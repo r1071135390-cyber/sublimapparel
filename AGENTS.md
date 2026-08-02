@@ -63,3 +63,27 @@
 
 - 模板默认预装核心组件库 `shadcn/ui`，位于`src/components/ui/`目录下
 - Next.js 项目**必须默认**采用 shadcn/ui 组件、风格和规范，**除非用户指定用其他的组件和规范。**
+
+## 项目概述 — VividPrint 外贸工厂官网
+
+### 项目简介
+义乌热升华印花服装工厂的英文外贸独立站，面向欧美B2B客户（赛事承办商、广告商、品牌营销团队等），展示全产业链能力和核心卖点（DDP到门、全棉全身印、灵活MOQ）。
+
+### 页面结构
+- `/` — 首页：Hero + 数据统计 + 核心优势 + 产品展示 + 供应链流程 + DDP亮点 + 服务行业 + 询盘表单
+- `/products` — 产品页：6大品类详细介绍 + 面料对比（涤纶 vs 全棉）
+- `/about` — 关于我们：工厂介绍 + 能力展示 + 供应链流程 + 团队 + 价值观
+- `/contact` — 联系我们：联系信息 + 询盘表单
+
+### API 接口
+- `POST /api/inquiry` — 询盘表单提交（name, email, company, product, quantity, message）
+
+### 组件目录
+- `src/components/layout/` — 导航栏 (navbar.tsx)、页脚 (footer.tsx)
+- `src/components/home/` — 首页各区块组件（hero, stats-bar, why-us, products-showcase, supply-chain, ddp-highlight, industries, inquiry-form）
+
+### 品牌色
+- 主色（深色基底）: `#0a0a0a`
+- 强调色（橙红）: `#ff4d00`
+- 辅助强调（电光蓝）: `#00c2ff`
+- 详见 `DESIGN.md`
