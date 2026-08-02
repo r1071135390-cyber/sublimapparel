@@ -8,6 +8,8 @@ const versions = [
   { id: "v2", label: "V2", color: "bg-stone-900", path: "/v2" },
   { id: "v3", label: "V3", color: "bg-stone-900", path: "/v3" },
   { id: "v4", label: "V4", color: "bg-stone-900", path: "/v4" },
+  { id: "v5", label: "V5", color: "bg-stone-900", path: "/v5" },
+  { id: "v6", label: "V6", color: "bg-stone-900", path: "/v6" },
 ];
 
 export function Switcher() {
