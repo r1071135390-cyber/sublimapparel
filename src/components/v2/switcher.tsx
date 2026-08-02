@@ -13,6 +13,12 @@ export default function V2Switcher() {
         <span className="px-4 py-2 rounded-full bg-[#0a0a0a] text-white">
           V2
         </span>
+        <Link
+          href="/v3"
+          className="px-4 py-2 rounded-full text-stone-500 hover:text-stone-900 transition-colors"
+        >
+          V3
+        </Link>
       </div>
     </div>
   );
