@@ -13,6 +13,8 @@ const VERSIONS = [
   { id: "v6", label: "V6", path: "/v6" },
   { id: "v7", label: "V7", path: "/v7" },
   { id: "v8", label: "V8", path: "/v8" },
+  { id: "v9", label: "V9", path: "/v9" },
+  { id: "v10", label: "V10", path: "/v10" },
 ];
 
 export function Switcher() {

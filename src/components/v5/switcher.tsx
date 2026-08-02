@@ -10,6 +10,10 @@ const VERSIONS = [
   { label: "V4", href: "/v4", desc: "Tech Glass" },
   { label: "V5", href: "/v5", desc: "E-commerce" },
   { label: "V6", href: "/v6", desc: "Sports Perf." },
+  { label: "V7", href: "/v7", desc: "Editorial" },
+  { label: "V8", href: "/v8", desc: "Brutalist" },
+  { label: "V9", href: "/v9", desc: "Zen" },
+  { label: "V10", href: "/v10", desc: "Neon" },
 ];
 
 export function V5Switcher() {

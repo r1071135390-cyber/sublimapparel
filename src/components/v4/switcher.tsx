@@ -10,6 +10,10 @@ const versions = [
   { id: "v4", label: "V4", color: "bg-cyan-400", path: "/v4" },
   { id: "v5", label: "V5", color: "bg-emerald-500", path: "/v5" },
   { id: "v6", label: "V6", color: "bg-lime-400", path: "/v6" },
+  { id: "v7", label: "V7", color: "bg-stone-700", path: "/v7" },
+  { id: "v8", label: "V8", color: "bg-yellow-300", path: "/v8" },
+  { id: "v9", label: "V9", color: "bg-stone-400", path: "/v9" },
+  { id: "v10", label: "V10", color: "bg-fuchsia-500", path: "/v10" },
 ];
 
 export function Switcher() {
