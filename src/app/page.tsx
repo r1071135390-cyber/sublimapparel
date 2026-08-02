@@ -1,5 +1,6 @@
 import Navbar from '@/components/layout/navbar';
 import Footer from '@/components/layout/footer';
+import V1Switcher from '@/components/v1/switcher';
 import Hero from '@/components/home/hero';
 import StatsBar from '@/components/home/stats-bar';
 import WhyUs from '@/components/home/why-us';
@@ -24,6 +25,7 @@ export default function Home() {
         <InquiryForm />
       </main>
       <Footer />
+      <V1Switcher />
     </>
   );
 }
