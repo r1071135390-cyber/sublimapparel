@@ -10,6 +10,7 @@ interface ProductCardProps {
   gradient: string;
   tags: string[];
   delay: number;
+  imageHint?: string;
 }
 
 function ProductCard({
@@ -18,6 +19,7 @@ function ProductCard({
   gradient,
   tags,
   delay,
+  imageHint,
 }: ProductCardProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -41,20 +43,23 @@ function ProductCard({
       }`}
       style={{ transitionDelay: `${delay}ms` }}
     >
-      {/* Visual area */}
-      <div
-        className={`h-48 sm:h-56 ${gradient} relative overflow-hidden`}
-      >
+      {/* Visual stage - designed for transparent PNG product images */}
+      <div className={`relative h-56 sm:h-64 ${gradient} overflow-hidden`}>
+        {/* Subtle decorative shapes for depth (very low opacity) */}
+        <div className="absolute -bottom-8 -right-8 w-32 h-32 bg-white/5 rounded-full pointer-events-none" />
+        <div className="absolute -top-8 -left-8 w-24 h-24 bg-white/5 rounded-full pointer-events-none" />
+
+        {/* Product image slot - transparent PNG goes here */}
+        {/* To add a real product image: replace this div with <Image src="/products/xxx.png" alt={title} fill className="object-contain p-6" /> */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center">
-            <div className="w-20 h-20 mx-auto bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
-              <span className="text-white text-3xl font-bold">VP</span>
+          <div className="text-center opacity-30 group-hover:opacity-20 transition-opacity">
+            <div className="w-32 h-32 mx-auto border-2 border-dashed border-white/40 rounded-2xl flex items-center justify-center">
+              <span className="text-white/60 text-xs font-medium">
+                {imageHint || 'Product PNG'}
+              </span>
             </div>
           </div>
         </div>
-        {/* Decorative elements */}
-        <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-white/10 rounded-full" />
-        <div className="absolute -top-4 -left-4 w-16 h-16 bg-white/10 rounded-full" />
       </div>
 
       {/* Content */}
@@ -87,6 +92,7 @@ const products: ProductCardProps[] = [
       'Full-color all-over print tees in polyester or cotton. Perfect for events, campaigns, and promotions.',
     gradient: 'bg-gradient-to-br from-[#ff4d00] to-[#ff7a3d]',
     tags: ['Polyester', 'Cotton', 'All-over'],
+    imageHint: 'T-Shirt PNG',
     delay: 0,
   },
   {
@@ -95,14 +101,16 @@ const products: ProductCardProps[] = [
       'Sublimated jerseys for running, cycling, soccer, and more. Moisture-wicking fabrics with vivid team designs.',
     gradient: 'bg-gradient-to-br from-[#00c2ff] to-[#0090cc]',
     tags: ['Running', 'Cycling', 'Team'],
+    imageHint: 'Jersey PNG',
     delay: 100,
   },
   {
     title: 'Hoodies & Sweatshirts',
     description:
       'Premium all-over printed hoodies. Soft fleece interior with stunning full-surface graphics.',
-    gradient: 'bg-gradient-to-br from-[#1a1a1a] to-[#333]',
+    gradient: 'bg-gradient-to-br from-[#2a2a2a] to-[#0a0a0a]',
     tags: ['Fleece', 'Premium', 'Unisex'],
+    imageHint: 'Hoodie PNG',
     delay: 200,
   },
   {
@@ -111,6 +119,7 @@ const products: ProductCardProps[] = [
       'Lightweight sublimated vests ideal for marathons, festivals, and outdoor events. Quick-dry fabric.',
     gradient: 'bg-gradient-to-br from-[#ffcc00] to-[#ff9500]',
     tags: ['Quick-dry', 'Lightweight', 'Events'],
+    imageHint: 'Vest PNG',
     delay: 300,
   },
   {
@@ -119,6 +128,7 @@ const products: ProductCardProps[] = [
       'Large-format printed flags, banners, and backdrops. Weather-resistant for indoor and outdoor use.',
     gradient: 'bg-gradient-to-br from-[#8b5cf6] to-[#6d28d9]',
     tags: ['Large format', 'Outdoor', 'Custom size'],
+    imageHint: 'Flag PNG',
     delay: 400,
   },
   {
@@ -127,6 +137,7 @@ const products: ProductCardProps[] = [
       'Custom printed bags, caps, scarves, aprons, and more. Complete your branded merchandise collection.',
     gradient: 'bg-gradient-to-br from-[#10b981] to-[#059669]',
     tags: ['Bags', 'Caps', 'Scarves'],
+    imageHint: 'Accessory PNG',
     delay: 500,
   },
 ];

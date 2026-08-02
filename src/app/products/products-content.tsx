@@ -11,6 +11,7 @@ interface ProductCategoryProps {
   gradient: string;
   reverse?: boolean;
   delay: number;
+  imageHint?: string;
 }
 
 function ProductCategory({
@@ -20,6 +21,7 @@ function ProductCategory({
   gradient,
   reverse,
   delay,
+  imageHint,
 }: ProductCategoryProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -43,19 +45,25 @@ function ProductCategory({
       }`}
       style={{ transitionDelay: `${delay}ms` }}
     >
-      {/* Visual */}
+      {/* Visual - designed for transparent PNG product images */}
       <div className={`${reverse ? 'lg:order-2' : ''}`}>
         <div
-          className={`${gradient} rounded-2xl h-64 sm:h-80 flex items-center justify-center relative overflow-hidden`}
+          className={`${gradient} rounded-2xl h-72 sm:h-96 relative overflow-hidden`}
         >
-          <div className="text-center z-10">
-            <div className="w-24 h-24 mx-auto bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mb-4">
-              <span className="text-white text-4xl font-bold">VP</span>
+          {/* Subtle decorative shapes */}
+          <div className="absolute -bottom-8 -right-8 w-40 h-40 bg-white/5 rounded-full pointer-events-none" />
+          <div className="absolute -top-8 -left-8 w-28 h-28 bg-white/5 rounded-full pointer-events-none" />
+
+          {/* Product image slot - transparent PNG goes here */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="text-center opacity-30">
+              <div className="w-40 h-40 mx-auto border-2 border-dashed border-white/40 rounded-2xl flex items-center justify-center">
+                <span className="text-white/60 text-xs font-medium">
+                  {imageHint || 'Product PNG'}
+                </span>
+              </div>
             </div>
-            <p className="text-white/80 text-sm font-medium">{title}</p>
           </div>
-          <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-white/10 rounded-full" />
-          <div className="absolute -top-6 -left-6 w-20 h-20 bg-white/10 rounded-full" />
         </div>
       </div>
 
@@ -96,6 +104,7 @@ const categories: ProductCategoryProps[] = [
       'Sizes from XS to 5XL',
     ],
     gradient: 'bg-gradient-to-br from-[#ff4d00] to-[#ff7a3d]',
+    imageHint: 'T-Shirt PNG',
     delay: 0,
   },
   {
@@ -111,6 +120,7 @@ const categories: ProductCategoryProps[] = [
     ],
     gradient: 'bg-gradient-to-br from-[#00c2ff] to-[#0090cc]',
     reverse: true,
+    imageHint: 'Jersey PNG',
     delay: 0,
   },
   {
@@ -124,7 +134,8 @@ const categories: ProductCategoryProps[] = [
       'Kangaroo pocket & drawstring hood',
       'Perfect for merch & brand giveaways',
     ],
-    gradient: 'bg-gradient-to-br from-[#1a1a1a] to-[#444]',
+    gradient: 'bg-gradient-to-br from-[#2a2a2a] to-[#0a0a0a]',
+    imageHint: 'Hoodie PNG',
     delay: 0,
   },
   {
@@ -140,6 +151,7 @@ const categories: ProductCategoryProps[] = [
     ],
     gradient: 'bg-gradient-to-br from-[#ffcc00] to-[#ff9500]',
     reverse: true,
+    imageHint: 'Vest PNG',
     delay: 0,
   },
   {
@@ -154,6 +166,7 @@ const categories: ProductCategoryProps[] = [
       'Perfect for trade shows & outdoor events',
     ],
     gradient: 'bg-gradient-to-br from-[#8b5cf6] to-[#6d28d9]',
+    imageHint: 'Banner PNG',
     delay: 0,
   },
   {
@@ -169,6 +182,7 @@ const categories: ProductCategoryProps[] = [
     ],
     gradient: 'bg-gradient-to-br from-[#10b981] to-[#059669]',
     reverse: true,
+    imageHint: 'Accessory PNG',
     delay: 0,
   },
 ];
