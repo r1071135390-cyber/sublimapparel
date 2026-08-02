@@ -1,43 +1,49 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-export function V3Switcher() {
-  const pathname = usePathname();
+const versions = [
+  { id: "v1", label: "V1", path: "" },
+  { id: "v2", label: "V2", path: "/v2" },
+  { id: "v3", label: "V3", path: "/v3" },
+  { id: "v4", label: "V4", path: "/v4" },
+];
+
+export function Switcher() {
+  const pathname = usePathname() || "/";
+  const current = versions.find((v) => {
+    if (v.id === "v1") return pathname === "/" || (!pathname.startsWith("/v"));
+    return pathname.startsWith(v.path);
+  });
+
+  const getHref = (version: typeof versions[number]) => {
+    if (version.id === "v1") return "/";
+    return `${version.path}${pathname.replace(/^\/v\d/, "") || ""}`;
+  };
 
   return (
-    <div className="fixed right-6 bottom-6 z-[100] flex items-center gap-1 border-2 border-black bg-white p-1 shadow-[4px_4px_0_0_#000]">
-      <Link
-        href="/"
-        className={`px-3 py-1.5 text-xs font-black uppercase tracking-wider transition-colors ${
-          !pathname.startsWith("/v2") && !pathname.startsWith("/v3")
-            ? "bg-black text-white"
-            : "text-black hover:bg-black/5"
-        }`}
-      >
-        V1
-      </Link>
-      <Link
-        href="/v2"
-        className={`px-3 py-1.5 text-xs font-black uppercase tracking-wider transition-colors ${
-          pathname.startsWith("/v2")
-            ? "bg-black text-white"
-            : "text-black hover:bg-black/5"
-        }`}
-      >
-        V2
-      </Link>
-      <Link
-        href="/v3"
-        className={`px-3 py-1.5 text-xs font-black uppercase tracking-wider transition-colors ${
-          pathname.startsWith("/v3")
-            ? "bg-[#ff4d00] text-white"
-            : "text-black hover:bg-black/5"
-        }`}
-      >
-        V3
-      </Link>
+    <div className="fixed bottom-6 right-6 z-50">
+      <div className="border-2 border-black bg-white p-1 shadow-[4px_4px_0_0_#000]">
+        <div className="flex items-center gap-0.5">
+          {versions.map((v) => {
+            const isActive = current?.id === v.id;
+            return (
+              <Link
+                key={v.id}
+                href={getHref(v)}
+                className={`rounded-sm px-3 py-1.5 text-xs font-black uppercase tracking-wider transition-all ${
+                  isActive
+                    ? "bg-black text-white"
+                    : "text-black hover:bg-yellow-200"
+                }`}
+              >
+                {v.label}
+              </Link>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }

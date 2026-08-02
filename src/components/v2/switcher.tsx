@@ -1,24 +1,46 @@
-import Link from 'next/link';
+"use client";
 
-export default function V2Switcher() {
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+const versions = [
+  { id: "v1", label: "V1", color: "bg-stone-900", path: "" },
+  { id: "v2", label: "V2", color: "bg-stone-900", path: "/v2" },
+  { id: "v3", label: "V3", color: "bg-stone-900", path: "/v3" },
+  { id: "v4", label: "V4", color: "bg-stone-900", path: "/v4" },
+];
+
+export function Switcher() {
+  const pathname = usePathname() || "/";
+  const current = versions.find((v) => {
+    if (v.id === "v1") return pathname === "/" || (!pathname.startsWith("/v"));
+    return pathname.startsWith(v.path);
+  });
+
+  const getHref = (version: typeof versions[number]) => {
+    if (version.id === "v1") return "/";
+    return `${version.path}${pathname.replace(/^\/v\d/, "") || ""}`;
+  };
+
   return (
     <div className="fixed bottom-6 right-6 z-50">
-      <div className="bg-white border border-stone-200 rounded-full shadow-lg p-1 flex items-center text-sm font-medium">
-        <Link
-          href="/"
-          className="px-4 py-2 rounded-full text-stone-500 hover:text-stone-900 transition-colors"
-        >
-          V1
-        </Link>
-        <span className="px-4 py-2 rounded-full bg-[#0a0a0a] text-white">
-          V2
-        </span>
-        <Link
-          href="/v3"
-          className="px-4 py-2 rounded-full text-stone-500 hover:text-stone-900 transition-colors"
-        >
-          V3
-        </Link>
+      <div className="flex items-center gap-1 rounded-full border border-black/10 bg-white/90 p-1 shadow-2xl backdrop-blur-md">
+        {versions.map((v) => {
+          const isActive = current?.id === v.id;
+          return (
+            <Link
+              key={v.id}
+              href={getHref(v)}
+              className={`rounded-full px-3.5 py-1.5 text-xs font-semibold transition-all ${
+                isActive
+                  ? "bg-stone-900 text-white"
+                  : "text-stone-600 hover:text-stone-900"
+              }`}
+            >
+              {v.label}
+            </Link>
+          );
+        })}
       </div>
     </div>
   );
