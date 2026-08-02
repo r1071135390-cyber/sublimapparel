@@ -43,6 +43,20 @@ export default function V1Switcher() {
           <Sparkles size={12} />
           V6
         </Link>
+        <Link
+          href="/v7"
+          className="px-4 py-2 rounded-full text-white/70 hover:text-white flex items-center gap-1.5 transition-colors"
+        >
+          <Sparkles size={12} />
+          V7
+        </Link>
+        <Link
+          href="/v8"
+          className="px-4 py-2 rounded-full text-white/70 hover:text-white flex items-center gap-1.5 transition-colors"
+        >
+          <Sparkles size={12} />
+          V8
+        </Link>
       </div>
     </div>
   );
