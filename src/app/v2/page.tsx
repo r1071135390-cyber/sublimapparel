@@ -1,6 +1,6 @@
 import V2Navbar from '@/components/v2/navbar';
 import V2Footer from '@/components/v2/footer';
-import V2Switcher from '@/components/v2/switcher';
+import { Switcher as V2Switcher } from "@/components/v2/switcher";
 import V2Hero from '@/components/v2/hero';
 import V2Features from '@/components/v2/features';
 import V2Products from '@/components/v2/products';

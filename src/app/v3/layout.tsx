@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { V3Navbar } from "@/components/v3/navbar";
 import { V3Footer } from "@/components/v3/footer";
-import { V3Switcher } from "@/components/v3/switcher";
+import { Switcher as V3Switcher } from "@/components/v3/switcher";
 
 export const metadata: Metadata = {
   title: "VividPrint — Full-Color Sublimation Apparel | DDP Worldwide",

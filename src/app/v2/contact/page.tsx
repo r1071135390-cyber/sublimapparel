@@ -1,6 +1,6 @@
 import V2Navbar from '@/components/v2/navbar';
 import V2Footer from '@/components/v2/footer';
-import V2Switcher from '@/components/v2/switcher';
+import { Switcher as V2Switcher } from "@/components/v2/switcher";
 import V2Contact from '@/components/v2/contact';
 import type { Metadata } from 'next';
 
