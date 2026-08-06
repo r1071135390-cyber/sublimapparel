@@ -174,7 +174,7 @@ export function Industries() {
             Not on the list?
           </div>
           <div className="mt-2 text-2xl font-black uppercase leading-tight md:text-3xl">
-            If it can be sublimated, we can print it.
+            Whatever you want to custom, we can make it.
           </div>
           <div className="mt-3 text-sm font-bold text-white/70">
             Tell us what you need. We&apos;ll figure it out.
