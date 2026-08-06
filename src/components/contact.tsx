@@ -79,7 +79,7 @@ export function Contact() {
                   Email
                 </div>
                 <div className="mt-1 text-base font-bold text-black">
-                  hello@vividprint.cn
+                  hello@sublimprint.com
                 </div>
               </div>
               <div>

@@ -1,6 +1,6 @@
 import { Contact } from "@/components/contact";
 
-export const metadata = { title: "Products — VividPrint" };
+export const metadata = { title: "Products — SublimPrint" };
 
 const categories = [
   {

@@ -1,6 +1,6 @@
 import { Contact } from "@/components/contact";
 
-export const metadata = { title: "Contact — VividPrint" };
+export const metadata = { title: "Contact — SublimPrint" };
 
 export default function ContactPage() {
   return (

@@ -10,7 +10,7 @@ export function Footer() {
               <div className="flex h-10 w-10 items-center justify-center bg-[#ff4d00]">
                 <span className="text-lg font-black text-white">V</span>
               </div>
-              <span className="text-xl font-black">vivid/print</span>
+              <span className="text-xl font-black">sublim/print</span>
             </div>
             <p className="text-sm leading-relaxed text-white/60">
               Full-color all-over print apparel from Yiwu, China. From design to your door.
@@ -46,7 +46,7 @@ export function Footer() {
             </h4>
             <ul className="space-y-2 text-sm text-white/80">
               <li>WhatsApp: +86 138 XXXX XXXX</li>
-              <li>Email: hello@vividprint.cn</li>
+              <li>Email: hello@sublimprint.com</li>
               <li>No. 35 Lingyun Road, Yiwu</li>
             </ul>
           </div>
@@ -60,7 +60,7 @@ export function Footer() {
         </div>
 
         <div className="flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-8 text-xs text-white/40 md:flex-row md:items-center">
-          <p>© {new Date().getFullYear()} VividPrint. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} SublimPrint. All rights reserved.</p>
           <p>From Yiwu to your door, worldwide.</p>
         </div>
       </div>

@@ -4,7 +4,7 @@ import { Footer } from "@/components/footer";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "VividPrint — Custom Print. Any Material. Any Product.",
+  title: "SublimPrint — Custom Print. Any Material. Any Product.",
   description:
     "Yiwu HomeDorm Commordity Manufacturing Co., Ltd. — a sublimation printing factory in Yiwu, China (est. 2018). Custom print on apparel, mugs, mousepads, banners, home textiles and more. Polyester & 100% cotton. DDP shipping worldwide, US warehouse in Los Angeles.",
 };

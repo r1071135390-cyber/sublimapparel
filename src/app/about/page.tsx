@@ -1,6 +1,6 @@
 import { Contact } from "@/components/contact";
 
-export const metadata = { title: "About — VividPrint" };
+export const metadata = { title: "About — SublimPrint" };
 
 const capabilities = [
   { title: "Sublimation printing", desc: "Large-format printers with CMYK ink sets. Up to 100m of fabric per roll. Both polyester and 100% cotton." },
@@ -36,7 +36,7 @@ export default function AboutPage() {
             <span className="text-[#ff4d00]">to the world.</span>
           </h1>
           <p className="mt-8 max-w-3xl text-xl leading-snug text-black/80">
-            VividPrint is a full-service sublimation factory based in Yiwu, China — with a
+            SublimPrint is a full-service sublimation factory based in Yiwu, China — with a
             warehouse in Los Angeles. We print on polyester and 100% cotton. We cut, sew, and
             ship anywhere in the world. And we handle the customs so you don&apos;t have to.
           </p>
