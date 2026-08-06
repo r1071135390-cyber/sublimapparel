@@ -1,8 +1,8 @@
-import { V11Contact } from "@/components/v11/contact";
+import { V12Contact } from "@/components/v12/contact";
 
 export const metadata = { title: "Contact — VividPrint" };
 
-export default function V11ContactPage() {
+export default function V12ContactPage() {
   return (
     <main>
       <section className="border-b-2 border-black bg-white">
@@ -17,7 +17,7 @@ export default function V11ContactPage() {
           </h1>
         </div>
       </section>
-      <V11Contact />
+      <V12Contact />
     </main>
   );
 }

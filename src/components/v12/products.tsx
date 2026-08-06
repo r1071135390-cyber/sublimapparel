@@ -1,4 +1,4 @@
-export function V11Products() {
+export function V12Products() {
   const categories = [
     {
       label: "Apparel",

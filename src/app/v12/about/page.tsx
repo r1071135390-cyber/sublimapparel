@@ -1,4 +1,4 @@
-import { V3Contact } from "@/components/v3/contact";
+import { V12Contact } from "@/components/v12/contact";
 
 export const metadata = { title: "About — VividPrint" };
 
@@ -22,7 +22,7 @@ const values = [
   { word: "Care", desc: "Your deadline is our deadline. Your reputation is our reputation." },
 ];
 
-export default function V3AboutPage() {
+export default function V12AboutPage() {
   return (
     <main>
       <section className="border-b-2 border-black bg-white">
@@ -156,7 +156,7 @@ export default function V3AboutPage() {
         </div>
       </section>
 
-      <V3Contact />
+      <V12Contact />
     </main>
   );
 }

@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export function V3Footer() {
+export function V12Footer() {
   return (
     <footer className="border-t-2 border-black bg-black text-white">
       <div className="mx-auto max-w-7xl px-6 py-16">
@@ -22,10 +22,10 @@ export function V3Footer() {
               Products
             </h4>
             <ul className="space-y-2 text-sm text-white/80">
-              <li><Link href="/v3/products" className="hover:text-white">Custom T-Shirts</Link></li>
-              <li><Link href="/v3/products" className="hover:text-white">Sports Jerseys</Link></li>
-              <li><Link href="/v3/products" className="hover:text-white">Hoodies</Link></li>
-              <li><Link href="/v3/products" className="hover:text-white">All categories</Link></li>
+              <li><Link href="/v12/products" className="hover:text-white">Custom T-Shirts</Link></li>
+              <li><Link href="/v12/products" className="hover:text-white">Sports Jerseys</Link></li>
+              <li><Link href="/v12/products" className="hover:text-white">Hoodies</Link></li>
+              <li><Link href="/v12/products" className="hover:text-white">All categories</Link></li>
             </ul>
           </div>
 
@@ -34,9 +34,9 @@ export function V3Footer() {
               Company
             </h4>
             <ul className="space-y-2 text-sm text-white/80">
-              <li><Link href="/v3/about" className="hover:text-white">About us</Link></li>
-              <li><Link href="/v3/contact" className="hover:text-white">Contact</Link></li>
-              <li><Link href="/v3/contact" className="hover:text-white">Get a quote</Link></li>
+              <li><Link href="/v12/about" className="hover:text-white">About us</Link></li>
+              <li><Link href="/v12/contact" className="hover:text-white">Contact</Link></li>
+              <li><Link href="/v12/contact" className="hover:text-white">Get a quote</Link></li>
             </ul>
           </div>
 

@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 const VERSIONS = [
   { label: "V1", href: "/", desc: "Dark" },
   { label: "V2", href: "/v2", desc: "Premium" },
-  { label: "V3", href: "/v3", desc: "Creative" },
   { label: "V4", href: "/v4", desc: "Tech" },
   { label: "V5", href: "/v5", desc: "E-com" },
   { label: "V6", href: "/v6", desc: "Sports" },
@@ -14,7 +13,7 @@ const VERSIONS = [
   { label: "V8", href: "/v8", desc: "Brutalist" },
   { label: "V9", href: "/v9", desc: "Zen" },
   { label: "V10", href: "/v10", desc: "Neon" },
-  { label: "V11", href: "/v11", desc: "Catalog" },
+  { label: "V12", href: "/v12", desc: "Catalog" },
 ];
 
 export function V6Switcher() {

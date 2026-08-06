@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 const VERSIONS = [
   { id: "v1", label: "V1", path: "/" },
   { id: "v2", label: "V2", path: "/v2" },
-  { id: "v3", label: "V3", path: "/v3" },
   { id: "v4", label: "V4", path: "/v4" },
   { id: "v5", label: "V5", path: "/v5" },
   { id: "v6", label: "V6", path: "/v6" },
@@ -14,7 +13,7 @@ const VERSIONS = [
   { id: "v8", label: "V8", path: "/v8" },
   { id: "v9", label: "V9", path: "/v9" },
   { id: "v10", label: "V10", path: "/v10" },
-  { id: "v11", label: "V11", path: "/v11" },
+  { id: "v12", label: "V12", path: "/v12" },
 ];
 
 export function V10Switcher() {

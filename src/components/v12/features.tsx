@@ -1,4 +1,4 @@
-export function V3Features() {
+export function V12Features() {
   const features = [
     {
       number: "01",

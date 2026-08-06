@@ -1,4 +1,4 @@
-import { V11Contact } from "@/components/v11/contact";
+import { V12Contact } from "@/components/v12/contact";
 
 export const metadata = { title: "Products — VividPrint" };
 
@@ -56,7 +56,7 @@ const comparison = [
   { feature: "MOQ", poly: "50 pcs", cotton: "50 pcs" },
 ];
 
-export default function V11ProductsPage() {
+export default function V12ProductsPage() {
   return (
     <main>
       <section className="border-b-2 border-black bg-white">
@@ -181,7 +181,7 @@ export default function V11ProductsPage() {
         </div>
       </section>
 
-      <V11Contact />
+      <V12Contact />
     </main>
   );
 }

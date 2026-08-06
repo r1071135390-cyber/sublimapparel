@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export function V11Hero() {
+export function V12Hero() {
   return (
     <section className="border-b-2 border-black bg-[#faf9f6]">
       <div className="mx-auto max-w-7xl px-6 py-12 md:py-20">
@@ -41,14 +41,14 @@ export function V11Hero() {
 
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <Link
-                href="/v11/contact"
+                href="/v12/contact"
                 className="group inline-flex items-center gap-3 bg-black px-8 py-5 text-base font-black uppercase tracking-wider text-white transition-all hover:bg-[#ff4d00]"
               >
                 Start a project
                 <span className="text-xl transition-transform group-hover:translate-x-1">→</span>
               </Link>
               <Link
-                href="/v11/products"
+                href="/v12/products"
                 className="group inline-flex items-center gap-2 border-2 border-black bg-white px-8 py-5 text-base font-black uppercase tracking-wider text-black transition-all hover:bg-black hover:text-white"
               >
                 See products
@@ -88,7 +88,7 @@ export function V11Hero() {
           <div className="relative md:col-span-6">
             <div className="relative aspect-[5/4] w-full overflow-hidden border-2 border-black bg-[#f5f1e8]">
               <Image
-                src="/v11-hero-products.jpg"
+                src="/v12-hero-products.jpg"
                 alt="Full range of custom sublimation printed products - apparel, mugs, mousepads, pillows, banners, caps, tote bags and more"
                 fill
                 priority

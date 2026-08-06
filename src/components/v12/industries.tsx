@@ -1,4 +1,4 @@
-export function V3Industries() {
+export function V12Industries() {
   const industries = [
     {
       title: "Events & Festivals",

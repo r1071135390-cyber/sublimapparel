@@ -1,17 +1,17 @@
 import Link from "next/link";
 
-export function V11Navbar() {
+export function V12Navbar() {
   const links = [
-    { href: "/v11", label: "Home" },
-    { href: "/v11/products", label: "Products" },
-    { href: "/v11/about", label: "About" },
-    { href: "/v11/contact", label: "Contact" },
+    { href: "/v12", label: "Home" },
+    { href: "/v12/products", label: "Products" },
+    { href: "/v12/about", label: "About" },
+    { href: "/v12/contact", label: "Contact" },
   ];
 
   return (
     <nav className="sticky top-0 z-50 border-b-2 border-black bg-[#faf9f6]">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <Link href="/v11" className="group flex items-center gap-2">
+        <Link href="/v12" className="group flex items-center gap-2">
           <div className="flex h-10 w-10 items-center justify-center bg-[#ff4d00] text-white">
             <span className="text-lg font-black">V</span>
           </div>
@@ -33,7 +33,7 @@ export function V11Navbar() {
         </div>
 
         <Link
-          href="/v11/contact"
+          href="/v12/contact"
           className="group inline-flex items-center gap-2 bg-black px-5 py-3 text-sm font-bold uppercase tracking-wider text-white transition-colors hover:bg-[#ff4d00]"
         >
           Get a quote

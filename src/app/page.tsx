@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import { V11Navbar } from "@/components/v11/navbar";
-import { V11Footer } from "@/components/v11/footer";
-import { Switcher as V11Switcher } from "@/components/v11/switcher";
-import { V11Hero } from "@/components/v11/hero";
-import { V11Features } from "@/components/v11/features";
-import { V11Products } from "@/components/v11/products";
-import { V11Process } from "@/components/v11/process";
-import { V11DDP } from "@/components/v11/ddp";
-import { V11Industries } from "@/components/v11/industries";
-import { V11Contact } from "@/components/v11/contact";
+import { V12Navbar } from "@/components/v12/navbar";
+import { V12Footer } from "@/components/v12/footer";
+import { Switcher as V12Switcher } from "@/components/v12/switcher";
+import { V12Hero } from "@/components/v12/hero";
+import { V12Features } from "@/components/v12/features";
+import { V12Products } from "@/components/v12/products";
+import { V12Process } from "@/components/v12/process";
+import { V12DDP } from "@/components/v12/ddp";
+import { V12Industries } from "@/components/v12/industries";
+import { V12Contact } from "@/components/v12/contact";
 
 export const metadata: Metadata = {
   title: "VividPrint — Custom Print. Any Material. Any Product.",
@@ -16,21 +16,21 @@ export const metadata: Metadata = {
     "Sublimation printing factory in Yiwu, China. Custom print on apparel, mugs, mousepads, banners, home textiles and more. Polyester & 100% cotton. DDP shipping worldwide, US warehouse in Los Angeles.",
 };
 
-export default function V11Home() {
+export default function V12Home() {
   return (
     <div className="min-h-screen bg-[#faf9f6] font-sans text-black antialiased">
-      <V11Navbar />
+      <V12Navbar />
       <main>
-        <V11Hero />
-        <V11Features />
-        <V11Products />
-        <V11Process />
-        <V11DDP />
-        <V11Industries />
-        <V11Contact />
+        <V12Hero />
+        <V12Features />
+        <V12Products />
+        <V12Process />
+        <V12DDP />
+        <V12Industries />
+        <V12Contact />
       </main>
-      <V11Footer />
-      <V11Switcher />
+      <V12Footer />
+      <V12Switcher />
     </div>
   );
 }

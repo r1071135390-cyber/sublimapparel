@@ -1,4 +1,4 @@
-export function V11DDP() {
+export function V12DDP() {
   return (
     <section className="border-b-2 border-black bg-[#ff4d00] text-black">
       <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
