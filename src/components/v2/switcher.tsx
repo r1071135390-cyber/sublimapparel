@@ -14,6 +14,7 @@ const versions = [
   { id: "v8", label: "V8", color: "bg-stone-900", path: "/v8" },
   { id: "v9", label: "V9", color: "bg-stone-900", path: "/v9" },
   { id: "v10", label: "V10", color: "bg-stone-900", path: "/v10" },
+  { id: "v11", label: "V11", color: "bg-stone-900", path: "/v11" },
 ];
 
 export function Switcher() {
