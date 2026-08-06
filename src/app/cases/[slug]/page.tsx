@@ -1,0 +1,224 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import Link from "next/link";
+import {
+  CalendarDays,
+  Megaphone,
+  Trophy,
+  Music2,
+  Presentation,
+  Briefcase,
+  Shirt,
+  GraduationCap,
+  Flag,
+  Coffee,
+  Bike,
+  ShoppingBag,
+  ArrowRight,
+  ArrowLeft,
+  Camera,
+  ImageOff,
+} from "lucide-react";
+import { industries, getIndustryBySlug } from "@/lib/cases";
+
+const iconMap: Record<string, typeof CalendarDays> = {
+  CalendarDays,
+  Megaphone,
+  Trophy,
+  Music2,
+  Presentation,
+  Briefcase,
+  Shirt,
+  GraduationCap,
+  Flag,
+  Coffee,
+  Bike,
+  ShoppingBag,
+};
+
+type Props = { params: Promise<{ slug: string }> };
+
+export async function generateStaticParams() {
+  return industries.map((i) => ({ slug: i.slug }));
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const ind = getIndustryBySlug(slug);
+  if (!ind) return { title: "Case Studies — SublimPrint" };
+  return {
+    title: `${ind.title} Case Studies — SublimPrint`,
+    description: ind.blurb,
+  };
+}
+
+export default async function CaseCategoryPage({ params }: Props) {
+  const { slug } = await params;
+  const ind = getIndustryBySlug(slug);
+  if (!ind) notFound();
+
+  const Icon = iconMap[ind.icon] ?? Camera;
+  const hasCases = ind.cases.length > 0;
+
+  return (
+    <>
+      {/* Top utility bar */}
+      <div className="border-b-2 border-black bg-black text-white">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-6 py-2.5 text-[11px] font-bold uppercase tracking-wider">
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-1">
+            <span>Global DDP shipping</span>
+            <span className="text-[#00c2ff]">·</span>
+            <span>US stock in Fontana, CA</span>
+            <span className="text-[#00c2ff]">·</span>
+            <span>MOQ from 50 pcs</span>
+          </div>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-1">
+            <span>Replies within 1 business day</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Hero */}
+      <section className="border-b-2 border-black bg-[#faf9f6]">
+        <div className="mx-auto max-w-7xl px-6 py-12 md:py-16">
+          <Link
+            href="/cases"
+            className="mb-6 inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-black/70 transition-colors hover:text-[#ff4d00]"
+          >
+            <ArrowLeft size={14} strokeWidth={3} />
+            All case studies
+          </Link>
+
+          <div className="flex items-start gap-4">
+            <div className="hidden h-16 w-16 flex-shrink-0 items-center justify-center border-2 border-black bg-[#ff4d00] text-white md:flex">
+              <Icon size={32} strokeWidth={2.5} />
+            </div>
+            <div>
+              <div className="mb-2 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
+                [ Industry / {String(industries.findIndex((i) => i.slug === ind.slug) + 1).padStart(3, "0")} ]
+              </div>
+              <h1 className="mb-4 text-4xl font-black uppercase leading-[0.95] tracking-tight md:text-6xl">
+                {ind.title}
+              </h1>
+              <p className="max-w-2xl text-base font-bold leading-relaxed md:text-lg">
+                {ind.blurb}
+              </p>
+            </div>
+          </div>
+
+          {/* The value pitch (orange highlight) */}
+          <div className="mt-8 border-l-4 border-[#ff4d00] bg-[#fff7f0] px-4 py-3 text-sm font-bold leading-relaxed text-black md:text-base">
+            {ind.pitch}
+          </div>
+        </div>
+      </section>
+
+      {/* Gallery */}
+      <section className="border-b-2 border-black bg-white">
+        <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
+          {hasCases ? (
+            <>
+              <div className="mb-8 flex items-end justify-between border-b-2 border-black pb-4">
+                <h2 className="text-2xl font-black uppercase leading-none tracking-tight md:text-3xl">
+                  {ind.cases.length} case stud{ind.cases.length === 1 ? "y" : "ies"}
+                </h2>
+              </div>
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {ind.cases.map((c) => (
+                  <article
+                    key={c.id}
+                    className="flex flex-col border-2 border-black bg-white p-5"
+                  >
+                    <div className="mb-4 aspect-[4/3] overflow-hidden border-2 border-black bg-[#faf9f6]">
+                      {c.images[0] ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={c.images[0]}
+                          alt={c.title}
+                          className="h-full w-full object-cover"
+                        />
+                      ) : (
+                        <div className="flex h-full items-center justify-center text-black/30">
+                          <ImageOff size={36} />
+                        </div>
+                      )}
+                    </div>
+                    <h3 className="mb-1 text-lg font-black uppercase leading-tight">
+                      {c.title}
+                    </h3>
+                    {c.client && (
+                      <div className="mb-3 text-xs font-bold uppercase tracking-wider text-black/60">
+                        {c.client}
+                        {c.year ? ` · ${c.year}` : ""}
+                      </div>
+                    )}
+                    <p className="text-sm font-medium leading-relaxed text-black/75">
+                      {c.summary}
+                    </p>
+                  </article>
+                ))}
+              </div>
+            </>
+          ) : (
+            /* Empty state — gallery under construction */
+            <div className="border-2 border-dashed border-black/30 bg-[#faf9f6] px-6 py-20 text-center">
+              <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center border-2 border-black bg-white text-[#ff4d00]">
+                <ImageOff size={36} strokeWidth={2.5} />
+              </div>
+              <h2 className="mb-3 text-2xl font-black uppercase leading-tight md:text-3xl">
+                Gallery under construction
+              </h2>
+              <p className="mx-auto mb-8 max-w-xl text-base font-bold leading-relaxed text-black/70">
+                We&apos;re putting together real examples for this category. In the meantime, send us your artwork and we&apos;ll come back with a free mockup and a landed, duty-paid quote within 1 business day.
+              </p>
+              <div className="flex flex-wrap items-center justify-center gap-3">
+                <Link
+                  href="/get-a-quote"
+                  className="inline-flex items-center gap-2 border-2 border-black bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-wider text-white transition-all hover:bg-black hover:shadow-[4px_4px_0_0_#000] hover:-translate-x-1 hover:-translate-y-1"
+                >
+                  Get a quote
+                  <ArrowRight size={16} strokeWidth={3} />
+                </Link>
+                <Link
+                  href="/cases"
+                  className="inline-flex items-center gap-2 border-2 border-black bg-white px-6 py-3 text-sm font-black uppercase tracking-wider transition-all hover:bg-black hover:text-white"
+                >
+                  Browse other categories
+                </Link>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Related industries */}
+      <section className="border-b-2 border-black bg-[#faf9f6]">
+        <div className="mx-auto max-w-7xl px-6 py-12 md:py-16">
+          <h2 className="mb-6 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
+            [ Other industries ]
+          </h2>
+          <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+            {industries
+              .filter((i) => i.slug !== ind.slug)
+              .slice(0, 6)
+              .map((i) => {
+                const OtherIcon = iconMap[i.icon] ?? Camera;
+                return (
+                  <Link
+                    key={i.slug}
+                    href={`/cases/${i.slug}`}
+                    className="group flex items-center gap-3 border-2 border-black bg-white px-4 py-3 transition-all hover:bg-[#ff4d00] hover:text-white"
+                  >
+                    <OtherIcon size={18} strokeWidth={2.5} />
+                    <span className="text-sm font-black uppercase">
+                      {i.title}
+                    </span>
+                  </Link>
+                );
+              })}
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}

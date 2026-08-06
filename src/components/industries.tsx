@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   CalendarDays,
   Megaphone,
@@ -13,77 +14,90 @@ import {
   Coffee,
   Bike,
   ShoppingBag,
+  ArrowRight,
 } from "lucide-react";
 
 export function Industries() {
   const industries = [
     {
+      slug: "events-conferences",
       title: "Events & Conferences",
       icon: CalendarDays,
       products: "Staff & volunteer tees, lanyards, table throws, step-and-repeat backdrops, feather flags",
       pitch: "Your date does not move. Our Fontana warehouse stock absorbs the headcount that changes in the final fortnight.",
     },
     {
+      slug: "promotional-products",
       title: "Promotional Products Distributors",
       icon: Megaphone,
       products: "Apparel, bags, towels, blankets, flags, table covers, lanyards",
       pitch: "Landed duty-paid pricing protects your margin; blind drop-ship from LA protects your client relationship.",
     },
     {
+      slug: "sports-teams",
       title: "Sports Teams & Leagues",
       icon: Trophy,
       products: "Sublimated jerseys, shorts, warm-ups, singlets, socks, sideline banners",
       pitch: "Cut-and-sew patterns that fit, named and numbered per unit, delivered before the season opens.",
     },
     {
+      slug: "music-tour-festival",
       title: "Music, Tour & Festival Merch",
       icon: Music2,
       products: "All-over-print tees and hoodies, bandanas, tote bags, stage backdrops",
       pitch: "Full-bleed printing on 100% cotton — merch your fans will actually want to wear.",
     },
     {
+      slug: "trade-show-display",
       title: "Trade Show & Display",
       icon: Presentation,
       products: "SEG tension fabric, backdrop walls, table throws, counter covers, tent walls",
       pitch: "Silicone edge is a sewing operation. We sew, so we can make it — and DDP handles the bulky freight.",
     },
     {
+      slug: "corporate-programs",
       title: "Corporate & Employee Programs",
       icon: Briefcase,
       products: "Uniforms, polos, onboarding kits, conference apparel, branded gifting",
       pitch: "Finance gets a fixed landed cost; multi-site restocks pull from our LA warehouse.",
     },
     {
+      slug: "apparel-brands",
       title: "Apparel Brands & Agencies",
       icon: Shirt,
       products: "Custom cut-and-sew, all-over-print apparel, private-label packaging",
       pitch: "Your pattern, your labels, your packaging. Cotton included.",
     },
     {
+      slug: "schools-greek-life",
       title: "Schools, Universities & Greek Life",
       icon: GraduationCap,
       products: "Rush shirts, bid day tees, game-day and alumni apparel, dorm goods",
       pitch: "Campus orders are cotton orders, and they are always urgent. We cover both.",
     },
     {
+      slug: "political-campaigns",
       title: "Political Campaigns",
       icon: Flag,
       products: "Rally tees, fabric banners, hand-held flags, canvasser vests, hats, rally towels",
       pitch: "Our LA warehouse turns a five-day requirement into a domestic shipment.",
     },
     {
+      slug: "breweries-hospitality",
       title: "Breweries, Coffee & Hospitality",
       icon: Coffee,
       products: "Merch tees and hoodies, aprons, bar towels, patio covers, tap-room banners",
       pitch: "Cotton merch, staff wear, and soft signage from one supplier — landed duty paid.",
     },
     {
+      slug: "endurance-race-events",
       title: "Endurance & Race Events",
       icon: Bike,
       products: "Finisher tees in cotton and technical, race shirts, cycling kits, route banners",
       pitch: "Final numbers land two weeks out. LA stock absorbs the difference.",
     },
     {
+      slug: "ecommerce-fulfillment",
       title: "E-commerce & Fulfillment",
       icon: ShoppingBag,
       products: "Blankets, pillow covers, towels, tapestries, pet goods, aprons, tote bags",
@@ -114,7 +128,7 @@ export function Industries() {
             const Icon = ind.icon;
             return (
               <div
-                key={ind.title}
+                key={ind.slug}
                 className="group flex flex-col border-2 border-black bg-white p-6 transition-all hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[6px_6px_0_0_#ff4d00]"
               >
                 {/* Icon + title */}
@@ -133,9 +147,22 @@ export function Industries() {
                 </p>
 
                 {/* Value pitch (the orange-bordered highlight) */}
-                <div className="mt-auto border-l-4 border-[#ff4d00] bg-[#fff7f0] px-3 py-2.5 text-sm font-bold leading-relaxed text-black">
+                <div className="mb-5 border-l-4 border-[#ff4d00] bg-[#fff7f0] px-3 py-2.5 text-sm font-bold leading-relaxed text-black">
                   {ind.pitch}
                 </div>
+
+                {/* View cases link */}
+                <Link
+                  href={`/cases/${ind.slug}`}
+                  className="mt-auto inline-flex items-center gap-1.5 self-start text-xs font-black uppercase tracking-wider text-black transition-colors hover:text-[#ff4d00]"
+                >
+                  View case studies
+                  <ArrowRight
+                    size={14}
+                    strokeWidth={3}
+                    className="transition-transform group-hover:translate-x-1"
+                  />
+                </Link>
               </div>
             );
           })}
