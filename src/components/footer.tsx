@@ -68,7 +68,7 @@ const linkGroups = [
   {
     title: "Company",
     items: [
-      "About SublimPrint",
+      "About sublimprint.com",
       "Our factory in Yiwu",
       "Why Yiwu",
       "Certifications & compliance",
@@ -126,7 +126,7 @@ export function Footer() {
               Factory
             </h3>
             <p className="text-sm font-medium leading-relaxed">
-              SublimPrint — Factory
+              HomeDorm — Factory
               <br />
               35 Lingyun Road
               <br />
@@ -139,7 +139,7 @@ export function Footer() {
               US Warehouse
             </h3>
             <p className="text-sm font-medium leading-relaxed">
-              SublimPrint — US warehouse
+              HomeDorm — US warehouse
               <br />
               13052 Jurupa Ave
               <br />
@@ -234,7 +234,7 @@ export function Footer() {
       <div className="border-t border-white/10 bg-black text-white/70">
         <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-4 px-6 py-6 text-xs md:flex-row md:items-center">
           <p className="font-medium">
-            © {new Date().getFullYear()} Yiwu HomeDorm Commordity Manufacturing
+            © {new Date().getFullYear()} Yiwu HomeDorm Commodity Manufacturing
             Co., Ltd. All rights reserved.
           </p>
           <ul className="flex flex-wrap items-center gap-x-5 gap-y-1">
@@ -261,9 +261,11 @@ export function Footer() {
           </ul>
         </div>
         <div className="mx-auto max-w-7xl px-6 pb-6 text-[11px] leading-relaxed text-white/50">
-          SublimPrint™ is a brand of Yiwu HomeDorm Commordity Manufacturing
-          Co., Ltd. — registered in Yiwu, Zhejiang, China. All artwork, designs
-          and trademarks shown are property of their respective owners.
+          sublimprint.com is the website of Yiwu HomeDorm Commodity Manufacturing
+          Co., Ltd. — registered in Yiwu, Zhejiang, China. SublimPrint is a
+          trade name used for the website only; it is not a registered
+          trademark. All artwork, designs and trademarks shown are property
+          of their respective owners.
         </div>
       </div>
     </footer>

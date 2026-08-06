@@ -36,7 +36,7 @@ export default function AboutPage() {
             <span className="text-[#ff4d00]">to the world.</span>
           </h1>
           <p className="mt-8 max-w-3xl text-xl leading-snug text-black/80">
-            SublimPrint is a full-service sublimation factory based in Yiwu, China — with a
+            sublimprint.com is the website of a full-service sublimation factory based in Yiwu, China — with a
             warehouse in Fontana, CA. We print on polyester and 100% cotton. We cut, sew, and
             ship anywhere in the world. And we handle the customs so you don&apos;t have to.
           </p>
@@ -60,7 +60,7 @@ export default function AboutPage() {
                 Legal entity
               </div>
               <div className="mt-2 text-lg font-black leading-tight text-black md:text-xl">
-                Yiwu HomeDorm Commordity Manufacturing Co., Ltd.
+                Yiwu HomeDorm Commodity Manufacturing Co., Ltd.
               </div>
             </div>
             <div className="border-2 border-black bg-white p-6">
