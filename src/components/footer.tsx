@@ -1,80 +1,72 @@
 import Link from "next/link";
-import {
-  MapPin,
-  Warehouse,
-  Mail,
-  MessageCircle,
-  Phone,
-  ShieldCheck,
-  CreditCard,
-  Layers,
-} from "lucide-react";
+import { MapPin, Mail, MessageCircle, Phone, Building2, Warehouse } from "lucide-react";
 
 const linkGroups = [
   {
     title: "Products",
     items: [
-      "Cotton Sublimation Collection",
-      "Team & Performance Apparel",
-      "Custom Cut-and-Sew Apparel",
-      "Headwear & Accessories",
-      "Flags, Banners & Outdoor",
-      "Trade Show & Display Textiles",
-      "Home & Soft Goods",
-      "Bags, Pet & Promo",
+      { label: "Cotton Sublimation Collection", href: "/products" },
+      { label: "Team & Performance Apparel", href: "/products" },
+      { label: "Custom Cut-and-Sew Apparel", href: "/products" },
+      { label: "Headwear & Accessories", href: "/products" },
+      { label: "Flags, Banners & Outdoor", href: "/products" },
+      { label: "Trade Show & Display Textiles", href: "/products" },
+      { label: "Home & Soft Goods", href: "/products" },
+      { label: "Bags, Pet & Promo", href: "/products" },
     ],
     viewAll: { href: "/products", label: "View all products" },
   },
   {
     title: "Capabilities",
     items: [
-      "Dye sublimation printing",
-      "100% cotton (full-bleed)",
-      "Cut & sew manufacturing",
-      "All-over print",
-      "Custom labels, tags & packaging",
-      "Quality control & testing",
-      "Factory & equipment",
+      { label: "Dye sublimation printing", href: "/about" },
+      { label: "100% cotton (full-bleed)", href: "/about" },
+      { label: "Cut & sew manufacturing", href: "/about" },
+      { label: "All-over print", href: "/about" },
+      { label: "Custom labels, tags & packaging", href: "/about" },
+      { label: "Quality control & testing", href: "/about" },
+      { label: "Factory & equipment", href: "/about" },
     ],
   },
   {
     title: "Industries",
     items: [
-      "Events & conferences",
-      "Promotional distributors",
-      "Sports teams & leagues",
-      "Music, tour & festival merch",
-      "Trade show & display",
-      "Corporate & employee programmes",
-      "Apparel brands & agencies",
-      "Schools & universities",
-      "Political campaigns",
+      { label: "Events & conferences", href: "/about" },
+      { label: "Promotional distributors", href: "/about" },
+      { label: "Sports teams & leagues", href: "/about" },
+      { label: "Music, tour & festival merch", href: "/about" },
+      { label: "Trade show & display", href: "/about" },
+      { label: "Corporate & employee programmes", href: "/about" },
+      { label: "Apparel brands & agencies", href: "/about" },
+      { label: "Schools & universities", href: "/about" },
+      { label: "Political campaigns", href: "/about" },
     ],
     viewAll: { href: "/about", label: "View all industries" },
   },
   {
     title: "Resources",
     items: [
-      "Artwork & file setup guide",
-      "Fabric library",
-      "Size charts",
-      "Sublimation vs screen print vs DTG",
-      "Ordering FAQ",
-      "Guides",
-      "Lead times",
-      "Sampling process",
+      { label: "Artwork & file setup guide", href: "/get-a-quote" },
+      { label: "Fabric library", href: "/about" },
+      { label: "Size charts", href: "/about" },
+      { label: "Sublimation vs screen print vs DTG", href: "/about" },
+      { label: "Ordering FAQ", href: "/about" },
+      { label: "Guides", href: "/about" },
+      { label: "Lead times", href: "/about" },
+      { label: "Sampling process", href: "/get-a-quote" },
     ],
   },
   {
     title: "Company",
     items: [
-      "About sublimprint.com",
-      "Our factory in Yiwu",
-      "Why Yiwu",
-      "Certifications & compliance",
-      "Sustainability & ink safety",
-      "Careers",
-      "Contact",
+      { label: "About sublimprint.com", href: "/about" },
+      { label: "Our factory in Yiwu", href: "/about" },
+      { label: "Why Yiwu", href: "/about" },
+      { label: "Certifications & compliance", href: "/about" },
+      { label: "Sustainability & ink safety", href: "/about" },
+      { label: "Careers", href: "/contact" },
+      { label: "Get a quote", href: "/get-a-quote" },
+      { label: "Contact", href: "/contact" },
     ],
   },
 ];
@@ -92,55 +84,58 @@ export function Footer() {
               </h3>
               <ul className="space-y-2.5">
                 {group.items.map((item) => (
-                  <li key={item}>
+                  <li key={item.label}>
                     <Link
-                      href="/contact"
-                      className="text-sm font-medium text-black transition-colors hover:text-[#ff4d00]"
+                      href={item.href}
+                      className="text-sm text-black/80 transition-colors hover:text-[#ff4d00]"
                     >
-                      {item}
+                      {item.label}
                     </Link>
                   </li>
                 ))}
-                {group.viewAll && (
-                  <li className="pt-1">
-                    <Link
-                      href={group.viewAll.href}
-                      className="text-sm font-black uppercase tracking-wider text-[#ff4d00] transition-colors hover:text-black"
-                    >
-                      {group.viewAll.label} →
-                    </Link>
-                  </li>
-                )}
               </ul>
+              {group.viewAll && (
+                <Link
+                  href={group.viewAll.href}
+                  className="mt-4 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-black hover:text-[#ff4d00]"
+                >
+                  {group.viewAll.label} →
+                </Link>
+              )}
             </div>
           ))}
         </div>
       </div>
 
-      {/* Locations / contact / response commitment */}
-      <div className="border-t-2 border-black bg-[#faf9f6]">
+      {/* Locations + Contact + Response Commitment */}
+      <div className="border-t border-black/10 bg-[#faf9f6]">
         <div className="mx-auto grid max-w-7xl gap-10 px-6 py-12 md:grid-cols-2 lg:grid-cols-4">
+          {/* Factory */}
           <div>
-            <h3 className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-[#ff4d00]">
-              <MapPin size={12} className="mr-1 inline-block" />
+            <h3 className="mb-4 flex items-center gap-2 text-xs font-black uppercase tracking-[0.18em] text-[#ff4d00]">
+              <Building2 size={14} />
               Factory
             </h3>
-            <p className="text-sm font-medium leading-relaxed">
+            <p className="text-sm font-bold text-black">
               HomeDorm — Factory
-              <br />
+            </p>
+            <p className="mt-2 text-sm text-black/70">
               35 Lingyun Road
               <br />
               Yiwu, Zhejiang, China
             </p>
           </div>
+
+          {/* US Warehouse */}
           <div>
-            <h3 className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-[#ff4d00]">
-              <Warehouse size={12} className="mr-1 inline-block" />
+            <h3 className="mb-4 flex items-center gap-2 text-xs font-black uppercase tracking-[0.18em] text-[#ff4d00]">
+              <Warehouse size={14} />
               US Warehouse
             </h3>
-            <p className="text-sm font-medium leading-relaxed">
+            <p className="text-sm font-bold text-black">
               HomeDorm — US warehouse
-              <br />
+            </p>
+            <p className="mt-2 text-sm text-black/70">
               13052 Jurupa Ave
               <br />
               Fontana, CA 92335
@@ -148,81 +143,81 @@ export function Footer() {
               United States
             </p>
           </div>
+
+          {/* Contact */}
           <div>
-            <h3 className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-[#ff4d00]">
-              <Mail size={12} className="mr-1 inline-block" />
+            <h3 className="mb-4 flex items-center gap-2 text-xs font-black uppercase tracking-[0.18em] text-[#ff4d00]">
+              <Mail size={14} />
               Contact
             </h3>
-            <ul className="space-y-1.5 text-sm font-medium">
-              <li>
-                <a
-                  href="mailto:hello@sublimprint.com"
-                  className="hover:text-[#ff4d00]"
-                >
-                  hello@sublimprint.com
-                </a>
+            <Link
+              href="mailto:hello@sublimprint.com"
+              className="text-sm text-black/80 transition-colors hover:text-[#ff4d00]"
+            >
+              hello@sublimprint.com
+            </Link>
+            <ul className="mt-3 space-y-2 text-sm text-black/70">
+              <li className="flex items-center gap-2">
+                <MessageCircle size={14} />
+                WhatsApp
               </li>
-              <li>
-                <a href="#" className="hover:text-[#ff4d00]">
-                  <MessageCircle size={12} className="mr-1 inline-block" />
-                  WhatsApp
-                </a>
+              <li className="flex items-center gap-2">
+                <MessageCircle size={14} />
+                WeChat
               </li>
-              <li>
-                <a href="#" className="hover:text-[#ff4d00]">
-                  WeChat
-                </a>
-              </li>
-              <li>
-                <a href="tel:+86138XXXXXXXX" className="hover:text-[#ff4d00]">
-                  <Phone size={12} className="mr-1 inline-block" />
-                  Phone
-                </a>
+              <li className="flex items-center gap-2">
+                <Phone size={14} />
+                Phone
               </li>
             </ul>
           </div>
+
+          {/* Response Commitment */}
           <div>
-            <h3 className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-[#ff4d00]">
+            <h3 className="mb-4 text-xs font-black uppercase tracking-[0.18em] text-[#ff4d00]">
               Response commitment
             </h3>
-            <p className="text-sm font-medium leading-relaxed">
+            <p className="text-sm leading-relaxed text-black/70">
               We reply within one business day. Our team overlaps with US
               Pacific and UK business hours. Quotes are landed and duty paid,
               with any exclusions stated on the quote.
             </p>
+            <Link
+              href="/get-a-quote"
+              className="mt-4 inline-flex items-center gap-2 border-2 border-black bg-[#ff4d00] px-4 py-2 text-xs font-black uppercase tracking-wider text-white transition-all hover:bg-black hover:border-black"
+            >
+              Get a quote →
+            </Link>
           </div>
         </div>
       </div>
 
       {/* Certifications / Payment / Platforms */}
-      <div className="border-t-2 border-black bg-black text-white">
+      <div className="border-t border-black/10 bg-black text-white">
         <div className="mx-auto grid max-w-7xl gap-10 px-6 py-10 md:grid-cols-3">
           <div>
             <h3 className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-[#ff4d00]">
-              <ShieldCheck size={12} className="mr-1 inline-block" />
               Certifications
             </h3>
-            <p className="text-sm font-medium leading-relaxed text-white/80">
+            <p className="text-sm leading-relaxed text-white/80">
               OEKO-TEX Standard 100 · ISO 9001 · Sedex-SMETA · CPSIA-compliant
               inks
             </p>
           </div>
           <div>
             <h3 className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-[#ff4d00]">
-              <CreditCard size={12} className="mr-1 inline-block" />
               Payment
             </h3>
-            <p className="text-sm font-medium leading-relaxed text-white/80">
+            <p className="text-sm leading-relaxed text-white/80">
               T/T · L/C at sight · PayPal (samples) · Trade Assurance on
               Alibaba
             </p>
           </div>
           <div>
             <h3 className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-[#ff4d00]">
-              <Layers size={12} className="mr-1 inline-block" />
               Platforms
             </h3>
-            <p className="text-sm font-medium leading-relaxed text-white/80">
+            <p className="text-sm leading-relaxed text-white/80">
               Alibaba Gold Supplier · Made-in-China · Global Sources · Google
               Verified
             </p>
@@ -230,37 +225,37 @@ export function Footer() {
         </div>
       </div>
 
-      {/* Legal */}
-      <div className="border-t border-white/10 bg-black text-white/70">
-        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-4 px-6 py-6 text-xs md:flex-row md:items-center">
-          <p className="font-medium">
-            © {new Date().getFullYear()} Yiwu HomeDorm Commodity Manufacturing
-            Co., Ltd. All rights reserved.
+      {/* Copyright + Legal */}
+      <div className="border-t border-white/10 bg-black text-white">
+        <div className="mx-auto flex max-w-7xl flex-col gap-3 px-6 py-6 text-xs text-white/60 md:flex-row md:items-center md:justify-between">
+          <p>
+            © 2026 Yiwu HomeDorm Commodity Manufacturing Co., Ltd. All rights
+            reserved.
           </p>
-          <ul className="flex flex-wrap items-center gap-x-5 gap-y-1">
+          <ul className="flex flex-wrap items-center gap-x-5 gap-y-2">
             <li>
-              <Link href="/contact" className="hover:text-[#ff4d00]">
+              <Link href="/privacy" className="hover:text-white">
                 Privacy policy
               </Link>
             </li>
             <li>
-              <Link href="/contact" className="hover:text-[#ff4d00]">
+              <Link href="/terms" className="hover:text-white">
                 Terms of sale
               </Link>
             </li>
             <li>
-              <Link href="/contact" className="hover:text-[#ff4d00]">
+              <Link href="/shipping-policy" className="hover:text-white">
                 Shipping policy
               </Link>
             </li>
             <li>
-              <Link href="/contact" className="hover:text-[#ff4d00]">
+              <Link href="/sitemap" className="hover:text-white">
                 Sitemap
               </Link>
             </li>
           </ul>
         </div>
-        <div className="mx-auto max-w-7xl px-6 pb-6 text-[11px] leading-relaxed text-white/50">
+        <div className="mx-auto max-w-7xl px-6 pb-6 text-[11px] leading-relaxed text-white/40">
           sublimprint.com is a website of Yiwu HomeDorm Commodity Manufacturing
           Co., Ltd. — registered in Yiwu, Zhejiang, China. All artwork, designs
           and trademarks shown are property of their respective owners.

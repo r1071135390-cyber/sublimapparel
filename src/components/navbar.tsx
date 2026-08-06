@@ -33,7 +33,7 @@ export function Navbar() {
         </div>
 
         <Link
-          href="/contact"
+          href="/get-a-quote"
           className="group inline-flex items-center gap-2 bg-black px-5 py-3 text-sm font-bold uppercase tracking-wider text-white transition-colors hover:bg-[#ff4d00]"
         >
           Get a quote

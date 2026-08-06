@@ -11,7 +11,7 @@ export function ArtworkCTA() {
         </h2>
         <div className="flex flex-wrap items-center gap-3">
           <Link
-            href="/contact"
+            href="/get-a-quote"
             className="group inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-wider text-white transition-colors hover:bg-white hover:text-black"
           >
             Get a quote
@@ -21,7 +21,7 @@ export function ArtworkCTA() {
             />
           </Link>
           <Link
-            href="/contact"
+            href="/get-a-quote"
             className="inline-flex items-center gap-2 border-2 border-white px-6 py-3 text-sm font-black uppercase tracking-wider text-white transition-colors hover:bg-white hover:text-black"
           >
             Request a sample kit

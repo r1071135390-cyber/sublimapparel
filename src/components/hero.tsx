@@ -41,7 +41,7 @@ export function Hero() {
 
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <Link
-                href="/contact"
+                href="/get-a-quote"
                 className="group inline-flex items-center gap-3 bg-black px-8 py-5 text-base font-black uppercase tracking-wider text-white transition-all hover:bg-[#ff4d00]"
               >
                 Start a project

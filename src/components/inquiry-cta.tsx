@@ -20,7 +20,7 @@ export function InquiryCTA() {
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <Link
-                href="/contact"
+                href="/get-a-quote"
                 className="group inline-flex items-center gap-2 bg-black px-7 py-4 text-sm font-black uppercase tracking-wider text-white transition-colors hover:bg-white hover:text-black"
               >
                 Get a quote
@@ -30,7 +30,7 @@ export function InquiryCTA() {
                 />
               </Link>
               <Link
-                href="/contact"
+                href="/get-a-quote"
                 className="inline-flex items-center gap-2 border-2 border-white bg-transparent px-7 py-4 text-sm font-black uppercase tracking-wider text-white transition-colors hover:bg-white hover:text-black"
               >
                 Request a sample kit
