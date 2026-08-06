@@ -1,63 +1,19 @@
-import type { Metadata } from 'next';
-import { Inspector } from 'react-dev-inspector';
-import './globals.css';
+import type { Metadata } from "next";
+import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/footer";
 
 export const metadata: Metadata = {
-  title: {
-    default: 'VividPrint | Full-Color Sublimation Apparel Manufacturer',
-    template: '%s | VividPrint',
-  },
+  title: "VividPrint — Full-Color Sublimation Apparel | DDP Worldwide",
   description:
-    'Professional dye-sublimation apparel manufacturer from Yiwu, China. Full-cotton & polyester all-over print. DDP shipping worldwide — no customs, no duties, delivered to your door.',
-  keywords: [
-    'sublimation printing',
-    'all-over print',
-    'custom apparel',
-    'dye sublimation',
-    'full cotton sublimation',
-    'DDP shipping',
-    'custom sportswear',
-    'event apparel',
-    'promotional clothing',
-    'OEM apparel manufacturer',
-    'Yiwu factory',
-  ],
-  authors: [{ name: 'VividPrint', url: 'https://vividprint.com' }],
-  generator: 'Coze Code',
-  openGraph: {
-    title: 'VividPrint | Full-Color Sublimation Apparel Manufacturer',
-    description:
-      'Professional dye-sublimation apparel manufacturer. Full-cotton & polyester all-over print. DDP shipping worldwide.',
-    url: 'https://vividprint.com',
-    siteName: 'VividPrint',
-    locale: 'en_US',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'VividPrint | Sublimation Apparel Manufacturer',
-    description:
-      'Full-cotton & polyester all-over print. DDP shipping worldwide — no customs, no duties.',
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
+    "Sublimation apparel factory in Yiwu, China. Full-color all-over print on polyester & 100% cotton. DDP shipping to your door, worldwide.",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  const isDev = process.env.COZE_PROJECT_ENV === 'DEV';
-
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={`antialiased bg-white text-[#0a0a0a]`}>
-        {isDev && <Inspector />}
-        {children}
-      </body>
-    </html>
+    <div className="min-h-screen bg-[#faf9f6] font-sans text-black antialiased">
+      <Navbar />
+      {children}
+      <Footer />
+    </div>
   );
 }
