@@ -8,7 +8,8 @@ const core = {
   badge: "★ Our core",
   headline: [
     { text: "We sublimate apparel.", color: "white" as const },
-    { text: "Not only polyester, but also cotton.", color: "orange" as const },
+    { text: "Not only polyester,", color: "orange" as const },
+    { text: "but also cotton.", color: "orange" as const },
   ],
   desc: (
     <>
