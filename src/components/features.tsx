@@ -6,12 +6,13 @@ import { ArrowRight, Shirt, Star } from "lucide-react";
 const core = {
   number: "00",
   badge: "★ Our core",
-  headline: "We sublimate apparel.",
+  headline: [
+    { text: "We sublimate apparel.", color: "white" as const },
+    { text: "Not only polyester, but also cotton.", color: "orange" as const },
+  ],
   desc: (
     <>
-      T-shirts, jerseys, hoodies, polos, tank tops, singlets, leggings, kids wear, baby onesies — and everything in between.{" "}
-      <span className="font-black text-white">Polyester AND 100% cotton</span>{" "}
-      — including the full-bleed cotton print most factories can&apos;t deliver. All-over print, cut-and-sew, named &amp; numbered per unit. From a 50-piece rush job to a 10,000-piece event run: this is where we started, and it&apos;s still what we do best.
+      T-shirts, jerseys, hoodies, polos, tank tops, singlets, leggings, kids wear, baby onesies — and everything in between. All-over print, cut-and-sew, named &amp; numbered per unit. From a 50-piece rush job to a 10,000-piece event run: this is where we started, and it&apos;s still what we do best.
     </>
   ),
   fabrics: [
@@ -105,7 +106,17 @@ export function Features() {
 
           {/* Headline */}
           <h3 className="mb-5 text-5xl font-black leading-[0.95] tracking-tight md:text-7xl">
-            {core.headline}
+            {core.headline.map((line, i) => (
+              <span
+                key={i}
+                className={
+                  "block " +
+                  (line.color === "orange" ? "text-[#ff4d00]" : "text-white")
+                }
+              >
+                {line.text}
+              </span>
+            ))}
           </h3>
 
           {/* Description */}
