@@ -19,7 +19,6 @@ const core = {
   fabrics: [
     { name: "Polyester", note: "Standard" },
     { name: "100% Cotton", note: "Our specialty", highlight: true },
-    { name: "Cotton blend", note: "Poly / cotton mix" },
     { name: "Recycled", note: "rPET & organic" },
   ],
   products: [
@@ -53,7 +52,7 @@ const features = [
     headline: "Most factories can't. We do.",
     desc: "Polyester sublimation is easy. But 100% cotton all-over print? That's a different beast — and most factories can't deliver it. We invested in the technology and the technique. The result: vibrant, soft-hand, all-over prints on real cotton.",
     color: "bg-[#00c2ff]",
-    tags: ["Polyester", "100% Cotton", "Cotton blend", "Recycled fabric"],
+    tags: ["Polyester", "100% Cotton", "Recycled fabric"],
   },
   {
     number: "03",
