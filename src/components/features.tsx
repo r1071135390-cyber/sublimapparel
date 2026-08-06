@@ -7,7 +7,19 @@ const core = {
   number: "00",
   badge: "★ Our core",
   headline: "We sublimate apparel.",
-  desc: "T-shirts, jerseys, hoodies, polos, tank tops, singlets, leggings, kids wear, baby onesies — and everything in between. Polyester and 100% cotton. All-over print, cut-and-sew, named & numbered per unit. From a 50-piece rush job to a 10,000-piece event run: this is where we started, and it's still what we do best.",
+  desc: (
+    <>
+      T-shirts, jerseys, hoodies, polos, tank tops, singlets, leggings, kids wear, baby onesies — and everything in between.{" "}
+      <span className="font-black text-white">Polyester AND 100% cotton</span>{" "}
+      — including the full-bleed cotton print most factories can&apos;t deliver. All-over print, cut-and-sew, named &amp; numbered per unit. From a 50-piece rush job to a 10,000-piece event run: this is where we started, and it&apos;s still what we do best.
+    </>
+  ),
+  fabrics: [
+    { name: "Polyester", note: "Standard" },
+    { name: "100% Cotton", note: "Our specialty", highlight: true },
+    { name: "Cotton blend", note: "Poly / cotton mix" },
+    { name: "Recycled", note: "rPET & organic" },
+  ],
   products: [
     { name: "T-shirts", slug: "tshirts" },
     { name: "Hoodies", slug: "hoodies" },
@@ -97,9 +109,32 @@ export function Features() {
           </h3>
 
           {/* Description */}
-          <p className="mb-10 max-w-3xl text-base leading-relaxed text-white/80 md:text-lg">
+          <p className="mb-6 max-w-3xl text-base leading-relaxed text-white/80 md:text-lg">
             {core.desc}
           </p>
+
+          {/* Fabric capability chips — cotton highlighted as the differentiator */}
+          <div className="mb-10 flex flex-wrap items-center gap-2 border-l-4 border-[#ff4d00] pl-4">
+            <span className="mr-2 text-[10px] font-black uppercase tracking-widest text-white/50">
+              Fabrics
+            </span>
+            {core.fabrics.map((f) => (
+              <div
+                key={f.name}
+                className={
+                  "inline-flex items-center gap-2 border-2 px-3 py-1.5 text-xs font-black uppercase tracking-tight transition-all " +
+                  (f.highlight
+                    ? "border-[#ff4d00] bg-[#ff4d00] text-white"
+                    : "border-white/25 bg-white/[0.04] text-white/80 hover:border-white hover:text-white")
+                }
+              >
+                <span>{f.name}</span>
+                <span className={"text-[10px] font-medium tracking-wider " + (f.highlight ? "text-white/80" : "text-white/50")}>
+                  {f.note}
+                </span>
+              </div>
+            ))}
+          </div>
 
           {/* Product sub-categories grid */}
           <div className="mb-8 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
