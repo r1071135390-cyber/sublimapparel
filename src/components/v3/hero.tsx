@@ -19,10 +19,10 @@ export function V3Hero() {
         </div>
 
         {/* Main grid */}
-        <div className="grid items-stretch gap-6 md:grid-cols-12 md:gap-8">
+        <div className="grid items-center gap-6 md:grid-cols-12 md:gap-8">
           {/* Left: oversized headline */}
-          <div className="md:col-span-6 flex flex-col justify-center">
-            <h1 className="text-[clamp(2.5rem,7vw,6.5rem)] font-black leading-[0.9] tracking-tighter text-black">
+          <div className="md:col-span-6 flex flex-col justify-center md:pr-6">
+            <h1 className="text-[clamp(2rem,5.5vw,5.5rem)] font-black leading-[0.9] tracking-tighter text-black">
               <span className="block">Custom print.</span>
               <span className="block">Any material.</span>
               <span className="block">Any product.</span>
@@ -86,7 +86,7 @@ export function V3Hero() {
 
           {/* Right: image collage */}
           <div className="relative md:col-span-6">
-            <div className="relative h-full min-h-[500px] overflow-hidden border-2 border-black bg-[#f5f1e8]">
+            <div className="relative aspect-[5/4] w-full overflow-hidden border-2 border-black bg-[#f5f1e8]">
               <Image
                 src="/v3-hero-products.jpg"
                 alt="Full range of custom sublimation printed products - apparel, mugs, mousepads, pillows, banners, caps, tote bags and more"
