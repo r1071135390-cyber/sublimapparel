@@ -15,8 +15,8 @@ export default function Home() {
       <Hero />
       <BeyondApparel />
       <InquiryCTA />
-      <ArtworkCTA />
       <Features />
+      <ArtworkCTA />
       <Products />
       <Process />
       <DDP />
