@@ -45,9 +45,9 @@ const features = [
     number: "03",
     title: "DDP worldwide from Yiwu",
     headline: "No customs. No duties. No headache.",
-    desc: "Yiwu is China's small-commodity capital — one of the world's most connected logistics hubs. We leverage that to ship DDP (Delivered Duty Paid) to 100+ countries. Your team never deals with customs, tariffs, or import paperwork.",
+    desc: "Yiwu is China's small-commodity capital — one of the world's most connected logistics hubs. We ship DDP to 100+ countries — Delivered Duty Paid, door to door. Your team never deals with customs, tariffs, or import paperwork.",
     color: "bg-[#ff4d00]",
-    tags: ["DDP shipping", "Customs cleared", "Door-to-door", "100+ countries"],
+    tags: ["DDP to 100+ countries", "Customs cleared", "Door-to-door", "No paperwork"],
   },
   {
     number: "04",
