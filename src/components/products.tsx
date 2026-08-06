@@ -37,7 +37,7 @@ export function Products() {
     },
     {
       label: "Hard Goods",
-      headline: "Sublimation on hard surfaces.",
+      headline: "Print on hard surfaces.",
       desc: "Mousepads, coasters, puzzles, phone cases, ceramic mugs, metal plates, acrylic photo panels.",
       items: ["Mousepads", "Mugs", "Puzzles", "Phone cases"],
       color: "bg-[#00c2ff]",
