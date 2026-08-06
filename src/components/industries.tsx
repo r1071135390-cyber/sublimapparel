@@ -173,7 +173,7 @@ export function Industries() {
           <div className="text-xs font-black uppercase tracking-widest text-[#00c2ff]">
             Not on the list?
           </div>
-          <div className="mt-2 text-2xl font-black uppercase leading-tight md:text-3xl">
+          <div className="mt-2 text-2xl font-black leading-tight md:text-3xl">
             Whatever you want to custom, we can make it.
           </div>
           <div className="mt-3 text-sm font-bold text-white/70">
