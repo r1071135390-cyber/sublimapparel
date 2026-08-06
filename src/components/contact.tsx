@@ -220,7 +220,7 @@ export function Contact() {
                     <option>Cycling Kits</option>
                     <option>Racing Kits</option>
                     <option>Hoodies &amp; Sweatshirts</option>
-                    <option>Tank Tops &amp; Vests</option>
+                    <option>Jerseys &amp; Vests</option>
                     <option>Pants &amp; Shorts</option>
                     <option>Golf / Bowling Shirts</option>
                     <option>Hats &amp; Caps</option>

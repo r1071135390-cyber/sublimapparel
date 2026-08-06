@@ -3,8 +3,8 @@ export function Products() {
     {
       label: "Apparel",
       headline: "From tees to team kits.",
-      desc: "T-shirts, hoodies, racing, cycling, golf / bowling, tank tops, singlets, leggings, baby onesies — full sublimation on cotton or polyester.",
-      items: ["T-shirts", "Hoodies", "Racing", "Cycling", "Golf / Bowling", "Tank tops"],
+      desc: "T-shirts, hoodies, racing, cycling, golf / bowling, jerseys, singlets, leggings, baby onesies — full sublimation on cotton or polyester.",
+      items: ["T-shirts", "Hoodies", "Racing", "Cycling", "Golf / Bowling", "Jerseys"],
       color: "bg-[#ff4d00]",
     },
     {
