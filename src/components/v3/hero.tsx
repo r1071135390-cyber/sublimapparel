@@ -86,10 +86,10 @@ export function V3Hero() {
 
           {/* Right: image collage */}
           <div className="relative md:col-span-5">
-            <div className="relative aspect-[4/5] overflow-hidden border-2 border-black bg-[#ff4d00]">
+            <div className="relative aspect-[4/3] overflow-hidden border-2 border-black bg-[#f5f1e8]">
               <Image
-                src="/v3-flatlay.jpg"
-                alt="Colorful sublimation printed t-shirts flat lay"
+                src="/v3-hero-products.jpg"
+                alt="Full range of custom sublimation printed products - apparel, mugs, mousepads, pillows, banners, caps, tote bags and more"
                 fill
                 priority
                 className="object-cover"
