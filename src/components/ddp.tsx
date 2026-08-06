@@ -67,10 +67,10 @@ export function DDP() {
               ★ Path B
             </div>
             <h3 className="mb-3 text-2xl font-black uppercase leading-tight md:text-3xl">
-              US Domestic<br />from LA Warehouse
+              US Domestic<br />from Fontana Warehouse
             </h3>
             <p className="mb-6 text-sm font-bold leading-relaxed md:text-base">
-              Your order ships from our Los Angeles warehouse. No customs. No duties. No ocean freight wait. Your team gets it in 2-5 days, like a domestic order.
+              Your order ships from our Fontana warehouse. No customs. No duties. No ocean freight wait. Your team gets it in 2-5 days, like a domestic order.
             </p>
 
             <ul className="space-y-2 text-sm font-bold">

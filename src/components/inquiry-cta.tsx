@@ -50,7 +50,7 @@ export function InquiryCTA() {
               </li>
               <li className="flex items-center gap-3">
                 <Warehouse size={18} className="text-black" />
-                <span>Yiwu factory + Los Angeles warehouse</span>
+                <span>Yiwu factory + Fontana, CA warehouse</span>
               </li>
             </ul>
           </div>

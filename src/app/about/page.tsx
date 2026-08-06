@@ -7,13 +7,13 @@ const capabilities = [
   { title: "Laser cutting", desc: "Precision cutting to ±0.5mm. Custom patterns and size charts." },
   { title: "Sewing & assembly", desc: "In-house sewing lines. Hand-stitched construction with quality control at every step." },
   { title: "DDP logistics", desc: "End-to-end shipping from Yiwu with all duties pre-paid. Door delivery in 50+ countries." },
-  { title: "LA warehouse", desc: "Stocked inventory in Los Angeles for US customers. Domestic shipping, no customs, 2-5 day delivery." },
+  { title: "LA warehouse", desc: "Stocked inventory in Fontana for US customers. Domestic shipping, no customs, 2-5 day delivery." },
   { title: "Custom packaging", desc: "Polybag, individual box, hangtag, barcode label — ready for retail or e-commerce fulfillment." },
 ];
 
 const locations = [
   { city: "Yiwu, China", role: "Factory + Global Hub", desc: "Complete production line. Daily output: 5,000+ pieces. Direct access to the world's largest small-commodity logistics network." },
-  { city: "Los Angeles, USA", role: "Overseas Warehouse", desc: "Stocked inventory for US customers. Domestic 2-5 day shipping. No customs. No duties. Perfect for e-commerce and time-sensitive orders." },
+  { city: "Fontana, CA, USA", role: "Overseas Warehouse", desc: "Stocked inventory for US customers. Domestic 2-5 day shipping. No customs. No duties. Perfect for e-commerce and time-sensitive orders." },
 ];
 
 const values = [
@@ -37,7 +37,7 @@ export default function AboutPage() {
           </h1>
           <p className="mt-8 max-w-3xl text-xl leading-snug text-black/80">
             SublimPrint is a full-service sublimation factory based in Yiwu, China — with a
-            warehouse in Los Angeles. We print on polyester and 100% cotton. We cut, sew, and
+            warehouse in Fontana, CA. We print on polyester and 100% cotton. We cut, sew, and
             ship anywhere in the world. And we handle the customs so you don&apos;t have to.
           </p>
         </div>
@@ -79,7 +79,7 @@ export default function AboutPage() {
                 Address
               </div>
               <div className="mt-2 text-base font-bold leading-snug text-black md:text-lg">
-                No. 35 Lingyun Road
+                35 Lingyun Road
                 <br />
                 Yiwu, Zhejiang, China
               </div>

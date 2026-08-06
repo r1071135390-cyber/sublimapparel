@@ -12,7 +12,7 @@ export function UtilityBar() {
           <li className="flex items-center gap-1.5">
             <span className="text-[#00c2ff]">●</span>
             <span className="font-bold uppercase tracking-wider text-white">
-              US stock in Los Angeles
+              US stock in Fontana, CA
             </span>
           </li>
           <li className="flex items-center gap-1.5">

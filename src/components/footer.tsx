@@ -128,7 +128,7 @@ export function Footer() {
             <p className="text-sm font-medium leading-relaxed">
               SublimPrint — Factory
               <br />
-              No. 35 Lingyun Road
+              35 Lingyun Road
               <br />
               Yiwu, Zhejiang, China
             </p>
@@ -141,7 +141,9 @@ export function Footer() {
             <p className="text-sm font-medium leading-relaxed">
               SublimPrint — US warehouse
               <br />
-              Los Angeles, CA
+              13052 Jurupa Ave
+              <br />
+              Fontana, CA 92335
               <br />
               United States
             </p>

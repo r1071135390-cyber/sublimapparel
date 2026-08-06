@@ -87,7 +87,7 @@ export function Contact() {
                   Address
                 </div>
                 <div className="mt-1 text-base font-bold leading-snug text-black">
-                  No. 35 Lingyun Road, Yiwu
+                  35 Lingyun Road, Yiwu, Zhejiang
                   <br />
                   Zhejiang, China
                 </div>

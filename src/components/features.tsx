@@ -26,11 +26,11 @@ export function Features() {
     },
     {
       number: "04",
-      title: "LA warehouse for US domestic",
+      title: "Fontana warehouse for US domestic",
       headline: "US delivery in 2–5 days.",
-      desc: "Need it fast in the States? We bulk-ship to our Los Angeles warehouse, then fulfill from there. No ocean transit, no customs — your order arrives at the US destination in 2–5 business days. Perfect for tight event deadlines and repeat POD orders.",
+      desc: "Need it fast in the States? We bulk-ship to our Fontana warehouse, then fulfill from there. No ocean transit, no customs — your order arrives at the US destination in 2–5 business days. Perfect for tight event deadlines and repeat POD orders.",
       color: "bg-[#00c2ff]",
-      tags: ["LA warehouse", "US domestic", "2-5 day delivery", "POD ready"],
+      tags: ["Fontana warehouse", "US domestic", "2-5 day delivery", "POD ready"],
     },
   ];
 
