@@ -13,7 +13,7 @@ const core = {
   ],
   desc: (
     <>
-      T-shirts, jerseys, hoodies, polos, tank tops, singlets, leggings, kids wear, baby onesies — and everything in between. All-over print, cut-and-sew, named &amp; numbered per unit. From a 50-piece rush job to a 10,000-piece event run: this is where we started, and it&apos;s still what we do best.
+      T-shirts, jerseys, hoodies, cycling jerseys, polos, tank tops, singlets, leggings, baby onesies — and everything in between. All-over print, cut-and-sew, named &amp; numbered per unit. From a 50-piece rush job to a 10,000-piece event run: this is where we started, and it&apos;s still what we do best.
     </>
   ),
   fabrics: [
@@ -25,9 +25,9 @@ const core = {
     { name: "T-shirts", slug: "tshirts" },
     { name: "Hoodies", slug: "hoodies" },
     { name: "Jerseys", slug: "jerseys" },
+    { name: "Cycling jerseys", slug: "cycling" },
     { name: "Polos", slug: "polos" },
     { name: "Tank tops", slug: "tank-tops" },
-    { name: "Kids wear", slug: "kids" },
   ],
   stats: [
     { value: "50", label: "MOQ (pcs)" },
