@@ -86,7 +86,7 @@ export function Hero() {
 
           {/* Right: image collage */}
           <div className="relative md:col-span-6">
-            <div className="relative aspect-[5/4] w-full overflow-hidden border-2 border-black bg-[#f5f1e8]">
+            <div className="relative aspect-[5/4] w-full overflow-hidden bg-[#f5f1e8]">
               <Image
                 src="/hero-products.jpg"
                 alt="Full range of custom sublimation printed products - apparel, mugs, mousepads, pillows, banners, caps, tote bags and more"
