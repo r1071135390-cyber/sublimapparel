@@ -47,9 +47,16 @@ export function Footer() {
             <ul className="space-y-2 text-sm text-white/80">
               <li>WhatsApp: +86 138 XXXX XXXX</li>
               <li>Email: hello@vividprint.cn</li>
-              <li>Yiwu, Zhejiang, China</li>
+              <li>No. 35 Lingyun Road, Yiwu</li>
             </ul>
           </div>
+        </div>
+
+        <div className="border-t border-white/10 pt-6 text-xs text-white/40">
+          <p>
+            Yiwu HomeDorm Commordity Manufacturing Co., Ltd. · Established 2018 · No. 35
+            Lingyun Road, Yiwu, Zhejiang, China
+          </p>
         </div>
 
         <div className="flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-8 text-xs text-white/40 md:flex-row md:items-center">

@@ -3,9 +3,9 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 
 export const metadata: Metadata = {
-  title: "VividPrint — Full-Color Sublimation Apparel | DDP Worldwide",
+  title: "VividPrint — Custom Print. Any Material. Any Product.",
   description:
-    "Sublimation apparel factory in Yiwu, China. Full-color all-over print on polyester & 100% cotton. DDP shipping to your door, worldwide.",
+    "Yiwu HomeDorm Commordity Manufacturing Co., Ltd. — a sublimation printing factory in Yiwu, China (est. 2018). Custom print on apparel, mugs, mousepads, banners, home textiles and more. Polyester & 100% cotton. DDP shipping worldwide, US warehouse in Los Angeles.",
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

@@ -43,12 +43,57 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Company background */}
+      <section className="border-b-2 border-black bg-[#faf9f6]">
+        <div className="mx-auto max-w-7xl px-6 py-20">
+          <div className="mb-3 inline-block bg-black px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+            Company background
+          </div>
+          <h2 className="mb-10 text-4xl font-black leading-tight text-black md:text-6xl">
+            Who we are
+            <br />
+            <span className="italic">on paper.</span>
+          </h2>
+          <div className="grid gap-6 md:grid-cols-3">
+            <div className="border-2 border-black bg-white p-6">
+              <div className="text-xs font-black uppercase tracking-widest text-black/50">
+                Legal entity
+              </div>
+              <div className="mt-2 text-lg font-black leading-tight text-black md:text-xl">
+                Yiwu HomeDorm Commordity Manufacturing Co., Ltd.
+              </div>
+            </div>
+            <div className="border-2 border-black bg-white p-6">
+              <div className="text-xs font-black uppercase tracking-widest text-black/50">
+                Established
+              </div>
+              <div className="mt-2 text-4xl font-black text-[#ff4d00] md:text-5xl">
+                2018
+              </div>
+              <div className="mt-1 text-xs font-bold uppercase tracking-wider text-black/60">
+                6+ years in sublimation
+              </div>
+            </div>
+            <div className="border-2 border-black bg-white p-6">
+              <div className="text-xs font-black uppercase tracking-widest text-black/50">
+                Address
+              </div>
+              <div className="mt-2 text-base font-bold leading-snug text-black md:text-lg">
+                No. 35 Lingyun Road
+                <br />
+                Yiwu, Zhejiang, China
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Stats */}
       <section className="border-b-2 border-black bg-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-20">
           <div className="grid gap-6 md:grid-cols-4">
             {[
-              { num: "10+", label: "Years in sublimation" },
+              { num: "Since 2018", label: "Founded in Yiwu" },
               { num: "200+", label: "Countries via DDP" },
               { num: "5K+", label: "Pieces per day" },
               { num: "98%", label: "On-time delivery" },

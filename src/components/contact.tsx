@@ -86,8 +86,10 @@ export function Contact() {
                 <div className="text-xs font-black uppercase tracking-widest text-black/50">
                   Address
                 </div>
-                <div className="mt-1 text-base font-bold text-black">
-                  Yiwu, Zhejiang, China
+                <div className="mt-1 text-base font-bold leading-snug text-black">
+                  No. 35 Lingyun Road, Yiwu
+                  <br />
+                  Zhejiang, China
                 </div>
               </div>
             </div>
