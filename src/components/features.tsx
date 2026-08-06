@@ -1,39 +1,65 @@
-export function Features() {
-  const features = [
-    {
-      number: "01",
-      title: "Any sublimatable product",
-      headline: "Print on anything.",
-      desc: "Apparel is our bread and butter — but we print on anything sublimation can handle. T-shirts, jerseys, hoodies, flags, banners, mousepads, mugs, phone cases, puzzles, cushions, throws, scarves, bags, hats… If it takes sublimation ink, we make it.",
-      color: "bg-[#ff4d00]",
-      tags: ["Apparel", "Home textile", "Hard goods", "Flags & banners"],
-    },
-    {
-      number: "02",
-      title: "Polyester AND 100% cotton",
-      headline: "Most factories can't. We do.",
-      desc: "Polyester sublimation is easy. But 100% cotton all-over print? That's a different beast — and most factories can't deliver it. We invested in the technology and the technique. The result: vibrant, soft-hand, all-over prints on real cotton.",
-      color: "bg-[#00c2ff]",
-      tags: ["Polyester", "100% Cotton", "Cotton blend", "Recycled fabric"],
-    },
-    {
-      number: "03",
-      title: "DDP worldwide from Yiwu",
-      headline: "No customs. No duties. No headache.",
-      desc: "Yiwu is China's small-commodity capital — one of the world's most connected logistics hubs. We leverage that to ship DDP (Delivered Duty Paid) to 100+ countries. Your team never deals with customs, tariffs, or import paperwork.",
-      color: "bg-[#ff4d00]",
-      tags: ["DDP shipping", "Customs cleared", "Door-to-door", "100+ countries"],
-    },
-    {
-      number: "04",
-      title: "Fontana warehouse for US domestic",
-      headline: "US delivery in 2–5 days.",
-      desc: "Need it fast in the States? We bulk-ship to our Fontana warehouse, then fulfill from there. No ocean transit, no customs — your order arrives at the US destination in 2–5 business days. Perfect for tight event deadlines and repeat POD orders.",
-      color: "bg-[#00c2ff]",
-      tags: ["Fontana warehouse", "US domestic", "2-5 day delivery", "POD ready"],
-    },
-  ];
+import Link from "next/link";
+import { ArrowRight, Shirt, Star } from "lucide-react";
 
+// Core capability — visually elevated, full-width, dark background.
+// Renumbered as "00" so the four supporting cards below stay 01-04.
+const core = {
+  number: "00",
+  badge: "★ Our core",
+  headline: "We sublimate apparel.",
+  desc: "T-shirts, jerseys, hoodies, polos, tank tops, singlets, leggings, kids wear, baby onesies — and everything in between. Polyester and 100% cotton. All-over print, cut-and-sew, named & numbered per unit. From a 50-piece rush job to a 10,000-piece event run: this is where we started, and it's still what we do best.",
+  products: [
+    { name: "T-shirts", slug: "tshirts" },
+    { name: "Hoodies", slug: "hoodies" },
+    { name: "Jerseys", slug: "jerseys" },
+    { name: "Polos", slug: "polos" },
+    { name: "Tank tops", slug: "tank-tops" },
+    { name: "Kids wear", slug: "kids" },
+  ],
+  stats: [
+    { value: "50", label: "MOQ (pcs)" },
+    { value: "15–25", label: "Days lead time" },
+    { value: "100+", label: "Fabric options" },
+    { value: "100%", label: "Cotton capable" },
+  ],
+};
+
+const features = [
+  {
+    number: "01",
+    title: "Any sublimatable product",
+    headline: "Print on anything.",
+    desc: "Apparel is our bread and butter — but we print on anything sublimation can handle. T-shirts, jerseys, hoodies, flags, banners, mousepads, mugs, phone cases, puzzles, cushions, throws, scarves, bags, hats… If it takes sublimation ink, we make it.",
+    color: "bg-[#ff4d00]",
+    tags: ["Apparel", "Home textile", "Hard goods", "Flags & banners"],
+  },
+  {
+    number: "02",
+    title: "Polyester AND 100% cotton",
+    headline: "Most factories can't. We do.",
+    desc: "Polyester sublimation is easy. But 100% cotton all-over print? That's a different beast — and most factories can't deliver it. We invested in the technology and the technique. The result: vibrant, soft-hand, all-over prints on real cotton.",
+    color: "bg-[#00c2ff]",
+    tags: ["Polyester", "100% Cotton", "Cotton blend", "Recycled fabric"],
+  },
+  {
+    number: "03",
+    title: "DDP worldwide from Yiwu",
+    headline: "No customs. No duties. No headache.",
+    desc: "Yiwu is China's small-commodity capital — one of the world's most connected logistics hubs. We leverage that to ship DDP (Delivered Duty Paid) to 100+ countries. Your team never deals with customs, tariffs, or import paperwork.",
+    color: "bg-[#ff4d00]",
+    tags: ["DDP shipping", "Customs cleared", "Door-to-door", "100+ countries"],
+  },
+  {
+    number: "04",
+    title: "Fontana warehouse for US domestic",
+    headline: "US delivery in 2–5 days.",
+    desc: "Need it fast in the States? We bulk-ship to our Fontana warehouse, then fulfill from there. No ocean transit, no customs — your order arrives at the US destination in 2–5 business days. Perfect for tight event deadlines and repeat POD orders.",
+    color: "bg-[#00c2ff]",
+    tags: ["Fontana warehouse", "US domestic", "2-5 day delivery", "POD ready"],
+  },
+];
+
+export function Features() {
   return (
     <section className="border-b-2 border-black bg-white">
       <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
@@ -48,11 +74,84 @@ export function Features() {
             </h2>
           </div>
           <div className="hidden text-right text-xs font-bold uppercase tracking-widest text-black/60 md:block">
-            4 things we&apos;re<br />best at.
+            1 core capability<br />+ 4 reasons to choose us.
           </div>
         </div>
 
-        {/* Features grid */}
+        {/* HERO: core capability — full-width dark card */}
+        <div className="mb-10 border-2 border-black bg-black p-6 text-white shadow-[8px_8px_0_0_#ff4d00] md:p-12">
+          {/* Top row: badge + number */}
+          <div className="mb-6 flex items-center justify-between gap-4">
+            <div className="inline-flex items-center gap-2 border-2 border-[#ff4d00] bg-[#ff4d00] px-3 py-1.5 text-xs font-black uppercase tracking-widest text-white">
+              <Star size={14} strokeWidth={3} fill="white" />
+              {core.badge}
+            </div>
+            <div className="text-2xl font-black leading-none text-white/30 md:text-3xl">
+              {core.number}
+            </div>
+          </div>
+
+          {/* Headline */}
+          <h3 className="mb-5 text-5xl font-black leading-[0.95] tracking-tight md:text-7xl">
+            {core.headline}
+          </h3>
+
+          {/* Description */}
+          <p className="mb-10 max-w-3xl text-base leading-relaxed text-white/80 md:text-lg">
+            {core.desc}
+          </p>
+
+          {/* Product sub-categories grid */}
+          <div className="mb-8 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
+            {core.products.map((p, idx) => (
+              <div
+                key={p.name}
+                className="group flex items-center gap-3 border-2 border-white/15 bg-white/[0.04] p-3 transition-all hover:border-[#ff4d00] hover:bg-[#ff4d00]"
+              >
+                <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center border-2 border-white/30 bg-white/10 text-white transition-colors group-hover:border-white group-hover:bg-white group-hover:text-[#ff4d00]">
+                  <span className="text-xs font-black">{String(idx + 1).padStart(2, "0")}</span>
+                </div>
+                <span className="text-sm font-black uppercase tracking-tight">
+                  {p.name}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {/* Stats row */}
+          <div className="mb-8 grid grid-cols-2 gap-3 border-t-2 border-white/10 pt-8 md:grid-cols-4">
+            {core.stats.map((s) => (
+              <div key={s.label}>
+                <div className="text-3xl font-black leading-none text-[#ff4d00] md:text-5xl">
+                  {s.value}
+                </div>
+                <div className="mt-2 text-[10px] font-black uppercase tracking-widest text-white/60 md:text-xs">
+                  {s.label}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* CTA */}
+          <div className="flex flex-wrap items-center gap-4 border-t-2 border-white/10 pt-8">
+            <Link
+              href="/get-a-quote"
+              className="inline-flex items-center gap-2 border-2 border-white bg-[#ff4d00] px-6 py-3.5 text-sm font-black uppercase tracking-wider text-white transition-all hover:bg-white hover:text-black hover:shadow-[4px_4px_0_0_#000] hover:-translate-x-1 hover:-translate-y-1"
+            >
+              Start your apparel project
+              <ArrowRight size={16} strokeWidth={3} />
+            </Link>
+            <Link
+              href="/products"
+              className="inline-flex items-center gap-2 text-sm font-black uppercase tracking-wider text-white/80 transition-colors hover:text-[#ff4d00]"
+            >
+              See all apparel options
+              <ArrowRight size={16} strokeWidth={3} />
+            </Link>
+          </div>
+        </div>
+
+        {/* Other 4 capabilities in 2x2 grid */}
         <div className="grid gap-6 md:grid-cols-2">
           {features.map((f, i) => (
             <div
