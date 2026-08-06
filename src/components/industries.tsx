@@ -1,44 +1,93 @@
+"use client";
+
+import {
+  CalendarDays,
+  Megaphone,
+  Trophy,
+  Music2,
+  Presentation,
+  Briefcase,
+  Shirt,
+  GraduationCap,
+  Flag,
+  Coffee,
+  Bike,
+  ShoppingBag,
+} from "lucide-react";
+
 export function Industries() {
   const industries = [
     {
-      title: "Events & Festivals",
-      items: ["Concerts & Music Festivals", "Sporting Events & Marathons", "Corporate Conferences", "Trade Shows & Expos", "Food & Cultural Festivals", "Charity Runs & Walks"],
-      emoji: "🎪",
+      title: "Events & Conferences",
+      icon: CalendarDays,
+      products: "Staff & volunteer tees, lanyards, table throws, step-and-repeat backdrops, feather flags",
+      pitch: "Your date does not move. Our Fontana warehouse stock absorbs the headcount that changes in the final fortnight.",
     },
     {
-      title: "Sports & Teams",
-      items: ["Race Teams & Athletes", "Club Teams & Leagues", "Gyms & Fitness Studios", "Yoga & Dance Studios", "Cheer & Dance Teams", "Coaching Academies"],
-      emoji: "🏃",
+      title: "Promotional Products Distributors",
+      icon: Megaphone,
+      products: "Apparel, bags, towels, blankets, flags, table covers, lanyards",
+      pitch: "Landed duty-paid pricing protects your margin; blind drop-ship from LA protects your client relationship.",
     },
     {
-      title: "Brand & Marketing",
-      items: ["Brand Agencies", "Marketing Teams", "Promotional Products", "Corporate Gifts", "Launch Events", "Pop-up Activations"],
-      emoji: "📢",
+      title: "Sports Teams & Leagues",
+      icon: Trophy,
+      products: "Sublimated jerseys, shorts, warm-ups, singlets, socks, sideline banners",
+      pitch: "Cut-and-sew patterns that fit, named and numbered per unit, delivered before the season opens.",
     },
     {
-      title: "Campaigns & Causes",
-      items: ["Political Campaigns", "Charity Organizations", "Advocacy Groups", "Awareness Drives", "Community Initiatives", "Fundraising Events"],
-      emoji: "🗳️",
+      title: "Music, Tour & Festival Merch",
+      icon: Music2,
+      products: "All-over-print tees and hoodies, bandanas, tote bags, stage backdrops",
+      pitch: "Full-bleed printing on 100% cotton — merch your fans will actually want to wear.",
     },
     {
-      title: "Education & Community",
-      items: ["Universities & Schools", "Fraternities & Sororities", "Clubs & Societies", "Graduation Events", "Alumni Reunions", "Religious Organizations"],
-      emoji: "🎓",
+      title: "Trade Show & Display",
+      icon: Presentation,
+      products: "SEG tension fabric, backdrop walls, table throws, counter covers, tent walls",
+      pitch: "Silicone edge is a sewing operation. We sew, so we can make it — and DDP handles the bulky freight.",
     },
     {
-      title: "E-commerce & POD",
-      items: ["Print-on-Demand Platforms", "Etsy Sellers", "Independent Brands", "Influencer Merch", "Streetwear Drops", "Subscription Boxes"],
-      emoji: "🛒",
+      title: "Corporate & Employee Programs",
+      icon: Briefcase,
+      products: "Uniforms, polos, onboarding kits, conference apparel, branded gifting",
+      pitch: "Finance gets a fixed landed cost; multi-site restocks pull from our LA warehouse.",
     },
     {
-      title: "Hospitality & Retail",
-      items: ["Hotels & Resorts", "Restaurants & Cafés", "Bars & Nightclubs", "Retail Stores", "Tourist Attractions", "Real Estate"],
-      emoji: "🏨",
+      title: "Apparel Brands & Agencies",
+      icon: Shirt,
+      products: "Custom cut-and-sew, all-over-print apparel, private-label packaging",
+      pitch: "Your pattern, your labels, your packaging. Cotton included.",
     },
     {
-      title: "Lifestyle & Personal",
-      items: ["Weddings & Bachelorettes", "Family Reunions", "Birthday Parties", "Anniversaries", "Memorial Events", "Custom Gifts"],
-      emoji: "💍",
+      title: "Schools, Universities & Greek Life",
+      icon: GraduationCap,
+      products: "Rush shirts, bid day tees, game-day and alumni apparel, dorm goods",
+      pitch: "Campus orders are cotton orders, and they are always urgent. We cover both.",
+    },
+    {
+      title: "Political Campaigns",
+      icon: Flag,
+      products: "Rally tees, fabric banners, hand-held flags, canvasser vests, hats, rally towels",
+      pitch: "Our LA warehouse turns a five-day requirement into a domestic shipment.",
+    },
+    {
+      title: "Breweries, Coffee & Hospitality",
+      icon: Coffee,
+      products: "Merch tees and hoodies, aprons, bar towels, patio covers, tap-room banners",
+      pitch: "Cotton merch, staff wear, and soft signage from one supplier — landed duty paid.",
+    },
+    {
+      title: "Endurance & Race Events",
+      icon: Bike,
+      products: "Finisher tees in cotton and technical, race shirts, cycling kits, route banners",
+      pitch: "Final numbers land two weeks out. LA stock absorbs the difference.",
+    },
+    {
+      title: "E-commerce & Fulfillment",
+      icon: ShoppingBag,
+      products: "Blankets, pillow covers, towels, tapestries, pet goods, aprons, tote bags",
+      pitch: "DDP removes the import problem; LA warehouse covers domestic replenishment.",
     },
   ];
 
@@ -59,26 +108,37 @@ export function Industries() {
           </p>
         </div>
 
-        {/* Industries grid */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {industries.map((ind, i) => (
-            <div
-              key={ind.title}
-              className="group border-2 border-black bg-white p-5 transition-all hover:-translate-x-1 hover:-translate-y-1 hover:bg-[#ff4d00] hover:text-white hover:shadow-[4px_4px_0_0_#000]"
-              style={{ transform: i % 2 === 0 ? "rotate(-0.5deg)" : "rotate(0.5deg)" }}
-            >
-              <div className="mb-3 text-3xl">{ind.emoji}</div>
-              <h3 className="mb-3 text-lg font-black uppercase leading-tight">{ind.title}</h3>
-              <ul className="space-y-1 text-xs font-bold">
-                {ind.items.map((item) => (
-                  <li key={item} className="flex items-start gap-1.5">
-                    <span className="mt-1.5 inline-block h-1 w-1 flex-shrink-0 bg-current" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+        {/* Industries grid: 3 columns × 4 rows on desktop, 2 cols on tablet, 1 on mobile */}
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {industries.map((ind) => {
+            const Icon = ind.icon;
+            return (
+              <div
+                key={ind.title}
+                className="group flex flex-col border-2 border-black bg-white p-6 transition-all hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[6px_6px_0_0_#ff4d00]"
+              >
+                {/* Icon + title */}
+                <div className="mb-4 flex items-center gap-3">
+                  <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center border-2 border-black bg-[#ff4d00] text-white transition-colors group-hover:bg-black">
+                    <Icon size={22} strokeWidth={2.5} />
+                  </div>
+                  <h3 className="text-lg font-black uppercase leading-tight tracking-tight">
+                    {ind.title}
+                  </h3>
+                </div>
+
+                {/* Products */}
+                <p className="mb-4 text-sm font-medium leading-relaxed text-black/75">
+                  {ind.products}
+                </p>
+
+                {/* Value pitch (the orange-bordered highlight) */}
+                <div className="mt-auto border-l-4 border-[#ff4d00] bg-[#fff7f0] px-3 py-2.5 text-sm font-bold leading-relaxed text-black">
+                  {ind.pitch}
+                </div>
+              </div>
+            );
+          })}
         </div>
 
         {/* Bottom callout */}
