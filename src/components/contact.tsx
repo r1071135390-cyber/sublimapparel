@@ -158,18 +158,14 @@ export function Contact() {
                   </select>
                 </Field>
                 <Field label="Quantity">
-                  <select
+                  <input
+                    type="text"
                     name="quantity"
                     value={form.quantity}
                     onChange={onChange}
-                    className="w-full border-b-2 border-black bg-transparent py-2 text-base font-medium text-black focus:border-[#ff4d00] focus:outline-none"
-                  >
-                    <option>50-100</option>
-                    <option value="">Select quantity range</option>
-                    <option>500-1000</option>
-                    <option>1000-5000</option>
-                    <option>5000+</option>
-                  </select>
+                    placeholder="e.g. 300 pcs"
+                    className="w-full border-b-2 border-black bg-transparent py-2 text-base font-medium text-black placeholder:text-black/30 focus:border-[#ff4d00] focus:outline-none"
+                  />
                 </Field>
               </div>
 
