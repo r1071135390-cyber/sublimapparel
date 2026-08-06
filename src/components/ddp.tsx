@@ -7,7 +7,7 @@ export function DDP() {
           <div className="mb-2 text-xs font-black uppercase tracking-widest">
             [ 005 / Logistics ]
           </div>
-          <h2 className="text-base font-black uppercase leading-tight tracking-tight md:whitespace-nowrap md:text-2xl md:leading-none">
+          <h2 className="text-2xl font-black uppercase leading-tight tracking-tight md:whitespace-nowrap md:text-4xl md:leading-none">
             You order. We deliver.{" "}
             <span className="italic underline decoration-2 decoration-black underline-offset-4">
               No customs. No duties. No paperwork.
