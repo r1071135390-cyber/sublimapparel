@@ -139,13 +139,20 @@ export function V3Contact() {
                     onChange={onChange}
                     className="w-full border-b-2 border-black bg-transparent py-2 text-base font-medium text-black focus:border-[#ff4d00] focus:outline-none"
                   >
-                    <option>Custom T-Shirts</option>
+                  <option>Custom T-Shirts (Polyester)</option>
+                    <option>Custom T-Shirts (Cotton)</option>
                     <option>Sports Jerseys</option>
                     <option>Hoodies &amp; Sweatshirts</option>
                     <option>Tank Tops &amp; Vests</option>
+                    <option>Pants &amp; Shorts</option>
+                    <option>Polo Shirts</option>
+                    <option>Hats &amp; Caps</option>
+                    <option>Bags &amp; Backpacks</option>
                     <option>Flags &amp; Banners</option>
-                    <option>Accessories</option>
-                    <option>Other</option>
+                    <option>Home Textiles (Pillows, Throws, Curtains)</option>
+                    <option>Mousepads &amp; Coasters</option>
+                    <option>Phone Cases &amp; Small Accessories</option>
+                    <option>Custom Project (Other)</option>
                   </select>
                 </Field>
                 <Field label="Quantity">

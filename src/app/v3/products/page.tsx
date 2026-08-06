@@ -2,22 +2,58 @@ import { V3Contact } from "@/components/v3/contact";
 
 export const metadata = { title: "Products — VividPrint" };
 
-const products = [
-  { name: "Custom T-Shirts", desc: "Full-color all-over print tees in polyester or 100% cotton. Perfect for events, campaigns, promotions.", color: "#ff4d00", tags: ["Polyester", "Cotton", "All-over print"] },
-  { name: "Sports Jerseys", desc: "Sublimated jerseys for running, cycling, soccer, and more. Moisture-wicking fabric with vivid team designs.", color: "#00c2ff", tags: ["Running", "Cycling", "Team"] },
-  { name: "Hoodies & Sweatshirts", desc: "Premium all-over printed hoodies. Soft fleece interior with stunning full-surface graphics.", color: "#000000", tags: ["Fleece", "Premium", "Unisex"] },
-  { name: "Tank Tops & Vests", desc: "Breathable sublimated vests for races, gyms, and summer events.", color: "#ffd400", tags: ["Athletic", "Lightweight", "Summer"] },
-  { name: "Flags & Banners", desc: "Vibrant printed flags and banners. Indoor or outdoor, custom sizes available.", color: "#9b51e0", tags: ["Indoor", "Outdoor", "Custom size"] },
-  { name: "Accessories", desc: "Caps, bags, scarves, and more. Extend your brand beyond apparel.", color: "#22c55e", tags: ["Caps", "Bags", "Scarves"] },
+const categories = [
+  {
+    id: "apparel",
+    title: "Apparel",
+    desc: "T-shirts, jerseys, hoodies, vests, polos, pants. Cut and sewn in our Yiwu factory.",
+    items: ["T-Shirts", "Sports Jerseys", "Hoodies & Sweatshirts", "Vests & Tanks", "Polo Shirts", "Pants & Shorts", "Polo & Workwear", "Children's Wear"],
+    note: "Polyester or 100% cotton. Our specialty: full-color all-over print on cotton.",
+  },
+  {
+    id: "home",
+    title: "Home & Living",
+    desc: "Custom printed home textiles. Bright patterns, soft fabrics, ready for retail or e-commerce.",
+    items: ["Throw Pillows", "Cushion Covers", "Blankets & Throws", "Curtains & Drapes", "Tablecloths", "Towels", "Bedding Sets"],
+    note: "Polyester, cotton, or blended fabrics. Custom sizes available.",
+  },
+  {
+    id: "accessories",
+    title: "Bags & Accessories",
+    desc: "Custom printed bags, hats, and fashion accessories. Great for events and brand merch.",
+    items: ["Drawstring Bags", "Backpacks", "Tote Bags", "Baseball Caps", "Bucket Hats", "Scarves & Bandanas", "Lanyards", "Aprons"],
+    note: "Durable sublimation-ready materials. Custom hardware and closures.",
+  },
+  {
+    id: "flags",
+    title: "Flags & Banners",
+    desc: "Indoor and outdoor flags, banners, and signage. Vibrant colors, fade-resistant.",
+    items: ["Garden Flags", "Beach Flags", "Hand Flags", "Trade Show Banners", "Pull-Up Banners", "Pennant Strings"],
+    note: "Knitted polyester, flag fabric, or mesh. Pole pockets and hemming included.",
+  },
+  {
+    id: "hardgoods",
+    title: "Hard Goods & Lifestyle",
+    desc: "Sublimation-ready hard goods and lifestyle products. Perfect for e-commerce and gifting.",
+    items: ["Mouse Pads", "Coasters", "Puzzles", "Phone Cases", "AirPods Cases", "Mugs (wrap print)", "Keychains", "Magnets"],
+    note: "Pre-treated sublimation blanks. Custom shapes and packaging available.",
+  },
+  {
+    id: "custom",
+    title: "Custom Projects",
+    desc: "Got something else? We love weird one-offs. Send us your idea and we'll figure out how to print it.",
+    items: ["Pet Apparel", "Shoe Uppers", "Lampshades", "Wall Art", "Festival Costumes", "Theatre Costumes", "Promotional Items", "Anything else you imagine"],
+    note: "Tell us what you need. If it can be sublimated, we can probably do it.",
+  },
 ];
 
 const comparison = [
-  { feature: "Best for", poly: "Performance, sports, vivid colors", cotton: "Comfort, lifestyle, natural feel" },
-  { feature: "Hand feel", poly: "Smooth, lightweight, athletic", cotton: "Soft, breathable, natural" },
-  { feature: "Color vibrancy", poly: "Maximum CMYK saturation", cotton: "Rich but slightly muted" },
-  { feature: "Wash durability", poly: "Excellent — colors stay vivid", cotton: "Excellent — colors stay rich" },
-  { feature: "MOQ", poly: "50 pcs", cotton: "100 pcs" },
-  { feature: "Lead time", poly: "10-15 days", cotton: "15-20 days" },
+  { feature: "Print method", poly: "Dye-sublimation transfer", cotton: "Cotton-sublimation coating" },
+  { feature: "Color vibrancy", poly: "Excellent", cotton: "Excellent (slightly softer)" },
+  { feature: "Hand feel", poly: "Smooth, lightweight", cotton: "Soft, natural cotton feel" },
+  { feature: "Durability", poly: "Won't fade, peel, or crack", cotton: "Won't fade, peel, or crack" },
+  { feature: "Best for", poly: "Sports, performance, lightweight", cotton: "Fashion, lifestyle, premium feel" },
+  { feature: "MOQ", poly: "50 pcs", cotton: "50 pcs" },
 ];
 
 export default function V3ProductsPage() {
@@ -26,43 +62,56 @@ export default function V3ProductsPage() {
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
-            Catalog
+            Products
           </div>
           <h1 className="text-5xl font-black leading-[0.95] tracking-tight text-black md:text-8xl">
-            Six things
+            If it can be sublimated,
             <br />
-            we <span className="italic">make.</span>
+            <span className="text-[#ff4d00]">we print it.</span>
           </h1>
+          <p className="mt-8 max-w-3xl text-xl leading-snug text-black/80">
+            Apparel is our bread and butter — but we print home goods, bags, flags, hard
+            goods, and whatever custom project you bring us. Polyester or 100% cotton.
+          </p>
         </div>
       </section>
 
+      {/* Categories */}
       <section className="border-b-2 border-black bg-[#faf9f6]">
-        <div className="mx-auto max-w-7xl px-6 py-16">
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {products.map((p, i) => (
+        <div className="mx-auto max-w-7xl px-6 py-20">
+          <div className="space-y-12">
+            {categories.map((cat, i) => (
               <div
-                key={p.name}
-                className="flex flex-col gap-4 border-2 border-black bg-white p-6"
+                key={cat.id}
+                className="border-2 border-black bg-white p-8"
               >
-                <div
-                  className="relative flex aspect-[4/3] items-center justify-center border border-black"
-                  style={{ backgroundColor: p.color }}
-                >
-                  <span className="text-7xl font-black text-white/30">
-                    0{i + 1}
-                  </span>
-                </div>
-                <h3 className="text-2xl font-black text-black">{p.name}</h3>
-                <p className="text-sm leading-relaxed text-black/70">{p.desc}</p>
-                <div className="flex flex-wrap gap-2">
-                  {p.tags.map((t) => (
-                    <span
-                      key={t}
-                      className="border border-black bg-white px-2 py-1 text-[10px] font-black uppercase tracking-wider text-black"
-                    >
-                      {t}
-                    </span>
-                  ))}
+                <div className="grid gap-6 md:grid-cols-12">
+                  <div className="md:col-span-4">
+                    <div className="mb-2 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
+                      Category 0{i + 1}
+                    </div>
+                    <h2 className="text-4xl font-black text-black md:text-5xl">
+                      {cat.title}
+                    </h2>
+                    <p className="mt-4 text-base leading-relaxed text-black/70">
+                      {cat.desc}
+                    </p>
+                    <p className="mt-4 border-l-4 border-[#00c2ff] pl-3 text-sm font-bold text-black/80">
+                      {cat.note}
+                    </p>
+                  </div>
+                  <div className="md:col-span-8">
+                    <div className="grid grid-cols-2 gap-2 md:grid-cols-3">
+                      {cat.items.map((item) => (
+                        <div
+                          key={item}
+                          className="border-2 border-black bg-[#faf9f6] p-3 text-sm font-black text-black"
+                        >
+                          {item}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}
@@ -70,33 +119,33 @@ export default function V3ProductsPage() {
         </div>
       </section>
 
-      {/* Material comparison */}
+      {/* Materials comparison */}
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto max-w-7xl px-6 py-20">
-          <div className="mb-12">
+          <div className="mb-8">
             <div className="mb-3 inline-block bg-[#00c2ff] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
-              Fabric
+              Materials
             </div>
             <h2 className="text-4xl font-black leading-tight text-black md:text-6xl">
-              Polyester vs.
+              Polyester
               <br />
-              <span className="text-[#ff4d00]">100% Cotton.</span>
+              <span className="italic">or 100% cotton.</span>
             </h2>
-            <p className="mt-4 max-w-2xl text-base text-black/70">
-              Most factories can only print on polyester. We do both — and we&apos;ve perfected
-              full-color all-over print on 100% cotton, too.
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-black/70">
+              Most sublimation factories can only print on polyester. We can print on both —
+              with the same vivid color and durable finish.
             </p>
           </div>
 
           <div className="overflow-x-auto border-2 border-black">
             <table className="w-full text-left">
               <thead>
-                <tr className="border-b-2 border-black bg-black text-white">
-                  <th className="p-4 text-xs font-black uppercase tracking-widest">
+                <tr>
+                  <th className="p-4 text-xs font-black uppercase tracking-widest bg-black text-white">
                     Feature
                   </th>
-                  <th className="p-4 text-xs font-black uppercase tracking-widest bg-[#00c2ff]/20 text-black">
-                    Polyester
+                  <th className="p-4 text-xs font-black uppercase tracking-widest bg-[#00c2ff]/10 text-black">
+                    100% Polyester
                   </th>
                   <th className="p-4 text-xs font-black uppercase tracking-widest bg-[#ff4d00]/10 text-black">
                     100% Cotton

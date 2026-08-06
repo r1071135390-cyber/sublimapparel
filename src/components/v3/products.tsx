@@ -1,123 +1,114 @@
-import Link from "next/link";
-
-const products = [
-  {
-    name: "Custom T-Shirts",
-    tags: ["Polyester", "Cotton", "All-over print"],
-    desc: "Full-color tees for events, campaigns, and promotions.",
-    color: "#ff4d00",
-    rotate: "-rotate-1",
-  },
-  {
-    name: "Sports Jerseys",
-    tags: ["Running", "Cycling", "Team"],
-    desc: "Sublimated jerseys with moisture-wicking fabric.",
-    color: "#00c2ff",
-    rotate: "rotate-1",
-  },
-  {
-    name: "Hoodies & Sweatshirts",
-    tags: ["Fleece", "Premium", "Unisex"],
-    desc: "Soft fleece with stunning full-surface graphics.",
-    color: "#000000",
-    rotate: "-rotate-1",
-  },
-  {
-    name: "Tank Tops & Vests",
-    tags: ["Athletic", "Lightweight", "Summer"],
-    desc: "Breathable sublimated vests for races and gyms.",
-    color: "#ffd400",
-    rotate: "rotate-1",
-  },
-  {
-    name: "Flags & Banners",
-    tags: ["Indoor", "Outdoor", "Custom size"],
-    desc: "Vibrant printed flags for events and storefronts.",
-    color: "#9b51e0",
-    rotate: "-rotate-1",
-  },
-  {
-    name: "Accessories",
-    tags: ["Caps", "Bags", "Scarves"],
-    desc: "Extend your brand with matching accessories.",
-    color: "#22c55e",
-    rotate: "rotate-1",
-  },
-];
-
 export function V3Products() {
+  const categories = [
+    {
+      label: "Apparel",
+      headline: "From tees to team kits.",
+      desc: "T-shirts, jerseys, hoodies, polos, tank tops, leggings, sports bras, kids wear, baby onesies — full sublimation on cotton or polyester.",
+      items: ["T-shirts", "Jerseys", "Hoodies", "Polo", "Tank tops", "Kids"],
+      color: "bg-[#ff4d00]",
+    },
+    {
+      label: "Sports & Team",
+      headline: "Built for game day.",
+      desc: "Custom sublimated kits for cycling, running, soccer, basketball, rowing, esports. Full team packages with names and numbers.",
+      items: ["Cycling jerseys", "Running singlets", "Soccer kits", "Esports"],
+      color: "bg-[#00c2ff]",
+    },
+    {
+      label: "Flags & Banners",
+      headline: "Make a statement outdoors.",
+      desc: "Custom flags, banners, pop-up displays, beach flags, feather banners. Fade-resistant for outdoor use.",
+      items: ["Garden flags", "Trade show", "Beach flags", "Banners"],
+      color: "bg-[#ff4d00]",
+    },
+    {
+      label: "Home & Living",
+      headline: "Print your art on soft goods.",
+      desc: "Custom cushions, pillowcases, throws, curtains, bean bags, aprons. Perfect for boutique brands and home decor.",
+      items: ["Cushions", "Throws", "Curtains", "Aprons"],
+      color: "bg-[#00c2ff]",
+    },
+    {
+      label: "Bags & Accessories",
+      headline: "Carry your brand.",
+      desc: "Drawstring bags, backpacks, tote bags, gym sacks, hats, scarves, bandanas, lanyards.",
+      items: ["Drawstring bags", "Backpacks", "Caps", "Lanyards"],
+      color: "bg-[#ff4d00]",
+    },
+    {
+      label: "Hard Goods",
+      headline: "Sublimation on hard surfaces.",
+      desc: "Mousepads, coasters, puzzles, phone cases, ceramic mugs, metal plates, acrylic photo panels.",
+      items: ["Mousepads", "Mugs", "Puzzles", "Phone cases"],
+      color: "bg-[#00c2ff]",
+    },
+  ];
+
   return (
     <section className="border-b-2 border-black bg-[#faf9f6]">
-      <div className="mx-auto max-w-7xl px-6 py-20 md:py-28">
+      <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
         {/* Section header */}
-        <div className="mb-16 flex flex-col items-start gap-4 md:flex-row md:items-end md:justify-between">
+        <div className="mb-12 flex items-end justify-between border-b-2 border-black pb-6">
           <div>
-            <div className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
-              Products
+            <div className="mb-2 text-xs font-black uppercase tracking-widest text-black/60">
+              [ 003 / Products ]
             </div>
-            <h2 className="text-5xl font-black leading-[0.95] tracking-tight text-black md:text-7xl">
-              What we
-              <br />
-              <span className="italic">make.</span>
+            <h2 className="text-4xl font-black uppercase leading-none tracking-tight text-black md:text-6xl">
+              What we make.
             </h2>
           </div>
-          <Link
-            href="/v3/products"
-            className="group inline-flex items-center gap-2 border-2 border-black bg-white px-6 py-3 text-sm font-black uppercase tracking-wider text-black transition-all hover:bg-black hover:text-white"
-          >
-            View all
-            <span className="transition-transform group-hover:translate-x-1">→</span>
-          </Link>
+          <div className="hidden text-right text-xs font-bold uppercase tracking-widest text-black/60 md:block">
+            6 categories.<br />Endless customization.
+          </div>
         </div>
 
-        {/* Product grid - irregular layout */}
+        {/* Categories grid */}
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {products.map((p, i) => (
-            <Link
-              key={p.name}
-              href="/v3/products"
-              className={`group relative flex flex-col gap-4 border-2 border-black bg-white p-6 transition-all hover:-translate-y-1 hover:shadow-[8px_8px_0_0_#000] ${p.rotate} hover:rotate-0`}
+          {categories.map((cat, i) => (
+            <div
+              key={cat.label}
+              className={`group relative border-2 border-black bg-white p-6 ${
+                i % 3 === 0 ? "md:rotate-[-1.5deg]" : i % 3 === 1 ? "md:rotate-[0.5deg]" : "md:rotate-[-0.5deg]"
+              } transition-transform hover:rotate-0 hover:shadow-[6px_6px_0_0_#000]`}
             >
-              {/* Color block preview */}
+              {/* Color label */}
               <div
-                className="relative aspect-[4/3] overflow-hidden border border-black"
-                style={{ backgroundColor: p.color }}
+                className={`inline-block ${cat.color} mb-4 border-2 border-black px-3 py-1 text-xs font-black uppercase tracking-widest text-white`}
               >
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-6xl font-black text-white/30">
-                    0{i + 1}
-                  </span>
-                </div>
-                {/* Dotted hint for transparent PNG */}
-                <div className="absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100 bg-[radial-gradient(circle,rgba(255,255,255,0.15)_1px,transparent_1px)] [background-size:12px_12px]" />
+                {cat.label}
               </div>
 
-              <div>
-                <h3 className="text-2xl font-black leading-tight text-black">
-                  {p.name}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-black/70">
-                  {p.desc}
-                </p>
-              </div>
+              {/* Headline */}
+              <h3 className="mb-3 text-2xl font-black leading-tight text-black md:text-3xl">
+                {cat.headline}
+              </h3>
 
-              <div className="flex flex-wrap gap-2">
-                {p.tags.map((t) => (
+              {/* Description */}
+              <p className="mb-5 text-sm leading-relaxed text-black/70">{cat.desc}</p>
+
+              {/* Items tags */}
+              <div className="flex flex-wrap gap-1.5">
+                {cat.items.map((item) => (
                   <span
-                    key={t}
-                    className="border border-black bg-white px-2 py-1 text-[10px] font-black uppercase tracking-wider text-black"
+                    key={item}
+                    className="border border-black bg-[#faf9f6] px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide text-black"
                   >
-                    {t}
+                    {item}
                   </span>
                 ))}
               </div>
-
-              <div className="mt-2 flex items-center gap-2 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
-                See details
-                <span className="transition-transform group-hover:translate-x-1">→</span>
-              </div>
-            </Link>
+            </div>
           ))}
+        </div>
+
+        {/* Bottom note */}
+        <div className="mt-12 border-2 border-black bg-[#ff4d00] p-6 text-center text-white shadow-[6px_6px_0_0_#000]">
+          <p className="text-lg font-black uppercase tracking-tight md:text-xl">
+            Don&apos;t see your product? If it takes sublimation ink, we can print on it.
+          </p>
+          <p className="mt-2 text-sm font-bold text-white/90">
+            Just send us your idea — we&apos;ll quote it in 24 hours.
+          </p>
         </div>
       </div>
     </section>

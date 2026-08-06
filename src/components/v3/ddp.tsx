@@ -1,64 +1,116 @@
-import Link from "next/link";
-
 export function V3DDP() {
   return (
-    <section className="relative overflow-hidden border-b-2 border-black bg-[#00c2ff]">
-      {/* Decorative shapes */}
-      <div className="absolute -top-12 -right-12 h-48 w-48 rounded-full bg-[#ff4d00] opacity-90" />
-      <div className="absolute bottom-0 left-0 h-32 w-32 bg-[#ffd400]" />
+    <section className="border-b-2 border-black bg-[#ff4d00] text-black">
+      <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
+        {/* Section header */}
+        <div className="mb-12 border-b-2 border-black pb-6">
+          <div className="mb-2 text-xs font-black uppercase tracking-widest">
+            [ 005 / Logistics ]
+          </div>
+          <h2 className="text-4xl font-black uppercase leading-none tracking-tight md:text-6xl">
+            You order. We deliver.<br />
+            <span className="italic underline decoration-4 decoration-black underline-offset-4">
+              No customs. No duties. No wait.
+            </span>
+          </h2>
+        </div>
 
-      <div className="relative mx-auto max-w-7xl px-6 py-20 md:py-32">
-        <div className="grid items-center gap-12 md:grid-cols-12">
-          <div className="md:col-span-7">
-            <div className="mb-4 inline-block border-2 border-black bg-white px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
-              ★ Our edge
+        {/* Two shipping paths */}
+        <div className="grid gap-6 md:grid-cols-2">
+          {/* Path 1: DDP Worldwide */}
+          <div className="border-2 border-black bg-[#ff4d00] p-6 shadow-[6px_6px_0_0_#000] md:p-8">
+            <div className="mb-4 inline-block -rotate-2 border-2 border-black bg-black px-3 py-1 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
+              ★ Path A
             </div>
-            <h2 className="text-5xl font-black leading-[0.9] tracking-tighter text-black md:text-8xl">
-              We ship
-              <br />
-              <span className="italic">DDP.</span>
-            </h2>
-            <p className="mt-6 max-w-xl text-xl font-medium leading-snug text-black md:text-2xl">
-              That means your order arrives at your door with{" "}
-              <span className="bg-black px-1 text-[#00c2ff]">all duties paid.</span> No customs
-              forms. No surprise fees. No headaches.
+            <h3 className="mb-3 text-2xl font-black uppercase leading-tight md:text-3xl">
+              DDP Shipping<br />to 200+ Countries
+            </h3>
+            <p className="mb-6 text-sm font-bold leading-relaxed md:text-base">
+              From our Yiwu factory — the heart of China&apos;s logistics network — we handle everything. Customs paperwork, duties, door delivery. You just open the box.
             </p>
-            <div className="mt-10 flex flex-wrap gap-4">
-              <Link
-                href="/v3/contact"
-                className="group inline-flex items-center gap-3 bg-black px-8 py-5 text-base font-black uppercase tracking-wider text-white transition-all hover:bg-[#ff4d00]"
-              >
-                Get DDP quote
-                <span className="text-xl transition-transform group-hover:translate-x-1">→</span>
-              </Link>
+
+            <ul className="space-y-2 text-sm font-bold">
+              <li className="flex items-start gap-2">
+                <span className="mt-0.5 inline-block h-5 w-5 flex-shrink-0 border-2 border-black bg-white text-center text-xs font-black leading-4">✓</span>
+                <span>No customs paperwork on your end</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="mt-0.5 inline-block h-5 w-5 flex-shrink-0 border-2 border-black bg-white text-center text-xs font-black leading-4">✓</span>
+                <span>No surprise duty bills at delivery</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="mt-0.5 inline-block h-5 w-5 flex-shrink-0 border-2 border-black bg-white text-center text-xs font-black leading-4">✓</span>
+                <span>Single invoice, one price, door to door</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="mt-0.5 inline-block h-5 w-5 flex-shrink-0 border-2 border-black bg-white text-center text-xs font-black leading-4">✓</span>
+                <span>Tracking from factory floor to your door</span>
+              </li>
+            </ul>
+
+            <div className="mt-6 border-2 border-black bg-white p-3">
+              <div className="text-[10px] font-black uppercase tracking-widest text-black/60">
+                Best for
+              </div>
+              <div className="mt-1 text-sm font-black uppercase">
+                EU · UK · AU · CA · Middle East · Asia
+              </div>
             </div>
           </div>
 
-          <div className="md:col-span-5">
-            <div className="border-2 border-black bg-white p-8">
-              <div className="mb-6 flex items-center gap-2 text-xs font-black uppercase tracking-widest text-black/60">
-                <span className="h-2 w-2 rounded-full bg-[#ff4d00]" />
-                How it works
-              </div>
-              <ul className="space-y-4 text-base font-bold text-black">
-                <li className="flex items-start gap-3">
-                  <span className="mt-1 inline-flex h-6 w-6 flex-shrink-0 items-center justify-center bg-black text-xs font-black text-white">1</span>
-                  <span>You send the order — we quote one all-in price.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="mt-1 inline-flex h-6 w-6 flex-shrink-0 items-center justify-center bg-black text-xs font-black text-white">2</span>
-                  <span>We produce, pack, and clear export customs.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="mt-1 inline-flex h-6 w-6 flex-shrink-0 items-center justify-center bg-black text-xs font-black text-white">3</span>
-                  <span>Carrier handles import &amp; duties on our account.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="mt-1 inline-flex h-6 w-6 flex-shrink-0 items-center justify-center bg-[#ff4d00] text-xs font-black text-white">4</span>
-                  <span className="font-black">Boxes land on your doorstep. Done.</span>
-                </li>
-              </ul>
+          {/* Path 2: LA US Domestic */}
+          <div className="relative border-2 border-black bg-black p-6 text-white shadow-[6px_6px_0_0_#00c2ff] md:p-8">
+            <div className="absolute -right-3 -top-3 rotate-[8deg] border-2 border-[#00c2ff] bg-[#00c2ff] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
+              ★ NEW
             </div>
+            <div className="mb-4 inline-block -rotate-2 border-2 border-white bg-white px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
+              ★ Path B
+            </div>
+            <h3 className="mb-3 text-2xl font-black uppercase leading-tight md:text-3xl">
+              US Domestic<br />from LA Warehouse
+            </h3>
+            <p className="mb-6 text-sm font-bold leading-relaxed md:text-base">
+              Your order ships from our Los Angeles warehouse. No customs. No duties. No ocean freight wait. Your team gets it in 2-5 days, like a domestic order.
+            </p>
+
+            <ul className="space-y-2 text-sm font-bold">
+              <li className="flex items-start gap-2">
+                <span className="mt-0.5 inline-block h-5 w-5 flex-shrink-0 border-2 border-[#00c2ff] bg-[#00c2ff] text-center text-xs font-black leading-4 text-black">✓</span>
+                <span>2-5 day delivery to anywhere in the US</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="mt-0.5 inline-block h-5 w-5 flex-shrink-0 border-2 border-[#00c2ff] bg-[#00c2ff] text-center text-xs font-black leading-4 text-black">✓</span>
+                <span>Zero customs, zero duties, zero border delays</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="mt-0.5 inline-block h-5 w-5 flex-shrink-0 border-2 border-[#00c2ff] bg-[#00c2ff] text-center text-xs font-black leading-4 text-black">✓</span>
+                <span>Stock up in LA, replenish in days</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="mt-0.5 inline-block h-5 w-5 flex-shrink-0 border-2 border-[#00c2ff] bg-[#00c2ff] text-center text-xs font-black leading-4 text-black">✓</span>
+                <span>Perfect for last-minute event needs</span>
+              </li>
+            </ul>
+
+            <div className="mt-6 border-2 border-[#00c2ff] bg-black p-3">
+              <div className="text-[10px] font-black uppercase tracking-widest text-[#00c2ff]">
+                Best for
+              </div>
+              <div className="mt-1 text-sm font-black uppercase text-white">
+                US-based clients · Rush orders · POD platforms
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Yiwu advantage strip */}
+        <div className="mt-8 border-2 border-black bg-white p-4 text-center md:p-6">
+          <div className="text-[10px] font-black uppercase tracking-widest text-black/60">
+            Why we can do this
+          </div>
+          <div className="mt-2 text-base font-black uppercase leading-tight md:text-xl">
+            Yiwu = World&apos;s Largest Small- Commodity Hub.<br />
+            <span className="text-[#ff4d00]">Daily flights · Container ships · Express couriers</span> — all at our doorstep.
           </div>
         </div>
       </div>

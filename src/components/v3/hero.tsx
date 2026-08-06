@@ -6,10 +6,15 @@ export function V3Hero() {
     <section className="border-b-2 border-black bg-[#faf9f6]">
       <div className="mx-auto max-w-7xl px-6 py-12 md:py-20">
         {/* Top label row */}
-        <div className="mb-8 flex items-center gap-3">
-          <span className="inline-flex h-3 w-3 rounded-full bg-[#ff4d00] animate-pulse" />
-          <span className="text-xs font-black uppercase tracking-widest text-black">
-            Now shipping worldwide · DDP to your door
+        <div className="mb-8 flex flex-wrap items-center gap-x-6 gap-y-2">
+          <div className="flex items-center gap-3">
+            <span className="inline-flex h-3 w-3 rounded-full bg-[#ff4d00] animate-pulse" />
+            <span className="text-xs font-black uppercase tracking-widest text-black">
+              Yiwu factory · LA warehouse
+            </span>
+          </div>
+          <span className="text-xs font-bold uppercase tracking-widest text-black/60">
+            DDP to 100+ countries · US domestic in 2-5 days
           </span>
         </div>
 
@@ -21,7 +26,7 @@ export function V3Hero() {
               <span className="block">Print</span>
               <span className="block">
                 <span className="relative inline-block">
-                  <span className="relative z-10">everything</span>
+                  <span className="relative z-10">anything</span>
                   <span className="absolute inset-x-0 bottom-2 -z-0 h-4 bg-[#ff4d00] md:h-8" />
                 </span>
               </span>
@@ -29,12 +34,14 @@ export function V3Hero() {
             </h1>
 
             <p className="mt-8 max-w-xl text-lg leading-relaxed text-black/70">
-              We&apos;re a sublimation factory in Yiwu, China specializing in full-color
-              all-over print apparel. Polyester or{" "}
+              We&apos;re a sublimation factory in <span className="font-bold text-black">Yiwu, China</span> with a full
+              chain — printing, cutting, sewing. <span className="font-bold text-black">Any product that can
+              be sublimated, we make it.</span> Polyester or{" "}
               <span className="font-bold text-[#ff4d00] underline decoration-2 underline-offset-4">
                 100% cotton
               </span>
-              . From your design to your customer&apos;s door, we handle everything.
+              . Ship DDP worldwide, or from our{" "}
+              <span className="font-bold text-[#00c2ff]">LA warehouse</span> to anywhere in the US.
             </p>
 
             <div className="mt-10 flex flex-wrap items-center gap-4">
@@ -54,17 +61,23 @@ export function V3Hero() {
             </div>
 
             {/* Mini stats */}
-            <div className="mt-12 grid max-w-lg grid-cols-3 gap-6 border-t-2 border-black pt-6">
+            <div className="mt-12 grid max-w-xl grid-cols-2 gap-6 border-t-2 border-black pt-6 md:grid-cols-4">
               <div>
-                <div className="text-3xl font-black text-black">50+</div>
+                <div className="text-3xl font-black text-black">10+</div>
                 <div className="text-xs font-bold uppercase tracking-wider text-black/60">
-                  Countries
+                  Years
                 </div>
               </div>
               <div>
-                <div className="text-3xl font-black text-[#ff4d00]">10+</div>
+                <div className="text-3xl font-black text-[#ff4d00]">100+</div>
                 <div className="text-xs font-bold uppercase tracking-wider text-black/60">
-                  Years
+                  Countries (DDP)
+                </div>
+              </div>
+              <div>
+                <div className="text-3xl font-black text-[#00c2ff]">LA ✈</div>
+                <div className="text-xs font-bold uppercase tracking-wider text-black/60">
+                  US domestic
                 </div>
               </div>
               <div>
@@ -91,9 +104,13 @@ export function V3Hero() {
             {/* Color block decorations */}
             <div className="absolute -top-4 -right-4 h-20 w-20 bg-[#00c2ff] border-2 border-black" />
             <div className="absolute -bottom-4 -left-4 h-16 w-16 bg-[#ff4d00] border-2 border-black" />
-            {/* Floating tag */}
+            {/* Floating tag - DDP */}
             <div className="absolute -left-4 top-8 rotate-[-8deg] border-2 border-black bg-white px-3 py-2 text-xs font-black uppercase tracking-wider">
-              DDP shipping ✓
+              DDP worldwide ✓
+            </div>
+            {/* Floating tag - LA warehouse */}
+            <div className="absolute -right-4 bottom-16 rotate-[6deg] border-2 border-black bg-[#00c2ff] px-3 py-2 text-xs font-black uppercase tracking-wider text-white">
+              LA warehouse ✈
             </div>
           </div>
         </div>
