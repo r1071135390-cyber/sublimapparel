@@ -23,7 +23,7 @@ export function DDP() {
               ★ Path A
             </div>
             <h3 className="mb-3 text-2xl font-black uppercase leading-tight md:text-3xl">
-              DDP Shipping<br />to 200+ Countries
+              DDP Shipping<br />to 100+ Countries
             </h3>
             <p className="mb-6 text-sm font-bold leading-relaxed md:text-base">
               From our Yiwu factory — the heart of China&apos;s logistics network — we handle everything. Customs paperwork, duties, door delivery. You just open the box.

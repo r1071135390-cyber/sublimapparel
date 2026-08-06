@@ -94,7 +94,7 @@ export default function AboutPage() {
           <div className="grid gap-6 md:grid-cols-4">
             {[
               { num: "Since 2018", label: "Founded in Yiwu" },
-              { num: "200+", label: "Countries via DDP" },
+              { num: "100+", label: "Countries via DDP" },
               { num: "5K+", label: "Pieces per day" },
               { num: "98%", label: "On-time delivery" },
             ].map((s) => (
