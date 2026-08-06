@@ -22,26 +22,21 @@ export function V3Hero() {
         <div className="grid gap-8 md:grid-cols-12 md:gap-12">
           {/* Left: oversized headline */}
           <div className="md:col-span-7">
-            <h1 className="text-[clamp(2.5rem,8vw,7.5rem)] font-black leading-[0.9] tracking-tighter text-black">
-              <span className="block">Print</span>
-              <span className="block">
-                <span className="relative inline-block">
-                  <span className="relative z-10">anything</span>
-                  <span className="absolute inset-x-0 bottom-2 -z-0 h-4 bg-[#ff4d00] md:h-8" />
-                </span>
-              </span>
-              <span className="block">in color.</span>
+            <h1 className="text-[clamp(2.5rem,7vw,6.5rem)] font-black leading-[0.9] tracking-tighter text-black">
+              <span className="block">Custom print.</span>
+              <span className="block">Any material.</span>
+              <span className="block">Any product.</span>
             </h1>
 
             <p className="mt-8 max-w-xl text-lg leading-relaxed text-black/70">
-              We&apos;re a sublimation factory in <span className="font-bold text-black">Yiwu, China</span> with a full
-              chain — printing, cutting, sewing. <span className="font-bold text-black">Any product that can
-              be sublimated, we make it.</span> Polyester or{" "}
+              For your team, your event, your brand, and your client gifts — we custom print{" "}
+              <span className="font-bold text-black">team uniforms, event merch, banners, home textiles, mugs, mousepads, and corporate gifts</span>.
+              From our <span className="font-bold text-black">Yiwu factory</span> to your door, with{" "}
               <span className="font-bold text-[#ff4d00] underline decoration-2 underline-offset-4">
-                100% cotton
-              </span>
-              . Ship DDP worldwide, or from our{" "}
-              <span className="font-bold text-[#00c2ff]">LA warehouse</span> to anywhere in the US.
+                DDP shipping
+              </span>{" "}
+              to 200+ countries and a{" "}
+              <span className="font-bold text-[#00c2ff]">US warehouse in Los Angeles</span>.
             </p>
 
             <div className="mt-10 flex flex-wrap items-center gap-4">
