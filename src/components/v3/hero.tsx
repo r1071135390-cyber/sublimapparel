@@ -19,9 +19,9 @@ export function V3Hero() {
         </div>
 
         {/* Main grid */}
-        <div className="grid gap-8 md:grid-cols-12 md:gap-12">
+        <div className="grid items-stretch gap-6 md:grid-cols-12 md:gap-8">
           {/* Left: oversized headline */}
-          <div className="md:col-span-7">
+          <div className="md:col-span-6 flex flex-col justify-center">
             <h1 className="text-[clamp(2.5rem,7vw,6.5rem)] font-black leading-[0.9] tracking-tighter text-black">
               <span className="block">Custom print.</span>
               <span className="block">Any material.</span>
@@ -85,8 +85,8 @@ export function V3Hero() {
           </div>
 
           {/* Right: image collage */}
-          <div className="relative md:col-span-5">
-            <div className="relative aspect-[4/3] overflow-hidden border-2 border-black bg-[#f5f1e8]">
+          <div className="relative md:col-span-6">
+            <div className="relative h-full min-h-[500px] overflow-hidden border-2 border-black bg-[#f5f1e8]">
               <Image
                 src="/v3-hero-products.jpg"
                 alt="Full range of custom sublimation printed products - apparel, mugs, mousepads, pillows, banners, caps, tote bags and more"
@@ -95,17 +95,6 @@ export function V3Hero() {
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 40vw"
               />
-            </div>
-            {/* Color block decorations */}
-            <div className="absolute -top-4 -right-4 h-20 w-20 bg-[#00c2ff] border-2 border-black" />
-            <div className="absolute -bottom-4 -left-4 h-16 w-16 bg-[#ff4d00] border-2 border-black" />
-            {/* Floating tag - DDP */}
-            <div className="absolute -left-4 top-8 rotate-[-8deg] border-2 border-black bg-white px-3 py-2 text-xs font-black uppercase tracking-wider">
-              DDP worldwide ✓
-            </div>
-            {/* Floating tag - LA warehouse */}
-            <div className="absolute -right-4 bottom-16 rotate-[6deg] border-2 border-black bg-[#00c2ff] px-3 py-2 text-xs font-black uppercase tracking-wider text-white">
-              LA warehouse ✈
             </div>
           </div>
         </div>
