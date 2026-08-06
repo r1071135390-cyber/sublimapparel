@@ -27,6 +27,8 @@ export function Contact() {
     company: "",
     product: "Custom T-Shirts",
     quantity: "",
+    shipCountry: "",
+    shipZip: "",
     deadline: "",
     message: "",
   });
@@ -106,6 +108,8 @@ export function Contact() {
         company: "",
         product: "Custom T-Shirts",
         quantity: "",
+        shipCountry: "",
+        shipZip: "",
         deadline: "",
         message: "",
       });
@@ -237,13 +241,51 @@ export function Contact() {
                     className="w-full border-b-2 border-black bg-transparent py-2 text-base font-medium text-black placeholder:text-black/30 focus:border-[#ff4d00] focus:outline-none"
                   />
                 </Field>
-                <Field label="Deadline (optional)">
+              </div>
+
+              {/* Shipping address — required for DDP quote */}
+              <div className="mt-6">
+                <div className="mb-1 flex items-baseline justify-between">
+                  <label className="block text-xs font-black uppercase tracking-widest text-black">
+                    Ship to <span className="text-black/50">— for DDP quote</span>
+                  </label>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-black/50">
+                    Country + ZIP / postal code at minimum
+                  </span>
+                </div>
+                <div className="grid gap-6 md:grid-cols-2">
+                  <input
+                    type="text"
+                    name="shipCountry"
+                    value={form.shipCountry}
+                    onChange={onChange}
+                    placeholder="Country (e.g. United States)"
+                    className="w-full border-b-2 border-black bg-transparent py-2 text-base font-medium text-black placeholder:text-black/30 focus:border-[#ff4d00] focus:outline-none"
+                  />
+                  <input
+                    type="text"
+                    name="shipZip"
+                    value={form.shipZip}
+                    onChange={onChange}
+                    placeholder="ZIP / postal code"
+                    className="w-full border-b-2 border-black bg-transparent py-2 text-base font-medium text-black placeholder:text-black/30 focus:border-[#ff4d00] focus:outline-none"
+                  />
+                </div>
+                <p className="mt-2 text-[11px] leading-snug text-black/60">
+                  We need the destination country + postal code to calculate the
+                  accurate <strong>landed, duty-paid price</strong>. Street address can be added in the project details below if known.
+                </p>
+              </div>
+
+              <div className="mt-6 grid gap-6 md:grid-cols-2">
+                <Field label="Required delivery date *">
                   <input
                     type="text"
                     name="deadline"
+                    required
                     value={form.deadline}
                     onChange={onChange}
-                    placeholder="e.g. Need by Sept 15"
+                    placeholder="e.g. Need by Sept 15, 2026"
                     className="w-full border-b-2 border-black bg-transparent py-2 text-base font-medium text-black placeholder:text-black/30 focus:border-[#ff4d00] focus:outline-none"
                   />
                 </Field>

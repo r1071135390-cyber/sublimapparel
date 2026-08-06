@@ -15,12 +15,26 @@ export async function POST(request: Request) {
     const company = String(fd.get("company") ?? "").trim();
     const product = String(fd.get("product") ?? "").trim();
     const quantity = String(fd.get("quantity") ?? "").trim();
+    const shipCountry = String(fd.get("shipCountry") ?? "").trim();
+    const shipZip = String(fd.get("shipZip") ?? "").trim();
     const deadline = String(fd.get("deadline") ?? "").trim();
     const message = String(fd.get("message") ?? "").trim();
 
     if (!name || !email) {
       return NextResponse.json(
         { error: "Name and email are required" },
+        { status: 400 }
+      );
+    }
+    if (!shipCountry || !shipZip) {
+      return NextResponse.json(
+        { error: "Destination country and ZIP / postal code are required for a DDP quote" },
+        { status: 400 }
+      );
+    }
+    if (!deadline) {
+      return NextResponse.json(
+        { error: "Required delivery date is required" },
         { status: 400 }
       );
     }
@@ -78,6 +92,8 @@ export async function POST(request: Request) {
       company: company || "N/A",
       product: product || "N/A",
       quantity: quantity || "N/A",
+      shipCountry: shipCountry || "N/A",
+      shipZip: shipZip || "N/A",
       deadline: deadline || "N/A",
       message: message || "N/A",
       artwork: uploadedKeys,
