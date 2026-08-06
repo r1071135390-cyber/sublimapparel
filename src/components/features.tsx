@@ -13,7 +13,7 @@ const core = {
   ],
   desc: (
     <>
-      T-shirts, hoodies, racing, cycling, golf / bowling, jerseys, singlets, leggings, baby onesies — and everything in between. All-over print, cut-and-sew, named &amp; numbered per unit. From a 50-piece rush job to a 10,000-piece event run: this is where we started, and it&apos;s still what we do best.
+      T-shirts, hoodies, jerseys, racing, cycling, golf / bowling, singlets, leggings, baby onesies — and everything in between. All-over print, cut-and-sew, named &amp; numbered per unit. From a 50-piece rush job to a 10,000-piece event run: this is where we started, and it&apos;s still what we do best.
     </>
   ),
   fabrics: [
@@ -24,10 +24,10 @@ const core = {
   products: [
     { name: "T-shirts", slug: "tshirts" },
     { name: "Hoodies", slug: "hoodies" },
+    { name: "Jerseys", slug: "jerseys" },
     { name: "Racing", slug: "racing" },
     { name: "Cycling", slug: "cycling" },
     { name: "Golf / Bowling", slug: "golf-bowling" },
-    { name: "Jerseys", slug: "jerseys" },
   ],
   stats: [
     { value: "50", label: "MOQ (pcs)" },

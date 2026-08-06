@@ -6,8 +6,8 @@ const categories = [
   {
     id: "apparel",
     title: "Apparel",
-    desc: "T-shirts, hoodies, racing, cycling, golf / bowling, jerseys, singlets, leggings. Cut and sewn in our Yiwu factory.",
-    items: ["T-Shirts", "Hoodies & Sweatshirts", "Racing Kits", "Cycling Kits", "Golf / Bowling Shirts", "Jerseys & Singlets", "Pants & Shorts", "Vests"],
+    desc: "T-shirts, hoodies, jerseys, racing, cycling, golf / bowling, singlets, leggings. Cut and sewn in our Yiwu factory.",
+    items: ["T-Shirts", "Hoodies & Sweatshirts", "Jerseys & Singlets", "Racing Kits", "Cycling Kits", "Golf / Bowling Shirts", "Pants & Shorts", "Vests"],
     note: "Polyester or 100% cotton. Our specialty: full-color all-over print on cotton.",
   },
   {
