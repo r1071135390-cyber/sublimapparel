@@ -262,10 +262,8 @@ export function Footer() {
         </div>
         <div className="mx-auto max-w-7xl px-6 pb-6 text-[11px] leading-relaxed text-white/50">
           sublimprint.com is the website of Yiwu HomeDorm Commodity Manufacturing
-          Co., Ltd. — registered in Yiwu, Zhejiang, China. SublimPrint is a
-          trade name used for the website only; it is not a registered
-          trademark. All artwork, designs and trademarks shown are property
-          of their respective owners.
+          Co., Ltd. — registered in Yiwu, Zhejiang, China. All artwork, designs
+          and trademarks shown are property of their respective owners.
         </div>
       </div>
     </footer>
