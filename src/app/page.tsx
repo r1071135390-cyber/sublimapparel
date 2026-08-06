@@ -13,9 +13,9 @@ export default function Home() {
   return (
     <main>
       <Hero />
+      <BeyondApparel />
       <InquiryCTA />
       <ArtworkCTA />
-      <BeyondApparel />
       <Features />
       <Products />
       <Process />
