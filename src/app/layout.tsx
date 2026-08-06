@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "VividPrint — Custom Print. Any Material. Any Product.",
@@ -8,12 +9,18 @@ export const metadata: Metadata = {
     "Yiwu HomeDorm Commordity Manufacturing Co., Ltd. — a sublimation printing factory in Yiwu, China (est. 2018). Custom print on apparel, mugs, mousepads, banners, home textiles and more. Polyester & 100% cotton. DDP shipping worldwide, US warehouse in Los Angeles.",
 };
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <div className="min-h-screen bg-[#faf9f6] font-sans text-black antialiased">
-      <Navbar />
-      {children}
-      <Footer />
-    </div>
+    <html lang="en">
+      <body className="min-h-screen bg-[#faf9f6] font-sans text-black antialiased">
+        <Navbar />
+        {children}
+        <Footer />
+      </body>
+    </html>
   );
 }
