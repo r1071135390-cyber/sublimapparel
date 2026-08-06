@@ -152,10 +152,10 @@ export function Footer() {
               Contact
             </h3>
             <Link
-              href="mailto:hello@sublimprint.com"
+              href="mailto:ramon@sublimprint.com"
               className="text-sm text-black/80 transition-colors hover:text-[#ff4d00]"
             >
-              hello@sublimprint.com
+              ramon@sublimprint.com
             </Link>
             <ul className="mt-3 space-y-2 text-sm text-black/70">
               <li className="flex items-center gap-2">

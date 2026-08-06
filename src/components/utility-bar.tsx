@@ -35,10 +35,10 @@ export function UtilityBar() {
           </li>
           <li>
             <a
-              href="mailto:hello@sublimprint.com"
+              href="mailto:ramon@sublimprint.com"
               className="font-bold uppercase tracking-wider text-white/60 hover:text-white"
             >
-              hello@sublimprint.com
+              ramon@sublimprint.com
             </a>
           </li>
           <li>

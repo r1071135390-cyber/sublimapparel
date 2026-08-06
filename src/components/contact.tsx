@@ -145,7 +145,9 @@ export function Contact() {
                   WhatsApp
                 </div>
                 <div className="mt-1 text-base font-bold text-black">
-                  +86 138 XXXX XXXX
+                  <a href="https://wa.me/8613764593988" target="_blank" rel="noopener noreferrer" className="hover:text-[#ff4d00]">
+                    +86 137 6459 3988
+                  </a>
                 </div>
               </div>
               <div>
@@ -153,7 +155,9 @@ export function Contact() {
                   Email
                 </div>
                 <div className="mt-1 text-base font-bold text-black">
-                  hello@sublimprint.com
+                  <a href="mailto:ramon@sublimprint.com" className="hover:text-[#ff4d00]">
+                    ramon@sublimprint.com
+                  </a>
                 </div>
               </div>
               <div>

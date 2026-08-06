@@ -53,7 +53,7 @@ export default function CasesPage() {
             <span>MOQ from 50 pcs</span>
           </div>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-1">
-            <span>WhatsApp · +86 137 5790 1100</span>
+            <span>WhatsApp · +86 137 6459 3988</span>
             <span className="text-[#00c2ff]">·</span>
             <span>Replies within 1 business day</span>
           </div>
