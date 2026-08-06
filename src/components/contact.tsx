@@ -8,7 +8,7 @@ export function Contact() {
     email: "",
     company: "",
     product: "Custom T-Shirts",
-    quantity: "100-500",
+    quantity: "",
     message: "",
   });
   const [status, setStatus] = useState<"idle" | "sending" | "ok" | "err">("idle");
@@ -37,7 +37,7 @@ export function Contact() {
         email: "",
         company: "",
         product: "Custom T-Shirts",
-        quantity: "100-500",
+        quantity: "",
         message: "",
       });
     } catch (err) {
@@ -165,7 +165,7 @@ export function Contact() {
                     className="w-full border-b-2 border-black bg-transparent py-2 text-base font-medium text-black focus:border-[#ff4d00] focus:outline-none"
                   >
                     <option>50-100</option>
-                    <option>100-500</option>
+                    <option value="">Select quantity range</option>
                     <option>500-1000</option>
                     <option>1000-5000</option>
                     <option>5000+</option>
