@@ -10,7 +10,7 @@ export function DDP() {
           <h2 className="text-4xl font-black uppercase leading-none tracking-tight md:text-6xl">
             You order. We deliver.<br />
             <span className="italic underline decoration-4 decoration-black underline-offset-4">
-              No customs. No duties. No wait.
+              No customs. No duties. No paperwork.
             </span>
           </h2>
         </div>
