@@ -3,15 +3,15 @@ export function Products() {
     {
       label: "Apparel",
       headline: "From tees to team kits.",
-      desc: "T-shirts, jerseys, hoodies, polos, tank tops, leggings, sports bras, kids wear, baby onesies — full sublimation on cotton or polyester.",
-      items: ["T-shirts", "Jerseys", "Hoodies", "Polo", "Tank tops", "Kids"],
+      desc: "T-shirts, hoodies, racing, cycling, golf / bowling, tank tops, singlets, leggings, baby onesies — full sublimation on cotton or polyester.",
+      items: ["T-shirts", "Hoodies", "Racing", "Cycling", "Golf / Bowling", "Tank tops"],
       color: "bg-[#ff4d00]",
     },
     {
       label: "Sports & Team",
       headline: "Built for game day.",
       desc: "Custom sublimated kits for cycling, running, soccer, basketball, rowing, esports. Full team packages with names and numbers.",
-      items: ["Cycling jerseys", "Running singlets", "Soccer kits", "Esports"],
+      items: ["Cycling", "Running", "Soccer", "Esports"],
       color: "bg-[#00c2ff]",
     },
     {

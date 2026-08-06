@@ -42,7 +42,7 @@ const features = [
     number: "01",
     title: "Any sublimatable product",
     headline: "Print on anything.",
-    desc: "Apparel is our bread and butter — but we print on anything sublimation can handle. T-shirts, jerseys, hoodies, flags, banners, mousepads, mugs, phone cases, puzzles, cushions, throws, scarves, bags, hats… If it takes sublimation ink, we make it.",
+    desc: "Apparel is our bread and butter — but we print on anything sublimation can handle. T-shirts, hoodies, racing, cycling, golf / bowling, flags, banners, mousepads, mugs, phone cases, puzzles, cushions, throws, scarves, bags, hats… If it takes sublimation ink, we make it.",
     color: "bg-[#ff4d00]",
     tags: ["Apparel", "Home textile", "Hard goods", "Flags & banners"],
   },

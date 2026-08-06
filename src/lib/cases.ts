@@ -49,7 +49,7 @@ export const industries: IndustryCase[] = [
     title: "Sports Teams & Leagues",
     icon: "Trophy",
     blurb:
-      "Sublimated jerseys, shorts, warm-ups, singlets, socks and sideline banners. Cut-and-sew patterns sized to your roster, named and numbered per unit.",
+      "Sublimated racing and cycling jerseys, shorts, warm-ups, singlets, socks and sideline banners. Cut-and-sew patterns sized to your roster, named and numbered per unit.",
     pitch:
       "Cut-and-sew patterns that fit, named and numbered per unit, delivered before the season opens.",
     cases: [],
@@ -79,7 +79,7 @@ export const industries: IndustryCase[] = [
     title: "Corporate & Employee Programs",
     icon: "Briefcase",
     blurb:
-      "Uniforms, polos, onboarding kits, conference apparel and branded gifting. Multi-site restocks pull from our LA warehouse, on a fixed landed cost.",
+      "Uniforms, golf / bowling shirts, onboarding kits, conference apparel and branded gifting. Multi-site restocks pull from our Fontana warehouse, on a fixed landed cost.",
     pitch:
       "Finance gets a fixed landed cost; multi-site restocks pull from our LA warehouse.",
     cases: [],

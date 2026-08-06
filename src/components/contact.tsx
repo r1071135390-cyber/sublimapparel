@@ -217,11 +217,12 @@ export function Contact() {
                   >
                     <option>Custom T-Shirts (Polyester)</option>
                     <option>Custom T-Shirts (Cotton)</option>
-                    <option>Sports Jerseys</option>
+                    <option>Cycling Kits</option>
+                    <option>Racing Kits</option>
                     <option>Hoodies &amp; Sweatshirts</option>
                     <option>Tank Tops &amp; Vests</option>
                     <option>Pants &amp; Shorts</option>
-                    <option>Polo Shirts</option>
+                    <option>Golf / Bowling Shirts</option>
                     <option>Hats &amp; Caps</option>
                     <option>Bags &amp; Backpacks</option>
                     <option>Flags &amp; Banners</option>
