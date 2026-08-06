@@ -45,15 +45,15 @@ export function Hero() {
           fill
           priority
           sizes="100vw"
-          className="object-cover object-center opacity-60"
+          className="object-cover object-center opacity-90 brightness-110"
         />
-        {/* Dark left-to-right gradient mask for text readability */}
+        {/* Brighter gradient mask — image clearly visible, text still readable */}
         <div
           aria-hidden
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(90deg, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.85) 45%, rgba(10,10,10,0.45) 100%)",
+              "linear-gradient(90deg, rgba(10,10,10,0.78) 0%, rgba(10,10,10,0.55) 45%, rgba(10,10,10,0.18) 100%)",
           }}
         />
       </div>
