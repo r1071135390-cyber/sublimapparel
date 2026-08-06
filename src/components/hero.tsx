@@ -35,7 +35,7 @@ export function Hero() {
               <span className="font-bold text-[#ff4d00] underline decoration-2 underline-offset-4">
                 DDP shipping
               </span>{" "}
-              to 200+ countries and a{" "}
+              to 100+ countries and a{" "}
               <span className="font-bold text-[#00c2ff]">US warehouse in Fontana, CA</span>.
             </p>
 

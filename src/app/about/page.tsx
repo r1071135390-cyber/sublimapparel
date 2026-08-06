@@ -6,7 +6,7 @@ const capabilities = [
   { title: "Sublimation printing", desc: "Large-format printers with CMYK ink sets. Up to 100m of fabric per roll. Both polyester and 100% cotton." },
   { title: "Laser cutting", desc: "Precision cutting to ±0.5mm. Custom patterns and size charts." },
   { title: "Sewing & assembly", desc: "In-house sewing lines. Hand-stitched construction with quality control at every step." },
-  { title: "DDP logistics", desc: "End-to-end shipping from Yiwu with all duties pre-paid. Door delivery in 50+ countries." },
+  { title: "DDP logistics", desc: "End-to-end shipping from Yiwu with all duties pre-paid. Door delivery in 100+ countries." },
   { title: "LA warehouse", desc: "Stocked inventory in Fontana for US customers. Domestic shipping, no customs, 2-5 day delivery." },
   { title: "Custom packaging", desc: "Polybag, individual box, hangtag, barcode label — ready for retail or e-commerce fulfillment." },
 ];

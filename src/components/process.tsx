@@ -33,7 +33,7 @@ export function Process() {
     {
       num: "06",
       title: "Delivered to Door",
-      desc: "DDP to 200+ countries. US orders ship domestically from LA — no customs wait.",
+      desc: "DDP to 100+ countries. US orders ship domestically from LA — no customs wait.",
       icon: "🚚",
     },
   ];
