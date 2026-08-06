@@ -1,4 +1,6 @@
 import { Hero } from "@/components/hero";
+import { InquiryCTA } from "@/components/inquiry-cta";
+import { ArtworkCTA } from "@/components/artwork-cta";
 import { Features } from "@/components/features";
 import { Products } from "@/components/products";
 import { Process } from "@/components/process";
@@ -10,6 +12,8 @@ export default function Home() {
   return (
     <main>
       <Hero />
+      <InquiryCTA />
+      <ArtworkCTA />
       <Features />
       <Products />
       <Process />

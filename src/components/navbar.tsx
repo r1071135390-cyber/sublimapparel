@@ -2,9 +2,9 @@ import Link from "next/link";
 
 export function Navbar() {
   const links = [
-    { href: "/", label: "Home" },
     { href: "/products", label: "Products" },
     { href: "/about", label: "About" },
+    { href: "/contact", label: "Resources" },
     { href: "/contact", label: "Contact" },
   ];
 
@@ -13,17 +13,17 @@ export function Navbar() {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <Link href="/" className="group flex items-center gap-2">
           <div className="flex h-10 w-10 items-center justify-center bg-[#ff4d00] text-white">
-            <span className="text-lg font-black">V</span>
+            <span className="text-lg font-black">S</span>
           </div>
           <span className="text-2xl font-black tracking-tight text-black">
-            vivid<span className="text-[#ff4d00]">/</span>print
+            sublim<span className="text-[#ff4d00]">/</span>print
           </span>
         </Link>
 
         <div className="hidden items-center gap-8 md:flex">
           {links.map((link) => (
             <Link
-              key={link.href}
+              key={link.href + link.label}
               href={link.href}
               className="text-sm font-bold uppercase tracking-wider text-black transition-colors hover:text-[#ff4d00]"
             >

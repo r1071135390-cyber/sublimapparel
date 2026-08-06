@@ -1,67 +1,267 @@
 import Link from "next/link";
+import {
+  MapPin,
+  Warehouse,
+  Mail,
+  MessageCircle,
+  Phone,
+  ShieldCheck,
+  CreditCard,
+  Layers,
+} from "lucide-react";
+
+const linkGroups = [
+  {
+    title: "Products",
+    items: [
+      "Cotton Sublimation Collection",
+      "Team & Performance Apparel",
+      "Custom Cut-and-Sew Apparel",
+      "Headwear & Accessories",
+      "Flags, Banners & Outdoor",
+      "Trade Show & Display Textiles",
+      "Home & Soft Goods",
+      "Bags, Pet & Promo",
+    ],
+    viewAll: { href: "/products", label: "View all products" },
+  },
+  {
+    title: "Capabilities",
+    items: [
+      "Dye sublimation printing",
+      "100% cotton (full-bleed)",
+      "Cut & sew manufacturing",
+      "All-over print",
+      "Custom labels, tags & packaging",
+      "Quality control & testing",
+      "Factory & equipment",
+    ],
+  },
+  {
+    title: "Industries",
+    items: [
+      "Events & conferences",
+      "Promotional distributors",
+      "Sports teams & leagues",
+      "Music, tour & festival merch",
+      "Trade show & display",
+      "Corporate & employee programmes",
+      "Apparel brands & agencies",
+      "Schools & universities",
+      "Political campaigns",
+    ],
+    viewAll: { href: "/about", label: "View all industries" },
+  },
+  {
+    title: "Resources",
+    items: [
+      "Artwork & file setup guide",
+      "Fabric library",
+      "Size charts",
+      "Sublimation vs screen print vs DTG",
+      "Ordering FAQ",
+      "Guides",
+      "Lead times",
+      "Sampling process",
+    ],
+  },
+  {
+    title: "Company",
+    items: [
+      "About SublimPrint",
+      "Our factory in Yiwu",
+      "Why Yiwu",
+      "Certifications & compliance",
+      "Sustainability & ink safety",
+      "Careers",
+      "Contact",
+    ],
+  },
+];
 
 export function Footer() {
   return (
-    <footer className="border-t-2 border-black bg-black text-white">
-      <div className="mx-auto max-w-7xl px-6 py-16">
-        <div className="mb-12 grid gap-12 md:grid-cols-4">
-          <div>
-            <div className="mb-4 flex items-center gap-2">
-              <div className="flex h-10 w-10 items-center justify-center bg-[#ff4d00]">
-                <span className="text-lg font-black text-white">V</span>
-              </div>
-              <span className="text-xl font-black">sublim/print</span>
+    <footer className="border-t-2 border-black bg-white text-black">
+      {/* Mega link directory */}
+      <div className="mx-auto max-w-7xl px-6 pt-16 pb-12">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-5">
+          {linkGroups.map((group) => (
+            <div key={group.title}>
+              <h3 className="mb-5 text-xs font-black uppercase tracking-[0.18em] text-[#ff4d00]">
+                {group.title}
+              </h3>
+              <ul className="space-y-2.5">
+                {group.items.map((item) => (
+                  <li key={item}>
+                    <Link
+                      href="/contact"
+                      className="text-sm font-medium text-black transition-colors hover:text-[#ff4d00]"
+                    >
+                      {item}
+                    </Link>
+                  </li>
+                ))}
+                {group.viewAll && (
+                  <li className="pt-1">
+                    <Link
+                      href={group.viewAll.href}
+                      className="text-sm font-black uppercase tracking-wider text-[#ff4d00] transition-colors hover:text-black"
+                    >
+                      {group.viewAll.label} →
+                    </Link>
+                  </li>
+                )}
+              </ul>
             </div>
-            <p className="text-sm leading-relaxed text-white/60">
-              Full-color all-over print apparel from Yiwu, China. From design to your door.
+          ))}
+        </div>
+      </div>
+
+      {/* Locations / contact / response commitment */}
+      <div className="border-t-2 border-black bg-[#faf9f6]">
+        <div className="mx-auto grid max-w-7xl gap-10 px-6 py-12 md:grid-cols-2 lg:grid-cols-4">
+          <div>
+            <h3 className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-[#ff4d00]">
+              <MapPin size={12} className="mr-1 inline-block" />
+              Factory
+            </h3>
+            <p className="text-sm font-medium leading-relaxed">
+              SublimPrint — Factory
+              <br />
+              No. 35 Lingyun Road
+              <br />
+              Yiwu, Zhejiang, China
             </p>
           </div>
-
           <div>
-            <h4 className="mb-4 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
-              Products
-            </h4>
-            <ul className="space-y-2 text-sm text-white/80">
-              <li><Link href="/products" className="hover:text-white">Custom T-Shirts</Link></li>
-              <li><Link href="/products" className="hover:text-white">Sports Jerseys</Link></li>
-              <li><Link href="/products" className="hover:text-white">Hoodies</Link></li>
-              <li><Link href="/products" className="hover:text-white">All categories</Link></li>
-            </ul>
+            <h3 className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-[#ff4d00]">
+              <Warehouse size={12} className="mr-1 inline-block" />
+              US Warehouse
+            </h3>
+            <p className="text-sm font-medium leading-relaxed">
+              SublimPrint — US warehouse
+              <br />
+              Los Angeles, CA
+              <br />
+              United States
+            </p>
           </div>
-
           <div>
-            <h4 className="mb-4 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
-              Company
-            </h4>
-            <ul className="space-y-2 text-sm text-white/80">
-              <li><Link href="/about" className="hover:text-white">About us</Link></li>
-              <li><Link href="/contact" className="hover:text-white">Contact</Link></li>
-              <li><Link href="/contact" className="hover:text-white">Get a quote</Link></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="mb-4 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
+            <h3 className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-[#ff4d00]">
+              <Mail size={12} className="mr-1 inline-block" />
               Contact
-            </h4>
-            <ul className="space-y-2 text-sm text-white/80">
-              <li>WhatsApp: +86 138 XXXX XXXX</li>
-              <li>Email: hello@sublimprint.com</li>
-              <li>No. 35 Lingyun Road, Yiwu</li>
+            </h3>
+            <ul className="space-y-1.5 text-sm font-medium">
+              <li>
+                <a
+                  href="mailto:hello@sublimprint.com"
+                  className="hover:text-[#ff4d00]"
+                >
+                  hello@sublimprint.com
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-[#ff4d00]">
+                  <MessageCircle size={12} className="mr-1 inline-block" />
+                  WhatsApp
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-[#ff4d00]">
+                  WeChat
+                </a>
+              </li>
+              <li>
+                <a href="tel:+86138XXXXXXXX" className="hover:text-[#ff4d00]">
+                  <Phone size={12} className="mr-1 inline-block" />
+                  Phone
+                </a>
+              </li>
             </ul>
           </div>
+          <div>
+            <h3 className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-[#ff4d00]">
+              Response commitment
+            </h3>
+            <p className="text-sm font-medium leading-relaxed">
+              We reply within one business day. Our team overlaps with US
+              Pacific and UK business hours. Quotes are landed and duty paid,
+              with any exclusions stated on the quote.
+            </p>
+          </div>
         </div>
+      </div>
 
-        <div className="border-t border-white/10 pt-6 text-xs text-white/40">
-          <p>
-            Yiwu HomeDorm Commordity Manufacturing Co., Ltd. · Established 2018 · No. 35
-            Lingyun Road, Yiwu, Zhejiang, China
+      {/* Certifications / Payment / Platforms */}
+      <div className="border-t-2 border-black bg-black text-white">
+        <div className="mx-auto grid max-w-7xl gap-10 px-6 py-10 md:grid-cols-3">
+          <div>
+            <h3 className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-[#ff4d00]">
+              <ShieldCheck size={12} className="mr-1 inline-block" />
+              Certifications
+            </h3>
+            <p className="text-sm font-medium leading-relaxed text-white/80">
+              OEKO-TEX Standard 100 · ISO 9001 · Sedex-SMETA · CPSIA-compliant
+              inks
+            </p>
+          </div>
+          <div>
+            <h3 className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-[#ff4d00]">
+              <CreditCard size={12} className="mr-1 inline-block" />
+              Payment
+            </h3>
+            <p className="text-sm font-medium leading-relaxed text-white/80">
+              T/T · L/C at sight · PayPal (samples) · Trade Assurance on
+              Alibaba
+            </p>
+          </div>
+          <div>
+            <h3 className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-[#ff4d00]">
+              <Layers size={12} className="mr-1 inline-block" />
+              Platforms
+            </h3>
+            <p className="text-sm font-medium leading-relaxed text-white/80">
+              Alibaba Gold Supplier · Made-in-China · Global Sources · Google
+              Verified
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Legal */}
+      <div className="border-t border-white/10 bg-black text-white/70">
+        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-4 px-6 py-6 text-xs md:flex-row md:items-center">
+          <p className="font-medium">
+            © {new Date().getFullYear()} Yiwu HomeDorm Commordity Manufacturing
+            Co., Ltd. All rights reserved.
           </p>
+          <ul className="flex flex-wrap items-center gap-x-5 gap-y-1">
+            <li>
+              <Link href="/contact" className="hover:text-[#ff4d00]">
+                Privacy policy
+              </Link>
+            </li>
+            <li>
+              <Link href="/contact" className="hover:text-[#ff4d00]">
+                Terms of sale
+              </Link>
+            </li>
+            <li>
+              <Link href="/contact" className="hover:text-[#ff4d00]">
+                Shipping policy
+              </Link>
+            </li>
+            <li>
+              <Link href="/contact" className="hover:text-[#ff4d00]">
+                Sitemap
+              </Link>
+            </li>
+          </ul>
         </div>
-
-        <div className="flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-8 text-xs text-white/40 md:flex-row md:items-center">
-          <p>© {new Date().getFullYear()} SublimPrint. All rights reserved.</p>
-          <p>From Yiwu to your door, worldwide.</p>
+        <div className="mx-auto max-w-7xl px-6 pb-6 text-[11px] leading-relaxed text-white/50">
+          SublimPrint™ is a brand of Yiwu HomeDorm Commordity Manufacturing
+          Co., Ltd. — registered in Yiwu, Zhejiang, China. All artwork, designs
+          and trademarks shown are property of their respective owners.
         </div>
       </div>
     </footer>
