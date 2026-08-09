@@ -11,12 +11,12 @@ export function Navbar() {
 
   return (
     <nav className="sticky top-0 z-50 border-b-2 border-black bg-[#faf9f6]">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
         <Link href="/" className="group flex items-center gap-2">
           <img
             src="/logo-main.jpg"
             alt="SublimApparel"
-            className="h-12 w-auto"
+            className="h-20 w-auto"
           />
         </Link>
 
