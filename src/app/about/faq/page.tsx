@@ -52,7 +52,7 @@ const sections = [
     icon: <Shirt className="h-5 w-5" />,
     title: "Products & fabric",
     questions: [
-      { q: "Can you do 100% cotton sublimation?", a: "Yes, this is our differentiator. Standard sublimation requires polyester, but we use a proprietary pre-treatment process that allows full-color sublimation on 100% cotton. Color is slightly less vibrant than polyester (think 90%), but the all-cotton hand-feel is preserved. See /fabric/cotton for the full process." },
+      { q: "Can you do all-over printing on 100% cotton?", a: "Yes, this is our differentiator. Strictly speaking, sublimation only bonds to polyester — on 100% cotton we run DTG and DTF instead, which deliver the same all-over vibrancy, a softer hand-feel, and actually last. The honest answer: you get cotton comfort with full-color print. See /fabric/cotton for the full process." },
       { q: "What fabrics do you stock?", a: "Polyester (most common, 120-220 GSM), poly-spandex (4-way stretch, 180-260 GSM), brushed poly (sweatshirt weight), cotton-poly blends (65/35 and 50/50), recycled poly (rPET), and 100% cotton (with pre-treatment). Mesh and waffle-knit available on request." },
       { q: "Can I bring my own fabric?", a: "Yes. We accept customer-supplied fabric (CIF Yiwu) for confirmed orders. We test-print your design on a 1m swatch first to confirm color and stretch before bulk. Customer fabric doesn't change the unit price significantly." },
       { q: "What about colors and Pantone matching?", a: "Sublimation is CMYK process — full color at no extra cost. We can hit Pantone Solid Coated within ΔE < 2 with our calibrated workflow. For critical brand colors, we send a lab dip or a print swatch for approval before bulk." },

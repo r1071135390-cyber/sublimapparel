@@ -3,20 +3,20 @@ import Link from "next/link";
 import { ArrowRight, Check, Leaf, Droplets, Shirt, Sparkles, Layers, Recycle } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Cotton Sublimation vs DTG & DTF — What Actually Prints on 100% Cotton",
+  title: "All-Over Cotton Printing | DTG & DTF on 100% Cotton",
   description:
-    "Strictly speaking, sublimation only bonds to polyester. On 100% cotton we run DTG and DTF for true all-over prints — same vibrancy, softer hand feel, and it actually lasts. Free digital mockup, MOQ 50.",
+    "Custom all-over printing on 100% cotton apparel. DTG and DTF processes, not sublimation — same vibrancy, softer hand feel, and it actually lasts on cotton. Free digital mockup, MOQ 50.",
   keywords: [
-    "cotton sublimation",
+    "all-over cotton printing",
     "100% cotton printing",
     "cotton jersey",
-    "sublimation cotton",
+    "cotton t-shirt printing",
     "DTG printing",
     "direct to garment",
     "organic cotton apparel",
-    "cotton t-shirt printing",
     "DTF heat transfer",
-    "sublimation on cotton",
+    "all-over print cotton",
+    "full coverage cotton print",
   ],
 };
 
@@ -58,16 +58,14 @@ export default function CottonPage() {
               100% Cotton · DTG · DTF
             </div>
             <h1 className="text-5xl font-black leading-[0.95] tracking-tight md:text-8xl">
-              Sublimation
-              <br />
-              on
+              All-over printing.
               <br />
               <span className="text-[#ff4d00]">100% cotton.</span>
             </h1>
             <p className="mt-6 max-w-xl text-base text-neutral-700 md:text-lg">
-              Most sublimation factories can only print on polyester. We run a
-              full cotton line — DTG, DTF, and reactive dye chemistry — with
-              soft hand feel and color fastness that survives industrial wash.
+              True all-over printing on 100% cotton — DTG, DTF, and reactive dye
+              chemistry. Soft hand feel and color fastness that survives
+              industrial wash. We are not a sublimation-only shop.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
