@@ -13,12 +13,11 @@ export function Navbar() {
     <nav className="sticky top-0 z-50 border-b-2 border-black bg-[#faf9f6]">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <Link href="/" className="group flex items-center gap-2">
-          <div className="flex h-10 w-10 items-center justify-center bg-[#ff4d00] text-white">
-            <span className="text-lg font-black">S</span>
-          </div>
-          <span className="text-2xl font-black tracking-tight text-black">
-            sublim<span className="text-[#ff4d00]">/</span>apparel
-          </span>
+          <img
+            src="/logo-main.jpg"
+            alt="SublimApparel"
+            className="h-12 w-auto"
+          />
         </Link>
 
         <div className="hidden items-center gap-8 md:flex">
