@@ -24,6 +24,12 @@ __pycache__/
 coverage
 storybook-static
 
+# Dev / sandbox artifacts (screenshots, scratch files)
+assets/
+dev-screenshots/
+*.tmp
+*.bak
+
 # Package manager artifacts
 .pnp*
 .npm
