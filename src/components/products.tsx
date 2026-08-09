@@ -7,7 +7,14 @@ export function Products() {
       label: "Apparel",
       headline: "From tees to team kits.",
       desc: "T-shirts, hoodies, jerseys, racing, cycling, golf / bowling, singlets, leggings, baby onesies — full sublimation on cotton or polyester.",
-      items: ["T-shirts", "Hoodies", "Jerseys", "Racing", "Cycling", "Golf / Bowling"],
+      items: [
+        { name: "T-shirts", href: "/products/t-shirts" },
+        { name: "Hoodies", href: "/products/hoodies" },
+        { name: "Jerseys", href: "/products/jerseys" },
+        { name: "Racing", href: "/products/racing" },
+        { name: "Cycling", href: "/products/cycling" },
+        { name: "Golf / Bowling", href: "/products/golf-bowling" },
+      ],
       color: "bg-[#ff4d00]",
       href: "/products",
     },
@@ -97,14 +104,31 @@ export function Products() {
 
               {/* Items tags */}
               <div className="flex flex-wrap gap-1.5">
-                {cat.items.map((item) => (
-                  <span
-                    key={item}
-                    className="border border-black bg-[#faf9f6] px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide text-black"
-                  >
-                    {item}
-                  </span>
-                ))}
+                {cat.items.map((item) => {
+                  const itemName = typeof item === "string" ? item : item.name;
+                  const itemHref = typeof item === "string" ? null : item.href;
+                  const baseCls =
+                    "border border-black px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide";
+                  if (itemHref) {
+                    return (
+                      <Link
+                        key={itemName}
+                        href={itemHref}
+                        className={`${baseCls} bg-[#faf9f6] text-black transition-colors hover:bg-[#ff4d00] hover:text-white`}
+                      >
+                        {itemName}
+                      </Link>
+                    );
+                  }
+                  return (
+                    <span
+                      key={itemName}
+                      className={`${baseCls} bg-[#faf9f6] text-black`}
+                    >
+                      {itemName}
+                    </span>
+                  );
+                })}
               </div>
 
               {/* Cotton badge for Apparel card */}

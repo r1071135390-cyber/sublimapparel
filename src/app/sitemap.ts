@@ -27,6 +27,12 @@ const ROUTES: SitemapRoute[] = [
   // ── L1 顶层（最高权重）──────────────────────────────────
   { path: "/", priority: 1.0, changeFrequency: "weekly" },
   { path: "/products", priority: 0.9, changeFrequency: "weekly" },
+  { path: "/products/t-shirts", priority: 0.85, changeFrequency: "monthly" },
+  { path: "/products/hoodies", priority: 0.85, changeFrequency: "monthly" },
+  { path: "/products/jerseys", priority: 0.85, changeFrequency: "monthly" },
+  { path: "/products/racing", priority: 0.85, changeFrequency: "monthly" },
+  { path: "/products/cycling", priority: 0.85, changeFrequency: "monthly" },
+  { path: "/products/golf-bowling", priority: 0.85, changeFrequency: "monthly" },
   { path: "/get-a-quote", priority: 0.95, changeFrequency: "monthly" }, // 询盘主入口
   { path: "/contact", priority: 0.7, changeFrequency: "monthly" },
 
