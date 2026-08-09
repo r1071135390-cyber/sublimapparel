@@ -1,4 +1,5 @@
 import { Contact } from "@/components/contact";
+import Link from "next/link";
 
 export const metadata = { title: "About — SublimPrint" };
 
@@ -196,6 +197,51 @@ export default function AboutPage() {
                 <h3 className="mb-3 text-3xl font-black text-black">{v.word}</h3>
                 <p className="text-base leading-relaxed text-black/70">{v.desc}</p>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Dive deeper — 5 sub-pages */}
+      <section className="border-b-2 border-black bg-[#faf9f6]">
+        <div className="mx-auto max-w-7xl px-6 py-20">
+          <div className="mb-10 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+            <div>
+              <div className="mb-3 inline-block border-2 border-black bg-white px-3 py-1 text-xs font-black uppercase tracking-widest">
+                Dive deeper
+              </div>
+              <h2 className="text-4xl font-black leading-tight text-black md:text-6xl">
+                Five pages that go <span className="text-[#ff4d00]">deeper</span>.
+              </h2>
+            </div>
+            <p className="max-w-md text-base text-black/70">
+              The above is the elevator pitch. The five pages below answer the questions
+              buyers ask in the second call.
+            </p>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {[
+              { href: "/about/factory", title: "Inside the factory", blurb: "12,000 sqm, 12 production lines, 6 sublimation printers, 200+ staff. Tour the floor.", badge: "Factory" },
+              { href: "/about/production", title: "Production process", blurb: "7 steps from inquiry to delivery, 21-day average, no black box.", badge: "Process" },
+              { href: "/about/quality", title: "Quality control", blurb: "4-stage QC, 50+ checkpoints, AQL 2.5, 99.2% first-pass rate.", badge: "Quality" },
+              { href: "/about/cases", title: "Industries we serve", blurb: "12 verticals, 1,000+ clients, 5M+ pieces last year. Race, sports, schools, political, yoga, esports, more.", badge: "Industries" },
+              { href: "/about/faq", title: "30 B2B questions", blurb: "Pricing, MOQ, fabric, lead time, shipping, customs, payment, samples, files. Honest answers.", badge: "FAQ" },
+            ].map((r) => (
+              <Link
+                key={r.href}
+                href={r.href}
+                className="group flex flex-col border-2 border-black bg-white p-6 transition-all hover:bg-[#ff4d00] hover:text-white"
+              >
+                <div className="mb-3 inline-block w-fit bg-black px-2 py-1 text-[10px] font-black uppercase tracking-widest text-white group-hover:bg-white group-hover:text-black">
+                  {r.badge}
+                </div>
+                <h3 className="mb-2 text-2xl font-black leading-tight">
+                  {r.title} →
+                </h3>
+                <p className="text-sm leading-relaxed text-black/70 group-hover:text-white/90">
+                  {r.blurb}
+                </p>
+              </Link>
             ))}
           </div>
         </div>

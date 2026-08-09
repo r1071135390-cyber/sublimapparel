@@ -46,6 +46,11 @@ const ROUTES: SitemapRoute[] = [
 
   // ── L2 信任 / 案例 ────────────────────────────────────
   { path: "/about", priority: 0.7, changeFrequency: "monthly" },
+  { path: "/about/factory", priority: 0.75, changeFrequency: "monthly" },
+  { path: "/about/production", priority: 0.75, changeFrequency: "monthly" },
+  { path: "/about/quality", priority: 0.75, changeFrequency: "monthly" },
+  { path: "/about/cases", priority: 0.75, changeFrequency: "monthly" },
+  { path: "/about/faq", priority: 0.7, changeFrequency: "monthly" },
   { path: "/cases", priority: 0.7, changeFrequency: "weekly" },
 
   // ── L3 法务（必要但不指望流量）────────────────────────
