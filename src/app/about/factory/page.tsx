@@ -17,9 +17,9 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Inside Our Yiwu Factory · 12,000 sqm Sublimation Apparel Plant | SublimPrint",
+  title: "Inside Our Yiwu Factory · 2,000 sqm Sublimation Apparel Plant | SublimPrint",
   description:
-    "12,000 sqm Yiwu sublimation apparel factory. 12 production lines, 200+ staff, 24/7 capacity. 6 inline printing machines, full cutting-sewing-printing-packaging vertical integration.",
+    "2,000 sqm Yiwu sublimation apparel factory. 12 production lines, 200+ staff, 24/7 capacity. 6 inline printing machines, full cutting-sewing-printing-packaging vertical integration.",
   keywords: [
     "yiwu factory",
     "sublimation factory",
@@ -86,7 +86,7 @@ const equipment = [
 ];
 
 const useCases = [
-  { title: "Athletic brands needing scale", body: "12,000 sqm floor, 12 lines, 200+ staff — we run 80K pieces/month without breaking a sweat. Race teams and jersey brands come back for repeat 5K+ piece orders." },
+  { title: "Athletic brands needing scale", body: "2,000 sqm floor, 12 lines, 200+ staff — we run 80K pieces/month without breaking a sweat. Race teams and jersey brands come back for repeat 5K+ piece orders." },
   { title: "Tech-apparel startups with technical fabric demands", body: "Poly-spandex, mesh, brushed-back, micro-poly — stocked and ICC-calibrated. Send your tech-pack, we reverse-engineer the construction." },
   { title: "Schools and Greek life bulk orders", body: "One PO, one ship date, 1,000+ pieces. We split the run across multiple lines to keep the timeline tight (10-14 days bulk)." },
   { title: "POD platforms with weekly drops", body: "Standing capacity, white-label packing, blind drop-ship. We treat each week as a production slot, not a project." },
@@ -111,7 +111,7 @@ export default function FactoryPage() {
             [ 010 / About · factory ]
           </div>
           <h1 className="max-w-4xl text-5xl font-extrabold leading-[0.95] tracking-tight md:text-7xl">
-            <span className="block">12,000 sqm.</span>
+            <span className="block">2,000 sqm.</span>
             <span className="block text-[#ff4d00]">12 production lines.</span>
             <span className="block">24/7 capacity.</span>
           </h1>
@@ -174,7 +174,7 @@ export default function FactoryPage() {
               to the production manager.
             </p>
             <p>
-              <strong className="text-[#0a0a0a]">12,000 sqm is real.</strong> That's a
+              <strong className="text-[#0a0a0a]">2,000 sqm is real.</strong> That's a
               football field and a half of floor space, dedicated to cutting, printing,
               sewing, QC, and packing. Six industrial sublimation printers run 24/7 in
               three shifts. Twelve sewing lines handle 80,000 garments per month at
