@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
-import { S3Storage } from "coze-coding-dev-sdk";
 
 const MAX_FILES = 5;
 const MAX_SIZE_MB = 25;
 const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024;
 const ALLOWED_EXT = [".jpg", ".jpeg", ".png", ".pdf", ".ai", ".eps", ".psd", ".svg", ".tif", ".tiff"];
+
+export const runtime = "edge";
 
 export async function POST(request: Request) {
   try {
@@ -43,7 +44,7 @@ export async function POST(request: Request) {
       );
     }
 
-    // Artwork files
+    // Artwork validation
     const files = fd.getAll("artwork").filter((x): x is File => x instanceof File);
     if (files.length > MAX_FILES) {
       return NextResponse.json(
@@ -51,6 +52,7 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
+    const artworkMeta: { name: string; size: number; type: string }[] = [];
     for (const f of files) {
       if (f.size === 0) continue;
       if (f.size > MAX_SIZE_BYTES) {
@@ -66,30 +68,11 @@ export async function POST(request: Request) {
           { status: 400 }
         );
       }
+      artworkMeta.push({ name: f.name, size: f.size, type: f.type || "application/octet-stream" });
     }
 
-    // Upload to object storage
-    const storage = new S3Storage({
-      endpointUrl: process.env.COZE_BUCKET_ENDPOINT_URL!,
-      accessKey: "",
-      secretKey: "",
-      bucketName: process.env.COZE_BUCKET_NAME!,
-      region: "cn-beijing",
-    });
-
-    const uploadedKeys: { name: string; key: string; size: number }[] = [];
-    for (const f of files) {
-      if (f.size === 0) continue;
-      const buf = Buffer.from(await f.arrayBuffer());
-      const safeBaseName = f.name.replace(/[^A-Za-z0-9._-]/g, "_");
-      const key = await storage.uploadFile({
-        fileContent: buf,
-        fileName: `inquiries/${Date.now()}_${safeBaseName}`,
-        contentType: f.type || "application/octet-stream",
-      });
-      uploadedKeys.push({ name: f.name, key, size: f.size });
-    }
-
+    // Log inquiry (Cloudflare Workers logs are visible in dashboard)
+    // Phase 2: integrate Resend for email delivery + attachment forwarding
     console.log("[Inquiry Received]", {
       name,
       email,
@@ -104,15 +87,16 @@ export async function POST(request: Request) {
       shipZip: shipZip || "N/A",
       deadline: deadline || "N/A",
       message: message || "N/A",
-      artwork: uploadedKeys,
+      artwork: artworkMeta,
+      artworkCount: artworkMeta.length,
       timestamp: new Date().toISOString(),
     });
 
     return NextResponse.json({
       success: true,
       message:
-        "Inquiry received successfully. We'll send a free mockup and a quote within 1 business day.",
-      artworkCount: uploadedKeys.length,
+        "Inquiry received successfully. We'll send a free mockup and a quote within 1 business day. (Artwork files validated; team will request re-upload if needed.)",
+      artworkCount: artworkMeta.length,
     });
   } catch (err) {
     console.error("[Inquiry Error]", err);
