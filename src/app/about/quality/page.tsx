@@ -269,7 +269,7 @@ export default function QualityPage() {
           <div className="text-xs font-mono uppercase tracking-widest text-[#6b6b6b]">Related</div>
           <div className="mt-4 grid gap-4 md:grid-cols-3">
             {[
-              { href: "/about/factory", title: "Factory", desc: "12,000 sqm, 6 printers, 12 lines" },
+              { href: "/about/factory", title: "Factory", desc: "2,000 sqm, 6 printers, 12 lines" },
               { href: "/about/production", title: "Production process", desc: "7 steps, 21 days" },
               { href: "/about/faq", title: "FAQ", desc: "30 B2B questions answered" },
             ].map((r) => (

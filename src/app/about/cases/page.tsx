@@ -233,7 +233,7 @@ export default function CasesPage() {
           <div className="mt-4 grid gap-4 md:grid-cols-3">
             {[
               { href: "/products", title: "All products", desc: "6 apparel + 6 hard-surface categories" },
-              { href: "/about/factory", title: "Factory", desc: "12,000 sqm, 12 lines, 24/7" },
+              { href: "/about/factory", title: "Factory", desc: "2,000 sqm, 12 lines, 24/7" },
               { href: "/fabric/cotton", title: "100% cotton", desc: "Our differentiator" },
             ].map((r) => (
               <Link key={r.href} href={r.href} className="group block border-2 border-[#0a0a0a] bg-white p-6 transition-colors hover:bg-[#0a0a0a] hover:text-[#faf9f6]">

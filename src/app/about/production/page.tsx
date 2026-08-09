@@ -303,7 +303,7 @@ export default function ProductionPage() {
           <div className="text-xs font-mono uppercase tracking-widest text-[#6b6b6b]">Related</div>
           <div className="mt-4 grid gap-4 md:grid-cols-3">
             {[
-              { href: "/about/factory", title: "Factory", desc: "12,000 sqm, 12 lines, 24/7" },
+              { href: "/about/factory", title: "Factory", desc: "2,000 sqm, 12 lines, 24/7" },
               { href: "/about/quality", title: "Quality control", desc: "4-stage QC, 50+ checkpoints" },
               { href: "/fabric/cotton", title: "100% cotton sublimation", desc: "Our differentiator" },
             ].map((r) => (

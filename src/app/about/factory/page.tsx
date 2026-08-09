@@ -33,7 +33,7 @@ export const metadata: Metadata = {
 };
 
 const stats = [
-  { value: "12,000", unit: "SQM", label: "Floor space" },
+  { value: "2,000", unit: "SQM", label: "Floor space" },
   { value: "12", unit: "LINES", label: "Production lines" },
   { value: "200+", unit: "STAFF", label: "Skilled workforce" },
   { value: "24/7", unit: "RUN", label: "Three shifts" },
