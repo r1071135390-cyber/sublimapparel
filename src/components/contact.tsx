@@ -26,7 +26,11 @@ export function Contact() {
     email: "",
     company: "",
     product: "Custom T-Shirts",
+    process: "Sublimation",
+    fabric: "Polyester",
+    designStatus: "Have design ready",
     quantity: "",
+    sizeBreakdown: "",
     shipCountry: "",
     shipZip: "",
     deadline: "",
@@ -107,7 +111,11 @@ export function Contact() {
         email: "",
         company: "",
         product: "Custom T-Shirts",
+        process: "Sublimation",
+        fabric: "Polyester",
+        designStatus: "Have design ready",
         quantity: "",
+        sizeBreakdown: "",
         shipCountry: "",
         shipZip: "",
         deadline: "",
@@ -244,6 +252,72 @@ export function Contact() {
                     onChange={onChange}
                     placeholder="e.g. 300 pcs"
                     className="w-full border-b-2 border-black bg-transparent py-2 text-base font-medium text-black placeholder:text-black/30 focus:border-[#ff4d00] focus:outline-none"
+                  />
+                </Field>
+              </div>
+
+              {/* Project specs — process / fabric / design status / size breakdown */}
+              <div className="mt-6">
+                <div className="mb-3 flex items-baseline justify-between">
+                  <label className="text-xs font-black uppercase tracking-widest text-black">
+                    Project specs
+                  </label>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-black/50">
+                    Helps us quote faster &amp; more accurately
+                  </span>
+                </div>
+                <div className="grid gap-6 md:grid-cols-3">
+                  <Field label="Print method">
+                    <select
+                      name="process"
+                      value={form.process}
+                      onChange={onChange}
+                      className="w-full border-b-2 border-black bg-transparent py-2 text-sm font-medium text-black focus:border-[#ff4d00] focus:outline-none"
+                    >
+                      <option>Sublimation</option>
+                      <option>DTG (Direct to garment)</option>
+                      <option>DTF (Heat transfer)</option>
+                      <option>Screen print</option>
+                      <option>Embroidery</option>
+                      <option>Not sure — please advise</option>
+                    </select>
+                  </Field>
+                  <Field label="Fabric">
+                    <select
+                      name="fabric"
+                      value={form.fabric}
+                      onChange={onChange}
+                      className="w-full border-b-2 border-black bg-transparent py-2 text-sm font-medium text-black focus:border-[#ff4d00] focus:outline-none"
+                    >
+                      <option>Polyester</option>
+                      <option>100% cotton</option>
+                      <option>Poly-cotton blend</option>
+                      <option>Recycled / rPET</option>
+                      <option>Not sure — please advise</option>
+                    </select>
+                  </Field>
+                  <Field label="Design status">
+                    <select
+                      name="designStatus"
+                      value={form.designStatus}
+                      onChange={onChange}
+                      className="w-full border-b-2 border-black bg-transparent py-2 text-sm font-medium text-black focus:border-[#ff4d00] focus:outline-none"
+                    >
+                      <option>Have design ready</option>
+                      <option>Have sketch / concept</option>
+                      <option>Need design help</option>
+                      <option>Use a template</option>
+                    </select>
+                  </Field>
+                </div>
+                <Field label="Size breakdown" className="mt-6">
+                  <input
+                    type="text"
+                    name="sizeBreakdown"
+                    value={form.sizeBreakdown}
+                    onChange={onChange}
+                    placeholder="e.g. S 60 / M 120 / L 80 / XL 40 — or 'standard size run, advise'"
+                    className="w-full border-b-2 border-black bg-transparent py-2 text-sm font-medium text-black placeholder:text-black/30 focus:border-[#ff4d00] focus:outline-none"
                   />
                 </Field>
               </div>

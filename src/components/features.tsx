@@ -9,6 +9,7 @@ const features = [
     desc: "Apparel is our bread and butter — but we print on anything sublimation can handle. T-shirts, hoodies, racing, cycling, golf / bowling, flags, banners, mousepads, mugs, phone cases, puzzles, cushions, throws, scarves, bags, hats… If it takes sublimation ink, we make it.",
     color: "bg-[#ff4d00]",
     tags: ["Apparel", "Home textile", "Hard goods", "Flags & banners"],
+    href: "/products",
   },
   {
     number: "02",
@@ -17,6 +18,7 @@ const features = [
     desc: "Polyester sublimation is easy. But 100% cotton all-over print? That's a different beast — and most factories can't deliver it. We invested in the technology and the technique. The result: vibrant, soft-hand, all-over prints on real cotton.",
     color: "bg-[#00c2ff]",
     tags: ["Polyester", "100% Cotton", "Recycled fabric"],
+    href: "/fabric/cotton",
   },
   {
     number: "03",
@@ -25,6 +27,7 @@ const features = [
     desc: "Yiwu is China's small-commodity capital — one of the world's most connected logistics hubs. We ship DDP to 100+ countries — Delivered Duty Paid, door to door. Your team never deals with customs, tariffs, or import paperwork.",
     color: "bg-[#ff4d00]",
     tags: ["DDP to 100+ countries", "Customs cleared", "Door-to-door", "No paperwork"],
+    href: "/shipping/ddp",
   },
   {
     number: "04",
@@ -33,6 +36,7 @@ const features = [
     desc: "Need it fast in the States? We bulk-ship to our Fontana warehouse, then fulfill from there. No ocean transit, no customs — your order arrives at the US destination in 2–5 business days. Perfect for tight event deadlines and repeat POD orders.",
     color: "bg-[#00c2ff]",
     tags: ["Fontana warehouse", "US domestic", "2-5 day delivery", "POD ready"],
+    href: "/shipping",
   },
 ];
 
@@ -95,6 +99,17 @@ export function Features() {
                   </span>
                 ))}
               </div>
+
+              {/* Learn more link */}
+              {f.href && (
+                <Link
+                  href={f.href}
+                  className="mt-6 inline-flex items-center gap-1.5 text-sm font-black uppercase tracking-wider text-[#ff4d00] transition-colors hover:text-black"
+                >
+                  Learn more
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+              )}
             </div>
           ))}
         </div>

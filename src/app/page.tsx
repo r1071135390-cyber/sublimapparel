@@ -3,6 +3,7 @@ import { InquiryCTA } from "@/components/inquiry-cta";
 import { ArtworkCTA } from "@/components/artwork-cta";
 import { BeyondApparel } from "@/components/beyond-apparel";
 import { Features } from "@/components/features";
+import { HowItWorks } from "@/components/how-it-works";
 import { Products } from "@/components/products";
 import { Process } from "@/components/process";
 import { DDP } from "@/components/ddp";
@@ -17,6 +18,7 @@ export default function Home() {
       <InquiryCTA />
       <Features />
       <ArtworkCTA />
+      <HowItWorks />
       <Products />
       <Process />
       <DDP />

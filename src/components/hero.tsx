@@ -20,8 +20,8 @@ const categories = [
 const stats = [
   { num: "50", label: "MOQ (pcs)", color: "text-[#ff4d00]" },
   { num: "15–25", label: "Days lead time", color: "text-white" },
-  { num: "100+", label: "Fabric options", color: "text-white" },
-  { num: "100%", label: "Cotton capable", color: "text-[#ff4d00]" },
+  { num: "0", label: "Setup fee", color: "text-[#ff4d00]" },
+  { num: "100%", label: "Cotton capable", color: "text-white" },
 ];
 
 export function Hero() {

@@ -1,3 +1,6 @@
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+
 export function Products() {
   const categories = [
     {
@@ -6,6 +9,7 @@ export function Products() {
       desc: "T-shirts, hoodies, jerseys, racing, cycling, golf / bowling, singlets, leggings, baby onesies — full sublimation on cotton or polyester.",
       items: ["T-shirts", "Hoodies", "Jerseys", "Racing", "Cycling", "Golf / Bowling"],
       color: "bg-[#ff4d00]",
+      href: "/products",
     },
     {
       label: "Sports & Team",
@@ -13,6 +17,7 @@ export function Products() {
       desc: "Custom sublimated kits for cycling, running, soccer, basketball, rowing, esports. Full team packages with names and numbers.",
       items: ["Cycling", "Running", "Soccer", "Esports"],
       color: "bg-[#00c2ff]",
+      href: "/products",
     },
     {
       label: "Flags & Banners",
@@ -20,6 +25,7 @@ export function Products() {
       desc: "Custom flags, banners, pop-up displays, beach flags, feather banners. Fade-resistant for outdoor use.",
       items: ["Garden flags", "Trade show", "Beach flags", "Banners"],
       color: "bg-[#ff4d00]",
+      href: "/products",
     },
     {
       label: "Home & Living",
@@ -27,6 +33,7 @@ export function Products() {
       desc: "Custom cushions, pillowcases, throws, curtains, bean bags, aprons. Perfect for boutique brands and home decor.",
       items: ["Cushions", "Throws", "Curtains", "Aprons"],
       color: "bg-[#00c2ff]",
+      href: "/products",
     },
     {
       label: "Bags & Accessories",
@@ -34,6 +41,7 @@ export function Products() {
       desc: "Drawstring bags, backpacks, tote bags, gym sacks, hats, scarves, bandanas, lanyards.",
       items: ["Drawstring bags", "Backpacks", "Caps", "Lanyards"],
       color: "bg-[#ff4d00]",
+      href: "/products",
     },
     {
       label: "Hard Goods",
@@ -41,6 +49,7 @@ export function Products() {
       desc: "Mousepads, coasters, puzzles, phone cases, ceramic mugs, metal plates, acrylic photo panels.",
       items: ["Mousepads", "Mugs", "Puzzles", "Phone cases"],
       color: "bg-[#00c2ff]",
+      href: "/products",
     },
   ];
 
@@ -97,6 +106,17 @@ export function Products() {
                   </span>
                 ))}
               </div>
+
+              {/* Cotton badge for Apparel card */}
+              {cat.label === "Apparel" && (
+                <Link
+                  href="/fabric/cotton"
+                  className="mt-4 inline-flex items-center gap-1.5 border-2 border-black bg-[#00c2ff] px-3 py-1.5 text-[11px] font-black uppercase tracking-wider text-black transition-transform hover:-translate-y-0.5"
+                >
+                  100% cotton option
+                  <ArrowRight className="h-3 w-3" />
+                </Link>
+              )}
             </div>
           ))}
         </div>

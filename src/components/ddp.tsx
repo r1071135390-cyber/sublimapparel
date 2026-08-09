@@ -1,3 +1,6 @@
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+
 export function DDP() {
   return (
     <section className="border-b-2 border-black bg-[#ff4d00] text-black">
@@ -112,6 +115,17 @@ export function DDP() {
             Yiwu = World&apos;s Largest Small- Commodity Hub.<br />
             <span className="text-[#ff4d00]">Daily flights · Container ships · Express couriers</span> — all at our doorstep.
           </div>
+        </div>
+
+        {/* Learn more CTA */}
+        <div className="mt-6 text-center">
+          <Link
+            href="/shipping/ddp"
+            className="group inline-flex items-center gap-2 border-2 border-black bg-black px-6 py-3 text-sm font-black uppercase tracking-wider text-white transition-colors hover:bg-white hover:text-black"
+          >
+            See the full DDP guide
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          </Link>
         </div>
       </div>
     </section>

@@ -15,6 +15,10 @@ export async function POST(request: Request) {
     const company = String(fd.get("company") ?? "").trim();
     const product = String(fd.get("product") ?? "").trim();
     const quantity = String(fd.get("quantity") ?? "").trim();
+    const printProcess = String(fd.get("process") ?? "").trim();
+    const fabric = String(fd.get("fabric") ?? "").trim();
+    const designStatus = String(fd.get("designStatus") ?? "").trim();
+    const sizeBreakdown = String(fd.get("sizeBreakdown") ?? "").trim();
     const shipCountry = String(fd.get("shipCountry") ?? "").trim();
     const shipZip = String(fd.get("shipZip") ?? "").trim();
     const deadline = String(fd.get("deadline") ?? "").trim();
@@ -66,10 +70,10 @@ export async function POST(request: Request) {
 
     // Upload to object storage
     const storage = new S3Storage({
-      endpointUrl: process.env.COZE_BUCKET_ENDPOINT_URL,
+      endpointUrl: process.env.COZE_BUCKET_ENDPOINT_URL!,
       accessKey: "",
       secretKey: "",
-      bucketName: process.env.COZE_BUCKET_NAME,
+      bucketName: process.env.COZE_BUCKET_NAME!,
       region: "cn-beijing",
     });
 
@@ -92,6 +96,10 @@ export async function POST(request: Request) {
       company: company || "N/A",
       product: product || "N/A",
       quantity: quantity || "N/A",
+      process: printProcess || "N/A",
+      fabric: fabric || "N/A",
+      designStatus: designStatus || "N/A",
+      sizeBreakdown: sizeBreakdown || "N/A",
       shipCountry: shipCountry || "N/A",
       shipZip: shipZip || "N/A",
       deadline: deadline || "N/A",
