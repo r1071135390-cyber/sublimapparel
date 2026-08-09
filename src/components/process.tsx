@@ -5,36 +5,42 @@ export function Process() {
       title: "Send Your Design",
       desc: "AI, PSD, PDF, or even a napkin sketch. We work with what you have.",
       icon: "📐",
+      img: "/designer-workstation.jpg",
     },
     {
       num: "02",
       title: "Sample & Confirm",
       desc: "Free sample in 3-5 days. Approve colors, fabric, fit — then we go.",
       icon: "🎨",
+      img: null,
     },
     {
       num: "03",
       title: "Print & Sew",
       desc: "Sublimation, cutting, and sewing under one roof. Full chain, no middlemen.",
       icon: "🧵",
+      img: "/fabric-printing.jpg",
     },
     {
       num: "04",
       title: "Quality Check",
       desc: "Every piece inspected. Colors verified against your proof. No surprises.",
       icon: "✓",
+      img: "/qc-inspection.jpg",
     },
     {
       num: "05",
       title: "Pack & Ship",
       desc: "Folded, poly-bagged, boxed. From our Yiwu floor or LA warehouse — your call.",
       icon: "📦",
+      img: null,
     },
     {
       num: "06",
       title: "Delivered to Door",
       desc: "DDP to 100+ countries. US orders ship domestically from LA — no customs wait.",
       icon: "🚚",
+      img: null,
     },
   ];
 
@@ -80,6 +86,19 @@ export function Process() {
               <p className="text-sm leading-relaxed text-white/70 group-hover:text-black/70">
                 {step.desc}
               </p>
+
+              {/* Image (when present) */}
+              {step.img && (
+                <div className="mt-4 -mx-6 -mb-6 overflow-hidden border-t-2 border-white/20">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={step.img}
+                    alt={step.title}
+                    className="aspect-[4/3] w-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all"
+                    loading="lazy"
+                  />
+                </div>
+              )}
             </div>
           ))}
         </div>

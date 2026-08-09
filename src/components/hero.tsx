@@ -33,7 +33,7 @@ export function Hero() {
       {/* Desktop background image (full bleed) — hidden on mobile */}
       <div className="absolute inset-0 hidden lg:block">
         <Image
-          src="/hero-factory.jpg"
+          src="/factory-floor.jpg"
           alt="Sublimation printing factory floor in Yiwu, China"
           fill
           priority
@@ -51,12 +51,12 @@ export function Hero() {
         />
       </div>
 
-      {/* Mobile hero image — a row of machines, on top, bright & direct (no overlay) */}
+      {/* Mobile hero image — vivid sublimated jersey (no overlay, max impact) */}
       <div className="relative block w-full lg:hidden">
         <div className="relative aspect-[16/9] w-full">
           <Image
-            src="/hero-factory.jpg"
-            alt="Row of sublimation printers in Yiwu factory"
+            src="/hero-jersey.jpg"
+            alt="Vivid full-sublimation jersey"
             fill
             priority
             sizes="100vw"

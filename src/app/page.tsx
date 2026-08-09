@@ -6,6 +6,7 @@ import { Features } from "@/components/features";
 import { HowItWorks } from "@/components/how-it-works";
 import { Products } from "@/components/products";
 import { Process } from "@/components/process";
+import { FactoryFloor } from "@/components/factory-floor";
 import { DDP } from "@/components/ddp";
 import { Industries } from "@/components/industries";
 import { Contact } from "@/components/contact";
@@ -21,6 +22,7 @@ export default function Home() {
       <HowItWorks />
       <Products />
       <Process />
+      <FactoryFloor />
       <DDP />
       <Industries />
       <Contact />
