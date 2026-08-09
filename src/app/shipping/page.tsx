@@ -20,16 +20,6 @@ const options = [
     href: "/shipping/ddp",
   },
   {
-    slug: "us-warehouse",
-    name: "US Warehouse",
-    tagline: "Fontana, CA. 2–5 day domestic shipping.",
-    icon: Warehouse,
-    badge: "Fastest for US buyers",
-    badgeColor: "bg-[#00c2ff] text-black",
-    desc: "Bulk shipped to our California warehouse, then domestic delivery. No customs, no duties, 2–5 days anywhere in the continental US.",
-    href: "/shipping/us-warehouse",
-  },
-  {
     slug: "global",
     name: "Worldwide Shipping",
     tagline: "Sea · air · express · rail to 100+ countries.",
@@ -48,6 +38,16 @@ const options = [
     badgeColor: "bg-black/10 text-black",
     desc: "If you have your own freight forwarder or prefer to arrange your own shipping, we can quote FOB Yiwu, CIF, or EXW terms.",
     href: "/get-a-quote",
+  },
+  {
+    slug: "us-warehouse",
+    name: "US Warehouse",
+    tagline: "Fontana, CA. 2–5 day domestic shipping.",
+    icon: Warehouse,
+    badge: "Fastest for US buyers",
+    badgeColor: "bg-[#00c2ff] text-black",
+    desc: "Bulk shipped to our California warehouse, then domestic delivery. No customs, no duties, 2–5 days anywhere in the continental US.",
+    href: "/shipping/us-warehouse",
   },
 ];
 
