@@ -82,6 +82,8 @@ const GROUPS: SitemapGroup[] = [
       { path: "/fabric/cotton", label: "Sublimation on 100% Cotton", note: "★ king differentiator · eats cotton jersey / 100% cotton / sublimation cotton / direct to garment", new: true },
       { path: "/shipping", label: "Shipping & Warehouse", note: "Index — DDP / US warehouse / Global delivery", new: true },
       { path: "/shipping/ddp", label: "DDP Delivered Duty Paid", note: "★ king SEO · eats ddp / duties paid / overseas warehouse", new: true },
+      { path: "/shipping/us-warehouse", label: "US Warehouse · Fontana, CA", note: "★ king SEO · eats us warehouse / overseas warehouse / fulfillment", new: true },
+      { path: "/shipping/global", label: "Worldwide Shipping", note: "★ king SEO · eats worldwide shipping / global fulfillment / sea air express", new: true },
     ],
   },
   {

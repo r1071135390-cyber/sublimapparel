@@ -41,6 +41,8 @@ const ROUTES: SitemapRoute[] = [
   { path: "/fabric/cotton", priority: 0.9, changeFrequency: "monthly" }, // 王炸
   { path: "/shipping", priority: 0.8, changeFrequency: "monthly" },
   { path: "/shipping/ddp", priority: 0.9, changeFrequency: "monthly" }, // 王炸
+  { path: "/shipping/us-warehouse", priority: 0.9, changeFrequency: "monthly" }, // 王炸
+  { path: "/shipping/global", priority: 0.9, changeFrequency: "monthly" }, // 王炸
 
   // ── L2 信任 / 案例 ────────────────────────────────────
   { path: "/about", priority: 0.7, changeFrequency: "monthly" },

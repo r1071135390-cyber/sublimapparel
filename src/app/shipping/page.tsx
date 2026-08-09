@@ -27,7 +27,17 @@ const options = [
     badge: "Fastest for US buyers",
     badgeColor: "bg-[#00c2ff] text-black",
     desc: "Bulk shipped to our California warehouse, then domestic delivery. No customs, no duties, 2–5 days anywhere in the continental US.",
-    href: "/get-a-quote",
+    href: "/shipping/us-warehouse",
+  },
+  {
+    slug: "global",
+    name: "Worldwide Shipping",
+    tagline: "Sea · air · express · rail to 100+ countries.",
+    icon: Truck,
+    badge: "All regions",
+    badgeColor: "bg-[#0a0a0a] text-white",
+    desc: "Five shipping modes, every Incoterm. Transit time, cost, and customs complexity mapped by region so you can pick the right route.",
+    href: "/shipping/global",
   },
   {
     slug: "fob",
@@ -68,10 +78,10 @@ export default function ShippingPage() {
             Choose your shipping
           </div>
           <h2 className="mb-10 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
-            Three ways to ship.
+            Four ways to ship.
           </h2>
 
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {options.map((o) => {
               const Icon = o.icon;
               return (
