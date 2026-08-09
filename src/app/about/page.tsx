@@ -1,5 +1,6 @@
 import { Contact } from "@/components/contact";
 import Link from "next/link";
+import { MapPin } from "lucide-react";
 
 export const metadata = { title: "About — SublimPrint" };
 
@@ -7,14 +8,24 @@ const capabilities = [
   { title: "Sublimation printing", desc: "Large-format printers with CMYK ink sets. Up to 100m of fabric per roll. Both polyester and 100% cotton." },
   { title: "Laser cutting", desc: "Precision cutting to ±0.5mm. Custom patterns and size charts." },
   { title: "Sewing & assembly", desc: "In-house sewing lines. Hand-stitched construction with quality control at every step." },
+  { title: "Custom packaging", desc: "Polybag, individual box, hangtag, barcode label — ready for retail or e-commerce fulfillment." },
   { title: "DDP logistics", desc: "End-to-end shipping from Yiwu with all duties pre-paid. Door delivery in 100+ countries." },
   { title: "LA warehouse", desc: "Stocked inventory in Fontana for US customers. Domestic shipping, no customs, 2-5 day delivery." },
-  { title: "Custom packaging", desc: "Polybag, individual box, hangtag, barcode label — ready for retail or e-commerce fulfillment." },
 ];
 
 const locations = [
-  { city: "Yiwu, China", role: "Factory + Global Hub", desc: "Complete production line. Daily output: 2,500+ pieces. Direct access to the world's largest small-commodity logistics network." },
-  { city: "Fontana, CA, USA", role: "Overseas Warehouse", desc: "Stocked inventory for US customers. Domestic 2-5 day shipping. No customs. No duties. Perfect for e-commerce and time-sensitive orders." },
+  {
+    city: "Yiwu, China",
+    role: "Factory + Global Hub",
+    address: ["No. 35 Lingyun Road", "Yiwu, Zhejiang, China"],
+    desc: "Complete production line. Daily output: 2,500+ pieces. Direct access to the world's largest small-commodity logistics network.",
+  },
+  {
+    city: "Fontana, CA, USA",
+    role: "Overseas Warehouse",
+    address: ["13052 Jurupa Ave", "Fontana, CA 92335", "United States"],
+    desc: "Stocked inventory for US customers. Domestic 2-5 day shipping. No customs. No duties. Perfect for e-commerce and time-sensitive orders.",
+  },
 ];
 
 const values = [
@@ -165,6 +176,14 @@ export default function AboutPage() {
                 <h3 className="mb-4 text-3xl font-black text-black md:text-4xl">
                   {loc.city}
                 </h3>
+                <div className="mb-4 flex items-start gap-2 text-sm font-medium leading-relaxed text-black/80">
+                  <MapPin size={16} className="mt-0.5 shrink-0 text-[#ff4d00]" />
+                  <div>
+                    {loc.address.map((line) => (
+                      <div key={line}>{line}</div>
+                    ))}
+                  </div>
+                </div>
                 <p className="text-base leading-relaxed text-black/80">{loc.desc}</p>
               </div>
             ))}
