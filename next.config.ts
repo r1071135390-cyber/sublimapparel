@@ -1,10 +1,12 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  // outputFileTracingRoot: path.resolve(__dirname, '../../'),  // Uncomment and add 'import path from "path"' if needed
-  /* config options here */
-  allowedDevOrigins: ['*.dev.coze.site'],
+  // Static export for Cloudflare Pages (loses API routes, but site is marketing-focused)
+  output: 'export',
+  // The /api/inquiry route is excluded from static export via dynamic = 'force-static' below
+  trailingSlash: true,
   images: {
+    unoptimized: true, // Required for static export (no Next.js image optimization server)
     remotePatterns: [
       {
         protocol: 'https',
@@ -13,6 +15,8 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  // Allow Coze dev origin (sandbox only)
+  allowedDevOrigins: ['*.dev.coze.site'],
 };
 
 export default nextConfig;

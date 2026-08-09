@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next";
 import { industries } from "@/lib/cases";
 
+export const dynamic = 'force-static';
+
 // Sitemap config
 // Add new static routes here + bump `priority` if it's a key conversion page.
 // Dynamic routes (cases, future products, future solutions) are appended below.

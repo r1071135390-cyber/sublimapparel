@@ -95,33 +95,62 @@ export function Contact() {
     e.preventDefault();
     setStatus("sending");
     setErrorMsg("");
-    try {
-      const fd = new FormData();
-      Object.entries(form).forEach(([k, v]) => fd.append(k, v));
-      files.forEach((a) => fd.append("artwork", a.file, a.name));
 
-      const res = await fetch("/api/inquiry", { method: "POST", body: fd });
-      if (!res.ok) {
-        const j = await res.json().catch(() => ({}));
-        throw new Error(j.error || "Request failed");
-      }
+    // Validate required fields
+    if (!form.name || !form.email) {
+      setStatus("err");
+      setErrorMsg("Name and email are required.");
+      return;
+    }
+    if (!form.deadline) {
+      setStatus("err");
+      setErrorMsg("Required delivery date is required for a DDP quote.");
+      return;
+    }
+
+    try {
+      // Build a structured email body from form data.
+      // mailto: opens the customer's email client with a new message addressed to us.
+      // The customer can review, attach artwork manually, and hit Send.
+      const lines = [
+        `Hi SublimApparel team,`,
+        ``,
+        `I'd like to request a quote for the following project:`,
+        ``,
+        `Name: ${form.name}`,
+        `Email: ${form.email}`,
+        `Company: ${form.company || "—"}`,
+        ``,
+        `Product: ${form.product}`,
+        `Quantity: ${form.quantity || "—"}`,
+        `Print method: ${form.process}`,
+        `Fabric: ${form.fabric}`,
+        `Design status: ${form.designStatus}`,
+        `Size breakdown: ${form.sizeBreakdown || "—"}`,
+        ``,
+        `Ship to:`,
+        `  Country: ${form.shipCountry || "—"}`,
+        `  ZIP / postal code: ${form.shipZip || "—"}`,
+        ``,
+        `Required delivery: ${form.deadline}`,
+        ``,
+        `Project details:`,
+        form.message || "(please add details)",
+        ``,
+        `Artwork files: ${files.length} file(s) ready to attach (${files.map(f => f.name).join(", ") || "none"})`,
+        ``,
+        `Best regards,`,
+        `${form.name}`,
+      ];
+
+      const subject = `Inquiry: ${form.product} — ${form.quantity || "TBD"} pcs — ${form.name}`;
+      const mailto = `mailto:ramon@sublimapparel.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join("\n"))}`;
+
+      // Open the user's email client
+      window.location.href = mailto;
+
       setStatus("ok");
-      setForm({
-        name: "",
-        email: "",
-        company: "",
-        product: "Custom T-Shirts",
-        process: "Sublimation",
-        fabric: "Polyester",
-        designStatus: "Have design ready",
-        quantity: "",
-        sizeBreakdown: "",
-        shipCountry: "",
-        shipZip: "",
-        deadline: "",
-        message: "",
-      });
-      setFiles([]);
+      // Don't clear the form — the user might want to retry or screenshot
     } catch (err) {
       setStatus("err");
       setErrorMsg(err instanceof Error ? err.message : "Something went wrong");
@@ -506,7 +535,13 @@ export function Contact() {
 
               {status === "ok" && (
                 <div className="mt-4 border-2 border-[#00c2ff] bg-[#00c2ff]/10 p-3 text-sm font-bold text-black">
-                  ✓ Thanks! We&apos;ll be in touch within 24 hours with a quote and a free mockup.
+                  ✓ Your email client should have opened with the inquiry pre-filled.
+                  Attach your artwork files and hit send — we&apos;ll reply within 24 hours.
+                  If nothing opened, please email us directly at{" "}
+                  <a href="mailto:ramon@sublimapparel.com" className="underline">
+                    ramon@sublimapparel.com
+                  </a>
+                  .
                 </div>
               )}
               {status === "err" && (
