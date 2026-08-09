@@ -13,7 +13,7 @@ const capabilities = [
 ];
 
 const locations = [
-  { city: "Yiwu, China", role: "Factory + Global Hub", desc: "Complete production line. Daily output: 5,000+ pieces. Direct access to the world's largest small-commodity logistics network." },
+  { city: "Yiwu, China", role: "Factory + Global Hub", desc: "Complete production line. Daily output: 2,500+ pieces. Direct access to the world's largest small-commodity logistics network." },
   { city: "Fontana, CA, USA", role: "Overseas Warehouse", desc: "Stocked inventory for US customers. Domestic 2-5 day shipping. No customs. No duties. Perfect for e-commerce and time-sensitive orders." },
 ];
 
@@ -96,7 +96,7 @@ export default function AboutPage() {
             {[
               { num: "Since 2018", label: "Founded in Yiwu" },
               { num: "100+", label: "Countries via DDP" },
-              { num: "5K+", label: "Pieces per day" },
+              { num: "2.5K+", label: "Pieces per day" },
               { num: "98%", label: "On-time delivery" },
             ].map((s) => (
               <div
