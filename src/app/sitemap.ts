@@ -1,5 +1,4 @@
 import type { MetadataRoute } from "next";
-import { industries } from "@/lib/cases";
 
 export const dynamic = 'force-static';
 
@@ -11,6 +10,9 @@ export const dynamic = 'force-static';
 const rawDomain = process.env.COZE_PROJECT_DOMAIN_DEFAULT ?? "https://sublimapparel.com";
 const SITE_URL = rawDomain.replace(/\/+$/, ""); // strip trailing slash if any
 const LAST_MOD = new Date(); // bump when meaningful content changes ship
+
+// Trailing-slash helper — site uses trailingSlash: true, so sitemap URLs must too.
+const withSlash = (p: string) => (p.endsWith("/") ? p : `${p}/`);
 
 type SitemapRoute = {
   path: string;
@@ -64,21 +66,17 @@ const ROUTES: SitemapRoute[] = [
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = LAST_MOD;
 
-  // Static pages
+  // Static pages — normalize all URLs to trailing-slash form to match trailingSlash: true
   const staticEntries: MetadataRoute.Sitemap = ROUTES.map((r) => ({
-    url: `${SITE_URL}${r.path}`,
+    url: `${SITE_URL}${withSlash(r.path)}`,
     lastModified: now,
     changeFrequency: r.changeFrequency,
     priority: r.priority,
   }));
 
-  // Dynamic: 12 case-study slugs
-  const caseEntries: MetadataRoute.Sitemap = industries.map((ind) => ({
-    url: `${SITE_URL}/cases/${ind.slug}`,
-    lastModified: now,
-    changeFrequency: "monthly" as const,
-    priority: 0.6,
-  }));
+  // Case-study slugs are currently thin/empty and have been marked noindex.
+  // Excluding them from sitemap so Google doesn't waste crawl budget on them.
+  // Re-add here once their content is rewritten to ≥ 600 words.
 
-  return [...staticEntries, ...caseEntries];
+  return staticEntries;
 }

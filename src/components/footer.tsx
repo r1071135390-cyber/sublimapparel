@@ -5,7 +5,8 @@ const linkGroups = [
   {
     title: "Products",
     items: [
-      { label: "Cotton Sublimation Collection", href: "/products" },
+      { label: "Cotton Printing (DTG & DTF)", href: "/fabric/cotton" },
+      { label: "Polyester Sublimation", href: "/fabric" },
       { label: "Team & Performance Apparel", href: "/products" },
       { label: "Custom Cut-and-Sew Apparel", href: "/products" },
       { label: "Headwear & Accessories", href: "/products" },

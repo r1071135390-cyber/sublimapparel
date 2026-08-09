@@ -5,9 +5,49 @@ import { UtilityBar } from "@/components/utility-bar";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "SublimApparel — Custom Print. Any Material. Any Product.",
+  metadataBase: new URL("https://sublimapparel.com"),
+  title: {
+    default: "SublimApparel — Custom Print. Any Material. Any Product.",
+    template: "%s | SublimApparel",
+  },
   description:
-    "SublimApparel is a sublimation printing factory in Yiwu, China (est. 2018). Custom print on apparel, mugs, mousepads, banners, home textiles and more. Polyester & 100% cotton. DDP shipping worldwide, US warehouse in Fontana, CA.",
+    "Sublimation on polyester, DTG & DTF on 100% cotton. MOQ 50, DDP to your door in 100+ countries, US warehouse in Fontana CA. Yiwu factory est. 2018.",
+  alternates: {
+    canonical: "./",
+  },
+  openGraph: {
+    type: "website",
+    siteName: "SublimApparel",
+    locale: "en_US",
+    title: "SublimApparel — Custom Print. Any Material. Any Product.",
+    description:
+      "Sublimation on polyester, DTG & DTF on 100% cotton. MOQ 50, DDP worldwide, US warehouse in Fontana CA.",
+    images: [
+      {
+        url: "/og-default.jpg",
+        width: 1200,
+        height: 630,
+        alt: "SublimApparel — Yiwu sublimation & cotton printing factory",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "SublimApparel — Custom Print. Any Material. Any Product.",
+    description:
+      "Sublimation on polyester, DTG & DTF on 100% cotton. MOQ 50, DDP worldwide, US warehouse in Fontana CA.",
+    images: ["/og-default.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   icons: {
     icon: "/icon.png",
     shortcut: "/icon.png",

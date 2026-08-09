@@ -49,6 +49,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${ind.title} Case Studies — SublimApparel`,
     description: ind.blurb,
+    robots: { index: false, follow: true },
   };
 }
 

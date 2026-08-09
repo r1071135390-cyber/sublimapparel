@@ -17,6 +17,11 @@ const nextConfig: NextConfig = {
   },
   // Allow Coze dev origin (sandbox only)
   allowedDevOrigins: ['*.dev.coze.site'],
+  // P0-1 fix: strip data-inspector-* debug attributes and source-path leaks from production HTML
+  compiler: {
+    reactRemoveProperties: { properties: ['^data-inspector-'] },
+    removeConsole: { exclude: ['error'] },
+  },
 };
 
 export default nextConfig;
