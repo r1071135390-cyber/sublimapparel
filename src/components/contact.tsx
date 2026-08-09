@@ -168,14 +168,31 @@ export function Contact() {
                   </a>
                 </div>
               </div>
+              {/* Factory — China */}
               <div>
                 <div className="text-xs font-black uppercase tracking-widest text-black/50">
-                  Address
+                  <span className="mr-1.5">🇨🇳</span>Factory · China
                 </div>
                 <div className="mt-1 text-base font-bold leading-snug text-black">
-                  35 Lingyun Road, Yiwu, Zhejiang
+                  35 Lingyun Road, Yiwu
                   <br />
                   Zhejiang, China
+                </div>
+              </div>
+
+              {/* Warehouse — US (Los Angeles) */}
+              <div>
+                <div className="text-xs font-black uppercase tracking-widest text-black/50">
+                  <span className="mr-1.5">🇺🇸</span>Warehouse · USA
+                </div>
+                <div className="mt-1 text-base font-bold leading-snug text-black">
+                  {/* TODO: replace with real LA warehouse address */}
+                  Los Angeles, CA 90021
+                  <br />
+                  United States
+                </div>
+                <div className="mt-1 text-xs font-medium text-black/50">
+                  US local pickup · no customs · 2–5 day ground
                 </div>
               </div>
             </div>
