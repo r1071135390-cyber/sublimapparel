@@ -117,9 +117,6 @@ export function Footer() {
               <Building2 size={14} />
               Factory
             </h3>
-            <p className="text-sm font-bold text-black">
-              HomeDorm — Factory
-            </p>
             <p className="mt-2 text-sm text-black/70">
               35 Lingyun Road
               <br />
@@ -133,9 +130,6 @@ export function Footer() {
               <Warehouse size={14} />
               US Warehouse
             </h3>
-            <p className="text-sm font-bold text-black">
-              HomeDorm — US warehouse
-            </p>
             <p className="mt-2 text-sm text-black/70">
               13052 Jurupa Ave
               <br />

@@ -186,8 +186,9 @@ export function Contact() {
                   <span className="mr-1.5">🇺🇸</span>Warehouse · USA
                 </div>
                 <div className="mt-1 text-base font-bold leading-snug text-black">
-                  {/* TODO: replace with real Fontana warehouse street address */}
-                  Fontana, CA, USA
+                  13052 Jurupa Ave
+                  <br />
+                  Fontana, CA 92335
                   <br />
                   United States
                 </div>

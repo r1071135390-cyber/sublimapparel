@@ -60,7 +60,7 @@ export default function AboutPage() {
                 Legal entity
               </div>
               <div className="mt-2 text-lg font-black leading-tight text-black md:text-xl">
-                Yiwu HomeDorm Commodity Manufacturing Co., Ltd.
+                Registered apparel manufacturer in Yiwu, Zhejiang, China.
               </div>
             </div>
             <div className="border-2 border-black bg-white p-6">
