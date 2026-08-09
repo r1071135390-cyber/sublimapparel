@@ -23,7 +23,7 @@ const stats = [
   { value: "100+", unit: "COUNTRIES", label: "Delivered to" },
   { value: "5", unit: "MODES", label: "Sea · Air · Express · Rail · Truck" },
   { value: "3–25", unit: "DAYS", label: "Transit range" },
-  { value: "98%", unit: "ON-TIME", label: "Tracking delivery rate" },
+  { value: "99.6%", unit: "ON-TIME", label: "Tracking delivery rate" },
 ];
 
 const shippingModes = [

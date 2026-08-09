@@ -36,7 +36,7 @@ const stats = [
   { value: "7", unit: "STEPS", label: "End-to-end process" },
   { value: "21", unit: "DAYS", label: "Average PO to delivery" },
   { value: "50+", unit: "CHECKS", label: "Quality gates" },
-  { value: "98%", unit: "ON-TIME", label: "On-time delivery rate" },
+  { value: "99.6%", unit: "ON-TIME", label: "On-time delivery rate" },
 ];
 
 const steps = [

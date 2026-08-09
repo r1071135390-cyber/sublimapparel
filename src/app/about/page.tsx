@@ -97,7 +97,7 @@ export default function AboutPage() {
               { num: "Since 2018", label: "Founded in Yiwu" },
               { num: "100+", label: "Countries via DDP" },
               { num: "2.5K+", label: "Pieces per day" },
-              { num: "98%", label: "On-time delivery" },
+              { num: "99.6%", label: "On-time delivery" },
             ].map((s) => (
               <div
                 key={s.label}
