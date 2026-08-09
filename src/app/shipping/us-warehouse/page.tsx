@@ -1,3 +1,4 @@
+import { JsonLd } from "@/components/json-ld";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { MapPin, Clock, Package, Plane, Truck, CheckCircle2, Phone, Mail } from "lucide-react";

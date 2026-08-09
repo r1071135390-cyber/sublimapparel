@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { UtilityBar } from "@/components/utility-bar";
+import { JsonLd } from "@/components/json-ld";
+import { organizationJsonLd } from "@/lib/json-ld-data";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -63,6 +65,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen bg-[#faf9f6] font-sans text-black antialiased">
+        <JsonLd data={organizationJsonLd} />
         <UtilityBar />
         <Navbar />
         {children}

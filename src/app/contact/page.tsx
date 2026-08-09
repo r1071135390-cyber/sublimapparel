@@ -1,6 +1,10 @@
 import { Contact } from "@/components/contact";
 
-export const metadata = { title: "Contact — SublimApparel" };
+export const metadata = {
+  title: "Contact SublimApparel — Yiwu Factory, US Warehouse & 24h Response",
+  description:
+    "Talk to a real production manager in Yiwu, China — or our Fontana, CA team — within 24h. WhatsApp, email, WeChat. Quote in 12h, sample in 5 days, bulk in 21 days.",
+};
 
 export default function ContactPage() {
   return (

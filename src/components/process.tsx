@@ -5,7 +5,7 @@ export function Process() {
       title: "Send Your Design",
       desc: "AI, PSD, PDF, or even a napkin sketch. We work with what you have.",
       icon: "📐",
-      img: "/designer-workstation.jpg",
+      img: "/designer-workstation.webp",
     },
     {
       num: "02",
@@ -19,14 +19,14 @@ export function Process() {
       title: "Print & Sew",
       desc: "Sublimation, cutting, and sewing under one roof. Full chain, no middlemen.",
       icon: "🧵",
-      img: "/fabric-printing.jpg",
+      img: "/fabric-printing.webp",
     },
     {
       num: "04",
       title: "Quality Check",
       desc: "Every piece inspected. Colors verified against your proof. No surprises.",
       icon: "✓",
-      img: "/qc-inspection.jpg",
+      img: "/qc-inspection.webp",
     },
     {
       num: "05",

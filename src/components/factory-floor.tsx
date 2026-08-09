@@ -27,7 +27,7 @@ export function FactoryFloor() {
             <div className="relative aspect-[16/10] overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/printer-closeup.jpg"
+                src="/printer-closeup.webp"
                 alt="Large-format sublimation printer — CMYK print head in action"
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 loading="lazy"
@@ -53,7 +53,7 @@ export function FactoryFloor() {
             <div className="relative aspect-[16/10] overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/heat-press.jpg"
+                src="/heat-press.webp"
                 alt="Industrial heat press — 200°C temperature transfer"
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 loading="lazy"

@@ -1,6 +1,10 @@
 import { Contact } from "@/components/contact";
 
-export const metadata = { title: "Products — SublimApparel" };
+export const metadata = {
+  title: "Custom Sublimation & Cotton Apparel — T-Shirts, Jerseys, Hoodies, Cycling, Golf, Racing",
+  description:
+    "Custom sublimated apparel for B2B: t-shirts, jerseys, hoodies, cycling kits, golf polos, racing suits. No setup fees, MOQ 50 pcs, full color all-over print, sample in 5 days.",
+};
 
 const categories = [
   {

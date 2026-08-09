@@ -33,7 +33,7 @@ export function Hero() {
       {/* Desktop background image (full bleed) — hidden on mobile */}
       <div className="absolute inset-0 hidden lg:block">
         <Image
-          src="/factory-floor.jpg"
+          src="/factory-floor.webp"
           alt="Sublimation printing factory floor in Yiwu, China"
           fill
           priority
@@ -55,7 +55,7 @@ export function Hero() {
       <div className="relative block w-full lg:hidden">
         <div className="relative aspect-[16/9] w-full">
           <Image
-            src="/hero-jersey.jpg"
+            src="/hero-jersey.webp"
             alt="Vivid full-sublimation jersey"
             fill
             priority

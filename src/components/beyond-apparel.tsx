@@ -84,7 +84,7 @@ export function BeyondApparel() {
           {/* Right: product image grid */}
           <div className="relative aspect-[4/5] w-full overflow-hidden bg-white md:aspect-auto md:h-full">
             <Image
-              src="/product-lineup.jpg"
+              src="/product-lineup.webp"
               alt="A dense grid of sublimated apparel products: t-shirts, hoodies, jerseys, flags, banners, mousepads, mugs and more"
               fill
               sizes="(max-width: 768px) 100vw, 50vw"

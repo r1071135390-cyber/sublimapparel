@@ -1,3 +1,4 @@
+import { JsonLd } from "@/components/json-ld";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Shirt, Users, Palette, Ruler, Layers, Sparkles } from "lucide-react";
@@ -95,6 +96,24 @@ const faq = [
 export default function JerseysPage() {
   return (
     <main>
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": "Custom Team Jerseys",
+        "image": `${process.env.NEXT_PUBLIC_SITE_URL || "https://sublimapparel.com"}/og-default.jpg`,
+        "description": "Custom sublimation printing, low MOQ 50 pcs, DDP shipping worldwide.",
+        "brand": { "@type": "Brand", "name": "SublimApparel" },
+        "manufacturer": { "@type": "Organization", "name": "SublimApparel" },
+        "offers": {
+          "@type": "Offer",
+          "url": `${process.env.NEXT_PUBLIC_SITE_URL || "https://sublimapparel.com"}/products/jerseys/`,
+          "priceCurrency": "USD",
+          "priceRange": "$",
+          "availability": "https://schema.org/InStock",
+          "itemCondition": "https://schema.org/NewCondition"
+        }
+      }} />
+
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto grid max-w-7xl gap-0 px-6 md:grid-cols-12">
           <div className="md:col-span-7 py-16 md:py-24">

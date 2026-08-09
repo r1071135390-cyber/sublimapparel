@@ -2,7 +2,11 @@ import { Contact } from "@/components/contact";
 import Link from "next/link";
 import { MapPin } from "lucide-react";
 
-export const metadata = { title: "About — SublimApparel" };
+export const metadata = {
+  title: "About SublimApparel — 2,000 sqm Yiwu Sublimation & Cotton Printing Factory Since 2018",
+  description:
+    "12 production lines, 200+ staff, 99.2% QC pass rate. Sublimation on polyester + all-over printing on 100% cotton. DDP to 100+ countries, US warehouse in Fontana CA.",
+};
 
 const capabilities = [
   { title: "Sublimation printing", desc: "Large-format printers with CMYK ink sets. Up to 100m of fabric per roll. Both polyester and 100% cotton." },
