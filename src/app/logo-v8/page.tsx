@@ -29,7 +29,7 @@ export default function LogoV8Preview() {
               num: "2",
               img: "/logo-concepts/v8-flat-2.jpg",
               tags: ["扁平", "横线分隔", "印刷感强"],
-              why: "加了 thin rule 在文字下面，更有"品牌字标"感。",
+              why: "加了 thin rule 在文字下面，更有『品牌字标』感。",
             },
             {
               num: "3",
