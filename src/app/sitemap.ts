@@ -6,7 +6,7 @@ import { industries } from "@/lib/cases";
 // Dynamic routes (cases, future products, future solutions) are appended below.
 
 // COZE_PROJECT_DOMAIN_DEFAULT is already prefixed with https://, so use it directly.
-const rawDomain = process.env.COZE_PROJECT_DOMAIN_DEFAULT ?? "https://sublimprint.com";
+const rawDomain = process.env.COZE_PROJECT_DOMAIN_DEFAULT ?? "https://sublimapparel.com";
 const SITE_URL = rawDomain.replace(/\/+$/, ""); // strip trailing slash if any
 const LAST_MOD = new Date(); // bump when meaningful content changes ship
 

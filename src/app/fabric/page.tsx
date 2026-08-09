@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowRight, Droplets, Leaf } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Fabric & Process — Polyester, Cotton, DTG, Sublimation | SublimPrint",
+  title: "Fabric & Process — Polyester, Cotton, DTG, Sublimation | SublimApparel",
   description:
     "We run every major apparel print process — sublimation on polyester, DTG and DTF on 100% cotton, screen print, and embroidery. Pick the right fabric and process for your project.",
 };

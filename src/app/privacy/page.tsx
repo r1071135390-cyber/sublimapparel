@@ -2,9 +2,9 @@ import { ArrowLeft, Mail } from "lucide-react";
 import Link from "next/link";
 
 export const metadata = {
-  title: "Privacy Policy — SublimPrint",
+  title: "Privacy Policy — SublimApparel",
   description:
-    "How SublimPrint collects, uses, and protects your personal data across our website, inquiry form, and order workflow.",
+    "How SublimApparel collects, uses, and protects your personal data across our website, inquiry form, and order workflow.",
 };
 
 const SECTIONS = [
@@ -14,7 +14,7 @@ const SECTIONS = [
     body: (
       <>
         <p>
-          This website (sublimprint.com) is operated by{" "}
+          This website (sublimapparel.com) is operated by{" "}
           <strong>Yiwu HomeDorm Commodity Manufacturing Co., Ltd.</strong>, a
           company registered in Yiwu, Zhejiang, China (the &ldquo;Company&rdquo;,
           &ldquo;we&rdquo;, &ldquo;us&rdquo;). We are the data controller for
@@ -27,7 +27,7 @@ const SECTIONS = [
           <strong>US warehouse:</strong> 13052 Jurupa Ave, Fontana, CA 92335,
           United States
           <br />
-          <strong>Email:</strong> ramon@sublimprint.com
+          <strong>Email:</strong> ramon@sublimapparel.com
           <br />
           <strong>WhatsApp:</strong> +86 137 6459 3988
         </p>
@@ -164,7 +164,7 @@ const SECTIONS = [
         </p>
         <p>
           To exercise any of these rights, contact us at{" "}
-          <strong>ramon@sublimprint.com</strong>. We will respond within 30
+          <strong>ramon@sublimapparel.com</strong>. We will respond within 30
           days.
         </p>
       </>
@@ -247,11 +247,11 @@ export default function PrivacyPage() {
               We respond to privacy &amp; data requests within 30 days.
             </p>
             <a
-              href="mailto:ramon@sublimprint.com?subject=Privacy%20request"
+              href="mailto:ramon@sublimapparel.com?subject=Privacy%20request"
               className="mt-5 inline-flex items-center gap-2 bg-[#ff4d00] px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-[#e64500]"
             >
               <Mail className="h-4 w-4" />
-              ramon@sublimprint.com
+              ramon@sublimapparel.com
             </a>
           </div>
         </div>

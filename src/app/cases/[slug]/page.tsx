@@ -45,9 +45,9 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const ind = getIndustryBySlug(slug);
-  if (!ind) return { title: "Case Studies — SublimPrint" };
+  if (!ind) return { title: "Case Studies — SublimApparel" };
   return {
-    title: `${ind.title} Case Studies — SublimPrint`,
+    title: `${ind.title} Case Studies — SublimApparel`,
     description: ind.blurb,
   };
 }

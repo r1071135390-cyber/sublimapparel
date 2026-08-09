@@ -2,9 +2,9 @@ import { ArrowLeft, Mail } from "lucide-react";
 import Link from "next/link";
 
 export const metadata = {
-  title: "Terms of Sale — SublimPrint",
+  title: "Terms of Sale — SublimApparel",
   description:
-    "Terms and conditions governing quotes, orders, payment, production, shipping, returns, and liability for custom sublimation apparel from SublimPrint.",
+    "Terms and conditions governing quotes, orders, payment, production, shipping, returns, and liability for custom sublimation apparel from SublimApparel.",
 };
 
 const SECTIONS = [
@@ -17,7 +17,7 @@ const SECTIONS = [
         and contracts between <strong>Yiwu HomeDorm Commodity Manufacturing Co., Ltd.</strong>
         (&ldquo;the Company&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;) and the
         buyer (&ldquo;Customer&rdquo;, &ldquo;you&rdquo;) for custom apparel,
-        accessories, and related printed products sold through sublimprint.com
+        accessories, and related printed products sold through sublimapparel.com
         or via direct email/WhatsApp quotation. By placing an order with us,
         you accept these Terms in full.
       </p>
@@ -290,11 +290,11 @@ export default function TermsPage() {
               business day.
             </p>
             <a
-              href="mailto:ramon@sublimprint.com?subject=Terms%20of%20sale%20question"
+              href="mailto:ramon@sublimapparel.com?subject=Terms%20of%20sale%20question"
               className="mt-5 inline-flex items-center gap-2 bg-[#ff4d00] px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-[#e64500]"
             >
               <Mail className="h-4 w-4" />
-              ramon@sublimprint.com
+              ramon@sublimapparel.com
             </a>
           </div>
         </div>

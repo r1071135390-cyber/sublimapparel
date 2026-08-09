@@ -60,7 +60,7 @@ const linkGroups = [
   {
     title: "Company",
     items: [
-      { label: "About sublimprint.com", href: "/about" },
+      { label: "About sublimapparel.com", href: "/about" },
       { label: "Our factory in Yiwu", href: "/about" },
       { label: "Why Yiwu", href: "/about" },
       { label: "Certifications & compliance", href: "/about" },
@@ -146,10 +146,10 @@ export function Footer() {
               Contact
             </h3>
             <Link
-              href="mailto:ramon@sublimprint.com"
+              href="mailto:ramon@sublimapparel.com"
               className="text-sm text-black/80 transition-colors hover:text-[#ff4d00]"
             >
-              ramon@sublimprint.com
+              ramon@sublimapparel.com
             </Link>
             <ul className="mt-3 space-y-2 text-sm text-black/70">
               <li className="flex items-center gap-2">
@@ -251,7 +251,7 @@ export function Footer() {
           </ul>
         </div>
         <div className="mx-auto max-w-7xl px-6 pb-6 text-[11px] leading-relaxed text-white/40">
-          sublimprint.com is a website of Yiwu HomeDorm Commodity Manufacturing
+          sublimapparel.com is a website of Yiwu HomeDorm Commodity Manufacturing
           Co., Ltd. — registered in Yiwu, Zhejiang, China. All artwork, designs
           and trademarks shown are property of their respective owners.
         </div>

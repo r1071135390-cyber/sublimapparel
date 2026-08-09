@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Inside Our Yiwu Factory · 2,000 sqm Sublimation Apparel Plant | SublimPrint",
+  title: "Inside Our Yiwu Factory · 2,000 sqm Sublimation Apparel Plant | SublimApparel",
   description:
     "2,000 sqm Yiwu sublimation apparel factory. 12 production lines, 200+ staff, 24/7 capacity. 6 inline printing machines, full cutting-sewing-printing-packaging vertical integration.",
   keywords: [

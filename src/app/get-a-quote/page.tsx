@@ -1,7 +1,7 @@
 import { Contact } from "@/components/contact";
 import { Check, Clock, FileText, MessageCircle } from "lucide-react";
 
-export const metadata = { title: "Get a Quote — SublimPrint" };
+export const metadata = { title: "Get a Quote — SublimApparel" };
 
 const whatHappens = [
   {

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowRight, Globe, Warehouse, Truck } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Shipping & Fulfillment — DDP, US Warehouse, Global Delivery | SublimPrint",
+  title: "Shipping & Fulfillment — DDP, US Warehouse, Global Delivery | SublimApparel",
   description:
     "DDP shipping to 100+ countries, US warehouse fulfillment from Fontana, CA, and global delivery. One invoice, no surprise duties.",
 };

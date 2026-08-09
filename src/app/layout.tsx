@@ -5,9 +5,9 @@ import { UtilityBar } from "@/components/utility-bar";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "SublimPrint — Custom Print. Any Material. Any Product.",
+  title: "SublimApparel — Custom Print. Any Material. Any Product.",
   description:
-    "SublimPrint is a sublimation printing factory in Yiwu, China (est. 2018). Custom print on apparel, mugs, mousepads, banners, home textiles and more. Polyester & 100% cotton. DDP shipping worldwide, US warehouse in Fontana, CA.",
+    "SublimApparel is a sublimation printing factory in Yiwu, China (est. 2018). Custom print on apparel, mugs, mousepads, banners, home textiles and more. Polyester & 100% cotton. DDP shipping worldwide, US warehouse in Fontana, CA.",
 };
 
 export default function RootLayout({

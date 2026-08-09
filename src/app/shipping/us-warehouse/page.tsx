@@ -371,10 +371,10 @@ export default function UsWarehousePage() {
                 Email
               </div>
               <a
-                href="mailto:ramon@sublimprint.com?subject=US%20warehouse%20quote"
+                href="mailto:ramon@sublimapparel.com?subject=US%20warehouse%20quote"
                 className="text-sm leading-relaxed text-[#faf9f6] hover:text-[#ff4d00]"
               >
-                ramon@sublimprint.com
+                ramon@sublimapparel.com
               </a>
             </div>
           </div>

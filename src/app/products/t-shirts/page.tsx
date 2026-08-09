@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Custom Sublimation T-Shirts | All-Over Print, Low MOQ | SublimPrint",
+  title: "Custom Sublimation T-Shirts | All-Over Print, Low MOQ | SublimApparel",
   description:
     "Custom sublimation t-shirts — all-over print, no setup fee, MOQ 50 pcs. Polyester and 100% cotton. Men's, women's, unisex, kids' sizes. Ships in 7–15 days. DDP to 100+ countries.",
   keywords: [

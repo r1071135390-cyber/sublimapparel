@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowRight, Flag, Users, Palette, Ruler, Layers, Award } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Custom Racing Apparel | Sublimation Motorsport, Auto Club, Track Day | SublimPrint",
+  title: "Custom Racing Apparel | Sublimation Motorsport, Auto Club, Track Day | SublimApparel",
   description:
     "Custom sublimation racing apparel for motorsport teams, auto clubs, track days, and racing series. Full all-over print, no setup fee, MOQ 50 pcs. Crew tees, polos, mechanic shirts, fan wear.",
   keywords: [

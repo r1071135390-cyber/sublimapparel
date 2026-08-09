@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowRight, Cloud, Layers, Palette, Ruler, Sparkles, Users, Wind } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Custom Sublimation Hoodies | All-Over Print, Low MOQ | SublimPrint",
+  title: "Custom Sublimation Hoodies | All-Over Print, Low MOQ | SublimApparel",
   description:
     "Custom sublimation hoodies — pullover, zip-up, cropped, heavyweight. 320–400 GSM fleece. All-over print, no setup fee, MOQ 50 pcs. DDP to 100+ countries.",
   keywords: [

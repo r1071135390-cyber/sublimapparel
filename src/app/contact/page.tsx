@@ -1,6 +1,6 @@
 import { Contact } from "@/components/contact";
 
-export const metadata = { title: "Contact — SublimPrint" };
+export const metadata = { title: "Contact — SublimApparel" };
 
 export default function ContactPage() {
   return (

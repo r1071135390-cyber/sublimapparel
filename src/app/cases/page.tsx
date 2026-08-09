@@ -19,7 +19,7 @@ import {
 import { industries } from "@/lib/cases";
 
 export const metadata: Metadata = {
-  title: "Case Studies — SublimPrint",
+  title: "Case Studies — SublimApparel",
   description:
     "Browse sublimation printing case studies by industry. See real examples of custom apparel, DDP shipping and full-bleed cotton prints we've produced for events, sports, brands, campaigns and more.",
 };

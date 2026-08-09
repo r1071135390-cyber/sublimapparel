@@ -19,7 +19,7 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Industries We Serve · 12 Verticals, 1,000+ B2B Clients | SublimPrint",
+  title: "Industries We Serve · 12 Verticals, 1,000+ B2B Clients | SublimApparel",
   description:
     "12 industries we serve: race events, sports clubs, schools, ecommerce brands, political campaigns, trade shows, esports, churches, fitness, cycling, gaming, hospitality. Sublimation apparel B2B.",
   keywords: [

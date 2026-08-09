@@ -2,7 +2,7 @@ import { ArrowLeft, Mail, Truck, Warehouse, Globe, Package } from "lucide-react"
 import Link from "next/link";
 
 export const metadata = {
-  title: "Shipping Policy — SublimPrint",
+  title: "Shipping Policy — SublimApparel",
   description:
     "How we ship, the difference between FOB / CIF / DDP, US warehouse fulfillment from Fontana CA, production lead times, tracking, and what to do if a shipment is lost or damaged.",
 };
@@ -357,11 +357,11 @@ export default function ShippingPolicyPage() {
               reply with DDP / FOB / CIF options within one business day.
             </p>
             <a
-              href="mailto:ramon@sublimprint.com?subject=Shipping%20quote%20request"
+              href="mailto:ramon@sublimapparel.com?subject=Shipping%20quote%20request"
               className="mt-5 inline-flex items-center gap-2 bg-[#ff4d00] px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-[#e64500]"
             >
               <Mail className="h-4 w-4" />
-              ramon@sublimprint.com
+              ramon@sublimapparel.com
             </a>
           </div>
         </div>

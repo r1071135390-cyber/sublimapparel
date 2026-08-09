@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowRight, Globe, ShieldCheck, Truck, Warehouse, MapPin, Package } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "DDP Shipping — Duties Paid, Delivered to Your Door | SublimPrint",
+  title: "DDP Shipping — Duties Paid, Delivered to Your Door | SublimApparel",
   description:
     "DDP (Delivered Duty Paid) shipping from Yiwu to 100+ countries. We handle customs, duties, and last-mile delivery — one invoice, no surprise fees. Domestic US shipping from Fontana, CA in 2–5 days.",
   keywords: [

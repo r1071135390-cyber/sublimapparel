@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowRight, Check, Leaf, Droplets, Shirt, Sparkles, Layers, Recycle } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Sublimation on 100% Cotton | Direct to Garment Printing | SublimPrint",
+  title: "Sublimation on 100% Cotton | Direct to Garment Printing | SublimApparel",
   description:
     "Custom print on 100% cotton, organic cotton, and cotton-blend apparel. Most factories can only print on polyester — we run both DTG (Direct to Garment) and DTF (Heat transfer) for true cotton sublimation. Low MOQ, soft hand feel, full color.",
   keywords: [

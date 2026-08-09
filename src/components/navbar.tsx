@@ -17,7 +17,7 @@ export function Navbar() {
             <span className="text-lg font-black">S</span>
           </div>
           <span className="text-2xl font-black tracking-tight text-black">
-            sublim<span className="text-[#ff4d00]">/</span>print
+            sublim<span className="text-[#ff4d00]">/</span>apparel
           </span>
         </Link>
 

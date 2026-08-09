@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Quality Control · 4-Stage QC, 50+ Checkpoints, AQL 2.5 | SublimPrint",
+  title: "Quality Control · 4-Stage QC, 50+ Checkpoints, AQL 2.5 | SublimApparel",
   description:
     "4-stage quality control: incoming fabric, in-line, pre-final, and pre-shipment. 50+ checkpoints, AQL 2.5 sampling, 99.2% first-pass rate. Sublimation apparel B2B.",
   keywords: [

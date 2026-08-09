@@ -22,7 +22,7 @@ import {
 // Visit /site-map to see the architecture; SEO sitemap lives at /sitemap.xml.
 
 export const metadata = {
-  title: "Site Map · SublimPrint",
+  title: "Site Map · SublimApparel",
   description: "Internal site architecture overview.",
   robots: { index: false, follow: false },
 };

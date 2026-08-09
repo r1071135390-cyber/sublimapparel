@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowRight, Shirt, Users, Palette, Ruler, Layers, Sparkles } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Custom Team Jerseys | Sublimation Soccer, Baseball, Basketball | SublimPrint",
+  title: "Custom Team Jerseys | Sublimation Soccer, Baseball, Basketball | SublimApparel",
   description:
     "Custom sublimation team jerseys for soccer, baseball, basketball, volleyball. Full dye-sublimation, no setup fee, MOQ 50 pcs, 10–15 day production. Numbers, names, logos all printed — not stitched.",
   keywords: [

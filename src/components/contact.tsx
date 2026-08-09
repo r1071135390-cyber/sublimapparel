@@ -163,8 +163,8 @@ export function Contact() {
                   Email
                 </div>
                 <div className="mt-1 text-base font-bold text-black">
-                  <a href="mailto:ramon@sublimprint.com" className="hover:text-[#ff4d00]">
-                    ramon@sublimprint.com
+                  <a href="mailto:ramon@sublimapparel.com" className="hover:text-[#ff4d00]">
+                    ramon@sublimapparel.com
                   </a>
                 </div>
               </div>
