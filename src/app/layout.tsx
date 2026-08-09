@@ -9,9 +9,9 @@ export const metadata: Metadata = {
   description:
     "SublimApparel is a sublimation printing factory in Yiwu, China (est. 2018). Custom print on apparel, mugs, mousepads, banners, home textiles and more. Polyester & 100% cotton. DDP shipping worldwide, US warehouse in Fontana, CA.",
   icons: {
-    icon: "/favicon-temp.jpg",
-    shortcut: "/favicon-temp.jpg",
-    apple: "/favicon-temp.jpg",
+    icon: "/icon.png",
+    shortcut: "/icon.png",
+    apple: "/icon.png",
   },
 };
 
