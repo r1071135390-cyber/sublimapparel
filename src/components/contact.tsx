@@ -176,7 +176,7 @@ export function Contact() {
               quote within 24 hours.
             </p>
 
-            <div className="mt-10 space-y-4 border-t-2 border-black pt-6 text-sm">
+            <div className="mt-10 space-y-8 border-t-2 border-black pt-8 text-sm">
               <div>
                 <div className="text-xs font-black uppercase tracking-widest text-black/50">
                   WhatsApp
