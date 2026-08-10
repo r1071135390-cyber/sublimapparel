@@ -1,14 +1,14 @@
 import { Metadata } from"next";
 import Link from"next/link";
 import Image from"next/image";
-import { CheckCircle2 } from"lucide-react";
+import { CheckCircle2, Sparkles, Plus } from"lucide-react";
 import { JsonLd } from"@/components/json-ld";
 import { techniqueData } from"@/lib/json-ld-data";
 
 export const metadata: Metadata = {
   title:"Apparel Printing & Embroidery Techniques",
   description:
-"Compare 20 apparel decoration techniques — sublimation, screen printing, DTG, DTF, embroidery, 3D puff & rhinestone. See costs, best uses and durability. DDP worldwide.",
+"Compare 20 apparel decoration techniques — sublimation, screen printing, DTG, DTF, embroidery, 3D puff & rhinestone. We run all 20 in-house and accept custom techniques too. DDP worldwide.",
   keywords: [
 "sublimation printing",
 "screen printing techniques",
@@ -260,6 +260,10 @@ const faqs = [
     q:"Do you offer eco-friendly printing options?",
     a:"Yes. We use phthalate-free, water-based, and OEKO-TEX certified inks across our processes, and we offer water-based and discharge screen printing for a softer, lower-impact finish. Ask us about sustainable fabric options too.",
   },
+  {
+    q:"I don't see my technique on this page — can you still do it?",
+    a:"Almost certainly yes. This page covers the 20 most-requested techniques, but our factory handles 50+ standard processes (discharge print, foil stamping, chenille, burnout, acid wash, high-density rubber, UV print, etc.) plus custom finishes developed per client. Send a reference photo, a sample swatch, or even just the name of the technique — we'll source the process, match it on a lab swatch in 5-7 days, and quote it like any of the 20 listed here.",
+  },
 ];
 
 export default function TechniquePage() {
@@ -353,6 +357,106 @@ export default function TechniquePage() {
                 </div>
               </Link>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* BEYOND THESE 20 — leave the door open */}
+      <section className="border-t-2 border-black bg-[#0A0A0A] text-white">
+        <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-20">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:gap-12">
+            <div className="md:col-span-5">
+              <p className="mb-3 text-xs font-bold uppercase tracking-widest text-[#ff4d00] md:text-sm">
+                Not on this list? We probably do it too.
+              </p>
+              <h2 className="mb-4 text-2xl font-black uppercase leading-tight tracking-tight md:mb-6 md:text-4xl">
+                These 20 are just the beginning.
+              </h2>
+              <p className="text-sm leading-relaxed text-white/75 md:text-base">
+                We run all 20 techniques on this page in-house — not just
+                sublimation. The apparel decoration industry actually has
+                <span className="font-bold text-white"> 50+ recognized print and embroidery processes</span>,
+                plus countless custom finishes developed for specific clients. We
+                list the 20 most-requested here so you can compare them side by
+                side.
+              </p>
+            </div>
+
+            <div className="md:col-span-7">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-5">
+                {/* Card 1 — All 20 in-house */}
+                <div className="border-2 border-white/15 bg-white/[0.03] p-5 md:p-6">
+                  <div className="mb-3 inline-flex h-9 w-9 items-center justify-center border-2 border-[#ff4d00] bg-[#ff4d00]/10 md:mb-4 md:h-10 md:w-10">
+                    <Sparkles className="h-4 w-4 text-[#ff4d00] md:h-5 md:w-5" />
+                  </div>
+                  <h3 className="mb-2 text-base font-black uppercase md:text-lg">
+                    We do all 20
+                  </h3>
+                  <p className="text-xs leading-relaxed text-white/70 md:text-sm">
+                    Sublimation is our core, but embroidery, screen print, DTG,
+                    DTF, 3D puff, rhinestone, appliqué — every technique on this
+                    page runs in our Yiwu factory on real production lines.
+                  </p>
+                </div>
+
+                {/* Card 2 — 50+ in industry */}
+                <div className="border-2 border-white/15 bg-white/[0.03] p-5 md:p-6">
+                  <div className="mb-3 inline-flex h-9 w-9 items-center justify-center border-2 border-[#00c2ff] bg-[#00c2ff]/10 md:mb-4 md:h-10 md:w-10">
+                    <span className="text-base font-black text-[#00c2ff] md:text-lg">
+                      50+
+                    </span>
+                  </div>
+                  <h3 className="mb-2 text-base font-black uppercase md:text-lg">
+                    More in the industry
+                  </h3>
+                  <p className="text-xs leading-relaxed text-white/70 md:text-sm">
+                    Discharge print, plastisol, foil-stamp, chenille, soutache,
+                    burnout, acid wash, pigment dye, garment dye, high-density
+                    rubber, stretch ink, UV print, and more — all doable.
+                  </p>
+                </div>
+
+                {/* Card 3 — Custom finishes */}
+                <div className="border-2 border-white/15 bg-white/[0.03] p-5 md:p-6 sm:col-span-2">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0">
+                      <div className="inline-flex h-9 w-9 items-center justify-center border-2 border-white bg-white/10 md:h-10 md:w-10">
+                        <Plus className="h-4 w-4 text-white md:h-5 md:w-5" />
+                      </div>
+                    </div>
+                    <div>
+                      <h3 className="mb-2 text-base font-black uppercase md:text-lg">
+                        Bring your own technique
+                      </h3>
+                      <p className="text-xs leading-relaxed text-white/70 md:text-sm">
+                        Saw a finish on another brand&apos;s product? Got a
+                        Pantone-matched custom effect your designer created? A
+                        sample, a reference image, or just a name is enough —
+                        we&apos;ll source the process, match it on your sample
+                        swatch, and quote it like any of the 20 above. Custom
+                        development typically takes 5–7 days for lab sample
+                        and adds no MOQ pressure.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-6 flex flex-col items-start gap-3 border-t border-white/15 pt-6 sm:flex-row sm:items-center md:mt-8 md:gap-4 md:pt-8">
+                <Link
+                  href="/get-a-quote/"
+                  className="inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-bold uppercase tracking-wide text-white transition-colors hover:bg-white hover:text-black md:px-8 md:py-4 md:text-base"
+                >
+                  Ask About Your Technique →
+                </Link>
+                <Link
+                  href="/contact/"
+                  className="inline-flex items-center gap-2 border-2 border-white px-6 py-3 text-sm font-bold uppercase tracking-wide text-white transition-colors hover:bg-white hover:text-black md:px-8 md:py-4 md:text-base"
+                >
+                  Send a Reference
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
