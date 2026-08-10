@@ -1,5 +1,6 @@
 import type { Metadata } from"next";
 import Link from"next/link";
+import Image from"next/image";
 import {
   ArrowRight,
   Globe,
@@ -492,6 +493,52 @@ export default function ShippingPage() {
           </p>
         </div>
       </section>
+      {/* SHIPMENT SIZES VISUAL */}
+      <section className="border-b-2 border-black bg-[#faf9f6]">
+        <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
+          <div className="mb-3 inline-block border-2 border-black bg-white px-3 py-1 text-xs font-black uppercase tracking-widest">
+            Real packages
+          </div>
+          <h2 className="mb-4 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
+            What your shipment actually looks like.
+          </h2>
+          <p className="mb-10 max-w-3xl text-base text-black/70 md:text-lg">
+            Same three orders from the table above. One photo each. No
+            rendering, no stock image — these are the actual shipment sizes
+            we pack and ship every week.
+          </p>
+
+          <div className="relative aspect-[16/9] w-full overflow-hidden border-2 border-black bg-white">
+            <Image
+              src="/shipping-cost-real.webp"
+              alt="Three different shipment sizes: 1kg DHL sample box with one printed T-shirt, 50kg mid-size order stacked on a wooden pallet ready for air freight, 500kg bulk order being loaded into a 20ft shipping container"
+              fill
+              sizes="(min-width: 1280px) 1280px, 100vw"
+              className="object-cover"
+              priority={false}
+            />
+          </div>
+
+          <div className="mt-8 grid gap-4 md:grid-cols-3">
+            <div className="border-l-4 border-[#ff4d00] bg-white p-5">
+              <div className="text-xs font-black uppercase tracking-widest text-[#ff4d00]">Left — 1 kg</div>
+              <div className="mt-1 text-lg font-black">A single DHL box. One T-shirt inside.</div>
+              <p className="mt-2 text-sm text-black/70">Used for samples and try-on orders. The shirt ships with a blank shipping label so you can re-pack it for your own customer without removing stickers.</p>
+            </div>
+            <div className="border-l-4 border-[#00c2ff] bg-white p-5">
+              <div className="text-xs font-black uppercase tracking-widest text-[#00c2ff]">Center — 50 kg</div>
+              <div className="mt-1 text-lg font-black">Four cartons on a wooden pallet.</div>
+              <p className="mt-2 text-sm text-black/70">A typical mid-size event or team order. Stretch-wrapped, marked with your PO number, and loaded onto the next air-freight flight out of PVG or SZX.</p>
+            </div>
+            <div className="border-l-4 border-black bg-white p-5">
+              <div className="text-xs font-black uppercase tracking-widest">Right — 500 kg</div>
+              <div className="mt-1 text-lg font-black">Bulk cartons going into a 20ft container.</div>
+              <p className="mt-2 text-sm text-black/70">Full-container or LCL sea freight. We book the container, load at our Yiwu dock, and you see the same boxes roll off a US West Coast port 18-22 days later.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
 
       {/* SAMPLE COST CALCULATIONS */}
       <section className="border-b-2 border-black bg-[#0a0a0a] text-white">
@@ -557,6 +604,57 @@ export default function ShippingPage() {
           </div>
         </div>
       </section>
+      {/* DDP FLOW PANORAMA */}
+      <section className="border-b-2 border-black bg-black text-white">
+        <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
+          <div className="mb-3 inline-block bg-[#00c2ff] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
+            The chain
+          </div>
+          <h2 className="mb-4 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
+            From the port to your door.
+          </h2>
+          <p className="mb-10 max-w-3xl text-base text-white/70 md:text-lg">
+            One continuous photograph of the full DDP chain. Every step on
+            this page happens in real life, in this order, with the same
+            people, containers, and trucks you see below.
+          </p>
+
+          <div className="relative aspect-[21/9] w-full overflow-hidden border-2 border-white/20">
+            <Image
+              src="/shipping-ddp-flow.webp"
+              alt="Ultra-wide panoramic view of the full DDP shipping chain: container ship at port, port gantry crane, flatbed truck at dock, customs inspection, brown UPS delivery truck on US residential street, driver handing a box to a customer at a US front door"
+              fill
+              sizes="(min-width: 1280px) 1280px, 100vw"
+              className="object-cover"
+              priority={false}
+            />
+          </div>
+
+          <div className="mt-8 grid gap-3 text-xs font-bold uppercase tracking-widest md:grid-cols-5">
+            <div className="border border-white/20 p-3">
+              <div className="text-[#00c2ff]">01 · YIWU PORT</div>
+              <div className="mt-1 text-white/60">Container loaded onto vessel</div>
+            </div>
+            <div className="border border-white/20 p-3">
+              <div className="text-[#00c2ff]">02 · 18-22 DAYS</div>
+              <div className="mt-1 text-white/60">Trans-Pacific to US West Coast</div>
+            </div>
+            <div className="border border-white/20 p-3">
+              <div className="text-[#00c2ff]">03 · US PORT</div>
+              <div className="mt-1 text-white/60">Customs clearance, 2-4 days</div>
+            </div>
+            <div className="border border-white/20 p-3">
+              <div className="text-[#00c2ff]">04 · DRAYAGE</div>
+              <div className="mt-1 text-white/60">Trucked to our 3PL warehouse</div>
+            </div>
+            <div className="border border-white/20 p-3">
+              <div className="text-[#00c2ff]">05 · 2-5 DAYS</div>
+              <div className="mt-1 text-white/60">UPS/FedEx to your door</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
 
       {/* HOW DDP WORKS */}
       <section className="border-b-2 border-black bg-[#faf9f6]">
