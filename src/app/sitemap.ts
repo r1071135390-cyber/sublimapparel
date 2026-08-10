@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { techniques } from "@/lib/techniques";
+import { blogPosts } from "@/lib/blog";
 
 export const dynamic = 'force-static';
 
@@ -65,6 +66,9 @@ const ROUTES: SitemapRoute[] = [
   { path: "/about/faq", priority: 0.7, changeFrequency: "monthly" },
   { path: "/cases", priority: 0.7, changeFrequency: "weekly" },
 
+  // ── L2 博客（内容营销 / 长尾词布局）─────────────────
+  { path: "/blog", priority: 0.8, changeFrequency: "weekly" },
+
   // ── L3 法务（必要但不指望流量）────────────────────────
   { path: "/privacy", priority: 0.3, changeFrequency: "yearly" },
   { path: "/terms", priority: 0.3, changeFrequency: "yearly" },
@@ -94,5 +98,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  return [...staticEntries, ...techniqueEntries];
+  // ── 博客详情页（长尾流量入口）────────────────────
+  const blogEntries: MetadataRoute.Sitemap = blogPosts.map((p) => ({
+    url: `${SITE_URL}${withSlash(`/blog/${p.slug}`)}`,
+    lastModified: new Date(p.date),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  return [...staticEntries, ...techniqueEntries, ...blogEntries];
 }

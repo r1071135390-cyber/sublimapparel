@@ -10,6 +10,7 @@ export function Navbar() {
     { href: "/shipping", label: "Shipping" },
     { href: "/about", label: "About" },
     { href: "/contact", label: "Contact" },
+    { href: "/blog", label: "Blog" },
   ];
 
   return (
