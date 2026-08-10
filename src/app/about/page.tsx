@@ -70,11 +70,11 @@ export default function AboutPage() {
         </div>
 
         <div className="relative mx-auto max-w-7xl px-6 py-16 md:py-24">
-          <div className="max-w-xl">
+          <div className="max-w-2xl">
               <div className="mb-3 inline-block bg-[#00c2ff] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
                 About SublimApparel
               </div>
-              <h1 className="text-5xl font-black leading-[1.05] tracking-tight text-white md:text-7xl">
+              <h1 className="text-[2.75rem] font-black leading-[1.05] tracking-tight text-white md:text-[4rem] lg:text-[4.5rem]">
                 One factory
                 <br />
                 in <span className="text-[#ff4d00]">Yiwu</span>, China.
