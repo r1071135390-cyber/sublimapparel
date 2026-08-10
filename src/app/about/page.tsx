@@ -1,4 +1,6 @@
 import { Contact } from"@/components/contact";
+import { JsonLd } from "@/components/json-ld";
+import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 import Link from"next/link";
 import { MapPin } from"lucide-react";
 import Image from"next/image";
@@ -6,7 +8,7 @@ import Image from"next/image";
 export const metadata = {
   title:"About SublimApparel — 2,000 sqm Yiwu Sublimation & Cotton Printing Factory Since 2018",
   description:
-"12 production lines, 50+ staff, 99.2% QC pass rate. Sublimation on polyester + all-over printing on 100% cotton. DDP to 100+ countries with all duties pre-paid.",
+"12 production lines, 50+ staff, 99.2% QC pass rate. Sublimation on polyester (true all-over) + DTG and DTF on 100% cotton (A4–A3 per panel). DDP to 100+ countries with all duties pre-paid.",
 };
 
 const capabilities = [
@@ -35,7 +37,12 @@ const values = [
 
 export default function AboutPage() {
   return (
-    <main>
+    <>
+      <JsonLd data={buildBreadcrumbJsonLd([
+        { name: "Home", path: "/" },
+        { name: "About", path: "/about" },
+      ])} />
+      <main>
       <section className="relative overflow-hidden border-b-2 border-black bg-[#0a0a0a] text-white">
         {/* Full-bleed background image — blurred/dark on left under text, clear on right */}
         <div className="absolute inset-0">
@@ -413,7 +420,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <Contact />
-    </main>
+      <Contact /></main>
+    </>
   );
 }

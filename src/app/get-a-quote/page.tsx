@@ -1,4 +1,6 @@
 import { Contact } from "@/components/contact";
+import { JsonLd } from "@/components/json-ld";
+import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 import { Check, Clock, FileText, MessageCircle } from "lucide-react";
 
 export const metadata = {
@@ -45,7 +47,12 @@ const tips = [
 
 export default function GetAQuotePage() {
   return (
-    <main>
+    <>
+      <JsonLd data={buildBreadcrumbJsonLd([
+        { name: "Home", path: "/" },
+        { name: "Get a Quote", path: "/get-a-quote" },
+      ])} />
+      <main>
       {/* HERO */}
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
@@ -177,5 +184,6 @@ export default function GetAQuotePage() {
       {/* THE FORM */}
       <Contact />
     </main>
+    </>
   );
 }

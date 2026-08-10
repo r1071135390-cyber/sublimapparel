@@ -1,4 +1,6 @@
 import type { Metadata } from"next";
+import { JsonLd } from "@/components/json-ld";
+import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 import Link from"next/link";
 import Image from"next/image";
 import { ArrowRight, Clock, Calendar } from"lucide-react";
@@ -33,7 +35,12 @@ export default function BlogIndexPage() {
   const categories = getAllCategories();
 
   return (
-    <main>
+    <>
+      <JsonLd data={buildBreadcrumbJsonLd([
+        { name: "Home", path: "/" },
+        { name: "Blog", path: "/blog" },
+      ])} />
+      <main>
       {/* HERO */}
       <section className="border-b-2 border-black bg-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-20">
@@ -221,5 +228,6 @@ export default function BlogIndexPage() {
         </div>
       </section>
     </main>
+    </>
   );
 }

@@ -1,4 +1,5 @@
 import { JsonLd } from "@/components/json-ld";
+import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Bike, Users, Palette, Ruler, Layers, Wind } from "lucide-react";
@@ -95,6 +96,12 @@ const faq = [
 export default function CyclingPage() {
   return (
     <main>
+      <JsonLd data={buildBreadcrumbJsonLd([
+        { name: "Home", path: "/" },
+        { name: "Products", path: "/products" },
+        { name: "Cycling Kits", path: "/products/cycling" },
+      ])} />
+      <JsonLd data={buildFaqJsonLd(faq)} />
       <JsonLd data={{
         "@context": "https://schema.org",
         "@type": "Product",

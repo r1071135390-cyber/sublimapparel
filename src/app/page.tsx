@@ -14,7 +14,7 @@ import { Contact } from "@/components/contact";
 export const metadata = {
   title: "SublimApparel — Yiwu Sublimation & All-Over Cotton Printing Factory, DDP to 100+ Countries",
   description:
-    "Sublimation on polyester, all-over DTG printing on 100% cotton. MOQ 50, DDP shipping to 100+ countries, US warehouse in Fontana CA. 12 production lines, since 2014.",
+    "Sublimation on polyester (true all-over, edge-to-edge). DTG and DTF on 100% cotton (A4–A3 per panel, soft hand). MOQ 50, DDP shipping to 100+ countries, US warehouse in Fontana CA. 12 production lines, since 2014.",
 };
 
 export default function Home() {

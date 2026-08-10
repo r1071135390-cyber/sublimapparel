@@ -1,4 +1,6 @@
 import Image from "next/image";
+import { JsonLd } from "@/components/json-ld";
+import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 import { Contact } from "@/components/contact";
 import { TeamSection } from "@/components/contact-team";
 
@@ -10,7 +12,12 @@ export const metadata = {
 
 export default function ContactPage() {
   return (
-    <main>
+    <>
+      <JsonLd data={buildBreadcrumbJsonLd([
+        { name: "Home", path: "/" },
+        { name: "Contact", path: "/contact" },
+      ])} />
+      <main>
       <section className="relative overflow-hidden border-b-2 border-black bg-[#0a0a0a] text-white">
         {/* Background image — full bleed */}
         <div className="absolute inset-0">
@@ -53,7 +60,7 @@ export default function ContactPage() {
         </div>
       </section>
       <TeamSection />
-      <Contact />
-    </main>
+      <Contact /></main>
+    </>
   );
 }

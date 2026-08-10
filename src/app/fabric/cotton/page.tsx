@@ -5,9 +5,9 @@ import { ArrowRight, Check, Leaf, Droplets, Shirt, Sparkles, Layers, Recycle } f
 import { cottonFabrics } from "@/lib/fabric-data";
 
 export const metadata: Metadata = {
-  title: "All-Over Cotton Printing | DTG & DTF on 100% Cotton",
+  title: "DTG & DTF Printing on 100% Cotton | A4–A3 Large-Area, Soft Hand",
   description:
-    "Custom all-over printing on 100% cotton apparel. DTG and DTF processes, not sublimation — same vibrancy, softer hand feel, and it actually lasts on cotton. Free digital mockup, MOQ 50.",
+    "Custom DTG and DTF printing on 100% cotton apparel. A4–A3 per panel, full-color, softer hand feel. Free digital mockup, MOQ 50.",
   keywords: [
     "all-over cotton printing",
     "100% cotton printing",
@@ -60,14 +60,14 @@ export default function CottonPage() {
               100% Cotton · DTG · DTF
             </div>
             <h1 className="text-5xl font-black leading-[0.95] tracking-tight md:text-8xl">
-              All-over printing.
+              100% cotton.
               <br />
-              <span className="text-[#ff4d00]">100% cotton.</span>
+              <span className="text-[#ff4d00]">DTG & DTF.</span>
             </h1>
             <p className="mt-6 max-w-xl text-base text-neutral-700 md:text-lg">
-              True all-over printing on 100% cotton — DTG, DTF, and reactive dye
-              chemistry. Soft hand feel and color fastness that survives
-              industrial wash. We are not a sublimation-only shop.
+              Large-area DTG and DTF printing on 100% cotton — A4 to A3 per
+              panel, full-color, soft hand feel. We run cotton and cotton-blend
+              on dedicated lines, not sublimation.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link

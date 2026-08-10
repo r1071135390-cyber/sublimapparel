@@ -1,4 +1,5 @@
 import { JsonLd } from "@/components/json-ld";
+import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Flag, Users, Palette, Ruler, Layers, Shirt, Sun, Mountain, Trophy } from "lucide-react";
@@ -97,6 +98,12 @@ const faq = [
 export default function GolfPage() {
   return (
     <main>
+      <JsonLd data={buildBreadcrumbJsonLd([
+        { name: "Home", path: "/" },
+        { name: "Products", path: "/products" },
+        { name: "Golf Shirts", path: "/products/golf" },
+      ])} />
+      <JsonLd data={buildFaqJsonLd(faq)} />
       <JsonLd data={{
         "@context": "https://schema.org",
         "@type": "Product",

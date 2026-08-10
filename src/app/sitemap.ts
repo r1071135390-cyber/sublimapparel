@@ -79,12 +79,28 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const now = LAST_MOD;
 
   // Static pages — normalize all URLs to trailing-slash form to match trailingSlash: true
-  const staticEntries: MetadataRoute.Sitemap = ROUTES.map((r) => ({
-    url: `${SITE_URL}${withSlash(r.path)}`,
-    lastModified: now,
-    changeFrequency: r.changeFrequency,
-    priority: r.priority,
-  }));
+  const staticEntries: MetadataRoute.Sitemap = ROUTES.map((r) => {
+    const entry: MetadataRoute.Sitemap[number] = {
+      url: `${SITE_URL}${withSlash(r.path)}`,
+      lastModified: now,
+      changeFrequency: r.changeFrequency,
+      priority: r.priority,
+    };
+    // Attach relevant images for product & fabric pages to feed Google Images.
+    if (r.path === "/products") {
+      entry.images = [`${SITE_URL}/og-default.jpg`];
+    } else if (r.path.startsWith("/products/")) {
+      const slug = r.path.replace("/products/", "");
+      entry.images = [`${SITE_URL}/og-default.jpg`, `${SITE_URL}/products/${slug}.webp`];
+    } else if (r.path === "/fabric" || r.path === "/fabric/cotton") {
+      entry.images = [`${SITE_URL}/fabric-hero.webp`, `${SITE_URL}/og-default.jpg`];
+    } else if (r.path === "/") {
+      entry.images = [`${SITE_URL}/og-default.jpg`];
+    } else if (r.path === "/technique") {
+      entry.images = [`${SITE_URL}/og-default.jpg`];
+    }
+    return entry;
+  });
 
   // Case-study slugs are currently thin/empty and have been marked noindex.
   // Excluding them from sitemap so Google doesn't waste crawl budget on them.
@@ -96,6 +112,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: now,
     changeFrequency: "monthly" as const,
     priority: 0.8,
+    images: [`${SITE_URL}/og-default.jpg`],
   }));
 
   // ── 博客详情页（长尾流量入口）────────────────────
@@ -104,6 +121,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: new Date(p.date),
     changeFrequency: "monthly" as const,
     priority: 0.7,
+    images: [`${SITE_URL}/og-default.jpg`],
   }));
 
   return [...staticEntries, ...techniqueEntries, ...blogEntries];

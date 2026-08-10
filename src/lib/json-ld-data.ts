@@ -32,7 +32,14 @@ export const organizationJsonLd = {
     { "@type": "Country", name: "Germany" },
     { "@type": "Country", name: "France" },
   ],
-  sameAs: [],
+  sameAs: [
+    "https://www.linkedin.com/company/sublimapparel",
+    "https://www.instagram.com/sublimapparel",
+    "https://www.facebook.com/sublimapparel",
+    "https://www.pinterest.com/sublimapparel",
+    "https://www.alibaba.com/showroom/sublimapparel",
+    "https://www.youtube.com/@sublimapparel",
+  ],
 };
 
 export const localBusinessJsonLd = {

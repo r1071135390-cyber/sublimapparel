@@ -1,4 +1,5 @@
 import { JsonLd } from "@/components/json-ld";
+import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
@@ -106,6 +107,11 @@ const faq = [
 export default function TShirtsPage() {
   return (
     <main>
+      <JsonLd data={buildBreadcrumbJsonLd([
+        { name: "Home", path: "/" },
+        { name: "Products", path: "/products" },
+        { name: "T-Shirts", path: "/products/t-shirts" },
+      ])} />
       <JsonLd data={{
         "@context": "https://schema.org",
         "@type": "Product",
@@ -123,6 +129,7 @@ export default function TShirtsPage() {
           "itemCondition": "https://schema.org/NewCondition"
         }
       }} />
+      <JsonLd data={buildFaqJsonLd(faq)} />
 
       {/* HERO */}
       <section className="border-b-2 border-black bg-white">

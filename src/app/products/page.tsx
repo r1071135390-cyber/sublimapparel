@@ -13,7 +13,7 @@ const categories = [
     title: "Apparel",
     desc: "T-shirts, hoodies, jerseys, racing, cycling, golf, bowling, esports, singlets, leggings. Cut and sewn in our Yiwu factory.",
     items: ["T-Shirts", "Hoodies & Sweatshirts", "Jerseys & Singlets", "Racing Kits", "Cycling Kits", "Golf / Bowling Shirts", "Pants & Shorts", "Vests"],
-    note: "Polyester or 100% cotton. Our specialty: full-color all-over print on cotton.",
+    note: "Polyester or 100% cotton. Cotton runs on DTG/DTF (A4–A3 per panel); polyester runs on sublimation (true all-over, edge-to-edge).",
   },
   {
     id: "home",

@@ -1,5 +1,7 @@
 import { FabricCatalogGrid } from "@/components/fabric-catalog-grid";
 import type { Metadata } from "next";
+import { JsonLd } from "@/components/json-ld";
+import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Download, Droplets, Leaf } from "lucide-react";
@@ -59,7 +61,12 @@ const processes = [
 
 export default function FabricPage() {
   return (
-    <main>
+    <>
+      <JsonLd data={buildBreadcrumbJsonLd([
+        { name: "Home", path: "/" },
+        { name: "Fabric", path: "/fabric" },
+      ])} />
+      <main>
       {/* HERO — full-bleed close-up of sublimation-printed fabric */}
       <section className="relative overflow-hidden bg-[#0a0a0a] text-white">
         <div className="relative h-[60vh] min-h-[480px] w-full lg:h-[78vh] lg:min-h-[640px]">
@@ -299,5 +306,6 @@ export default function FabricPage() {
         </div>
       </section>
     </main>
+    </>
   );
 }
