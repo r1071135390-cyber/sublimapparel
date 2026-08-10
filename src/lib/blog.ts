@@ -28,7 +28,7 @@ export const blogPosts: BlogPost[] = [
     excerpt:
 "Sublimation printing is the only decoration method that dyes fabric from the inside out. Learn how it works, when to use it, and why it's the gold standard for all-over print apparel.",
     category:"Industry Guide",
-    date:"2025-01-15",
+    date:"2026-06-01",
     readTime:"8 min read",
     author:"SublimApparel Team",
     coverImage:"/techniques/Sublimationprinting02.webp",
@@ -92,7 +92,7 @@ export const blogPosts: BlogPost[] = [
     excerpt:
 "DTG prints directly into fabric. DTF prints onto film first, then heat-presses. Both have their place. Here is how to choose — based on your fabric, design, and run size.",
     category:"Industry Guide",
-    date:"2025-01-22",
+    date:"2026-06-10",
     readTime:"7 min read",
     author:"SublimApparel Team",
     coverImage:"/techniques/DTGprinting03.webp",
@@ -162,7 +162,7 @@ export const blogPosts: BlogPost[] = [
     excerpt:
 "DDP (Delivered Duty Paid) means the price you are quoted is the price you pay. No surprise customs fees, no last-mile surprises. Here is how it works and why it matters for B2B.",
     category:"Logistics",
-    date:"2025-02-03",
+    date:"2026-06-20",
     readTime:"6 min read",
     author:"SublimApparel Team",
     coverImage:"/delivery-door.webp",
@@ -226,7 +226,7 @@ export const blogPosts: BlogPost[] = [
     excerpt:
 "Take a tour of our 8,000 m² production facility in Yiwu — from fabric warehouse to 1.9m wide-format printers to 100% final QC. See how a real Chinese apparel factory operates.",
     category:"Factory Stories",
-    date:"2025-02-12",
+    date:"2026-07-05",
     readTime:"10 min read",
     author:"SublimApparel Team",
     coverImage:"/factory-floor.webp",
@@ -297,7 +297,7 @@ export const blogPosts: BlogPost[] = [
     excerpt:
 "The wrong fabric choice can ruin an otherwise great esports jersey. Here is what pro teams and tournament organizers use — and what to avoid for performance, comfort, and print quality.",
     category:"Product Guide",
-    date:"2025-02-20",
+    date:"2026-07-15",
     readTime:"7 min read",
     author:"SublimApparel Team",
     coverImage:"/esports-jersey-prodigy.webp",
@@ -360,7 +360,7 @@ export const blogPosts: BlogPost[] = [
     excerpt:
 "MOQ is the smallest order a factory will run. It exists for a reason — and a 50-piece MOQ is genuinely small for custom apparel. Here is how MOQ works and how to keep costs down at low quantities.",
     category:"Industry Guide",
-    date:"2025-03-01",
+    date:"2026-07-25",
     readTime:"5 min read",
     author:"SublimApparel Team",
     coverImage:"/printer-closeup.webp",
@@ -415,7 +415,7 @@ export const blogPosts: BlogPost[] = [
     excerpt:
 "Cycling jerseys are technical apparel — the wrong fabric choice leads to discomfort on a 100km ride. Here is what to look for, from GSM to weave structure to moisture management.",
     category:"Product Guide",
-    date:"2025-03-12",
+    date:"2026-08-03",
     readTime:"6 min read",
     author:"SublimApparel Team",
     coverImage:"/golf-polo-navy.webp",
@@ -469,7 +469,7 @@ export const blogPosts: BlogPost[] = [
     excerpt:
 "Screen printing and embroidery are the two workhorses of custom apparel decoration. They look different, cost different, and last different. Here is how to pick the right one for your project.",
     category:"Industry Guide",
-    date:"2025-03-20",
+    date:"2026-08-10",
     readTime:"6 min read",
     author:"SublimApparel Team",
     coverImage:"/techniques/Embroidery07.webp",
