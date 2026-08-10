@@ -66,7 +66,7 @@ export default function ProductsPage() {
     <main>
       <section className="relative overflow-hidden bg-white">
         {/* Full-bleed background image with floating text overlay */}
-        <div className="relative aspect-[2/1] w-full">
+        <div className="relative h-[70vh] min-h-[520px] w-full">
           <Image
             src="/hero-products.webp"
             alt="Range of custom printed products — apparel, bags, home goods, hard substrates"
