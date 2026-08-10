@@ -28,7 +28,7 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative overflow-hidden border-b-2 border-black bg-[#0a0a0a] text-white"
+      className="relative overflow-hidden bg-[#0a0a0a] text-white"
     >
       {/* Desktop background image (full bleed) — hidden on mobile */}
       <div className="absolute inset-0 hidden lg:block">
@@ -84,16 +84,16 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="relative mx-auto max-w-7xl px-4 py-10 md:px-8 md:py-20 lg:py-28">
+      <div className="relative mx-auto max-w-7xl px-4 py-6 md:px-8 md:py-10 lg:py-14">
         {/* Top label */}
-        <div className="mb-5 flex items-center gap-3 md:mb-8">
+        <div className="mb-2 flex items-center gap-3 md:mb-4">
           <span className="inline-flex h-6 items-center rounded-sm border border-white/30 bg-white/10 px-2.5 text-[10px] font-bold uppercase tracking-[0.18em] text-white backdrop-blur-sm md:h-7 md:px-3 md:text-xs">
             Yiwu factory · LA warehouse
           </span>
         </div>
 
         {/* Status line */}
-        <div className="mb-8 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-white/70 md:mb-14 md:text-sm">
+        <div className="mb-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-white/70 md:mb-6 md:text-sm">
           <span>
             <span className="font-bold text-white">DDP to 100+ countries</span>
             <span className="mx-2 text-white/40">·</span>
@@ -104,14 +104,14 @@ export function Hero() {
         </div>
 
         {/* Headline — 3 lines, flat / full width */}
-        <h1 className="mb-7 max-w-4xl text-4xl font-black leading-[0.95] tracking-tight md:mb-10 md:text-7xl lg:text-[88px]">
+        <h1 className="mb-4 max-w-4xl text-4xl font-black leading-[0.95] tracking-tight md:mb-5 md:text-7xl lg:text-[88px]">
           <span className="block whitespace-nowrap text-white">We sublimate apparel.</span>
           <span className="block text-[#ff4d00]">not only polyester,</span>
           <span className="block text-[#ff4d00]">but also cotton.</span>
         </h1>
 
         {/* Subhead */}
-        <p className="mb-8 max-w-2xl text-sm text-white/80 md:mb-12 md:text-lg">
+        <p className="mb-4 max-w-2xl text-sm text-white/80 md:mb-5 md:text-lg">
           T-shirts, hoodies, jerseys, racing kits, cycling kits, golf, bowling, esports
           &mdash; full sublimation on polyester and 100% cotton. From a 50-piece
           rush job to a 10,000-piece event run. This is where we started, and
@@ -119,7 +119,7 @@ export function Hero() {
         </p>
 
         {/* FABRICS bar */}
-        <div className="mb-5 flex flex-wrap items-center gap-2.5 md:mb-8 md:gap-4">
+        <div className="mb-2 flex flex-wrap items-center gap-2.5 md:mb-3 md:gap-4">
           <span className="border-l-4 border-[#ff4d00] pl-3 text-xs font-black uppercase tracking-widest text-white">
             Fabrics
           </span>
@@ -141,7 +141,7 @@ export function Hero() {
         </div>
 
         {/* 6 apparel category chips */}
-        <div className="mb-8 grid grid-cols-2 gap-2 sm:grid-cols-3 md:mb-12 md:flex md:flex-wrap md:gap-3">
+        <div className="mb-4 grid grid-cols-2 gap-2 sm:grid-cols-3 md:mb-5 md:flex md:flex-wrap md:gap-3">
           {categories.map((c) => (
             <span
               key={c.num}
@@ -156,7 +156,7 @@ export function Hero() {
         </div>
 
         {/* Stats row */}
-        <div className="mb-8 grid grid-cols-2 gap-x-6 gap-y-4 border-y border-white/15 py-6 md:mb-12 md:grid-cols-4 md:gap-x-8 md:py-8">
+        <div className="mb-4 grid grid-cols-2 gap-x-6 gap-y-4 py-4 md:mb-5 md:grid-cols-4 md:gap-x-8 md:py-5">
           {stats.map((s) => (
             <div key={s.label}>
               <div className={"text-3xl font-black leading-none md:text-5xl " + s.color}>
@@ -170,7 +170,7 @@ export function Hero() {
         </div>
 
         {/* CTAs */}
-        <div className="mb-8 flex flex-col gap-3 sm:flex-row md:mb-12">
+        <div className="mb-4 flex flex-col gap-3 sm:flex-row md:mb-5">
           <Link
             href="/get-a-quote"
             className="group inline-flex items-center justify-center gap-2 rounded-sm border-2 border-[#ff4d00] bg-[#ff4d00] px-6 py-3.5 text-sm font-black uppercase tracking-wider text-white shadow-[4px_4px_0_0_#ffffff] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:bg-[#e64500] hover:shadow-[2px_2px_0_0_#ffffff] md:px-8 md:py-4 md:text-base"
@@ -187,7 +187,7 @@ export function Hero() {
         </div>
 
         {/* "We don't stop at apparel" — desktop + mobile (text only, image carries the visual on mobile) */}
-        <div className="border-t border-white/15 pt-5 md:pt-8">
+        <div className="pt-2 md:pt-3">
           <Link
             href="#capabilities"
             className="group inline-flex items-center gap-3 text-xs text-white/80 transition-colors hover:text-[#ff4d00] md:text-sm"
