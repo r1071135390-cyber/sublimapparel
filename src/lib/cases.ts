@@ -79,7 +79,7 @@ export const industries: IndustryCase[] = [
     title: "Corporate & Employee Programs",
     icon: "Briefcase",
     blurb:
-      "Uniforms, golf / bowling shirts, onboarding kits, conference apparel and branded gifting. Multi-site restocks pull from our Fontana warehouse, on a fixed landed cost.",
+      "Uniforms, golf, bowling, esports shirts, onboarding kits, conference apparel and branded gifting. Multi-site restocks pull from our Fontana warehouse, on a fixed landed cost.",
     pitch:
       "Finance gets a fixed landed cost; multi-site restocks pull from our LA warehouse.",
     cases: [],

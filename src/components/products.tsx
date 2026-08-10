@@ -6,14 +6,16 @@ export function Products() {
     {
       label: "Apparel",
       headline: "From tees to team kits.",
-      desc: "T-shirts, hoodies, jerseys, racing, cycling, golf / bowling, singlets, leggings, baby onesies — full sublimation on cotton or polyester.",
+      desc: "T-shirts, hoodies, jerseys, racing, cycling, golf, bowling, esports, singlets, leggings, baby onesies — full sublimation on cotton or polyester.",
       items: [
         { name: "T-shirts", href: "/products/t-shirts" },
         { name: "Hoodies", href: "/products/hoodies" },
         { name: "Jerseys", href: "/products/jerseys" },
         { name: "Racing", href: "/products/racing" },
         { name: "Cycling", href: "/products/cycling" },
-        { name: "Golf / Bowling", href: "/products/golf-bowling" },
+        { name: "Golf", href: "/products/golf" },
+        { name: "Bowling", href: "/products/bowling" },
+        { name: "Esports", href: "/products/esports" },
       ],
       color: "bg-[#ff4d00]",
       href: "/products",

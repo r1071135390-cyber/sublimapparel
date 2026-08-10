@@ -36,7 +36,9 @@ const ROUTES: SitemapRoute[] = [
   { path: "/products/jerseys", priority: 0.85, changeFrequency: "monthly" },
   { path: "/products/racing", priority: 0.85, changeFrequency: "monthly" },
   { path: "/products/cycling", priority: 0.85, changeFrequency: "monthly" },
-  { path: "/products/golf-bowling", priority: 0.85, changeFrequency: "monthly" },
+  { path: "/products/golf", priority: 0.85, changeFrequency: "monthly" },
+  { path: "/products/bowling", priority: 0.85, changeFrequency: "monthly" },
+  { path: "/products/esports", priority: 0.85, changeFrequency: "monthly" },
   { path: "/get-a-quote", priority: 0.95, changeFrequency: "monthly" }, // 询盘主入口
   { path: "/contact", priority: 0.7, changeFrequency: "monthly" },
 

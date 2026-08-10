@@ -58,7 +58,7 @@ export function Industries() {
       slug: "corporate-programs",
       title: "Corporate & Employee Programs",
       icon: Briefcase,
-      products: "Uniforms, golf / bowling shirts, onboarding kits, conference apparel, branded gifting",
+      products: "Uniforms, golf polos, bowling shirts, esports jerseys, onboarding kits, conference apparel, branded gifting",
       pitch: "Finance gets a fixed landed cost; multi-site restocks pull from our LA warehouse.",
     },
     {
