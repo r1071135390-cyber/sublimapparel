@@ -186,10 +186,10 @@ export function Hero() {
           </Link>
         </div>
 
-        {/* "We don't stop at apparel" — desktop + mobile (text only, image carries the visual on mobile) */}
+        {/* "We don't stop at apparel" — link to full product range */}
         <div className="pt-2 md:pt-3">
           <Link
-            href="#capabilities"
+            href="/products/"
             className="group inline-flex items-center gap-3 text-xs text-white/80 transition-colors hover:text-[#ff4d00] md:text-sm"
           >
             <span className="font-bold uppercase tracking-[0.18em]">
