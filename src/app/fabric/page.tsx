@@ -45,24 +45,50 @@ const processes = [
 export default function FabricPage() {
   return (
     <main>
-      <section className="border-b-2 border-black bg-white">
-        <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
-          <div className="mb-3 inline-block border-2 border-black bg-white px-3 py-1 text-xs font-black uppercase tracking-widest">
-            Fabric & Process
+      {/* HERO — full-bleed close-up of sublimation-printed fabric */}
+      <section className="relative overflow-hidden bg-[#0a0a0a] text-white">
+        <div className="relative h-[60vh] min-h-[480px] w-full lg:h-[78vh] lg:min-h-[640px]">
+          <Image
+            src="/fabric-hero.webp"
+            alt="Close-up of full-sublimation polyester fabric — vivid print on white, knit texture visible"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+          {/* Gradient mask — solid dark on left under text, transparent on right */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/92 via-35% to-transparent" />
+          {/* Subtle blur on the left half under the text */}
+          <div
+            className="absolute inset-0 backdrop-blur-[2px]"
+            style={{
+              WebkitMaskImage:
+                "linear-gradient(to right, #000 0%, #000 35%, transparent 60%)",
+              maskImage:
+                "linear-gradient(to right, #000 0%, #000 35%, transparent 60%)",
+            }}
+          />
+        </div>
+
+        <div className="absolute inset-0 mx-auto max-w-7xl px-6">
+          <div className="flex h-full items-center pb-12 pt-10 md:pb-16 md:pt-14 lg:items-end lg:pb-20 lg:pt-0">
+            <div className="max-w-2xl">
+              <div className="mb-4 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+                Fabric &amp; Process
+              </div>
+              <h1 className="text-5xl font-black leading-[0.95] tracking-tight md:text-7xl lg:text-[88px]">
+                Overall printing,
+                <br />
+                <span className="text-[#ff4d00]">polyester or cotton.</span>
+              </h1>
+              <p className="mt-6 max-w-xl text-base text-white/85 md:text-lg">
+                We run every major apparel print process so you can pick the
+                right fabric and method for your project — not the only one we
+                happen to have. Most factories only run polyester sublimation.
+                We run cotton too.
+              </p>
+            </div>
           </div>
-          <h1 className="text-5xl font-black leading-[0.95] tracking-tight md:text-8xl">
-            Two fabrics.
-            <br />
-            <span className="text-[#ff4d00]">Six processes.</span>
-            <br />
-            One factory.
-          </h1>
-          <p className="mt-6 max-w-2xl text-base text-neutral-700 md:text-lg">
-            We run every major apparel print process so you can pick the right
-            fabric and method for your project — not the only one we happen to
-            have. Most factories only run polyester sublimation. We run
-            cotton too.
-          </p>
         </div>
       </section>
 
