@@ -214,79 +214,7 @@ export default function FabricPage() {
         </div>
       </section>
 
-      {/* PROCESSES table */}
-      <section className="border-b-2 border-black bg-white">
-        <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
-          <div className="mb-3 inline-block border-2 border-black bg-white px-3 py-1 text-xs font-black uppercase tracking-widest">
-            Processes
-          </div>
-          <h2 className="mb-10 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
-            All processes we run.
-          </h2>
-
-          <div className="overflow-x-auto border-2 border-black">
-            <table className="w-full min-w-[640px]">
-              <thead>
-                <tr className="border-b-2 border-black bg-black text-left text-xs font-black uppercase tracking-widest text-white">
-                  <th className="px-4 py-3">Process</th>
-                  <th className="px-4 py-3">Best on</th>
-                  <th className="px-4 py-3">Why pick it</th>
-                </tr>
-              </thead>
-              <tbody>
-                {processes.map((p, i) => (
-                  <tr key={i} className={"border-b border-black/10 " + (i % 2 === 0 ? "bg-white" : "bg-neutral-50")}>
-                    <td className="px-4 py-3 font-black">{p.name}</td>
-                    <td className="px-4 py-3 text-sm">{p.fabric}</td>
-                    <td className="px-4 py-3 text-sm text-black/70">{p.desc}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      {/* BEYOND THESE 6 — 3 CARDS */}
-      <section className="border-b-2 border-black bg-[#faf9f6]">
-        <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
-          <div className="mb-3 inline-block bg-black px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
-            Beyond These 6
-          </div>
-          <h2 className="mb-3 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
-            The 6 processes are just the start.
-          </h2>
-          <p className="mb-12 max-w-3xl text-base text-black/70 md:text-lg">
-            The 6 processes above run on our own lines. The full fabric line below is what we keep on hand. Send your own fabric and we&apos;ll print on that too.
-          </p>
-
-          <div className="grid gap-6 md:grid-cols-3">
-            <div className="border-2 border-black bg-white p-6">
-              <div className="mb-2 text-xs font-black uppercase tracking-widest text-[#ff4d00]">01 / Featured</div>
-              <h3 className="mb-3 text-2xl font-black leading-tight">6 processes featured</h3>
-              <p className="text-sm text-black/70">
-                The ones we run on our own lines. Optimized for cost, speed, and color.
-              </p>
-            </div>
-            <div className="border-2 border-black bg-white p-6">
-              <div className="mb-2 text-xs font-black uppercase tracking-widest text-[#ff4d00]">02 / In stock</div>
-              <h3 className="mb-3 text-2xl font-black leading-tight">100+ fabric types in stock</h3>
-              <p className="text-sm text-black/70">
-                From 80 gsm chiffon to 420 gsm fleece. See the list below for the full breakdown.
-              </p>
-            </div>
-            <div className="border-2 border-black bg-white p-6">
-              <div className="mb-2 text-xs font-black uppercase tracking-widest text-[#ff4d00]">03 / By request</div>
-              <h3 className="mb-3 text-2xl font-black leading-tight">Send your own fabric</h3>
-              <p className="text-sm text-black/70">
-                Already have a fabric you want us to print on? Send it. We&apos;ll print and ship.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FULL FABRIC CATALOGUE — 2-COLUMN DETAILED LIST */}
+      {/* FULL FABRIC CATALOGUE */}
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
           <div className="mb-3 inline-block border-2 border-black bg-white px-3 py-1 text-xs font-black uppercase tracking-widest">
@@ -380,6 +308,78 @@ export default function FabricPage() {
                 Send your spec
                 <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
               </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* PROCESSES table */}
+      <section className="border-b-2 border-black bg-white">
+        <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
+          <div className="mb-3 inline-block border-2 border-black bg-white px-3 py-1 text-xs font-black uppercase tracking-widest">
+            Processes
+          </div>
+          <h2 className="mb-10 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
+            All processes we run.
+          </h2>
+
+          <div className="overflow-x-auto border-2 border-black">
+            <table className="w-full min-w-[640px]">
+              <thead>
+                <tr className="border-b-2 border-black bg-black text-left text-xs font-black uppercase tracking-widest text-white">
+                  <th className="px-4 py-3">Process</th>
+                  <th className="px-4 py-3">Best on</th>
+                  <th className="px-4 py-3">Why pick it</th>
+                </tr>
+              </thead>
+              <tbody>
+                {processes.map((p, i) => (
+                  <tr key={i} className={"border-b border-black/10 " + (i % 2 === 0 ? "bg-white" : "bg-neutral-50")}>
+                    <td className="px-4 py-3 font-black">{p.name}</td>
+                    <td className="px-4 py-3 text-sm">{p.fabric}</td>
+                    <td className="px-4 py-3 text-sm text-black/70">{p.desc}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      {/* BEYOND THESE 6 — 3 CARDS */}
+      <section className="border-b-2 border-black bg-[#faf9f6]">
+        <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
+          <div className="mb-3 inline-block bg-black px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+            Beyond These 6
+          </div>
+          <h2 className="mb-3 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
+            The 6 processes are just the start.
+          </h2>
+          <p className="mb-12 max-w-3xl text-base text-black/70 md:text-lg">
+            The 6 processes below run on our own lines. The full fabric line above is what we keep on hand. Send your own fabric and we&apos;ll print on that too.
+          </p>
+
+          <div className="grid gap-6 md:grid-cols-3">
+            <div className="border-2 border-black bg-white p-6">
+              <div className="mb-2 text-xs font-black uppercase tracking-widest text-[#ff4d00]">01 / Featured</div>
+              <h3 className="mb-3 text-2xl font-black leading-tight">6 processes featured</h3>
+              <p className="text-sm text-black/70">
+                The ones we run on our own lines. Optimized for cost, speed, and color.
+              </p>
+            </div>
+            <div className="border-2 border-black bg-white p-6">
+              <div className="mb-2 text-xs font-black uppercase tracking-widest text-[#ff4d00]">02 / In stock</div>
+              <h3 className="mb-3 text-2xl font-black leading-tight">100+ fabric types in stock</h3>
+              <p className="text-sm text-black/70">
+                From 80 gsm chiffon to 420 gsm fleece. See the list above for the full breakdown.
+              </p>
+            </div>
+            <div className="border-2 border-black bg-white p-6">
+              <div className="mb-2 text-xs font-black uppercase tracking-widest text-[#ff4d00]">03 / By request</div>
+              <h3 className="mb-3 text-2xl font-black leading-tight">Send your own fabric</h3>
+              <p className="text-sm text-black/70">
+                Already have a fabric you want us to print on? Send it. We&apos;ll print and ship.
+              </p>
             </div>
           </div>
         </div>
