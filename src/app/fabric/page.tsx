@@ -80,6 +80,8 @@ export default function FabricPage() {
                 Overall printing,
                 <br />
                 <span className="text-[#ff4d00]">polyester or cotton.</span>
+                <br />
+                One factory.
               </h1>
               <p className="mt-6 max-w-xl text-base text-white/85 md:text-lg">
                 We run every major apparel print process so you can pick the
