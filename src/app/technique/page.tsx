@@ -41,7 +41,7 @@ const techniques = [
   },
   {
     name: "All-Over Printing (AOP)",
-    slug: "aop",
+    slug: "overall-printing",
     image: "/techniques/Overallprinting05.webp",
     description:
       "Edge-to-edge coverage with no blank borders. Seamless, bold patterns that turn the whole garment into your canvas.",
@@ -158,7 +158,7 @@ const techniques = [
   },
   {
     name: "Metallic Printing (Foil)",
-    slug: "metallic",
+    slug: "metallic-printing",
     image: "/techniques/Metallicprinting01.webp",
     description:
       "Gold, silver, and holographic foils pressed onto fabric for a luxe, mirror-shine metallic finish.",
@@ -167,7 +167,7 @@ const techniques = [
   },
   {
     name: "Reflective Printing",
-    slug: "reflective",
+    slug: "reflective-printing",
     image: "/techniques/Reflectiveprinting05.webp",
     description:
       "Glass-bead inks reflect light for high-visibility graphics that glow under headlights — safety meets style.",
@@ -185,7 +185,7 @@ const techniques = [
   },
   {
     name: "Silicone Printing",
-    slug: "silicone",
+    slug: "silicone-printing",
     image: "/techniques/Siliconeprinting05.webp",
     description:
       "Flexible, rubbery ink with a smooth matte finish that stretches and moves with performance fabrics.",
@@ -194,7 +194,7 @@ const techniques = [
   },
   {
     name: "Appliqué Embroidery",
-    slug: "applique",
+    slug: "applique-embroidery",
     image: "/techniques/Appliqueembroidery04.webp",
     description:
       "Fabric panels stitched onto the garment for bold, layered designs with crisp, clean edges.",
@@ -203,7 +203,7 @@ const techniques = [
   },
   {
     name: "Laser Carving",
-    slug: "laser",
+    slug: "laser-engraving",
     image: "/techniques/Laserengraving05.webp",
     description:
       "Precision laser etching creates permanent, high-contrast marking on denim, leather, and technical fabrics.",
@@ -320,8 +320,9 @@ export default function TechniquePage() {
 
           <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-4">
             {techniques.map((tech) => (
-              <div
+              <Link
                 key={tech.slug}
+                href={`/technique/${tech.slug}/`}
                 className="group flex flex-col border-2 border-black bg-white transition-all hover:border-[#ff4d00] hover:shadow-[4px_4px_0_0_#ff4d00] md:hover:shadow-[6px_6px_0_0_#ff4d00]"
               >
                 <div className="relative aspect-square w-full overflow-hidden border-b-2 border-black bg-[#f5f5f5]">
@@ -346,11 +347,11 @@ export default function TechniquePage() {
                   </p>
                   <div className="mt-auto border-t border-black/10 pt-2 md:pt-3">
                     <span className="text-[10px] font-bold uppercase tracking-wider text-[#ff4d00] md:text-xs">
-                      MOQ: {tech.moq}
+                      MOQ: {tech.moq} →
                     </span>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

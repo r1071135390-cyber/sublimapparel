@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { techniques } from "@/lib/techniques";
 
 export const dynamic = 'force-static';
 
@@ -45,10 +46,15 @@ const ROUTES: SitemapRoute[] = [
   // ── L2 蓝海 SEO 王炸（新加的，吃 0 竞争词）──────────────
   { path: "/fabric", priority: 0.85, changeFrequency: "monthly" },
   { path: "/fabric/cotton", priority: 0.9, changeFrequency: "monthly" }, // 王炸
+  { path: "/technique", priority: 0.85, changeFrequency: "monthly" },
   { path: "/shipping", priority: 0.8, changeFrequency: "monthly" },
   { path: "/shipping/ddp", priority: 0.9, changeFrequency: "monthly" }, // 王炸
   { path: "/shipping/us-warehouse", priority: 0.9, changeFrequency: "monthly" }, // 王炸
   { path: "/shipping/global", priority: 0.9, changeFrequency: "monthly" }, // 王炸
+
+  // ── 账户系统（占位）──────────────────────────
+  { path: "/login", priority: 0.3, changeFrequency: "yearly" },
+  { path: "/register", priority: 0.3, changeFrequency: "yearly" },
 
   // ── L2 信任 / 案例 ────────────────────────────────────
   { path: "/about", priority: 0.7, changeFrequency: "monthly" },
@@ -80,5 +86,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Excluding them from sitemap so Google doesn't waste crawl budget on them.
   // Re-add here once their content is rewritten to ≥ 600 words.
 
-  return staticEntries;
+  // ── 20 个工艺详情页（SEO 关键词布局）────────────────
+  const techniqueEntries: MetadataRoute.Sitemap = techniques.map((t) => ({
+    url: `${SITE_URL}${withSlash(`/technique/${t.slug}`)}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  }));
+
+  return [...staticEntries, ...techniqueEntries];
 }
