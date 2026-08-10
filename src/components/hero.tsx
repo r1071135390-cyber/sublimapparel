@@ -113,9 +113,9 @@ export function Hero() {
         {/* Subhead */}
         <p className="mb-4 max-w-2xl text-sm text-white/80 md:mb-5 md:text-lg">
           T-shirts, hoodies, jerseys, racing kits, cycling kits, golf, bowling, esports
-          &mdash; full sublimation on polyester and 100% cotton. From a 50-piece
-          rush job to a 10,000-piece event run. This is where we started, and
-          it&rsquo;s still what we do best.
+          &mdash; full sublimation on polyester and allover digital print on 100% cotton.
+          From a 50-piece rush job to a 10,000-piece event run. This is where we
+          started, and it&rsquo;s still what we do best.
         </p>
 
         {/* FABRICS bar */}
