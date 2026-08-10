@@ -68,7 +68,7 @@ export default function ProductsPage() {
         {/* Full-bleed background image with floating text overlay */}
         <div className="relative h-[70vh] min-h-[520px] w-full">
           <Image
-            src="/hero-products.webp"
+            src="/product-hero-products.webp"
             alt="Range of custom printed products — apparel, bags, home goods, hard substrates"
             fill
             priority
