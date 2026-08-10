@@ -125,6 +125,66 @@ export default function PolyesterPage() {
         </div>
       </section>
 
+      {/* FABRICS WE STOCK — polyester-only filter from full catalogue */}
+      <section id="polyester-fabrics" className="border-b-2 border-black bg-white">
+        <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
+          <div className="mb-3 inline-block border-2 border-black bg-white px-3 py-1 text-xs font-black uppercase tracking-widest">
+            In stock
+          </div>
+          <h2 className="mb-4 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
+            Polyester fabrics
+            <br />
+            <span className="text-[#ff4d00]">we keep on hand.</span>
+          </h2>
+          <p className="mb-10 max-w-2xl text-base text-black/70">
+            The polyester-side of our full fabric line. Pre-shrunk, pre-tested,
+            ready to run on the sublimation press.
+          </p>
+
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {polyesterFabrics.map((f) => (
+              <div
+                key={f.swatch}
+                className="group flex flex-col border-2 border-black bg-white transition-all hover:border-[#ff4d00] hover:shadow-[4px_4px_0_0_#ff4d00]"
+              >
+                <div className="relative aspect-square w-full border-b-2 border-black bg-[#faf9f6]">
+                  <Image
+                    src={`/fabric-sw-${f.swatch.split("-")[0]}.webp`}
+                    alt={f.name}
+                    fill
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    sizes="(max-width: 768px) 50vw, 25vw"
+                  />
+                </div>
+                <div className="flex flex-1 flex-col p-4">
+                  <h3 className="mb-2 text-sm font-black uppercase leading-tight">
+                    {f.name}
+                  </h3>
+                  <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-black/50">
+                    {f.comp}
+                  </p>
+                  <p className="mb-3 text-[11px] leading-relaxed text-black/70">
+                    {f.description}
+                  </p>
+                  <div className="mb-2 flex items-center justify-between text-[10px]">
+                    <span className="font-bold uppercase text-black/40">Weight</span>
+                    <span className="font-black">{f.gsm} gsm</span>
+                  </div>
+                  <div className="mb-2 flex items-center justify-between text-[10px]">
+                    <span className="font-bold uppercase text-black/40">Best for</span>
+                    <span className="font-medium text-right">{f.use}</span>
+                  </div>
+                  <div className="mt-auto flex items-center justify-between border-t border-black/10 pt-3 text-[10px] font-black text-[#ff4d00]">
+                    <span>Sublimation fit: {f.fit}</span>
+                    <span>→</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* WHY US */}
       <section className="border-b-2 border-black bg-[#0a0a0a] text-white">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
@@ -223,66 +283,6 @@ export default function PolyesterPage() {
                 </div>
                 <h3 className="mb-2 text-xl font-black leading-tight">{p.name}</h3>
                 <p className="text-sm leading-relaxed text-black/70">{p.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FABRICS WE STOCK — polyester-only filter from full catalogue */}
-      <section id="polyester-fabrics" className="border-b-2 border-black bg-white">
-        <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
-          <div className="mb-3 inline-block border-2 border-black bg-white px-3 py-1 text-xs font-black uppercase tracking-widest">
-            In stock
-          </div>
-          <h2 className="mb-4 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
-            Polyester fabrics
-            <br />
-            <span className="text-[#ff4d00]">we keep on hand.</span>
-          </h2>
-          <p className="mb-10 max-w-2xl text-base text-black/70">
-            The polyester-side of our full fabric line. Pre-shrunk, pre-tested,
-            ready to run on the sublimation press.
-          </p>
-
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {polyesterFabrics.map((f) => (
-              <div
-                key={f.swatch}
-                className="group flex flex-col border-2 border-black bg-white transition-all hover:border-[#ff4d00] hover:shadow-[4px_4px_0_0_#ff4d00]"
-              >
-                <div className="relative aspect-square w-full border-b-2 border-black bg-[#faf9f6]">
-                  <Image
-                    src={`/fabric-sw-${f.swatch.split("-")[0]}.webp`}
-                    alt={f.name}
-                    fill
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
-                    sizes="(max-width: 768px) 50vw, 25vw"
-                  />
-                </div>
-                <div className="flex flex-1 flex-col p-4">
-                  <h3 className="mb-2 text-sm font-black uppercase leading-tight">
-                    {f.name}
-                  </h3>
-                  <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-black/50">
-                    {f.comp}
-                  </p>
-                  <p className="mb-3 text-[11px] leading-relaxed text-black/70">
-                    {f.description}
-                  </p>
-                  <div className="mb-2 flex items-center justify-between text-[10px]">
-                    <span className="font-bold uppercase text-black/40">Weight</span>
-                    <span className="font-black">{f.gsm} gsm</span>
-                  </div>
-                  <div className="mb-2 flex items-center justify-between text-[10px]">
-                    <span className="font-bold uppercase text-black/40">Best for</span>
-                    <span className="font-medium text-right">{f.use}</span>
-                  </div>
-                  <div className="mt-auto flex items-center justify-between border-t border-black/10 pt-3 text-[10px] font-black text-[#ff4d00]">
-                    <span>Sublimation fit: {f.fit}</span>
-                    <span>→</span>
-                  </div>
-                </div>
               </div>
             ))}
           </div>
