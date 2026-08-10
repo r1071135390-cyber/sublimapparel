@@ -33,7 +33,7 @@ export function Process() {
       title: "Pack & Ship",
       desc: "Folded, poly-bagged, boxed. From our Yiwu floor or LA warehouse — your call.",
       icon: "📦",
-      img: null,
+      img: "/pack-warehouse.webp",
     },
     {
       num: "06",
