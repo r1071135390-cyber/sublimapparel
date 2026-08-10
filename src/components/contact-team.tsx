@@ -67,10 +67,10 @@ export function TeamSection() {
             tagColor="bg-[#00c2ff]"
           />
           <Person
-            initials="W"
-            name="Wendy"
+            initials="C"
+            name="Chris"
             role="Account Manager · EU + sample coordination"
-            bio="6 years handling European DTC brands and event agencies. Runs the sample room — every mockup, color proof and pre-production sample goes through her."
+            bio="6 years handling European DTC brands and event agencies. Runs the sample room — every mockup, color proof and pre-production sample goes through Chris."
             tag="EN · DE"
             tagColor="bg-[#00c2ff]"
           />
