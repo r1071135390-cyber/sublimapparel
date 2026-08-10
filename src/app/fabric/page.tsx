@@ -2,7 +2,7 @@ import { FabricCatalogGrid } from "@/components/fabric-catalog-grid";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Download, Droplets, Leaf } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Download, Droplets, Leaf } from "lucide-react";
 import { fabricTypes } from "@/lib/fabric-data";
 
 export const metadata: Metadata = {
@@ -35,12 +35,12 @@ const fabrics = [
 ];
 
 const processes = [
-  { name: "Sublimation", fabric: "Polyester", desc: "All-over print, photorealistic color, zero hand feel" },
-  { name: "DTG", fabric: "Cotton (light)", desc: "Direct to garment, soft hand feel, full color on natural fabrics" },
-  { name: "DTF", fabric: "Cotton (any color)", desc: "Heat transfer film, vibrant on dark, durable" },
-  { name: "Screen print", fabric: "Any", desc: "Classic, cost-effective for high-volume simple designs" },
-  { name: "Embroidery", fabric: "Any", desc: "Premium finish for logos, caps, polos" },
-  { name: "DTF heat transfer", fabric: "Any", desc: "Versatile, low MOQ, good for small runs" },
+  { name: "Sublimation", slug: "sublimation", fabric: "Polyester", desc: "All-over print, photorealistic color, zero hand feel" },
+  { name: "DTG", slug: "dtg", fabric: "Cotton (light)", desc: "Direct to garment, soft hand feel, full color on natural fabrics" },
+  { name: "DTF", slug: "dtf", fabric: "Cotton (any color)", desc: "Heat transfer film, vibrant on dark, durable" },
+  { name: "Screen print", slug: "screen-printing", fabric: "Any", desc: "Classic, cost-effective for high-volume simple designs" },
+  { name: "Embroidery", slug: "embroidery", fabric: "Any", desc: "Premium finish for logos, caps, polos" },
+  { name: "DTF heat transfer", slug: "dtf", fabric: "Any", desc: "Versatile, low MOQ, good for small runs" },
 ];
 
 export default function FabricPage() {
@@ -201,8 +201,16 @@ export default function FabricPage() {
               </thead>
               <tbody>
                 {processes.map((p, i) => (
-                  <tr key={i} className={"border-b border-black/10 " + (i % 2 === 0 ? "bg-white" : "bg-neutral-50")}>
-                    <td className="px-4 py-3 font-black">{p.name}</td>
+                  <tr key={i} className={"border-b border-black/10 transition-colors hover:bg-[#fff4ef] " + (i % 2 === 0 ? "bg-white" : "bg-neutral-50")}>
+                    <td className="px-4 py-3 font-black">
+                      <Link
+                        href={`/technique/${p.slug}`}
+                        className="inline-flex items-center gap-1.5 text-black underline-offset-4 transition-colors hover:text-[#ff4d00] hover:underline"
+                      >
+                        {p.name}
+                        <ArrowUpRight className="h-3.5 w-3.5 stroke-[2.5]" />
+                      </Link>
+                    </td>
                     <td className="px-4 py-3 text-sm">{p.fabric}</td>
                     <td className="px-4 py-3 text-sm text-black/70">{p.desc}</td>
                   </tr>
