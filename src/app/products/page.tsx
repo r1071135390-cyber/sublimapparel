@@ -69,9 +69,9 @@ export default function ProductsPage() {
             Products
           </div>
           <h1 className="text-5xl font-black leading-[0.95] tracking-tight text-black md:text-8xl">
-            If it can be sublimated,
+            Whatever you need to customize,
             <br />
-            <span className="text-[#ff4d00]">we print it.</span>
+            <span className="text-[#ff4d00]">we make it.</span>
           </h1>
           <p className="mt-8 max-w-3xl text-xl leading-snug text-black/80">
             Apparel is our bread and butter — but we print home goods, bags, flags, hard
