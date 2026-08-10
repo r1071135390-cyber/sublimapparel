@@ -304,34 +304,86 @@ export default function ShippingPage() {
   return (
     <main>
       {/* HERO */}
-      <section className="border-b-2 border-black bg-[#0a0a0a] text-white">
-        <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
-          <div className="mb-3 inline-block bg-[#00c2ff] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
-            Shipping & Fulfillment
-          </div>
-          <h1 className="text-5xl font-black leading-[0.95] tracking-tight md:text-8xl">
-            From our factory
-            <br />
-            <span className="text-[#00c2ff]">to your door.</span>
-          </h1>
-          <p className="mt-6 max-w-2xl text-base text-white/70 md:text-lg">
-            We ship to 100+ countries. Pick the option that fits your buyer —
-            full DDP for international, US warehouse for domestic speed, or
-            your own freight forwarder if you prefer.
-          </p>
-          <div className="mt-8 flex flex-wrap items-center gap-4 text-sm font-black uppercase tracking-widest text-white/80">
-            <span className="flex items-center gap-2">
-              <CheckCircle2 className="h-4 w-4 text-[#00c2ff]" strokeWidth={2.5} />
-              Door-to-door insurance
-            </span>
-            <span className="flex items-center gap-2">
-              <CheckCircle2 className="h-4 w-4 text-[#00c2ff]" strokeWidth={2.5} />
-              Real-time tracking
-            </span>
-            <span className="flex items-center gap-2">
-              <CheckCircle2 className="h-4 w-4 text-[#00c2ff]" strokeWidth={2.5} />
-              One invoice, no surprises
-            </span>
+      {/* HERO — dark text on left, warehouse image on right (same pattern as home page) */}
+      <section className="relative overflow-hidden border-b-2 border-black bg-[#0a0a0a] text-white">
+        {/* Image — right side, full-bleed, masked on the left so text stays readable */}
+        <div
+          className="pointer-events-none absolute inset-y-0 right-0 hidden md:block md:w-[58%]"
+          aria-hidden="true"
+        >
+          <div
+            className="h-full w-full bg-cover bg-center"
+            style={{ backgroundImage: "url('/shipping-hero.webp')" }}
+          />
+          {/* Fade the left edge of the image into the dark background so the text stays clean */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to right, #0a0a0a 0%, #0a0a0a 18%, rgba(10,10,10,0.55) 38%, rgba(10,10,10,0) 60%)",
+            }}
+          />
+        </div>
+
+        <div className="relative z-10 mx-auto max-w-7xl px-6 py-16 md:py-24">
+          <div className="max-w-2xl">
+            <div className="mb-5 inline-block bg-[#00c2ff] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
+              Shipping & Fulfillment
+            </div>
+            <h1 className="text-5xl font-black leading-[0.95] tracking-tight md:text-7xl">
+              From our line
+              <br />
+              <span className="text-[#00c2ff]">to your door.</span>
+            </h1>
+            <p className="mt-6 max-w-xl text-base text-white/75 md:text-lg">
+              One invoice. One carrier. Zero customs headaches. We ship DDP to
+              100+ countries — your address, an Amazon FBA warehouse, or any
+              commercial / residential door in between.
+            </p>
+
+            {/* Stat row */}
+            <div className="mt-10 grid grid-cols-2 gap-x-6 gap-y-5 border-t border-white/15 pt-8 sm:grid-cols-4">
+              <div>
+                <div className="text-3xl font-black text-white md:text-4xl">50+</div>
+                <div className="mt-1 text-[11px] font-bold uppercase tracking-widest text-white/60">
+                  Countries
+                </div>
+              </div>
+              <div>
+                <div className="text-3xl font-black text-[#00c2ff] md:text-4xl">0</div>
+                <div className="mt-1 text-[11px] font-bold uppercase tracking-widest text-white/60">
+                  Hidden Fees
+                </div>
+              </div>
+              <div>
+                <div className="text-3xl font-black text-white md:text-4xl">99.3%</div>
+                <div className="mt-1 text-[11px] font-bold uppercase tracking-widest text-white/60">
+                  On-Time
+                </div>
+              </div>
+              <div>
+                <div className="text-3xl font-black text-white md:text-4xl">5-7d</div>
+                <div className="mt-1 text-[11px] font-bold uppercase tracking-widest text-white/60">
+                  US West
+                </div>
+              </div>
+            </div>
+
+            {/* Trust row */}
+            <div className="mt-10 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-black uppercase tracking-widest text-white/70">
+              <span className="flex items-center gap-2">
+                <CheckCircle2 className="h-4 w-4 text-[#00c2ff]" strokeWidth={2.5} />
+                Door-to-door insurance
+              </span>
+              <span className="flex items-center gap-2">
+                <CheckCircle2 className="h-4 w-4 text-[#00c2ff]" strokeWidth={2.5} />
+                Real-time tracking
+              </span>
+              <span className="flex items-center gap-2">
+                <CheckCircle2 className="h-4 w-4 text-[#00c2ff]" strokeWidth={2.5} />
+                One invoice, no surprises
+              </span>
+            </div>
           </div>
         </div>
       </section>
