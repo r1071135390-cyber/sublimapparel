@@ -66,7 +66,7 @@ export default function ProductsPage() {
     <main>
       <section className="relative overflow-hidden bg-white">
         {/* Full-bleed background image with floating text overlay */}
-        <div className="relative aspect-[16/9] w-full">
+        <div className="relative aspect-[2/1] w-full">
           <Image
             src="/hero-products.webp"
             alt="Range of custom printed products — apparel, bags, home goods, hard substrates"
@@ -78,7 +78,7 @@ export default function ProductsPage() {
 
           {/* Floating text overlay */}
           <div className="absolute inset-0 mx-auto flex max-w-7xl items-center px-6">
-            <div className="max-w-3xl">
+            <div className="max-w-2xl">
               <div
                 className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white"
                 style={{
@@ -89,7 +89,7 @@ export default function ProductsPage() {
                 Products
               </div>
               <h1
-                className="whitespace-nowrap text-4xl font-black leading-[0.95] tracking-tight text-black md:text-6xl lg:text-7xl"
+                className="text-5xl font-black leading-[0.95] tracking-tight text-black md:text-7xl lg:text-8xl"
                 style={{
                   WebkitTextStroke: "2px #ffffff",
                   paintOrder: "stroke fill",
