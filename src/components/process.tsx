@@ -40,7 +40,7 @@ export function Process() {
       title: "Delivered to Door",
       desc: "DDP to 100+ countries. US orders ship domestically from LA — no customs wait.",
       icon: "🚚",
-      img: null,
+      img: "/delivery-door.webp",
     },
   ];
 
