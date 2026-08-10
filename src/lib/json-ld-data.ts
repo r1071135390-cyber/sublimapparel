@@ -59,3 +59,48 @@ export const localBusinessJsonLd = {
     name: "United States",
   },
 };
+
+export const techniqueData = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  name: "Sublimation Printing Process at SublimApparel",
+  description: "How we dye-sublimate polyester and 100% cotton apparel in 6 steps: artwork separation, wide-format print, cut & assemble, heat-press transfer, cut & sew, quality check.",
+  step: [
+    {
+      "@type": "HowToStep",
+      position: 1,
+      name: "Artwork separation",
+      text: "CMYK + 8 extended spot colors are pre-flighted. Underbase white added automatically for polyester.",
+    },
+    {
+      "@type": "HowToStep",
+      position: 2,
+      name: "Wide-format print",
+      text: "1.9m wide roll-to-roll sublimation printer lays the design onto transfer paper at 4,800 × 1,200 DPI.",
+    },
+    {
+      "@type": "HowToStep",
+      position: 3,
+      name: "Cut & assemble",
+      text: "Printed paper is cut to garment panel size. Front, back, sleeves kept aligned.",
+    },
+    {
+      "@type": "HowToStep",
+      position: 4,
+      name: "Heat-press transfer",
+      text: "200°C / 30 sec cycle on an 80 × 100 cm platen. Dye sublimates from solid to gas, bonds with polyester fibers.",
+    },
+    {
+      "@type": "HowToStep",
+      position: 5,
+      name: "Cut & sew",
+      text: "Each garment is cut, assembled and sewn on the same floor. Panels match perfectly because printed together.",
+    },
+    {
+      "@type": "HowToStep",
+      position: 6,
+      name: "Quality check",
+      text: "Every piece inspected. Colors verified against your proof. Defects removed before poly-bagging.",
+    },
+  ],
+};
