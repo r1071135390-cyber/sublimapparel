@@ -78,7 +78,7 @@ export default function ProductsPage() {
 
           {/* Floating text overlay */}
           <div className="absolute inset-0 mx-auto flex max-w-7xl items-center px-6">
-            <div className="max-w-2xl">
+            <div className="max-w-3xl">
               <div
                 className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white"
                 style={{
@@ -89,7 +89,7 @@ export default function ProductsPage() {
                 Products
               </div>
               <h1
-                className="text-5xl font-black leading-[0.95] tracking-tight text-black md:text-7xl lg:text-8xl"
+                className="whitespace-nowrap text-4xl font-black leading-[0.95] tracking-tight text-black md:text-6xl lg:text-7xl"
                 style={{
                   WebkitTextStroke: "2px #ffffff",
                   paintOrder: "stroke fill",
