@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export function TeamSection() {
   return (
     <section className="border-b-2 border-black bg-white">
@@ -34,16 +36,16 @@ export function TeamSection() {
             </div>
             <p className="mt-3 text-[11px] font-medium leading-snug text-black/50">
               Average tenure covers our four senior account managers (Ramon, Lily, Mark,
-              Wendy). Junior coordinators reply faster; final quotes always come from
+              Chris). Junior coordinators reply faster; final quotes always come from
               a senior.
             </p>
           </div>
         </div>
 
         {/* Team cards */}
-        <div className="mt-16 grid gap-px bg-black md:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           <Person
-            initials="R"
+            image="/team-ramon.webp"
             name="Ramon"
             role="Account Director · LATAM + EU"
             bio="12 years in export trade. Native Spanish, fluent English. Ran our Mexico & Spain distribution before joining SublimApparel in 2020. The one who signs off on the final quote."
@@ -51,7 +53,7 @@ export function TeamSection() {
             tagColor="bg-[#ff4d00]"
           />
           <Person
-            initials="L"
+            image="/team-lily.webp"
             name="Lily"
             role="Senior Account Manager · US + UK"
             bio="9 years servicing US event merchandisers, UK sports clubs and NA advertising agencies. Spent 4 years in a Yiwu trading company before us. Owns our US & UK book."
@@ -59,7 +61,7 @@ export function TeamSection() {
             tagColor="bg-[#00c2ff]"
           />
           <Person
-            initials="M"
+            image="/team-mark.webp"
             name="Mark"
             role="Account Manager · AU + NZ + JP"
             bio="7 years focused on the Pacific. Works with Australian uniform suppliers, NZ rugby clubs and Japanese promo houses. Knows the AU compliance paperwork inside-out."
@@ -67,7 +69,7 @@ export function TeamSection() {
             tagColor="bg-[#00c2ff]"
           />
           <Person
-            initials="C"
+            image="/team-chris.webp"
             name="Chris"
             role="Account Manager · EU + sample coordination"
             bio="6 years handling European DTC brands and event agencies. Runs the sample room — every mockup, color proof and pre-production sample goes through Chris."
@@ -119,14 +121,14 @@ function Stat({ label, value, sub }: { label: string; value: string; sub: string
 }
 
 function Person({
-  initials,
+  image,
   name,
   role,
   bio,
   tag,
   tagColor,
 }: {
-  initials: string;
+  image: string;
   name: string;
   role: string;
   bio: string;
@@ -134,21 +136,25 @@ function Person({
   tagColor: string;
 }) {
   return (
-    <div className="bg-white p-6">
-      <div className="flex items-start gap-4">
-        <div className="flex h-14 w-14 shrink-0 items-center justify-center bg-black text-2xl font-black text-white">
-          {initials}
-        </div>
-        <div className="min-w-0 flex-1">
-          <div className="text-lg font-black text-black">{name}</div>
-          <div className="text-[11px] font-bold uppercase tracking-wider text-black/60">
-            {role}
-          </div>
-        </div>
+    <div className="border-2 border-black bg-white">
+      <div className="relative aspect-[4/5] w-full overflow-hidden bg-[#e5e5e5]">
+        <Image
+          src={image}
+          alt={`${name} — ${role}`}
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 50vw, (max-width: 1024px) 25vw, 280px"
+        />
       </div>
-      <p className="mt-4 text-sm leading-relaxed text-black/75">{bio}</p>
-      <div className={`mt-4 inline-block ${tagColor} px-2 py-1 text-[10px] font-black uppercase tracking-widest text-white`}>
-        {tag}
+      <div className="p-5">
+        <div className="text-lg font-black text-black">{name}</div>
+        <div className="text-[11px] font-bold uppercase tracking-wider text-black/60">
+          {role}
+        </div>
+        <p className="mt-3 text-sm leading-relaxed text-black/75">{bio}</p>
+        <div className={`mt-4 inline-block ${tagColor} px-2 py-1 text-[10px] font-black uppercase tracking-widest text-white`}>
+          {tag}
+        </div>
       </div>
     </div>
   );
