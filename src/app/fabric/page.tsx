@@ -247,14 +247,9 @@ export default function FabricPage() {
 
                 {/* Content */}
                 <div className="flex flex-1 flex-col p-3 md:p-4">
-                  <div className="mb-1 flex items-baseline gap-1.5">
-                    <span className="text-[9px] font-black uppercase tracking-widest text-black/40 md:text-[10px]">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <h3 className="text-sm font-black uppercase leading-tight text-black md:text-base">
-                      {f.name}
-                    </h3>
-                  </div>
+                  <h3 className="mb-2 text-sm font-black uppercase leading-tight text-black md:text-base">
+                    {f.name}
+                  </h3>
                   <p className="mb-2 text-[10px] uppercase tracking-wide text-[#6b6b6b] md:mb-3 md:text-xs">
                     {f.comp}
                   </p>
