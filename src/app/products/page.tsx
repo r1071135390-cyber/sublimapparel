@@ -66,7 +66,7 @@ export default function ProductsPage() {
     <main>
       <section className="relative overflow-hidden bg-white">
         {/* Full-bleed background image with floating text overlay */}
-        <div className="relative h-[70vh] min-h-[520px] w-full">
+        <div className="relative h-[85vh] min-h-[640px] w-full">
           <Image
             src="/product-hero-products.webp"
             alt="Range of custom printed products — apparel, bags, home goods, hard substrates"
@@ -83,7 +83,7 @@ export default function ProductsPage() {
                 Products
               </div>
               <h1
-                className="text-5xl font-black leading-[0.95] tracking-tight text-black md:text-7xl lg:text-8xl"
+                className="whitespace-nowrap text-5xl font-black leading-[0.95] tracking-tight text-black md:text-7xl lg:text-8xl"
                 style={{
                   WebkitTextStroke: "2px #ffffff",
                   paintOrder: "stroke fill",
