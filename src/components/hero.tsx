@@ -34,7 +34,7 @@ export function Hero() {
       <div className="absolute inset-0 hidden lg:block">
         <Image
           src="/factory-floor.webp"
-          alt="Sublimation printing factory floor in Yiwu, China"
+          alt="Row of sublimation printers in Yiwu factory — 24/7 production lines"
           fill
           priority
           sizes="100vw"
