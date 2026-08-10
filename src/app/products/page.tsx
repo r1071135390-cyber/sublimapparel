@@ -69,57 +69,62 @@ export default function ProductsPage() {
   return (
     <main>
       <section className="relative overflow-hidden bg-white">
-        {/* Full-bleed background image */}
+        {/* Full-bleed background image with floating text overlay */}
         <div className="relative aspect-[2/1] w-full">
           <Image
             src="/hero-products.webp"
-            alt="Custom sublimated products from Yiwu factory"
+            alt="Range of custom printed products — apparel, bags, home goods, hard substrates"
             fill
             priority
-            className="object-cover"
             sizes="100vw"
+            className="object-cover object-center"
           />
 
           {/* Floating text overlay */}
-          <div className="absolute inset-0 flex items-center">
-            <div className="mx-auto w-full max-w-7xl px-6 md:px-10">
-              <div className="max-w-3xl">
-                <div
-                  className="mb-4 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white"
-                  style={{
-                    textShadow:
-                      "0 0 6px rgba(255,255,255,0.9), 0 0 12px rgba(255,255,255,0.6)",
-                  }}
-                >
-                  Products
-                </div>
-                <h1
-                  className="text-4xl font-black leading-[1.05] tracking-tight text-black md:text-6xl lg:text-7xl"
+          <div className="absolute inset-0 mx-auto flex max-w-7xl items-center px-6">
+            <div className="max-w-3xl">
+              <div
+                className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white"
+                style={{
+                  textShadow:
+                    "0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff",
+                }}
+              >
+                Products
+              </div>
+              <h1
+                className="whitespace-nowrap text-4xl font-black leading-[0.95] tracking-tight text-black md:text-6xl lg:text-7xl"
+                style={{
+                  WebkitTextStroke: "2px #ffffff",
+                  paintOrder: "stroke fill",
+                  textShadow:
+                    "0 0 8px rgba(255,255,255,0.9), 0 0 16px rgba(255,255,255,0.6)",
+                }}
+              >
+                Whatever you need
+                <br />
+                to customize
+                <br />
+                <span
+                  className="text-[#ff4d00]"
                   style={{
                     WebkitTextStroke: "2px #ffffff",
                     paintOrder: "stroke fill",
-                    textShadow:
-                      "0 0 8px rgba(255,255,255,0.9), 0 0 16px rgba(255,255,255,0.6)",
                   }}
                 >
-                  Whatever you need
-                  <br />
-                  to customize
-                  <br />
-                  <span className="text-[#ff4d00]">we make it.</span>
-                </h1>
-                <p
-                  className="mt-6 max-w-2xl text-base leading-snug text-black/90 md:text-xl"
-                  style={{
-                    textShadow:
-                      "-1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff, 1px 1px 0 #ffffff, -1px 0 0 #ffffff, 1px 0 0 #ffffff, 0 -1px 0 #ffffff, 0 1px 0 #ffffff, 0 0 4px rgba(255,255,255,0.9)",
-                  }}
-                >
-                  Apparel is our bread and butter — but we print home goods, bags,
-                  flags, hard goods, and whatever custom project you bring us. Polyester
-                  or 100% cotton.
-                </p>
-              </div>
+                  we make it.
+                </span>
+              </h1>
+              <p
+                className="mt-6 max-w-xl text-base leading-snug text-black/85 md:text-lg"
+                style={{
+                  textShadow:
+                    "0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff, 0 0 4px #fff, 0 0 4px #fff, 0 0 4px #fff, 0 0 4px #fff",
+                }}
+              >
+                Apparel is our bread and butter — but we print home goods, bags, flags, hard
+                goods, and whatever custom project you bring us. Polyester or 100% cotton.
+              </p>
             </div>
           </div>
         </div>
@@ -231,31 +236,6 @@ export default function ProductsPage() {
       </section>
 
       <ProductCatalogGrid />
-
-      {/* Excel download */}
-      <section className="border-t border-black/10 bg-[#0a0a0a] py-12 text-white">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between">
-            <div>
-              <h3 className="text-2xl font-extrabold tracking-tight md:text-3xl">
-                Need the full product list?
-              </h3>
-              <p className="mt-2 max-w-xl text-sm text-white/70 md:text-base">
-                Download our complete product catalog as Excel — with name, category, subcategory,
-                process, fabric options, and tags. Image column left blank for you to assign.
-              </p>
-            </div>
-            <a
-              href="/products-catalog.xlsx"
-              download
-              className="inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-bold uppercase tracking-wider text-white transition hover:bg-[#e64500] md:text-base"
-            >
-              <span>Download Excel (106 products)</span>
-              <span aria-hidden>→</span>
-            </a>
-          </div>
-        </div>
-      </section>
 
       <Contact />
     </main>
