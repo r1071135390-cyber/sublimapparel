@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Contact } from "@/components/contact";
+import { TeamSection } from "@/components/contact-team";
 
 export const metadata = {
   title: "Contact SublimApparel — Talk to a Real Person in Yiwu, 24h Response",
@@ -51,6 +52,7 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+      <TeamSection />
       <Contact />
     </main>
   );
