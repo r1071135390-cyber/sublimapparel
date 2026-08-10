@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Droplets, Leaf, Package, Send, Shirt } from "lucide-react";
+import { ArrowRight, Download, Droplets, Leaf, Package, Send, Shirt } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Fabric & Process — 12 Fabric Types, 6 Print Processes | SublimApparel",
@@ -151,7 +151,7 @@ export default function FabricPage() {
         </div>
       </section>
 
-      {/* BEYOND THESE 6 — FULL FABRIC CHART */}
+      {/* BEYOND THESE 6 — 3 CARDS */}
       <section className="border-b-2 border-black bg-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
           <div className="mb-3 inline-block bg-black px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
@@ -176,7 +176,7 @@ export default function FabricPage() {
               <div className="mb-2 text-xs font-black uppercase tracking-widest text-[#ff4d00]">02 / In stock</div>
               <h3 className="mb-3 text-2xl font-black leading-tight">12 fabric types in stock</h3>
               <p className="text-sm text-black/70">
-                From 80 gsm chiffon to 420 gsm fleece. See the chart below for the full list.
+                From 80 gsm chiffon to 420 gsm fleece. See the list below for the full breakdown.
               </p>
             </div>
             <div className="border-2 border-black bg-white p-6">
@@ -187,80 +187,95 @@ export default function FabricPage() {
               </p>
             </div>
           </div>
+        </div>
+      </section>
 
-          <div className="mt-16 mb-3 inline-block border-2 border-black bg-white px-3 py-1 text-xs font-black uppercase tracking-widest">
-            The 12 we keep on hand
+      {/* FULL FABRIC CATALOGUE — 2-COLUMN DETAILED LIST */}
+      <section className="border-b-2 border-black bg-white">
+        <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
+          <div className="mb-3 inline-block border-2 border-black bg-white px-3 py-1 text-xs font-black uppercase tracking-widest">
+            Full fabric catalogue
           </div>
-          <h3 className="mb-6 text-3xl font-black leading-tight md:text-4xl">
-            Full fabric catalog.
-          </h3>
+          <h2 className="mb-3 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
+            The <span className="text-[#ff4d00]">12</span> we keep on hand.
+          </h2>
+          <p className="mb-12 max-w-3xl text-base text-black/70 md:text-lg">
+            What you actually get when you order from us. Composition, weight, common spec, and the sublimation fit rating — on every card.
+          </p>
 
-          <div className="overflow-x-auto border-2 border-black">
-            <table className="w-full min-w-[760px] text-left">
-              <thead>
-                <tr className="border-b-2 border-black bg-black text-xs font-black uppercase tracking-widest text-white">
-                  <th className="px-4 py-3">Fabric</th>
-                  <th className="px-4 py-3">Composition</th>
-                  <th className="px-4 py-3">Weight (gsm)</th>
-                  <th className="px-4 py-3">Best for</th>
-                  <th className="px-4 py-3">Sublimation fit</th>
-                </tr>
-              </thead>
-              <tbody>
-                {fabricTypes.map((f, i) => (
-                  <tr key={i} className={"border-b border-black/10 " + (i % 2 === 0 ? "bg-white" : "bg-neutral-50")}>
-                    <td className="px-4 py-3 font-black text-sm">{f.name}</td>
-                    <td className="px-4 py-3 text-xs text-black/80">{f.comp}</td>
-                    <td className="px-4 py-3 text-xs whitespace-nowrap">{f.gsm}</td>
-                    <td className="px-4 py-3 text-xs text-black/70">{f.use}</td>
-                    <td className="px-4 py-3 text-sm text-[#ff4d00] font-black">{f.fit}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="grid gap-4 md:grid-cols-2">
+            {fabricTypes.map((f, i) => (
+              <div
+                key={i}
+                className="group flex gap-4 border-2 border-black bg-white p-4 transition-all hover:border-[#ff4d00]"
+              >
+                {/* Swatch image */}
+                <div className="relative aspect-square h-32 w-32 shrink-0 overflow-hidden border border-black/10 bg-white">
+                  <Image
+                    src={`/fabric-sw-${f.swatch}.webp`}
+                    alt={`${f.name} fabric swatch`}
+                    fill
+                    sizes="128px"
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                </div>
+
+                {/* Content */}
+                <div className="flex min-w-0 flex-1 flex-col">
+                  <div className="mb-1 flex items-baseline gap-2">
+                    <span className="text-[10px] font-black uppercase tracking-widest text-black/40">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <h3 className="truncate text-lg font-black leading-tight">{f.name}</h3>
+                  </div>
+                  <div className="mb-2 text-[11px] text-black/60">{f.comp}</div>
+                  <dl className="mt-auto space-y-1 text-[11px]">
+                    <div className="flex items-baseline justify-between gap-2 border-b border-black/10 pb-1">
+                      <dt className="font-black uppercase tracking-wider text-black/50">Weight</dt>
+                      <dd className="text-right text-black">{f.gsm} gsm</dd>
+                    </div>
+                    <div className="flex items-baseline justify-between gap-2 border-b border-black/10 pb-1">
+                      <dt className="font-black uppercase tracking-wider text-black/50">Best for</dt>
+                      <dd className="text-right text-black">{f.use}</dd>
+                    </div>
+                    <div className="flex items-baseline justify-between gap-2 pt-0.5">
+                      <dt className="font-black uppercase tracking-wider text-black/50">Sublimation fit</dt>
+                      <dd className="text-right text-sm font-black text-[#ff4d00]">{f.fit}</dd>
+                    </div>
+                  </dl>
+                </div>
+              </div>
+            ))}
           </div>
-          <p className="mt-3 text-xs text-black/50">
+
+          <p className="mt-6 text-xs text-black/50">
             ★ rating = how well the fabric holds sublimation dye. ★★★★★ = full all-over color, ★ = needs special process (we do all of them — including 100% cotton via DTG/DTF).
           </p>
 
-          {/* FABRIC SWATCH GRID */}
-          <div className="mt-16">
-            <div className="mb-3 inline-block border-2 border-black bg-white px-3 py-1 text-xs font-black uppercase tracking-widest">
-              Swatches up close
+          {/* Download CSV + Send your spec CTA */}
+          <div className="mt-8 flex flex-col items-start justify-between gap-4 border-2 border-black bg-[#faf9f6] p-6 md:flex-row md:items-center">
+            <div>
+              <div className="mb-1 text-[10px] font-black uppercase tracking-widest text-[#ff4d00]">Spec sheet</div>
+              <h4 className="text-lg font-black leading-tight">Download the full catalogue as CSV.</h4>
+              <p className="mt-1 text-sm text-black/60">All 12 fabrics with composition, weight, and use — for your sourcing team.</p>
             </div>
-            <h3 className="mb-3 text-3xl font-black leading-tight md:text-4xl">
-              <span className="text-[#ff4d00]">Real feel.</span> Real specs.
-            </h3>
-            <p className="mb-8 max-w-3xl text-base text-black/70">
-              12 fabric swatches, all photographed on white under the same lighting. Hover or tap any swatch to see the full table spec.
-            </p>
-
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-              {fabricTypes.map((f, i) => (
-                <div key={i} className="group border-2 border-black bg-white p-2 transition-all hover:border-[#ff4d00]">
-                  <div className="relative aspect-square w-full overflow-hidden bg-white">
-                    <Image
-                      src={`/fabric-sw-${f.swatch}.webp`}
-                      alt={`${f.name} fabric swatch`}
-                      fill
-                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 16vw"
-                      className="object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="mt-2 px-1">
-                    <div className="text-[10px] font-black leading-tight text-black">
-                      {String(i + 1).padStart(2, "0")} · {f.name}
-                    </div>
-                    <div className="mt-0.5 text-[9px] text-black/60">
-                      {f.comp} · {f.gsm} gsm
-                    </div>
-                  </div>
-                </div>
-              ))}
+            <div className="flex flex-col gap-2 sm:flex-row">
+              <a
+                href="data:text/csv;charset=utf-8,No,Name,Composition,Weight (gsm),Best for,Sublimation fit%0A1,Polyester jersey,100% Polyester,110-160,T-shirts / cultural shirts / jerseys,5%0A2,Bird-eye mesh,100% Polyester,135-275,Basketball / cycling / team kits,5%0A3,Poly-spandex stretch mesh,92% Poly + 8% Spandex,100-185,Compression / yoga base layers,4%0A4,Polar fleece,100% Polyester,270-420,Hoodies / jackets / winter sports,4%0A5,Nylon-spandex,75-85% Nylon + 15-25% Spandex,160-280,Yoga / swimwear / leggings,3%0A6,Direct print fabric,100% Polyester (coated),100-170,Flags / banners / posters / pillows,5%0A7,Poly-cotton blend (CVC / TC),65% Poly + 35% Cotton,120-260,Polos / workwear / shirts,2%0A8,100% Cotton,100% Cotton,180-250,Cotton tees / hoodies — our edge,1%0A9,Polyester satin / chiffon,100% Polyester,80-120,Dresses / dance / scarves,5%0A10,French terry,100% Polyester,200-320,Hoodies / pullovers,4%0A11,Polyester compression,100% Polyester,180-280,Compression wear / cycling,4%0A12,Microfiber peach,100% Polyester,120-200,Blankets / pillow covers / lining,4"
+                download="sublimapparel-fabric-catalogue.csv"
+                className="inline-flex items-center gap-2 border-2 border-black bg-white px-4 py-3 text-sm font-black uppercase tracking-widest transition-all hover:bg-black hover:text-white"
+              >
+                <Download className="h-4 w-4" strokeWidth={2.5} />
+                Download CSV
+              </a>
+              <Link
+                href="/get-a-quote"
+                className="inline-flex items-center gap-2 bg-[#ff4d00] px-4 py-3 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-black"
+              >
+                <Send className="h-4 w-4" strokeWidth={2.5} />
+                Send your spec
+              </Link>
             </div>
-            <p className="mt-4 text-xs text-black/50">
-              All swatches are 500×500 close-up photos, white-balanced under D65 daylight. Real fabric — not renders.
-            </p>
           </div>
         </div>
       </section>
