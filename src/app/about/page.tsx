@@ -1,11 +1,12 @@
 import { Contact } from"@/components/contact";
 import Link from"next/link";
 import { MapPin } from"lucide-react";
+import Image from"next/image";
 
 export const metadata = {
   title:"About SublimApparel — 2,000 sqm Yiwu Sublimation & Cotton Printing Factory Since 2018",
   description:
-"12 production lines, 200+ staff, 99.2% QC pass rate. Sublimation on polyester + all-over printing on 100% cotton. DDP to 100+ countries, US warehouse in Fontana CA.",
+"12 production lines, 200+ staff, 99.2% QC pass rate. Sublimation on polyester + all-over printing on 100% cotton. DDP to 100+ countries with all duties pre-paid.",
 };
 
 const capabilities = [
@@ -14,21 +15,15 @@ const capabilities = [
   { title:"Sewing & assembly", desc:"In-house sewing lines. Hand-stitched construction with quality control at every step." },
   { title:"Custom packaging", desc:"Polybag, individual box, hangtag, barcode label — ready for retail or e-commerce fulfillment." },
   { title:"DDP logistics", desc:"End-to-end shipping from Yiwu with all duties pre-paid. Door delivery in 100+ countries." },
-  { title:"LA warehouse", desc:"Stocked inventory in Fontana for US customers. Domestic shipping, no customs, 2-5 day delivery." },
+  { title:"Optional US buffer", desc:"A small Fontana, CA address for occasional overstock buffer storage. Tier-2 add-on, not a standard service." },
 ];
 
 const locations = [
   {
-    city:"Yiwu, China",
+    city:"Yiwu, China (HQ)",
     role:"Factory + Global Hub",
     address: ["No. 35 Lingyun Road","Yiwu, Zhejiang, China"],
-    desc:"Complete production line. Daily output: 2,500+ pieces. Direct access to the world's largest small-commodity logistics network.",
-  },
-  {
-    city:"Fontana, CA, USA",
-    role:"Overseas Warehouse",
-    address: ["13052 Jurupa Ave","Fontana, CA 92335","United States"],
-    desc:"Stocked inventory for US customers. Domestic 2-5 day shipping. No customs. No duties. Perfect for e-commerce and time-sensitive orders.",
+    desc:"Our only production site. 12 lines, 200+ staff, daily output 2,500+ pieces. Direct access to the world's largest small-commodity logistics network.",
   },
 ];
 
@@ -41,21 +36,86 @@ const values = [
 export default function AboutPage() {
   return (
     <main>
-      <section className="border-b-2 border-black bg-white">
-        <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
-          <div className="mb-3 inline-block bg-[#00c2ff] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
-            About
+      <section className="relative overflow-hidden border-b-2 border-black bg-[#0a0a0a] text-white">
+        {/* Full-bleed background image — blurred/dark on left under text, clear on right */}
+        <div className="absolute inset-0">
+          <Image
+            src="/about-hero.webp"
+            alt="SublimApparel Yiwu factory exterior with 3D SublimApparel signage in brand orange on the upper facade"
+            fill
+            sizes="100vw"
+            className="object-cover object-[center_30%]"
+            priority
+          />
+          {/* Gradient mask: solid dark on left where text sits, transparent on the right where the building is clear */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to right, #0a0a0a 0%, #0a0a0a 30%, rgba(10,10,10,0.85) 45%, rgba(10,10,10,0.35) 62%, rgba(10,10,10,0) 80%)",
+            }}
+          />
+          {/* Extra heavy blur layer on the very left to fade out the image where the text sits */}
+          <div
+            className="absolute inset-y-0 left-0 w-1/2 backdrop-blur-md"
+            style={{
+              background:
+                "linear-gradient(to right, rgba(10,10,10,0.75) 0%, rgba(10,10,10,0.35) 60%, rgba(10,10,10,0) 100%)",
+              WebkitMaskImage:
+                "linear-gradient(to right, #000 0%, #000 60%, transparent 100%)",
+              maskImage:
+                "linear-gradient(to right, #000 0%, #000 60%, transparent 100%)",
+            }}
+          />
+        </div>
+
+        <div className="relative mx-auto max-w-7xl px-6 py-16 md:py-24">
+          <div className="max-w-xl">
+              <div className="mb-3 inline-block bg-[#00c2ff] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
+                About SublimApparel
+              </div>
+              <h1 className="text-5xl font-black leading-[0.95] tracking-tight text-white md:text-7xl">
+                One factory
+                <br />
+                <span className="text-[#ff4d00]">in Yiwu, China.</span>
+                <br />
+                <span className="text-white/80">Built for the world.</span>
+              </h1>
+              <p className="mt-8 max-w-xl text-base leading-relaxed text-white/80 md:text-lg">
+                SublimApparel is a full-service sublimation apparel factory — design, print, cut, sew,
+                QC, pack, and ship — all under one roof in Yiwu, Zhejiang. We were built to serve
+                the kind of customer who needs a reliable Chinese partner for custom team wear,
+                event merchandise, and brand apparel.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Link
+                  href="/contact/"
+                  className="inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-widest text-white transition-colors hover:bg-[#e64500]"
+                >
+                  Visit the factory →
+                </Link>
+                <Link
+                  href="/technique/"
+                  className="inline-flex items-center gap-2 border-2 border-white/40 px-6 py-3 text-sm font-black uppercase tracking-widest text-white transition-colors hover:bg-white hover:text-black"
+                >
+                  See what we make
+                </Link>
+              </div>
+              <div className="mt-10 grid grid-cols-3 gap-4 border-t border-white/15 pt-6">
+                <div>
+                  <div className="text-3xl font-black text-white md:text-4xl">2018</div>
+                  <div className="mt-1 text-[10px] font-bold uppercase tracking-widest text-white/60">Founded</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-black text-white md:text-4xl">6+</div>
+                  <div className="mt-1 text-[10px] font-bold uppercase tracking-widest text-white/60">Years sublimation-only</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-black text-white md:text-4xl">50+</div>
+                  <div className="mt-1 text-[10px] font-bold uppercase tracking-widest text-white/60">Countries shipped</div>
+                </div>
+              </div>
           </div>
-          <h1 className="text-5xl font-black leading-[0.95] tracking-tight text-black md:text-8xl">
-            From Yiwu
-            <br />
-            <span className="text-[#ff4d00]">to the world.</span>
-          </h1>
-          <p className="mt-8 max-w-3xl text-xl leading-snug text-black/80">
-            sublimapparel.com is a website of a full-service sublimation factory based in Yiwu, China — with a
-            warehouse in Fontana, CA. We print on polyester and 100% cotton. We cut, sew, and
-            ship anywhere in the world. And we handle the customs so you don&apos;t have to.
-          </p>
         </div>
       </section>
 
