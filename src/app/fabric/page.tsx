@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Droplets, Leaf, Package, Send, Shirt } from "lucide-react";
 
@@ -41,18 +42,18 @@ const processes = [
 ];
 
 const fabricTypes = [
-  { name: "Polyester jersey", comp: "100% Polyester", gsm: "110–160", use: "T-shirts, cultural shirts, jerseys", fit: "★★★★★" },
-  { name: "Bird-eye mesh", comp: "100% Polyester", gsm: "135–275", use: "Basketball, cycling, team kits", fit: "★★★★★" },
-  { name: "Poly-spandex stretch mesh", comp: "92% Poly + 8% Spandex", gsm: "100–185", use: "Compression, yoga base layers", fit: "★★★★" },
-  { name: "Polar fleece", comp: "100% Polyester", gsm: "270–420", use: "Hoodies, jackets, winter sports", fit: "★★★★" },
-  { name: "Nylon-spandex", comp: "75–85% Nylon + 15–25% Spandex", gsm: "160–280", use: "Yoga, swimwear, leggings", fit: "★★★" },
-  { name: "Direct print fabric", comp: "100% Polyester (coated)", gsm: "100–170", use: "Flags, banners, posters, pillows", fit: "★★★★★" },
-  { name: "Poly-cotton blend (CVC / TC)", comp: "65% Poly + 35% Cotton", gsm: "120–260", use: "Polos, workwear, shirts", fit: "★★" },
-  { name: "100% Cotton", comp: "100% Cotton", gsm: "180–250", use: "Cotton tees, hoodies — our edge", fit: "★" },
-  { name: "Polyester satin / chiffon", comp: "100% Polyester", gsm: "80–120", use: "Dresses, dance, scarves", fit: "★★★★★" },
-  { name: "French terry", comp: "100% Polyester", gsm: "200–320", use: "Hoodies, pullovers", fit: "★★★★" },
-  { name: "Polyester compression", comp: "100% Polyester", gsm: "180–280", use: "Compression wear, cycling", fit: "★★★★" },
-  { name: "Microfiber peach", comp: "100% Polyester", gsm: "120–200", use: "Blankets, pillow covers, lining", fit: "★★★★" },
+  { name: "Polyester jersey", comp: "100% Polyester", gsm: "110–160", use: "T-shirts, cultural shirts, jerseys", fit: "★★★★★", swatch: "01-jersey" },
+  { name: "Bird-eye mesh", comp: "100% Polyester", gsm: "135–275", use: "Basketball, cycling, team kits", fit: "★★★★★", swatch: "02-birdeye" },
+  { name: "Poly-spandex stretch mesh", comp: "92% Poly + 8% Spandex", gsm: "100–185", use: "Compression, yoga base layers", fit: "★★★★", swatch: "03-spandex" },
+  { name: "Polar fleece", comp: "100% Polyester", gsm: "270–420", use: "Hoodies, jackets, winter sports", fit: "★★★★", swatch: "04-fleece" },
+  { name: "Nylon-spandex", comp: "75–85% Nylon + 15–25% Spandex", gsm: "160–280", use: "Yoga, swimwear, leggings", fit: "★★★", swatch: "05-nylon" },
+  { name: "Direct print fabric", comp: "100% Polyester (coated)", gsm: "100–170", use: "Flags, banners, posters, pillows", fit: "★★★★★", swatch: "06-banner" },
+  { name: "Poly-cotton blend (CVC / TC)", comp: "65% Poly + 35% Cotton", gsm: "120–260", use: "Polos, workwear, shirts", fit: "★★", swatch: "07-polycotton" },
+  { name: "100% Cotton", comp: "100% Cotton", gsm: "180–250", use: "Cotton tees, hoodies — our edge", fit: "★", swatch: "08-cotton" },
+  { name: "Polyester satin / chiffon", comp: "100% Polyester", gsm: "80–120", use: "Dresses, dance, scarves", fit: "★★★★★", swatch: "09-satin" },
+  { name: "French terry", comp: "100% Polyester", gsm: "200–320", use: "Hoodies, pullovers", fit: "★★★★", swatch: "10-terry" },
+  { name: "Polyester compression", comp: "100% Polyester", gsm: "180–280", use: "Compression wear, cycling", fit: "★★★★", swatch: "11-compression" },
+  { name: "Microfiber peach", comp: "100% Polyester", gsm: "120–200", use: "Blankets, pillow covers, lining", fit: "★★★★", swatch: "12-peach" },
 ];
 
 export default function FabricPage() {
@@ -221,6 +222,46 @@ export default function FabricPage() {
           <p className="mt-3 text-xs text-black/50">
             ★ rating = how well the fabric holds sublimation dye. ★★★★★ = full all-over color, ★ = needs special process (we do all of them — including 100% cotton via DTG/DTF).
           </p>
+
+          {/* FABRIC SWATCH GRID */}
+          <div className="mt-16">
+            <div className="mb-3 inline-block border-2 border-black bg-white px-3 py-1 text-xs font-black uppercase tracking-widest">
+              Swatches up close
+            </div>
+            <h3 className="mb-3 text-3xl font-black leading-tight md:text-4xl">
+              <span className="text-[#ff4d00]">Real feel.</span> Real specs.
+            </h3>
+            <p className="mb-8 max-w-3xl text-base text-black/70">
+              12 fabric swatches, all photographed on white under the same lighting. Hover or tap any swatch to see the full table spec.
+            </p>
+
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+              {fabricTypes.map((f, i) => (
+                <div key={i} className="group border-2 border-black bg-white p-2 transition-all hover:border-[#ff4d00]">
+                  <div className="relative aspect-square w-full overflow-hidden bg-white">
+                    <Image
+                      src={`/fabric-sw-${f.swatch}.webp`}
+                      alt={`${f.name} fabric swatch`}
+                      fill
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 16vw"
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="mt-2 px-1">
+                    <div className="text-[10px] font-black leading-tight text-black">
+                      {String(i + 1).padStart(2, "0")} · {f.name}
+                    </div>
+                    <div className="mt-0.5 text-[9px] text-black/60">
+                      {f.comp} · {f.gsm} gsm
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <p className="mt-4 text-xs text-black/50">
+              All swatches are 500×500 close-up photos, white-balanced under D65 daylight. Real fabric — not renders.
+            </p>
+          </div>
         </div>
       </section>
 
