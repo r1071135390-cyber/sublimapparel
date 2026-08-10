@@ -271,43 +271,108 @@ export default function TechniquePage() {
     <>
       <JsonLd data={techniqueData} />
 
-      {/* HERO */}
-      <section className="border-b-2 border-black bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-20">
-          <p className="mb-3 text-xs font-bold uppercase tracking-widest text-[#ff4d00] md:mb-4 md:text-sm">
+      {/* HERO — same split pattern as homepage: dark text on left, clear image on right */}
+      <section className="relative overflow-hidden border-b-2 border-black bg-[#0a0a0a] text-white">
+        {/* Desktop background image (full bleed) — hidden on mobile */}
+        <div className="absolute inset-0 hidden lg:block">
+          <Image
+            src="/technique-hero.webp"
+            alt="Top-down flat-lay of 6 apparel samples showing different decoration techniques — sublimation, 3D puff, embroidery, rhinestone, DTF and reflective print"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center opacity-90 brightness-105"
+          />
+          {/* Gradient mask — image clearly visible on the right, fades to dark on the left where text sits */}
+          <div
+            aria-hidden
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(90deg, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.78) 35%, rgba(10,10,10,0.35) 65%, rgba(10,10,10,0.15) 100%)",
+            }}
+          />
+        </div>
+
+        {/* Mobile hero image — full bleed, no overlay */}
+        <div className="relative block w-full lg:hidden">
+          <div className="relative aspect-[16/9] w-full">
+            <Image
+              src="/technique-hero.webp"
+              alt="Top-down flat-lay of 6 apparel samples showing different decoration techniques"
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover object-center brightness-105"
+            />
+            <div
+              aria-hidden
+              className="absolute inset-x-0 bottom-0 h-20"
+              style={{
+                background:
+                  "linear-gradient(180deg, rgba(10,10,10,0) 0%, rgba(10,10,10,1) 100%)",
+              }}
+            />
+          </div>
+          <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between gap-2 text-[10px] font-bold uppercase tracking-[0.18em] text-white drop-shadow">
+            <span className="inline-flex items-center gap-1.5 rounded-sm bg-black/55 px-2 py-1 backdrop-blur-sm">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#ff4d00]" />
+              6 techniques · one bench
+            </span>
+            <span className="rounded-sm bg-black/55 px-2 py-1 backdrop-blur-sm">
+              Yiwu sample room
+            </span>
+          </div>
+        </div>
+
+        <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-16 lg:py-24">
+          <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-[#ff4d00] md:mb-4 md:text-sm">
             [ Technique Guide ]
           </p>
-          <h1 className="text-4xl font-black uppercase leading-[0.95] tracking-tight text-black md:text-7xl">
-            Sublimation. Plus
-            <br />
-            <span className="text-[#ff4d00]">every other technique.</span>
+
+          <h1 className="mb-4 max-w-3xl text-4xl font-black uppercase leading-[0.95] tracking-tight text-white md:mb-5 md:text-6xl lg:text-7xl">
+            <span className="block whitespace-nowrap">Sublimation. Plus</span>
+            <span className="block text-[#ff4d00]">every other technique.</span>
           </h1>
-          <p className="mt-6 max-w-3xl text-base text-[#6b6b6b] md:mt-8 md:text-lg">
+
+          <p className="mb-3 max-w-xl text-sm text-white/80 md:mb-4 md:text-base">
             Sublimation is our flagship, but we run every other technique on
             this page in-house with the same quality and turnaround. Screen
             printing, embroidery, DTG, DTF, 3D puff, rhinestone and many
             more — all on the same production line, all under one quote, all
             DDP to your door.
           </p>
-          <p className="mt-4 max-w-3xl text-base font-medium italic text-[#1a1a1a] md:mt-5 md:text-lg">
-            There is no "best" technique — only the one that best matches your
-            brief. Not sure which is right for you? Send us your design,
-            fabric and quantity, and we&apos;ll recommend the process that
-            fits.
+          <p className="mb-6 max-w-xl text-sm font-medium italic text-white md:mb-7 md:text-base">
+            There is no &quot;best&quot; technique — only the one that best
+            matches your brief. Not sure which is right for you? Send us your
+            design, fabric and quantity, and we&apos;ll recommend the process
+            that fits.
           </p>
-          <div className="mt-8 flex flex-col gap-3 md:mt-10 md:flex-row md:gap-4">
+
+          <div className="flex flex-col gap-3 md:flex-row md:gap-4">
             <Link
               href="/get-a-quote/"
-              className="inline-flex items-center justify-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-bold uppercase tracking-wide text-white transition-colors hover:bg-black md:px-8 md:py-4 md:text-base"
+              className="inline-flex items-center justify-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-bold uppercase tracking-wide text-white transition-colors hover:bg-white hover:text-[#ff4d00] md:px-8 md:py-4 md:text-base"
             >
               Get a Quote →
             </Link>
             <Link
               href="#all-techniques"
-              className="inline-flex items-center justify-center gap-2 border-2 border-black bg-white px-6 py-3 text-sm font-bold uppercase tracking-wide text-black transition-colors hover:bg-black hover:text-white md:px-8 md:py-4 md:text-base"
+              className="inline-flex items-center justify-center gap-2 border-2 border-white bg-white/5 px-6 py-3 text-sm font-bold uppercase tracking-wide text-white backdrop-blur-sm transition-colors hover:bg-white hover:text-black md:px-8 md:py-4 md:text-base"
             >
               See All Techniques
             </Link>
+          </div>
+
+          {/* Tiny caption strip — only on desktop, anchored bottom-right where the image is clear */}
+          <div className="mt-6 hidden items-center gap-2 text-[10px] font-bold uppercase tracking-[0.18em] text-white/85 lg:flex">
+            <span className="inline-flex items-center gap-1.5 rounded-sm bg-black/55 px-2 py-1 backdrop-blur-sm">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#ff4d00]" />
+              6 techniques · one bench
+            </span>
+            <span className="rounded-sm bg-black/55 px-2 py-1 backdrop-blur-sm">
+              Yiwu sample room
+            </span>
           </div>
         </div>
       </section>
