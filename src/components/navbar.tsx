@@ -6,8 +6,8 @@ export function Navbar() {
     { href: "/", label: "Home" },
     { href: "/products", label: "Products" },
     { href: "/fabric", label: "Fabric" },
-    { href: "/shipping", label: "Shipping" },
     { href: "/technique", label: "Technique" },
+    { href: "/shipping", label: "Shipping" },
     { href: "/about", label: "About" },
     { href: "/contact", label: "Contact" },
   ];
