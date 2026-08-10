@@ -69,7 +69,9 @@ export default function ProductsPage() {
             Products
           </div>
           <h1 className="text-5xl font-black leading-[0.95] tracking-tight text-black md:text-8xl">
-            Whatever you need to customize,
+            Whatever you need
+            <br />
+            to customize
             <br />
             <span className="text-[#ff4d00]">we make it.</span>
           </h1>
