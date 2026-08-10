@@ -76,10 +76,10 @@ export default function FabricPage() {
               <div className="mb-4 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
                 Fabric &amp; Process
               </div>
-              <h1 className="text-5xl font-black leading-[0.95] tracking-tight md:text-7xl lg:text-[88px]">
+              <h1 className="text-balance text-3xl font-black leading-[0.95] tracking-tight sm:text-5xl md:text-6xl md:whitespace-nowrap lg:text-7xl">
                 Overall printing,
                 <br />
-                <span className="text-[#ff4d00]">polyester or cotton.</span>
+                <span className="text-[#ff4d00] md:whitespace-nowrap">polyester or cotton.</span>
                 <br />
                 One factory.
               </h1>
