@@ -1,24 +1,54 @@
-import { Contact } from"@/components/contact";
+import Image from "next/image";
+import { Contact } from "@/components/contact";
 
 export const metadata = {
-  title:"Contact SublimApparel — Yiwu Factory, US Warehouse & 24h Response",
+  title: "Contact SublimApparel — Talk to a Real Person in Yiwu, 24h Response",
   description:
-"Talk to a real production manager in Yiwu, China — or our Fontana, CA team — within 24h. WhatsApp, email, WeChat. Quote in 12h, sample in 5 days, bulk in 21 days.",
+    "Real production managers in Yiwu, China — not chatbots. WhatsApp, email, WeChat. Reply in 24h, quote in 12h, sample in 5 days, bulk in 21 days.",
 };
 
 export default function ContactPage() {
   return (
     <main>
-      <section className="border-b-2 border-black bg-white">
-        <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
-          <div className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
-            Contact
+      <section className="relative overflow-hidden border-b-2 border-black bg-[#0a0a0a] text-white">
+        {/* Background image — full bleed */}
+        <div className="absolute inset-0">
+          <Image
+            src="/contact-hero.webp"
+            alt="SublimApparel team working at desks in the office"
+            fill
+            className="object-cover object-[center_35%]"
+            priority
+          />
+          {/* Gradient mask — solid dark on left under text, transparent on right */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/90 via-35% to-transparent" />
+          {/* Subtle blur on the left half under the text */}
+          <div
+            className="absolute inset-0 backdrop-blur-[2px]"
+            style={{
+              WebkitMaskImage:
+                "linear-gradient(to right, #000 0%, #000 35%, transparent 60%)",
+              maskImage:
+                "linear-gradient(to right, #000 0%, #000 35%, transparent 60%)",
+            }}
+          />
+        </div>
+
+        <div className="relative mx-auto max-w-7xl px-6 py-20 md:py-28 lg:py-32">
+          <div className="max-w-2xl">
+            <div className="mb-4 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+              Contact
+            </div>
+            <h1 className="text-[44px] font-black leading-[1.05] tracking-tight md:text-[64px] lg:text-[72px]">
+              Let&apos;s
+              <br />
+              <span className="text-[#ff4d00]">talk.</span>
+            </h1>
+            <p className="mt-4 max-w-md text-base leading-relaxed text-white/80 md:text-lg">
+              Real production managers in Yiwu, China — not chatbots.
+              WhatsApp, email, WeChat. Average reply time: under 24 hours.
+            </p>
           </div>
-          <h1 className="text-5xl font-black leading-[0.95] tracking-tight text-black md:text-8xl">
-            Let&apos;s
-            <br />
-            <span className="text-[#ff4d00]">talk.</span>
-          </h1>
         </div>
       </section>
       <Contact />
