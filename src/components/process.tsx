@@ -12,7 +12,7 @@ export function Process() {
       title: "Sample & Confirm",
       desc: "Free sample in 3-5 days. Approve colors, fabric, fit — then we go.",
       icon: "🎨",
-      img: null,
+      img: "/sample-studio.webp",
     },
     {
       num: "03",
