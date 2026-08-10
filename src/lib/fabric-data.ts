@@ -165,7 +165,7 @@ export const fabricTypes: Fabric[] = [
     spec: "Width 150cm, 4-way stretch",
     use: "Compression, fitted athletic",
     fit: 4,
-    swatch: "03-polyspandex",
+    swatch: "03-spandex",
     description:
       "92/8 poly-spandex. Four-way stretch for compression and fitted cuts.",
     printMethods: ["sublimation", "dtf"],
@@ -218,7 +218,7 @@ export const fabricTypes: Fabric[] = [
     spec: "Width 150-180cm, brushed both sides",
     use: "Hoodies, jackets, blankets",
     fit: 4,
-    swatch: "04-polarfleece",
+    swatch: "04-fleece",
     description:
       "Heavy-knit loops, brushed both sides. Plush hand, prints through to the pile.",
     printMethods: ["sublimation", "dtf", "screen-print", "embroidery"],
@@ -271,7 +271,7 @@ export const fabricTypes: Fabric[] = [
     spec: "Width 150cm, 4-way stretch",
     use: "Swim, yoga, fitted tops",
     fit: 3,
-    swatch: "05-nylonspandex",
+    swatch: "05-nylon",
     description:
       "Silky hand, excellent stretch recovery. Used for swim, yoga, fitted tops.",
     printMethods: ["dtf", "sublimation"],
@@ -324,7 +324,7 @@ export const fabricTypes: Fabric[] = [
     spec: "Width 110-150cm, woven coated",
     use: "Flags, banners, signs",
     fit: 5,
-    swatch: "06-direct",
+    swatch: "06-banner",
     description:
       "Flag/banner fabric. Tightly woven, takes direct print on coated face.",
     printMethods: ["sublimation"],
@@ -416,59 +416,6 @@ export const fabricTypes: Fabric[] = [
   },
   {
     name: "100% Cotton",
-    slug: "cotton-tshirt",
-    comp: "100% Cotton",
-    gsm: "160-220",
-    spec: "Width 150-180cm, knitted jersey",
-    use: "T-shirts, fashion basics, baby wear",
-    fit: 3,
-    swatch: "08-cotton",
-    description:
-      "Pure cotton — specialty process at our factory. We dye-sub on cotton via DTG/DTF for full color, soft hand.",
-    printMethods: ["dtg", "dtf", "screen-print", "embroidery"],
-    tags: [
-      "cotton", "knit", "jersey", "lightweight", "midweight", "casual",
-      "t-shirts", "fashion", "basics", "dtg-friendly", "organic", "everyday",
-    ],
-    h1: "100% Cotton Fabric — Pure Cotton for DTG and DTF Printing",
-    metaDescription:
-      "100% cotton fabric, 160-220 gsm. Soft hand, breathable, suitable for DTG and DTF printing. T-shirts, fashion basics, baby wear, organic cotton options. MOQ 50 pcs.",
-    intro:
-      "100% cotton is the most-used apparel fiber worldwide — soft, breathable, hypoallergenic, and comfortable against the skin. We run two printing processes on cotton: DTG (direct-to-garment) and DTF (direct-to-film). Both give full-color graphics with a soft hand. We can also do all-over sublimation on cotton via a special transfer process for select projects.",
-    characteristics: [
-      "100% cotton, soft hand",
-      "160-220 gsm available",
-      "Organic cotton options on request",
-      "Excellent for DTG and DTF printing",
-      "Breathable and hypoallergenic",
-      "Not suitable for standard sublimation",
-    ],
-    bestForList: [
-      "Fashion and basics t-shirts",
-      "Baby and toddler wear",
-      "Premium retail apparel",
-      "Organic and natural collections",
-    ],
-    careNotes: [
-      "Machine wash cold, gentle cycle",
-      "Tumble dry low or hang dry",
-      "Iron on cotton setting",
-      "Wash dark colors separately first few cycles",
-    ],
-    relatedSlugs: ["pima-cotton", "poly-cotton-blend", "bamboo", "modal"],
-    faq: [
-      {
-        q: "Can you do all-over printing on cotton?",
-        a: "Yes — we have a special transfer process that allows edge-to-edge printing on cotton garments. It's slightly more expensive than standard sublimation on poly, but the result is full-coverage graphics on a cotton substrate.",
-      },
-      {
-        q: "What's the best print method for cotton?",
-        a: "DTG for one-off or small-batch full-color designs. DTF for higher volumes or designs with white underbase. Screen-print for simple vector designs in 1-4 colors. Embroidery for premium logos.",
-      },
-    ],
-  },
-  {
-    name: "Polyester satin / chiffon",
     slug: "polyester-satin-chiffon",
     comp: "100% Polyester",
     gsm: "60-120",
@@ -524,7 +471,7 @@ export const fabricTypes: Fabric[] = [
     spec: "Width 150-180cm, looped back",
     use: "Hoodies, pullovers, joggers",
     fit: 4,
-    swatch: "10-frenchterry",
+    swatch: "10-terry",
     description:
       "Looped back, smooth face. Mid-weight for hoodies and pullovers.",
     printMethods: ["sublimation", "dtf", "screen-print", "embroidery"],
@@ -712,6 +659,112 @@ export const fabricTypes: Fabric[] = [
       {
         q: "Can I sublimate on terry cloth?",
         a: "No — terry cloth is typically a poly-cotton blend with looped pile that doesn't take sublimation ink well. For graphics, use DTF (best for full color), screen-print, or embroidery.",
+      },
+    ],
+  },
+  {
+    name: "Polyester satin / chiffon",
+    slug: "polyester-satin-chiffon",
+    comp: "100% Polyester",
+    gsm: "80-120",
+    spec: "Width 145-150cm, satin weave or chiffon weave",
+    use: "Lining, fashion scarves, blouses, dresses, decorative",
+    fit: 2,
+    swatch: "satin",
+    description:
+      "Lightweight 100% polyester with a smooth, lustrous surface. Satin weave gives a glossy face; chiffon weave is sheer and drapey. Both take vivid sublimation prints.",
+    printMethods: ["sublimation", "heat-transfer"],
+    tags: [
+      "polyester", "satin", "chiffon", "lightweight", "sheer",
+      "fashion", "dresses", "blouses", "lining", "sublimation-friendly",
+    ],
+    h1: "Polyester Satin & Chiffon Fabric — Lightweight, Sheer, Sublimation-Ready",
+    metaDescription:
+      "100% polyester satin and chiffon, 80-120 gsm. Smooth, lustrous, drapey. Fashion blouses, dresses, scarves, lining. Vivid sublimation printing. Low MOQ 100 pcs.",
+    intro:
+      "Polyester satin and chiffon are the go-to substrates for lightweight, fashion-forward garments. Satin has a glossy face and matte back; chiffon is sheer with a soft, drapey hand. Both accept sublimation ink beautifully — the smooth surface yields sharp, photographic detail.",
+    characteristics: [
+      "100% polyester",
+      "80-120 gsm — featherweight",
+      "Satin: glossy face, matte back; Chiffon: sheer, drapey",
+      "Excellent sublimation print results",
+      "Smooth, cool-touch hand",
+      "Limited durability for high-abrasion use",
+    ],
+    bestForList: [
+      "Fashion blouses and dresses",
+      "Scarves and hair accessories",
+      "Lining for jackets and suits",
+      "Dancewear and performance costumes",
+    ],
+    careNotes: [
+      "Hand wash cold or gentle cycle",
+      "Hang dry, do not wring",
+      "Iron on low heat with pressing cloth",
+      "Do not bleach",
+    ],
+    relatedSlugs: ["polyester-jersey", "silk-charmeuse", "silk-chiffon", "poly-spandex-stretch"],
+    faq: [
+      {
+        q: "What's the difference between satin and chiffon?",
+        a: "Satin has a glossy face and is opaque — used for blouses, linings, dresses. Chiffon is sheer and drapey — used for scarves, overlays, and flowy garments. Both are 100% polyester and accept sublimation equally well.",
+      },
+      {
+        q: "Can I get custom colors on satin?",
+        a: "Yes — through sublimation we can match any color or print photographic detail. Minimum order is typically 100 pieces per design for custom dye-sub on satin.",
+      },
+    ],
+  },
+  {
+    name: "100% cotton t-shirt (DTG/DTF)",
+    slug: "cotton-tshirt",
+    comp: "100% Cotton",
+    gsm: "160-220",
+    spec: "Width 150-180cm, knitted jersey",
+    use: "T-shirts, fashion basics, baby wear",
+    fit: 3,
+    swatch: "08-cotton",
+    description:
+      "Pure cotton — specialty process at our factory. We dye-sub on cotton via DTG/DTF for full color, soft hand.",
+    printMethods: ["dtg", "dtf", "screen-print", "embroidery"],
+    tags: [
+      "cotton", "knit", "jersey", "lightweight", "midweight", "casual",
+      "t-shirts", "fashion", "basics", "dtg-friendly", "organic", "everyday",
+    ],
+    h1: "100% Cotton Fabric — Pure Cotton for DTG and DTF Printing",
+    metaDescription:
+      "100% cotton fabric, 160-220 gsm. Soft hand, breathable, suitable for DTG and DTF printing. T-shirts, fashion basics, baby wear, organic cotton options. MOQ 50 pcs.",
+    intro:
+      "100% cotton is the most-used apparel fiber worldwide — soft, breathable, hypoallergenic, and comfortable against the skin. We run two printing processes on cotton: DTG (direct-to-garment) and DTF (direct-to-film). Both give full-color graphics with a soft hand. We can also do all-over sublimation on cotton via a special transfer process for select projects.",
+    characteristics: [
+      "100% cotton, soft hand",
+      "160-220 gsm available",
+      "Organic cotton options on request",
+      "Excellent for DTG and DTF printing",
+      "Breathable and hypoallergenic",
+      "Not suitable for standard sublimation",
+    ],
+    bestForList: [
+      "Fashion and basics t-shirts",
+      "Baby and toddler wear",
+      "Premium retail apparel",
+      "Organic and natural collections",
+    ],
+    careNotes: [
+      "Machine wash cold, gentle cycle",
+      "Tumble dry low or hang dry",
+      "Iron on cotton setting",
+      "Wash dark colors separately first few cycles",
+    ],
+    relatedSlugs: ["pima-cotton", "poly-cotton-blend", "bamboo", "modal"],
+    faq: [
+      {
+        q: "Can you do all-over printing on cotton?",
+        a: "Yes — we have a special transfer process that allows edge-to-edge printing on cotton garments. It's slightly more expensive than standard sublimation on poly, but the result is full-coverage graphics on a cotton substrate.",
+      },
+      {
+        q: "What's the best print method for cotton?",
+        a: "DTG for one-off or small-batch full-color designs. DTF for higher volumes or designs with white underbase. Screen-print for simple vector designs in 1-4 colors. Embroidery for premium logos.",
       },
     ],
   },
