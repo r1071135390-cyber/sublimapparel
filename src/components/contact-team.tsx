@@ -76,6 +76,32 @@ export function TeamSection() {
           />
         </div>
 
+        {/* The wider team — full-bleed group photo */}
+        <figure className="relative mt-14 overflow-hidden border-2 border-black bg-[#f5f5f5]">
+          <div className="relative aspect-[16/9] w-full">
+            <img
+              src="/team-group.webp"
+              alt="SublimApparel team photo — production floor and account staff, Yiwu factory"
+              className="h-full w-full object-cover"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/40 to-transparent" />
+          </div>
+          <figcaption className="absolute inset-y-0 left-0 flex flex-col justify-end p-6 md:p-10 max-w-[55%]">
+            <div className="mb-3 inline-block w-fit bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+              The wider team
+            </div>
+            <h3 className="text-2xl md:text-3xl font-black leading-tight text-white">
+              These four are the tip.
+            </h3>
+            <p className="mt-2 text-base md:text-lg font-semibold text-white/95">
+              And 30+ more on the production floor —
+              <br />
+              <span className="text-white/75 font-medium">printers, cutters, sewers, QC, packing, shipping.</span>
+            </p>
+          </figcaption>
+        </figure>
+
         {/* What to expect */}
         <div className="mt-12 border-2 border-black bg-[#faf9f6] p-8 md:p-10">
           <div className="mb-6 inline-block bg-black px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
