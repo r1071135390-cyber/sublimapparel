@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     "DDP from China",
     "Yiwu shipping",
     "overseas warehouse",
-    "US warehouse fulfillment",
+    "limited US buffer-storage (overstock only)",
     "global shipping apparel",
     "delivered duty paid",
   ],
@@ -38,7 +38,7 @@ const regions = [
     region: "North America",
     icon: MapPin,
     rows: [
-      { country: "United States (mainland)", ddp: "8–12 days from Yiwu · 2–5 days from Fontana, CA", note: "Most orders ship from CA warehouse" },
+      { country: "United States (mainland)", ddp: "8–12 days from Yiwu", note: "Direct from factory to your door" },
       { country: "Canada", ddp: "12–18 days from Yiwu", note: "Duties & GST included" },
       { country: "Mexico", ddp: "15–22 days from Yiwu", note: "DDP available for orders > 50 pcs" },
     ],
@@ -87,7 +87,8 @@ export default function DdpPage() {
             DDP (Delivered Duty Paid) means one invoice, one tracking number,
             and zero surprise bills at the door. We handle customs, duties,
             and last-mile for every order — to 100+ countries, from Yiwu or
-            our US warehouse in Fontana, California.
+            the limited buffer-storage address in Fontana, California
+            (overstock only — not a standard service).
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link

@@ -50,7 +50,7 @@ const ROUTES: SitemapRoute[] = [
   { path: "/technique", priority: 0.85, changeFrequency: "monthly" },
   { path: "/shipping", priority: 0.8, changeFrequency: "monthly" },
   { path: "/shipping/ddp", priority: 0.9, changeFrequency: "monthly" }, // 王炸
-  { path: "/shipping/us-warehouse", priority: 0.9, changeFrequency: "monthly" }, // 王炸
+  { path: "/shipping/us-warehouse", priority: 0.1, changeFrequency: "yearly" }, // placeholder — not actively promoted
   { path: "/shipping/global", priority: 0.9, changeFrequency: "monthly" }, // 王炸
 
   // ── 账户系统（占位）──────────────────────────

@@ -160,12 +160,6 @@ export default function GlobalShippingPage() {
             >
               Quote my shipment →
             </Link>
-            <Link
-              href="/shipping/us-warehouse"
-              className="inline-flex items-center justify-center gap-2 border-2 border-[#faf9f6] px-8 py-4 text-base font-bold uppercase tracking-wide text-[#faf9f6] transition-colors hover:bg-[#faf9f6] hover:text-[#0a0a0a]"
-            >
-              US warehouse (2–5 day) →
-            </Link>
           </div>
         </div>
       </section>
@@ -216,11 +210,12 @@ export default function GlobalShippingPage() {
               us.
             </p>
             <p>
-              For US buyers specifically, we also have a Fontana, CA warehouse — see{" "}
+              We do have a Fontana, CA address for occasional overstock buffer storage — but it&apos;s
+              a Tier-2 add-on, not a standard service. Read the{" "}
               <Link href="/shipping/us-warehouse" className="font-bold text-[#ff4d00] underline">
-                US warehouse program
-              </Link>{" "}
-              for 2-5 day delivery on stocked items.
+                honest note about it
+              </Link>
+              {" "}before assuming it applies to your order.
             </p>
           </div>
         </div>
@@ -420,7 +415,7 @@ export default function GlobalShippingPage() {
           <div className="mt-4 grid gap-4 md:grid-cols-3">
             {[
               { href: "/shipping/ddp", title: "DDP shipping", desc: "Delivered duty paid, no import license needed" },
-              { href: "/shipping/us-warehouse", title: "US warehouse", desc: "2–5 day US shipping from Fontana, CA" },
+              { href: "/shipping/us-warehouse", title: "US warehouse (add-on)", desc: "Honest note on our limited Fontana buffer storage" },
               { href: "/products", title: "All products", desc: "6 categories, DDP-ready" },
             ].map((r) => (
               <Link

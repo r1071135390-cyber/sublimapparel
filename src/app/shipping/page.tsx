@@ -3,11 +3,11 @@ import Link from"next/link";
 import {
   ArrowRight,
   Globe,
-  Warehouse,
-  Truck,
+  Zap,
   Plane,
   Ship,
-  Train,
+  Warehouse,
+  Truck,
   Clock,
   DollarSign,
   ShieldCheck,
@@ -23,9 +23,9 @@ import {
 } from"lucide-react";
 
 export const metadata: Metadata = {
-  title:"Shipping & Fulfillment — DDP, US Warehouse, Global Delivery",
+  title:"Shipping & Fulfillment — DDP Worldwide",
   description:
-"DDP shipping to 100+ countries, US warehouse fulfillment from Fontana CA, and global delivery. One invoice, no surprise duties.",
+"DDP shipping to 100+ countries, with one invoice, no surprise duties. Sea, air and express options from Yiwu to your door.",
   openGraph: {
     title:"Shipping & Fulfillment — DDP Worldwide",
     description:
@@ -45,34 +45,56 @@ const options = [
     href:"/shipping/ddp",
   },
   {
-    slug:"global",
-    name:"Worldwide Shipping",
-    tagline:"Sea · air · express · rail to 100+ countries.",
-    icon: Truck,
-    badge:"All regions",
+    slug:"express",
+    name:"Express (DHL / FedEx)",
+    tagline:"3-5 days. For small urgent orders.",
+    icon: Zap,
+    badge:"Door to door",
     badgeColor:"bg-[#0a0a0a] text-white",
-    desc:"Five shipping modes, every Incoterm. Transit time, cost, and customs complexity mapped by region so you can pick the right route.",
-    href:"/shipping/global",
-  },
-  {
-    slug:"fob",
-    name:"FOB / CIF / EXW",
-    tagline:"For buyers with their own freight.",
-    icon: Container,
-    badge:"Optional",
-    badgeColor:"bg-black/10 text-black",
-    desc:"If you have your own freight forwarder or prefer to arrange your own shipping, we can quote FOB Yiwu, CIF, or EXW terms.",
+    desc:"DHL / FedEx / UPS door-to-door for samples, re-orders, and small urgent shipments up to ~300kg. Full tracking, insurance included.",
     href:"/get-a-quote",
   },
   {
-    slug:"us-warehouse",
-    name:"US Warehouse",
-    tagline:"Fontana, CA. 2-5 day domestic shipping.",
+    slug:"air",
+    name:"Air Freight",
+    tagline:"5-10 days. Mid-size urgent.",
+    icon: Plane,
+    badge:"Airport to airport",
+    badgeColor:"bg-black/10 text-black",
+    desc:"For 100-1,000kg urgent orders where sea is too slow but express is too expensive. We deliver to your nearest international airport.",
+    href:"/get-a-quote",
+  },
+  {
+    slug:"sea",
+    name:"Sea Freight",
+    tagline:"18-40 days. Best cost per kg.",
+    icon: Ship,
+    badge:"FCL · LCL",
+    badgeColor:"bg-black/10 text-black",
+    desc:"FCL (full container) or LCL (shared container) for bulk orders above 500kg. Cheapest per kg, slowest transit. We book with our NVOCC partner.",
+    href:"/get-a-quote",
+  },
+];
+
+// Supplementary services — for specific use cases, not the main 4 modes
+const supplementary = [
+  {
+    slug:"fob",
+    name:"FOB / CIF / EXW",
+    tagline:"For buyers with their own freight forwarder.",
+    icon: Container,
+    desc:"If you already have a US/EU freight forwarder and prefer to arrange your own shipping, we can quote FOB Yiwu, CIF your-port, or EXW factory-gate terms. We hand over the goods at the agreed point; you take it from there.",
+    href:"/get-a-quote",
+    note:"Useful when you have negotiated freight rates, an in-house customs broker, or a bonded warehouse network.",
+  },
+  {
+    slug:"buffer-storage",
+    name:"Buffer Storage (US Warehouse)",
+    tagline:"Only useful for over-orders you don't need yet.",
     icon: Warehouse,
-    badge:"Fastest for US buyers",
-    badgeColor:"bg-[#00c2ff] text-black",
-    desc:"Bulk shipped to our California warehouse, then domestic delivery. No customs, no duties, 2-5 days anywhere in the continental US.",
+    desc:"Most of our orders are custom-printed and ship directly from Yiwu — there's nothing to \"stock\" because every piece is made to order. The only use case is when you order ahead of demand: 1,000 pcs now, 500 needed immediately, 500 held for a later drop. The 500 sit in our California warehouse until you call them in.",
     href:"/shipping/us-warehouse",
+    note:"Honest caveat: this isn't a standard service. It doesn't change your unit price. It only avoids re-production cost on surplus. Ask before counting on it.",
   },
 ];
 
@@ -549,6 +571,15 @@ export default function ShippingPage() {
               );
             })}
           </div>
+        </div>
+      </section>
+
+      {/* FOOTNOTE — not a feature, just an honest mention */}
+      <section className="border-b-2 border-black bg-[#faf9f6]">
+        <div className="mx-auto max-w-4xl px-6 py-12 md:py-16">
+          <p className="text-sm leading-relaxed text-[#6b6b6b]">
+            <span className="font-black text-[#0a0a0a]">Two add-ons we&apos;re not pushing:</span> FOB / CIF / EXW terms if you have your own freight forwarder, and a small US buffer-storage address in Fontana, CA for occasional overstock. We don&apos;t actively promote either — they&apos;re only useful in narrow cases (e.g. you ordered 1,000 pieces, used 500, want to keep the other 500 in the US for a later drop). They don&apos;t change your unit price in any meaningful way. Ask if you need them; otherwise ignore.
+          </p>
         </div>
       </section>
 
