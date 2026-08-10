@@ -1,53 +1,53 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowRight, Globe, Warehouse, Truck } from "lucide-react";
+import type { Metadata } from"next";
+import Link from"next/link";
+import { ArrowRight, Globe, Warehouse, Truck } from"lucide-react";
 
 export const metadata: Metadata = {
-  title: "Shipping & Fulfillment — DDP, US Warehouse, Global Delivery | SublimApparel",
+  title:"Shipping & Fulfillment — DDP, US Warehouse, Global Delivery",
   description:
-    "DDP shipping to 100+ countries, US warehouse fulfillment from Fontana, CA, and global delivery. One invoice, no surprise duties.",
+"DDP shipping to 100+ countries, US warehouse fulfillment from Fontana, CA, and global delivery. One invoice, no surprise duties.",
 };
 
 const options = [
   {
-    slug: "ddp",
-    name: "DDP Shipping",
-    tagline: "Duties paid. We handle everything.",
+    slug:"ddp",
+    name:"DDP Shipping",
+    tagline:"Duties paid. We handle everything.",
     icon: Globe,
-    badge: "Most popular",
-    badgeColor: "bg-[#ff4d00]",
-    desc: "Delivered Duty Paid to 100+ countries from Yiwu. Customs, duties, and last-mile — one invoice, no surprise bills.",
-    href: "/shipping/ddp",
+    badge:"Most popular",
+    badgeColor:"bg-[#ff4d00]",
+    desc:"Delivered Duty Paid to 100+ countries from Yiwu. Customs, duties, and last-mile — one invoice, no surprise bills.",
+    href:"/shipping/ddp",
   },
   {
-    slug: "global",
-    name: "Worldwide Shipping",
-    tagline: "Sea · air · express · rail to 100+ countries.",
+    slug:"global",
+    name:"Worldwide Shipping",
+    tagline:"Sea · air · express · rail to 100+ countries.",
     icon: Truck,
-    badge: "All regions",
-    badgeColor: "bg-[#0a0a0a] text-white",
-    desc: "Five shipping modes, every Incoterm. Transit time, cost, and customs complexity mapped by region so you can pick the right route.",
-    href: "/shipping/global",
+    badge:"All regions",
+    badgeColor:"bg-[#0a0a0a] text-white",
+    desc:"Five shipping modes, every Incoterm. Transit time, cost, and customs complexity mapped by region so you can pick the right route.",
+    href:"/shipping/global",
   },
   {
-    slug: "fob",
-    name: "FOB / CIF / EXW",
-    tagline: "For buyers with their own freight.",
+    slug:"fob",
+    name:"FOB / CIF / EXW",
+    tagline:"For buyers with their own freight.",
     icon: Truck,
-    badge: "Optional",
-    badgeColor: "bg-black/10 text-black",
-    desc: "If you have your own freight forwarder or prefer to arrange your own shipping, we can quote FOB Yiwu, CIF, or EXW terms.",
-    href: "/get-a-quote",
+    badge:"Optional",
+    badgeColor:"bg-black/10 text-black",
+    desc:"If you have your own freight forwarder or prefer to arrange your own shipping, we can quote FOB Yiwu, CIF, or EXW terms.",
+    href:"/get-a-quote",
   },
   {
-    slug: "us-warehouse",
-    name: "US Warehouse",
-    tagline: "Fontana, CA. 2–5 day domestic shipping.",
+    slug:"us-warehouse",
+    name:"US Warehouse",
+    tagline:"Fontana, CA. 2–5 day domestic shipping.",
     icon: Warehouse,
-    badge: "Fastest for US buyers",
-    badgeColor: "bg-[#00c2ff] text-black",
-    desc: "Bulk shipped to our California warehouse, then domestic delivery. No customs, no duties, 2–5 days anywhere in the continental US.",
-    href: "/shipping/us-warehouse",
+    badge:"Fastest for US buyers",
+    badgeColor:"bg-[#00c2ff] text-black",
+    desc:"Bulk shipped to our California warehouse, then domestic delivery. No customs, no duties, 2–5 days anywhere in the continental US.",
+    href:"/shipping/us-warehouse",
   },
 ];
 
@@ -92,7 +92,7 @@ export default function ShippingPage() {
                 >
                   <div className="mb-4 flex items-center justify-between">
                     <Icon className="h-7 w-7 text-[#ff4d00]" strokeWidth={1.5} />
-                    <span className={"px-2 py-1 text-[10px] font-black uppercase tracking-widest " + o.badgeColor + " text-white"}>
+                    <span className={"px-2 py-1 text-[10px] font-black uppercase tracking-widest" + o.badgeColor +" text-white"}>
                       {o.badge}
                     </span>
                   </div>

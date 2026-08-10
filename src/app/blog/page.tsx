@@ -1,29 +1,29 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import Image from "next/image";
-import { ArrowRight, Clock, Calendar } from "lucide-react";
-import { blogPosts, getFeaturedPost, getAllCategories } from "@/lib/blog";
+import type { Metadata } from"next";
+import Link from"next/link";
+import Image from"next/image";
+import { ArrowRight, Clock, Calendar } from"lucide-react";
+import { blogPosts, getFeaturedPost, getAllCategories } from"@/lib/blog";
 
 export const metadata: Metadata = {
-  title: "Blog | Sublimation Apparel Industry Insights & Factory Stories | SublimApparel",
+  title:"Blog | Sublimation Apparel Industry Insights & Factory Stories",
   description:
-    "Industry guides, factory stories, and B2B apparel manufacturing insights from a 8,000 m² Yiwu sublimation factory. Sublimation vs DTG, DDP shipping, fabric guides, and more.",
+"Industry guides, factory stories, and B2B apparel manufacturing insights from a 8,000 m² Yiwu sublimation factory. Sublimation vs DTG, DDP shipping, fabric guides, and more.",
   keywords: [
-    "sublimation printing blog",
-    "apparel manufacturing insights",
-    "Yiwu factory",
-    "B2B apparel guide",
-    "DTG vs DTF",
-    "DDP shipping guide",
-    "esports jersey fabric",
+"sublimation printing blog",
+"apparel manufacturing insights",
+"Yiwu factory",
+"B2B apparel guide",
+"DTG vs DTF",
+"DDP shipping guide",
+"esports jersey fabric",
   ],
-  alternates: { canonical: "./" },
+  alternates: { canonical:"./" },
   openGraph: {
-    title: "SublimApparel Blog — Apparel Manufacturing Insights",
+    title:"SublimApparel Blog — Apparel Manufacturing Insights",
     description:
-      "Industry guides, factory stories, and B2B apparel insights. Written by the team behind our 8,000 m² Yiwu sublimation factory.",
-    url: "/blog/",
-    type: "website",
+"Industry guides, factory stories, and B2B apparel insights. Written by the team behind our 8,000 m² Yiwu sublimation factory.",
+    url:"/blog/",
+    type:"website",
   },
 };
 
@@ -88,9 +88,9 @@ export default function BlogIndexPage() {
                   <span className="flex items-center gap-1">
                     <Calendar className="h-3 w-3" />
                     {new Date(featured.date).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "short",
-                      day: "numeric",
+                      year:"numeric",
+                      month:"short",
+                      day:"numeric",
                     })}
                   </span>
                   <span className="flex items-center gap-1">
@@ -175,9 +175,9 @@ export default function BlogIndexPage() {
                     <span className="flex items-center gap-1">
                       <Calendar className="h-3 w-3" />
                       {new Date(post.date).toLocaleDateString("en-US", {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
+                        year:"numeric",
+                        month:"short",
+                        day:"numeric",
                       })}
                     </span>
                     <span className="flex items-center gap-1">

@@ -25,7 +25,7 @@ export function generateMetadata({
       title: post.metaTitle,
       description: post.metaDescription,
       keywords: post.tags,
-      alternates: { canonical: `./${post.slug}/` },
+      alternates: { canonical: `/blog/${post.slug}/` },
       openGraph: {
         title: post.title,
         description: post.excerpt,

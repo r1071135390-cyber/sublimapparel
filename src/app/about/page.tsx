@@ -1,41 +1,41 @@
-import { Contact } from "@/components/contact";
-import Link from "next/link";
-import { MapPin } from "lucide-react";
+import { Contact } from"@/components/contact";
+import Link from"next/link";
+import { MapPin } from"lucide-react";
 
 export const metadata = {
-  title: "About SublimApparel — 2,000 sqm Yiwu Sublimation & Cotton Printing Factory Since 2018",
+  title:"About SublimApparel — 2,000 sqm Yiwu Sublimation & Cotton Printing Factory Since 2018",
   description:
-    "12 production lines, 200+ staff, 99.2% QC pass rate. Sublimation on polyester + all-over printing on 100% cotton. DDP to 100+ countries, US warehouse in Fontana CA.",
+"12 production lines, 200+ staff, 99.2% QC pass rate. Sublimation on polyester + all-over printing on 100% cotton. DDP to 100+ countries, US warehouse in Fontana CA.",
 };
 
 const capabilities = [
-  { title: "Sublimation printing", desc: "Large-format printers with CMYK ink sets. Up to 100m of fabric per roll. Both polyester and 100% cotton." },
-  { title: "Laser cutting", desc: "Precision cutting to ±0.5mm. Custom patterns and size charts." },
-  { title: "Sewing & assembly", desc: "In-house sewing lines. Hand-stitched construction with quality control at every step." },
-  { title: "Custom packaging", desc: "Polybag, individual box, hangtag, barcode label — ready for retail or e-commerce fulfillment." },
-  { title: "DDP logistics", desc: "End-to-end shipping from Yiwu with all duties pre-paid. Door delivery in 100+ countries." },
-  { title: "LA warehouse", desc: "Stocked inventory in Fontana for US customers. Domestic shipping, no customs, 2-5 day delivery." },
+  { title:"Sublimation printing", desc:"Large-format printers with CMYK ink sets. Up to 100m of fabric per roll. Both polyester and 100% cotton." },
+  { title:"Laser cutting", desc:"Precision cutting to ±0.5mm. Custom patterns and size charts." },
+  { title:"Sewing & assembly", desc:"In-house sewing lines. Hand-stitched construction with quality control at every step." },
+  { title:"Custom packaging", desc:"Polybag, individual box, hangtag, barcode label — ready for retail or e-commerce fulfillment." },
+  { title:"DDP logistics", desc:"End-to-end shipping from Yiwu with all duties pre-paid. Door delivery in 100+ countries." },
+  { title:"LA warehouse", desc:"Stocked inventory in Fontana for US customers. Domestic shipping, no customs, 2-5 day delivery." },
 ];
 
 const locations = [
   {
-    city: "Yiwu, China",
-    role: "Factory + Global Hub",
-    address: ["No. 35 Lingyun Road", "Yiwu, Zhejiang, China"],
-    desc: "Complete production line. Daily output: 2,500+ pieces. Direct access to the world's largest small-commodity logistics network.",
+    city:"Yiwu, China",
+    role:"Factory + Global Hub",
+    address: ["No. 35 Lingyun Road","Yiwu, Zhejiang, China"],
+    desc:"Complete production line. Daily output: 2,500+ pieces. Direct access to the world's largest small-commodity logistics network.",
   },
   {
-    city: "Fontana, CA, USA",
-    role: "Overseas Warehouse",
-    address: ["13052 Jurupa Ave", "Fontana, CA 92335", "United States"],
-    desc: "Stocked inventory for US customers. Domestic 2-5 day shipping. No customs. No duties. Perfect for e-commerce and time-sensitive orders.",
+    city:"Fontana, CA, USA",
+    role:"Overseas Warehouse",
+    address: ["13052 Jurupa Ave","Fontana, CA 92335","United States"],
+    desc:"Stocked inventory for US customers. Domestic 2-5 day shipping. No customs. No duties. Perfect for e-commerce and time-sensitive orders.",
   },
 ];
 
 const values = [
-  { word: "Craft", desc: "Every piece is hand-finished. Quality over speed, always." },
-  { word: "Clarity", desc: "One quote. One timeline. One point of contact. No surprises." },
-  { word: "Care", desc: "Your deadline is our deadline. Your reputation is our reputation." },
+  { word:"Craft", desc:"Every piece is hand-finished. Quality over speed, always." },
+  { word:"Clarity", desc:"One quote. One timeline. One point of contact. No surprises." },
+  { word:"Care", desc:"Your deadline is our deadline. Your reputation is our reputation." },
 ];
 
 export default function AboutPage() {
@@ -109,10 +109,10 @@ export default function AboutPage() {
         <div className="mx-auto max-w-7xl px-6 py-20">
           <div className="grid gap-6 md:grid-cols-4">
             {[
-              { num: "Since 2018", label: "Founded in Yiwu" },
-              { num: "100+", label: "Countries via DDP" },
-              { num: "2.5K+", label: "Pieces per day" },
-              { num: "99.6%", label: "On-time delivery" },
+              { num:"Since 2018", label:"Founded in Yiwu" },
+              { num:"100+", label:"Countries via DDP" },
+              { num:"2.5K+", label:"Pieces per day" },
+              { num:"99.6%", label:"On-time delivery" },
             ].map((s) => (
               <div
                 key={s.label}
@@ -244,11 +244,11 @@ export default function AboutPage() {
           </div>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {[
-              { href: "/about/factory", title: "Inside the factory", blurb: "2,000 sqm, 12 production lines, 6 sublimation printers, 200+ staff. Tour the floor.", badge: "Factory" },
-              { href: "/about/production", title: "Production process", blurb: "7 steps from inquiry to delivery, 21-day average, no black box.", badge: "Process" },
-              { href: "/about/quality", title: "Quality control", blurb: "4-stage QC, 50+ checkpoints, AQL 2.5, 99.2% first-pass rate.", badge: "Quality" },
-              { href: "/about/cases", title: "Industries we serve", blurb: "12 verticals, 1,000+ clients, 5M+ pieces last year. Race, sports, schools, political, yoga, esports, more.", badge: "Industries" },
-              { href: "/about/faq", title: "30 B2B questions", blurb: "Pricing, MOQ, fabric, lead time, shipping, customs, payment, samples, files. Honest answers.", badge: "FAQ" },
+              { href:"/about/factory", title:"Inside the factory", blurb:"2,000 sqm, 12 production lines, 6 sublimation printers, 200+ staff. Tour the floor.", badge:"Factory" },
+              { href:"/about/production", title:"Production process", blurb:"7 steps from inquiry to delivery, 21-day average, no black box.", badge:"Process" },
+              { href:"/about/quality", title:"Quality control", blurb:"4-stage QC, 50+ checkpoints, AQL 2.5, 99.2% first-pass rate.", badge:"Quality" },
+              { href:"/about/cases", title:"Industries we serve", blurb:"12 verticals, 1,000+ clients, 5M+ pieces last year. Race, sports, schools, political, yoga, esports, more.", badge:"Industries" },
+              { href:"/about/faq", title:"30 B2B questions", blurb:"Pricing, MOQ, fabric, lead time, shipping, customs, payment, samples, files. Honest answers.", badge:"FAQ" },
             ].map((r) => (
               <Link
                 key={r.href}

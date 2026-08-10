@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ArrowRight, Users, Palette, Ruler, Sparkles, Shirt, Trophy, Layers, Star } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Custom Bowling Jerseys | Sublimated League & Tournament Shirts | SublimApparel",
+  title: "Custom Bowling Jerseys | Sublimated League & Tournament Shirts",
   description:
     "Custom sublimated bowling jerseys for leagues, tournaments, and retro-style nights. Loose fit, contrasting side panels, name & number front and back. MOQ 50 pcs, 15-20 day lead time, DDP shipping.",
   keywords: [

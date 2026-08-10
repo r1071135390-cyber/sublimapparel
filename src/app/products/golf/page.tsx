@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ArrowRight, Flag, Users, Palette, Ruler, Layers, Shirt, Sun, Mountain, Trophy } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Custom Golf Apparel | Sublimated Polos, Mock Necks, Quarter-Zips | SublimApparel",
+  title: "Custom Golf Apparel | Sublimated Polos, Mock Necks, Quarter-Zips",
   description:
     "Premium custom golf polos, mock necks, and quarter-zips for country clubs, tournaments, and corporate golf days. Sublimated all-over print, moisture-wicking 4-way stretch poly-spandex. MOQ 50 pcs, 15-20 day lead time, DDP shipping.",
   keywords: [

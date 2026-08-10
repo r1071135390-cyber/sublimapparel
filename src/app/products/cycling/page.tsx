@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ArrowRight, Bike, Users, Palette, Ruler, Layers, Wind } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Custom Cycling Jerseys | Sublimation Cycling Apparel for Teams & Clubs | SublimApparel",
+  title: "Custom Cycling Jerseys | Sublimation Cycling Apparel for Teams & Clubs",
   description:
     "Premium custom cycling jerseys, shorts, and kits via sublimation. Italian-performance fabric, full hidden zip, race-cut or club-cut, padded shorts. MOQ 50 pcs. Free design redraw.",
   keywords: [
