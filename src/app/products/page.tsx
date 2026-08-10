@@ -64,36 +64,37 @@ const comparison = [
 export default function ProductsPage() {
   return (
     <main>
-      <section className="border-b-2 border-black bg-white">
-        {/* Full-width product showcase image */}
-        <div className="relative w-full">
-          <div className="relative aspect-[2/1] w-full">
-            <Image
-              src="/hero-products.webp"
-              alt="Range of custom printed products — apparel, bags, home goods, hard substrates"
-              fill
-              priority
-              sizes="100vw"
-              className="object-cover object-center"
-            />
-          </div>
-        </div>
+      <section className="relative overflow-hidden bg-white">
+        {/* Full-bleed background image with floating text overlay */}
+        <div className="relative aspect-[2/1] w-full">
+          <Image
+            src="/hero-products.webp"
+            alt="Range of custom printed products — apparel, bags, home goods, hard substrates"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center"
+          />
 
-        <div className="mx-auto max-w-7xl px-6 py-12 md:py-16">
-          <div className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
-            Products
+          {/* Floating text overlay */}
+          <div className="absolute inset-0 mx-auto flex max-w-7xl items-center px-6">
+            <div className="max-w-2xl">
+              <div className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+                Products
+              </div>
+              <h1 className="text-5xl font-black leading-[0.95] tracking-tight text-black md:text-7xl lg:text-8xl">
+                Whatever you need
+                <br />
+                to customize
+                <br />
+                <span className="text-[#ff4d00]">we make it.</span>
+              </h1>
+              <p className="mt-6 max-w-xl text-base leading-snug text-black/80 md:text-lg">
+                Apparel is our bread and butter — but we print home goods, bags, flags, hard
+                goods, and whatever custom project you bring us. Polyester or 100% cotton.
+              </p>
+            </div>
           </div>
-          <h1 className="text-5xl font-black leading-[0.95] tracking-tight text-black md:text-8xl">
-            Whatever you need
-            <br />
-            to customize
-            <br />
-            <span className="text-[#ff4d00]">we make it.</span>
-          </h1>
-          <p className="mt-8 max-w-3xl text-xl leading-snug text-black/80">
-            Apparel is our bread and butter — but we print home goods, bags, flags, hard
-            goods, and whatever custom project you bring us. Polyester or 100% cotton.
-          </p>
         </div>
       </section>
 
