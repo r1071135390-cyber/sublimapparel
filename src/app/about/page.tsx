@@ -10,12 +10,12 @@ export const metadata = {
 };
 
 const capabilities = [
-  { title:"Sublimation printing", desc:"Large-format printers with CMYK ink sets. Up to 100m of fabric per roll. Both polyester and 100% cotton." },
-  { title:"Laser cutting", desc:"Precision cutting to ±0.5mm. Custom patterns and size charts." },
-  { title:"Sewing & assembly", desc:"In-house sewing lines. Hand-stitched construction with quality control at every step." },
-  { title:"Custom packaging", desc:"Polybag, individual box, hangtag, barcode label — ready for retail or e-commerce fulfillment." },
-  { title:"DDP logistics", desc:"End-to-end shipping from Yiwu with all duties pre-paid. Door delivery in 100+ countries." },
-  { title:"Optional US buffer", desc:"A small Fontana, CA address for occasional overstock buffer storage. Tier-2 add-on, not a standard service." },
+  { title:"Sublimation & DTG printing", desc:"Large-format printers, full CMYK color, polyester and 100% cotton." },
+  { title:"Cutting & sorting", desc:"Clean edges, accurate sizing, ready for assembly." },
+  { title:"Sewing & assembly", desc:"Brother industrial machines, hand-finished construction." },
+  { title:"Quality control", desc:"4-stage inspection, AQL 2.5 standard, 99.2% first-pass." },
+  { title:"Packing & labeling", desc:"Polybag, individual box, hangtag, barcode — retail-ready." },
+  { title:"Sample room", desc:"100+ color swatches, free sample run before bulk production." },
 ];
 
 const locations = [
@@ -119,6 +119,38 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Factory floor panorama */}
+      <section className="relative border-b-2 border-black bg-black">
+        <div className="relative aspect-[16/9] w-full overflow-hidden">
+          <Image
+            src="/about-floor.webp"
+            alt="Inside the SublimApparel factory floor in Yiwu — large-format sublimation printers, sewing lines, and workers in blue vests"
+            fill
+            sizes="100vw"
+            className="object-cover"
+          />
+          {/* Subtle bottom-left gradient for legibility of the label */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.4) 25%, rgba(0,0,0,0) 55%)",
+            }}
+          />
+        </div>
+        <div className="absolute bottom-6 left-6 right-6 md:bottom-10 md:left-10">
+          <div className="mb-2 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+            Inside the factory
+          </div>
+          <div className="max-w-3xl text-2xl font-black leading-tight text-white md:text-4xl">
+            2,000 sqm · 12 lines · 6 sublimation printers · 200+ staff
+          </div>
+          <div className="mt-2 text-xs font-bold uppercase tracking-widest text-white/70">
+            Yiwu, Zhejiang — the only place we make things.
+          </div>
+        </div>
+      </section>
+
       {/* Company background */}
       <section className="border-b-2 border-black bg-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-20">
@@ -190,26 +222,57 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* What we do */}
+      {/* What we do — 6 process photos */}
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto max-w-7xl px-6 py-20">
-          <h2 className="mb-12 text-4xl font-black leading-tight text-black md:text-6xl">
-            What we do
-            <br />
-            <span className="text-[#ff4d00]">in-house.</span>
-          </h2>
-          <div className="grid gap-6 md:grid-cols-2">
-            {capabilities.map((c, i) => (
+          <div className="mb-12 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+            <div>
+              <div className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+                What we do
+              </div>
+              <h2 className="text-4xl font-black leading-tight text-black md:text-6xl">
+                Six steps.
+                <br />
+                <span className="text-[#ff4d00]">One roof.</span>
+              </h2>
+            </div>
+            <p className="max-w-md text-base text-black/70">
+              Every step happens under one roof in Yiwu. No subcontractors, no handoffs,
+              no surprises about where your order actually gets made.
+            </p>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {[
+              { src:"/about-process-pr.webp", alt:"Large-format sublimation printer in operation with a worker in a blue vest", num:"01", title:"Sublimation & DTG printing", desc:"Large-format printers, full CMYK color, polyester and 100% cotton." },
+              { src:"/about-process-cu.webp", alt:"Worker at a long cutting and sorting table with rows of shirt forms behind", num:"02", title:"Cutting & sorting", desc:"Clean edges, accurate sizing, ready for assembly." },
+              { src:"/about-process-se.webp", alt:"Brother industrial sewing machine with a worker's hands guiding red striped fabric", num:"03", title:"Sewing & assembly", desc:"Brother industrial machines, hand-finished construction." },
+              { src:"/about-process-qc.webp", alt:"Quality control inspector examining a printed t-shirt on a long inspection table", num:"04", title:"Quality control", desc:"4-stage inspection, AQL 2.5 standard, 99.2% first-pass." },
+              { src:"/about-process-pa.webp", alt:"Worker folding finished garments on a packing table with clear poly bags and shipping boxes", num:"05", title:"Packing & labeling", desc:"Polybag, individual box, hangtag, barcode — retail-ready." },
+              { src:"/about-process-sa.webp", alt:"Sample showroom with dozens of finished t-shirts on hangers organized by color on a long display rack", num:"06", title:"Sample room", desc:"100+ color swatches, free sample run before bulk production." },
+            ].map((c) => (
               <div
-                key={c.title}
-                className="flex gap-4 border-2 border-black bg-[#faf9f6] p-6"
+                key={c.num}
+                className="group flex flex-col border-2 border-black bg-white transition-all hover:border-[#ff4d00]"
               >
-                <div className="inline-flex h-12 w-12 flex-shrink-0 items-center justify-center bg-black text-base font-black text-white">
-                  0{i + 1}
+                <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#faf9f6]">
+                  <Image
+                    src={c.src}
+                    alt={c.alt}
+                    fill
+                    sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <div className="absolute left-3 top-3 inline-block bg-black px-2 py-1 text-[10px] font-black uppercase tracking-widest text-white">
+                    {c.num}
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-xl font-black text-black">{c.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-black/70">{c.desc}</p>
+                <div className="p-5">
+                  <h3 className="text-lg font-black leading-tight text-black md:text-xl">
+                    {c.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-black/70">
+                    {c.desc}
+                  </p>
                 </div>
               </div>
             ))}
