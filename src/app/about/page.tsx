@@ -79,7 +79,7 @@ export default function AboutPage() {
                 <br />
                 in <span className="text-[#ff4d00]">Yiwu</span>, China.
                 <br />
-                Built for the world.
+                Print for the world.
               </h1>
               <p className="mt-4 max-w-xl text-base leading-relaxed text-white/80 md:text-lg">
                 SublimApparel is a full-service sublimation apparel factory — design, print, cut, sew,
