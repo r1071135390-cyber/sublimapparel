@@ -278,15 +278,22 @@ export default function TechniquePage() {
             [ Technique Guide ]
           </p>
           <h1 className="text-4xl font-black uppercase leading-[0.95] tracking-tight text-black md:text-7xl">
-            Apparel printing.
+            Sublimation. Plus
             <br />
-            <span className="text-[#ff4d00]">20 techniques.</span>
+            <span className="text-[#ff4d00]">every other technique.</span>
           </h1>
           <p className="mt-6 max-w-3xl text-base text-[#6b6b6b] md:mt-8 md:text-lg">
-            Compare 20 apparel decoration techniques — sublimation, screen
-            printing, DTG, DTF, embroidery, 3D puff &amp; rhinestone. See
-            costs, best uses, and durability. Pick the right one for your
-            project, or mix multiple techniques on a single garment.
+            Sublimation is our flagship, but we run every other technique on
+            this page in-house with the same quality and turnaround. Screen
+            printing, embroidery, DTG, DTF, 3D puff, rhinestone and many
+            more — all on the same production line, all under one quote, all
+            DDP to your door.
+          </p>
+          <p className="mt-4 max-w-3xl text-base font-medium italic text-[#1a1a1a] md:mt-5 md:text-lg">
+            There is no "best" technique — only the one that best matches your
+            brief. Not sure which is right for you? Send us your design,
+            fabric and quantity, and we&apos;ll recommend the process that
+            fits.
           </p>
           <div className="mt-8 flex flex-col gap-3 md:mt-10 md:flex-row md:gap-4">
             <Link
