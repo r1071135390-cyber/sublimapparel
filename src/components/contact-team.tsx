@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 export function TeamSection() {
   return (
     <section className="border-b-2 border-black bg-white">
@@ -42,8 +40,8 @@ export function TeamSection() {
           </div>
         </div>
 
-        {/* Team cards */}
-        <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        {/* Team cards — horizontal with small photo avatar */}
+        <div className="mt-16 grid gap-4 md:grid-cols-2">
           <Person
             image="/team-ramon.webp"
             name="Ramon"
@@ -79,7 +77,7 @@ export function TeamSection() {
         </div>
 
         {/* What to expect */}
-        <div className="mt-16 border-2 border-black bg-[#faf9f6] p-8 md:p-10">
+        <div className="mt-12 border-2 border-black bg-[#faf9f6] p-8 md:p-10">
           <div className="mb-6 inline-block bg-black px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
             What you can expect
           </div>
@@ -136,25 +134,32 @@ function Person({
   tagColor: string;
 }) {
   return (
-    <div className="border-2 border-black bg-white">
-      <div className="relative aspect-[4/5] w-full overflow-hidden bg-[#e5e5e5]">
-        <Image
+    <div className="flex gap-4 border-2 border-black bg-white p-4">
+      {/* Small photo avatar */}
+      <div
+        className="relative h-20 w-16 flex-shrink-0 overflow-hidden bg-[#e5e5e5]"
+        style={{ filter: "grayscale(0.15) contrast(0.96)" }}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
           src={image}
-          alt={`${name} — ${role}`}
-          fill
-          className="object-cover"
-          sizes="(max-width: 768px) 50vw, (max-width: 1024px) 25vw, 280px"
+          alt={`${name}`}
+          className="h-full w-full object-cover"
+          loading="lazy"
         />
       </div>
-      <div className="p-5">
-        <div className="text-lg font-black text-black">{name}</div>
+      {/* Text */}
+      <div className="flex-1 min-w-0">
+        <div className="flex items-baseline justify-between gap-2">
+          <div className="text-lg font-black text-black">{name}</div>
+          <div className={`${tagColor} px-1.5 py-0.5 text-[9px] font-black uppercase tracking-widest text-white flex-shrink-0`}>
+            {tag}
+          </div>
+        </div>
         <div className="text-[11px] font-bold uppercase tracking-wider text-black/60">
           {role}
         </div>
-        <p className="mt-3 text-sm leading-relaxed text-black/75">{bio}</p>
-        <div className={`mt-4 inline-block ${tagColor} px-2 py-1 text-[10px] font-black uppercase tracking-widest text-white`}>
-          {tag}
-        </div>
+        <p className="mt-2 text-sm leading-relaxed text-black/75">{bio}</p>
       </div>
     </div>
   );
