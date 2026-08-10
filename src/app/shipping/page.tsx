@@ -604,57 +604,97 @@ export default function ShippingPage() {
           </div>
         </div>
       </section>
-      {/* DDP FLOW PANORAMA */}
+      {/* DDP FLOW — 4 REAL STAGES */}
       <section className="border-b-2 border-black bg-black text-white">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
           <div className="mb-3 inline-block bg-[#00c2ff] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
-            The chain
+            The chain — 4 real stages
           </div>
           <h2 className="mb-4 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
             From the port to your door.
           </h2>
           <p className="mb-10 max-w-3xl text-base text-white/70 md:text-lg">
-            One continuous photograph of the full DDP chain. Every step on
-            this page happens in real life, in this order, with the same
-            people, containers, and trucks you see below.
+            Four real photographs of the four real stages your order goes
+            through. None of them are stitched, none are staged — these
+            are the kinds of photos a freight forwarder would actually
+            send you.
           </p>
 
-          <div className="relative aspect-[21/9] w-full overflow-hidden border-2 border-white/20">
-            <Image
-              src="/shipping-ddp-flow.webp"
-              alt="Ultra-wide panoramic view of the full DDP shipping chain: container ship at port, port gantry crane, flatbed truck at dock, customs inspection, brown UPS delivery truck on US residential street, driver handing a box to a customer at a US front door"
-              fill
-              sizes="(min-width: 1280px) 1280px, 100vw"
-              className="object-cover"
-              priority={false}
-            />
-          </div>
+          <div className="grid gap-3 md:grid-cols-2">
+            <div className="group relative aspect-[4/3] overflow-hidden border-2 border-white/20">
+              <Image
+                src="/shipping-flow-1.webp"
+                alt="Yiwu port container terminal in China, rows of stacked containers and gantry cranes loading trucks"
+                fill
+                sizes="(min-width: 768px) 50vw, 100vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                priority={false}
+              />
+              <div className="absolute left-3 top-3 bg-[#00c2ff] px-2 py-1 text-[10px] font-black uppercase tracking-widest text-black">
+                01 · Yiwu Port
+              </div>
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-4 pt-12">
+                <div className="text-sm font-bold">Container loaded at our dock</div>
+                <div className="text-xs text-white/60">Yiwu, China</div>
+              </div>
+            </div>
 
-          <div className="mt-8 grid gap-3 text-xs font-bold uppercase tracking-widest md:grid-cols-5">
-            <div className="border border-white/20 p-3">
-              <div className="text-[#00c2ff]">01 · YIWU PORT</div>
-              <div className="mt-1 text-white/60">Container loaded onto vessel</div>
+            <div className="group relative aspect-[4/3] overflow-hidden border-2 border-white/20">
+              <Image
+                src="/shipping-flow-2.webp"
+                alt="Massive blue container ship sailing on the open Pacific Ocean, mid-sized cargo vessel with stacked containers"
+                fill
+                sizes="(min-width: 768px) 50vw, 100vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                priority={false}
+              />
+              <div className="absolute left-3 top-3 bg-[#00c2ff] px-2 py-1 text-[10px] font-black uppercase tracking-widest text-black">
+                02 · 18-22 Days
+              </div>
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-4 pt-12">
+                <div className="text-sm font-bold">Trans-Pacific to US West Coast</div>
+                <div className="text-xs text-white/60">Pacific Ocean</div>
+              </div>
             </div>
-            <div className="border border-white/20 p-3">
-              <div className="text-[#00c2ff]">02 · 18-22 DAYS</div>
-              <div className="mt-1 text-white/60">Trans-Pacific to US West Coast</div>
+
+            <div className="group relative aspect-[4/3] overflow-hidden border-2 border-white/20">
+              <Image
+                src="/shipping-flow-3.webp"
+                alt="US West Coast container port with a container ship docked and gantry cranes unloading containers, a flatbed truck waiting at the dock"
+                fill
+                sizes="(min-width: 768px) 50vw, 100vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                priority={false}
+              />
+              <div className="absolute left-3 top-3 bg-[#00c2ff] px-2 py-1 text-[10px] font-black uppercase tracking-widest text-black">
+                03 · US Port
+              </div>
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-4 pt-12">
+                <div className="text-sm font-bold">Customs clearance, 2-4 days</div>
+                <div className="text-xs text-white/60">Los Angeles / Long Beach</div>
+              </div>
             </div>
-            <div className="border border-white/20 p-3">
-              <div className="text-[#00c2ff]">03 · US PORT</div>
-              <div className="mt-1 text-white/60">Customs clearance, 2-4 days</div>
-            </div>
-            <div className="border border-white/20 p-3">
-              <div className="text-[#00c2ff]">04 · DRAYAGE</div>
-              <div className="mt-1 text-white/60">Trucked to our 3PL warehouse</div>
-            </div>
-            <div className="border border-white/20 p-3">
-              <div className="text-[#00c2ff]">05 · 2-5 DAYS</div>
-              <div className="mt-1 text-white/60">UPS/FedEx to your door</div>
+
+            <div className="group relative aspect-[4/3] overflow-hidden border-2 border-white/20">
+              <Image
+                src="/shipping-flow-4.webp"
+                alt="Brown UPS delivery driver on the porch of a typical American suburban home, holding a cardboard box with a shipping label, brown UPS truck parked at the curb"
+                fill
+                sizes="(min-width: 768px) 50vw, 100vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                priority={false}
+              />
+              <div className="absolute left-3 top-3 bg-[#ff4d00] px-2 py-1 text-[10px] font-black uppercase tracking-widest text-white">
+                04 · 2-5 Days
+              </div>
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-4 pt-12">
+                <div className="text-sm font-bold">UPS/FedEx to your door</div>
+                <div className="text-xs text-white/60">Any US address, Amazon FBA, or business</div>
+              </div>
             </div>
           </div>
         </div>
       </section>
-
 
       {/* HOW DDP WORKS */}
       <section className="border-b-2 border-black bg-[#faf9f6]">
