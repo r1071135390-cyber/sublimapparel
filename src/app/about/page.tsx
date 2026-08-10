@@ -81,13 +81,13 @@ export default function AboutPage() {
                 <br />
                 Built for the world.
               </h1>
-              <p className="mt-8 max-w-xl text-base leading-relaxed text-white/80 md:text-lg">
+              <p className="mt-4 max-w-xl text-base leading-relaxed text-white/80 md:text-lg">
                 SublimApparel is a full-service sublimation apparel factory — design, print, cut, sew,
                 QC, pack, and ship — all under one roof in Yiwu, Zhejiang. We were built to serve
                 the kind of customer who needs a reliable Chinese partner for custom team wear,
                 event merchandise, and brand apparel.
               </p>
-              <div className="mt-8 flex flex-wrap gap-3">
+              <div className="mt-4 flex flex-wrap gap-3">
                 <Link
                   href="/contact/"
                   className="inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-widest text-white transition-colors hover:bg-[#e64500]"
@@ -101,7 +101,7 @@ export default function AboutPage() {
                   See what we make
                 </Link>
               </div>
-              <div className="mt-10 grid grid-cols-3 gap-4 border-t border-white/15 pt-6">
+              <div className="mt-5 grid grid-cols-3 gap-4 border-t border-white/15 pt-6">
                 <div>
                   <div className="text-3xl font-black text-white md:text-4xl">2018</div>
                   <div className="mt-1 text-[10px] font-bold uppercase tracking-widest text-white/60">Founded</div>
