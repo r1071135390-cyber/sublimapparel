@@ -307,11 +307,9 @@ export default function AboutPage() {
             Where we make it
           </div>
           <h2 className="mb-12 text-4xl font-black leading-tight text-white md:text-6xl">
-            One workshop
+            From Yiwu
             <br />
-            <span className="text-[#ff4d00]">in Yiwu.</span>
-            <br />
-            <span className="text-white/80">Ships worldwide.</span>
+            <span className="text-[#ff4d00]">to worldwide.</span>
           </h2>
           <div className="grid gap-6 md:grid-cols-2">
             {locations.map((loc, i) => (
