@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Download, Droplets, Leaf, Shirt } from "lucide-react";
+import { ArrowRight, Download, Droplets, Leaf } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Fabric & Process — Full Fabric Line & 6 Print Processes | SublimApparel",
@@ -299,47 +299,55 @@ export default function FabricPage() {
             Real thing, real feel. Composition, weight, common spec, and the sublimation fit rating — on every card.
           </p>
 
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-4">
             {fabricTypes.map((f, i) => (
               <div
                 key={i}
-                className="group flex gap-4 border-2 border-black bg-white p-4 transition-all hover:border-[#ff4d00]"
+                className="group flex flex-col border-2 border-black bg-white transition-all hover:border-[#ff4d00] hover:shadow-[4px_4px_0_0_#ff4d00] md:hover:shadow-[6px_6px_0_0_#ff4d00]"
               >
                 {/* Swatch image */}
-                <div className="relative aspect-square h-32 w-32 shrink-0 overflow-hidden border border-black/10 bg-white">
+                <div className="relative aspect-square w-full overflow-hidden border-b-2 border-black bg-[#f5f5f5]">
                   <Image
                     src={`/fabric-sw-${f.swatch}.webp`}
                     alt={`${f.name} fabric swatch`}
-                    fill
-                    sizes="128px"
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    width={600}
+                    height={600}
+                    className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                    loading="lazy"
                   />
                 </div>
 
                 {/* Content */}
-                <div className="flex min-w-0 flex-1 flex-col">
-                  <div className="mb-1 flex items-baseline gap-2">
-                    <span className="text-[10px] font-black uppercase tracking-widest text-black/40">
+                <div className="flex flex-1 flex-col p-3 md:p-4">
+                  <div className="mb-1 flex items-baseline gap-1.5">
+                    <span className="text-[9px] font-black uppercase tracking-widest text-black/40 md:text-[10px]">
                       {String(i + 1).padStart(2, "0")}
                     </span>
-                    <h3 className="truncate text-lg font-black leading-tight">{f.name}</h3>
+                    <h3 className="text-sm font-black uppercase leading-tight text-black md:text-base">
+                      {f.name}
+                    </h3>
                   </div>
-                  <div className="mb-1.5 text-[11px] text-black/60">{f.comp}</div>
-                  <p className="mb-2 text-[11px] leading-relaxed text-black/75">{f.description}</p>
-                  <dl className="mt-auto space-y-1 text-[11px]">
-                    <div className="flex items-baseline justify-between gap-2 border-b border-black/10 pb-1">
-                      <dt className="font-black uppercase tracking-wider text-black/50">Weight</dt>
-                      <dd className="text-right text-black">{f.gsm} gsm</dd>
+                  <p className="mb-2 text-[10px] uppercase tracking-wide text-[#6b6b6b] md:mb-3 md:text-xs">
+                    {f.comp}
+                  </p>
+                  <p className="mb-3 flex-1 text-[11px] leading-relaxed text-[#3a3a3a] md:text-xs">
+                    {f.description}
+                  </p>
+                  <div className="mb-2 space-y-0.5 border-t border-black/10 pt-2 text-[10px] md:text-[11px]">
+                    <div className="flex items-baseline justify-between gap-2">
+                      <span className="font-bold uppercase tracking-wider text-[#6b6b6b]">Weight</span>
+                      <span className="text-right text-black">{f.gsm} gsm</span>
                     </div>
-                    <div className="flex items-baseline justify-between gap-2 border-b border-black/10 pb-1">
-                      <dt className="font-black uppercase tracking-wider text-black/50">Best for</dt>
-                      <dd className="text-right text-black">{f.use}</dd>
+                    <div className="flex items-baseline justify-between gap-2">
+                      <span className="font-bold uppercase tracking-wider text-[#6b6b6b]">Best for</span>
+                      <span className="truncate text-right text-black">{f.use}</span>
                     </div>
-                    <div className="flex items-baseline justify-between gap-2 pt-0.5">
-                      <dt className="font-black uppercase tracking-wider text-black/50">Sublimation fit</dt>
-                      <dd className="text-right text-sm font-black text-[#ff4d00]">{f.fit}</dd>
-                    </div>
-                  </dl>
+                  </div>
+                  <div className="mt-auto border-t border-black/10 pt-2 md:pt-3">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#ff4d00] md:text-xs">
+                      Sublimation fit: {f.fit} →
+                    </span>
+                  </div>
                 </div>
               </div>
             ))}
