@@ -71,7 +71,7 @@ export default function FabricPage() {
         </div>
 
         <div className="absolute inset-0 mx-auto max-w-7xl px-6">
-          <div className="flex h-full items-center pb-12 pt-10 md:pb-16 md:pt-14 lg:items-end lg:pb-20 lg:pt-0">
+          <div className="flex h-full items-start pb-12 pt-24 md:pb-16 md:pt-32 lg:items-center lg:pb-0 lg:pt-0">
             <div className="max-w-2xl">
               <div className="mb-4 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
                 Fabric &amp; Process
