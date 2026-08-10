@@ -101,7 +101,7 @@ export default function AboutPage() {
                   See what we make
                 </Link>
               </div>
-              <div className="mt-5 grid grid-cols-3 gap-4 border-t border-white/15 pt-6">
+              <div className="mt-3 grid grid-cols-3 gap-4 border-t border-white/15 pt-3">
                 <div>
                   <div className="text-3xl font-black text-white md:text-4xl">2018</div>
                   <div className="mt-1 text-[10px] font-bold uppercase tracking-widest text-white/60">Founded</div>
