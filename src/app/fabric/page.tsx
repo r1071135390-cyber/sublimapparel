@@ -35,12 +35,26 @@ const fabrics = [
 ];
 
 const processes = [
-  { name: "Sublimation", slug: "sublimation", fabric: "Polyester", desc: "All-over print, photorealistic color, zero hand feel" },
-  { name: "DTG", slug: "dtg", fabric: "Cotton (light)", desc: "Direct to garment, soft hand feel, full color on natural fabrics" },
-  { name: "DTF", slug: "dtf", fabric: "Cotton (any color)", desc: "Heat transfer film, vibrant on dark, durable" },
-  { name: "Screen print", slug: "screen-printing", fabric: "Any", desc: "Classic, cost-effective for high-volume simple designs" },
-  { name: "Embroidery", slug: "embroidery", fabric: "Any", desc: "Premium finish for logos, caps, polos" },
-  { name: "DTF heat transfer", slug: "dtf", fabric: "Any", desc: "Versatile, low MOQ, good for small runs" },
+  { name: "Sublimation Printing", slug: "sublimation", bestOn: "Polyester", desc: "Dye fuses into fibers — permanent, breathable, full-color, zero hand feel" },
+  { name: "All-Over Printing (AOP)", slug: "overall-printing", bestOn: "Polyester, poly-blend", desc: "Edge-to-edge coverage with no blank borders — bold patterns on the whole garment" },
+  { name: "Screen Printing", slug: "screen-printing", bestOn: "Any", desc: "Thick ink layers — vivid, opaque, survives hundreds of washes" },
+  { name: "Embroidery", slug: "embroidery", bestOn: "Any", desc: "Premium stitched logos with a textured, high-end feel" },
+  { name: "DTG Printing", slug: "dtg", bestOn: "100% cotton", desc: "Direct-to-garment digital — unlimited colors, photo-level detail" },
+  { name: "DTF Printing", slug: "dtf", bestOn: "Any fabric / color", desc: "Print to film, then heat-press — vibrant, flexible, crack-resistant" },
+  { name: "3D Puff Printing", slug: "3d-puff", bestOn: "Cotton, poly-blend", desc: "Heat-activated ink rises into a rounded, raised print with real tactile depth" },
+  { name: "3D Embroidery", slug: "3d-embroidery", bestOn: "Caps, jackets", desc: "Foam-backed stitching raises your logo into a bold, three-dimensional statement" },
+  { name: "Rhinestone Embellishment", slug: "rhinestone", bestOn: "Any", desc: "Heat-set rhinestones add eye-catching sparkle with precision placement" },
+  { name: "Embossing Press", slug: "embossing", bestOn: "Cotton, poly-blend", desc: "Heat and pressure create a tone-on-tone raised texture — quiet, premium branding" },
+  { name: "Beaded Embroidery", slug: "beaded", bestOn: "Silk, satin, premium", desc: "Hand-finished beadwork adds luxurious texture and shimmer to high-fashion pieces" },
+  { name: "Yarn Embroidery", slug: "yarn", bestOn: "Knitwear, sweaters", desc: "Chunky, heavy-thread stitching with a tactile, handcrafted character" },
+  { name: "Terry Embroidery (Chenille)", slug: "terry", bestOn: "Varsity, retro", desc: "Soft, looped stitches with a plush, towel-like texture — classic varsity look" },
+  { name: "Glitter Printing", slug: "glitter", bestOn: "Any", desc: "Sparkling glitter inks catch the light from every angle with soft-hand feel" },
+  { name: "Metallic Printing (Foil)", slug: "metallic-printing", bestOn: "Cotton, poly-blend", desc: "Gold, silver, holographic foils pressed on for a luxe mirror-shine finish" },
+  { name: "Reflective Printing", slug: "reflective-printing", bestOn: "Polyester, technical", desc: "Glass-bead inks glow under headlights — safety meets style" },
+  { name: "Flocking", slug: "flocking", bestOn: "Cotton, poly-blend", desc: "Velvety, raised fibers give a soft suede-like touch with rich color depth" },
+  { name: "Silicone Printing", slug: "silicone-printing", bestOn: "Performance, swimwear", desc: "Flexible rubbery ink with smooth matte finish that stretches with the fabric" },
+  { name: "Appliqué Embroidery", slug: "applique-embroidery", bestOn: "Team jerseys, varsity", desc: "Fabric panels stitched on for bold, layered designs with crisp clean edges" },
+  { name: "Laser Carving", slug: "laser-engraving", bestOn: "Denim, leather, technical", desc: "Precision laser etching creates permanent high-contrast marking on rugged fabrics" },
 ];
 
 export default function FabricPage() {
@@ -184,11 +198,14 @@ export default function FabricPage() {
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
           <div className="mb-3 inline-block border-2 border-black bg-white px-3 py-1 text-xs font-black uppercase tracking-widest">
-            Processes
+            20 Processes
           </div>
-          <h2 className="mb-10 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
-            All processes we run.
+          <h2 className="mb-3 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
+            All 20 techniques we run.
           </h2>
+          <p className="mb-10 max-w-3xl text-base text-black/70 md:text-lg">
+            Twenty in-house decoration techniques. Click any row to dive into process, best substrates, MOQ, and pricing.
+          </p>
 
           <div className="overflow-x-auto border-2 border-black">
             <table className="w-full min-w-[640px]">
@@ -211,7 +228,7 @@ export default function FabricPage() {
                         <ArrowUpRight className="h-3.5 w-3.5 stroke-[2.5]" />
                       </Link>
                     </td>
-                    <td className="px-4 py-3 text-sm">{p.fabric}</td>
+                    <td className="px-4 py-3 text-sm">{p.bestOn}</td>
                     <td className="px-4 py-3 text-sm text-black/70">{p.desc}</td>
                   </tr>
                 ))}
@@ -221,23 +238,23 @@ export default function FabricPage() {
         </div>
       </section>
 
-      {/* BEYOND THESE 6 — 3 CARDS */}
+      {/* BEYOND THESE 20 — 3 CARDS */}
       <section className="border-b-2 border-black bg-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
           <div className="mb-3 inline-block bg-black px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
-            Beyond These 6
+            Beyond These 20
           </div>
           <h2 className="mb-3 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
-            The 6 processes are just the start.
+            The 20 techniques are just the start.
           </h2>
           <p className="mb-12 max-w-3xl text-base text-black/70 md:text-lg">
-            The 6 processes below run on our own lines. The full fabric line above is what we keep on hand. Send your own fabric and we&apos;ll print on that too.
+            Twenty techniques run on our own lines. The full fabric line above is what we keep on hand. Send your own fabric and we&apos;ll print on that too.
           </p>
 
           <div className="grid gap-6 md:grid-cols-3">
             <div className="border-2 border-black bg-white p-6">
               <div className="mb-2 text-xs font-black uppercase tracking-widest text-[#ff4d00]">01 / Featured</div>
-              <h3 className="mb-3 text-2xl font-black leading-tight">6 processes featured</h3>
+              <h3 className="mb-3 text-2xl font-black leading-tight">20 techniques featured</h3>
               <p className="text-sm text-black/70">
                 The ones we run on our own lines. Optimized for cost, speed, and color.
               </p>
