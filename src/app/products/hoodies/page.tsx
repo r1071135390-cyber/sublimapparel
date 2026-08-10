@@ -20,6 +20,10 @@ export const metadata: Metadata = {
     "team hoodies",
     "low MOQ hoodies",
   ],
+
+  openGraph: {
+    images: ["/product-lineup.webp"],
+  },
 };
 
 const stats = [

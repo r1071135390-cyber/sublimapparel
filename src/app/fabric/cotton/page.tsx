@@ -20,6 +20,10 @@ export const metadata: Metadata = {
     "allover digital print cotton",
     "full body cotton print", "cotton sublimation", "cut and sew cotton",
   ],
+
+  openGraph: {
+    images: ["/fabric-hero.webp"],
+  },
 };
 
 const whyUs = [

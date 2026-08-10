@@ -22,6 +22,10 @@ export const metadata: Metadata = {
     "moisture wicking polo",
     "DDP golf apparel",
   ],
+
+  openGraph: {
+    images: ["/product-lineup.webp"],
+  },
 };
 
 const stats = [

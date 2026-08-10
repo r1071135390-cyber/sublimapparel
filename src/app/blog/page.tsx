@@ -26,6 +26,7 @@ export const metadata: Metadata = {
 "Industry guides, factory stories, and B2B apparel insights. Written by the team behind our 8,000 m² Yiwu sublimation factory.",
     url:"/blog/",
     type:"website",
+    images: ["/product-lineup.webp"],
   },
 };
 

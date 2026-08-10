@@ -32,6 +32,10 @@ export const metadata: Metadata = {
     "yoga wear manufacturer",
     "cycling jersey factory",
   ],
+
+  openGraph: {
+    images: ["/about-hero.webp"],
+  },
 };
 
 const stats = [

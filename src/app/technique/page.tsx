@@ -26,6 +26,7 @@ export const metadata: Metadata = {
 "20 decoration techniques, compared. Sublimation, screen print, DTG, DTF, embroidery, 3D puff, rhinestone and more — costs, durability, best uses.",
     url:"/technique/",
     type:"article",
+    images: ["/technique-hero.webp"],
   },
 };
 

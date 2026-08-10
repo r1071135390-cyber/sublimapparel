@@ -22,6 +22,10 @@ export const metadata: Metadata = {
     "college esports apparel",
     "twitch streamer merch",
   ],
+
+  openGraph: {
+    images: ["/hero-jersey.webp"],
+  },
 };
 
 const stats = [

@@ -16,6 +16,10 @@ export const metadata: Metadata = {
     "global shipping apparel",
     "delivered duty paid",
   ],
+
+  openGraph: {
+    images: ["/shipping-hero.webp"],
+  },
 };
 
 const whatDdp = [

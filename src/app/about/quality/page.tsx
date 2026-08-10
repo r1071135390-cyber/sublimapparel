@@ -30,6 +30,10 @@ export const metadata: Metadata = {
     "factory audit",
     "defect rate",
   ],
+
+  openGraph: {
+    images: ["/about-hero.webp"],
+  },
 };
 
 const stats = [

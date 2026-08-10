@@ -30,6 +30,10 @@ export const metadata: Metadata = {
     "event t-shirts",
     "promo t-shirts",
   ],
+
+  openGraph: {
+    images: ["/product-hero-products.webp"],
+  },
 };
 
 const stats = [

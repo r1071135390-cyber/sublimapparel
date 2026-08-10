@@ -7,6 +7,10 @@ export const metadata = {
   title: "Get a Quote — Custom Sublimation & Cotton Apparel Manufacturer",
   description:
     "Request a landed-cost quote in under 12 hours. Free digital mockup, free sample round on first order. Sublimation on polyester, DTG / DTF on 100% cotton, DDP shipping to 100+ countries.",
+
+  openGraph: {
+    images: ["/contact-hero.webp"],
+  },
 };
 
 const whatHappens = [

@@ -20,6 +20,10 @@ export const metadata: Metadata = {
     "sublimated jerseys",
     "low MOQ jerseys",
   ],
+
+  openGraph: {
+    images: ["/hero-jersey.webp"],
+  },
 };
 
 const stats = [

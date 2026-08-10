@@ -20,6 +20,10 @@ export const metadata: Metadata = {
     "all over print cycling",
     "racing cycling jersey",
   ],
+
+  openGraph: {
+    images: ["/product-lineup.webp"],
+  },
 };
 
 const stats = [

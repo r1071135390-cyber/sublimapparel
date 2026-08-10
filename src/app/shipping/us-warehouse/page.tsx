@@ -11,6 +11,10 @@ export const metadata: Metadata = {
     canonical: "https://sublimapparel.com/shipping/us-warehouse/",
   },
   robots: { index: true, follow: true },
+
+  openGraph: {
+    images: ["/shipping-hero.webp"],
+  },
 };
 
 const usWarehouseData = {

@@ -20,6 +20,10 @@ export const metadata: Metadata = {
     "all-over print polyester",
     "full coverage polyester print",
   ],
+
+  openGraph: {
+    images: ["/fabric-hero.webp"],
+  },
 };
 
 const whyUs = [

@@ -17,6 +17,10 @@ export const metadata: Metadata = {
     "sea air express",
     "global fulfillment",
   ],
+
+  openGraph: {
+    images: ["/shipping-hero.webp"],
+  },
 };
 
 const stats = [

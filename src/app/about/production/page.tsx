@@ -30,6 +30,10 @@ export const metadata: Metadata = {
     "production timeline",
     "21 day production",
   ],
+
+  openGraph: {
+    images: ["/factory-floor.webp"],
+  },
 };
 
 const stats = [

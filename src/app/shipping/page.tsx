@@ -31,6 +31,7 @@ export const metadata: Metadata = {
     title:"Shipping & Fulfillment — DDP Worldwide",
     description:
 "DDP to 100+ countries, US warehouse in 2-5 days, or your own freight forwarder. One quote, no surprise duties.",
+    images: ["/shipping-hero.webp"],
   },
 };
 

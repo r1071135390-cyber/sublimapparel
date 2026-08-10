@@ -20,6 +20,10 @@ export const metadata: Metadata = {
     "boutique bowling apparel",
     "DDP bowling jerseys",
   ],
+
+  openGraph: {
+    images: ["/product-lineup.webp"],
+  },
 };
 
 const stats = [

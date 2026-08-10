@@ -8,6 +8,10 @@ export const metadata = {
   title: "Contact SublimApparel — Talk to a Real Person in Yiwu, 24h Response",
   description:
     "Real production managers in Yiwu, China — not chatbots. WhatsApp, email, WeChat. Reply in 24h, quote in 12h, sample in 5 days, bulk in 21 days.",
+
+  openGraph: {
+    images: ["/contact-hero.webp"],
+  },
 };
 
 export default function ContactPage() {

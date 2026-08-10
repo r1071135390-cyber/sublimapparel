@@ -24,6 +24,10 @@ export const metadata: Metadata = {
     "sublimation pricing",
     "yiwu factory faq",
   ],
+
+  openGraph: {
+    images: ["/about-hero.webp"],
+  },
 };
 
 const stats = [
