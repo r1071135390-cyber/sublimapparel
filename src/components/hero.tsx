@@ -105,9 +105,9 @@ export function Hero() {
 
         {/* Headline — 3 lines, flat / full width */}
         <h1 className="mb-4 max-w-4xl text-4xl font-black leading-[0.95] tracking-tight md:mb-5 md:text-7xl lg:text-[88px]">
-          <span className="block whitespace-nowrap text-white">We sublimate apparel.</span>
-          <span className="block text-[#ff4d00]">not only polyester,</span>
-          <span className="block text-[#ff4d00]">but also cotton.</span>
+          <span className="block whitespace-nowrap text-white">Yiwu sublimate apparel factory,</span>
+          <span className="block text-[#ff4d00]">polyester sublimation</span>
+          <span className="block text-[#ff4d00]">& allover digital print cotton.</span>
         </h1>
 
         {/* Subhead */}
