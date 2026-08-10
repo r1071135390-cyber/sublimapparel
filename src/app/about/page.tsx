@@ -74,12 +74,12 @@ export default function AboutPage() {
               <div className="mb-3 inline-block bg-[#00c2ff] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
                 About SublimApparel
               </div>
-              <h1 className="text-5xl font-black leading-[0.95] tracking-tight text-white md:text-7xl">
+              <h1 className="text-5xl font-black leading-[1.05] tracking-tight text-white md:text-7xl">
                 One factory
                 <br />
-                <span className="text-[#ff4d00]">in Yiwu, China.</span>
+                in <span className="text-[#ff4d00]">Yiwu</span>, China.
                 <br />
-                <span className="text-white/80">Built for the world.</span>
+                Built for the world.
               </h1>
               <p className="mt-8 max-w-xl text-base leading-relaxed text-white/80 md:text-lg">
                 SublimApparel is a full-service sublimation apparel factory — design, print, cut, sew,
