@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { productTypes, productBySlug, productCategoryDisplay } from "@/lib/products-data";
+import { productTypes, productBySlug, productSubcategories, productMainCategories } from "@/lib/products-data";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -28,7 +28,7 @@ export default async function ProductPage({ params }: PageProps) {
   const product = productBySlug(slug);
   if (!product) notFound();
 
-  const categoryLabel = productCategoryDisplay[product.category] || product.category;
+  const categoryLabel = product.mainCategoryLabel;
 
   return (
     <main className="min-h-screen bg-white">
@@ -72,14 +72,12 @@ export default async function ProductPage({ params }: PageProps) {
                 ))}
               </div>
             </div>
-            <div className="relative aspect-square bg-white/5 border border-white/10 overflow-hidden">
-              <Image
-                src={product.image}
-                alt={product.name}
-                fill
-                className="object-cover"
-                priority
-              />
+            <div className="relative aspect-square bg-white/5 border border-white/10 overflow-hidden flex items-center justify-center">
+              <div className="text-center">
+                <div className="text-[10px] font-bold uppercase tracking-widest text-white/40 mb-2">Image pending</div>
+                <div className="text-3xl font-extrabold text-white/80">{product.name}</div>
+                <div className="mt-3 text-sm text-white/50">{product.mainCategoryLabel}</div>
+              </div>
             </div>
           </div>
         </div>
@@ -240,14 +238,10 @@ function RelatedProducts({ currentSlug, tags }: { currentSlug: string; tags: str
               href={`/products/${p.slug}`}
               className="group flex flex-col bg-white border border-black/10 hover:border-[#ff4d00] transition"
             >
-              <div className="relative aspect-square bg-white overflow-hidden">
-                <Image
-                  src={p.image}
-                  alt={p.name}
-                  fill
-                  className="object-cover group-hover:scale-105 transition duration-300"
-                  sizes="(min-width: 768px) 25vw, 50vw"
-                />
+              <div className="flex aspect-square items-center justify-center bg-neutral-50 px-3 text-center">
+                <span className="text-xs font-bold leading-tight text-black/40">
+                  {p.name}
+                </span>
               </div>
               <div className="p-4">
                 <p className="text-xs font-bold tracking-widest uppercase text-[#ff4d00] mb-1">

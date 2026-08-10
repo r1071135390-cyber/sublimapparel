@@ -1,5 +1,4 @@
 import { Contact } from "@/components/contact";
-import Image from "next/image";
 import ProductCatalogGrid from "@/components/product-catalog-grid";
 import { productTypes } from "@/lib/products-data";
 
@@ -68,65 +67,22 @@ const comparison = [
 export default function ProductsPage() {
   return (
     <main>
-      <section className="relative overflow-hidden bg-white">
-        {/* Full-bleed background image with floating text overlay */}
-        <div className="relative aspect-[2/1] w-full">
-          <Image
-            src="/hero-products.webp"
-            alt="Range of custom printed products — apparel, bags, home goods, hard substrates"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-center"
-          />
-
-          {/* Floating text overlay */}
-          <div className="absolute inset-0 mx-auto flex max-w-7xl items-center px-6">
-            <div className="max-w-3xl">
-              <div
-                className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white"
-                style={{
-                  textShadow:
-                    "0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff",
-                }}
-              >
-                Products
-              </div>
-              <h1
-                className="whitespace-nowrap text-4xl font-black leading-[0.95] tracking-tight text-black md:text-6xl lg:text-7xl"
-                style={{
-                  WebkitTextStroke: "2px #ffffff",
-                  paintOrder: "stroke fill",
-                  textShadow:
-                    "0 0 8px rgba(255,255,255,0.9), 0 0 16px rgba(255,255,255,0.6)",
-                }}
-              >
-                Whatever you need
-                <br />
-                to customize
-                <br />
-                <span
-                  className="text-[#ff4d00]"
-                  style={{
-                    WebkitTextStroke: "2px #ffffff",
-                    paintOrder: "stroke fill",
-                  }}
-                >
-                  we make it.
-                </span>
-              </h1>
-              <p
-                className="mt-6 max-w-xl text-base leading-snug text-black/85 md:text-lg"
-                style={{
-                  textShadow:
-                    "0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff, 0 0 4px #fff, 0 0 4px #fff, 0 0 4px #fff, 0 0 4px #fff",
-                }}
-              >
-                Apparel is our bread and butter — but we print home goods, bags, flags, hard
-                goods, and whatever custom project you bring us. Polyester or 100% cotton.
-              </p>
-            </div>
+      <section className="border-b-2 border-black bg-white">
+        <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
+          <div className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+            Products
           </div>
+          <h1 className="text-4xl font-black leading-[1.05] tracking-tight text-black md:text-6xl lg:text-7xl">
+            Whatever you need
+            <br />
+            to customize
+            <br />
+            <span className="text-[#ff4d00]">we make it.</span>
+          </h1>
+          <p className="mt-8 max-w-3xl text-xl leading-snug text-black/80">
+            Apparel is our bread and butter — but we print home goods, bags, flags, hard
+            goods, and whatever custom project you bring us. Polyester or 100% cotton.
+          </p>
         </div>
       </section>
 
@@ -236,6 +192,31 @@ export default function ProductsPage() {
       </section>
 
       <ProductCatalogGrid />
+
+      {/* Excel download */}
+      <section className="border-t border-black/10 bg-[#0a0a0a] py-12 text-white">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between">
+            <div>
+              <h3 className="text-2xl font-extrabold tracking-tight md:text-3xl">
+                Need the full product list?
+              </h3>
+              <p className="mt-2 max-w-xl text-sm text-white/70 md:text-base">
+                Download our complete product catalog as Excel — with name, category, subcategory,
+                process, fabric options, and tags. Image column left blank for you to assign.
+              </p>
+            </div>
+            <a
+              href="/products-catalog.xlsx"
+              download
+              className="inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-bold uppercase tracking-wider text-white transition hover:bg-[#e64500] md:text-base"
+            >
+              <span>Download Excel (106 products)</span>
+              <span aria-hidden>→</span>
+            </a>
+          </div>
+        </div>
+      </section>
 
       <Contact />
     </main>
