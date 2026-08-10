@@ -183,7 +183,9 @@ export default function FabricPage() {
             Fabrics
           </div>
           <h2 className="mb-10 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
-            What we print on.
+            Overall apparel printing,
+            <br />
+            <span className="text-[#ff4d00]">what we print on.</span>
           </h2>
 
           <div className="grid gap-6 md:grid-cols-2">
