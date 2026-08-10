@@ -1,5 +1,9 @@
 import { Contact } from "@/components/contact";
 import Image from "next/image";
+import ProductCatalogGrid from "@/components/product-catalog-grid";
+import { productTypes } from "@/lib/products-data";
+
+
 
 export const metadata = {
   title: "Custom Sublimation & Cotton Apparel — T-Shirts, Jerseys, Hoodies, Cycling, Golf, Racing",
@@ -230,6 +234,8 @@ export default function ProductsPage() {
           </div>
         </div>
       </section>
+
+      <ProductCatalogGrid />
 
       <Contact />
     </main>
