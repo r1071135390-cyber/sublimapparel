@@ -19,7 +19,7 @@ import {
 export const metadata: Metadata = {
   title: "Inside Our Yiwu Factory · 2,000 sqm Sublimation Apparel Plant | SublimApparel",
   description:
-    "2,000 sqm Yiwu sublimation apparel factory. 12 production lines, 200+ staff, 24/7 capacity. 6 inline printing machines, full cutting-sewing-printing-packaging vertical integration.",
+    "2,000 sqm Yiwu sublimation apparel factory. 12 production lines, 50+ staff, 24/7 capacity. 6 inline printing machines, full cutting-sewing-printing-packaging vertical integration.",
   keywords: [
     "yiwu factory",
     "sublimation factory",
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
 const stats = [
   { value: "2,000", unit: "SQM", label: "Floor space" },
   { value: "12", unit: "LINES", label: "Production lines" },
-  { value: "200+", unit: "STAFF", label: "Skilled workforce" },
+  { value: "50+", unit: "STAFF", label: "Skilled workforce" },
   { value: "24/7", unit: "RUN", label: "Three shifts" },
 ];
 
@@ -86,7 +86,7 @@ const equipment = [
 ];
 
 const useCases = [
-  { title: "Athletic brands needing scale", body: "2,000 sqm floor, 12 lines, 200+ staff — we run 80K pieces/month without breaking a sweat. Race teams and jersey brands come back for repeat 5K+ piece orders." },
+  { title: "Athletic brands needing scale", body: "2,000 sqm floor, 12 lines, 50+ staff — we run 80K pieces/month without breaking a sweat. Race teams and jersey brands come back for repeat 5K+ piece orders." },
   { title: "Tech-apparel startups with technical fabric demands", body: "Poly-spandex, mesh, brushed-back, micro-poly — stocked and ICC-calibrated. Send your tech-pack, we reverse-engineer the construction." },
   { title: "Schools and Greek life bulk orders", body: "One PO, one ship date, 1,000+ pieces. We split the run across multiple lines to keep the timeline tight (10-14 days bulk)." },
   { title: "POD platforms with weekly drops", body: "Standing capacity, white-label packing, blind drop-ship. We treat each week as a production slot, not a project." },

@@ -6,7 +6,7 @@ import Image from"next/image";
 export const metadata = {
   title:"About SublimApparel — 2,000 sqm Yiwu Sublimation & Cotton Printing Factory Since 2018",
   description:
-"12 production lines, 200+ staff, 99.2% QC pass rate. Sublimation on polyester + all-over printing on 100% cotton. DDP to 100+ countries with all duties pre-paid.",
+"12 production lines, 50+ staff, 99.2% QC pass rate. Sublimation on polyester + all-over printing on 100% cotton. DDP to 100+ countries with all duties pre-paid.",
 };
 
 const capabilities = [
@@ -23,7 +23,7 @@ const locations = [
     city:"Yiwu, China (HQ)",
     role:"Factory + Global Hub",
     address: ["No. 35 Lingyun Road","Yiwu, Zhejiang, China"],
-    desc:"Our only production site. 12 lines, 200+ staff, daily output 2,500+ pieces. Direct access to the world's largest small-commodity logistics network.",
+    desc:"Our only production site. 12 lines, 50+ staff, daily output 2,500+ pieces. Direct access to the world's largest small-commodity logistics network.",
   },
 ];
 
@@ -189,7 +189,7 @@ export default function AboutPage() {
             Inside the factory
           </div>
           <div className="max-w-3xl text-2xl font-black leading-tight text-white md:text-4xl">
-            2,000 sqm · 12 lines · 6 sublimation printers · 200+ staff
+            2,000 sqm · 12 lines · 6 sublimation printers · 50+ staff
           </div>
           <div className="mt-2 text-xs font-bold uppercase tracking-widest text-white/70">
             Yiwu, Zhejiang — the only place we make things.
@@ -368,7 +368,7 @@ export default function AboutPage() {
           </div>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {[
-              { href:"/about/factory", title:"Inside the factory", blurb:"2,000 sqm, 12 production lines, 6 sublimation printers, 200+ staff. Tour the floor.", badge:"Factory" },
+              { href:"/about/factory", title:"Inside the factory", blurb:"2,000 sqm, 12 production lines, 6 sublimation printers, 50+ staff. Tour the floor.", badge:"Factory" },
               { href:"/about/production", title:"Production process", blurb:"7 steps from inquiry to delivery, 21-day average, no black box.", badge:"Process" },
               { href:"/about/quality", title:"Quality control", blurb:"4-stage QC, 50+ checkpoints, AQL 2.5, 99.2% first-pass rate.", badge:"Quality" },
               { href:"/about/cases", title:"Industries we serve", blurb:"12 verticals, 1,000+ clients, 5M+ pieces last year. Race, sports, schools, political, yoga, esports, more.", badge:"Industries" },

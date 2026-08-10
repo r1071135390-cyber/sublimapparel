@@ -94,7 +94,7 @@ const GROUPS: SitemapGroup[] = [
     accent: "black",
     nodes: [
       { path: "/about", label: "About", note: "Factory story, vertical integration, certifications" },
-      { path: "/about/factory", label: "Inside the factory", note: "2,000 sqm, 12 lines, 6 printers, 200+ staff", new: true },
+      { path: "/about/factory", label: "Inside the factory", note: "2,000 sqm, 12 lines, 6 printers, 50+ staff", new: true },
       { path: "/about/production", label: "Production process", note: "7 steps, 21-day average, day-by-day timeline", new: true },
       { path: "/about/quality", label: "Quality control", note: "4-stage QC, 50+ checkpoints, AQL 2.5", new: true },
       { path: "/about/cases", label: "Industries we serve", note: "12 verticals, 1,000+ clients, 5M+ pieces", new: true },
