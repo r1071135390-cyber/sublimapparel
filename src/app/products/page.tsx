@@ -1,4 +1,5 @@
 import { Contact } from "@/components/contact";
+import Image from "next/image";
 
 export const metadata = {
   title: "Custom Sublimation & Cotton Apparel — T-Shirts, Jerseys, Hoodies, Cycling, Golf, Racing",
@@ -63,22 +64,49 @@ const comparison = [
 export default function ProductsPage() {
   return (
     <main>
-      <section className="border-b-2 border-black bg-white">
-        <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
-          <div className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
-            Products
+      <section className="relative overflow-hidden bg-[#0a0a0a] text-white">
+        <div className="relative h-[60vh] min-h-[480px] w-full lg:h-[78vh] lg:min-h-[640px]">
+          <Image
+            src="/hero-products.webp"
+            alt="Range of custom printed products — apparel, bags, home goods, hard substrates"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+          {/* Gradient mask — solid dark on left under text, transparent on right */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/92 via-35% to-transparent" />
+          {/* Subtle blur on the left half under the text */}
+          <div
+            className="absolute inset-0 backdrop-blur-[2px]"
+            style={{
+              WebkitMaskImage:
+                "linear-gradient(to right, #000 0%, #000 35%, transparent 60%)",
+              maskImage:
+                "linear-gradient(to right, #000 0%, #000 35%, transparent 60%)",
+            }}
+          />
+        </div>
+
+        <div className="absolute inset-0 mx-auto max-w-7xl px-6">
+          <div className="flex h-full items-start pb-12 pt-16 md:pb-16 md:pt-24 lg:items-center lg:pb-0 lg:pt-0">
+            <div className="max-w-2xl">
+              <div className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+                Products
+              </div>
+              <h1 className="text-5xl font-black leading-[0.95] tracking-tight text-white md:text-8xl">
+                Whatever you need
+                <br />
+                to customize
+                <br />
+                <span className="text-[#ff4d00]">we make it.</span>
+              </h1>
+              <p className="mt-8 max-w-3xl text-xl leading-snug text-white/80">
+                Apparel is our bread and butter — but we print home goods, bags, flags, hard
+                goods, and whatever custom project you bring us. Polyester or 100% cotton.
+              </p>
+            </div>
           </div>
-          <h1 className="text-5xl font-black leading-[0.95] tracking-tight text-black md:text-8xl">
-            Whatever you need
-            <br />
-            to customize
-            <br />
-            <span className="text-[#ff4d00]">we make it.</span>
-          </h1>
-          <p className="mt-8 max-w-3xl text-xl leading-snug text-black/80">
-            Apparel is our bread and butter — but we print home goods, bags, flags, hard
-            goods, and whatever custom project you bring us. Polyester or 100% cotton.
-          </p>
         </div>
       </section>
 
