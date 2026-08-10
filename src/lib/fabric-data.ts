@@ -735,7 +735,7 @@ export const fabricTypes: Fabric[] = [
     metaDescription:
       "100% cotton fabric, 160-220 gsm. Soft hand, breathable, suitable for DTG and DTF printing. T-shirts, fashion basics, baby wear, organic cotton options. MOQ 50 pcs.",
     intro:
-      "100% cotton is the most-used apparel fiber worldwide — soft, breathable, hypoallergenic, and comfortable against the skin. We run two printing processes on cotton: DTG (direct-to-garment) and DTF (direct-to-film). Both give full-color graphics with a soft hand. We can also do all-over sublimation on cotton via a special transfer process for select projects.",
+      "100% cotton is the most-used apparel fiber worldwide — soft, breathable, hypoallergenic, and comfortable against the skin. We run three printing processes on cotton: DTG (direct-to-garment) and DTF (direct-to-film) for A4–A3 per-panel prints, and allover digital print on cotton for true edge-to-edge, full-body graphics via cut-and-sew. All three give full-color graphics with a soft hand feel.",
     characteristics: [
       "100% cotton, soft hand",
       "160-220 gsm available",

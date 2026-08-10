@@ -13,7 +13,7 @@ const categories = [
     title: "Apparel",
     desc: "T-shirts, hoodies, jerseys, racing, cycling, golf, bowling, esports, singlets, leggings. Cut and sewn in our Yiwu factory.",
     items: ["T-Shirts", "Hoodies & Sweatshirts", "Jerseys & Singlets", "Racing Kits", "Cycling Kits", "Golf / Bowling Shirts", "Pants & Shorts", "Vests"],
-    note: "Polyester or 100% cotton. Cotton runs on DTG/DTF (A4–A3 per panel); polyester runs on sublimation (true all-over, edge-to-edge).",
+    note: "Polyester or 100% cotton. Cotton runs on DTG/DTF (A4–A3 per panel); polyester runs on sublimation (true all-over, edge-to-edge). Allover digital print on cotton also available (cut-and-sew, true full-body, MOQ 100).",
   },
   {
     id: "home",
@@ -216,8 +216,7 @@ export default function ProductsPage() {
               Our specialty
             </div>
             <p className="mt-2 text-lg font-bold text-black">
-              Full-color all-over print on 100% cotton is hard to find. Most sublimation
-              factories can&apos;t do it — we can, with rich color and soft hand feel.
+              Allover digital print on 100% cotton is rare. We run it in-house — true edge-to-edge, cut-and-sew workflow, photorealistic color, soft hand feel. MOQ 100 pcs per design.
             </p>
           </div>
         </div>

@@ -305,7 +305,7 @@ export default function ProductionPage() {
             {[
               { href: "/about/factory", title: "Factory", desc: "2,000 sqm, 12 lines, 24/7" },
               { href: "/about/quality", title: "Quality control", desc: "4-stage QC, 50+ checkpoints" },
-              { href: "/fabric/cotton", title: "All-Over Cotton Printing", desc: "DTG & DTF on 100% cotton" },
+              { href: "/fabric/cotton", title: "Allover digital print on cotton", desc: "Cut-and-sew, true full-body" },
             ].map((r) => (
               <Link key={r.href} href={r.href} className="group block border-2 border-[#0a0a0a] bg-white p-6 transition-colors hover:bg-[#0a0a0a] hover:text-[#faf9f6]">
                 <div className="text-xs font-mono uppercase tracking-wider text-[#ff4d00]">→</div>

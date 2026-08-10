@@ -8,7 +8,7 @@ import Image from"next/image";
 export const metadata = {
   title:"About SublimApparel — 2,000 sqm Yiwu Sublimation & Cotton Printing Factory Since 2018",
   description:
-"12 production lines, 50+ staff, 99.2% QC pass rate. Sublimation on polyester (true all-over) + DTG and DTF on 100% cotton (A4–A3 per panel). DDP to 100+ countries with all duties pre-paid.",
+"12 production lines, 50+ staff, 99.2% QC pass rate. Sublimation on polyester (true all-over) + DTG and DTF on 100% cotton (A4–A3 per panel) + allover digital print on cotton (cut-and-sew, true full-body). DDP to 100+ countries with all duties pre-paid.",
 };
 
 const capabilities = [

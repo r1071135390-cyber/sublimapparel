@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Check, Leaf, Droplets, Shirt, Sparkles, Layers, Recycle } from "lucide-react";
+import { ArrowRight, Check, Leaf, Droplets, Shirt, Sparkles, Layers, Recycle, ScanLine, Scissors, Palette, Ruler } from "lucide-react";
 import { cottonFabrics } from "@/lib/fabric-data";
 
 export const metadata: Metadata = {
-  title: "DTG & DTF Printing on 100% Cotton | A4–A3 Large-Area, Soft Hand",
+  title: "Allover Digital Print on 100% Cotton | Full-Body Print + DTG/DTF",
   description:
-    "Custom DTG and DTF printing on 100% cotton apparel. A4–A3 per panel, full-color, softer hand feel. Free digital mockup, MOQ 50.",
+    "Allover digital print on 100% cotton apparel — true full-body, edge-to-edge printing via our proprietary cotton digital workflow. Also offer DTG and DTF for A4–A3 per panel. Soft hand feel, full color, MOQ 50.",
   keywords: [
-    "all-over cotton printing",
+    "allover digital print on cotton",
     "100% cotton printing",
     "cotton jersey",
     "cotton t-shirt printing",
@@ -17,8 +17,8 @@ export const metadata: Metadata = {
     "direct to garment",
     "organic cotton apparel",
     "DTF heat transfer",
-    "all-over print cotton",
-    "full coverage cotton print",
+    "allover digital print cotton",
+    "full body cotton print", "cotton sublimation", "cut and sew cotton",
   ],
 };
 
@@ -29,13 +29,36 @@ const whyUs = [
   { icon: Recycle, title: "Organic cotton available", desc: "GOTS-certified organic cotton, 180–220 GSM, available in natural / off-white / dyed. Same low-MOQ 50 pcs as our polyester line." },
 ];
 
+const alloverDigital = [
+  {
+    icon: ScanLine,
+    title: "Allover digital print on cotton — seam to seam",
+    desc: "Our proprietary cut-and-sew digital transfer workflow prints edge-to-edge on 100% cotton. The full garment is printed before sewing — front, back, sleeves all in one continuous image. This is different from DTG and DTF (which are A4–A3 per panel). For full-body cotton graphics with zero panel seams, this is the process.",
+  },
+  {
+    icon: Scissors,
+    title: "Cut-and-sew workflow",
+    desc: "We print the full pattern on cotton fabric, then cut and sew the garment. The seam lines are the only interruption — the rest is one continuous print. Same look as poly sublimation, on 100% cotton substrate.",
+  },
+  {
+    icon: Palette,
+    title: "Photorealistic color on cotton",
+    desc: "Reactive dye chemistry gives full CMYK color range on cotton. Colors are as vibrant as poly sublimation, with a soft hand feel that DTG and DTF cannot match. Properly cured prints survive 50+ wash cycles.",
+  },
+  {
+    icon: Ruler,
+    title: "MOQ 100 pcs for allover cotton",
+    desc: "Allover digital print on cotton requires cut-and-sew, so MOQ is 100 pcs per design (vs 50 for DTG/DTF on stocked blanks). Lead time 20–25 days. Ask for a custom quote.",
+  },
+];
+
 const comparison = [
   { feature: "Best fabric", poly: "100% polyester / poly-blend", cotton: "100% cotton / cotton-blend / organic cotton" },
   { feature: "Print method", poly: "Dye sublimation (heat press)", cotton: "DTG (direct to garment) or DTF (heat transfer)" },
   { feature: "Hand feel", poly: "Zero hand feel — print becomes the fabric", cotton: "Soft hand feel — print sits on the surface" },
   { feature: "Color vibrancy", poly: "Extremely vibrant, photorealistic", cotton: "Vibrant; slightly less saturated than poly sublimation" },
   { feature: "Color fastness", poly: "Excellent — print will not fade or peel", cotton: "Excellent with proper curing; we wash-test every batch" },
-  { feature: "All-over print", poly: "Yes — seam to seam", cotton: "A4-size print area per panel (front/back/sleeves)" },
+  { feature: "All-over print", poly: "Yes — seam to seam (sublimation)", cotton: "Yes — via allover digital print on cotton (seam to seam)" },
   { feature: "MOQ", poly: "50 pcs (true low-MOQ)", cotton: "50 pcs (true low-MOQ)" },
   { feature: "Best for", poly: "Sportswear, esports jerseys, cycling, full-print streetwear", cotton: "Premium tees, lifestyle, fashion, eco-conscious brands, baby/kids" },
 ];
@@ -194,6 +217,51 @@ export default function CottonPage() {
                   <Icon className="mb-4 h-7 w-7 text-[#ff4d00]" strokeWidth={1.5} />
                   <h3 className="mb-2 text-xl font-black leading-tight">{w.title}</h3>
                   <p className="text-sm leading-relaxed text-white/70">{w.desc}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ALLOVER DIGITAL PRINT ON COTTON — distinct from DTG/DTF */}
+      <section className="border-b-2 border-black bg-[#ff4d00] text-white">
+        <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
+          <div className="mb-12 flex items-end justify-between border-b border-white/30 pb-6">
+            <div>
+              <div className="mb-2 text-xs font-black uppercase tracking-widest text-white/80">
+                [ 001.5 / Allover digital print on cotton ]
+              </div>
+              <h2 className="text-4xl font-black uppercase leading-none tracking-tight md:text-6xl">
+                True all-over
+                <br />
+                <span className="text-white">on 100% cotton.</span>
+              </h2>
+            </div>
+            <div className="hidden text-right text-xs font-black uppercase tracking-widest text-white/80 md:block">
+              [ 4 pillars ]
+            </div>
+          </div>
+          <p className="mb-10 max-w-3xl text-lg font-medium leading-snug md:text-xl">
+            DTG and DTF print A4–A3 per panel. <span className="underline decoration-2 underline-offset-4">Allover digital print on cotton</span> is a different process — we print the full garment before sewing, so the print runs edge-to-edge with only the seam lines as interruption. Same look as poly sublimation, on 100% cotton substrate.
+          </p>
+          <div className="grid gap-px bg-white/30 md:grid-cols-2 lg:grid-cols-4">
+            {alloverDigital.map((w, i) => {
+              const Icon = w.icon;
+              return (
+                <div key={i} className="bg-[#ff4d00] p-6 md:p-8">
+                  <div className="mb-4 flex items-center gap-2">
+                    <Icon className="h-5 w-5" strokeWidth={2.5} />
+                    <div className="text-xs font-black uppercase tracking-widest text-white/80">
+                      0{i + 1}
+                    </div>
+                  </div>
+                  <h3 className="mb-3 text-lg font-black leading-tight md:text-xl">
+                    {w.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed text-white/90">
+                    {w.desc}
+                  </p>
                 </div>
               );
             })}

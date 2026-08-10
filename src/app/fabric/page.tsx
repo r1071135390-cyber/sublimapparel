@@ -21,7 +21,7 @@ const fabrics = [
     badgeColor: "bg-[#ff4d00]",
     icon: Leaf,
     color: "bg-[#faf9f6]",
-    desc: "Beyond DTG and DTF printing on 100% cotton, organic cotton — we can do overall printing too. Soft hand feel, full color, low MOQ 50 pcs.",
+    desc: "Beyond DTG and DTF printing on 100% cotton, organic cotton — we also do allover digital print on cotton (true edge-to-edge, cut-and-sew workflow). Soft hand feel, full color, low MOQ.",
     href: "/fabric/cotton#cotton-fabrics",
   },
   {
