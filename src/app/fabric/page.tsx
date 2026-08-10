@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Download, Droplets, Leaf, Package, Send, Shirt } from "lucide-react";
+import { ArrowRight, Download, Droplets, Leaf, Shirt } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Fabric & Process — 12 Fabric Types, 6 Print Processes | SublimApparel",
+  title: "Fabric & Process — Full Fabric Line & 6 Print Processes | SublimApparel",
   description:
-    "12 fabric types in stock (polyester, poly-spandex, nylon, cotton, blends) and 6 print processes (sublimation, DTG, DTF, screen, embroidery, cut-and-sew). Sublimation fit rating included for every fabric. Send your own fabric — we'll print on it too.",
+    "Our full fabric line in stock (polyester, poly-spandex, nylon, cotton, blends and more) and 6 print processes (sublimation, DTG, DTF, screen, embroidery, cut-and-sew). Sublimation fit rating included for every fabric. Send your own fabric — we'll print on it too.",
 };
 
 const fabrics = [
@@ -42,18 +42,114 @@ const processes = [
 ];
 
 const fabricTypes = [
-  { name: "Polyester jersey", comp: "100% Polyester", gsm: "110–160", use: "T-shirts, cultural shirts, jerseys", fit: "★★★★★", swatch: "01-jersey" },
-  { name: "Bird-eye mesh", comp: "100% Polyester", gsm: "135–275", use: "Basketball, cycling, team kits", fit: "★★★★★", swatch: "02-birdeye" },
-  { name: "Poly-spandex stretch mesh", comp: "92% Poly + 8% Spandex", gsm: "100–185", use: "Compression, yoga base layers", fit: "★★★★", swatch: "03-spandex" },
-  { name: "Polar fleece", comp: "100% Polyester", gsm: "270–420", use: "Hoodies, jackets, winter sports", fit: "★★★★", swatch: "04-fleece" },
-  { name: "Nylon-spandex", comp: "75–85% Nylon + 15–25% Spandex", gsm: "160–280", use: "Yoga, swimwear, leggings", fit: "★★★", swatch: "05-nylon" },
-  { name: "Direct print fabric", comp: "100% Polyester (coated)", gsm: "100–170", use: "Flags, banners, posters, pillows", fit: "★★★★★", swatch: "06-banner" },
-  { name: "Poly-cotton blend (CVC / TC)", comp: "65% Poly + 35% Cotton", gsm: "120–260", use: "Polos, workwear, shirts", fit: "★★", swatch: "07-polycotton" },
-  { name: "100% Cotton", comp: "100% Cotton", gsm: "180–250", use: "Cotton tees, hoodies — our edge", fit: "★", swatch: "08-cotton" },
-  { name: "Polyester satin / chiffon", comp: "100% Polyester", gsm: "80–120", use: "Dresses, dance, scarves", fit: "★★★★★", swatch: "09-satin" },
-  { name: "French terry", comp: "100% Polyester", gsm: "200–320", use: "Hoodies, pullovers", fit: "★★★★", swatch: "10-terry" },
-  { name: "Polyester compression", comp: "100% Polyester", gsm: "180–280", use: "Compression wear, cycling", fit: "★★★★", swatch: "11-compression" },
-  { name: "Microfiber peach", comp: "100% Polyester", gsm: "120–200", use: "Blankets, pillow covers, lining", fit: "★★★★", swatch: "12-peach" },
+  {
+    name: "Polyester jersey",
+    comp: "100% Polyester",
+    gsm: "110–160",
+    use: "T-shirts, cultural shirts, jerseys",
+    fit: "★★★★★",
+    swatch: "01-jersey",
+    description: "Workhorse polyester for sublimation. Holds prints flat, washes clean, doesn't pill.",
+  },
+  {
+    name: "Bird-eye mesh",
+    comp: "100% Polyester",
+    gsm: "135–275",
+    use: "Basketball, cycling, team kits",
+    fit: "★★★★★",
+    swatch: "02-birdeye",
+    description: "Perforated mesh — small holes for breathability, smooth face for sharp prints.",
+  },
+  {
+    name: "Poly-spandex stretch mesh",
+    comp: "92% Poly + 8% Spandex",
+    gsm: "100–185",
+    use: "Compression, yoga base layers",
+    fit: "★★★★",
+    swatch: "03-spandex",
+    description: "92/8 poly-spandex. Four-way stretch for compression and fitted cuts.",
+  },
+  {
+    name: "Polar fleece",
+    comp: "100% Polyester",
+    gsm: "270–420",
+    use: "Hoodies, jackets, winter sports",
+    fit: "★★★★",
+    swatch: "04-fleece",
+    description: "Heavy-knit loops, brushed both sides. Plush hand, prints through to the pile.",
+  },
+  {
+    name: "Nylon-spandex",
+    comp: "75–85% Nylon + 15–25% Spandex",
+    gsm: "160–280",
+    use: "Yoga, swimwear, leggings",
+    fit: "★★★",
+    swatch: "05-nylon",
+    description: "Silky hand, excellent stretch recovery. Used for swim, yoga, fitted tops.",
+  },
+  {
+    name: "Direct print fabric",
+    comp: "100% Polyester (coated)",
+    gsm: "100–170",
+    use: "Flags, banners, posters, pillows",
+    fit: "★★★★★",
+    swatch: "06-banner",
+    description: "Flag/banner fabric. Tightly woven, takes direct print on coated face.",
+  },
+  {
+    name: "Poly-cotton blend (CVC / TC)",
+    comp: "65% Poly + 35% Cotton",
+    gsm: "120–260",
+    use: "Polos, workwear, shirts",
+    fit: "★★",
+    swatch: "07-polycotton",
+    description: "Poly-cotton CVC or TC. Heavier hand, used for polo and workwear.",
+  },
+  {
+    name: "100% Cotton",
+    comp: "100% Cotton",
+    gsm: "180–250",
+    use: "Cotton tees, hoodies — our edge",
+    fit: "★",
+    swatch: "08-cotton",
+    description: "Pure cotton — specialty process at our factory. We dye-sub cotton via DTG/DTF for full color, soft hand.",
+  },
+  {
+    name: "Polyester satin / chiffon",
+    comp: "100% Polyester",
+    gsm: "80–120",
+    use: "Dresses, dance, scarves",
+    fit: "★★★★★",
+    swatch: "09-satin",
+    description: "Polyester satin and chiffon. Silky drape, used for dance and dresses.",
+  },
+  {
+    name: "French terry",
+    comp: "100% Polyester",
+    gsm: "200–320",
+    use: "Hoodies, pullovers",
+    fit: "★★★★",
+    swatch: "10-terry",
+    description: "Looped back, smooth face. Mid-weight for hoodies and pullovers.",
+  },
+  {
+    name: "Polyester compression",
+    comp: "100% Polyester",
+    gsm: "180–280",
+    use: "Compression wear, cycling",
+    fit: "★★★★",
+    swatch: "11-compression",
+    description: "Polyester interlock, tight knit. Holds shape under stretch.",
+  },
+  {
+    name: "Microfiber peach",
+    comp: "100% Polyester",
+    gsm: "120–200",
+    use: "Blankets, pillow covers, lining",
+    fit: "★★★★",
+    swatch: "12-peach",
+    description: "Microfiber peach skin. Soft sueded hand, used for linings and home textiles.",
+  },
 ];
 
 export default function FabricPage() {
@@ -161,7 +257,7 @@ export default function FabricPage() {
             The 6 processes are just the start.
           </h2>
           <p className="mb-12 max-w-3xl text-base text-black/70 md:text-lg">
-            The 6 processes above run on our own lines. The 12 fabric types below are what we keep on hand. Send your own fabric and we&apos;ll print on that too.
+            The 6 processes above run on our own lines. The full fabric line below is what we keep on hand. Send your own fabric and we&apos;ll print on that too.
           </p>
 
           <div className="grid gap-6 md:grid-cols-3">
@@ -174,7 +270,7 @@ export default function FabricPage() {
             </div>
             <div className="border-2 border-black bg-white p-6">
               <div className="mb-2 text-xs font-black uppercase tracking-widest text-[#ff4d00]">02 / In stock</div>
-              <h3 className="mb-3 text-2xl font-black leading-tight">12 fabric types in stock</h3>
+              <h3 className="mb-3 text-2xl font-black leading-tight">100+ fabric types in stock</h3>
               <p className="text-sm text-black/70">
                 From 80 gsm chiffon to 420 gsm fleece. See the list below for the full breakdown.
               </p>
@@ -197,10 +293,10 @@ export default function FabricPage() {
             Full fabric catalogue
           </div>
           <h2 className="mb-3 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
-            The <span className="text-[#ff4d00]">12</span> we keep on hand.
+            The <span className="text-[#ff4d00]">fabric line.</span>
           </h2>
           <p className="mb-12 max-w-3xl text-base text-black/70 md:text-lg">
-            What you actually get when you order from us. Composition, weight, common spec, and the sublimation fit rating — on every card.
+            Real thing, real feel. Composition, weight, common spec, and the sublimation fit rating — on every card.
           </p>
 
           <div className="grid gap-4 md:grid-cols-2">
@@ -228,7 +324,8 @@ export default function FabricPage() {
                     </span>
                     <h3 className="truncate text-lg font-black leading-tight">{f.name}</h3>
                   </div>
-                  <div className="mb-2 text-[11px] text-black/60">{f.comp}</div>
+                  <div className="mb-1.5 text-[11px] text-black/60">{f.comp}</div>
+                  <p className="mb-2 text-[11px] leading-relaxed text-black/75">{f.description}</p>
                   <dl className="mt-auto space-y-1 text-[11px]">
                     <div className="flex items-baseline justify-between gap-2 border-b border-black/10 pb-1">
                       <dt className="font-black uppercase tracking-wider text-black/50">Weight</dt>
@@ -257,7 +354,7 @@ export default function FabricPage() {
             <div>
               <div className="mb-1 text-[10px] font-black uppercase tracking-widest text-[#ff4d00]">Spec sheet</div>
               <h4 className="text-lg font-black leading-tight">Download the full catalogue as CSV.</h4>
-              <p className="mt-1 text-sm text-black/60">All 12 fabrics with composition, weight, and use — for your sourcing team.</p>
+              <p className="mt-1 text-sm text-black/60">Our full fabric line with composition, weight, and use — for your sourcing team.</p>
             </div>
             <div className="flex flex-col gap-2 sm:flex-row">
               <a
@@ -272,8 +369,8 @@ export default function FabricPage() {
                 href="/get-a-quote"
                 className="inline-flex items-center gap-2 bg-[#ff4d00] px-4 py-3 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-black"
               >
-                <Send className="h-4 w-4" strokeWidth={2.5} />
                 Send your spec
+                <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
               </Link>
             </div>
           </div>
