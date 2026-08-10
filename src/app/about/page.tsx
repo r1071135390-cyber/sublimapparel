@@ -119,38 +119,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Factory floor panorama */}
-      <section className="relative border-b-2 border-black bg-black">
-        <div className="relative aspect-[16/9] w-full overflow-hidden">
-          <Image
-            src="/about-floor.webp"
-            alt="Inside the SublimApparel factory floor in Yiwu — large-format sublimation printers, sewing lines, and workers in blue vests"
-            fill
-            sizes="100vw"
-            className="object-cover"
-          />
-          {/* Subtle bottom-left gradient for legibility of the label */}
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.4) 25%, rgba(0,0,0,0) 55%)",
-            }}
-          />
-        </div>
-        <div className="absolute bottom-6 left-6 right-6 md:bottom-10 md:left-10">
-          <div className="mb-2 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
-            Inside the factory
-          </div>
-          <div className="max-w-3xl text-2xl font-black leading-tight text-white md:text-4xl">
-            2,000 sqm · 12 lines · 6 sublimation printers · 200+ staff
-          </div>
-          <div className="mt-2 text-xs font-bold uppercase tracking-widest text-white/70">
-            Yiwu, Zhejiang — the only place we make things.
-          </div>
-        </div>
-      </section>
-
       {/* Company background */}
       <section className="border-b-2 border-black bg-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-20">
@@ -192,6 +160,39 @@ export default function AboutPage() {
                 Yiwu, Zhejiang, China
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Factory floor panorama — same image as home hero */}
+      <section className="relative border-b-2 border-black bg-black">
+        <div className="relative aspect-[16/9] w-full overflow-hidden">
+          <Image
+            src="/factory-floor.webp"
+            alt="A row of large-format sublimation printers in the SublimApparel factory in Yiwu"
+            fill
+            sizes="100vw"
+            className="object-cover"
+            priority={false}
+          />
+          {/* Subtle bottom-left gradient for legibility of the label */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 25%, rgba(0,0,0,0) 55%)",
+            }}
+          />
+        </div>
+        <div className="absolute bottom-6 left-6 right-6 md:bottom-10 md:left-10">
+          <div className="mb-2 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+            Inside the factory
+          </div>
+          <div className="max-w-3xl text-2xl font-black leading-tight text-white md:text-4xl">
+            2,000 sqm · 12 lines · 6 sublimation printers · 200+ staff
+          </div>
+          <div className="mt-2 text-xs font-bold uppercase tracking-widest text-white/70">
+            Yiwu, Zhejiang — the only place we make things.
           </div>
         </div>
       </section>
