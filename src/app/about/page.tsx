@@ -282,21 +282,42 @@ export default function AboutPage() {
       </section>
 
       {/* Locations */}
-      <section className="border-b-2 border-black bg-[#ffd400]">
-        <div className="mx-auto max-w-7xl px-6 py-20">
-          <div className="mb-3 inline-block bg-black px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
-            Two locations
+      <section className="relative overflow-hidden border-b-2 border-black bg-[#0a0a0a] text-white">
+        {/* Full-bleed screen printing workshop photo as background */}
+        <div className="absolute inset-0">
+          <Image
+            src="/about-screen-print-shop.webp"
+            alt="Inside the SublimApparel screen printing workshop in Yiwu — long parallel printing tables with white t-shirts laid flat, workers in blue t-shirts"
+            fill
+            sizes="100vw"
+            className="object-cover object-[center_45%]"
+          />
+          {/* Dark gradient so white cards stay legible on top of the image */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to bottom, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0.35) 50%, rgba(10,10,10,0.7) 100%)",
+            }}
+          />
+        </div>
+
+        <div className="relative mx-auto max-w-7xl px-6 py-20">
+          <div className="mb-3 inline-block bg-[#ffd400] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
+            Where we make it
           </div>
-          <h2 className="mb-12 text-4xl font-black leading-tight text-black md:text-6xl">
-            Yiwu + LA
+          <h2 className="mb-12 text-4xl font-black leading-tight text-white md:text-6xl">
+            One workshop
             <br />
-            <span className="italic">= worldwide.</span>
+            <span className="text-[#ff4d00]">in Yiwu.</span>
+            <br />
+            <span className="text-white/80">Ships worldwide.</span>
           </h2>
           <div className="grid gap-6 md:grid-cols-2">
             {locations.map((loc, i) => (
               <div
                 key={loc.city}
-                className="border-2 border-black bg-white p-8"
+                className="border-2 border-white/30 bg-white p-8"
               >
                 <div className="mb-2 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
                   0{i + 1} / {loc.role}
