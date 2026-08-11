@@ -2,7 +2,7 @@ import { ArrowLeft, Mail } from "lucide-react";
 import Link from "next/link";
 
 export const metadata = {
-  title: "Terms of Sale — SublimApparel",
+  title: "Terms of Sale ",
   description:
     "Terms and conditions governing quotes, orders, payment, production, shipping, returns, and liability for custom sublimation apparel from SublimApparel.",
 };

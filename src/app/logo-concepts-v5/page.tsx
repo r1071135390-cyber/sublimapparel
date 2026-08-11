@@ -3,7 +3,7 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 
 export const metadata: Metadata = {
-  title: "Logo Concepts V5 — A4.3 All-Over — SublimApparel",
+  title: "Logo Concepts V5 — A4.3 All-Over ",
   description: "A4.3 framework with all-over print patterns",
   robots: { index: false, follow: false },
 };

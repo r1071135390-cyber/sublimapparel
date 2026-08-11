@@ -3,7 +3,7 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 
 export const metadata: Metadata = {
-  title: "Logo Concepts V4 — A4 Enhanced — SublimApparel",
+  title: "Logo Concepts V4 — A4 Enhanced ",
   description: "A4 enhanced logo variants for SublimApparel",
   robots: { index: false, follow: false },
 };

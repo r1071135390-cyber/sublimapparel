@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Golf Apparel — SublimApparel",
+  title: "Golf Apparel ",
   description: "Page moved. Custom golf polos, mock necks, and quarter-zips.",
   robots: { index: false, follow: false },
 };

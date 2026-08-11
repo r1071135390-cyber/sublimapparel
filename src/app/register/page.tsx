@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Create Account | SublimApparel",
+  title: "Create Account",
   description:
     "Create your SublimApparel account to manage orders, request reprints, and access saved shipping addresses.",
   robots: { index: false },

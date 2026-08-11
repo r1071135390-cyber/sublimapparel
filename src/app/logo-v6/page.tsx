@@ -3,7 +3,7 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 
 export const metadata: Metadata = {
-  title: "Logo V6 — A4.3 Pattern Scaled Up — SublimApparel",
+  title: "Logo V6 — A4.3 Pattern Scaled Up ",
   description: "A4.3 with same explosion pattern scaled to cover full t-shirt",
   robots: { index: false, follow: false },
 };

@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Production Process · 7 Steps from Inquiry to Delivery | SublimApparel",
+  title: "Production Process · 7 Steps from Inquiry to Delivery",
   description:
     "Our 7-step production process: inquiry, quote, mockup, sample, bulk production, QC, shipping. 21-day average lead time from PO to delivery. Sublimation apparel B2B.",
   keywords: [

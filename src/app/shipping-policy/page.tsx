@@ -2,7 +2,7 @@ import { ArrowLeft, Mail, Truck, Warehouse, Globe, Package } from "lucide-react"
 import Link from "next/link";
 
 export const metadata = {
-  title: "Shipping Policy — SublimApparel",
+  title: "Shipping Policy ",
   description:
     "How we ship, the difference between FOB / CIF / DDP, US warehouse fulfillment from Fontana CA, production lead times, tracking, and what to do if a shipment is lost or damaged.",
 };

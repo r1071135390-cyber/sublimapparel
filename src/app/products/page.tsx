@@ -5,7 +5,7 @@ import { ArrowRight, Sparkles } from "lucide-react";
 import { tagArchiveLink, resolveArchiveLink } from "@/lib/tag-utils";
 
 export const metadata = {
-  title: "Custom Sublimation & Cotton Apparel — T-Shirts, Jerseys, Hoodies, Cycling, Golf, Racing",
+  title: "Custom Sublimation & Cotton Apparel — T-Shirts, Jerseys, Hoodies",
   description:
     "Custom sublimated apparel for B2B: t-shirts, jerseys, hoodies, cycling kits, golf polos, racing suits. No setup fees, MOQ 50 pcs, full color all-over print, sample in 5 days.",
 

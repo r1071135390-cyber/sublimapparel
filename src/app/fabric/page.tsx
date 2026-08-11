@@ -8,7 +8,7 @@ import { ArrowRight, ArrowUpRight, Download, Droplets, Leaf } from "lucide-react
 import { fabricTypes } from "@/lib/fabric-data";
 
 export const metadata: Metadata = {
-  title: "Fabric & Process — Full Fabric Line & 6 Print Processes | SublimApparel",
+  title: "Fabric & Process — Full Fabric Line & 6 Print Processes",
   description:
     "Our full fabric line in stock (polyester, poly-spandex, nylon, cotton, blends and more) and 6 print processes (sublimation, DTG, DTF, screen, embroidery, cut-and-sew). Sublimation fit rating included for every fabric. Send your own fabric — we'll print on it too.",
 

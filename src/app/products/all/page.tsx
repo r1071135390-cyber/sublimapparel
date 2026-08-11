@@ -7,7 +7,7 @@ import { products, allSports, allScenarios } from "@/lib/products-data";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 
 export const metadata: Metadata = {
-  title: "100 All-Over Print Products — Custom Apparel by Garment, Sport & Scenario",
+  title: "100 All-Over Print Products | Apparel by Garment, Sport",
   description:
     "100 all-over print apparel products, cross-filtered by garment type (29), sport (42) and scenario (27). From polyester sublimation to all-over digital print on cotton, MOQ 50 pcs, DDP to door.",
   keywords: [
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "./" },
   openGraph: {
-    title: "100 All-Over Print Products — Custom Apparel by Garment, Sport & Scenario",
+    title: "100 All-Over Print Products | Apparel by Garment, Sport",
     description:
       "100 all-over print apparel products, cross-filtered by garment, sport and scenario. Polyester sublimation + all-over digital print on cotton. MOQ 50 pcs, DDP worldwide.",
     url: "/products/all/",

@@ -35,7 +35,7 @@ export interface TagSEO {
 function seoForCategory(label: string): TagSEO {
   const lc = label.toLowerCase();
   return {
-    title: `Custom ${label} | Sublimation All-Over Print | MOQ 50 | SublimApparel`,
+    title: `Custom ${label} | Sublimation All-Over Print | MOQ 50`,
     description: `Custom ${label} sublimation & allover digital print on cotton. Edge-to-edge artwork, MOQ 50 pcs per design, 7–10 day sample, DDP shipping to 50+ countries. Get a quote in 1 business day.`,
     h1: `Custom ${label} — All-Over Print Sublimation & Cotton Printing`,
     keywords: [
@@ -54,7 +54,7 @@ function seoForCategory(label: string): TagSEO {
 function seoForSport(label: string): TagSEO {
   const lc = label.toLowerCase();
   return {
-    title: `Custom ${label} Jerseys & Uniforms | All-Over Print | SublimApparel`,
+    title: `Custom ${label} Jerseys & Uniforms | All-Over Print`,
     description: `Custom ${label} jerseys, kits, and uniforms. Edge-to-edge all-over sublimation print, breathable polyester or allover digital print on cotton. MOQ 50 pcs, DDP shipping. Free quote in 1 day.`,
     h1: `Custom ${label} Jerseys & Kits — All-Over Print Factory`,
     keywords: [
@@ -71,7 +71,7 @@ function seoForSport(label: string): TagSEO {
 
 function seoForScenario(label: string): TagSEO {
   return {
-    title: `Custom ${label} Apparel & Merch | Bulk Wholesale | SublimApparel`,
+    title: `Custom ${label} Apparel & Merch | Bulk Wholesale`,
     description: `Custom ${label} apparel, merch, and uniforms. Full-coverage all-over sublimation print, MOQ 50 pcs, 7–10 day sample, DDP shipping. Trusted by 500+ brands across 50+ countries. Get a quote.`,
     h1: `Custom ${label} Apparel & Merch — Bulk All-Over Print`,
     keywords: [

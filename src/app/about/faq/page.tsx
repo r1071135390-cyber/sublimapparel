@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "FAQ · 30 B2B Sublimation Questions Answered | SublimApparel",
+  title: "FAQ · 30 B2B Sublimation Questions Answered",
   description:
     "30 frequently asked B2B questions about sublimation apparel: pricing, MOQ, fabric, lead time, shipping, customs, payment, samples, file prep. Yiwu factory direct.",
   keywords: [

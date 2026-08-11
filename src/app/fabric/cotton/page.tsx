@@ -5,7 +5,7 @@ import { ArrowRight, Check, Leaf, Droplets, Shirt, Sparkles, Layers, Recycle, Sc
 import { cottonFabrics } from "@/lib/fabric-data";
 
 export const metadata: Metadata = {
-  title: "Allover Digital Print on 100% Cotton | Full-Body Print + DTG/DTF",
+  title: "Allover Digital Print on Cotton | Full-Body + DTG/DTF",
   description:
     "Allover digital print on 100% cotton apparel — true full-body, edge-to-edge printing via our proprietary cotton digital workflow. Also offer DTG and DTF for A4–A3 per panel. Soft hand feel, full color, MOQ 50.",
   keywords: [

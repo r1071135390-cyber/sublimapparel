@@ -7,7 +7,7 @@ import { ArrowRight, Clock, Calendar } from"lucide-react";
 import { blogPosts, getFeaturedPost, getAllCategories } from"@/lib/blog";
 
 export const metadata: Metadata = {
-  title:"Blog | Sublimation Apparel Industry Insights & Factory Stories",
+  title:"Blog | Sublimation Apparel Insights & Factory Stories",
   description:
 "Industry guides, factory stories, and B2B apparel manufacturing insights from a 8,000 m² Yiwu sublimation factory. Sublimation vs DTG, DDP shipping, fabric guides, and more.",
   keywords: [
