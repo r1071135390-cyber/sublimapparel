@@ -258,24 +258,30 @@ export default async function CaseCategoryPage({ params }: Props) {
       {/* Related industries */}
       <section className="border-b-2 border-black bg-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-12 md:py-16">
+          <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.3em] text-muted-foreground">
+            12 industries · serving 50+ countries · since 2014
+          </p>
           <h2 className="mb-6 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
-            [ Other industries ]
+            [ Other industries — {industries.length - 1} more ]
           </h2>
-          <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {industries
               .filter((i) => i.slug !== ind.slug)
-              .slice(0, 6)
               .map((i) => {
                 const OtherIcon = iconMap[i.icon] ?? Camera;
+                const otherIdx = industries.findIndex((x) => x.slug === i.slug) + 1;
                 return (
                   <Link
                     key={i.slug}
                     href={`/cases/${i.slug}`}
-                    className="group flex items-center gap-3 border-2 border-black bg-white px-4 py-3 transition-all hover:bg-[#ff4d00] hover:text-white"
+                    className="group relative flex items-center gap-3 border-2 border-black bg-white px-4 py-3 transition-all hover:border-[#ff4d00] hover:bg-[#ff4d00] hover:text-white"
                   >
-                    <OtherIcon size={18} strokeWidth={2.5} />
-                    <span className="text-sm font-black uppercase">
+                    <OtherIcon size={18} strokeWidth={2.5} className="shrink-0" />
+                    <span className="flex-1 text-sm font-black uppercase">
                       {i.title}
+                    </span>
+                    <span className="font-mono text-[10px] font-bold opacity-40 group-hover:opacity-100">
+                      {String(otherIdx).padStart(3, "0")}
                     </span>
                   </Link>
                 );
