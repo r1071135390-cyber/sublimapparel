@@ -2,7 +2,7 @@ import { Contact } from "@/components/contact";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Sparkles } from "lucide-react";
-import { tagLink, resolveTagLink } from "@/lib/tag-utils";
+import { tagArchiveLink, resolveArchiveLink } from "@/lib/tag-utils";
 
 export const metadata = {
   title: "Custom Sublimation & Cotton Apparel — T-Shirts, Jerseys, Hoodies, Cycling, Golf, Racing",
@@ -179,16 +179,16 @@ export default function ProductsPage() {
               {/* Quick-filter tags */}
               <div className="mt-6 flex flex-wrap gap-2">
                 {[
-                  { name: "All 100 products", href: tagLink({}) },
-                  { name: "Jerseys", href: tagLink({ category: "Jersey / Kit" }) },
-                  { name: "T-Shirts", href: tagLink({ category: "T-Shirt" }) },
-                  { name: "Hoodies", href: tagLink({ category: "Hoodie" }) },
-                  { name: "Polo Shirts", href: tagLink({ category: "Polo Shirt" }) },
-                  { name: "Soccer", href: tagLink({ sport: "Soccer" }) },
-                  { name: "Cycling", href: tagLink({ sport: "Cycling" }) },
-                  { name: "Basketball", href: tagLink({ sport: "Basketball" }) },
-                  { name: "Events", href: tagLink({ scenario: "Event & Festival" }) },
-                  { name: "Teams", href: tagLink({ scenario: "Team & Club" }) },
+                  { name: "All 100 products", href: "/products/all/" },
+                  { name: "Jerseys", href: tagArchiveLink("category", "Jersey / Kit") },
+                  { name: "T-Shirts", href: tagArchiveLink("category", "T-Shirt") },
+                  { name: "Hoodies", href: tagArchiveLink("category", "Hoodie") },
+                  { name: "Polo Shirts", href: tagArchiveLink("category", "Polo Shirt") },
+                  { name: "Soccer", href: tagArchiveLink("sport", "Soccer") },
+                  { name: "Cycling", href: tagArchiveLink("sport", "Cycling") },
+                  { name: "Basketball", href: tagArchiveLink("sport", "Basketball") },
+                  { name: "Events", href: tagArchiveLink("scenario", "Event & Festival") },
+                  { name: "Teams", href: tagArchiveLink("scenario", "Team & Club") },
                 ].map((q) => (
                   <Link
                     key={q.name}
@@ -265,8 +265,8 @@ export default function ProductsPage() {
                       {cat.items.map((item) => {
                         const itemName = item.name;
                         const itemHref = item.category
-                          ? tagLink({ category: item.category })
-                          : resolveTagLink(itemName);
+                          ? tagArchiveLink("category", item.category)
+                          : resolveArchiveLink(itemName);
                         if (itemHref) {
                           return (
                             <Link

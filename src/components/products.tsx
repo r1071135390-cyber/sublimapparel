@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { tagLink, resolveTagLink } from "@/lib/tag-utils";
+import { tagArchiveLink, resolveArchiveLink } from "@/lib/tag-utils";
 
 export function Products() {
   const categories = [
@@ -19,7 +19,7 @@ export function Products() {
         { name: "Esports", tag: "Jersey / Kit" },
       ],
       color: "bg-[#ff4d00]",
-      href: tagLink({}),
+      href: "/products/all/",
     },
     {
       label: "Sports & Team",
@@ -32,7 +32,7 @@ export function Products() {
         { name: "Esports", tag: "sport:Esports" },
       ],
       color: "bg-[#00c2ff]",
-      href: tagLink({ sport: "Cycling" }),
+      href: tagArchiveLink("sport", "Cycling"),
     },
     {
       label: "Flags & Banners",
@@ -138,14 +138,14 @@ export function Products() {
                   if (typeof item === "object" && item.tag) {
                     const [dim, value] = item.tag.split(":");
                     if (dim === "category")
-                      itemHref = tagLink({ category: value });
+                      itemHref = tagArchiveLink("category", value);
                     else if (dim === "sport")
-                      itemHref = tagLink({ sport: value });
+                      itemHref = tagArchiveLink("sport", value);
                     else if (dim === "scenario")
-                      itemHref = tagLink({ scenario: value });
+                      itemHref = tagArchiveLink("scenario", value);
                   }
-                  // Fallback: try resolveTagLink on the label itself
-                  if (!itemHref) itemHref = resolveTagLink(itemName);
+                  // Fallback: try resolveArchiveLink on the label itself
+                  if (!itemHref) itemHref = resolveArchiveLink(itemName);
                   const baseCls =
                     "border border-black px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide";
                   if (itemHref) {

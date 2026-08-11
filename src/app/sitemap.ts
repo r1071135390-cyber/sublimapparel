@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { techniques } from "@/lib/techniques";
 import { blogPosts } from "@/lib/blog";
+import { getAllTagSlugs } from "@/lib/tag-archive";
 
 export const dynamic = 'force-static';
 
@@ -124,5 +125,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     images: [`${SITE_URL}/og-default.jpg`],
   }));
 
-  return [...staticEntries, ...techniqueEntries, ...blogEntries];
+  // ── 98 个 tag archive 页（29 类目 + 42 运动 + 27 场景）────
+  const tagEntries: MetadataRoute.Sitemap = (["category", "sport", "scenario"] as const).flatMap(
+    (dim) =>
+      getAllTagSlugs(dim).map(({ slug }) => ({
+        url: `${SITE_URL}${withSlash(`/tag/${dim}/${slug}`)}`,
+        lastModified: now,
+        changeFrequency: "monthly" as const,
+        priority: 0.7,
+        images: [`${SITE_URL}/og-default.jpg`],
+      }))
+  );
+
+  return [...staticEntries, ...techniqueEntries, ...blogEntries, ...tagEntries];
 }

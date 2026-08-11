@@ -253,3 +253,41 @@ export function resolveTagLink(
   if (SCENARIO_MAP[trimmed]) return tagLink({ scenario: SCENARIO_MAP[trimmed] });
   return null;
 }
+
+// ============================================================
+// Tag archive — dedicated page per tag at /tag/<dim>/<slug>/
+// ============================================================
+
+export type ArchiveDimension = "category" | "sport" | "scenario";
+
+function archiveSlugify(s: string): string {
+  return s
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+/**
+ * Build the URL to the dedicated archive page for a given tag.
+ * Each of the 29 categories, 42 sports, and 27 scenarios has its
+ * own page at /tag/<dimension>/<slug>/.
+ */
+export function tagArchiveLink(
+  dimension: ArchiveDimension,
+  value: string
+): string {
+  return `/tag/${dimension}/${archiveSlugify(value)}/`;
+}
+
+/**
+ * Resolve a free-text UI label to the matching archive URL.
+ * Returns null if no archive exists for the label.
+ */
+export function resolveArchiveLink(label: string): string | null {
+  const trimmed = label.trim();
+  if (CATEGORY_MAP[trimmed]) return tagArchiveLink("category", CATEGORY_MAP[trimmed]);
+  if (SPORT_MAP[trimmed]) return tagArchiveLink("sport", SPORT_MAP[trimmed]);
+  if (SCENARIO_MAP[trimmed]) return tagArchiveLink("scenario", SCENARIO_MAP[trimmed]);
+  return null;
+}

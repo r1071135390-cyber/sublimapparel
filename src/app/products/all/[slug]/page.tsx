@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, CheckCircle2, Sparkles, ArrowRight, Truck, Ruler } from "lucide-react";
 import { JsonLd } from "@/components/json-ld";
+import { tagArchiveLink } from "@/lib/tag-utils";
 import {
   products,
   getProductBySlug,
@@ -283,7 +284,7 @@ export default async function ProductDetailPage({
                   {product.sports.map((s) => (
                     <Link
                       key={s}
-                      href={`/products/all/#cat=&sport=${encodeURIComponent(s)}&use=`}
+                      href={tagArchiveLink("sport", s)}
                       className="rounded-sm border-2 border-white/20 bg-white/5 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white transition-colors hover:border-[#ff4d00] hover:bg-[#ff4d00] md:text-xs"
                     >
                       {s}
@@ -301,7 +302,7 @@ export default async function ProductDetailPage({
                 {product.scenarios.map((s) => (
                   <Link
                     key={s}
-                    href={`/products/all/#cat=&sport=&use=${encodeURIComponent(s)}`}
+                    href={tagArchiveLink("scenario", s)}
                     className="rounded-sm border-2 border-white/20 bg-white/5 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white transition-colors hover:border-[#00c2ff] hover:bg-[#00c2ff] md:text-xs"
                   >
                     {s}
@@ -315,7 +316,7 @@ export default async function ProductDetailPage({
                 Garment type
               </h3>
               <Link
-                href={`/products/all/#cat=${encodeURIComponent(product.category)}&sport=&use=`}
+                href={tagArchiveLink("category", product.category)}
                 className="inline-flex rounded-sm border-2 border-[#ff4d00] bg-[#ff4d00] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white transition-colors hover:bg-[#e64500] md:text-xs"
               >
                 {product.category}
