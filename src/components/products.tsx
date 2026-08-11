@@ -12,11 +12,11 @@ export function Products() {
         { name: "T-shirts", tag: "T-Shirt" },
         { name: "Hoodies", tag: "Hoodie" },
         { name: "Jerseys", tag: "Jersey / Kit" },
-        { name: "Racing", tag: "Jersey / Kit" },
-        { name: "Cycling", tag: "Sports Top / Kit" },
-        { name: "Golf", tag: "Polo Shirt" },
-        { name: "Bowling", tag: "Shirt" },
-        { name: "Esports", tag: "Jersey / Kit" },
+        { name: "Racing kits", tag: "sport:Running" },
+        { name: "Cycling kits", tag: "sport:Cycling" },
+        { name: "Golf", tag: "sport:Golf" },
+        { name: "Bowling", tag: "sport:Bowling" },
+        { name: "Esports", tag: "sport:Esports" },
       ],
       color: "bg-[#ff4d00]",
       href: "/products/all/",
@@ -39,52 +39,52 @@ export function Products() {
       headline: "Make a statement outdoors.",
       desc: "Custom flags, banners, pop-up displays, beach flags, feather banners. Fade-resistant for outdoor use.",
       items: [
-        { name: "Garden flags" },
-        { name: "Trade show" },
-        { name: "Beach flags" },
-        { name: "Banners" },
+        { name: "Garden flags", tag: "/products/#flags" },
+        { name: "Trade show", tag: "/products/#flags" },
+        { name: "Beach flags", tag: "/products/#flags" },
+        { name: "Banners", tag: "/products/#flags" },
       ],
       color: "bg-[#ff4d00]",
-      href: "/products",
+      href: "/products/",
     },
     {
       label: "Home & Living",
       headline: "Print your art on soft goods.",
       desc: "Custom cushions, pillowcases, throws, curtains, bean bags, aprons. Perfect for boutique brands and home decor.",
       items: [
-        { name: "Cushions" },
-        { name: "Throws" },
-        { name: "Curtains" },
+        { name: "Cushions", tag: "/products/#home" },
+        { name: "Throws", tag: "/products/#home" },
+        { name: "Curtains", tag: "/products/#home" },
         { name: "Aprons", tag: "category:Apron" },
       ],
       color: "bg-[#00c2ff]",
-      href: "/products",
+      href: "/products/",
     },
     {
       label: "Bags & Accessories",
       headline: "Carry your brand.",
       desc: "Drawstring bags, backpacks, tote bags, gym sacks, hats, scarves, bandanas, lanyards.",
       items: [
-        { name: "Drawstring bags" },
-        { name: "Backpacks" },
+        { name: "Drawstring bags", tag: "/products/#accessories" },
+        { name: "Backpacks", tag: "/products/#accessories" },
         { name: "Caps", tag: "category:Baseball Cap" },
-        { name: "Lanyards" },
+        { name: "Lanyards", tag: "/products/#accessories" },
       ],
       color: "bg-[#ff4d00]",
-      href: "/products",
+      href: "/products/",
     },
     {
       label: "Hard Goods",
       headline: "Print on hard surfaces.",
       desc: "Mousepads, coasters, puzzles, phone cases, ceramic mugs, metal plates, acrylic photo panels.",
       items: [
-        { name: "Mousepads" },
-        { name: "Mugs" },
-        { name: "Puzzles" },
-        { name: "Phone cases" },
+        { name: "Mousepads", tag: "/products/#hardgoods" },
+        { name: "Mugs", tag: "/products/#hardgoods" },
+        { name: "Puzzles", tag: "/products/#hardgoods" },
+        { name: "Phone cases", tag: "/products/#hardgoods" },
       ],
       color: "bg-[#00c2ff]",
-      href: "/products",
+      href: "/products/",
     },
   ];
 
@@ -124,7 +124,13 @@ export function Products() {
 
               {/* Headline */}
               <h3 className="mb-3 text-2xl font-black leading-tight text-black md:text-3xl">
-                {cat.headline}
+                <Link
+                  href={cat.href}
+                  className="transition-colors hover:text-[#ff4d00]"
+                >
+                  {cat.headline}
+                  <ArrowRight className="ml-2 inline h-5 w-5 align-middle" />
+                </Link>
               </h3>
 
               {/* Description */}
@@ -136,16 +142,24 @@ export function Products() {
                   const itemName = typeof item === "string" ? item : item.name;
                   let itemHref: string | null = null;
                   if (typeof item === "object" && item.tag) {
-                    const [dim, value] = item.tag.split(":");
-                    if (dim === "category")
-                      itemHref = tagArchiveLink("category", value);
-                    else if (dim === "sport")
-                      itemHref = tagArchiveLink("sport", value);
-                    else if (dim === "scenario")
-                      itemHref = tagArchiveLink("scenario", value);
+                    if (item.tag.startsWith("/")) {
+                      itemHref = item.tag;
+                    } else {
+                      const [dim, value] = item.tag.split(":");
+                      if (dim === "category")
+                        itemHref = tagArchiveLink("category", value);
+                      else if (dim === "sport")
+                        itemHref = tagArchiveLink("sport", value);
+                      else if (dim === "scenario")
+                        itemHref = tagArchiveLink("scenario", value);
+                      else
+                        itemHref = tagArchiveLink("category", item.tag);
+                    }
                   }
                   // Fallback: try resolveArchiveLink on the label itself
                   if (!itemHref) itemHref = resolveArchiveLink(itemName);
+                  // Last resort: link to the category's own page
+                  if (!itemHref) itemHref = cat.href;
                   const baseCls =
                     "border border-black px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide";
                   if (itemHref) {
@@ -185,13 +199,20 @@ export function Products() {
         </div>
 
         {/* Bottom note */}
-        <div className="mt-12 border-2 border-black bg-[#ff4d00] p-6 text-center text-white shadow-[6px_6px_0_0_#000]">
-          <p className="text-lg font-black uppercase tracking-tight md:text-xl">
+        <div className="mt-12 border-2 border-black bg-[#ff4d00] p-6 text-center text-white shadow-[6px_6px_0_0_#000] md:p-8">
+          <p className="text-lg font-black uppercase tracking-tight md:text-2xl">
             Don&apos;t see your product? If it takes sublimation ink, we can print on it.
           </p>
-          <p className="mt-2 text-sm font-bold text-white/90">
+          <p className="mt-2 text-sm font-bold text-white/90 md:text-base">
             Just send us your idea — we&apos;ll quote it in 24 hours.
           </p>
+          <Link
+            href="/contact/"
+            className="mt-5 inline-flex items-center gap-2 border-2 border-white bg-black px-5 py-2.5 text-sm font-black uppercase tracking-wider text-white transition-transform hover:-translate-y-0.5"
+          >
+            Send us your idea
+            <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
       </div>
     </section>

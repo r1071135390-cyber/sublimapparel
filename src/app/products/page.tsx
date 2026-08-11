@@ -243,7 +243,8 @@ export default function ProductsPage() {
             {categories.map((cat, i) => (
               <div
                 key={cat.id}
-                className="border-2 border-black bg-white p-8"
+                id={cat.id}
+                className="border-2 border-black bg-white p-8 scroll-mt-32"
               >
                 <div className="grid gap-6 md:grid-cols-12">
                   <div className="md:col-span-4">
@@ -266,26 +267,16 @@ export default function ProductsPage() {
                         const itemName = item.name;
                         const itemHref = item.category
                           ? tagArchiveLink("category", item.category)
-                          : resolveArchiveLink(itemName);
-                        if (itemHref) {
-                          return (
-                            <Link
-                              key={itemName}
-                              href={itemHref}
-                              className="group flex items-center justify-between border-2 border-black bg-[#faf9f6] px-3 py-2.5 text-sm font-black text-black transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:border-[#ff4d00] hover:bg-[#ff4d00] hover:text-white hover:shadow-[3px_3px_0_0_#000]"
-                            >
-                              <span>{itemName}</span>
-                              <ArrowRight className="h-3.5 w-3.5 opacity-0 transition-opacity group-hover:opacity-100" strokeWidth={3} />
-                            </Link>
-                          );
-                        }
+                          : resolveArchiveLink(itemName) ?? `/products/#${cat.id}`;
                         return (
-                          <div
+                          <Link
                             key={itemName}
-                            className="border-2 border-black bg-[#faf9f6] p-3 text-sm font-black text-black"
+                            href={itemHref}
+                            className="group flex items-center justify-between border-2 border-black bg-[#faf9f6] px-3 py-2.5 text-sm font-black text-black transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:border-[#ff4d00] hover:bg-[#ff4d00] hover:text-white hover:shadow-[3px_3px_0_0_#000]"
                           >
-                            {itemName}
-                          </div>
+                            <span>{itemName}</span>
+                            <ArrowRight className="h-3.5 w-3.5 opacity-0 transition-opacity group-hover:opacity-100" strokeWidth={3} />
+                          </Link>
                         );
                       })}
                     </div>
