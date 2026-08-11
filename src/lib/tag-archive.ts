@@ -19,6 +19,81 @@ export interface TagInfo {
 }
 
 // ------------------------------------------------------------
+// SEO — auto-generated per tag from templates
+// Each tag archive page has a unique meta title (≤60 chars),
+// meta description (≤160 chars), H1, and 5–8 keyword phrases
+// matched to user search intent for that tag dimension.
+// ------------------------------------------------------------
+
+export interface TagSEO {
+  title: string;
+  description: string;
+  h1: string;
+  keywords: string[];
+}
+
+function seoForCategory(label: string): TagSEO {
+  const lc = label.toLowerCase();
+  return {
+    title: `Custom ${label} | Sublimation All-Over Print | MOQ 50 | SublimApparel`,
+    description: `Custom ${label} sublimation & allover digital print on cotton. Edge-to-edge artwork, MOQ 50 pcs per design, 7–10 day sample, DDP shipping to 50+ countries. Get a quote in 1 business day.`,
+    h1: `Custom ${label} — All-Over Print Sublimation & Cotton Printing`,
+    keywords: [
+      `custom ${label} wholesale`,
+      `allover print ${label}`,
+      `sublimation ${label} factory`,
+      `bulk ${label} manufacturer`,
+      `${label} with logo`,
+      `MOQ 50 ${label} supplier`,
+      `private label ${label}`,
+      `DDP shipping ${label}`,
+    ],
+  };
+}
+
+function seoForSport(label: string): TagSEO {
+  const lc = label.toLowerCase();
+  return {
+    title: `Custom ${label} Jerseys & Uniforms | All-Over Print | SublimApparel`,
+    description: `Custom ${label} jerseys, kits, and uniforms. Edge-to-edge all-over sublimation print, breathable polyester or allover digital print on cotton. MOQ 50 pcs, DDP shipping. Free quote in 1 day.`,
+    h1: `Custom ${label} Jerseys & Kits — All-Over Print Factory`,
+    keywords: [
+      `custom ${label} jerseys`,
+      `${label} team uniforms wholesale`,
+      `sublimated ${label} kit`,
+      `allover print ${label} apparel`,
+      `bulk ${label} uniform factory`,
+      `${label} jersey MOQ 50`,
+      `private label ${label} gear`,
+    ],
+  };
+}
+
+function seoForScenario(label: string): TagSEO {
+  return {
+    title: `Custom ${label} Apparel & Merch | Bulk Wholesale | SublimApparel`,
+    description: `Custom ${label} apparel, merch, and uniforms. Full-coverage all-over sublimation print, MOQ 50 pcs, 7–10 day sample, DDP shipping. Trusted by 500+ brands across 50+ countries. Get a quote.`,
+    h1: `Custom ${label} Apparel & Merch — Bulk All-Over Print`,
+    keywords: [
+      `custom ${label} apparel`,
+      `${label} merch wholesale`,
+      `branded ${label} merchandise`,
+      `bulk ${label} uniform supplier`,
+      `${label} giveaway apparel`,
+      `promotional ${label} clothing`,
+      `private label ${label} apparel`,
+      `DDP shipping ${label} merch`,
+    ],
+  };
+}
+
+export function seoForTag(dim: TagDimension, label: string): TagSEO {
+  if (dim === "category") return seoForCategory(label);
+  if (dim === "sport") return seoForSport(label);
+  return seoForScenario(label);
+}
+
+// ------------------------------------------------------------
 // Helpers
 // ------------------------------------------------------------
 

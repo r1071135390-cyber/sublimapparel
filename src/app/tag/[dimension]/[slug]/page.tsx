@@ -9,6 +9,7 @@ import {
   getTagInfo,
   getAllTagSlugs,
   slugify,
+  seoForTag,
 } from "@/lib/tag-archive";
 import { JsonLd } from "@/components/json-ld";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
@@ -46,16 +47,24 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const tag = findTagBySlug(dimension as TagDimension, slug);
   if (!tag) return {};
   const { label, dimension: dim, description } = tag;
+  const seo = seoForTag(dim, label);
   const path = `/tag/${dim}/${slug}`;
   return {
-    title: `${label} — ${DIMENSION_LABEL[dim]} | SublimApparel`,
-    description: description.slice(0, 160),
+    title: seo.title,
+    description: seo.description,
+    keywords: seo.keywords,
     alternates: { canonical: path },
     openGraph: {
-      title: `${label} sublimation products`,
-      description: description.slice(0, 160),
+      title: seo.title,
+      description: seo.description,
       url: path,
       type: "website",
+      images: ["/hero-products.webp"],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: seo.title,
+      description: seo.description,
       images: ["/hero-products.webp"],
     },
   };
@@ -134,6 +143,17 @@ export default async function TagArchivePage({ params }: PageProps) {
     <>
       <JsonLd data={breadcrumb} />
       <JsonLd data={itemListJsonLd} />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: seoForTag(dim, tag.label).title,
+          description: seoForTag(dim, tag.label).description,
+          url: `${SITE_URL}/tag/${dim}/${slug}/`,
+          keywords: seoForTag(dim, tag.label).keywords.join(", "),
+          inLanguage: "en",
+        }}
+      />
 
       <main className="min-h-screen bg-background">
         {/* Hero */}
@@ -155,9 +175,12 @@ export default async function TagArchivePage({ params }: PageProps) {
                   </span>
                   <span className="text-3xl">{tag.icon}</span>
                 </div>
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.05] tracking-tight mb-4">
-                  {tag.label}
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-[1.05] tracking-tight mb-4">
+                  {seoForTag(dim, tag.label).h1}
                 </h1>
+                <p className="text-sm text-background/60 mb-3 font-medium uppercase tracking-wider">
+                  {tag.label} &middot; {DIMENSION_LABEL[dim]}
+                </p>
                 <p className="text-base sm:text-lg text-background/70 max-w-2xl leading-relaxed">
                   {tag.description}
                 </p>
