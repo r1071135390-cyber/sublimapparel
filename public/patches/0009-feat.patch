@@ -1,0 +1,566 @@
+From c437eac0e7dadb5c1ef7696a7c03b8c253b7b2b8 Mon Sep 17 00:00:00 2001
+From: user8596904236 <1254955844122064-user8596904236@noreply.coze.cn>
+Date: Tue, 11 Aug 2026 20:19:53 +0800
+Subject: [PATCH 09/10] =?UTF-8?q?feat:=20=E4=BF=9D=E5=AD=98=E6=96=87?=
+ =?UTF-8?q?=E4=BB=B6=E5=8F=98=E6=9B=B4?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Coze-Commit-Type: user
+Coze-User-ID: 1254955844122064
+Coze-Conversation-ID: 11527849
+---
+ src/app/about/cases/page.tsx           | 2 +-
+ src/app/about/factory/page.tsx         | 2 +-
+ src/app/about/faq/page.tsx             | 2 +-
+ src/app/about/page.tsx                 | 4 ++--
+ src/app/about/production/page.tsx      | 2 +-
+ src/app/about/quality/page.tsx         | 2 +-
+ src/app/blog/page.tsx                  | 2 +-
+ src/app/cases/[slug]/page.tsx          | 2 +-
+ src/app/cases/page.tsx                 | 2 +-
+ src/app/contact/page.tsx               | 2 +-
+ src/app/fabric/cotton/page.tsx         | 2 +-
+ src/app/fabric/page.tsx                | 2 +-
+ src/app/final-logo/page.tsx            | 2 +-
+ src/app/get-a-quote/page.tsx           | 2 +-
+ src/app/logo-concepts-v2/page.tsx      | 2 +-
+ src/app/logo-concepts-v3/page.tsx      | 2 +-
+ src/app/logo-concepts-v4/page.tsx      | 2 +-
+ src/app/logo-concepts-v5/page.tsx      | 2 +-
+ src/app/logo-concepts/page.tsx         | 2 +-
+ src/app/logo-preview/page.tsx          | 2 +-
+ src/app/logo-v6/page.tsx               | 2 +-
+ src/app/logo-v7/page.tsx               | 2 +-
+ src/app/page.tsx                       | 2 +-
+ src/app/privacy/page.tsx               | 2 +-
+ src/app/products/all/page.tsx          | 4 ++--
+ src/app/products/cycling/page.tsx      | 2 +-
+ src/app/products/esports/page.tsx      | 2 +-
+ src/app/products/golf-bowling/page.tsx | 2 +-
+ src/app/products/golf/page.tsx         | 2 +-
+ src/app/products/jerseys/page.tsx      | 2 +-
+ src/app/products/page.tsx              | 2 +-
+ src/app/products/racing/page.tsx       | 2 +-
+ src/app/register/page.tsx              | 2 +-
+ src/app/shipping-policy/page.tsx       | 2 +-
+ src/app/shipping/ddp/page.tsx          | 2 +-
+ src/app/terms/page.tsx                 | 2 +-
+ src/lib/tag-archive.ts                 | 6 +++---
+ 37 files changed, 41 insertions(+), 41 deletions(-)
+
+diff --git a/src/app/about/cases/page.tsx b/src/app/about/cases/page.tsx
+index fcf1f6e..49ccc6b 100644
+--- a/src/app/about/cases/page.tsx
++++ b/src/app/about/cases/page.tsx
+@@ -19,7 +19,7 @@ import {
+ } from "lucide-react";
+ 
+ export const metadata: Metadata = {
+-  title: "Industries We Serve · 12 Verticals, 1,000+ B2B Clients | SublimApparel",
++  title: "Industries We Serve · 12 Verticals, 1,000+ B2B Clients",
+   description:
+     "12 industries we serve: race events, sports clubs, schools, ecommerce brands, political campaigns, trade shows, esports, churches, fitness, cycling, gaming, hospitality. Sublimation apparel B2B.",
+   keywords: [
+diff --git a/src/app/about/factory/page.tsx b/src/app/about/factory/page.tsx
+index b6b01fb..b8b162c 100644
+--- a/src/app/about/factory/page.tsx
++++ b/src/app/about/factory/page.tsx
+@@ -17,7 +17,7 @@ import {
+ } from "lucide-react";
+ 
+ export const metadata: Metadata = {
+-  title: "Inside Our Yiwu Factory · 2,000 sqm Sublimation Apparel Plant | SublimApparel",
++  title: "Inside Our Yiwu Factory | 2,000 sqm Sublimation Apparel Plant",
+   description:
+     "2,000 sqm Yiwu sublimation apparel factory. 12 production lines, 50+ staff, 24/7 capacity. 6 inline printing machines, full cutting-sewing-printing-packaging vertical integration.",
+   keywords: [
+diff --git a/src/app/about/faq/page.tsx b/src/app/about/faq/page.tsx
+index d29d489..bd5eb11 100644
+--- a/src/app/about/faq/page.tsx
++++ b/src/app/about/faq/page.tsx
+@@ -12,7 +12,7 @@ import {
+ } from "lucide-react";
+ 
+ export const metadata: Metadata = {
+-  title: "FAQ · 30 B2B Sublimation Questions Answered | SublimApparel",
++  title: "FAQ · 30 B2B Sublimation Questions Answered",
+   description:
+     "30 frequently asked B2B questions about sublimation apparel: pricing, MOQ, fabric, lead time, shipping, customs, payment, samples, file prep. Yiwu factory direct.",
+   keywords: [
+diff --git a/src/app/about/page.tsx b/src/app/about/page.tsx
+index 4be363a..9e3a5f8 100644
+--- a/src/app/about/page.tsx
++++ b/src/app/about/page.tsx
+@@ -6,9 +6,9 @@ import { MapPin } from"lucide-react";
+ import Image from"next/image";
+ 
+ export const metadata = {
+-  title:"About SublimApparel — 2,000 sqm Yiwu Sublimation & Cotton Printing Factory Since 2018",
++  title:"About SublimApparel | Yiwu Sublimation & Cotton Printing Factory",
+   description:
+-"12 production lines, 50+ staff, 99.2% QC pass rate. Sublimation on polyester (true all-over) + DTG and DTF on 100% cotton (A4–A3 per panel) + allover digital print on cotton (cut-and-sew, true full-body). DDP to 100+ countries with all duties pre-paid.",
++"2,000 sqm Yiwu factory. 12 lines, 50+ staff, 99.2% QC. Sublimation + allover cotton print. DDP 100+ countries.",
+ 
+   openGraph: {
+     images: ["/about-hero.webp"],
+diff --git a/src/app/about/production/page.tsx b/src/app/about/production/page.tsx
+index b24e1cf..7bbcfda 100644
+--- a/src/app/about/production/page.tsx
++++ b/src/app/about/production/page.tsx
+@@ -17,7 +17,7 @@ import {
+ } from "lucide-react";
+ 
+ export const metadata: Metadata = {
+-  title: "Production Process · 7 Steps from Inquiry to Delivery | SublimApparel",
++  title: "Production Process · 7 Steps from Inquiry to Delivery",
+   description:
+     "Our 7-step production process: inquiry, quote, mockup, sample, bulk production, QC, shipping. 21-day average lead time from PO to delivery. Sublimation apparel B2B.",
+   keywords: [
+diff --git a/src/app/about/quality/page.tsx b/src/app/about/quality/page.tsx
+index 2f38dd3..8fe5e9f 100644
+--- a/src/app/about/quality/page.tsx
++++ b/src/app/about/quality/page.tsx
+@@ -17,7 +17,7 @@ import {
+ } from "lucide-react";
+ 
+ export const metadata: Metadata = {
+-  title: "Quality Control · 4-Stage QC, 50+ Checkpoints, AQL 2.5 | SublimApparel",
++  title: "Quality Control · 4-Stage QC, 50+ Checkpoints, AQL 2.5",
+   description:
+     "4-stage quality control: incoming fabric, in-line, pre-final, and pre-shipment. 50+ checkpoints, AQL 2.5 sampling, 99.2% first-pass rate. Sublimation apparel B2B.",
+   keywords: [
+diff --git a/src/app/blog/page.tsx b/src/app/blog/page.tsx
+index 72287c5..6a3641f 100644
+--- a/src/app/blog/page.tsx
++++ b/src/app/blog/page.tsx
+@@ -7,7 +7,7 @@ import { ArrowRight, Clock, Calendar } from"lucide-react";
+ import { blogPosts, getFeaturedPost, getAllCategories } from"@/lib/blog";
+ 
+ export const metadata: Metadata = {
+-  title:"Blog | Sublimation Apparel Industry Insights & Factory Stories",
++  title:"Blog | Sublimation Apparel Insights & Factory Stories",
+   description:
+ "Industry guides, factory stories, and B2B apparel manufacturing insights from a 8,000 m² Yiwu sublimation factory. Sublimation vs DTG, DDP shipping, fabric guides, and more.",
+   keywords: [
+diff --git a/src/app/cases/[slug]/page.tsx b/src/app/cases/[slug]/page.tsx
+index 652af27..910f676 100644
+--- a/src/app/cases/[slug]/page.tsx
++++ b/src/app/cases/[slug]/page.tsx
+@@ -47,7 +47,7 @@ export async function generateStaticParams() {
+ export async function generateMetadata({ params }: Props): Promise<Metadata> {
+   const { slug } = await params;
+   const ind = getIndustryBySlug(slug);
+-  if (!ind) return { title: "Case Studies — SublimApparel" };
++  if (!ind) return { title: "Case Studies " };
+   return {
+     title: `${ind.title} Case Studies — SublimApparel`,
+     description: ind.blurb,
+diff --git a/src/app/cases/page.tsx b/src/app/cases/page.tsx
+index 2763ee8..c10eb1c 100644
+--- a/src/app/cases/page.tsx
++++ b/src/app/cases/page.tsx
+@@ -19,7 +19,7 @@ import {
+ import { industries } from "@/lib/cases";
+ 
+ export const metadata: Metadata = {
+-  title: "Case Studies — SublimApparel",
++  title: "Case Studies ",
+   description:
+     "Browse sublimation printing case studies by industry. See real examples of custom apparel, DDP shipping and full-bleed cotton prints we've produced for events, sports, brands, campaigns and more.",
+ };
+diff --git a/src/app/contact/page.tsx b/src/app/contact/page.tsx
+index aa50839..f3edcc7 100644
+--- a/src/app/contact/page.tsx
++++ b/src/app/contact/page.tsx
+@@ -5,7 +5,7 @@ import { Contact } from "@/components/contact";
+ import { TeamSection } from "@/components/contact-team";
+ 
+ export const metadata = {
+-  title: "Contact SublimApparel — Talk to a Real Person in Yiwu, 24h Response",
++  title: "Contact Us — Real Person in Yiwu, 24h Response",
+   description:
+     "Real production managers in Yiwu, China — not chatbots. WhatsApp, email, WeChat. Reply in 24h, quote in 12h, sample in 5 days, bulk in 21 days.",
+ 
+diff --git a/src/app/fabric/cotton/page.tsx b/src/app/fabric/cotton/page.tsx
+index 59202b2..678644c 100644
+--- a/src/app/fabric/cotton/page.tsx
++++ b/src/app/fabric/cotton/page.tsx
+@@ -5,7 +5,7 @@ import { ArrowRight, Check, Leaf, Droplets, Shirt, Sparkles, Layers, Recycle, Sc
+ import { cottonFabrics } from "@/lib/fabric-data";
+ 
+ export const metadata: Metadata = {
+-  title: "Allover Digital Print on 100% Cotton | Full-Body Print + DTG/DTF",
++  title: "Allover Digital Print on Cotton | Full-Body + DTG/DTF",
+   description:
+     "Allover digital print on 100% cotton apparel — true full-body, edge-to-edge printing via our proprietary cotton digital workflow. Also offer DTG and DTF for A4–A3 per panel. Soft hand feel, full color, MOQ 50.",
+   keywords: [
+diff --git a/src/app/fabric/page.tsx b/src/app/fabric/page.tsx
+index cf2d923..9bd115a 100644
+--- a/src/app/fabric/page.tsx
++++ b/src/app/fabric/page.tsx
+@@ -8,7 +8,7 @@ import { ArrowRight, ArrowUpRight, Download, Droplets, Leaf } from "lucide-react
+ import { fabricTypes } from "@/lib/fabric-data";
+ 
+ export const metadata: Metadata = {
+-  title: "Fabric & Process — Full Fabric Line & 6 Print Processes | SublimApparel",
++  title: "Fabric & Process — Full Fabric Line & 6 Print Processes",
+   description:
+     "Our full fabric line in stock (polyester, poly-spandex, nylon, cotton, blends and more) and 6 print processes (sublimation, DTG, DTF, screen, embroidery, cut-and-sew). Sublimation fit rating included for every fabric. Send your own fabric — we'll print on it too.",
+ 
+diff --git a/src/app/final-logo/page.tsx b/src/app/final-logo/page.tsx
+index 3eb10d5..54ca939 100644
+--- a/src/app/final-logo/page.tsx
++++ b/src/app/final-logo/page.tsx
+@@ -3,7 +3,7 @@ import { Navbar } from "@/components/navbar";
+ import { Footer } from "@/components/footer";
+ 
+ export const metadata: Metadata = {
+-  title: "Final Logo — SublimApparel",
++  title: "Final Logo ",
+   description: "A4.3 with print pattern scaled to all-over",
+   robots: { index: false, follow: false },
+ };
+diff --git a/src/app/get-a-quote/page.tsx b/src/app/get-a-quote/page.tsx
+index ac4ee01..ea67d5e 100644
+--- a/src/app/get-a-quote/page.tsx
++++ b/src/app/get-a-quote/page.tsx
+@@ -4,7 +4,7 @@ import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
+ import { Check, Clock, FileText, MessageCircle } from "lucide-react";
+ 
+ export const metadata = {
+-  title: "Get a Quote — Custom Sublimation & Cotton Apparel Manufacturer",
++  title: "Get a Quote | Custom Sublimation & Cotton Apparel Manufacturer",
+   description:
+     "Request a landed-cost quote in under 12 hours. Free digital mockup, free sample round on first order. Sublimation on polyester, DTG / DTF on 100% cotton, DDP shipping to 100+ countries.",
+ 
+diff --git a/src/app/logo-concepts-v2/page.tsx b/src/app/logo-concepts-v2/page.tsx
+index a9dcba0..dbca744 100644
+--- a/src/app/logo-concepts-v2/page.tsx
++++ b/src/app/logo-concepts-v2/page.tsx
+@@ -3,7 +3,7 @@ import { Navbar } from "@/components/navbar";
+ import { Footer } from "@/components/footer";
+ 
+ export const metadata: Metadata = {
+-  title: "Logo Concepts V2 — SublimApparel",
++  title: "Logo Concepts V2 ",
+   description: "Logo design options with clothing silhouette — internal preview",
+   robots: { index: false, follow: false },
+ };
+diff --git a/src/app/logo-concepts-v3/page.tsx b/src/app/logo-concepts-v3/page.tsx
+index 1b5286b..35d84e6 100644
+--- a/src/app/logo-concepts-v3/page.tsx
++++ b/src/app/logo-concepts-v3/page.tsx
+@@ -3,7 +3,7 @@ import { Navbar } from "@/components/navbar";
+ import { Footer } from "@/components/footer";
+ 
+ export const metadata: Metadata = {
+-  title: "Logo Concepts V3 — All-Over Print — SublimApparel",
++  title: "Logo Concepts V3 — All-Over Print ",
+   description: "All-over print logo variants for SublimApparel",
+   robots: { index: false, follow: false },
+ };
+diff --git a/src/app/logo-concepts-v4/page.tsx b/src/app/logo-concepts-v4/page.tsx
+index fa87c90..6f74f02 100644
+--- a/src/app/logo-concepts-v4/page.tsx
++++ b/src/app/logo-concepts-v4/page.tsx
+@@ -3,7 +3,7 @@ import { Navbar } from "@/components/navbar";
+ import { Footer } from "@/components/footer";
+ 
+ export const metadata: Metadata = {
+-  title: "Logo Concepts V4 — A4 Enhanced — SublimApparel",
++  title: "Logo Concepts V4 — A4 Enhanced ",
+   description: "A4 enhanced logo variants for SublimApparel",
+   robots: { index: false, follow: false },
+ };
+diff --git a/src/app/logo-concepts-v5/page.tsx b/src/app/logo-concepts-v5/page.tsx
+index ed10b5d..59e7e46 100644
+--- a/src/app/logo-concepts-v5/page.tsx
++++ b/src/app/logo-concepts-v5/page.tsx
+@@ -3,7 +3,7 @@ import { Navbar } from "@/components/navbar";
+ import { Footer } from "@/components/footer";
+ 
+ export const metadata: Metadata = {
+-  title: "Logo Concepts V5 — A4.3 All-Over — SublimApparel",
++  title: "Logo Concepts V5 — A4.3 All-Over ",
+   description: "A4.3 framework with all-over print patterns",
+   robots: { index: false, follow: false },
+ };
+diff --git a/src/app/logo-concepts/page.tsx b/src/app/logo-concepts/page.tsx
+index cfb1c95..21b493c 100644
+--- a/src/app/logo-concepts/page.tsx
++++ b/src/app/logo-concepts/page.tsx
+@@ -3,7 +3,7 @@ import { Navbar } from "@/components/navbar";
+ import { Footer } from "@/components/footer";
+ 
+ export const metadata: Metadata = {
+-  title: "Logo Concepts — SublimApparel",
++  title: "Logo Concepts ",
+   description: "Logo design options for SublimApparel — internal preview",
+   robots: { index: false, follow: false },
+ };
+diff --git a/src/app/logo-preview/page.tsx b/src/app/logo-preview/page.tsx
+index fb71a6a..f2a82ba 100644
+--- a/src/app/logo-preview/page.tsx
++++ b/src/app/logo-preview/page.tsx
+@@ -3,7 +3,7 @@ import { Navbar } from "@/components/navbar";
+ import { Footer } from "@/components/footer";
+ 
+ export const metadata: Metadata = {
+-  title: "Logo Preview — SublimApparel",
++  title: "Logo Preview ",
+   description: "Compare current A4.3 logo vs new full-body print version",
+   robots: { index: false, follow: false },
+ };
+diff --git a/src/app/logo-v6/page.tsx b/src/app/logo-v6/page.tsx
+index a5cb498..5511b81 100644
+--- a/src/app/logo-v6/page.tsx
++++ b/src/app/logo-v6/page.tsx
+@@ -3,7 +3,7 @@ import { Navbar } from "@/components/navbar";
+ import { Footer } from "@/components/footer";
+ 
+ export const metadata: Metadata = {
+-  title: "Logo V6 — A4.3 Pattern Scaled Up — SublimApparel",
++  title: "Logo V6 — A4.3 Pattern Scaled Up ",
+   description: "A4.3 with same explosion pattern scaled to cover full t-shirt",
+   robots: { index: false, follow: false },
+ };
+diff --git a/src/app/logo-v7/page.tsx b/src/app/logo-v7/page.tsx
+index b555141..fccc8e5 100644
+--- a/src/app/logo-v7/page.tsx
++++ b/src/app/logo-v7/page.tsx
+@@ -3,7 +3,7 @@ import { Navbar } from "@/components/navbar";
+ import { Footer } from "@/components/footer";
+ 
+ export const metadata: Metadata = {
+-  title: "Logo V7 — A4.3 Only Pattern Scaled — SublimApparel",
++  title: "Logo V7 — A4.3 Only Pattern Scaled ",
+   description: "A4.3 with print pattern only scaled up to all-over",
+   robots: { index: false, follow: false },
+ };
+diff --git a/src/app/page.tsx b/src/app/page.tsx
+index 58c3301..e3c7771 100644
+--- a/src/app/page.tsx
++++ b/src/app/page.tsx
+@@ -12,7 +12,7 @@ import { Industries } from "@/components/industries";
+ import { Contact } from "@/components/contact";
+ 
+ export const metadata = {
+-  title: "SublimApparel — Yiwu Sublimation & All-Over Cotton Printing Factory, DDP to 100+ Countries",
++  title: "Yiwu Sublimation & All-Over Cotton Printing | DDP 100+",
+   description:
+     "Sublimation on polyester (true all-over, edge-to-edge). DTG and DTF on 100% cotton (A4–A3 per panel, soft hand). Allover digital print on cotton also available (cut-and-sew, true full-body, MOQ 100). MOQ 50 for DTG/DTF, DDP shipping to 100+ countries, US warehouse in Fontana CA. 12 production lines, since 2014.",
+ 
+diff --git a/src/app/privacy/page.tsx b/src/app/privacy/page.tsx
+index 987c462..756d81e 100644
+--- a/src/app/privacy/page.tsx
++++ b/src/app/privacy/page.tsx
+@@ -2,7 +2,7 @@ import { ArrowLeft, Mail } from "lucide-react";
+ import Link from "next/link";
+ 
+ export const metadata = {
+-  title: "Privacy Policy — SublimApparel",
++  title: "Privacy Policy ",
+   description:
+     "How SublimApparel collects, uses, and protects your personal data across our website, inquiry form, and order workflow.",
+ };
+diff --git a/src/app/products/all/page.tsx b/src/app/products/all/page.tsx
+index 8710fe5..f756d2c 100644
+--- a/src/app/products/all/page.tsx
++++ b/src/app/products/all/page.tsx
+@@ -7,7 +7,7 @@ import { products, allSports, allScenarios } from "@/lib/products-data";
+ import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
+ 
+ export const metadata: Metadata = {
+-  title: "100 All-Over Print Products — Custom Apparel by Garment, Sport & Scenario",
++  title: "100 All-Over Print Products | Apparel by Garment, Sport",
+   description:
+     "100 all-over print apparel products, cross-filtered by garment type (29), sport (42) and scenario (27). From polyester sublimation to all-over digital print on cotton, MOQ 50 pcs, DDP to door.",
+   keywords: [
+@@ -22,7 +22,7 @@ export const metadata: Metadata = {
+   ],
+   alternates: { canonical: "./" },
+   openGraph: {
+-    title: "100 All-Over Print Products — Custom Apparel by Garment, Sport & Scenario",
++    title: "100 All-Over Print Products | Apparel by Garment, Sport",
+     description:
+       "100 all-over print apparel products, cross-filtered by garment, sport and scenario. Polyester sublimation + all-over digital print on cotton. MOQ 50 pcs, DDP worldwide.",
+     url: "/products/all/",
+diff --git a/src/app/products/cycling/page.tsx b/src/app/products/cycling/page.tsx
+index cf00e23..bb79d1a 100644
+--- a/src/app/products/cycling/page.tsx
++++ b/src/app/products/cycling/page.tsx
+@@ -5,7 +5,7 @@ import Link from "next/link";
+ import { ArrowRight, Bike, Users, Palette, Ruler, Layers, Wind } from "lucide-react";
+ 
+ export const metadata: Metadata = {
+-  title: "Custom Cycling Jerseys | Sublimation Cycling Apparel for Teams & Clubs",
++  title: "Custom Cycling Jerseys | Sublimation Apparel for Teams & Clubs",
+   description:
+     "Premium custom cycling jerseys, shorts, and kits via sublimation. Italian-performance fabric, full hidden zip, race-cut or club-cut, padded shorts. MOQ 50 pcs. Free design redraw.",
+   keywords: [
+diff --git a/src/app/products/esports/page.tsx b/src/app/products/esports/page.tsx
+index e091195..f5e0a05 100644
+--- a/src/app/products/esports/page.tsx
++++ b/src/app/products/esports/page.tsx
+@@ -5,7 +5,7 @@ import Link from "next/link";
+ import { ArrowRight, Users, Palette, Ruler, Sparkles, Shirt, Gamepad2, Crown, Layers, Zap } from "lucide-react";
+ 
+ export const metadata: Metadata = {
+-  title: "Custom Esports Apparel | Sublimated Jerseys, Hoodies, Team Kits",
++  title: "Custom Esports Apparel | Sublimated Jerseys & Team Kits",
+   description:
+     "Custom sublimated esports jerseys, hoodies, and team kits for gaming teams, tournaments, and streamers. Bold all-over print, poly-spandex stretch, name & gamer tag front and back. MOQ 50 pcs, 15-20 day lead time, DDP shipping.",
+   keywords: [
+diff --git a/src/app/products/golf-bowling/page.tsx b/src/app/products/golf-bowling/page.tsx
+index 0eb7c53..eed5bd3 100644
+--- a/src/app/products/golf-bowling/page.tsx
++++ b/src/app/products/golf-bowling/page.tsx
+@@ -1,7 +1,7 @@
+ import type { Metadata } from "next";
+ 
+ export const metadata: Metadata = {
+-  title: "Golf Apparel — SublimApparel",
++  title: "Golf Apparel ",
+   description: "Page moved. Custom golf polos, mock necks, and quarter-zips.",
+   robots: { index: false, follow: false },
+ };
+diff --git a/src/app/products/golf/page.tsx b/src/app/products/golf/page.tsx
+index 78994f2..f77f945 100644
+--- a/src/app/products/golf/page.tsx
++++ b/src/app/products/golf/page.tsx
+@@ -5,7 +5,7 @@ import Link from "next/link";
+ import { ArrowRight, Flag, Users, Palette, Ruler, Layers, Shirt, Sun, Mountain, Trophy } from "lucide-react";
+ 
+ export const metadata: Metadata = {
+-  title: "Custom Golf Apparel | Sublimated Polos, Mock Necks, Quarter-Zips",
++  title: "Custom Golf Apparel | Sublimated Polos & Quarter-Zips",
+   description:
+     "Premium custom golf polos, mock necks, and quarter-zips for country clubs, tournaments, and corporate golf days. Sublimated all-over print, moisture-wicking 4-way stretch poly-spandex. MOQ 50 pcs, 15-20 day lead time, DDP shipping.",
+   keywords: [
+diff --git a/src/app/products/jerseys/page.tsx b/src/app/products/jerseys/page.tsx
+index e843f65..9365cb9 100644
+--- a/src/app/products/jerseys/page.tsx
++++ b/src/app/products/jerseys/page.tsx
+@@ -5,7 +5,7 @@ import Link from "next/link";
+ import { ArrowRight, Shirt, Users, Palette, Ruler, Layers, Sparkles } from "lucide-react";
+ 
+ export const metadata: Metadata = {
+-  title: "Custom Team Jerseys | Sublimation Soccer, Baseball, Basketball",
++  title: "Custom Team Jerseys | Soccer, Baseball, Basketball",
+   description:
+     "Custom sublimation team jerseys for soccer, baseball, basketball, volleyball. Full dye-sublimation, no setup fee, MOQ 50 pcs, 10–15 day production. Numbers, names, logos all printed — not stitched.",
+   keywords: [
+diff --git a/src/app/products/page.tsx b/src/app/products/page.tsx
+index 6cd8a4c..ec54c80 100644
+--- a/src/app/products/page.tsx
++++ b/src/app/products/page.tsx
+@@ -5,7 +5,7 @@ import { ArrowRight, Sparkles } from "lucide-react";
+ import { tagArchiveLink, resolveArchiveLink } from "@/lib/tag-utils";
+ 
+ export const metadata = {
+-  title: "Custom Sublimation & Cotton Apparel — T-Shirts, Jerseys, Hoodies, Cycling, Golf, Racing",
++  title: "Custom Sublimation & Cotton Apparel — T-Shirts, Jerseys, Hoodies",
+   description:
+     "Custom sublimated apparel for B2B: t-shirts, jerseys, hoodies, cycling kits, golf polos, racing suits. No setup fees, MOQ 50 pcs, full color all-over print, sample in 5 days.",
+ 
+diff --git a/src/app/products/racing/page.tsx b/src/app/products/racing/page.tsx
+index 63d93f7..460d691 100644
+--- a/src/app/products/racing/page.tsx
++++ b/src/app/products/racing/page.tsx
+@@ -5,7 +5,7 @@ import Link from "next/link";
+ import { ArrowRight, Flag, Users, Palette, Ruler, Layers, Award } from "lucide-react";
+ 
+ export const metadata: Metadata = {
+-  title: "Custom Racing Apparel | Sublimation Motorsport, Auto Club, Track Day",
++  title: "Custom Racing Apparel | Sublimation Motorsport & Track Day",
+   description:
+     "Custom sublimation racing apparel for motorsport teams, auto clubs, track days, and racing series. Full all-over print, no setup fee, MOQ 50 pcs. Crew tees, polos, mechanic shirts, fan wear.",
+   keywords: [
+diff --git a/src/app/register/page.tsx b/src/app/register/page.tsx
+index 274a8f9..9a8b769 100644
+--- a/src/app/register/page.tsx
++++ b/src/app/register/page.tsx
+@@ -2,7 +2,7 @@ import type { Metadata } from "next";
+ import Link from "next/link";
+ 
+ export const metadata: Metadata = {
+-  title: "Create Account | SublimApparel",
++  title: "Create Account",
+   description:
+     "Create your SublimApparel account to manage orders, request reprints, and access saved shipping addresses.",
+   robots: { index: false },
+diff --git a/src/app/shipping-policy/page.tsx b/src/app/shipping-policy/page.tsx
+index 7631fd3..07b19fb 100644
+--- a/src/app/shipping-policy/page.tsx
++++ b/src/app/shipping-policy/page.tsx
+@@ -2,7 +2,7 @@ import { ArrowLeft, Mail, Truck, Warehouse, Globe, Package } from "lucide-react"
+ import Link from "next/link";
+ 
+ export const metadata = {
+-  title: "Shipping Policy — SublimApparel",
++  title: "Shipping Policy ",
+   description:
+     "How we ship, the difference between FOB / CIF / DDP, US warehouse fulfillment from Fontana CA, production lead times, tracking, and what to do if a shipment is lost or damaged.",
+ };
+diff --git a/src/app/shipping/ddp/page.tsx b/src/app/shipping/ddp/page.tsx
+index c04df24..b385ae1 100644
+--- a/src/app/shipping/ddp/page.tsx
++++ b/src/app/shipping/ddp/page.tsx
+@@ -3,7 +3,7 @@ import Link from "next/link";
+ import { ArrowRight, Globe, ShieldCheck, Truck, Warehouse, MapPin, Package } from "lucide-react";
+ 
+ export const metadata: Metadata = {
+-  title: "DDP Shipping — Duties Paid, Delivered to Your Door | SublimApparel",
++  title: "DDP Shipping — Duties Paid, Delivered to Your Door",
+   description:
+     "DDP (Delivered Duty Paid) shipping from Yiwu to 100+ countries. We handle customs, duties, and last-mile delivery — one invoice, no surprise fees. Domestic US shipping from Fontana, CA in 2–5 days.",
+   keywords: [
+diff --git a/src/app/terms/page.tsx b/src/app/terms/page.tsx
+index 1038913..9bd9bb0 100644
+--- a/src/app/terms/page.tsx
++++ b/src/app/terms/page.tsx
+@@ -2,7 +2,7 @@ import { ArrowLeft, Mail } from "lucide-react";
+ import Link from "next/link";
+ 
+ export const metadata = {
+-  title: "Terms of Sale — SublimApparel",
++  title: "Terms of Sale ",
+   description:
+     "Terms and conditions governing quotes, orders, payment, production, shipping, returns, and liability for custom sublimation apparel from SublimApparel.",
+ };
+diff --git a/src/lib/tag-archive.ts b/src/lib/tag-archive.ts
+index 3c22843..43e7bef 100644
+--- a/src/lib/tag-archive.ts
++++ b/src/lib/tag-archive.ts
+@@ -35,7 +35,7 @@ export interface TagSEO {
+ function seoForCategory(label: string): TagSEO {
+   const lc = label.toLowerCase();
+   return {
+-    title: `Custom ${label} | Sublimation All-Over Print | MOQ 50 | SublimApparel`,
++    title: `Custom ${label} | Sublimation All-Over Print | MOQ 50`,
+     description: `Custom ${label} sublimation & allover digital print on cotton. Edge-to-edge artwork, MOQ 50 pcs per design, 7–10 day sample, DDP shipping to 50+ countries. Get a quote in 1 business day.`,
+     h1: `Custom ${label} — All-Over Print Sublimation & Cotton Printing`,
+     keywords: [
+@@ -54,7 +54,7 @@ function seoForCategory(label: string): TagSEO {
+ function seoForSport(label: string): TagSEO {
+   const lc = label.toLowerCase();
+   return {
+-    title: `Custom ${label} Jerseys & Uniforms | All-Over Print | SublimApparel`,
++    title: `Custom ${label} Jerseys & Uniforms | All-Over Print`,
+     description: `Custom ${label} jerseys, kits, and uniforms. Edge-to-edge all-over sublimation print, breathable polyester or allover digital print on cotton. MOQ 50 pcs, DDP shipping. Free quote in 1 day.`,
+     h1: `Custom ${label} Jerseys & Kits — All-Over Print Factory`,
+     keywords: [
+@@ -71,7 +71,7 @@ function seoForSport(label: string): TagSEO {
+ 
+ function seoForScenario(label: string): TagSEO {
+   return {
+-    title: `Custom ${label} Apparel & Merch | Bulk Wholesale | SublimApparel`,
++    title: `Custom ${label} Apparel & Merch | Bulk Wholesale`,
+     description: `Custom ${label} apparel, merch, and uniforms. Full-coverage all-over sublimation print, MOQ 50 pcs, 7–10 day sample, DDP shipping. Trusted by 500+ brands across 50+ countries. Get a quote.`,
+     h1: `Custom ${label} Apparel & Merch — Bulk All-Over Print`,
+     keywords: [
+-- 
+2.43.0
+

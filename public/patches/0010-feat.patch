@@ -1,0 +1,31 @@
+From f617fa393ea99a1c52707737a6b1fa23b6f659a8 Mon Sep 17 00:00:00 2001
+From: user8596904236 <1254955844122064-user8596904236@noreply.coze.cn>
+Date: Tue, 11 Aug 2026 20:22:15 +0800
+Subject: [PATCH 10/10] =?UTF-8?q?feat:=20=E4=BF=9D=E5=AD=98=E6=96=87?=
+ =?UTF-8?q?=E4=BB=B6=E5=8F=98=E6=9B=B4?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Coze-Commit-Type: user
+Coze-User-ID: 1254955844122064
+Coze-Conversation-ID: 11527849
+---
+ next-env.d.ts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/next-env.d.ts b/next-env.d.ts
+index c4b7818..9edff1c 100644
+--- a/next-env.d.ts
++++ b/next-env.d.ts
+@@ -1,6 +1,6 @@
+ /// <reference types="next" />
+ /// <reference types="next/image-types/global" />
+-import "./.next/dev/types/routes.d.ts";
++import "./.next/types/routes.d.ts";
+ 
+ // NOTE: This file should not be edited
+ // see https://nextjs.org/docs/app/api-reference/config/typescript for more information.
+-- 
+2.43.0
+

@@ -1,0 +1,2691 @@
+From b58825c788aae76d453803f28be906b556665fce Mon Sep 17 00:00:00 2001
+From: user8596904236 <1254955844122064-user8596904236@noreply.coze.cn>
+Date: Tue, 11 Aug 2026 17:59:35 +0800
+Subject: [PATCH 01/10] =?UTF-8?q?feat:=20=E5=AF=BC=E5=85=A5=20100=20?=
+ =?UTF-8?q?=E6=AC=BE=20all-over=20print=20=E4=BA=A7=E5=93=81=EF=BC=8C?=
+ =?UTF-8?q?=E4=B8=89=E7=BB=B4=E5=BA=A6=E4=BA=A4=E5=8F=89=E7=AD=9B=E9=80=89?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Coze-Commit-Type: user
+Coze-User-ID: 1254955844122064
+Coze-Conversation-ID: 11527849
+---
+ src/app/products/all/[slug]/page.tsx |  460 ++++++++
+ src/app/products/all/page.tsx        |  193 ++++
+ src/app/products/page.tsx            |   34 +
+ src/components/product-catalog.tsx   |  337 ++++++
+ src/lib/products-data.ts             | 1598 ++++++++++++++++++++++++++
+ 5 files changed, 2622 insertions(+)
+ create mode 100644 src/app/products/all/[slug]/page.tsx
+ create mode 100644 src/app/products/all/page.tsx
+ create mode 100644 src/components/product-catalog.tsx
+ create mode 100644 src/lib/products-data.ts
+
+diff --git a/src/app/products/all/[slug]/page.tsx b/src/app/products/all/[slug]/page.tsx
+new file mode 100644
+index 0000000..acaaadc
+--- /dev/null
++++ b/src/app/products/all/[slug]/page.tsx
+@@ -0,0 +1,460 @@
++import type { Metadata } from "next";
++import Link from "next/link";
++import { notFound } from "next/navigation";
++import { ArrowLeft, CheckCircle2, Sparkles, ArrowRight, Truck, Ruler } from "lucide-react";
++import { JsonLd } from "@/components/json-ld";
++import {
++  products,
++  getProductBySlug,
++  getRelatedProducts,
++  type ProductCategory,
++  type Sport,
++  type Scenario,
++} from "@/lib/products-data";
++import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
++
++export function generateStaticParams() {
++  return products.map((p) => ({ slug: p.slug }));
++}
++
++export async function generateMetadata({
++  params,
++}: {
++  params: Promise<{ slug: string }>;
++}): Promise<Metadata> {
++  const { slug } = await params;
++  const product = getProductBySlug(slug);
++  if (!product) return { title: "Product not found" };
++
++  const sportTags = product.sports.length ? ` for ${product.sports.slice(0, 3).join(", ")}` : "";
++  return {
++    title: `${product.name} — Custom All-Over Print | MOQ ${product.moq}`,
++    description: `${product.name}. ${product.description} ${product.fabrics.length} fabric options${sportTags}. MOQ ${product.moq} pcs, DDP worldwide.`,
++    keywords: [
++      product.name,
++      product.category.toLowerCase(),
++      "all-over print",
++      "custom apparel",
++      "sublimation",
++      "all-over digital print on cotton",
++      "DDP apparel factory",
++      "Yiwu apparel factory",
++      ...product.sports.map((s) => `${s.toLowerCase()} jersey`),
++    ],
++    alternates: { canonical: `./` },
++    openGraph: {
++      title: `${product.name} — Custom All-Over Print`,
++      description: product.description,
++      url: `/products/all/${product.slug}/`,
++      type: "website",
++      images: ["/hero-products.webp"],
++    },
++  };
++}
++
++const PLACEHOLDER_GRADIENTS = [
++  "from-orange-500 to-red-500",
++  "from-blue-500 to-cyan-500",
++  "from-purple-500 to-pink-500",
++  "from-green-500 to-emerald-500",
++  "from-yellow-500 to-orange-500",
++  "from-pink-500 to-rose-500",
++  "from-indigo-500 to-blue-500",
++  "from-teal-500 to-green-500",
++];
++
++function getGradient(id: string) {
++  let hash = 0;
++  for (let i = 0; i < id.length; i++) hash = (hash * 31 + id.charCodeAt(i)) | 0;
++  return PLACEHOLDER_GRADIENTS[Math.abs(hash) % PLACEHOLDER_GRADIENTS.length];
++}
++
++function getCategoryEmoji(category: ProductCategory) {
++  const map: Partial<Record<ProductCategory, string>> = {
++    "T-Shirt": "👕",
++    "Hoodie": "🧥",
++    "Polo Shirt": "👔",
++    "Jersey / Kit": "⚽",
++    "Sports Top / Kit": "🏃",
++    "Jacket": "🧥",
++    "Combat Gear": "🥊",
++    "Shirt": "👔",
++    "Tank Top & Camis": "🎽",
++    "Pants": "👖",
++    "Sweatshirt": "👕",
++    "Sleepwear & Underwear": "🩲",
++    "Dress": "👗",
++    "Coord Set": "👚",
++    "Knitwear": "🧶",
++    "Romper & Jumpsuit": "🦺",
++    "Skirt": "👗",
++    "Bodysuit": "🩱",
++    "Sports Top": "🏃",
++    "Baby Bodysuit": "👶",
++    "Kids Sportswear": "🧒",
++    "Winter Wear": "❄️",
++    "Activewear": "🏃",
++    "Swimwear": "🩱",
++    "Beachwear": "🏖️",
++    "Leggings": "🦿",
++    "Apron": "🧑‍🍳",
++    "Bucket Hat": "🎩",
++    "Baseball Cap": "🧢",
++  };
++  return map[category] ?? "👕";
++}
++
++export default async function ProductDetailPage({
++  params,
++}: {
++  params: Promise<{ slug: string }>;
++}) {
++  const { slug } = await params;
++  const product = getProductBySlug(slug);
++  if (!product) notFound();
++
++  const related = getRelatedProducts(product, 4);
++  const gradient = getGradient(product.id);
++  const emoji = getCategoryEmoji(product.category);
++
++  const breadcrumbLd = buildBreadcrumbJsonLd([
++    { name: "Home", path: "/" },
++    { name: "Products", path: "/products/" },
++    { name: "All Products", path: "/products/all/" },
++    { name: product.name, path: `/products/all/${product.slug}/` },
++  ]);
++
++  const productLd = {
++    "@context": "https://schema.org",
++    "@type": "Product",
++    name: product.name,
++    description: product.description,
++    image: "https://sublimapparel.com/hero-products.webp",
++    brand: { "@type": "Brand", name: "SublimApparel" },
++    category: product.category,
++    offers: {
++      "@type": "Offer",
++      availability: "https://schema.org/MadeToOrder",
++      priceCurrency: "USD",
++      priceValidUntil: "2027-12-31",
++      url: `https://sublimapparel.com/products/all/${product.slug}/`,
++      seller: { "@type": "Organization", name: "SublimApparel" },
++    },
++  };
++
++  return (
++    <>
++      <JsonLd data={breadcrumbLd} />
++      <JsonLd data={productLd} />
++
++      {/* HERO BAND */}
++      <section className="relative overflow-hidden border-b-2 border-black bg-[#0A0A0A] text-white">
++        <div className="absolute inset-0 opacity-30">
++          <div
++            className={`h-full w-full bg-gradient-to-br ${gradient}`}
++          />
++        </div>
++        <div className="relative mx-auto max-w-7xl px-4 py-10 md:px-8 md:py-16">
++          <Link
++            href="/products/all/"
++            className="mb-4 inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-white/70 hover:text-white md:text-xs"
++          >
++            <ArrowLeft className="h-3 w-3" />
++            All 100 products
++          </Link>
++          <div className="mb-3 flex flex-wrap items-center gap-2 text-[10px] font-bold uppercase tracking-widest md:text-xs">
++            <span className="rounded-sm bg-[#ff4d00] px-2 py-1 text-white">{product.category}</span>
++            <span className="rounded-sm bg-white/15 px-2 py-1 text-white backdrop-blur-sm">
++              MOQ {product.moq} pcs
++            </span>
++            {product.sports.slice(0, 2).map((s) => (
++              <span key={s} className="rounded-sm bg-white/15 px-2 py-1 text-white backdrop-blur-sm">
++                {s}
++              </span>
++            ))}
++          </div>
++          <h1 className="mb-3 max-w-4xl text-3xl font-black uppercase leading-[0.95] tracking-tight md:mb-4 md:text-5xl lg:text-6xl">
++            {product.name}
++          </h1>
++          <p className="max-w-2xl text-sm leading-relaxed text-white/85 md:text-base">
++            {product.description}
++          </p>
++        </div>
++      </section>
++
++      {/* IMAGE + SPEC */}
++      <section className="bg-white">
++        <div className="mx-auto max-w-7xl px-4 py-8 md:px-8 md:py-16">
++          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-12">
++            {/* Image placeholder */}
++            <div className="relative aspect-square w-full overflow-hidden border-2 border-black bg-[#f5f5f5]">
++              <div
++                className={`flex h-full w-full items-center justify-center bg-gradient-to-br ${gradient} text-9xl md:text-[12rem]`}
++              >
++                <span className="opacity-80">{emoji}</span>
++              </div>
++              <div className="absolute left-3 top-3 rounded-sm bg-black/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white md:text-xs">
++                Photo placeholder
++              </div>
++              <div className="absolute right-3 top-3 rounded-sm bg-[#ff4d00] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white md:text-xs">
++                {product.category}
++              </div>
++              <div className="absolute bottom-3 left-3 right-3 rounded-sm bg-black/70 px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-wide text-white/80 backdrop-blur-sm md:text-xs">
++                Real product shots coming soon — inquire for current samples
++              </div>
++            </div>
++
++            {/* Specs */}
++            <div>
++              <div className="mb-6 border-b-2 border-black pb-3 md:mb-8 md:pb-4">
++                <p className="mb-1 text-[10px] font-bold uppercase tracking-widest text-[#ff4d00] md:text-xs">
++                  Specs at a glance
++                </p>
++                <h2 className="text-2xl font-black uppercase leading-tight text-black md:text-3xl">
++                  {product.fabrics.length} fabric options
++                </h2>
++              </div>
++
++              <div className="space-y-2 md:space-y-3">
++                {product.fabrics.map((f, i) => (
++                  <div
++                    key={i}
++                    className="flex flex-col gap-1 border-2 border-black/10 bg-[#f5f5f5] p-3 md:flex-row md:items-center md:justify-between md:gap-4 md:p-4"
++                  >
++                    <div className="flex-1">
++                      <div className="text-[11px] font-black uppercase text-black md:text-sm">
++                        {f.material}
++                      </div>
++                      <div className="mt-0.5 text-[10px] uppercase tracking-wide text-[#6b6b6b] md:text-xs">
++                        {f.process}
++                      </div>
++                      {f.gsmOptions && (
++                        <div className="mt-0.5 text-[10px] text-[#6b6b6b] md:text-[11px]">
++                          GSM: {f.gsmOptions}
++                        </div>
++                      )}
++                    </div>
++                    <div className="rounded-sm bg-white px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-black md:text-xs">
++                      {f.gsm}
++                    </div>
++                  </div>
++                ))}
++              </div>
++
++              <div className="mt-6 flex flex-col gap-2 sm:flex-row md:mt-8">
++                <Link
++                  href="/get-a-quote/"
++                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-sm bg-[#ff4d00] px-4 py-3 text-sm font-black uppercase tracking-wide text-white transition-colors hover:bg-[#e64500] md:text-base"
++                >
++                  Get a quote
++                  <ArrowRight className="h-4 w-4" />
++                </Link>
++                <Link
++                  href="/contact/"
++                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-sm border-2 border-black bg-white px-4 py-3 text-sm font-black uppercase tracking-wide text-black transition-colors hover:border-[#ff4d00] hover:text-[#ff4d00] md:text-base"
++                >
++                  Request a sample
++                </Link>
++              </div>
++            </div>
++          </div>
++        </div>
++      </section>
++
++      {/* TAGS BY DIMENSION */}
++      <section className="border-y-2 border-black bg-[#1A1A1A] text-white">
++        <div className="mx-auto max-w-7xl px-4 py-10 md:px-8 md:py-16">
++          <p className="mb-1 text-[10px] font-bold uppercase tracking-widest text-[#ff4d00] md:text-xs">
++            Cross-reference this product
++          </p>
++          <h2 className="mb-6 text-2xl font-black uppercase leading-tight tracking-tight md:mb-8 md:text-3xl">
++            Where this fits
++          </h2>
++
++          <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
++            <div>
++              <h3 className="mb-3 text-[10px] font-bold uppercase tracking-widest text-white/60 md:text-xs">
++                Sports ({product.sports.length})
++              </h3>
++              {product.sports.length === 0 ? (
++                <p className="text-sm text-white/50">— no specific sport —</p>
++              ) : (
++                <div className="flex flex-wrap gap-1.5">
++                  {product.sports.map((s) => (
++                    <Link
++                      key={s}
++                      href={`/products/all/#cat=&sport=${encodeURIComponent(s)}&use=`}
++                      className="rounded-sm border-2 border-white/20 bg-white/5 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white transition-colors hover:border-[#ff4d00] hover:bg-[#ff4d00] md:text-xs"
++                    >
++                      {s}
++                    </Link>
++                  ))}
++                </div>
++              )}
++            </div>
++
++            <div>
++              <h3 className="mb-3 text-[10px] font-bold uppercase tracking-widest text-white/60 md:text-xs">
++                Scenarios ({product.scenarios.length})
++              </h3>
++              <div className="flex flex-wrap gap-1.5">
++                {product.scenarios.map((s) => (
++                  <Link
++                    key={s}
++                    href={`/products/all/#cat=&sport=&use=${encodeURIComponent(s)}`}
++                    className="rounded-sm border-2 border-white/20 bg-white/5 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white transition-colors hover:border-[#00c2ff] hover:bg-[#00c2ff] md:text-xs"
++                  >
++                    {s}
++                  </Link>
++                ))}
++              </div>
++            </div>
++
++            <div>
++              <h3 className="mb-3 text-[10px] font-bold uppercase tracking-widest text-white/60 md:text-xs">
++                Garment type
++              </h3>
++              <Link
++                href={`/products/all/#cat=${encodeURIComponent(product.category)}&sport=&use=`}
++                className="inline-flex rounded-sm border-2 border-[#ff4d00] bg-[#ff4d00] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white transition-colors hover:bg-[#e64500] md:text-xs"
++              >
++                {product.category}
++              </Link>
++            </div>
++          </div>
++        </div>
++      </section>
++
++      {/* HOW WE MAKE IT */}
++      <section className="bg-white">
++        <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-20">
++          <div className="mb-8 border-b-2 border-black pb-4 md:mb-12 md:pb-6">
++            <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-[#ff4d00] md:text-sm">
++              Production, in-house
++            </p>
++            <h2 className="text-2xl font-black uppercase leading-tight tracking-tight text-black md:text-4xl">
++              How we make {product.category.toLowerCase()}
++            </h2>
++          </div>
++          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
++            {product.fabrics
++              .filter((f) => f.process.toLowerCase().includes("sublimation"))
++              .slice(0, 4)
++              .map((f, i) => (
++                <div key={i} className="border-2 border-black bg-[#f5f5f5] p-4 md:p-6">
++                  <div className="mb-2 inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#ff4d00] text-sm font-black text-white md:h-10 md:w-10 md:text-base">
++                    {i + 1}
++                  </div>
++                  <h3 className="mb-2 text-sm font-black uppercase text-black md:text-base">
++                    {f.process}
++                  </h3>
++                  <p className="text-[11px] leading-relaxed text-[#3a3a3a] md:text-xs">
++                    CMYK ink infused into {f.material.toLowerCase()} fibers at 200°C. Permanent,
++                    breathable, no cracking or peeling.{" "}
++                    {f.gsm !== "—" && `Standard ${f.gsm}.`}
++                  </p>
++                </div>
++              ))}
++            {product.fabrics
++              .filter((f) => f.process.toLowerCase().includes("all-over digital print on cotton"))
++              .slice(0, 4)
++              .map((f, i) => (
++                <div key={`cot-${i}`} className="border-2 border-black bg-[#f5f5f5] p-4 md:p-6">
++                  <div className="mb-2 inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#00c2ff] text-sm font-black text-white md:h-10 md:w-10 md:text-base">
++                    {i + 1}
++                  </div>
++                  <h3 className="mb-2 text-sm font-black uppercase text-black md:text-base">
++                    {f.process}
++                  </h3>
++                  <p className="text-[11px] leading-relaxed text-[#3a3a3a] md:text-xs">
++                    Cut & sew workflow — pre-cut fabric printed in panels, then assembled. Full
++                    edge-to-edge coverage on {f.material.toLowerCase()}.
++                    {f.gsm !== "—" && ` Standard ${f.gsm}.`}
++                  </p>
++                </div>
++              ))}
++          </div>
++        </div>
++      </section>
++
++      {/* RELATED PRODUCTS */}
++      {related.length > 0 && (
++        <section className="border-t-2 border-black bg-[#f5f5f5]">
++          <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-20">
++            <div className="mb-6 flex items-end justify-between border-b-2 border-black pb-4 md:mb-10 md:pb-6">
++              <div>
++                <p className="mb-1 text-[10px] font-bold uppercase tracking-widest text-[#ff4d00] md:text-xs">
++                  Cross-sell
++                </p>
++                <h2 className="text-2xl font-black uppercase leading-tight tracking-tight text-black md:text-3xl">
++                  Related products
++                </h2>
++              </div>
++              <Link
++                href="/products/all/"
++                className="hidden text-[10px] font-bold uppercase tracking-wide text-[#ff4d00] hover:underline md:inline md:text-xs"
++              >
++                See all 100 →
++              </Link>
++            </div>
++            <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5">
++              {related.map((p) => (
++                <Link
++                  key={p.id}
++                  href={`/products/all/${p.slug}/`}
++                  className="group flex flex-col border-2 border-black bg-white transition-all hover:border-[#ff4d00] hover:shadow-[4px_4px_0_0_#ff4d00] md:hover:shadow-[6px_6px_0_0_#ff4d00]"
++                >
++                  <div
++                    className={`flex aspect-square w-full items-center justify-center border-b-2 border-black bg-gradient-to-br ${getGradient(p.id)} text-5xl md:text-7xl`}
++                  >
++                    <span className="opacity-80">{getCategoryEmoji(p.category)}</span>
++                  </div>
++                  <div className="p-3 md:p-4">
++                    <h3 className="text-[11px] font-black uppercase leading-tight text-black md:text-sm">
++                      {p.name}
++                    </h3>
++                    <p className="mt-1 text-[9px] uppercase tracking-wide text-[#6b6b6b] md:text-[10px]">
++                      {p.category} · MOQ {p.moq}
++                    </p>
++                  </div>
++                </Link>
++              ))}
++            </div>
++          </div>
++        </section>
++      )}
++
++      {/* CTA BAND */}
++      <section className="border-t-2 border-black bg-[#0A0A0A] text-white">
++        <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-20">
++          <div className="grid grid-cols-1 items-center gap-6 md:grid-cols-3 md:gap-8">
++            <div className="md:col-span-2">
++              <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-[#ff4d00] md:text-xs">
++                Ready to order?
++              </p>
++              <h2 className="text-2xl font-black uppercase leading-tight tracking-tight md:text-4xl">
++                Send artwork.<br />
++                Get a quote in 1 business day.
++              </h2>
++            </div>
++            <div className="flex flex-col gap-3">
++              <Link
++                href="/get-a-quote/"
++                className="inline-flex items-center justify-center gap-2 rounded-sm bg-[#ff4d00] px-4 py-3 text-sm font-black uppercase tracking-wide text-white hover:bg-[#e64500] md:text-base"
++              >
++                Get a quote
++                <ArrowRight className="h-4 w-4" />
++              </Link>
++              <Link
++                href="/contact/"
++                className="inline-flex items-center justify-center gap-2 rounded-sm border-2 border-white bg-transparent px-4 py-3 text-sm font-black uppercase tracking-wide text-white hover:bg-white hover:text-black md:text-base"
++              >
++                Talk to us
++              </Link>
++            </div>
++          </div>
++        </div>
++      </section>
++    </>
++  );
++}
+diff --git a/src/app/products/all/page.tsx b/src/app/products/all/page.tsx
+new file mode 100644
+index 0000000..8710fe5
+--- /dev/null
++++ b/src/app/products/all/page.tsx
+@@ -0,0 +1,193 @@
++import type { Metadata } from "next";
++import Link from "next/link";
++import { Sparkles, ArrowRight, Truck, BadgeCheck } from "lucide-react";
++import { JsonLd } from "@/components/json-ld";
++import { ProductCatalog } from "@/components/product-catalog";
++import { products, allSports, allScenarios } from "@/lib/products-data";
++import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
++
++export const metadata: Metadata = {
++  title: "100 All-Over Print Products — Custom Apparel by Garment, Sport & Scenario",
++  description:
++    "100 all-over print apparel products, cross-filtered by garment type (29), sport (42) and scenario (27). From polyester sublimation to all-over digital print on cotton, MOQ 50 pcs, DDP to door.",
++  keywords: [
++    "all-over print catalog",
++    "sublimation apparel wholesale",
++    "all-over digital print on cotton",
++    "custom jerseys China",
++    "DDP apparel factory",
++    "Yiwu apparel factory",
++    "custom workwear China",
++    "promotional apparel bulk",
++  ],
++  alternates: { canonical: "./" },
++  openGraph: {
++    title: "100 All-Over Print Products — Custom Apparel by Garment, Sport & Scenario",
++    description:
++      "100 all-over print apparel products, cross-filtered by garment, sport and scenario. Polyester sublimation + all-over digital print on cotton. MOQ 50 pcs, DDP worldwide.",
++    url: "/products/all/",
++    type: "website",
++    images: ["/hero-products.webp"],
++  },
++};
++
++const breadcrumbLd = buildBreadcrumbJsonLd([
++  { name: "Home", path: "/" },
++  { name: "Products", path: "/products/" },
++  { name: "All Products", path: "/products/all/" },
++]);
++
++export default function AllProductsPage() {
++  return (
++    <>
++      <JsonLd data={breadcrumbLd} />
++
++      {/* HERO */}
++      <section className="relative overflow-hidden border-b-2 border-black bg-[#0A0A0A] text-white">
++        <div className="absolute inset-0 opacity-30">
++          <div
++            className="h-full w-full"
++            style={{
++              backgroundImage:
++                "radial-gradient(circle at 20% 30%, rgba(255,77,0,0.35) 0%, transparent 40%), radial-gradient(circle at 80% 70%, rgba(0,194,255,0.25) 0%, transparent 40%)",
++            }}
++          />
++        </div>
++        <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-20">
++          <div className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-[#ff4d00] md:text-xs">
++            <Sparkles className="h-3.5 w-3.5" />
++            <span>The full catalog · 100 products</span>
++          </div>
++          <h1 className="mb-4 text-3xl font-black uppercase leading-[0.95] tracking-tight md:mb-6 md:text-6xl lg:text-7xl">
++            Pick a garment.<br />
++            Pick a sport.<br />
++            <span className="text-[#ff4d00]">Pick a scenario.</span>
++          </h1>
++          <p className="mb-6 max-w-2xl text-sm leading-relaxed text-white/80 md:mb-8 md:text-base">
++            {products.length} all-over print products, cross-filtered three ways. Polyester sublimation or all-over digital print on cotton. MOQ {products[0]?.moq ?? 50} pcs. DDP to your door — duty paid.
++          </p>
++          <div className="flex flex-wrap gap-2 md:gap-3">
++            <span className="inline-flex items-center gap-1.5 rounded-sm bg-white/10 px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-wide backdrop-blur-sm md:text-xs">
++              <span className="h-1.5 w-1.5 rounded-full bg-[#ff4d00]" />
++              {products.length} products
++            </span>
++            <span className="inline-flex items-center gap-1.5 rounded-sm bg-white/10 px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-wide backdrop-blur-sm md:text-xs">
++              <span className="h-1.5 w-1.5 rounded-full bg-[#00c2ff]" />
++              {allSports.length} sports
++            </span>
++            <span className="inline-flex items-center gap-1.5 rounded-sm bg-white/10 px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-wide backdrop-blur-sm md:text-xs">
++              <span className="h-1.5 w-1.5 rounded-full bg-white" />
++              {allScenarios.length} scenarios
++            </span>
++            <span className="inline-flex items-center gap-1.5 rounded-sm bg-white/10 px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-wide backdrop-blur-sm md:text-xs">
++              <Truck className="h-3 w-3" />
++              DDP worldwide
++            </span>
++          </div>
++        </div>
++      </section>
++
++      {/* QUICK STATS BAR */}
++      <section className="border-b-2 border-black bg-[#1A1A1A] text-white">
++        <div className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-white/10 md:grid-cols-4">
++          {[
++            { value: "50", label: "Min. order qty" },
++            { value: "14–20d", label: "Sample lead" },
++            { value: "25–35d", label: "Bulk lead" },
++            { value: "DDP", label: "Door-to-door" },
++          ].map((stat) => (
++            <div key={stat.label} className="p-4 text-center md:p-6">
++              <div className="text-2xl font-black tracking-tight md:text-4xl">{stat.value}</div>
++              <div className="mt-1 text-[10px] font-bold uppercase tracking-widest text-white/60 md:text-xs">
++                {stat.label}
++              </div>
++            </div>
++          ))}
++        </div>
++      </section>
++
++      {/* CATALOG WITH 3-DIM FILTER */}
++      <ProductCatalog />
++
++      {/* HOW IT WORKS — closed loop */}
++      <section className="border-t-2 border-black bg-[#0A0A0A] text-white">
++        <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-20">
++          <div className="mb-8 text-center md:mb-12">
++            <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-[#ff4d00] md:text-xs">
++              Closed loop, in-house
++            </p>
++            <h2 className="text-2xl font-black uppercase leading-tight tracking-tight md:text-4xl">
++              One factory. From yarn to door.
++            </h2>
++          </div>
++          <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
++            {[
++              { step: "01", title: "Pick", body: "Choose your product, fabric, GSM, technique — anything custom." },
++              { step: "02", title: "Sample", body: "Free mockup + paid sample in 7–10 days, shipped express." },
++              { step: "03", title: "Bulk", body: "25–35 day production, in-line QC at 4 stages, AQL 2.5 final." },
++              { step: "04", title: "Door", body: "DDP to your warehouse — duties paid, customs cleared." },
++            ].map((s) => (
++              <div key={s.step} className="border-2 border-white/15 bg-white/5 p-4 md:p-6">
++                <div className="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#ff4d00] text-base font-black text-white md:h-12 md:w-12 md:text-xl">
++                  {s.step}
++                </div>
++                <h3 className="mb-2 text-sm font-black uppercase tracking-tight text-white md:text-lg">
++                  {s.title}
++                </h3>
++                <p className="text-[11px] leading-relaxed text-white/70 md:text-sm">
++                  {s.body}
++                </p>
++              </div>
++            ))}
++          </div>
++          <div className="mt-10 text-center">
++            <Link
++              href="/get-a-quote/"
++              className="inline-flex items-center gap-2 rounded-sm bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-wide text-white transition-colors hover:bg-[#e64500] md:text-base"
++            >
++              Get a quote on your pick
++              <ArrowRight className="h-4 w-4" />
++            </Link>
++          </div>
++        </div>
++      </section>
++
++      {/* TRUST BAR */}
++      <section className="border-b-2 border-t-2 border-black bg-white">
++        <div className="mx-auto max-w-7xl px-4 py-8 md:px-8 md:py-12">
++          <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
++            {[
++              {
++                icon: <BadgeCheck className="h-6 w-6 text-[#ff4d00]" />,
++                title: "BSCI / SEDEX audited",
++                body: "Independent social-compliance audits every 12 months.",
++              },
++              {
++                icon: <Truck className="h-6 w-6 text-[#00c2ff]" />,
++                title: "DDP to 50+ countries",
++                body: "Duty-paid door delivery via our DDP logistics partner.",
++              },
++              {
++                icon: <Sparkles className="h-6 w-6 text-[#ff4d00]" />,
++                title: "20 decoration techniques",
++                body: "Sublimation, DTG, DTF, screen, embroidery, 3D puff, rhinestone — all in-house.",
++              },
++            ].map((t) => (
++              <div key={t.title} className="flex items-start gap-3 border-l-4 border-[#ff4d00] bg-[#f5f5f5] p-4 md:p-5">
++                <div className="shrink-0">{t.icon}</div>
++                <div>
++                  <h3 className="mb-1 text-sm font-black uppercase text-black md:text-base">
++                    {t.title}
++                  </h3>
++                  <p className="text-[11px] leading-relaxed text-[#6b6b6b] md:text-xs">
++                    {t.body}
++                  </p>
++                </div>
++              </div>
++            ))}
++          </div>
++        </div>
++      </section>
++    </>
++  );
++}
+diff --git a/src/app/products/page.tsx b/src/app/products/page.tsx
+index b429f8e..f0e5162 100644
+--- a/src/app/products/page.tsx
++++ b/src/app/products/page.tsx
+@@ -1,5 +1,7 @@
+ import { Contact } from "@/components/contact";
+ import Image from "next/image";
++import Link from "next/link";
++import { ArrowRight, Sparkles } from "lucide-react";
+ 
+ export const metadata = {
+   title: "Custom Sublimation & Cotton Apparel — T-Shirts, Jerseys, Hoodies, Cycling, Golf, Racing",
+@@ -122,6 +124,38 @@ export default function ProductsPage() {
+         </div>
+       </section>
+ 
++      {/* 100-product catalog callout */}
++      <section className="border-b-2 border-black bg-[#0A0A0A] text-white">
++        <div className="mx-auto max-w-7xl px-4 py-10 md:px-6 md:py-16">
++          <div className="grid grid-cols-1 items-center gap-6 md:grid-cols-12 md:gap-8">
++            <div className="md:col-span-8">
++              <div className="mb-3 inline-flex items-center gap-1.5 rounded-sm bg-[#ff4d00] px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest md:text-xs">
++                <Sparkles className="h-3 w-3" />
++                New · 100-product catalog
++              </div>
++              <h2 className="mb-3 text-2xl font-black uppercase leading-tight tracking-tight md:text-4xl">
++                Browse 100 all-over print products
++              </h2>
++              <p className="max-w-2xl text-sm leading-relaxed text-white/80 md:text-base">
++                Cross-filter by garment (29 types), sport (42), and scenario (27). Polyester sublimation + all-over digital print on cotton. MOQ 50 pcs, DDP to door.
++              </p>
++            </div>
++            <div className="flex flex-col gap-2 md:col-span-4 md:items-end">
++              <Link
++                href="/products/all/"
++                className="inline-flex items-center justify-center gap-2 rounded-sm bg-[#ff4d00] px-5 py-3 text-sm font-black uppercase tracking-wide text-white transition-colors hover:bg-[#e64500] md:text-base"
++              >
++                See all 100 products
++                <ArrowRight className="h-4 w-4" />
++              </Link>
++              <p className="text-[10px] uppercase tracking-widest text-white/50 md:text-xs">
++                Filter by sport, scenario &amp; garment
++              </p>
++            </div>
++          </div>
++        </div>
++      </section>
++
+       {/* Categories */}
+       <section className="border-b-2 border-black bg-[#faf9f6]">
+         <div className="mx-auto max-w-7xl px-6 py-20">
+diff --git a/src/components/product-catalog.tsx b/src/components/product-catalog.tsx
+new file mode 100644
+index 0000000..c29c443
+--- /dev/null
++++ b/src/components/product-catalog.tsx
+@@ -0,0 +1,337 @@
++"use client";
++
++import { useMemo, useState, useEffect } from "react";
++import Link from "next/link";
++import Image from "next/image";
++import { X } from "lucide-react";
++import {
++  products,
++  productCategories,
++  allSports,
++  allScenarios,
++  type Product,
++  type ProductCategory,
++  type Sport,
++  type Scenario,
++} from "@/lib/products-data";
++
++const PLACEHOLDER_GRADIENTS = [
++  "from-orange-500 to-red-500",
++  "from-blue-500 to-cyan-500",
++  "from-purple-500 to-pink-500",
++  "from-green-500 to-emerald-500",
++  "from-yellow-500 to-orange-500",
++  "from-pink-500 to-rose-500",
++  "from-indigo-500 to-blue-500",
++  "from-teal-500 to-green-500",
++];
++
++function getGradient(id: string) {
++  let hash = 0;
++  for (let i = 0; i < id.length; i++) hash = (hash * 31 + id.charCodeAt(i)) | 0;
++  return PLACEHOLDER_GRADIENTS[Math.abs(hash) % PLACEHOLDER_GRADIENTS.length];
++}
++
++function getCategoryEmoji(category: ProductCategory) {
++  const map: Partial<Record<ProductCategory, string>> = {
++    "T-Shirt": "👕",
++    "Hoodie": "🧥",
++    "Polo Shirt": "👔",
++    "Jersey / Kit": "⚽",
++    "Sports Top / Kit": "🏃",
++    "Jacket": "🧥",
++    "Combat Gear": "🥊",
++    "Shirt": "👔",
++    "Tank Top & Camis": "🎽",
++    "Pants": "👖",
++    "Sweatshirt": "👕",
++    "Sleepwear & Underwear": "🩲",
++    "Dress": "👗",
++    "Coord Set": "👚",
++    "Knitwear": "🧶",
++    "Romper & Jumpsuit": "🦺",
++    "Skirt": "👗",
++    "Bodysuit": "🩱",
++    "Sports Top": "🏃",
++    "Baby Bodysuit": "👶",
++    "Kids Sportswear": "🧒",
++    "Winter Wear": "❄️",
++    "Activewear": "🏃",
++    "Swimwear": "🩱",
++    "Beachwear": "🏖️",
++    "Leggings": "🦿",
++    "Apron": "🧑‍🍳",
++    "Bucket Hat": "🎩",
++    "Baseball Cap": "🧢",
++  };
++  return map[category] ?? "👕";
++}
++
++interface FilterState {
++  categories: ProductCategory[];
++  sports: Sport[];
++  scenarios: Scenario[];
++}
++
++function readFromHash(): FilterState {
++  if (typeof window === "undefined") return { categories: [], sports: [], scenarios: [] };
++  const hash = window.location.hash.replace(/^#/, "");
++  if (!hash) return { categories: [], sports: [], scenarios: [] };
++  const params = new URLSearchParams(hash);
++  return {
++    categories: (params.get("cat")?.split(",").filter(Boolean) as ProductCategory[]) ?? [],
++    sports: (params.get("sport")?.split(",").filter(Boolean) as Sport[]) ?? [],
++    scenarios: (params.get("use")?.split(",").filter(Boolean) as Scenario[]) ?? [],
++  };
++}
++
++function writeToHash(filter: FilterState) {
++  if (typeof window === "undefined") return;
++  const params = new URLSearchParams();
++  if (filter.categories.length) params.set("cat", filter.categories.join(","));
++  if (filter.sports.length) params.set("sport", filter.sports.join(","));
++  if (filter.scenarios.length) params.set("use", filter.scenarios.join(","));
++  const newHash = params.toString();
++  const newUrl = `${window.location.pathname}${newHash ? `#${newHash}` : ""}`;
++  window.history.replaceState(null, "", newUrl);
++}
++
++function matchesFilter(p: Product, filter: FilterState): boolean {
++  if (filter.categories.length && !filter.categories.includes(p.category)) return false;
++  if (filter.sports.length) {
++    const intersect = p.sports.filter((s) => filter.sports.includes(s));
++    if (intersect.length === 0) return false;
++  }
++  if (filter.scenarios.length) {
++    const intersect = p.scenarios.filter((s) => filter.scenarios.includes(s));
++    if (intersect.length === 0) return false;
++  }
++  return true;
++}
++
++function FilterChip({
++  active,
++  onClick,
++  children,
++}: {
++  active: boolean;
++  onClick: () => void;
++  children: React.ReactNode;
++}) {
++  return (
++    <button
++      type="button"
++      onClick={onClick}
++      className={`rounded-full border-2 px-3 py-1 text-[11px] font-bold uppercase tracking-wide transition-colors md:text-xs ${
++        active
++          ? "border-[#ff4d00] bg-[#ff4d00] text-white"
++          : "border-black/15 bg-white text-black hover:border-[#ff4d00]/50"
++      }`}
++    >
++      {children}
++    </button>
++  );
++}
++
++export function ProductCatalog() {
++  const [filter, setFilter] = useState<FilterState>({
++    categories: [],
++    sports: [],
++    scenarios: [],
++  });
++  const [hydrated, setHydrated] = useState(false);
++
++  useEffect(() => {
++    setFilter(readFromHash());
++    setHydrated(true);
++  }, []);
++
++  useEffect(() => {
++    if (hydrated) writeToHash(filter);
++  }, [filter, hydrated]);
++
++  const filtered = useMemo(() => products.filter((p) => matchesFilter(p, filter)), [filter]);
++
++  const toggle = <K extends keyof FilterState>(key: K, value: FilterState[K][number]) => {
++    setFilter((prev) => {
++      const list = prev[key] as Array<typeof value>;
++      const next = list.includes(value) ? list.filter((v) => v !== value) : [...list, value];
++      return { ...prev, [key]: next };
++    });
++  };
++
++  const clearAll = () => setFilter({ categories: [], sports: [], scenarios: [] });
++
++  const activeCount = filter.categories.length + filter.sports.length + filter.scenarios.length;
++
++  return (
++    <div>
++      {/* FILTER PANEL */}
++      <section className="border-b-2 border-black bg-[#f5f5f5]">
++        <div className="mx-auto max-w-7xl px-4 py-6 md:px-8 md:py-10">
++          <div className="mb-4 flex items-end justify-between md:mb-6">
++            <div>
++              <p className="mb-1 text-[10px] font-bold uppercase tracking-widest text-[#ff4d00] md:text-xs">
++                Cross-filter 3 dimensions
++              </p>
++              <h2 className="text-xl font-black uppercase leading-tight tracking-tight text-black md:text-3xl">
++                Find your product
++              </h2>
++            </div>
++            {activeCount > 0 && (
++              <button
++                type="button"
++                onClick={clearAll}
++                className="inline-flex items-center gap-1 rounded-full border-2 border-black bg-white px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide text-black hover:border-[#ff4d00] hover:text-[#ff4d00] md:text-xs"
++              >
++                <X className="h-3 w-3" />
++                Clear {activeCount} filter{activeCount > 1 ? "s" : ""}
++              </button>
++            )}
++          </div>
++
++          {/* CLOTHING (categories) */}
++          <div className="mb-4 md:mb-6">
++            <h3 className="mb-2 text-[10px] font-bold uppercase tracking-widest text-[#6b6b6b] md:text-xs">
++              Clothing · {filter.categories.length || "all"}
++            </h3>
++            <div className="flex flex-wrap gap-1.5 md:gap-2">
++              {productCategories.map((cat) => (
++                <FilterChip
++                  key={cat}
++                  active={filter.categories.includes(cat)}
++                  onClick={() => toggle("categories", cat)}
++                >
++                  {cat}
++                </FilterChip>
++              ))}
++            </div>
++          </div>
++
++          {/* SPORT */}
++          <div className="mb-4 md:mb-6">
++            <h3 className="mb-2 text-[10px] font-bold uppercase tracking-widest text-[#6b6b6b] md:text-xs">
++              Sport · {filter.sports.length || "all"}
++            </h3>
++            <div className="flex flex-wrap gap-1.5 md:gap-2">
++              {allSports.map((sport) => (
++                <FilterChip
++                  key={sport}
++                  active={filter.sports.includes(sport)}
++                  onClick={() => toggle("sports", sport)}
++                >
++                  {sport}
++                </FilterChip>
++              ))}
++            </div>
++          </div>
++
++          {/* SCENARIO */}
++          <div>
++            <h3 className="mb-2 text-[10px] font-bold uppercase tracking-widest text-[#6b6b6b] md:text-xs">
++              Scenario · {filter.scenarios.length || "all"}
++            </h3>
++            <div className="flex flex-wrap gap-1.5 md:gap-2">
++              {allScenarios.map((sc) => (
++                <FilterChip
++                  key={sc}
++                  active={filter.scenarios.includes(sc)}
++                  onClick={() => toggle("scenarios", sc)}
++                >
++                  {sc}
++                </FilterChip>
++              ))}
++            </div>
++          </div>
++        </div>
++      </section>
++
++      {/* RESULT COUNT */}
++      <section className="bg-white">
++        <div className="mx-auto max-w-7xl px-4 py-4 md:px-8 md:py-6">
++          <p className="text-xs font-bold uppercase tracking-wide text-black md:text-sm">
++            {filtered.length} of {products.length} products
++            {activeCount > 0 && (
++              <span className="ml-2 text-[#ff4d00]">— filtered by {activeCount} tag{activeCount > 1 ? "s" : ""}</span>
++            )}
++          </p>
++        </div>
++      </section>
++
++      {/* PRODUCT GRID */}
++      <section className="bg-white">
++        <div className="mx-auto max-w-7xl px-4 pb-12 md:px-8 md:pb-20">
++          {filtered.length === 0 ? (
++            <div className="rounded-md border-2 border-dashed border-black/20 bg-[#f5f5f5] py-20 text-center">
++              <p className="text-sm font-bold uppercase text-[#6b6b6b] md:text-base">
++                No products match this combination
++              </p>
++              <button
++                type="button"
++                onClick={clearAll}
++                className="mt-4 inline-flex items-center gap-1 rounded-full border-2 border-[#ff4d00] bg-white px-4 py-2 text-xs font-bold uppercase tracking-wide text-[#ff4d00] hover:bg-[#ff4d00] hover:text-white"
++              >
++                Clear filters
++              </button>
++            </div>
++          ) : (
++            <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-5 lg:grid-cols-4">
++              {filtered.map((p) => (
++                <Link
++                  key={p.id}
++                  href={`/products/all/${p.slug}/`}
++                  className="group flex flex-col border-2 border-black bg-white transition-all hover:border-[#ff4d00] hover:shadow-[4px_4px_0_0_#ff4d00] md:hover:shadow-[6px_6px_0_0_#ff4d00]"
++                >
++                  <div className="relative aspect-square w-full overflow-hidden border-b-2 border-black bg-[#f5f5f5]">
++                    <div
++                      className={`flex h-full w-full items-center justify-center bg-gradient-to-br ${getGradient(p.id)} text-5xl md:text-7xl`}
++                    >
++                      <span className="opacity-80">{getCategoryEmoji(p.category)}</span>
++                    </div>
++                    <div className="absolute left-2 top-2 rounded-sm bg-black/70 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-white md:text-[10px]">
++                      {p.category}
++                    </div>
++                    <div className="absolute right-2 top-2 rounded-sm bg-[#ff4d00] px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-white md:text-[10px]">
++                      MOQ {p.moq}
++                    </div>
++                  </div>
++                  <div className="flex flex-1 flex-col p-3 md:p-4">
++                    <h3 className="mb-1 text-[11px] font-black uppercase leading-tight text-black md:text-sm">
++                      {p.name}
++                    </h3>
++                    <p className="mb-2 line-clamp-2 text-[10px] leading-relaxed text-[#6b6b6b] md:mb-3 md:text-[11px]">
++                      {p.description}
++                    </p>
++                    <div className="mt-auto flex flex-wrap gap-1 border-t border-black/10 pt-2 md:pt-3">
++                      {p.sports.slice(0, 2).map((s) => (
++                        <span
++                          key={s}
++                          className="rounded-sm bg-[#f5f5f5] px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-wide text-[#3a3a3a] md:text-[9px]"
++                        >
++                          {s}
++                        </span>
++                      ))}
++                      {p.scenarios.slice(0, 2).map((s) => (
++                        <span
++                          key={s}
++                          className="rounded-sm bg-[#fff5f0] px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-wide text-[#ff4d00] md:text-[9px]"
++                        >
++                          {s}
++                        </span>
++                      ))}
++                      {(p.sports.length > 2 || p.scenarios.length > 2) && (
++                        <span className="rounded-sm bg-[#f5f5f5] px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-wide text-[#6b6b6b] md:text-[9px]">
++                          +{p.sports.length + p.scenarios.length - 4} more
++                        </span>
++                      )}
++                    </div>
++                  </div>
++                </Link>
++              ))}
++            </div>
++          )}
++        </div>
++      </section>
++    </div>
++  );
++}
+diff --git a/src/lib/products-data.ts b/src/lib/products-data.ts
+new file mode 100644
+index 0000000..b6a84d4
+--- /dev/null
++++ b/src/lib/products-data.ts
+@@ -0,0 +1,1598 @@
++// ============================================================
++// All-Over Print Product Catalog — 100 products, 3-dim tags
++// ============================================================
++//
++// Each product carries three tag dimensions:
++//   - category  (服装名称) — T-Shirt, Hoodie, Jersey, etc.
++//   - sports    (运动项目) — AFL, Basketball, Yoga, etc.
++//   - scenarios (使用场景) — Team & Club, Corporate, etc.
++//
++// Cross-filter: within one dimension = OR, across dimensions = AND
++//
++// Image placeholders — to be replaced with real product shots.
++// Sourced from Yoycol product feed (Aug 2026).
++
++export type ProductCategory =
++  | "T-Shirt"
++  | "Hoodie"
++  | "Polo Shirt"
++  | "Jersey / Kit"
++  | "Sports Top / Kit"
++  | "Jacket"
++  | "Combat Gear"
++  | "Shirt"
++  | "Tank Top & Camis"
++  | "Pants"
++  | "Sweatshirt"
++  | "Sleepwear & Underwear"
++  | "Dress"
++  | "Coord Set"
++  | "Knitwear"
++  | "Romper & Jumpsuit"
++  | "Skirt"
++  | "Bodysuit"
++  | "Sports Top"
++  | "Baby Bodysuit"
++  | "Kids Sportswear"
++  | "Winter Wear"
++  | "Activewear"
++  | "Swimwear"
++  | "Beachwear"
++  | "Leggings"
++  | "Apron"
++  | "Bucket Hat"
++  | "Baseball Cap";
++
++export type Sport =
++  | "AFL" | "Athletics" | "Badminton" | "Baseball" | "Basketball"
++  | "Beach" | "Bowling" | "Boxing" | "Cheer" | "Cricket"
++  | "CrossFit" | "Cycling" | "Dance" | "Dive" | "Esports"
++  | "Fishing" | "Football" | "Golf" | "Gym" | "Hockey"
++  | "Lacrosse" | "MMA" | "Martial Arts" | "Netball" | "Pilates"
++  | "Rugby" | "Running" | "Skate" | "Skating" | "Ski"
++  | "Snowboard" | "Soccer" | "Softball" | "Surf" | "Swimwear"
++  | "Table Tennis" | "Tennis" | "Triathlon" | "Volleyball" | "Wrestling"
++  | "Yoga";
++
++export type Scenario =
++  | "Promotional Swag" | "Event & Festival" | "School & Education"
++  | "Team & Club" | "Sports League" | "Corporate & Branding"
++  | "Uniform & Workwear" | "Retail & Fashion" | "Political Campaign"
++  | "Fundraiser & Charity" | "Music & Merch" | "Wedding & Party"
++  | "Gift & Souvenir" | "Construction & Engineering"
++  | "Express & Logistics" | "Hospitality & F&B" | "Medical & Healthcare"
++  | "Security & Property" | "Retail & Supermarket"
++  | "Education & School" | "Corporate & Promo"
++  | "Transit & Transport" | "Studio & Gym" | "Military"
++  | "Festival & Holiday";
++
++export interface ProductFabric {
++  gsm: string;        // e.g. "210GSM" or "—"
++  material: string;   // e.g. "涤纶" / "棉" / "抓绒"
++  process: string;    // e.g. "Sublimation" / "All-Over Digital Print on Cotton"
++  gsmOptions?: string; // e.g. "160180200220240 g"
++}
++
++export interface Product {
++  id: string;                  // yoycol ID, e.g. "2AHAYR15"
++  slug: string;                // URL slug derived from id
++  name: string;                // display name
++  category: ProductCategory;
++  sports: Sport[];             // empty array = "no specific sport"
++  scenarios: Scenario[];
++  fabrics: ProductFabric[];    // available fabric options
++  moq: number;                 // minimum order qty
++  description: string;
++}
++
++// All 42 sport tags (used for the cross-cutting products that apply to all sports)
++const ALL_SPORTS: Sport[] = [
++  "AFL", "Athletics", "Badminton", "Baseball", "Basketball",
++  "Beach", "Bowling", "Boxing", "Cheer", "Cricket",
++  "CrossFit", "Cycling", "Dance", "Dive", "Esports",
++  "Fishing", "Football", "Golf", "Gym", "Hockey",
++  "Lacrosse", "MMA", "Martial Arts", "Netball", "Pilates",
++  "Rugby", "Running", "Skate", "Skating", "Ski",
++  "Snowboard", "Soccer", "Softball", "Surf", "Swimwear",
++  "Table Tennis", "Tennis", "Triathlon", "Volleyball", "Wrestling",
++  "Yoga",
++];
++
++// All 13 main scenarios (used for the cross-cutting products that apply to all scenarios)
++const ALL_SCENARIOS: Scenario[] = [
++  "Corporate & Branding", "Team & Club", "Event & Festival",
++  "School & Education", "Fundraiser & Charity", "Retail & Fashion",
++  "Uniform & Workwear", "Music & Merch", "Sports League",
++  "Wedding & Party", "Gift & Souvenir", "Promotional Swag",
++  "Political Campaign",
++];
++
++// Sport-specific scenarios
++const SPORT_SCENARIOS: Scenario[] = [
++  "Team & Club", "Event & Festival", "Sports League",
++  "School & Education", "Promotional Swag",
++];
++
++// ============================================================
++// PRODUCT CATALOG (100 items)
++// ============================================================
++
++export const products: Product[] = [
++  // ---------- 1–23: Cross-cutting products (all sports + all scenarios) ----------
++  {
++    id: "2AHAYR15",
++    slug: "all-over-print-womens-rectangle-scarf",
++    name: "All-Over Print Womens Rectangle Scarf 170X45cm",
++    category: "Hoodie",  // tagged as Hoodie in source (group with 服装)
++    sports: ALL_SPORTS,
++    scenarios: ALL_SCENARIOS,
++    fabrics: [
++      { gsm: "310GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++      { gsm: "245GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++      { gsm: "230GSM", material: "Polyester", process: "Sublimation" },
++      { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
++      { gsm: "190GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++      { gsm: "180GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++      { gsm: "170GSM", material: "Polyester", process: "Sublimation" },
++      { gsm: "140GSM", material: "Polyester", process: "Sublimation" },
++      { gsm: "140GSM", material: "棉/Slub棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++      { gsm: "125GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++      { gsm: "125GSM", material: "棉/Slub棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++      { gsm: "115GSM", material: "Polyester", process: "Sublimation" },
++      { gsm: "115GSM", material: "棉/府绸", process: "All-Over Digital Print on Cotton", gsmOptions: "80100120 g" },
++      { gsm: "—", material: "Interlock布", process: "Sublimation", gsmOptions: "160180200220 g" },
++    ],
++    moq: 50,
++    description: "All-over print rectangle scarf, 170×45cm. 14 fabric options, full sublimation or allover digital print on cotton.",
++  },
++  {
++    id: "2KTXDM69",
++    slug: "childrens-t-shirts-printed-usa-gildan-64000b",
++    name: "Childrens T-Shirts Printed in USA — Gildan 64000B (DTG)",
++    category: "T-Shirt",
++    sports: ALL_SPORTS,
++    scenarios: ALL_SCENARIOS,
++    fabrics: [
++      { gsm: "230GSM", material: "Polyester", process: "Sublimation" },
++      { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
++      { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
++      { gsm: "190GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++      { gsm: "180GSM", material: "Polyester", process: "Sublimation" },
++      { gsm: "180GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++      { gsm: "145GSM", material: "Polyester", process: "Sublimation" },
++      { gsm: "145GSM", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++      { gsm: "—", material: "Interlock布", process: "Sublimation", gsmOptions: "160180200220 g" },
++      { gsm: "—", material: "天鹅绒", process: "Sublimation", gsmOptions: "240260280300 g" },
++      { gsm: "—", material: "平纹布", process: "Sublimation", gsmOptions: "120140160180200 g" },
++      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
++      { gsm: "—", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++    ],
++    moq: 50,
++    description: "Kids Gildan 64000B t-shirt, DTG or sublimation. 13 fabric options for any design.",
++  },
++  {
++    id: "1WPXZY10",
++    slug: "all-over-print-womens-high-stretch-tights",
++    name: "All-Over Print Womens High-Stretch Tights",
++    category: "Pants",
++    sports: ALL_SPORTS,
++    scenarios: ALL_SCENARIOS,
++    fabrics: [
++      { gsm: "310GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++      { gsm: "290GSM", material: "Polyester", process: "Sublimation" },
++      { gsm: "245GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++      { gsm: "230GSM", material: "Polyester", process: "Sublimation" },
++      { gsm: "145GSM", material: "Polyester", process: "Sublimation" },
++      { gsm: "115GSM", material: "棉/府绸", process: "All-Over Digital Print on Cotton", gsmOptions: "80100120 g" },
++      { gsm: "—", material: "Interlock布", process: "Sublimation", gsmOptions: "160180200220 g" },
++      { gsm: "—", material: "抓绒", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
++      { gsm: "—", material: "毛绒", process: "Sublimation", gsmOptions: "200220240260280300 g" },
++      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
++      { gsm: "—", material: "雪纺", process: "Sublimation", gsmOptions: "80100120140160180200 g" },
++      { gsm: "—", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++    ],
++    moq: 50,
++    description: "High-stretch tights/leggings, all-over print, 12 fabric options.",
++  },
++  {
++    id: "2MHPDM39",
++    slug: "unisex-durable-pullover-sweatshirt-290gsm",
++    name: "Unisex Durable Pullover Sweatshirt 290GSM (DTG)",
++    category: "Shirt",
++    sports: ALL_SPORTS,
++    scenarios: ALL_SCENARIOS,
++    fabrics: [
++      { gsm: "150GSM", material: "Polyester", process: "Sublimation" },
++      { gsm: "140GSM", material: "Polyester", process: "Sublimation" },
++      { gsm: "140GSM", material: "棉/Slub棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++      { gsm: "120GSM", material: "Polyester", process: "Sublimation" },
++      { gsm: "115GSM", material: "Polyester", process: "Sublimation" },
++      { gsm: "115GSM", material: "棉/府绸", process: "All-Over Digital Print on Cotton", gsmOptions: "80100120 g" },
++      { gsm: "110GSM", material: "仿麻", process: "Sublimation", gsmOptions: "120140160180200220240260 g" },
++      { gsm: "—", material: "亚麻", process: "Sublimation", gsmOptions: "120140160180200220240260 g" },
++      { gsm: "—", material: "缎面", process: "Sublimation", gsmOptions: "80100120140160180200 g" },
++      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
++      { gsm: "—", material: "雪纺", process: "Sublimation", gsmOptions: "80100120140160180200 g" },
++    ],
++    moq: 50,
++    description: "Unisex pullover sweatshirt, 290gsm, 11 fabric options.",
++  },
++  {
++    id: "2MHPJR90",
++    slug: "mens-fleece-lined-vintage-wash-zip-hoodie",
++    name: "Mens Fleece-Lined Vintage Wash Zip Hoodie 360GSM (DTF)",
++    category: "Jacket",
++    sports: ALL_SPORTS,
++    scenarios: ALL_SCENARIOS,
++    fabrics: [
++      { gsm: "310GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++      { gsm: "245GSM", material: "Polyester", process: "Sublimation" },
++      { gsm: "245GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++      { gsm: "245GSM", material: "棉/斜纹", process: "All-Over Digital Print on Cotton", gsmOptions: "120140160180200220240260280300 g" },
++      { gsm: "230GSM", material: "Polyester", process: "Sublimation" },
++      { gsm: "—", material: "天鹅绒", process: "Sublimation", gsmOptions: "240260280300 g" },
++      { gsm: "—", material: "抓绒", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
++      { gsm: "—", material: "抓绒/帆布", process: "Sublimation", gsmOptions: "300 g" },
++      { gsm: "—", material: "抓绒/羊羔绒", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
++      { gsm: "—", material: "抓绒/针织", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
++      { gsm: "—", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++      { gsm: "—", material: "毛绒", process: "Sublimation", gsmOptions: "200220240260280300 g" },
++      { gsm: "—", material: "涤纶", process: "Sublimation", gsmOptions: "100120140160180200 g" },
++      { gsm: "—", material: "超细纤维", process: "Sublimation", gsmOptions: "100120 g" },
++      { gsm: "—", material: "雪纺", process: "Sublimation", gsmOptions: "80100120140160180200 g" },
++    ],
++    moq: 50,
++    description: "Fleece-lined vintage wash zip hoodie, 360gsm, 15 fabric options.",
++  },
++  {
++    id: "2WUSMG97",
++    slug: "womens-seamless-briefs-printed-usa-180gsm",
++    name: "Womens Seamless Briefs Printed in USA 180GSM (DTF)",
++    category: "Sleepwear & Underwear",
++    sports: ALL_SPORTS,
++    scenarios: ALL_SCENARIOS,
++    fabrics: [
++      { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
++      { gsm: "190GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++      { gsm: "180GSM", material: "Polyester", process: "Sublimation" },
++      { gsm: "180GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++      { gsm: "115GSM", material: "棉/府绸", process: "All-Over Digital Print on Cotton", gsmOptions: "80100120 g" },
++      { gsm: "—", material: "抓绒", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
++      { gsm: "—", material: "毛绒", process: "Sublimation", gsmOptions: "200220240260280300 g" },
++      { gsm: "—", material: "涤纶/抓绒/羊羔绒", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
++      { gsm: "—", material: "缎面", process: "Sublimation", gsmOptions: "80100120140160180200 g" },
++    ],
++    moq: 50,
++    description: "Womens seamless briefs, 180gsm, 9 fabric options.",
++  },
++  {
++    id: "2MBXMA09",
++    slug: "mens-loose-sleeveless-hoodie-320gsm",
++    name: "Mens Loose Sleeveless Hoodie 320GSM (DTF)",
++    category: "Tank Top & Camis",
++    sports: ALL_SPORTS,
++    scenarios: ALL_SCENARIOS,
++    fabrics: [
++      { gsm: "310GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++      { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
++      { gsm: "190GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++      { gsm: "180GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++      { gsm: "—", material: "天鹅绒", process: "Sublimation", gsmOptions: "240260280300 g" },
++      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
++    ],
++    moq: 50,
++    description: "Mens loose sleeveless hoodie, 320gsm, 6 fabric options.",
++  },
++  {
++    id: "3WBXGZ50",
++    slug: "all-over-print-womens-tank-vest-dress",
++    name: "All-Over Print Womens Tank Vest Dress",
++    category: "Dress",
++    sports: ALL_SPORTS,
++    scenarios: ALL_SCENARIOS,
++    fabrics: [
++      { gsm: "140GSM", material: "棉/Slub棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++      { gsm: "—", material: "天鹅绒", process: "Sublimation", gsmOptions: "240260280300 g" },
++      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
++    ],
++    moq: 50,
++    description: "Womens tank vest dress, 3 fabric options.",
++  },
++  {
++    id: "2MHPSA03",
++    slug: "mens-distressed-vintage-wash-sweatshirt-360gsm",
++    name: "Mens Distressed Vintage Wash Sweatshirt 360GSM (DTG)",
++    category: "Sweatshirt",
++    sports: ALL_SPORTS,
++    scenarios: ALL_SCENARIOS,
++    fabrics: [
++      { gsm: "310GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++      { gsm: "—", material: "Interlock布", process: "Sublimation", gsmOptions: "160180200220 g" },
++      { gsm: "—", material: "抓绒", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
++      { gsm: "—", material: "针织/华夫格", process: "Sublimation", gsmOptions: "160180200220240260280300 g" },
++    ],
++    moq: 50,
++    description: "Mens distressed vintage wash sweatshirt, 360gsm, 4 fabric options.",
++  },
++  {
++    id: "3KCSZJ10",
++    slug: "plamix-all-over-print-childrens-shirt-with-pocket",
++    name: "Plamix All-Over Print Childrens Shirt With Pocket 140GSM Slub Cotton",
++    category: "Coord Set",
++    sports: ALL_SPORTS,
++    scenarios: ALL_SCENARIOS,
++    fabrics: [
++      { gsm: "140GSM", material: "棉/Slub棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++      { gsm: "—", material: "抓绒", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
++      { gsm: "—", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++    ],
++    moq: 50,
++    description: "Plamix childrens shirt with pocket, 140gsm slub cotton, 3 fabric options.",
++  },
++  {
++    id: "2MHPHR99",
++    slug: "mens-vintage-crewneck-knit-sweater-285gsm",
++    name: "Mens Vintage Crewneck Knit Sweater 285GSM (DTG)",
++    category: "Knitwear",
++    sports: ALL_SPORTS,
++    scenarios: ALL_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "平纹布", process: "Sublimation", gsmOptions: "120140160180200 g" },
++      { gsm: "—", material: "抓绒", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
++      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
++      { gsm: "—", material: "针织", process: "Sublimation", gsmOptions: "120140160180200 g" },
++    ],
++    moq: 50,
++    description: "Mens vintage crewneck knit sweater, 285gsm, 4 fabric options.",
++  },
++  {
++    id: "3MJMJH01",
++    slug: "all-over-print-unisex-thickened-home-jumpsuit",
++    name: "All-Over Print Unisex Thickened Home Jumpsuit",
++    category: "Romper & Jumpsuit",
++    sports: ALL_SPORTS,
++    scenarios: ALL_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++      { gsm: "—", material: "缎面", process: "Sublimation", gsmOptions: "80100120140160180200 g" },
++      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
++    ],
++    moq: 50,
++    description: "Unisex thickened home jumpsuit, 3 fabric options.",
++  },
++  {
++    id: "3CDDAQ01",
++    slug: "all-over-print-kids-short-sleeve-dress",
++    name: "All-Over Print Kids Short-Sleeve Dress",
++    category: "Skirt",
++    sports: ALL_SPORTS,
++    scenarios: ALL_SCENARIOS,
++    fabrics: [
++      { gsm: "180GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++    ],
++    moq: 50,
++    description: "Kids short-sleeve dress, 1 fabric option.",
++  },
++  {
++    id: "3WJMBX16",
++    slug: "all-over-print-womens-tank-bodysuit",
++    name: "All-Over Print Womens Tank Bodysuit",
++    category: "Bodysuit",
++    sports: ALL_SPORTS,
++    scenarios: ALL_SCENARIOS,
++    fabrics: [
++      { gsm: "180GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++      { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
++    ],
++    moq: 50,
++    description: "Womens tank bodysuit, 2 fabric options.",
++  },
++  {
++    id: "3KTXPL29",
++    slug: "all-over-print-childrens-lapel-polo-shirt",
++    name: "All-Over Print Childrens Lapel Polo Shirt 145GSM Birdseye",
++    category: "Polo Shirt",
++    sports: ALL_SPORTS,
++    scenarios: ALL_SCENARIOS,
++    fabrics: [
++      { gsm: "145GSM", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++      { gsm: "—", material: "平纹布", process: "Sublimation", gsmOptions: "120140160180200 g" },
++    ],
++    moq: 50,
++    description: "Childrens lapel polo shirt, 145gsm birdseye, 2 fabric options.",
++  },
++  {
++    id: "3AHGYD02",
++    slug: "sports-square-towel",
++    name: "Sports Square Towel",
++    category: "Sports Top",
++    sports: ALL_SPORTS,
++    scenarios: ALL_SCENARIOS,
++    fabrics: [
++      { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
++      { gsm: "—", material: "平纹布", process: "Sublimation" },
++    ],
++    moq: 50,
++    description: "Sports square towel, 2 fabric options.",
++  },
++  {
++    id: "2KBBMB01",
++    slug: "baby-short-sleeve-onesie-usa-190gsm",
++    name: "Baby Short-Sleeve Onesie Printed in USA 190GSM Front (DTF)",
++    category: "Baby Bodysuit",
++    sports: ALL_SPORTS,
++    scenarios: ALL_SCENARIOS,
++    fabrics: [
++      { gsm: "180GSM", material: "棉", process: "All-Over Digital Print on Cotton" },
++      { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
++    ],
++    moq: 50,
++    description: "Baby short-sleeve onesie, 190gsm front DTF, 2 fabric options.",
++  },
++  {
++    id: "3KCSSY02",
++    slug: "all-over-print-kids-baseball-jersey",
++    name: "All-Over Print Kids Baseball Jersey",
++    category: "Kids Sportswear",
++    sports: ALL_SPORTS,
++    scenarios: ALL_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "平纹布", process: "Sublimation" },
++    ],
++    moq: 50,
++    description: "Kids baseball jersey, 1 fabric option.",
++  },
++  {
++    id: "3MHZDM41",
++    slug: "all-over-print-mens-half-zip-pullover",
++    name: "All-Over Print Mens Half-Zip Pullover",
++    category: "Winter Wear",
++    sports: ALL_SPORTS,
++    scenarios: ALL_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "Interlock布", process: "Sublimation" },
++      { gsm: "—", material: "平纹布", process: "Sublimation" },
++    ],
++    moq: 50,
++    description: "Mens half-zip pullover, 2 fabric options.",
++  },
++  {
++    id: "3MPHTU08",
++    slug: "all-over-print-mens-long-sleeve-t-shirt-dropped-shoulders",
++    name: "All-Over Print Mens Long-Sleeve T-Shirt With Dropped Shoulders Interlock",
++    category: "Activewear",
++    sports: ALL_SPORTS,
++    scenarios: ALL_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "Interlock布", process: "Sublimation" },
++    ],
++    moq: 50,
++    description: "Mens long-sleeve T-shirt with dropped shoulders, interlock, 1 fabric option.",
++  },
++  {
++    id: "2HKAWQ05",
++    slug: "all-over-print-apron",
++    name: "All-Over Print Apron",
++    category: "Apron",
++    sports: ALL_SPORTS,
++    scenarios: ALL_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "—", process: "Sublimation" },
++    ],
++    moq: 50,
++    description: "All-over print apron, 1 fabric option.",
++  },
++  {
++    id: "2AAOYF03",
++    slug: "all-over-print-bucket-hat",
++    name: "All-Over Print Bucket Hat",
++    category: "Bucket Hat",
++    sports: ALL_SPORTS,
++    scenarios: ALL_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "—", process: "Sublimation" },
++    ],
++    moq: 50,
++    description: "All-over print bucket hat, 1 fabric option.",
++  },
++  {
++    id: "2AMSMG90",
++    slug: "all-over-print-baseball-cap",
++    name: "All-Over Print Baseball Cap",
++    category: "Baseball Cap",
++    sports: ALL_SPORTS,
++    scenarios: ALL_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "Sandwich 6 Panels", process: "Sublimation" },
++      { gsm: "—", material: "牛仔", process: "Sublimation" },
++      { gsm: "—", material: "网眼布", process: "Sublimation" },
++    ],
++    moq: 50,
++    description: "All-over print baseball cap, 3 fabric options.",
++  },
++
++  // ---------- 24–64: Sport-specific jerseys ----------
++  {
++    id: "3MPXDK57",
++    slug: "all-over-print-soccer-jersey-kit",
++    name: "All-Over Print Soccer Jersey Kit (Shirt + Shorts)",
++    category: "Jersey / Kit",
++    sports: ["Soccer"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "210GSM", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++      { gsm: "180GSM", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++      { gsm: "—", material: "Interlock布", process: "Sublimation", gsmOptions: "160180200220 g" },
++      { gsm: "—", material: "平纹布", process: "Sublimation", gsmOptions: "120140160180200 g" },
++      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
++    ],
++    moq: 50,
++    description: "Soccer jersey + shorts, full sublimation, 5 fabric options.",
++  },
++  {
++    id: "3MBXVL01",
++    slug: "all-over-print-basketball-jersey-kit",
++    name: "All-Over Print Basketball Jersey Kit (Reversible option)",
++    category: "Jersey / Kit",
++    sports: ["Basketball"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "210GSM", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
++      { gsm: "—", material: "平纹布", process: "Sublimation", gsmOptions: "120140160180200 g" },
++    ],
++    moq: 50,
++    description: "Basketball jersey, reversible option, 3 fabric options.",
++  },
++  {
++    id: "3MBXGT28",
++    slug: "all-over-print-badminton-outfit",
++    name: "All-Over Print Badminton Outfit",
++    category: "Sports Top / Kit",
++    sports: ["Badminton"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
++    ],
++    moq: 50,
++    description: "Badminton outfit, 2 fabric options.",
++  },
++  {
++    id: "3MTXLB56",
++    slug: "all-over-print-hockey-jersey",
++    name: "All-Over Print Hockey Jersey (Lycra option)",
++    category: "Jersey / Kit",
++    sports: ["Hockey"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++      { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
++    ],
++    moq: 50,
++    description: "Hockey jersey with Lycra option, 2 fabric options.",
++  },
++  {
++    id: "3MBXGT27",
++    slug: "all-over-print-running-wear-kit",
++    name: "All-Over Print Running Wear (Shirt + Shorts)",
++    category: "Sports Top / Kit",
++    sports: ["Running", "Athletics"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
++    ],
++    moq: 50,
++    description: "Running wear kit (shirt + shorts), 2 fabric options.",
++  },
++  {
++    id: "3MTXUB79",
++    slug: "all-over-print-cycling-wear-kit",
++    name: "All-Over Print Cycling Wear Kit (Jersey + Bib Shorts)",
++    category: "Sports Top / Kit",
++    sports: ["Cycling"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++      { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
++    ],
++    moq: 50,
++    description: "Cycling wear kit (jersey + bib shorts), 2 fabric options.",
++  },
++  {
++    id: "3CPXX001",
++    slug: "all-over-print-yoga-wear-set",
++    name: "All-Over Print Yoga Wear Set (Top + Leggings)",
++    category: "Sports Top / Kit",
++    sports: ["Yoga", "Pilates"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
++      { gsm: "—", material: "Interlock布", process: "Sublimation", gsmOptions: "160180200220 g" },
++    ],
++    moq: 50,
++    description: "Yoga wear set (top + leggings), 2 fabric options.",
++  },
++  {
++    id: "3KYYOP05",
++    slug: "all-over-print-swimwear-one-piece",
++    name: "All-Over Print Swimwear (One-Piece / Bikini / Trunks)",
++    category: "Swimwear",
++    sports: ["Swimwear", "Surf", "Beach", "Dive"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
++    ],
++    moq: 50,
++    description: "Swimwear — one-piece, bikini, or trunks, Lycra sublimation.",
++  },
++  {
++    id: "3KCSFH01",
++    slug: "all-over-print-golf-polo-shirt",
++    name: "All-Over Print Golf Polo Shirt",
++    category: "Polo Shirt",
++    sports: ["Golf"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++      { gsm: "—", material: "Pique布", process: "Sublimation", gsmOptions: "160180200220240 g" },
++    ],
++    moq: 50,
++    description: "Golf polo shirt, 2 fabric options.",
++  },
++  {
++    id: "3MBSBL01",
++    slug: "all-over-print-baseball-jersey-kit",
++    name: "All-Over Print Baseball Jersey Kit (Shirt + Pants)",
++    category: "Jersey / Kit",
++    sports: ["Baseball", "Softball"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++      { gsm: "—", material: "平纹布", process: "Sublimation", gsmOptions: "120140160180200 g" },
++    ],
++    moq: 50,
++    description: "Baseball jersey kit (shirt + pants), 2 fabric options.",
++  },
++  {
++    id: "3MFBJK01",
++    slug: "all-over-print-american-football-jersey",
++    name: "All-Over Print American Football Jersey",
++    category: "Jersey / Kit",
++    sports: ["Football"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++      { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
++    ],
++    moq: 50,
++    description: "American football jersey, 2 fabric options.",
++  },
++  {
++    id: "3MRGJK01",
++    slug: "all-over-print-rugby-jersey",
++    name: "All-Over Print Rugby Jersey",
++    category: "Jersey / Kit",
++    sports: ["Rugby"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++      { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
++    ],
++    moq: 50,
++    description: "Rugby jersey, 2 fabric options.",
++  },
++  {
++    id: "3MVBJK01",
++    slug: "all-over-print-volleyball-jersey-kit",
++    name: "All-Over Print Volleyball Jersey Kit",
++    category: "Jersey / Kit",
++    sports: ["Volleyball"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
++    ],
++    moq: 50,
++    description: "Volleyball jersey kit, 2 fabric options.",
++  },
++  {
++    id: "3MTNJK01",
++    slug: "all-over-print-tennis-outfit",
++    name: "All-Over Print Tennis Outfit (Shirt + Skirt/Shorts)",
++    category: "Sports Top / Kit",
++    sports: ["Tennis"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++      { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
++    ],
++    moq: 50,
++    description: "Tennis outfit (shirt + skirt/shorts), 2 fabric options.",
++  },
++  {
++    id: "3MTTJK01",
++    slug: "all-over-print-table-tennis-outfit",
++    name: "All-Over Print Table Tennis Outfit",
++    category: "Sports Top / Kit",
++    sports: ["Table Tennis"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++    ],
++    moq: 50,
++    description: "Table tennis outfit, 1 fabric option.",
++  },
++  {
++    id: "3MCKJK01",
++    slug: "all-over-print-cricket-jersey",
++    name: "All-Over Print Cricket Jersey",
++    category: "Jersey / Kit",
++    sports: ["Cricket"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++      { gsm: "—", material: "平纹布", process: "Sublimation", gsmOptions: "120140160180200 g" },
++    ],
++    moq: 50,
++    description: "Cricket jersey, 2 fabric options.",
++  },
++  {
++    id: "3MLC001",
++    slug: "all-over-print-lacrosse-jersey",
++    name: "All-Over Print Lacrosse Jersey",
++    category: "Jersey / Kit",
++    sports: ["Lacrosse"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++    ],
++    moq: 50,
++    description: "Lacrosse jersey, 1 fabric option.",
++  },
++  {
++    id: "3MSB001",
++    slug: "all-over-print-softball-jersey",
++    name: "All-Over Print Softball Jersey",
++    category: "Jersey / Kit",
++    sports: ["Softball"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++    ],
++    moq: 50,
++    description: "Softball jersey, 1 fabric option.",
++  },
++  {
++    id: "3MSF001",
++    slug: "all-over-print-surf-lycra-top",
++    name: "All-Over Print Surf Lycra Top (Rash Guard)",
++    category: "Sports Top / Kit",
++    sports: ["Surf", "Swimwear", "Beach"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
++    ],
++    moq: 50,
++    description: "Surf Lycra top / rash guard, 1 fabric option.",
++  },
++  {
++    id: "3MSK001",
++    slug: "all-over-print-ski-jacket",
++    name: "All-Over Print Ski Jacket (Insulated)",
++    category: "Jacket",
++    sports: ["Ski", "Snowboard"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "涤纶", process: "Sublimation", gsmOptions: "100120140160180200 g" },
++      { gsm: "—", material: "抓绒/帆布", process: "Sublimation", gsmOptions: "300 g" },
++    ],
++    moq: 50,
++    description: "Ski jacket insulated, 2 fabric options.",
++  },
++  {
++    id: "3MSB002",
++    slug: "all-over-print-snowboard-jacket",
++    name: "All-Over Print Snowboard Jacket",
++    category: "Jacket",
++    sports: ["Snowboard", "Ski"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "涤纶", process: "Sublimation", gsmOptions: "100120140160180200 g" },
++    ],
++    moq: 50,
++    description: "Snowboard jacket, 1 fabric option.",
++  },
++  {
++    id: "3MKT001",
++    slug: "all-over-print-skate-t-shirt",
++    name: "All-Over Print Skate T-Shirt",
++    category: "T-Shirt",
++    sports: ["Skate", "Skating"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++      { gsm: "—", material: "Interlock布", process: "Sublimation", gsmOptions: "160180200220 g" },
++    ],
++    moq: 50,
++    description: "Skate T-shirt, 2 fabric options.",
++  },
++  {
++    id: "3MBX001",
++    slug: "all-over-print-boxing-shorts",
++    name: "All-Over Print Boxing Shorts",
++    category: "Combat Gear",
++    sports: ["Boxing", "MMA", "Martial Arts"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
++      { gsm: "—", material: "涤纶", process: "Sublimation", gsmOptions: "100120140160180200 g" },
++    ],
++    moq: 50,
++    description: "Boxing shorts, 2 fabric options.",
++  },
++  {
++    id: "3MWR001",
++    slug: "all-over-print-wrestling-singlet",
++    name: "All-Over Print Wrestling Singlet",
++    category: "Combat Gear",
++    sports: ["Wrestling", "MMA"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
++    ],
++    moq: 50,
++    description: "Wrestling singlet, 1 fabric option.",
++  },
++  {
++    id: "3MMA001",
++    slug: "all-over-print-mma-fight-shorts",
++    name: "All-Over Print MMA Fight Shorts",
++    category: "Combat Gear",
++    sports: ["MMA", "Boxing", "Martial Arts"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
++    ],
++    moq: 50,
++    description: "MMA fight shorts, 1 fabric option.",
++  },
++  {
++    id: "3MMA002",
++    slug: "all-over-print-martial-arts-gi",
++    name: "All-Over Print Martial Arts Gi (Top + Pants)",
++    category: "Combat Gear",
++    sports: ["Martial Arts"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++    ],
++    moq: 50,
++    description: "Martial arts gi (top + pants), 1 fabric option.",
++  },
++  {
++    id: "3MPL001",
++    slug: "all-over-print-pilates-top-leggings",
++    name: "All-Over Print Pilates Set (Top + Leggings)",
++    category: "Sports Top / Kit",
++    sports: ["Pilates", "Yoga"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
++    ],
++    moq: 50,
++    description: "Pilates set (top + leggings), 1 fabric option.",
++  },
++  {
++    id: "3MDC001",
++    slug: "all-over-print-dance-leotard",
++    name: "All-Over Print Dance Leotard",
++    category: "Sports Top / Kit",
++    sports: ["Dance", "Cheer", "Gym"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
++    ],
++    moq: 50,
++    description: "Dance leotard, 1 fabric option.",
++  },
++  {
++    id: "3MCR001",
++    slug: "all-over-print-cheer-uniform",
++    name: "All-Over Print Cheer Uniform (Top + Skirt)",
++    category: "Sports Top / Kit",
++    sports: ["Cheer", "Dance"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
++    ],
++    moq: 50,
++    description: "Cheer uniform (top + skirt), 1 fabric option.",
++  },
++  {
++    id: "3MCF001",
++    slug: "all-over-print-crossfit-t-shirt",
++    name: "All-Over Print CrossFit T-Shirt",
++    category: "T-Shirt",
++    sports: ["CrossFit", "Gym", "Athletics"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++      { gsm: "—", material: "Interlock布", process: "Sublimation", gsmOptions: "160180200220 g" },
++    ],
++    moq: 50,
++    description: "CrossFit T-shirt, 2 fabric options.",
++  },
++  {
++    id: "3MBW001",
++    slug: "all-over-print-bowling-shirt",
++    name: "All-Over Print Bowling Shirt",
++    category: "Shirt",
++    sports: ["Bowling"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "涤纶", process: "Sublimation", gsmOptions: "100120140160180200 g" },
++    ],
++    moq: 50,
++    description: "Bowling shirt, 1 fabric option.",
++  },
++  {
++    id: "3MES001",
++    slug: "all-over-print-esports-jersey",
++    name: "All-Over Print Esports Jersey",
++    category: "Jersey / Kit",
++    sports: ["Esports"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
++    ],
++    moq: 50,
++    description: "Esports jersey, 2 fabric options.",
++  },
++  {
++    id: "3MTR001",
++    slug: "all-over-print-triathlon-suit",
++    name: "All-Over Print Triathlon Suit (One-Piece)",
++    category: "Sports Top / Kit",
++    sports: ["Triathlon", "Cycling", "Running"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
++    ],
++    moq: 50,
++    description: "Triathlon suit one-piece, 1 fabric option.",
++  },
++  {
++    id: "3MAF001",
++    slug: "all-over-print-australian-rules-jersey",
++    name: "All-Over Print Australian Rules (AFL) Jersey",
++    category: "Jersey / Kit",
++    sports: ["AFL"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++    ],
++    moq: 50,
++    description: "AFL jersey, 1 fabric option.",
++  },
++  {
++    id: "3MNB001",
++    slug: "all-over-print-netball-dress",
++    name: "All-Over Print Netball Dress (Bib Style)",
++    category: "Sports Top / Kit",
++    sports: ["Netball"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
++    ],
++    moq: 50,
++    description: "Netball dress bib style, 1 fabric option.",
++  },
++  {
++    id: "3MAT001",
++    slug: "all-over-print-athletics-singlet",
++    name: "All-Over Print Athletics Singlet (Track & Field)",
++    category: "Sports Top / Kit",
++    sports: ["Athletics", "Running"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
++      { gsm: "—", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++    ],
++    moq: 50,
++    description: "Athletics singlet, 2 fabric options.",
++  },
++  {
++    id: "3MFS001",
++    slug: "all-over-print-fishing-shirt-upf50",
++    name: "All-Over Print Fishing Shirt (UPF 50+)",
++    category: "Sports Top / Kit",
++    sports: ["Fishing"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "涤纶", process: "Sublimation", gsmOptions: "100120140160180200 g" },
++    ],
++    moq: 50,
++    description: "Fishing shirt UPF 50+, 1 fabric option.",
++  },
++  {
++    id: "3MGM001",
++    slug: "all-over-print-gym-tank-top",
++    name: "All-Over Print Gym Tank Top",
++    category: "Tank Top & Camis",
++    sports: ["Gym", "CrossFit", "Athletics"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++      { gsm: "—", material: "Interlock布", process: "Sublimation", gsmOptions: "160180200220 g" },
++    ],
++    moq: 50,
++    description: "Gym tank top, 2 fabric options.",
++  },
++  {
++    id: "3MDV001",
++    slug: "all-over-print-dive-lycra-suit",
++    name: "All-Over Print Dive Lycra Suit",
++    category: "Sports Top / Kit",
++    sports: ["Dive", "Surf", "Swimwear"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
++    ],
++    moq: 50,
++    description: "Dive Lycra suit, 1 fabric option.",
++  },
++  {
++    id: "3MSK002",
++    slug: "all-over-print-skating-dress",
++    name: "All-Over Print Skating Dress (Figure / Roller)",
++    category: "Sports Top / Kit",
++    sports: ["Skating"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
++    ],
++    moq: 50,
++    description: "Figure / roller skating dress, 1 fabric option.",
++  },
++  {
++    id: "2HBTSJ19",
++    slug: "all-over-print-beach-sports-jersey",
++    name: "All-Over Print Beach Sports Jersey (Volleyball / Soccer / Rugby)",
++    category: "Jersey / Kit",
++    sports: ["Beach", "Volleyball", "Soccer", "Rugby"],
++    scenarios: SPORT_SCENARIOS,
++    fabrics: [
++      { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
++      { gsm: "—", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++    ],
++    moq: 50,
++    description: "Beach sports jersey — volleyball, soccer, rugby, 2 fabric options.",
++  },
++
++  // ---------- 65–99: Industry-specific workwear ----------
++  {
++    id: "3WEXPL01",
++    slug: "all-over-print-express-logistics-polo-shirt",
++    name: "All-Over Print Express & Logistics Polo Shirt",
++    category: "Polo Shirt",
++    sports: [],
++    scenarios: ["Uniform & Workwear", "Corporate & Branding", "Construction & Engineering", "Express & Logistics"],
++    fabrics: [
++      { gsm: "—", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++      { gsm: "—", material: "Pique布", process: "Sublimation", gsmOptions: "160180200220240 g" },
++    ],
++    moq: 50,
++    description: "Express & logistics polo shirt, 2 fabric options.",
++  },
++  {
++    id: "3WEXPL02",
++    slug: "all-over-print-express-logistics-t-shirt",
++    name: "All-Over Print Express & Logistics T-Shirt",
++    category: "T-Shirt",
++    sports: [],
++    scenarios: ["Uniform & Workwear", "Express & Logistics", "Corporate & Branding"],
++    fabrics: [
++      { gsm: "—", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++      { gsm: "—", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++    ],
++    moq: 50,
++    description: "Express & logistics T-shirt, 2 fabric options.",
++  },
++  {
++    id: "3WEXPL03",
++    slug: "all-over-print-express-logistics-hoodie",
++    name: "All-Over Print Express & Logistics Hoodie",
++    category: "Hoodie",
++    sports: [],
++    scenarios: ["Uniform & Workwear", "Express & Logistics", "Corporate & Branding"],
++    fabrics: [
++      { gsm: "—", material: "抓绒", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
++      { gsm: "—", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++    ],
++    moq: 50,
++    description: "Express & logistics hoodie, 2 fabric options.",
++  },
++  {
++    id: "3WCON01",
++    slug: "all-over-print-construction-hoodie",
++    name: "All-Over Print Construction Hoodie (Hi-Vis Option)",
++    category: "Hoodie",
++    sports: [],
++    scenarios: ["Construction & Engineering", "Uniform & Workwear", "Construction & Engineering"],
++    fabrics: [
++      { gsm: "—", material: "抓绒", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
++      { gsm: "—", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++    ],
++    moq: 50,
++    description: "Construction hoodie with hi-vis option, 2 fabric options.",
++  },
++  {
++    id: "3WCON02",
++    slug: "all-over-print-construction-jacket",
++    name: "All-Over Print Construction Jacket (Insulated)",
++    category: "Jacket",
++    sports: [],
++    scenarios: ["Construction & Engineering", "Uniform & Workwear"],
++    fabrics: [
++      { gsm: "—", material: "涤纶", process: "Sublimation", gsmOptions: "100120140160180200 g" },
++      { gsm: "—", material: "抓绒/帆布", process: "Sublimation", gsmOptions: "300 g" },
++    ],
++    moq: 50,
++    description: "Construction jacket insulated, 2 fabric options.",
++  },
++  {
++    id: "3WCON03",
++    slug: "all-over-print-construction-pants",
++    name: "All-Over Print Construction Pants (Cargo)",
++    category: "Pants",
++    sports: [],
++    scenarios: ["Construction & Engineering", "Uniform & Workwear"],
++    fabrics: [
++      { gsm: "—", material: "棉/斜纹", process: "All-Over Digital Print on Cotton", gsmOptions: "120140160180200220240260280300 g" },
++    ],
++    moq: 50,
++    description: "Construction cargo pants, 1 fabric option.",
++  },
++  {
++    id: "3WCON04",
++    slug: "all-over-print-construction-t-shirt",
++    name: "All-Over Print Construction T-Shirt (Hi-Vis Option)",
++    category: "T-Shirt",
++    sports: [],
++    scenarios: ["Construction & Engineering", "Uniform & Workwear"],
++    fabrics: [
++      { gsm: "—", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++      { gsm: "—", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++    ],
++    moq: 50,
++    description: "Construction T-shirt hi-vis option, 2 fabric options.",
++  },
++  {
++    id: "3WHOS01",
++    slug: "all-over-print-hospitality-polo-shirt",
++    name: "All-Over Print Hospitality & F&B Polo Shirt",
++    category: "Polo Shirt",
++    sports: [],
++    scenarios: ["Hospitality & F&B", "Uniform & Workwear", "Corporate & Branding"],
++    fabrics: [
++      { gsm: "—", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++      { gsm: "—", material: "Pique布", process: "Sublimation", gsmOptions: "160180200220240 g" },
++    ],
++    moq: 50,
++    description: "Hospitality & F&B polo shirt, 2 fabric options.",
++  },
++  {
++    id: "3WHOS02",
++    slug: "all-over-print-hospitality-t-shirt",
++    name: "All-Over Print Hospitality & F&B T-Shirt",
++    category: "T-Shirt",
++    sports: [],
++    scenarios: ["Hospitality & F&B", "Uniform & Workwear"],
++    fabrics: [
++      { gsm: "—", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++    ],
++    moq: 50,
++    description: "Hospitality & F&B T-shirt, 1 fabric option.",
++  },
++  {
++    id: "3WHOS03",
++    slug: "all-over-print-hospitality-sweatshirt",
++    name: "All-Over Print Hospitality & F&B Sweatshirt",
++    category: "Sweatshirt",
++    sports: [],
++    scenarios: ["Hospitality & F&B", "Uniform & Workwear"],
++    fabrics: [
++      { gsm: "—", material: "抓绒", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
++    ],
++    moq: 50,
++    description: "Hospitality & F&B sweatshirt, 1 fabric option.",
++  },
++  {
++    id: "3WMED01",
++    slug: "all-over-print-medical-scrubs-t-shirt",
++    name: "All-Over Print Medical & Healthcare Scrubs T-Shirt",
++    category: "T-Shirt",
++    sports: [],
++    scenarios: ["Medical & Healthcare", "Uniform & Workwear"],
++    fabrics: [
++      { gsm: "—", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++      { gsm: "—", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++    ],
++    moq: 50,
++    description: "Medical & healthcare scrubs T-shirt, 2 fabric options.",
++  },
++  {
++    id: "3WMED02",
++    slug: "all-over-print-medical-polo-shirt",
++    name: "All-Over Print Medical & Healthcare Polo Shirt",
++    category: "Polo Shirt",
++    sports: [],
++    scenarios: ["Medical & Healthcare", "Uniform & Workwear"],
++    fabrics: [
++      { gsm: "—", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++    ],
++    moq: 50,
++    description: "Medical & healthcare polo shirt, 1 fabric option.",
++  },
++  {
++    id: "3WMED03",
++    slug: "all-over-print-medical-tank-top",
++    name: "All-Over Print Medical & Healthcare Tank Top",
++    category: "Tank Top & Camis",
++    sports: [],
++    scenarios: ["Medical & Healthcare", "Uniform & Workwear"],
++    fabrics: [
++      { gsm: "—", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++    ],
++    moq: 50,
++    description: "Medical & healthcare tank top, 1 fabric option.",
++  },
++  {
++    id: "3WSEC01",
++    slug: "all-over-print-security-polo-shirt",
++    name: "All-Over Print Security & Property Polo Shirt",
++    category: "Polo Shirt",
++    sports: [],
++    scenarios: ["Security & Property", "Uniform & Workwear", "Construction & Engineering"],
++    fabrics: [
++      { gsm: "—", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++      { gsm: "—", material: "Pique布", process: "Sublimation", gsmOptions: "160180200220240 g" },
++    ],
++    moq: 50,
++    description: "Security & property polo shirt, 2 fabric options.",
++  },
++  {
++    id: "3WSEC02",
++    slug: "all-over-print-security-hoodie",
++    name: "All-Over Print Security & Property Hoodie",
++    category: "Hoodie",
++    sports: [],
++    scenarios: ["Security & Property", "Uniform & Workwear"],
++    fabrics: [
++      { gsm: "—", material: "抓绒", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
++    ],
++    moq: 50,
++    description: "Security & property hoodie, 1 fabric option.",
++  },
++  {
++    id: "3WSEC03",
++    slug: "all-over-print-security-jacket",
++    name: "All-Over Print Security & Property Jacket",
++    category: "Jacket",
++    sports: [],
++    scenarios: ["Security & Property", "Uniform & Workwear"],
++    fabrics: [
++      { gsm: "—", material: "涤纶", process: "Sublimation", gsmOptions: "100120140160180200 g" },
++    ],
++    moq: 50,
++    description: "Security & property jacket, 1 fabric option.",
++  },
++  {
++    id: "3WRTL01",
++    slug: "all-over-print-retail-polo-shirt",
++    name: "All-Over Print Retail & Supermarket Polo Shirt",
++    category: "Polo Shirt",
++    sports: [],
++    scenarios: ["Retail & Supermarket", "Uniform & Workwear", "Retail & Fashion"],
++    fabrics: [
++      { gsm: "—", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++    ],
++    moq: 50,
++    description: "Retail & supermarket polo shirt, 1 fabric option.",
++  },
++  {
++    id: "3WRTL02",
++    slug: "all-over-print-retail-t-shirt",
++    name: "All-Over Print Retail & Supermarket T-Shirt",
++    category: "T-Shirt",
++    sports: [],
++    scenarios: ["Retail & Supermarket", "Uniform & Workwear", "Retail & Fashion"],
++    fabrics: [
++      { gsm: "—", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++    ],
++    moq: 50,
++    description: "Retail & supermarket T-shirt, 1 fabric option.",
++  },
++  {
++    id: "3WRTL03",
++    slug: "all-over-print-retail-hoodie",
++    name: "All-Over Print Retail & Supermarket Hoodie",
++    category: "Hoodie",
++    sports: [],
++    scenarios: ["Retail & Supermarket", "Uniform & Workwear"],
++    fabrics: [
++      { gsm: "—", material: "抓绒", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
++    ],
++    moq: 50,
++    description: "Retail & supermarket hoodie, 1 fabric option.",
++  },
++  {
++    id: "3WEDU01",
++    slug: "all-over-print-school-t-shirt",
++    name: "All-Over Print School & Education T-Shirt",
++    category: "T-Shirt",
++    sports: [],
++    scenarios: ["Education & School", "School & Education", "Uniform & Workwear"],
++    fabrics: [
++      { gsm: "—", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++      { gsm: "—", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++    ],
++    moq: 50,
++    description: "School & education T-shirt, 2 fabric options.",
++  },
++  {
++    id: "3WEDU02",
++    slug: "all-over-print-school-polo-shirt",
++    name: "All-Over Print School & Education Polo Shirt",
++    category: "Polo Shirt",
++    sports: [],
++    scenarios: ["Education & School", "School & Education", "Uniform & Workwear"],
++    fabrics: [
++      { gsm: "—", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++      { gsm: "—", material: "Pique布", process: "Sublimation", gsmOptions: "160180200220240 g" },
++    ],
++    moq: 50,
++    description: "School & education polo shirt, 2 fabric options.",
++  },
++  {
++    id: "3WEDU03",
++    slug: "all-over-print-school-jacket",
++    name: "All-Over Print School & Education Jacket",
++    category: "Jacket",
++    sports: [],
++    scenarios: ["Education & School", "School & Education", "Uniform & Workwear"],
++    fabrics: [
++      { gsm: "—", material: "涤纶", process: "Sublimation", gsmOptions: "100120140160180200 g" },
++    ],
++    moq: 50,
++    description: "School & education jacket, 1 fabric option.",
++  },
++  {
++    id: "3WCOR01",
++    slug: "all-over-print-corporate-promo-polo-shirt",
++    name: "All-Over Print Corporate & Promo Polo Shirt",
++    category: "Polo Shirt",
++    sports: [],
++    scenarios: ["Corporate & Promo", "Corporate & Branding", "Uniform & Workwear", "Promotional Swag"],
++    fabrics: [
++      { gsm: "—", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++      { gsm: "—", material: "Pique布", process: "Sublimation", gsmOptions: "160180200220240 g" },
++    ],
++    moq: 50,
++    description: "Corporate & promo polo shirt, 2 fabric options.",
++  },
++  {
++    id: "3WCOR02",
++    slug: "all-over-print-corporate-promo-t-shirt",
++    name: "All-Over Print Corporate & Promo T-Shirt",
++    category: "T-Shirt",
++    sports: [],
++    scenarios: ["Corporate & Promo", "Corporate & Branding", "Promotional Swag"],
++    fabrics: [
++      { gsm: "—", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++      { gsm: "—", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++    ],
++    moq: 50,
++    description: "Corporate & promo T-shirt, 2 fabric options.",
++  },
++  {
++    id: "3WCOR03",
++    slug: "all-over-print-corporate-promo-hoodie",
++    name: "All-Over Print Corporate & Promo Hoodie",
++    category: "Hoodie",
++    sports: [],
++    scenarios: ["Corporate & Promo", "Corporate & Branding", "Promotional Swag"],
++    fabrics: [
++      { gsm: "—", material: "抓绒", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
++      { gsm: "—", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++    ],
++    moq: 50,
++    description: "Corporate & promo hoodie, 2 fabric options.",
++  },
++  {
++    id: "3WTRN01",
++    slug: "all-over-print-transit-polo-shirt",
++    name: "All-Over Print Transit & Transport Polo Shirt",
++    category: "Polo Shirt",
++    sports: [],
++    scenarios: ["Transit & Transport", "Uniform & Workwear", "Express & Logistics"],
++    fabrics: [
++      { gsm: "—", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++    ],
++    moq: 50,
++    description: "Transit & transport polo shirt, 1 fabric option.",
++  },
++  {
++    id: "3WTRN02",
++    slug: "all-over-print-transit-jacket",
++    name: "All-Over Print Transit & Transport Jacket",
++    category: "Jacket",
++    sports: [],
++    scenarios: ["Transit & Transport", "Uniform & Workwear"],
++    fabrics: [
++      { gsm: "—", material: "涤纶", process: "Sublimation", gsmOptions: "100120140160180200 g" },
++    ],
++    moq: 50,
++    description: "Transit & transport jacket, 1 fabric option.",
++  },
++  {
++    id: "3WTRN03",
++    slug: "all-over-print-transit-hoodie",
++    name: "All-Over Print Transit & Transport Hoodie",
++    category: "Hoodie",
++    sports: [],
++    scenarios: ["Transit & Transport", "Uniform & Workwear"],
++    fabrics: [
++      { gsm: "—", material: "抓绒", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
++    ],
++    moq: 50,
++    description: "Transit & transport hoodie, 1 fabric option.",
++  },
++  {
++    id: "3WSTU01",
++    slug: "all-over-print-studio-gym-tank-top",
++    name: "All-Over Print Studio & Gym Tank Top",
++    category: "Tank Top & Camis",
++    sports: [],
++    scenarios: ["Studio & Gym", "Uniform & Workwear"],
++    fabrics: [
++      { gsm: "—", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++      { gsm: "—", material: "Interlock布", process: "Sublimation", gsmOptions: "160180200220 g" },
++    ],
++    moq: 50,
++    description: "Studio & gym tank top, 2 fabric options.",
++  },
++  {
++    id: "3WSTU02",
++    slug: "all-over-print-studio-gym-t-shirt",
++    name: "All-Over Print Studio & Gym T-Shirt",
++    category: "T-Shirt",
++    sports: [],
++    scenarios: ["Studio & Gym", "Uniform & Workwear"],
++    fabrics: [
++      { gsm: "—", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++    ],
++    moq: 50,
++    description: "Studio & gym T-shirt, 1 fabric option.",
++  },
++  {
++    id: "3WSTU03",
++    slug: "all-over-print-studio-gym-leggings",
++    name: "All-Over Print Studio & Gym Leggings",
++    category: "Leggings",
++    sports: [],
++    scenarios: ["Studio & Gym", "Uniform & Workwear"],
++    fabrics: [
++      { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
++    ],
++    moq: 50,
++    description: "Studio & gym leggings, 1 fabric option.",
++  },
++  {
++    id: "3WFES01",
++    slug: "all-over-print-festival-t-shirt",
++    name: "All-Over Print Festival & Holiday T-Shirt",
++    category: "T-Shirt",
++    sports: [],
++    scenarios: ["Festival & Holiday", "Event & Festival", "Music & Merch", "Promotional Swag"],
++    fabrics: [
++      { gsm: "—", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++      { gsm: "—", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++    ],
++    moq: 50,
++    description: "Festival & holiday T-shirt, 2 fabric options.",
++  },
++  {
++    id: "3WFES02",
++    slug: "all-over-print-festival-hoodie",
++    name: "All-Over Print Festival & Holiday Hoodie",
++    category: "Hoodie",
++    sports: [],
++    scenarios: ["Festival & Holiday", "Event & Festival", "Music & Merch"],
++    fabrics: [
++      { gsm: "—", material: "抓绒", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
++      { gsm: "—", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++    ],
++    moq: 50,
++    description: "Festival & holiday hoodie, 2 fabric options.",
++  },
++  {
++    id: "3WMIL01",
++    slug: "all-over-print-military-training-t-shirt",
++    name: "All-Over Print Military Wear Training T-Shirt",
++    category: "T-Shirt",
++    sports: [],
++    scenarios: ["Military", "Uniform & Workwear", "Construction & Engineering"],
++    fabrics: [
++      { gsm: "—", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
++      { gsm: "—", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++    ],
++    moq: 50,
++    description: "Military training T-shirt, 2 fabric options.",
++  },
++  {
++    id: "3WMIL02",
++    slug: "all-over-print-military-casual-polo",
++    name: "All-Over Print Military Wear Casual Polo",
++    category: "Polo Shirt",
++    sports: [],
++    scenarios: ["Military", "Uniform & Workwear"],
++    fabrics: [
++      { gsm: "—", material: "鸟眼布", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
++    ],
++    moq: 50,
++    description: "Military casual polo, 1 fabric option.",
++  },
++  {
++    id: "3WBEACH01",
++    slug: "all-over-print-beach-sarong",
++    name: "All-Over Print Beach Sarong (180×110cm)",
++    category: "Beachwear",
++    sports: ["Beach", "Swimwear", "Surf"],
++    scenarios: ["Event & Festival", "Retail & Fashion", "Promotional Swag"],
++    fabrics: [
++      { gsm: "—", material: "涤纶", process: "Sublimation", gsmOptions: "100120140160180200 g" },
++      { gsm: "—", material: "雪纺", process: "Sublimation", gsmOptions: "80100120140160180200 g" },
++    ],
++    moq: 50,
++    description: "Beach sarong 180×110cm, 2 fabric options, ideal for resort & event merch.",
++  },
++];
++
++// ============================================================
++// INDEX LOOKUPS
++// ============================================================
++
++export const productCategories: ProductCategory[] = Array.from(
++  new Set(products.map((p) => p.category))
++) as ProductCategory[];
++
++export const allSports: Sport[] = Array.from(
++  new Set(products.flatMap((p) => p.sports))
++) as Sport[];
++
++export const allScenarios: Scenario[] = Array.from(
++  new Set(products.flatMap((p) => p.scenarios))
++) as Scenario[];
++
++export function getProductBySlug(slug: string): Product | undefined {
++  return products.find((p) => p.slug === slug);
++}
++
++export function getRelatedProducts(product: Product, limit = 4): Product[] {
++  return products
++    .filter((p) => p.id !== product.id)
++    .map((p) => {
++      const sportOverlap = p.sports.filter((s) => product.sports.includes(s)).length;
++      const scenarioOverlap = p.scenarios.filter((s) => product.scenarios.includes(s)).length;
++      const sameCategory = p.category === product.category ? 3 : 0;
++      return { p, score: sportOverlap * 2 + scenarioOverlap + sameCategory };
++    })
++    .sort((a, b) => b.score - a.score)
++    .slice(0, limit)
++    .map((entry) => entry.p);
++}
++
+-- 
+2.43.0
+

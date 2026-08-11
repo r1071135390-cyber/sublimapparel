@@ -1,0 +1,744 @@
+From 363441798d5028e60efb194c08179305af452ea2 Mon Sep 17 00:00:00 2001
+From: user8596904236 <1254955844122064-user8596904236@noreply.coze.cn>
+Date: Tue, 11 Aug 2026 18:22:59 +0800
+Subject: [PATCH 02/10] =?UTF-8?q?feat:=20=E4=BF=9D=E5=AD=98=E6=96=87?=
+ =?UTF-8?q?=E4=BB=B6=E5=8F=98=E6=9B=B4?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Coze-Commit-Type: user
+Coze-User-ID: 1254955844122064
+Coze-Conversation-ID: 11527849
+---
+ src/app/products/page.tsx     | 126 +++++++++++++++--
+ src/components/industries.tsx |  45 ++++--
+ src/components/products.tsx   |  69 ++++++---
+ src/lib/tag-utils.ts          | 255 ++++++++++++++++++++++++++++++++++
+ 4 files changed, 453 insertions(+), 42 deletions(-)
+ create mode 100644 src/lib/tag-utils.ts
+
+diff --git a/src/app/products/page.tsx b/src/app/products/page.tsx
+index f0e5162..0b19198 100644
+--- a/src/app/products/page.tsx
++++ b/src/app/products/page.tsx
+@@ -2,6 +2,7 @@ import { Contact } from "@/components/contact";
+ import Image from "next/image";
+ import Link from "next/link";
+ import { ArrowRight, Sparkles } from "lucide-react";
++import { tagLink, resolveTagLink } from "@/lib/tag-utils";
+ 
+ export const metadata = {
+   title: "Custom Sublimation & Cotton Apparel — T-Shirts, Jerseys, Hoodies, Cycling, Golf, Racing",
+@@ -18,42 +19,97 @@ const categories = [
+     id: "apparel",
+     title: "Apparel",
+     desc: "T-shirts, hoodies, jerseys, racing, cycling, golf, bowling, esports, singlets, leggings. Cut and sewn in our Yiwu factory.",
+-    items: ["T-Shirts", "Hoodies & Sweatshirts", "Jerseys & Singlets", "Racing Kits", "Cycling Kits", "Golf / Bowling Shirts", "Pants & Shorts", "Vests"],
++    items: [
++      { name: "T-Shirts", category: "T-Shirt" },
++      { name: "Hoodies", category: "Hoodie" },
++      { name: "Sweatshirts", category: "Sweatshirt" },
++      { name: "Jerseys", category: "Jersey / Kit" },
++      { name: "Cycling Kits", category: "Sports Top / Kit" },
++      { name: "Polo / Golf", category: "Polo Shirt" },
++      { name: "Bowling Shirts", category: "Shirt" },
++      { name: "Pants & Shorts", category: "Pants" },
++      { name: "Leggings", category: "Leggings" },
++      { name: "Tank Tops", category: "Tank Top & Camis" },
++      { name: "Vests", category: "Jacket" },
++      { name: "Combat Gear", category: "Combat Gear" },
++    ],
+     note: "Polyester or 100% cotton. Cotton runs on DTG/DTF (A4–A3 per panel); polyester runs on sublimation (true all-over, edge-to-edge). Allover digital print on cotton also available (cut-and-sew, true full-body, MOQ 100).",
+   },
+   {
+     id: "home",
+     title: "Home & Living",
+     desc: "Custom printed home textiles. Bright patterns, soft fabrics, ready for retail or e-commerce.",
+-    items: ["Throw Pillows", "Cushion Covers", "Blankets & Throws", "Curtains & Drapes", "Tablecloths", "Towels", "Bedding Sets"],
++    items: [
++      { name: "Throw Pillows" },
++      { name: "Cushion Covers" },
++      { name: "Blankets & Throws" },
++      { name: "Curtains & Drapes" },
++      { name: "Tablecloths" },
++      { name: "Towels" },
++      { name: "Bedding Sets" },
++    ],
+     note: "Polyester, cotton, or blended fabrics. Custom sizes available.",
+   },
+   {
+     id: "accessories",
+     title: "Bags & Accessories",
+     desc: "Custom printed bags, hats, and fashion accessories. Great for events and brand merch.",
+-    items: ["Drawstring Bags", "Backpacks", "Tote Bags", "Baseball Caps", "Bucket Hats", "Scarves & Bandanas", "Lanyards", "Aprons"],
++    items: [
++      { name: "Drawstring Bags" },
++      { name: "Backpacks" },
++      { name: "Tote Bags" },
++      { name: "Baseball Caps", category: "Baseball Cap" },
++      { name: "Bucket Hats", category: "Bucket Hat" },
++      { name: "Scarves & Bandanas" },
++      { name: "Lanyards" },
++      { name: "Aprons", category: "Apron" },
++    ],
+     note: "Durable sublimation-ready materials. Custom hardware and closures.",
+   },
+   {
+     id: "flags",
+     title: "Flags & Banners",
+     desc: "Indoor and outdoor flags, banners, and signage. Vibrant colors, fade-resistant.",
+-    items: ["Garden Flags", "Beach Flags", "Hand Flags", "Trade Show Banners", "Pull-Up Banners", "Pennant Strings"],
++    items: [
++      { name: "Garden Flags" },
++      { name: "Beach Flags" },
++      { name: "Hand Flags" },
++      { name: "Trade Show Banners" },
++      { name: "Pull-Up Banners" },
++      { name: "Pennant Strings" },
++    ],
+     note: "Knitted polyester, flag fabric, or mesh. Pole pockets and hemming included.",
+   },
+   {
+     id: "hardgoods",
+     title: "Hard Goods & Lifestyle",
+     desc: "Sublimation-ready hard goods and lifestyle products. Perfect for e-commerce and gifting.",
+-    items: ["Mouse Pads", "Coasters", "Puzzles", "Phone Cases", "AirPods Cases", "Mugs (wrap print)", "Keychains", "Magnets"],
++    items: [
++      { name: "Mouse Pads" },
++      { name: "Coasters" },
++      { name: "Puzzles" },
++      { name: "Phone Cases" },
++      { name: "AirPods Cases" },
++      { name: "Mugs (wrap print)" },
++      { name: "Keychains" },
++      { name: "Magnets" },
++    ],
+     note: "Pre-treated sublimation blanks. Custom shapes and packaging available.",
+   },
+   {
+     id: "custom",
+     title: "Custom Projects",
+     desc: "Got something else? We love weird one-offs. Send us your idea and we'll figure out how to print it.",
+-    items: ["Pet Apparel", "Shoe Uppers", "Lampshades", "Wall Art", "Festival Costumes", "Theatre Costumes", "Promotional Items", "Anything else you imagine"],
++    items: [
++      { name: "Pet Apparel" },
++      { name: "Shoe Uppers" },
++      { name: "Lampshades" },
++      { name: "Wall Art" },
++      { name: "Festival Costumes" },
++      { name: "Theatre Costumes" },
++      { name: "Promotional Items" },
++      { name: "Anything else you imagine" },
++    ],
+     note: "Tell us what you need. If it can be sublimated, we can probably do it.",
+   },
+ ];
+@@ -119,6 +175,30 @@ export default function ProductsPage() {
+                 Apparel is our bread and butter — but we print home goods, bags, flags, hard
+                 goods, and whatever custom project you bring us. Polyester or 100% cotton.
+               </p>
++
++              {/* Quick-filter tags */}
++              <div className="mt-6 flex flex-wrap gap-2">
++                {[
++                  { name: "All 100 products", href: tagLink({}) },
++                  { name: "Jerseys", href: tagLink({ category: "Jersey / Kit" }) },
++                  { name: "T-Shirts", href: tagLink({ category: "T-Shirt" }) },
++                  { name: "Hoodies", href: tagLink({ category: "Hoodie" }) },
++                  { name: "Polo Shirts", href: tagLink({ category: "Polo Shirt" }) },
++                  { name: "Soccer", href: tagLink({ sport: "Soccer" }) },
++                  { name: "Cycling", href: tagLink({ sport: "Cycling" }) },
++                  { name: "Basketball", href: tagLink({ sport: "Basketball" }) },
++                  { name: "Events", href: tagLink({ scenario: "Event & Festival" }) },
++                  { name: "Teams", href: tagLink({ scenario: "Team & Club" }) },
++                ].map((q) => (
++                  <Link
++                    key={q.name}
++                    href={q.href}
++                    className="border-2 border-black bg-white px-3 py-1.5 text-xs font-black uppercase tracking-wide text-black transition-colors hover:bg-[#ff4d00] hover:text-white"
++                  >
++                    {q.name}
++                  </Link>
++                ))}
++              </div>
+             </div>
+           </div>
+         </div>
+@@ -182,14 +262,32 @@ export default function ProductsPage() {
+                   </div>
+                   <div className="md:col-span-8">
+                     <div className="grid grid-cols-2 gap-2 md:grid-cols-3">
+-                      {cat.items.map((item) => (
+-                        <div
+-                          key={item}
+-                          className="border-2 border-black bg-[#faf9f6] p-3 text-sm font-black text-black"
+-                        >
+-                          {item}
+-                        </div>
+-                      ))}
++                      {cat.items.map((item) => {
++                        const itemName = item.name;
++                        const itemHref = item.category
++                          ? tagLink({ category: item.category })
++                          : resolveTagLink(itemName);
++                        if (itemHref) {
++                          return (
++                            <Link
++                              key={itemName}
++                              href={itemHref}
++                              className="group flex items-center justify-between border-2 border-black bg-[#faf9f6] px-3 py-2.5 text-sm font-black text-black transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:border-[#ff4d00] hover:bg-[#ff4d00] hover:text-white hover:shadow-[3px_3px_0_0_#000]"
++                            >
++                              <span>{itemName}</span>
++                              <ArrowRight className="h-3.5 w-3.5 opacity-0 transition-opacity group-hover:opacity-100" strokeWidth={3} />
++                            </Link>
++                          );
++                        }
++                        return (
++                          <div
++                            key={itemName}
++                            className="border-2 border-black bg-[#faf9f6] p-3 text-sm font-black text-black"
++                          >
++                            {itemName}
++                          </div>
++                        );
++                      })}
+                     </div>
+                   </div>
+                 </div>
+diff --git a/src/components/industries.tsx b/src/components/industries.tsx
+index 7aa694d..ce9ef6f 100644
+--- a/src/components/industries.tsx
++++ b/src/components/industries.tsx
+@@ -16,11 +16,13 @@ import {
+   ShoppingBag,
+   ArrowRight,
+ } from "lucide-react";
++import { tagLink } from "@/lib/tag-utils";
+ 
+ export function Industries() {
+   const industries = [
+     {
+       slug: "events-conferences",
++      scenario: "Event & Festival",
+       title: "Events & Conferences",
+       icon: CalendarDays,
+       products: "Staff & volunteer tees, lanyards, table throws, step-and-repeat backdrops, feather flags",
+@@ -28,6 +30,7 @@ export function Industries() {
+     },
+     {
+       slug: "promotional-products",
++      scenario: "Promotional Swag",
+       title: "Promotional Products Distributors",
+       icon: Megaphone,
+       products: "Apparel, bags, towels, blankets, flags, table covers, lanyards",
+@@ -35,6 +38,7 @@ export function Industries() {
+     },
+     {
+       slug: "sports-teams",
++      scenario: "Sports League",
+       title: "Sports Teams & Leagues",
+       icon: Trophy,
+       products: "Sublimated jerseys, shorts, warm-ups, singlets, socks, sideline banners",
+@@ -42,6 +46,7 @@ export function Industries() {
+     },
+     {
+       slug: "music-tour-festival",
++      scenario: "Music & Merch",
+       title: "Music, Tour & Festival Merch",
+       icon: Music2,
+       products: "All-over-print tees and hoodies, bandanas, tote bags, stage backdrops",
+@@ -49,6 +54,7 @@ export function Industries() {
+     },
+     {
+       slug: "trade-show-display",
++      scenario: "Event & Festival",
+       title: "Trade Show & Display",
+       icon: Presentation,
+       products: "SEG tension fabric, backdrop walls, table throws, counter covers, tent walls",
+@@ -56,6 +62,7 @@ export function Industries() {
+     },
+     {
+       slug: "corporate-programs",
++      scenario: "Corporate & Branding",
+       title: "Corporate & Employee Programs",
+       icon: Briefcase,
+       products: "Uniforms, golf polos, bowling shirts, esports jerseys, onboarding kits, conference apparel, branded gifting",
+@@ -63,6 +70,7 @@ export function Industries() {
+     },
+     {
+       slug: "apparel-brands",
++      scenario: "Retail & Fashion",
+       title: "Apparel Brands & Agencies",
+       icon: Shirt,
+       products: "Custom cut-and-sew, all-over-print apparel, private-label packaging",
+@@ -70,6 +78,7 @@ export function Industries() {
+     },
+     {
+       slug: "schools-greek-life",
++      scenario: "Education & School",
+       title: "Schools, Universities & Greek Life",
+       icon: GraduationCap,
+       products: "Rush shirts, bid day tees, game-day and alumni apparel, dorm goods",
+@@ -77,6 +86,7 @@ export function Industries() {
+     },
+     {
+       slug: "political-campaigns",
++      scenario: "Political Campaign",
+       title: "Political Campaigns",
+       icon: Flag,
+       products: "Rally tees, fabric banners, hand-held flags, canvasser vests, hats, rally towels",
+@@ -84,6 +94,7 @@ export function Industries() {
+     },
+     {
+       slug: "breweries-hospitality",
++      scenario: "Hospitality & F&B",
+       title: "Breweries, Coffee & Hospitality",
+       icon: Coffee,
+       products: "Merch tees and hoodies, aprons, bar towels, patio covers, tap-room banners",
+@@ -91,6 +102,7 @@ export function Industries() {
+     },
+     {
+       slug: "endurance-race-events",
++      scenario: "Sports League",
+       title: "Endurance & Race Events",
+       icon: Bike,
+       products: "Finisher tees in cotton and technical, race shirts, cycling kits, route banners",
+@@ -98,6 +110,7 @@ export function Industries() {
+     },
+     {
+       slug: "ecommerce-fulfillment",
++      scenario: "Retail & Fashion",
+       title: "E-commerce & Fulfillment",
+       icon: ShoppingBag,
+       products: "Blankets, pillow covers, towels, tapestries, pet goods, aprons, tote bags",
+@@ -151,18 +164,26 @@ export function Industries() {
+                   {ind.pitch}
+                 </div>
+ 
+-                {/* View cases link */}
+-                <Link
+-                  href={`/cases/${ind.slug}`}
+-                  className="mt-auto inline-flex items-center gap-1.5 self-start text-xs font-black uppercase tracking-wider text-black transition-colors hover:text-[#ff4d00]"
+-                >
+-                  View case studies
+-                  <ArrowRight
+-                    size={14}
+-                    strokeWidth={3}
+-                    className="transition-transform group-hover:translate-x-1"
+-                  />
+-                </Link>
++                {/* View products link */}
++                <div className="mt-auto flex items-center justify-between gap-2">
++                  <Link
++                    href={tagLink({ scenario: ind.scenario })}
++                    className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-black transition-colors hover:text-[#ff4d00]"
++                  >
++                    Browse products
++                    <ArrowRight
++                      size={14}
++                      strokeWidth={3}
++                      className="transition-transform group-hover:translate-x-1"
++                    />
++                  </Link>
++                  <Link
++                    href={`/cases/${ind.slug}`}
++                    className="text-[10px] font-bold uppercase tracking-wider text-black/50 transition-colors hover:text-black"
++                  >
++                    Cases →
++                  </Link>
++                </div>
+               </div>
+             );
+           })}
+diff --git a/src/components/products.tsx b/src/components/products.tsx
+index 3ecf62c..1ca8719 100644
+--- a/src/components/products.tsx
++++ b/src/components/products.tsx
+@@ -1,5 +1,6 @@
+ import Link from "next/link";
+ import { ArrowRight } from "lucide-react";
++import { tagLink, resolveTagLink } from "@/lib/tag-utils";
+ 
+ export function Products() {
+   const categories = [
+@@ -8,31 +9,41 @@ export function Products() {
+       headline: "From tees to team kits.",
+       desc: "T-shirts, hoodies, jerseys, racing, cycling, golf, bowling, esports, singlets, leggings, baby onesies — full sublimation on cotton or polyester.",
+       items: [
+-        { name: "T-shirts", href: "/products/t-shirts" },
+-        { name: "Hoodies", href: "/products/hoodies" },
+-        { name: "Jerseys", href: "/products/jerseys" },
+-        { name: "Racing", href: "/products/racing" },
+-        { name: "Cycling", href: "/products/cycling" },
+-        { name: "Golf", href: "/products/golf" },
+-        { name: "Bowling", href: "/products/bowling" },
+-        { name: "Esports", href: "/products/esports" },
++        { name: "T-shirts", tag: "T-Shirt" },
++        { name: "Hoodies", tag: "Hoodie" },
++        { name: "Jerseys", tag: "Jersey / Kit" },
++        { name: "Racing", tag: "Jersey / Kit" },
++        { name: "Cycling", tag: "Sports Top / Kit" },
++        { name: "Golf", tag: "Polo Shirt" },
++        { name: "Bowling", tag: "Shirt" },
++        { name: "Esports", tag: "Jersey / Kit" },
+       ],
+       color: "bg-[#ff4d00]",
+-      href: "/products",
++      href: tagLink({}),
+     },
+     {
+       label: "Sports & Team",
+       headline: "Built for game day.",
+       desc: "Custom sublimated kits for cycling, running, soccer, basketball, rowing, esports. Full team packages with names and numbers.",
+-      items: ["Cycling", "Running", "Soccer", "Esports"],
++      items: [
++        { name: "Cycling", tag: "sport:Cycling" },
++        { name: "Running", tag: "sport:Running" },
++        { name: "Soccer", tag: "sport:Soccer" },
++        { name: "Esports", tag: "sport:Esports" },
++      ],
+       color: "bg-[#00c2ff]",
+-      href: "/products",
++      href: tagLink({ sport: "Cycling" }),
+     },
+     {
+       label: "Flags & Banners",
+       headline: "Make a statement outdoors.",
+       desc: "Custom flags, banners, pop-up displays, beach flags, feather banners. Fade-resistant for outdoor use.",
+-      items: ["Garden flags", "Trade show", "Beach flags", "Banners"],
++      items: [
++        { name: "Garden flags" },
++        { name: "Trade show" },
++        { name: "Beach flags" },
++        { name: "Banners" },
++      ],
+       color: "bg-[#ff4d00]",
+       href: "/products",
+     },
+@@ -40,7 +51,12 @@ export function Products() {
+       label: "Home & Living",
+       headline: "Print your art on soft goods.",
+       desc: "Custom cushions, pillowcases, throws, curtains, bean bags, aprons. Perfect for boutique brands and home decor.",
+-      items: ["Cushions", "Throws", "Curtains", "Aprons"],
++      items: [
++        { name: "Cushions" },
++        { name: "Throws" },
++        { name: "Curtains" },
++        { name: "Aprons", tag: "category:Apron" },
++      ],
+       color: "bg-[#00c2ff]",
+       href: "/products",
+     },
+@@ -48,7 +64,12 @@ export function Products() {
+       label: "Bags & Accessories",
+       headline: "Carry your brand.",
+       desc: "Drawstring bags, backpacks, tote bags, gym sacks, hats, scarves, bandanas, lanyards.",
+-      items: ["Drawstring bags", "Backpacks", "Caps", "Lanyards"],
++      items: [
++        { name: "Drawstring bags" },
++        { name: "Backpacks" },
++        { name: "Caps", tag: "category:Baseball Cap" },
++        { name: "Lanyards" },
++      ],
+       color: "bg-[#ff4d00]",
+       href: "/products",
+     },
+@@ -56,7 +77,12 @@ export function Products() {
+       label: "Hard Goods",
+       headline: "Print on hard surfaces.",
+       desc: "Mousepads, coasters, puzzles, phone cases, ceramic mugs, metal plates, acrylic photo panels.",
+-      items: ["Mousepads", "Mugs", "Puzzles", "Phone cases"],
++      items: [
++        { name: "Mousepads" },
++        { name: "Mugs" },
++        { name: "Puzzles" },
++        { name: "Phone cases" },
++      ],
+       color: "bg-[#00c2ff]",
+       href: "/products",
+     },
+@@ -108,7 +134,18 @@ export function Products() {
+               <div className="flex flex-wrap gap-1.5">
+                 {cat.items.map((item) => {
+                   const itemName = typeof item === "string" ? item : item.name;
+-                  const itemHref = typeof item === "string" ? null : item.href;
++                  let itemHref: string | null = null;
++                  if (typeof item === "object" && item.tag) {
++                    const [dim, value] = item.tag.split(":");
++                    if (dim === "category")
++                      itemHref = tagLink({ category: value });
++                    else if (dim === "sport")
++                      itemHref = tagLink({ sport: value });
++                    else if (dim === "scenario")
++                      itemHref = tagLink({ scenario: value });
++                  }
++                  // Fallback: try resolveTagLink on the label itself
++                  if (!itemHref) itemHref = resolveTagLink(itemName);
+                   const baseCls =
+                     "border border-black px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide";
+                   if (itemHref) {
+diff --git a/src/lib/tag-utils.ts b/src/lib/tag-utils.ts
+new file mode 100644
+index 0000000..fc2d9c9
+--- /dev/null
++++ b/src/lib/tag-utils.ts
+@@ -0,0 +1,255 @@
++// ============================================================
++// Tag-link helpers
++// ============================================================
++//
++// Build a /products/all/ URL with a pre-applied 3-dim filter
++// encoded in the URL hash. The ProductCatalog page reads this
++// hash on mount and pre-selects the chips.
++//
++// Schema (matching ProductCatalog's readFromHash):
++//   #cat=Category1,Category2&sport=Sport1,Sport2&use=Scenario1,Scenario2
++//
++// Use enc.encodeURIComponent for multi-word values with spaces/&.
++//
++// Examples:
++//   tagLink({ category: "Hoodie" })
++//   → "/products/all/#cat=Hoodie&sport=&use="
++//   tagLink({ sport: "Soccer" })
++//   → "/products/all/#cat=&sport=Soccer&use="
++//   tagLink({ scenario: "Sports League" })
++//   → "/products/all/#cat=&sport=&use=Sports%20League"
++//   tagLink({ sports: ["Soccer", "Basketball"] })
++//   → "/products/all/#cat=&sport=Soccer%2CBasketball&use="
++
++export type TagFilterInput =
++  | { category: string }
++  | { categories: string[] }
++  | { sport: string }
++  | { sports: string[] }
++  | { scenario: string }
++  | { scenarios: string[] }
++  | {
++      categories?: string[];
++      sports?: string[];
++      scenarios?: string[];
++    };
++
++const BASE = "/products/all/";
++
++export function tagLink(input: TagFilterInput): string {
++  let categories: string[] = [];
++  let sports: string[] = [];
++  let scenarios: string[] = [];
++
++  if ("category" in input) {
++    categories = [input.category];
++  } else if ("categories" in input) {
++    categories = input.categories ?? [];
++  } else if ("sport" in input) {
++    sports = [input.sport];
++  } else if ("sports" in input) {
++    sports = input.sports ?? [];
++  } else if ("scenario" in input) {
++    scenarios = [input.scenario];
++  } else if ("scenarios" in input) {
++    scenarios = input.scenarios ?? [];
++  } else {
++    if (input.categories) categories = input.categories;
++    if (input.sports) sports = input.sports;
++    if (input.scenarios) scenarios = input.scenarios;
++  }
++
++  // URLSearchParams encodes spaces as '+' and '&' as '%26', but
++  // keeps ',' literal — matching the readFromHash side in
++  // ProductCatalog which uses .split(',').
++  const params = new URLSearchParams();
++  if (categories.length) params.set("cat", categories.join(","));
++  if (sports.length) params.set("sport", sports.join(","));
++  if (scenarios.length) params.set("use", scenarios.join(","));
++  return `${BASE}#${params.toString()}`;
++}
++
++// ============================================================
++// Pre-baked mappings for the most common UI text on the site
++// ============================================================
++
++const CATEGORY_MAP: Record<string, string> = {
++  "T-shirts": "T-Shirt",
++  "T-Shirts": "T-Shirt",
++  TShirt: "T-Shirt",
++  "Tee": "T-Shirt",
++  Tees: "T-Shirt",
++  "Hoodies": "Hoodie",
++  "Hoodie & Sweatshirts": "Hoodie",
++  "Hoodie": "Hoodie",
++  "Jerseys": "Jersey / Kit",
++  "Jersey": "Jersey / Kit",
++  "Jerseys & Singlets": "Jersey / Kit",
++  "Racing Kits": "Jersey / Kit",
++  "Racing": "Jersey / Kit",
++  "Cycling Kits": "Sports Top / Kit",
++  Cycling: "Sports Top / Kit",
++  "Golf / Bowling Shirts": "Polo Shirt",
++  "Golf": "Polo Shirt",
++  "Bowling Shirts": "Shirt",
++  "Bowling": "Shirt",
++  "Esports Jerseys": "Jersey / Kit",
++  Esports: "Jersey / Kit",
++  "Singlets": "Sports Top / Kit",
++  "Pants & Shorts": "Pants",
++  "Pants": "Pants",
++  "Shorts": "Pants",
++  Vests: "Jacket",
++  Jackets: "Jacket",
++  "Polo Shirt": "Polo Shirt",
++  "Polo": "Polo Shirt",
++  "Activewear": "Activewear",
++  "Leggings": "Leggings",
++  "Kids Sportswear": "Kids Sportswear",
++  "Baby Bodysuit": "Baby Bodysuit",
++  "Bucket Hat": "Bucket Hat",
++  "Baseball Cap": "Baseball Cap",
++  Caps: "Baseball Cap",
++  Apron: "Apron",
++  Dress: "Dress",
++  Skirt: "Skirt",
++  "Scarf": "Hoodie", // tagged as Hoodie in source
++  Scarves: "Hoodie",
++  "Sweatshirts": "Sweatshirt",
++  "Sweatshirt": "Sweatshirt",
++  "Tank Top & Camis": "Tank Top & Camis",
++  "Tank Top": "Tank Top & Camis",
++  "Combat Gear": "Combat Gear",
++  Knitwear: "Knitwear",
++  Bodysuit: "Bodysuit",
++  "Romper & Jumpsuit": "Romper & Jumpsuit",
++  "Sleepwear & Underwear": "Sleepwear & Underwear",
++  Beachwear: "Beachwear",
++  Swimwear: "Swimwear",
++  "Winter Wear": "Winter Wear",
++  Shirt: "Shirt",
++  "Coord Set": "Coord Set",
++  "Sports Top / Kit": "Sports Top / Kit",
++  "Sports Top": "Sports Top / Kit",
++  "Sportswear": "Sports Top / Kit",
++};
++
++const SPORT_MAP: Record<string, string> = {
++  Soccer: "Soccer",
++  Basketball: "Basketball",
++  Baseball: "Baseball",
++  "Softball": "Softball",
++  Football: "Football",
++  Rugby: "Rugby",
++  Cricket: "Cricket",
++  "Table Tennis": "Table Tennis",
++  Tennis: "Tennis",
++  "Badminton": "Badminton",
++  Volleyball: "Volleyball",
++  Hockey: "Hockey",
++  Lacrosse: "Lacrosse",
++  Cycling: "Cycling",
++  Running: "Running",
++  "Marathon": "Running",
++  Golf: "Golf",
++  Bowling: "Bowling",
++  Esports: "Esports",
++  Swimming: "Swimwear",
++  Swim: "Swimwear",
++  Surf: "Surf",
++  Beach: "Beach",
++  "Dive": "Dive",
++  Diving: "Dive",
++  Ski: "Ski",
++  Skiing: "Ski",
++  Snowboard: "Snowboard",
++  Skate: "Skate",
++  Skating: "Skating",
++  "Yoga": "Yoga",
++  Pilates: "Pilates",
++  Boxing: "Boxing",
++  MMA: "MMA",
++  Wrestling: "Wrestling",
++  "Martial Arts": "Martial Arts",
++  "CrossFit": "CrossFit",
++  Gym: "Gym",
++  "Weightlifting": "Gym",
++  Athletics: "Athletics",
++  Track: "Athletics",
++  "Dance": "Dance",
++  Cheer: "Cheer",
++  Triathlon: "Triathlon",
++  AFL: "AFL",
++  Netball: "Netball",
++  Fishing: "Fishing",
++};
++
++const SCENARIO_MAP: Record<string, string> = {
++  // Industries on home page
++  "Events & Conferences": "Event & Festival",
++  "Event & Conferences": "Event & Festival",
++  "Events": "Event & Festival",
++  "Event": "Event & Festival",
++  "Promotional Products Distributors": "Promotional Swag",
++  "Promotional": "Promotional Swag",
++  "Promotional Swag": "Promotional Swag",
++  "Sports Teams & Leagues": "Sports League",
++  "Sports League": "Sports League",
++  "Sports Teams": "Team & Club",
++  "Team & Club": "Team & Club",
++  "Music, Tour & Festival Merch": "Music & Merch",
++  "Music": "Music & Merch",
++  "Music & Merch": "Music & Merch",
++  "Festival": "Festival & Holiday",
++  "Trade Show & Display": "Event & Festival",
++  "Trade Show": "Event & Festival",
++  "Corporate & Employee Programs": "Corporate & Branding",
++  "Corporate": "Corporate & Branding",
++  "Corporate & Branding": "Corporate & Branding",
++  "Apparel Brands & Agencies": "Retail & Fashion",
++  "Apparel Brands": "Retail & Fashion",
++  "Schools, Universities & Greek Life": "Education & School",
++  "Schools": "Education & School",
++  "Greek Life": "Education & School",
++  "Education & School": "Education & School",
++  "School & Education": "Education & School",
++  "Political Campaigns": "Political Campaign",
++  "Political Campaign": "Political Campaign",
++  "Breweries, Coffee & Hospitality": "Hospitality & F&B",
++  "Hospitality": "Hospitality & F&B",
++  "Hospitality & F&B": "Hospitality & F&B",
++  "Endurance & Race Events": "Sports League",
++  "Race Events": "Event & Festival",
++  "E-commerce & Fulfillment": "Retail & Fashion",
++  "Wedding": "Wedding & Party",
++  "Fundraiser": "Fundraiser & Charity",
++  "Construction": "Construction & Engineering",
++  "Construction & Engineering": "Construction & Engineering",
++  "Medical": "Medical & Healthcare",
++  "Medical & Healthcare": "Medical & Healthcare",
++  "Security": "Security & Property",
++  "Security & Property": "Security & Property",
++  "Uniform & Workwear": "Uniform & Workwear",
++  "Uniform": "Uniform & Workwear",
++  "Workwear": "Uniform & Workwear",
++  "Retail": "Retail & Fashion",
++  "Retail & Fashion": "Retail & Fashion",
++  "Gift & Souvenir": "Gift & Souvenir",
++  "Souvenir": "Gift & Souvenir",
++  "Charity": "Fundraiser & Charity",
++  "Fundraiser & Charity": "Fundraiser & Charity",
++};
++
++/**
++ * Resolve a free-text UI label to the right TagLink dimension.
++ * Returns null if the label can't be mapped.
++ */
++export function resolveTagLink(
++  label: string
++): ReturnType<typeof tagLink> | null {
++  const trimmed = label.trim();
++  if (CATEGORY_MAP[trimmed]) return tagLink({ category: CATEGORY_MAP[trimmed] });
++  if (SPORT_MAP[trimmed]) return tagLink({ sport: SPORT_MAP[trimmed] });
++  if (SCENARIO_MAP[trimmed]) return tagLink({ scenario: SCENARIO_MAP[trimmed] });
++  return null;
++}
+-- 
+2.43.0
+

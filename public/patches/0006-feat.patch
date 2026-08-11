@@ -1,0 +1,260 @@
+From 8c64f610e03f675aa1d73b9897caa456adb7e8cd Mon Sep 17 00:00:00 2001
+From: user8596904236 <1254955844122064-user8596904236@noreply.coze.cn>
+Date: Tue, 11 Aug 2026 19:29:00 +0800
+Subject: [PATCH 06/10] =?UTF-8?q?feat:=20=E4=BF=9D=E5=AD=98=E6=96=87?=
+ =?UTF-8?q?=E4=BB=B6=E5=8F=98=E6=9B=B4?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Coze-Commit-Type: user
+Coze-User-ID: 1254955844122064
+Coze-Conversation-ID: 11527849
+---
+ src/app/cases/[slug]/page.tsx | 63 +++++++++++++++++++++++++++++++++++
+ src/components/industries.tsx |  9 +++--
+ src/lib/cases.ts              | 29 ++++++++++++++++
+ 3 files changed, 99 insertions(+), 2 deletions(-)
+
+diff --git a/src/app/cases/[slug]/page.tsx b/src/app/cases/[slug]/page.tsx
+index a4acf51..25dfefe 100644
+--- a/src/app/cases/[slug]/page.tsx
++++ b/src/app/cases/[slug]/page.tsx
+@@ -20,6 +20,8 @@ import {
+   ImageOff,
+ } from "lucide-react";
+ import { industries, getIndustryBySlug } from "@/lib/cases";
++import { products, type Product } from "@/lib/products-data";
++import { tagArchiveLink } from "@/lib/tag-utils";
+ 
+ const iconMap: Record<string, typeof CalendarDays> = {
+   CalendarDays,
+@@ -114,6 +116,67 @@ export default async function CaseCategoryPage({ params }: Props) {
+         </div>
+       </section>
+ 
++      {/* Related products — pulled from /products/all matching the industry's scenario tag */}
++      {(() => {
++        const related: Product[] = products
++          .filter(
++            (p) =>
++              p.scenarios.includes(ind.relatedScenario) &&
++              (!ind.relatedCategory || p.category === ind.relatedCategory) &&
++              (!ind.relatedSport || p.sports.includes(ind.relatedSport)),
++          )
++          .slice(0, 8);
++        if (related.length === 0) return null;
++        return (
++          <section className="border-b-2 border-black bg-[#faf9f6]">
++            <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
++              <div className="mb-6 flex flex-wrap items-end justify-between gap-4 border-b-2 border-black pb-4">
++                <div>
++                  <div className="mb-2 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
++                    [ Related products ]
++                  </div>
++                  <h2 className="text-2xl font-black uppercase leading-none tracking-tight md:text-3xl">
++                    Built for {ind.title.toLowerCase()}
++                  </h2>
++                </div>
++                <Link
++                  href={tagArchiveLink("scenario", ind.relatedScenario)}
++                  className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-black transition-colors hover:text-[#ff4d00]"
++                >
++                  See all {ind.relatedScenario} products
++                  <ArrowRight size={14} strokeWidth={3} />
++                </Link>
++              </div>
++              <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
++                {related.map((p) => (
++                  <Link
++                    key={p.id}
++                    href={`/products/all/${p.slug}/`}
++                    className="group flex flex-col border-2 border-black bg-white p-4 transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0_0_#ff4d00]"
++                  >
++                    <div className="mb-3 flex aspect-square items-center justify-center border-2 border-black bg-gradient-to-br from-[#0a0a0a] to-[#1a1a1a] text-5xl font-black text-white">
++                      {p.category.charAt(0)}
++                    </div>
++                    <div className="text-[10px] font-black uppercase tracking-widest text-[#ff4d00]">
++                      {p.category}
++                    </div>
++                    <h3 className="mt-0.5 text-sm font-black uppercase leading-tight tracking-tight line-clamp-2">
++                      {p.name}
++                    </h3>
++                    <p className="mt-1 text-[11px] font-medium leading-snug text-black/65 line-clamp-2">
++                      {p.description}
++                    </p>
++                    <p className="mt-2 text-[11px] font-black uppercase tracking-wider text-black/55">
++                      MOQ {p.moq}
++                    </p>
++                  </Link>
++                ))}
++              </div>
++            </div>
++          </section>
++        );
++      })()}
++
+       {/* Gallery */}
+       <section className="border-b-2 border-black bg-white">
+         <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
+diff --git a/src/components/industries.tsx b/src/components/industries.tsx
+index c7d1db8..a233660 100644
+--- a/src/components/industries.tsx
++++ b/src/components/industries.tsx
+@@ -150,7 +150,12 @@ export function Industries() {
+                     <Icon size={22} strokeWidth={2.5} />
+                   </div>
+                   <h3 className="text-lg font-black uppercase leading-tight tracking-tight">
+-                    {ind.title}
++                    <Link
++                      href={`/cases/${ind.slug}`}
++                      className="transition-colors hover:text-[#ff4d00]"
++                    >
++                      {ind.title}
++                    </Link>
+                   </h3>
+                 </div>
+ 
+@@ -181,7 +186,7 @@ export function Industries() {
+                     href={`/cases/${ind.slug}`}
+                     className="text-[10px] font-bold uppercase tracking-wider text-black/50 transition-colors hover:text-black"
+                   >
+-                    Cases →
++                    Industry page →
+                   </Link>
+                 </div>
+               </div>
+diff --git a/src/lib/cases.ts b/src/lib/cases.ts
+index eafe638..e323951 100644
+--- a/src/lib/cases.ts
++++ b/src/lib/cases.ts
+@@ -3,6 +3,8 @@
+ // To add real case studies later, populate `cases` for the relevant industry.
+ // Each case can include multiple images + a short description.
+ 
++import type { ProductCategory, Scenario, Sport } from "./products-data";
++
+ export type CaseStudy = {
+   id: string;
+   title: string;
+@@ -19,6 +21,12 @@ export type IndustryCase = {
+   icon: string; // lucide icon name (matched in components)
+   blurb: string; // short paragraph shown on the slug page hero
+   pitch: string; // the orange-highlighted value prop
++  /** Primary tag this industry maps to — drives the related-products block on the slug page. */
++  relatedScenario: Scenario;
++  /** Secondary category tag (optional) — narrows the product list further. */
++  relatedCategory?: ProductCategory;
++  /** Optional sport tag — narrows the product list further. */
++  relatedSport?: Sport;
+   cases: CaseStudy[];
+ };
+ 
+@@ -32,6 +40,7 @@ export const industries: IndustryCase[] = [
+       "Staff tees, volunteer uniforms, lanyards, table throws, step-and-repeat backdrops and feather flags — produced in Yiwu and delivered to your venue, duty paid.",
+     pitch:
+       "Your date does not move. Our Fontana warehouse stock absorbs the headcount that changes in the final fortnight.",
++    relatedScenario: "Event & Festival",
+     cases: [],
+   },
+   {
+@@ -42,6 +51,8 @@ export const industries: IndustryCase[] = [
+       "Apparel, bags, towels, blankets, flags, table covers and lanyards for the promo industry. Landed duty-paid pricing and blind drop-ship available.",
+     pitch:
+       "Landed duty-paid pricing protects your margin; blind drop-ship from LA protects your client relationship.",
++    relatedScenario: "Promotional Swag",
++    relatedCategory: "T-Shirt",
+     cases: [],
+   },
+   {
+@@ -52,6 +63,8 @@ export const industries: IndustryCase[] = [
+       "Sublimated racing and cycling jerseys, shorts, warm-ups, singlets, socks and sideline banners. Cut-and-sew patterns sized to your roster, named and numbered per unit.",
+     pitch:
+       "Cut-and-sew patterns that fit, named and numbered per unit, delivered before the season opens.",
++    relatedScenario: "Sports League",
++    relatedCategory: "Jersey / Kit",
+     cases: [],
+   },
+   {
+@@ -62,6 +75,8 @@ export const industries: IndustryCase[] = [
+       "All-over-print tees and hoodies, bandanas, tote bags, stage backdrops. Full-bleed printing on 100% cotton — merch fans actually want to wear.",
+     pitch:
+       "Full-bleed printing on 100% cotton — merch your fans will actually want to wear.",
++    relatedScenario: "Music & Merch",
++    relatedCategory: "T-Shirt",
+     cases: [],
+   },
+   {
+@@ -72,6 +87,7 @@ export const industries: IndustryCase[] = [
+       "SEG tension fabric, backdrop walls, table throws, counter covers and tent walls. Silicone edge is a sewing operation — we sew, so we can make it.",
+     pitch:
+       "Silicone edge is a sewing operation. We sew, so we can make it — and DDP handles the bulky freight.",
++    relatedScenario: "Event & Festival",
+     cases: [],
+   },
+   {
+@@ -82,6 +98,8 @@ export const industries: IndustryCase[] = [
+       "Uniforms, golf, bowling, esports shirts, onboarding kits, conference apparel and branded gifting. Multi-site restocks pull from our Fontana warehouse, on a fixed landed cost.",
+     pitch:
+       "Finance gets a fixed landed cost; multi-site restocks pull from our LA warehouse.",
++    relatedScenario: "Corporate & Branding",
++    relatedCategory: "Polo Shirt",
+     cases: [],
+   },
+   {
+@@ -92,6 +110,8 @@ export const industries: IndustryCase[] = [
+       "Custom cut-and-sew, all-over-print apparel and private-label packaging. Your pattern, your labels, your packaging — cotton included.",
+     pitch:
+       "Your pattern, your labels, your packaging. Cotton included.",
++    relatedScenario: "Retail & Fashion",
++    relatedCategory: "Hoodie",
+     cases: [],
+   },
+   {
+@@ -102,6 +122,8 @@ export const industries: IndustryCase[] = [
+       "Rush shirts, bid day tees, game-day apparel, alumni gear and dorm goods. Campus orders are cotton orders, and they are always urgent.",
+     pitch:
+       "Campus orders are cotton orders, and they are always urgent. We cover both.",
++    relatedScenario: "Education & School",
++    relatedCategory: "T-Shirt",
+     cases: [],
+   },
+   {
+@@ -112,6 +134,8 @@ export const industries: IndustryCase[] = [
+       "Rally tees, fabric banners, hand-held flags, canvasser vests, hats and rally towels. LA warehouse turns a five-day requirement into a domestic shipment.",
+     pitch:
+       "Our LA warehouse turns a five-day requirement into a domestic shipment.",
++    relatedScenario: "Political Campaign",
++    relatedCategory: "T-Shirt",
+     cases: [],
+   },
+   {
+@@ -122,6 +146,8 @@ export const industries: IndustryCase[] = [
+       "Merch tees and hoodies, aprons, bar towels, patio covers and tap-room banners. Cotton merch, staff wear and soft signage from one supplier.",
+     pitch:
+       "Cotton merch, staff wear, and soft signage from one supplier — landed duty paid.",
++    relatedScenario: "Hospitality & F&B",
++    relatedCategory: "T-Shirt",
+     cases: [],
+   },
+   {
+@@ -132,6 +158,8 @@ export const industries: IndustryCase[] = [
+       "Finisher tees in cotton and technical, race shirts, cycling kits and route banners. Final numbers land two weeks out — LA stock absorbs the difference.",
+     pitch:
+       "Final numbers land two weeks out. LA stock absorbs the difference.",
++    relatedScenario: "Sports League",
++    relatedSport: "Running",
+     cases: [],
+   },
+   {
+@@ -142,6 +170,7 @@ export const industries: IndustryCase[] = [
+       "Blankets, pillow covers, towels, tapestries, pet goods, aprons and tote bags. DDP removes the import problem; LA warehouse covers domestic replenishment.",
+     pitch:
+       "DDP removes the import problem; LA warehouse covers domestic replenishment.",
++    relatedScenario: "Retail & Fashion",
+     cases: [],
+   },
+ ];
+-- 
+2.43.0
+
