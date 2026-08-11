@@ -1,5 +1,7 @@
 import { Contact } from "@/components/contact";
 import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight, Sparkles } from "lucide-react";
 
 export const metadata = {
   title: "Custom Sublimation & Cotton Apparel — T-Shirts, Jerseys, Hoodies, Cycling, Golf, Racing",
@@ -116,6 +118,38 @@ export default function ProductsPage() {
               >
                 Apparel is our bread and butter — but we print home goods, bags, flags, hard
                 goods, and whatever custom project you bring us. Polyester or 100% cotton.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 100-product catalog callout */}
+      <section className="border-b-2 border-black bg-[#0A0A0A] text-white">
+        <div className="mx-auto max-w-7xl px-4 py-10 md:px-6 md:py-16">
+          <div className="grid grid-cols-1 items-center gap-6 md:grid-cols-12 md:gap-8">
+            <div className="md:col-span-8">
+              <div className="mb-3 inline-flex items-center gap-1.5 rounded-sm bg-[#ff4d00] px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest md:text-xs">
+                <Sparkles className="h-3 w-3" />
+                New · 100-product catalog
+              </div>
+              <h2 className="mb-3 text-2xl font-black uppercase leading-tight tracking-tight md:text-4xl">
+                Browse 100 all-over print products
+              </h2>
+              <p className="max-w-2xl text-sm leading-relaxed text-white/80 md:text-base">
+                Cross-filter by garment (29 types), sport (42), and scenario (27). Polyester sublimation + all-over digital print on cotton. MOQ 50 pcs, DDP to door.
+              </p>
+            </div>
+            <div className="flex flex-col gap-2 md:col-span-4 md:items-end">
+              <Link
+                href="/products/all/"
+                className="inline-flex items-center justify-center gap-2 rounded-sm bg-[#ff4d00] px-5 py-3 text-sm font-black uppercase tracking-wide text-white transition-colors hover:bg-[#e64500] md:text-base"
+              >
+                See all 100 products
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              <p className="text-[10px] uppercase tracking-widest text-white/50 md:text-xs">
+                Filter by sport, scenario &amp; garment
               </p>
             </div>
           </div>
