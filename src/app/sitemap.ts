@@ -54,6 +54,9 @@ const ROUTES: SitemapRoute[] = [
   { path: "/shipping/us-warehouse", priority: 0.1, changeFrequency: "yearly" }, // placeholder — not actively promoted
   { path: "/shipping/global", priority: 0.9, changeFrequency: "monthly" }, // 王炸
 
+  // ── 王炸关键词落地页（精准流量承接）──────────
+  { path: "/all-over-print", priority: 0.95, changeFrequency: "monthly" }, // P1 — all over print 流量入口
+
   // ── 账户系统（占位）──────────────────────────
   { path: "/login", priority: 0.3, changeFrequency: "yearly" },
   { path: "/register", priority: 0.3, changeFrequency: "yearly" },

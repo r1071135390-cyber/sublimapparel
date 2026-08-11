@@ -415,7 +415,7 @@ export const fabricTypes: Fabric[] = [
     ],
   },
   {
-    name: "100% Cotton",
+    name: "Polyester satin / chiffon",
     slug: "polyester-satin-chiffon",
     comp: "100% Polyester",
     gsm: "60-120",
