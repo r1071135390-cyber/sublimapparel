@@ -3,18 +3,18 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 
 const fabrics = [
-  { name: "POLYESTER", note: "Standard" },
-  { name: "100% COTTON", note: "Our specialty", highlight: true },
-  { name: "RECYCLED", note: "rPET & organic" },
+  { name: "POLYESTER", note: "Standard", href: "/fabric/polyester" },
+  { name: "100% COTTON", note: "Our specialty", highlight: true, href: "/fabric/cotton" },
+  { name: "RECYCLED", note: "rPET & organic", href: "/fabric/cotton" },
 ];
 
 const categories = [
-  { num: "01", name: "T-shirts" },
-  { num: "02", name: "Hoodies" },
-  { num: "03", name: "Jerseys" },
-  { num: "04", name: "Racing" },
-  { num: "05", name: "Cycling" },
-  { num: "06", name: "Golf / Bowling" },
+  { num: "01", name: "T-shirts", href: "/products/all/?category=T-Shirt" },
+  { num: "02", name: "Hoodies", href: "/products/all/?category=Hoodie" },
+  { num: "03", name: "Jerseys", href: "/products/all/?category=Jersey+%2F+Kit" },
+  { num: "04", name: "Racing", href: "/products/all/?category=Jersey+%2F+Kit" },
+  { num: "05", name: "Cycling", href: "/products/all/?sport=Cycling" },
+  { num: "06", name: "Golf / Bowling", href: "/products/all/?sport=Golf" },
 ];
 
 const stats = [
@@ -106,14 +106,28 @@ export function Hero() {
         {/* Headline — 3 lines, flat / full width */}
         <h1 className="mb-4 max-w-4xl whitespace-nowrap text-2xl font-black leading-[1.05] tracking-tight md:mb-5 md:text-4xl lg:text-5xl xl:text-6xl">
           <span className="block text-white">Yiwu sublimate apparel factory</span>
-          <span className="block text-[#ff4d00]">polyester sublimation &amp;</span>
-          <span className="block text-[#ff4d00]">allover digital print cotton.</span>
+          <span className="block text-[#ff4d00]">
+            <Link href="/fabric/polyester" className="hover:underline hover:underline-offset-4">polyester sublimation</Link> &amp;
+          </span>
+          <span className="block text-[#ff4d00]">
+            <Link href="/fabric/cotton" className="hover:underline hover:underline-offset-4">allover digital print cotton</Link>.
+          </span>
         </h1>
 
         {/* Subhead */}
         <p className="mb-4 max-w-2xl text-sm text-white/80 md:mb-5 md:text-lg">
-          T-shirts, hoodies, jerseys, racing kits, cycling kits, golf, bowling, esports
-          &mdash; full sublimation on polyester and allover digital print on 100% cotton.
+          <Link href="/products/all/?category=T-Shirt" className="font-semibold text-white underline-offset-4 hover:text-[#ff4d00] hover:underline">T-shirts</Link>,{" "}
+          <Link href="/products/all/?category=Hoodie" className="font-semibold text-white underline-offset-4 hover:text-[#ff4d00] hover:underline">hoodies</Link>,{" "}
+          <Link href="/products/all/?category=Jersey+%2F+Kit" className="font-semibold text-white underline-offset-4 hover:text-[#ff4d00] hover:underline">jerseys</Link>,{" "}
+          <Link href="/products/all/?category=Jersey+%2F+Kit" className="font-semibold text-white underline-offset-4 hover:text-[#ff4d00] hover:underline">racing kits</Link>,{" "}
+          <Link href="/products/all/?sport=Cycling" className="font-semibold text-white underline-offset-4 hover:text-[#ff4d00] hover:underline">cycling kits</Link>,{" "}
+          <Link href="/products/all/?sport=Golf" className="font-semibold text-white underline-offset-4 hover:text-[#ff4d00] hover:underline">golf</Link>,{" "}
+          <Link href="/products/all/?sport=Bowling" className="font-semibold text-white underline-offset-4 hover:text-[#ff4d00] hover:underline">bowling</Link>,{" "}
+          <Link href="/products/all/?sport=Esports" className="font-semibold text-white underline-offset-4 hover:text-[#ff4d00] hover:underline">esports</Link>
+          {" "}&mdash; full sublimation on{" "}
+          <Link href="/fabric/polyester" className="font-semibold text-white underline-offset-4 hover:text-[#ff4d00] hover:underline">polyester</Link>{" "}
+          and{" "}
+          <Link href="/fabric/cotton" className="font-semibold text-white underline-offset-4 hover:text-[#ff4d00] hover:underline">allover digital print on 100% cotton</Link>.
           From a 50-piece rush job to a 10,000-piece event run. This is where we
           started, and it&rsquo;s still what we do best.
         </p>
@@ -124,34 +138,36 @@ export function Hero() {
             Fabrics
           </span>
           {fabrics.map((f) => (
-            <span
+            <Link
               key={f.name}
+              href={f.href}
               className={
                 f.highlight
-                  ? "rounded-sm border border-[#ff4d00] bg-[#ff4d00] px-2.5 py-1.5 text-[11px] font-black uppercase tracking-wider text-white shadow-[3px_3px_0_0_rgba(255,255,255,0.25)] md:px-3 md:text-xs"
-                  : "rounded-sm border border-white/25 bg-white/5 px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-white backdrop-blur-sm md:px-3 md:text-xs"
+                  ? "rounded-sm border border-[#ff4d00] bg-[#ff4d00] px-2.5 py-1.5 text-[11px] font-black uppercase tracking-wider text-white shadow-[3px_3px_0_0_rgba(255,255,255,0.25)] transition-all hover:-translate-y-0.5 hover:shadow-[4px_4px_0_0_rgba(255,255,255,0.45)] md:px-3 md:text-xs"
+                  : "rounded-sm border border-white/25 bg-white/5 px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-white backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-[#ff4d00] hover:bg-[#ff4d00]/20 md:px-3 md:text-xs"
               }
             >
               {f.name}{" "}
               <span className="ml-1 font-medium normal-case opacity-80">
                 {f.note}
               </span>
-            </span>
+            </Link>
           ))}
         </div>
 
         {/* 6 apparel category chips */}
         <div className="mb-4 grid grid-cols-2 gap-2 sm:grid-cols-3 md:mb-5 md:flex md:flex-wrap md:gap-3">
           {categories.map((c) => (
-            <span
+            <Link
               key={c.num}
-              className="inline-flex items-center gap-2 rounded-sm border border-white/25 bg-white/5 px-2.5 py-2 text-[11px] font-bold uppercase tracking-wider text-white backdrop-blur-sm md:px-3 md:text-sm"
+              href={c.href}
+              className="inline-flex items-center gap-2 rounded-sm border border-white/25 bg-white/5 px-2.5 py-2 text-[11px] font-bold uppercase tracking-wider text-white backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-[#ff4d00] hover:bg-[#ff4d00]/20 md:px-3 md:text-sm"
             >
               <span className="inline-flex h-5 w-5 items-center justify-center rounded-sm border border-white/30 bg-white/10 text-[10px] font-black">
                 {c.num}
               </span>
               {c.name}
-            </span>
+            </Link>
           ))}
         </div>
 
