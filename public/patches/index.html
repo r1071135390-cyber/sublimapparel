@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>SublimApparel — Patch Downloads</title>
+<meta name="robots" content="noindex" />
+<style>
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:#0a0a0a;color:#e5e5e5;margin:0;padding:48px 24px;max-width:920px;margin:0 auto;}
+h1{color:#ff4d00;font-size:32px;margin:0 0 8px;}
+p{color:#a0a0a0;line-height:1.6;margin:0 0 24px;}
+ol{padding-left:0;list-style:none;counter-reset:item;}
+li{counter-increment:item;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;padding:16px 20px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
+li::before{content:counter(item,decimal-leading-zero);color:#ff4d00;font-weight:700;font-size:20px;margin-right:16px;font-family:ui-monospace,SFMono-Regular,monospace;}
+.meta{flex:1;min-width:240px;}
+.meta b{color:#fff;font-size:15px;display:block;margin-bottom:4px;font-family:ui-monospace,SFMono-Regular,monospace;}
+.meta span{color:#6b6b6b;font-size:13px;}
+a.btn{display:inline-block;background:#ff4d00;color:#fff;text-decoration:none;padding:8px 18px;border-radius:6px;font-size:14px;font-weight:600;transition:background 0.2s;}
+a.btn:hover{background:#e64500;}
+a.btn-ghost{background:transparent;border:1px solid #ff4d00;color:#ff4d00;}
+a.btn-ghost:hover{background:#ff4d00;color:#fff;}
+pre{background:#000;border:1px solid #2a2a2a;padding:16px;border-radius:6px;overflow-x:auto;font-size:13px;color:#00c2ff;font-family:ui-monospace,SFMono-Regular,monospace;line-height:1.5;}
+.note{background:#1a1a1a;border-left:3px solid #00c2ff;padding:12px 16px;border-radius:4px;margin:24px 0;color:#e5e5e5;font-size:14px;}
+</style>
+</head>
+<body>
+<h1>SublimApparel — Git Patches</h1>
+<p>9 commits ahead of origin/main. Download each patch in order, then apply locally with <code style="color:#00c2ff;">git am</code> and push to your remote.</p>
+
+<div class="note">
+  <b>Total: 304 KB across 10 files.</b> Click any file below to download, or use the bash script at the bottom to grab all at once.
+</div>
+
+<ol>
+  <li><div class="meta"><b>0001-feat-100-all-over-print.patch</b><span>112 KB — 100 products catalog with 3-dimension cross-filter</span></div><a class="btn" href="/patches/0001-feat-100-all-over-print.patch" download>Download</a></li>
+  <li><div class="meta"><b>0002-feat.patch</b><span>29 KB — Tag archive pages (29 categories + 42 sports + 27 scenarios)</span></div><a class="btn" href="/patches/0002-feat.patch" download>Download</a></li>
+  <li><div class="meta"><b>0003-feat.patch</b><span>7.7 KB — SEO keyword injection for all tag archives</span></div><a class="btn" href="/patches/0003-feat.patch" download>Download</a></li>
+  <li><div class="meta"><b>0004-feat.patch</b><span>81 KB — Industries cross-linking + Related products on /cases/[slug]/</span></div><a class="btn" href="/patches/0004-feat.patch" download>Download</a></li>
+  <li><div class="meta"><b>0005-feat.patch</b><span>7.0 KB — Other industries section (all 11 siblings)</span></div><a class="btn" href="/patches/0005-feat.patch" download>Download</a></li>
+  <li><div class="meta"><b>0006-feat.patch</b><span>12 KB — Bottom-page link-up (Products 6 cards + 24 items)</span></div><a class="btn" href="/patches/0006-feat.patch" download>Download</a></li>
+  <li><div class="meta"><b>0007-feat.patch</b><span>3.0 KB — Home page hero + products link-up + SEO keywords</span></div><a class="btn" href="/patches/0007-feat.patch" download>Download</a></li>
+  <li><div class="meta"><b>0008-feat.patch</b><span>10 KB — Final logo + 6 brand assets</span></div><a class="btn" href="/patches/0008-feat.patch" download>Download</a></li>
+  <li><div class="meta"><b>0009-feat.patch</b><span>28 KB — README documentation</span></div><a class="btn" href="/patches/0009-feat.patch" download>Download</a></li>
+  <li><div class="meta"><b>0010-feat.patch</b><span>1.0 KB — Misc SEO improvements</span></div><a class="btn" href="/patches/0010-feat.patch" download>Download</a></li>
+</ol>
+
+<h2 style="color:#fff;margin-top:48px;font-size:22px;">One-shot apply script (recommended)</h2>
+<p>Save this as <code style="color:#00c2ff;">apply-patches.sh</code> in your sublimapparel repo root and run <code style="color:#00c2ff;">bash apply-patches.sh</code>:</p>
+<pre>#!/bin/bash
+set -e
+mkdir -p .patches
+cd .patches
+BASE="https://279a63c8-c31c-4ac6-a941-1577a843d2e1.dev.coze.site/patches"
+FILES=(
+  "0001-feat-100-all-over-print.patch"
+  "0002-feat.patch"
+  "0003-feat.patch"
+  "0004-feat.patch"
+  "0005-feat.patch"
+  "0006-feat.patch"
+  "0007-feat.patch"
+  "0008-feat.patch"
+  "0009-feat.patch"
+  "0010-feat.patch"
+)
+for f in "${FILES[@]}"; do
+  if [ ! -f "$f" ]; then
+    echo "↓ Downloading $f"
+    curl -fsSL -O "$BASE/$f"
+  fi
+done
+cd ..
+git am --abort 2>/dev/null || true
+for f in "${FILES[@]}"; do
+  echo "✓ Applying $f"
+  git am --signoff < ".patches/$f"
+done
+echo ""
+echo "Done! All 10 patches applied. Now run:"
+echo "  git push origin main"</pre>
+
+<p style="margin-top:32px;color:#6b6b6b;font-size:13px;">Sandbox domain expires in 30 days. Download ASAP.</p>
+</body>
+</html>
