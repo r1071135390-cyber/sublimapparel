@@ -1,0 +1,100 @@
+0001	Hoodie                	All-Over Print Womens Rectangle Scarf 170X45cm
+0002	T-Shirt               	Childrens T-Shirts Printed in USA — Gildan 64000B (DTG)
+0003	Pants                 	All-Over Print Womens High-Stretch Tights
+0004	Shirt                 	Unisex Durable Pullover Sweatshirt 290GSM (DTG)
+0005	Jacket                	Mens Fleece-Lined Vintage Wash Zip Hoodie 360GSM (DTF)
+0006	Sleepwear & Underwear 	Womens Seamless Briefs Printed in USA 180GSM (DTF)
+0007	Tank Top & Camis      	Mens Loose Sleeveless Hoodie 320GSM (DTF)
+0008	Dress                 	All-Over Print Womens Tank Vest Dress
+0009	Sweatshirt            	Mens Distressed Vintage Wash Sweatshirt 360GSM (DTG)
+0010	Coord Set             	Plamix All-Over Print Childrens Shirt With Pocket 140GSM Slub Cotton
+0011	Knitwear              	Mens Vintage Crewneck Knit Sweater 285GSM (DTG)
+0012	Romper & Jumpsuit     	All-Over Print Unisex Thickened Home Jumpsuit
+0013	Skirt                 	All-Over Print Kids Short-Sleeve Dress
+0014	Bodysuit              	All-Over Print Womens Tank Bodysuit
+0015	Polo Shirt            	All-Over Print Childrens Lapel Polo Shirt 145GSM Birdseye
+0016	Sports Top            	Sports Square Towel
+0017	Baby Bodysuit         	Baby Short-Sleeve Onesie Printed in USA 190GSM Front (DTF)
+0018	Kids Sportswear       	All-Over Print Kids Baseball Jersey
+0019	Winter Wear           	All-Over Print Mens Half-Zip Pullover
+0020	Activewear            	All-Over Print Mens Long-Sleeve T-Shirt With Dropped Shoulders Interlock
+0021	Apron                 	All-Over Print Apron
+0022	Bucket Hat            	All-Over Print Bucket Hat
+0023	Baseball Cap          	All-Over Print Baseball Cap
+0024	Jersey / Kit          	All-Over Print Soccer Jersey Kit (Shirt + Shorts)
+0025	Jersey / Kit          	All-Over Print Basketball Jersey Kit (Reversible option)
+0026	Sports Top / Kit      	All-Over Print Badminton Outfit
+0027	Jersey / Kit          	All-Over Print Hockey Jersey (Lycra option)
+0028	Sports Top / Kit      	All-Over Print Running Wear (Shirt + Shorts)
+0029	Sports Top / Kit      	All-Over Print Cycling Wear Kit (Jersey + Bib Shorts)
+0030	Sports Top / Kit      	All-Over Print Yoga Wear Set (Top + Leggings)
+0031	Swimwear              	All-Over Print Swimwear (One-Piece / Bikini / Trunks)
+0032	Polo Shirt            	All-Over Print Golf Polo Shirt
+0033	Jersey / Kit          	All-Over Print Baseball Jersey Kit (Shirt + Pants)
+0034	Jersey / Kit          	All-Over Print American Football Jersey
+0035	Jersey / Kit          	All-Over Print Rugby Jersey
+0036	Jersey / Kit          	All-Over Print Volleyball Jersey Kit
+0037	Sports Top / Kit      	All-Over Print Tennis Outfit (Shirt + Skirt/Shorts)
+0038	Sports Top / Kit      	All-Over Print Table Tennis Outfit
+0039	Jersey / Kit          	All-Over Print Cricket Jersey
+0040	Jersey / Kit          	All-Over Print Lacrosse Jersey
+0041	Jersey / Kit          	All-Over Print Softball Jersey
+0042	Sports Top / Kit      	All-Over Print Surf Lycra Top (Rash Guard)
+0043	Jacket                	All-Over Print Ski Jacket (Insulated)
+0044	Jacket                	All-Over Print Snowboard Jacket
+0045	T-Shirt               	All-Over Print Skate T-Shirt
+0046	Combat Gear           	All-Over Print Boxing Shorts
+0047	Combat Gear           	All-Over Print Wrestling Singlet
+0048	Combat Gear           	All-Over Print MMA Fight Shorts
+0049	Combat Gear           	All-Over Print Martial Arts Gi (Top + Pants)
+0050	Sports Top / Kit      	All-Over Print Pilates Set (Top + Leggings)
+0051	Sports Top / Kit      	All-Over Print Dance Leotard
+0052	Sports Top / Kit      	All-Over Print Cheer Uniform (Top + Skirt)
+0053	T-Shirt               	All-Over Print CrossFit T-Shirt
+0054	Shirt                 	All-Over Print Bowling Shirt
+0055	Jersey / Kit          	All-Over Print Esports Jersey
+0056	Sports Top / Kit      	All-Over Print Triathlon Suit (One-Piece)
+0057	Jersey / Kit          	All-Over Print Australian Rules (AFL) Jersey
+0058	Sports Top / Kit      	All-Over Print Netball Dress (Bib Style)
+0059	Sports Top / Kit      	All-Over Print Athletics Singlet (Track & Field)
+0060	Sports Top / Kit      	All-Over Print Fishing Shirt (UPF 50+)
+0061	Tank Top & Camis      	All-Over Print Gym Tank Top
+0062	Sports Top / Kit      	All-Over Print Dive Lycra Suit
+0063	Sports Top / Kit      	All-Over Print Skating Dress (Figure / Roller)
+0064	Jersey / Kit          	All-Over Print Beach Sports Jersey (Volleyball / Soccer / Rugby)
+0065	Polo Shirt            	All-Over Print Express & Logistics Polo Shirt
+0066	T-Shirt               	All-Over Print Express & Logistics T-Shirt
+0067	Hoodie                	All-Over Print Express & Logistics Hoodie
+0068	Hoodie                	All-Over Print Construction Hoodie (Hi-Vis Option)
+0069	Jacket                	All-Over Print Construction Jacket (Insulated)
+0070	Pants                 	All-Over Print Construction Pants (Cargo)
+0071	T-Shirt               	All-Over Print Construction T-Shirt (Hi-Vis Option)
+0072	Polo Shirt            	All-Over Print Hospitality & F&B Polo Shirt
+0073	T-Shirt               	All-Over Print Hospitality & F&B T-Shirt
+0074	Sweatshirt            	All-Over Print Hospitality & F&B Sweatshirt
+0075	T-Shirt               	All-Over Print Medical & Healthcare Scrubs T-Shirt
+0076	Polo Shirt            	All-Over Print Medical & Healthcare Polo Shirt
+0077	Tank Top & Camis      	All-Over Print Medical & Healthcare Tank Top
+0078	Polo Shirt            	All-Over Print Security & Property Polo Shirt
+0079	Hoodie                	All-Over Print Security & Property Hoodie
+0080	Jacket                	All-Over Print Security & Property Jacket
+0081	Polo Shirt            	All-Over Print Retail & Supermarket Polo Shirt
+0082	T-Shirt               	All-Over Print Retail & Supermarket T-Shirt
+0083	Hoodie                	All-Over Print Retail & Supermarket Hoodie
+0084	T-Shirt               	All-Over Print School & Education T-Shirt
+0085	Polo Shirt            	All-Over Print School & Education Polo Shirt
+0086	Jacket                	All-Over Print School & Education Jacket
+0087	Polo Shirt            	All-Over Print Corporate & Promo Polo Shirt
+0088	T-Shirt               	All-Over Print Corporate & Promo T-Shirt
+0089	Hoodie                	All-Over Print Corporate & Promo Hoodie
+0090	Polo Shirt            	All-Over Print Transit & Transport Polo Shirt
+0091	Jacket                	All-Over Print Transit & Transport Jacket
+0092	Hoodie                	All-Over Print Transit & Transport Hoodie
+0093	Tank Top & Camis      	All-Over Print Studio & Gym Tank Top
+0094	T-Shirt               	All-Over Print Studio & Gym T-Shirt
+0095	Leggings              	All-Over Print Studio & Gym Leggings
+0096	T-Shirt               	All-Over Print Festival & Holiday T-Shirt
+0097	Hoodie                	All-Over Print Festival & Holiday Hoodie
+0098	T-Shirt               	All-Over Print Military Wear Training T-Shirt
+0099	Polo Shirt            	All-Over Print Military Wear Casual Polo
+0100	Beachwear             	All-Over Print Beach Sarong (180×110cm)
