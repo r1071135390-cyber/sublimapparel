@@ -20,6 +20,8 @@ import {
   ImageOff,
 } from "lucide-react";
 import { industries, getIndustryBySlug } from "@/lib/cases";
+import { products, type Product } from "@/lib/products-data";
+import { tagArchiveLink } from "@/lib/tag-utils";
 
 const iconMap: Record<string, typeof CalendarDays> = {
   CalendarDays,
@@ -113,6 +115,67 @@ export default async function CaseCategoryPage({ params }: Props) {
           </div>
         </div>
       </section>
+
+      {/* Related products — pulled from /products/all matching the industry's scenario tag */}
+      {(() => {
+        const related: Product[] = products
+          .filter(
+            (p) =>
+              p.scenarios.includes(ind.relatedScenario) &&
+              (!ind.relatedCategory || p.category === ind.relatedCategory) &&
+              (!ind.relatedSport || p.sports.includes(ind.relatedSport)),
+          )
+          .slice(0, 8);
+        if (related.length === 0) return null;
+        return (
+          <section className="border-b-2 border-black bg-[#faf9f6]">
+            <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
+              <div className="mb-6 flex flex-wrap items-end justify-between gap-4 border-b-2 border-black pb-4">
+                <div>
+                  <div className="mb-2 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
+                    [ Related products ]
+                  </div>
+                  <h2 className="text-2xl font-black uppercase leading-none tracking-tight md:text-3xl">
+                    Built for {ind.title.toLowerCase()}
+                  </h2>
+                </div>
+                <Link
+                  href={tagArchiveLink("scenario", ind.relatedScenario)}
+                  className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-black transition-colors hover:text-[#ff4d00]"
+                >
+                  See all {ind.relatedScenario} products
+                  <ArrowRight size={14} strokeWidth={3} />
+                </Link>
+              </div>
+              <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                {related.map((p) => (
+                  <Link
+                    key={p.id}
+                    href={`/products/all/${p.slug}/`}
+                    className="group flex flex-col border-2 border-black bg-white p-4 transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0_0_#ff4d00]"
+                  >
+                    <div className="mb-3 flex aspect-square items-center justify-center border-2 border-black bg-gradient-to-br from-[#0a0a0a] to-[#1a1a1a] text-5xl font-black text-white">
+                      {p.category.charAt(0)}
+                    </div>
+                    <div className="text-[10px] font-black uppercase tracking-widest text-[#ff4d00]">
+                      {p.category}
+                    </div>
+                    <h3 className="mt-0.5 text-sm font-black uppercase leading-tight tracking-tight line-clamp-2">
+                      {p.name}
+                    </h3>
+                    <p className="mt-1 text-[11px] font-medium leading-snug text-black/65 line-clamp-2">
+                      {p.description}
+                    </p>
+                    <p className="mt-2 text-[11px] font-black uppercase tracking-wider text-black/55">
+                      MOQ {p.moq}
+                    </p>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+        );
+      })()}
 
       {/* Gallery */}
       <section className="border-b-2 border-black bg-white">

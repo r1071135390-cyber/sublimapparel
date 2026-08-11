@@ -150,7 +150,12 @@ export function Industries() {
                     <Icon size={22} strokeWidth={2.5} />
                   </div>
                   <h3 className="text-lg font-black uppercase leading-tight tracking-tight">
-                    {ind.title}
+                    <Link
+                      href={`/cases/${ind.slug}`}
+                      className="transition-colors hover:text-[#ff4d00]"
+                    >
+                      {ind.title}
+                    </Link>
                   </h3>
                 </div>
 
@@ -181,7 +186,7 @@ export function Industries() {
                     href={`/cases/${ind.slug}`}
                     className="text-[10px] font-bold uppercase tracking-wider text-black/50 transition-colors hover:text-black"
                   >
-                    Cases →
+                    Industry page →
                   </Link>
                 </div>
               </div>
