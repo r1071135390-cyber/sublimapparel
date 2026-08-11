@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { tagLink, resolveTagLink } from "@/lib/tag-utils";
 
 export function Products() {
   const categories = [
@@ -8,31 +9,41 @@ export function Products() {
       headline: "From tees to team kits.",
       desc: "T-shirts, hoodies, jerseys, racing, cycling, golf, bowling, esports, singlets, leggings, baby onesies — full sublimation on cotton or polyester.",
       items: [
-        { name: "T-shirts", href: "/products/t-shirts" },
-        { name: "Hoodies", href: "/products/hoodies" },
-        { name: "Jerseys", href: "/products/jerseys" },
-        { name: "Racing", href: "/products/racing" },
-        { name: "Cycling", href: "/products/cycling" },
-        { name: "Golf", href: "/products/golf" },
-        { name: "Bowling", href: "/products/bowling" },
-        { name: "Esports", href: "/products/esports" },
+        { name: "T-shirts", tag: "T-Shirt" },
+        { name: "Hoodies", tag: "Hoodie" },
+        { name: "Jerseys", tag: "Jersey / Kit" },
+        { name: "Racing", tag: "Jersey / Kit" },
+        { name: "Cycling", tag: "Sports Top / Kit" },
+        { name: "Golf", tag: "Polo Shirt" },
+        { name: "Bowling", tag: "Shirt" },
+        { name: "Esports", tag: "Jersey / Kit" },
       ],
       color: "bg-[#ff4d00]",
-      href: "/products",
+      href: tagLink({}),
     },
     {
       label: "Sports & Team",
       headline: "Built for game day.",
       desc: "Custom sublimated kits for cycling, running, soccer, basketball, rowing, esports. Full team packages with names and numbers.",
-      items: ["Cycling", "Running", "Soccer", "Esports"],
+      items: [
+        { name: "Cycling", tag: "sport:Cycling" },
+        { name: "Running", tag: "sport:Running" },
+        { name: "Soccer", tag: "sport:Soccer" },
+        { name: "Esports", tag: "sport:Esports" },
+      ],
       color: "bg-[#00c2ff]",
-      href: "/products",
+      href: tagLink({ sport: "Cycling" }),
     },
     {
       label: "Flags & Banners",
       headline: "Make a statement outdoors.",
       desc: "Custom flags, banners, pop-up displays, beach flags, feather banners. Fade-resistant for outdoor use.",
-      items: ["Garden flags", "Trade show", "Beach flags", "Banners"],
+      items: [
+        { name: "Garden flags" },
+        { name: "Trade show" },
+        { name: "Beach flags" },
+        { name: "Banners" },
+      ],
       color: "bg-[#ff4d00]",
       href: "/products",
     },
@@ -40,7 +51,12 @@ export function Products() {
       label: "Home & Living",
       headline: "Print your art on soft goods.",
       desc: "Custom cushions, pillowcases, throws, curtains, bean bags, aprons. Perfect for boutique brands and home decor.",
-      items: ["Cushions", "Throws", "Curtains", "Aprons"],
+      items: [
+        { name: "Cushions" },
+        { name: "Throws" },
+        { name: "Curtains" },
+        { name: "Aprons", tag: "category:Apron" },
+      ],
       color: "bg-[#00c2ff]",
       href: "/products",
     },
@@ -48,7 +64,12 @@ export function Products() {
       label: "Bags & Accessories",
       headline: "Carry your brand.",
       desc: "Drawstring bags, backpacks, tote bags, gym sacks, hats, scarves, bandanas, lanyards.",
-      items: ["Drawstring bags", "Backpacks", "Caps", "Lanyards"],
+      items: [
+        { name: "Drawstring bags" },
+        { name: "Backpacks" },
+        { name: "Caps", tag: "category:Baseball Cap" },
+        { name: "Lanyards" },
+      ],
       color: "bg-[#ff4d00]",
       href: "/products",
     },
@@ -56,7 +77,12 @@ export function Products() {
       label: "Hard Goods",
       headline: "Print on hard surfaces.",
       desc: "Mousepads, coasters, puzzles, phone cases, ceramic mugs, metal plates, acrylic photo panels.",
-      items: ["Mousepads", "Mugs", "Puzzles", "Phone cases"],
+      items: [
+        { name: "Mousepads" },
+        { name: "Mugs" },
+        { name: "Puzzles" },
+        { name: "Phone cases" },
+      ],
       color: "bg-[#00c2ff]",
       href: "/products",
     },
@@ -108,7 +134,18 @@ export function Products() {
               <div className="flex flex-wrap gap-1.5">
                 {cat.items.map((item) => {
                   const itemName = typeof item === "string" ? item : item.name;
-                  const itemHref = typeof item === "string" ? null : item.href;
+                  let itemHref: string | null = null;
+                  if (typeof item === "object" && item.tag) {
+                    const [dim, value] = item.tag.split(":");
+                    if (dim === "category")
+                      itemHref = tagLink({ category: value });
+                    else if (dim === "sport")
+                      itemHref = tagLink({ sport: value });
+                    else if (dim === "scenario")
+                      itemHref = tagLink({ scenario: value });
+                  }
+                  // Fallback: try resolveTagLink on the label itself
+                  if (!itemHref) itemHref = resolveTagLink(itemName);
                   const baseCls =
                     "border border-black px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide";
                   if (itemHref) {

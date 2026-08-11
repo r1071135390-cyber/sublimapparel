@@ -16,11 +16,13 @@ import {
   ShoppingBag,
   ArrowRight,
 } from "lucide-react";
+import { tagLink } from "@/lib/tag-utils";
 
 export function Industries() {
   const industries = [
     {
       slug: "events-conferences",
+      scenario: "Event & Festival",
       title: "Events & Conferences",
       icon: CalendarDays,
       products: "Staff & volunteer tees, lanyards, table throws, step-and-repeat backdrops, feather flags",
@@ -28,6 +30,7 @@ export function Industries() {
     },
     {
       slug: "promotional-products",
+      scenario: "Promotional Swag",
       title: "Promotional Products Distributors",
       icon: Megaphone,
       products: "Apparel, bags, towels, blankets, flags, table covers, lanyards",
@@ -35,6 +38,7 @@ export function Industries() {
     },
     {
       slug: "sports-teams",
+      scenario: "Sports League",
       title: "Sports Teams & Leagues",
       icon: Trophy,
       products: "Sublimated jerseys, shorts, warm-ups, singlets, socks, sideline banners",
@@ -42,6 +46,7 @@ export function Industries() {
     },
     {
       slug: "music-tour-festival",
+      scenario: "Music & Merch",
       title: "Music, Tour & Festival Merch",
       icon: Music2,
       products: "All-over-print tees and hoodies, bandanas, tote bags, stage backdrops",
@@ -49,6 +54,7 @@ export function Industries() {
     },
     {
       slug: "trade-show-display",
+      scenario: "Event & Festival",
       title: "Trade Show & Display",
       icon: Presentation,
       products: "SEG tension fabric, backdrop walls, table throws, counter covers, tent walls",
@@ -56,6 +62,7 @@ export function Industries() {
     },
     {
       slug: "corporate-programs",
+      scenario: "Corporate & Branding",
       title: "Corporate & Employee Programs",
       icon: Briefcase,
       products: "Uniforms, golf polos, bowling shirts, esports jerseys, onboarding kits, conference apparel, branded gifting",
@@ -63,6 +70,7 @@ export function Industries() {
     },
     {
       slug: "apparel-brands",
+      scenario: "Retail & Fashion",
       title: "Apparel Brands & Agencies",
       icon: Shirt,
       products: "Custom cut-and-sew, all-over-print apparel, private-label packaging",
@@ -70,6 +78,7 @@ export function Industries() {
     },
     {
       slug: "schools-greek-life",
+      scenario: "Education & School",
       title: "Schools, Universities & Greek Life",
       icon: GraduationCap,
       products: "Rush shirts, bid day tees, game-day and alumni apparel, dorm goods",
@@ -77,6 +86,7 @@ export function Industries() {
     },
     {
       slug: "political-campaigns",
+      scenario: "Political Campaign",
       title: "Political Campaigns",
       icon: Flag,
       products: "Rally tees, fabric banners, hand-held flags, canvasser vests, hats, rally towels",
@@ -84,6 +94,7 @@ export function Industries() {
     },
     {
       slug: "breweries-hospitality",
+      scenario: "Hospitality & F&B",
       title: "Breweries, Coffee & Hospitality",
       icon: Coffee,
       products: "Merch tees and hoodies, aprons, bar towels, patio covers, tap-room banners",
@@ -91,6 +102,7 @@ export function Industries() {
     },
     {
       slug: "endurance-race-events",
+      scenario: "Sports League",
       title: "Endurance & Race Events",
       icon: Bike,
       products: "Finisher tees in cotton and technical, race shirts, cycling kits, route banners",
@@ -98,6 +110,7 @@ export function Industries() {
     },
     {
       slug: "ecommerce-fulfillment",
+      scenario: "Retail & Fashion",
       title: "E-commerce & Fulfillment",
       icon: ShoppingBag,
       products: "Blankets, pillow covers, towels, tapestries, pet goods, aprons, tote bags",
@@ -151,18 +164,26 @@ export function Industries() {
                   {ind.pitch}
                 </div>
 
-                {/* View cases link */}
-                <Link
-                  href={`/cases/${ind.slug}`}
-                  className="mt-auto inline-flex items-center gap-1.5 self-start text-xs font-black uppercase tracking-wider text-black transition-colors hover:text-[#ff4d00]"
-                >
-                  View case studies
-                  <ArrowRight
-                    size={14}
-                    strokeWidth={3}
-                    className="transition-transform group-hover:translate-x-1"
-                  />
-                </Link>
+                {/* View products link */}
+                <div className="mt-auto flex items-center justify-between gap-2">
+                  <Link
+                    href={tagLink({ scenario: ind.scenario })}
+                    className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-black transition-colors hover:text-[#ff4d00]"
+                  >
+                    Browse products
+                    <ArrowRight
+                      size={14}
+                      strokeWidth={3}
+                      className="transition-transform group-hover:translate-x-1"
+                    />
+                  </Link>
+                  <Link
+                    href={`/cases/${ind.slug}`}
+                    className="text-[10px] font-bold uppercase tracking-wider text-black/50 transition-colors hover:text-black"
+                  >
+                    Cases →
+                  </Link>
+                </div>
               </div>
             );
           })}

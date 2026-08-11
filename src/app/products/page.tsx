@@ -2,6 +2,7 @@ import { Contact } from "@/components/contact";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Sparkles } from "lucide-react";
+import { tagLink, resolveTagLink } from "@/lib/tag-utils";
 
 export const metadata = {
   title: "Custom Sublimation & Cotton Apparel — T-Shirts, Jerseys, Hoodies, Cycling, Golf, Racing",
@@ -18,42 +19,97 @@ const categories = [
     id: "apparel",
     title: "Apparel",
     desc: "T-shirts, hoodies, jerseys, racing, cycling, golf, bowling, esports, singlets, leggings. Cut and sewn in our Yiwu factory.",
-    items: ["T-Shirts", "Hoodies & Sweatshirts", "Jerseys & Singlets", "Racing Kits", "Cycling Kits", "Golf / Bowling Shirts", "Pants & Shorts", "Vests"],
+    items: [
+      { name: "T-Shirts", category: "T-Shirt" },
+      { name: "Hoodies", category: "Hoodie" },
+      { name: "Sweatshirts", category: "Sweatshirt" },
+      { name: "Jerseys", category: "Jersey / Kit" },
+      { name: "Cycling Kits", category: "Sports Top / Kit" },
+      { name: "Polo / Golf", category: "Polo Shirt" },
+      { name: "Bowling Shirts", category: "Shirt" },
+      { name: "Pants & Shorts", category: "Pants" },
+      { name: "Leggings", category: "Leggings" },
+      { name: "Tank Tops", category: "Tank Top & Camis" },
+      { name: "Vests", category: "Jacket" },
+      { name: "Combat Gear", category: "Combat Gear" },
+    ],
     note: "Polyester or 100% cotton. Cotton runs on DTG/DTF (A4–A3 per panel); polyester runs on sublimation (true all-over, edge-to-edge). Allover digital print on cotton also available (cut-and-sew, true full-body, MOQ 100).",
   },
   {
     id: "home",
     title: "Home & Living",
     desc: "Custom printed home textiles. Bright patterns, soft fabrics, ready for retail or e-commerce.",
-    items: ["Throw Pillows", "Cushion Covers", "Blankets & Throws", "Curtains & Drapes", "Tablecloths", "Towels", "Bedding Sets"],
+    items: [
+      { name: "Throw Pillows" },
+      { name: "Cushion Covers" },
+      { name: "Blankets & Throws" },
+      { name: "Curtains & Drapes" },
+      { name: "Tablecloths" },
+      { name: "Towels" },
+      { name: "Bedding Sets" },
+    ],
     note: "Polyester, cotton, or blended fabrics. Custom sizes available.",
   },
   {
     id: "accessories",
     title: "Bags & Accessories",
     desc: "Custom printed bags, hats, and fashion accessories. Great for events and brand merch.",
-    items: ["Drawstring Bags", "Backpacks", "Tote Bags", "Baseball Caps", "Bucket Hats", "Scarves & Bandanas", "Lanyards", "Aprons"],
+    items: [
+      { name: "Drawstring Bags" },
+      { name: "Backpacks" },
+      { name: "Tote Bags" },
+      { name: "Baseball Caps", category: "Baseball Cap" },
+      { name: "Bucket Hats", category: "Bucket Hat" },
+      { name: "Scarves & Bandanas" },
+      { name: "Lanyards" },
+      { name: "Aprons", category: "Apron" },
+    ],
     note: "Durable sublimation-ready materials. Custom hardware and closures.",
   },
   {
     id: "flags",
     title: "Flags & Banners",
     desc: "Indoor and outdoor flags, banners, and signage. Vibrant colors, fade-resistant.",
-    items: ["Garden Flags", "Beach Flags", "Hand Flags", "Trade Show Banners", "Pull-Up Banners", "Pennant Strings"],
+    items: [
+      { name: "Garden Flags" },
+      { name: "Beach Flags" },
+      { name: "Hand Flags" },
+      { name: "Trade Show Banners" },
+      { name: "Pull-Up Banners" },
+      { name: "Pennant Strings" },
+    ],
     note: "Knitted polyester, flag fabric, or mesh. Pole pockets and hemming included.",
   },
   {
     id: "hardgoods",
     title: "Hard Goods & Lifestyle",
     desc: "Sublimation-ready hard goods and lifestyle products. Perfect for e-commerce and gifting.",
-    items: ["Mouse Pads", "Coasters", "Puzzles", "Phone Cases", "AirPods Cases", "Mugs (wrap print)", "Keychains", "Magnets"],
+    items: [
+      { name: "Mouse Pads" },
+      { name: "Coasters" },
+      { name: "Puzzles" },
+      { name: "Phone Cases" },
+      { name: "AirPods Cases" },
+      { name: "Mugs (wrap print)" },
+      { name: "Keychains" },
+      { name: "Magnets" },
+    ],
     note: "Pre-treated sublimation blanks. Custom shapes and packaging available.",
   },
   {
     id: "custom",
     title: "Custom Projects",
     desc: "Got something else? We love weird one-offs. Send us your idea and we'll figure out how to print it.",
-    items: ["Pet Apparel", "Shoe Uppers", "Lampshades", "Wall Art", "Festival Costumes", "Theatre Costumes", "Promotional Items", "Anything else you imagine"],
+    items: [
+      { name: "Pet Apparel" },
+      { name: "Shoe Uppers" },
+      { name: "Lampshades" },
+      { name: "Wall Art" },
+      { name: "Festival Costumes" },
+      { name: "Theatre Costumes" },
+      { name: "Promotional Items" },
+      { name: "Anything else you imagine" },
+    ],
     note: "Tell us what you need. If it can be sublimated, we can probably do it.",
   },
 ];
@@ -119,6 +175,30 @@ export default function ProductsPage() {
                 Apparel is our bread and butter — but we print home goods, bags, flags, hard
                 goods, and whatever custom project you bring us. Polyester or 100% cotton.
               </p>
+
+              {/* Quick-filter tags */}
+              <div className="mt-6 flex flex-wrap gap-2">
+                {[
+                  { name: "All 100 products", href: tagLink({}) },
+                  { name: "Jerseys", href: tagLink({ category: "Jersey / Kit" }) },
+                  { name: "T-Shirts", href: tagLink({ category: "T-Shirt" }) },
+                  { name: "Hoodies", href: tagLink({ category: "Hoodie" }) },
+                  { name: "Polo Shirts", href: tagLink({ category: "Polo Shirt" }) },
+                  { name: "Soccer", href: tagLink({ sport: "Soccer" }) },
+                  { name: "Cycling", href: tagLink({ sport: "Cycling" }) },
+                  { name: "Basketball", href: tagLink({ sport: "Basketball" }) },
+                  { name: "Events", href: tagLink({ scenario: "Event & Festival" }) },
+                  { name: "Teams", href: tagLink({ scenario: "Team & Club" }) },
+                ].map((q) => (
+                  <Link
+                    key={q.name}
+                    href={q.href}
+                    className="border-2 border-black bg-white px-3 py-1.5 text-xs font-black uppercase tracking-wide text-black transition-colors hover:bg-[#ff4d00] hover:text-white"
+                  >
+                    {q.name}
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -182,14 +262,32 @@ export default function ProductsPage() {
                   </div>
                   <div className="md:col-span-8">
                     <div className="grid grid-cols-2 gap-2 md:grid-cols-3">
-                      {cat.items.map((item) => (
-                        <div
-                          key={item}
-                          className="border-2 border-black bg-[#faf9f6] p-3 text-sm font-black text-black"
-                        >
-                          {item}
-                        </div>
-                      ))}
+                      {cat.items.map((item) => {
+                        const itemName = item.name;
+                        const itemHref = item.category
+                          ? tagLink({ category: item.category })
+                          : resolveTagLink(itemName);
+                        if (itemHref) {
+                          return (
+                            <Link
+                              key={itemName}
+                              href={itemHref}
+                              className="group flex items-center justify-between border-2 border-black bg-[#faf9f6] px-3 py-2.5 text-sm font-black text-black transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:border-[#ff4d00] hover:bg-[#ff4d00] hover:text-white hover:shadow-[3px_3px_0_0_#000]"
+                            >
+                              <span>{itemName}</span>
+                              <ArrowRight className="h-3.5 w-3.5 opacity-0 transition-opacity group-hover:opacity-100" strokeWidth={3} />
+                            </Link>
+                          );
+                        }
+                        return (
+                          <div
+                            key={itemName}
+                            className="border-2 border-black bg-[#faf9f6] p-3 text-sm font-black text-black"
+                          >
+                            {itemName}
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
