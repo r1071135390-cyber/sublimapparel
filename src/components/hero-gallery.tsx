@@ -42,7 +42,7 @@ export function HeroGallery({ images, intervalMs = 3500 }: Props) {
       />
 
       {/* carousel viewport */}
-      <div className="relative aspect-[4/3] overflow-hidden rounded-md">
+      <div className="relative aspect-square overflow-hidden rounded-md bg-[#1A1A1A]">
         {images.map((src, i) => (
           <div
             key={src}
@@ -55,7 +55,7 @@ export function HeroGallery({ images, intervalMs = 3500 }: Props) {
               alt=""
               fill
               sizes="(min-width: 1024px) 448px, 100vw"
-              className="object-cover"
+              className="object-contain"
               priority={i === 0}
             />
           </div>
