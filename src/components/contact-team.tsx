@@ -169,7 +169,7 @@ function Person({
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={image}
-          alt={`${name}`}
+          alt={`${name} — ${role} at SublimApparel`}
           className="h-full w-full object-cover"
           loading="lazy"
         />

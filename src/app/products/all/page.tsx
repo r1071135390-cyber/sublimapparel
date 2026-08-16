@@ -5,7 +5,7 @@ import { JsonLd } from "@/components/json-ld";
 import { ProductCatalog } from "@/components/product-catalog";
 import { HeroGallery } from "@/components/hero-gallery";
 import { products, allSports, allScenarios } from "@/lib/products-data";
-import { pickHeroImages } from "@/lib/product-images";
+import { pickHeroImagesWithAlts } from "@/lib/product-images";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 
 export const metadata: Metadata = {
@@ -104,7 +104,7 @@ export default function AllProductsPage() {
                 </Link>
               </div>
             </div>
-            <HeroGallery images={pickHeroImages(products, 4, "all-products")} />
+            <HeroGallery images={pickHeroImagesWithAlts(products, 4, "all-products")} />
           </div>
         </div>
       </section>

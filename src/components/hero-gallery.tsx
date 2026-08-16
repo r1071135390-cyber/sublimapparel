@@ -3,9 +3,13 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
+type HeroImage = { src: string; alt: string };
+
 type Props = {
-  /** Image URLs to cycle through. Empty array hides the carousel. */
-  images: string[];
+  /** Image objects to cycle through. Empty array hides the carousel. */
+  images: HeroImage[];
+  /** Back-compat: accept plain string array. Alt text defaults to "". */
+  rawImages?: string[];
   /** Auto-rotate interval in ms. */
   intervalMs?: number;
 };
@@ -20,18 +24,20 @@ type Props = {
  *
  * Image URLs must be pre-computed on the server (this is a client component).
  */
-export function HeroGallery({ images, intervalMs = 3500 }: Props) {
+export function HeroGallery({ images, rawImages, intervalMs = 3500 }: Props) {
+  // Normalise: if the caller passed the legacy `images: string[]`, convert.
+  const slides: HeroImage[] = images ?? (rawImages ?? []).map((src) => ({ src, alt: "" }));
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    if (images.length <= 1) return;
+    if (slides.length <= 1) return;
     const t = setInterval(() => {
-      setIndex((i) => (i + 1) % images.length);
+      setIndex((i) => (i + 1) % slides.length);
     }, intervalMs);
     return () => clearInterval(t);
-  }, [images.length, intervalMs]);
+  }, [slides.length, intervalMs]);
 
-  if (images.length === 0) return null;
+  if (slides.length === 0) return null;
 
   return (
     <div className="relative hidden lg:block w-full max-w-md mx-auto lg:ml-auto lg:mr-0">
@@ -43,16 +49,16 @@ export function HeroGallery({ images, intervalMs = 3500 }: Props) {
 
       {/* carousel viewport */}
       <div className="relative aspect-square overflow-hidden rounded-md bg-[#1A1A1A]">
-        {images.map((src, i) => (
+        {slides.map((img, i) => (
           <div
-            key={src}
+            key={img.src}
             className="absolute inset-0 transition-opacity duration-700 ease-in-out"
             style={{ opacity: i === index ? 1 : 0 }}
             aria-hidden={i !== index}
           >
             <Image
-              src={src}
-              alt=""
+              src={img.src}
+              alt={img.alt}
               fill
               sizes="(min-width: 1024px) 448px, 100vw"
               className="object-contain"
@@ -63,14 +69,14 @@ export function HeroGallery({ images, intervalMs = 3500 }: Props) {
       </div>
 
       {/* dot indicators */}
-      {images.length > 1 && (
+      {slides.length > 1 && (
         <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex gap-1.5">
-          {images.map((_, i) => (
+          {slides.map((img, i) => (
             <button
               key={i}
               type="button"
               onClick={() => setIndex(i)}
-              aria-label={`Show image ${i + 1}`}
+              aria-label={`Show image ${i + 1}: ${img.alt || "product photo"}`}
               className={`h-1.5 rounded-full transition-all ${
                 i === index
                   ? "w-6 bg-background"

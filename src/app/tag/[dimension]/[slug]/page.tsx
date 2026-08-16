@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ChevronRight } from "lucide-react";
 import { products, type Product } from "@/lib/products-data";
-import { pickHeroImages, getMainImagePath } from "@/lib/product-images";
+import { pickHeroImagesWithAlts, getMainImagePath } from "@/lib/product-images";
 import { HeroGallery } from "@/components/hero-gallery";
 import {
   ALL_TAGS,
@@ -222,7 +222,7 @@ export default async function TagArchivePage({ params }: PageProps) {
                 </Link>
               </div>
 
-              <HeroGallery images={pickHeroImages(matches, 4, `${dim}-${slug}`)} />
+              <HeroGallery images={pickHeroImagesWithAlts(matches, 4, `${dim}-${slug}`)} />
             </div>
           </div>
         </section>

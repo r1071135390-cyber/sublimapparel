@@ -19,7 +19,7 @@ export function Navbar() {
         <Link href="/" className="group flex items-center gap-2">
           <img
             src="/sublimapparel-logo.webp"
-            alt="SublimApparel"
+            alt="SublimApparel — custom all-over print apparel factory, Yiwu China"
             className="h-11 w-auto"
           />
         </Link>

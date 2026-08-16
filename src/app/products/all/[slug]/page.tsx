@@ -17,6 +17,7 @@ import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 import { ProductGallery } from "@/components/product-gallery";
 import { KeywordCloud } from "@/components/keyword-cloud";
 import { getProductImages } from "@/lib/product-images";
+import { buildSeoContent, buildProductFaqLd } from "@/lib/product-content";
 
 export function generateStaticParams() {
   return products.map((p) => ({ slug: p.slug }));
@@ -31,10 +32,10 @@ export async function generateMetadata({
   const product = getProductBySlug(slug);
   if (!product) return { title: "Product not found" };
 
-  const sportTags = product.sports.length ? ` for ${product.sports.slice(0, 3).join(", ")}` : "";
+  const seo = buildSeoContent(product);
   return {
     title: `${product.name} — Custom All-Over Print | MOQ ${product.moq}`,
-    description: `${product.name}. ${product.description} ${product.fabrics.length} fabric options${sportTags}. MOQ ${product.moq} pcs, DDP worldwide.`,
+    description: seo.metaDescription,
     keywords: [
       product.name,
       product.category.toLowerCase(),
@@ -49,7 +50,7 @@ export async function generateMetadata({
     alternates: { canonical: `./` },
     openGraph: {
       title: `${product.name} — Custom All-Over Print`,
-      description: product.description,
+      description: seo.metaDescription,
       url: `/products/all/${product.slug}/`,
       type: "website",
       images: ["/product-hero-products.webp"],
@@ -104,6 +105,7 @@ export default async function ProductDetailPage({
   const related = getRelatedProducts(product, 4);
   const gradient = getGradient(product.id);
   const emoji = getCategoryEmoji(product.category);
+  const seo = buildSeoContent(product);
 
   const breadcrumbLd = buildBreadcrumbJsonLd([
     { name: "Home", path: "/" },
@@ -116,7 +118,7 @@ export default async function ProductDetailPage({
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.name,
-    description: product.description,
+    description: seo.metaDescription,
     image: "https://sublimapparel.com/product-hero-products.webp",
     brand: { "@type": "Brand", name: "SublimApparel" },
     category: product.category,
@@ -130,10 +132,13 @@ export default async function ProductDetailPage({
     },
   };
 
+  const faqLd = buildProductFaqLd(seo.faq);
+
   return (
     <>
       <JsonLd data={breadcrumbLd} />
       <JsonLd data={productLd} />
+      <JsonLd data={faqLd} />
 
       {/* HERO BAND */}
       <section className="relative overflow-hidden border-b-2 border-black bg-[#0A0A0A] text-white">
@@ -232,6 +237,75 @@ export default async function ProductDetailPage({
                 </Link>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ABOUT THIS GARMENT — SEO content (paragraphs + highlights) */}
+      <section className="bg-white">
+        <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-20">
+          <div className="mb-8 border-b-2 border-black pb-4 md:mb-12 md:pb-6">
+            <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-[#ff4d00] md:text-sm">
+              About this garment
+            </p>
+            <h2 className="text-2xl font-black uppercase leading-tight tracking-tight text-black md:text-4xl">
+              {seo.tagline}
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-12">
+            <div className="md:col-span-2 space-y-5 text-[13px] leading-relaxed text-[#1a1a1a] md:text-[15px] md:leading-relaxed">
+              <p>{seo.overview}</p>
+              <p>{seo.printMethod}</p>
+              <p>{seo.useCases}</p>
+              <p>{seo.careAndSpecs}</p>
+            </div>
+
+            <aside className="md:pl-6 md:border-l-2 md:border-black/10">
+              <h3 className="mb-4 text-[10px] font-black uppercase tracking-widest text-black md:text-xs">
+                Highlights
+              </h3>
+              <ul className="space-y-3">
+                {seo.highlights.map((h) => (
+                  <li key={h} className="flex items-start gap-2 text-[12px] leading-snug text-[#1a1a1a] md:text-sm">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#ff4d00]" aria-hidden />
+                    <span>{h}</span>
+                  </li>
+                ))}
+              </ul>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ — SEO structured content */}
+      <section className="border-y-2 border-black bg-[#f5f5f5]">
+        <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-16">
+          <div className="mb-6 md:mb-10">
+            <p className="mb-1 text-[10px] font-bold uppercase tracking-widest text-[#ff4d00] md:text-xs">
+              Frequently asked
+            </p>
+            <h2 className="text-2xl font-black uppercase leading-tight tracking-tight text-black md:text-3xl">
+              Questions about this blank
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
+            {seo.faq.map((q) => (
+              <details
+                key={q.question}
+                className="group border-2 border-black bg-white p-4 md:p-5"
+              >
+                <summary className="cursor-pointer list-none text-[13px] font-black uppercase leading-snug text-black md:text-sm">
+                  <span className="flex items-start justify-between gap-3">
+                    <span>{q.question}</span>
+                    <span className="text-[#ff4d00] transition-transform group-open:rotate-45">+</span>
+                  </span>
+                </summary>
+                <p className="mt-3 text-[12px] leading-relaxed text-[#3a3a3a] md:text-[13px]">
+                  {q.answer}
+                </p>
+              </details>
+            ))}
           </div>
         </div>
       </section>

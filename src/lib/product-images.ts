@@ -112,3 +112,58 @@ export function pickHeroImages(
 
   return picked;
 }
+
+/**
+ * Pick N product images AND alt-text, paired. Same deterministic seeding as
+ * `pickHeroImages`. The alt string is built from the product's name + category
+ * so screen readers and crawlers see unique, descriptive text on every slide.
+ */
+export type NamedProduct = {
+  number?: string;
+  id: string;
+  name: string;
+  category: string;
+};
+
+export function pickHeroImagesWithAlts(
+  products: NamedProduct[],
+  count: number,
+  seed: string,
+): { src: string; alt: string }[] {
+  // Same seed hash as pickHeroImages so the order is stable.
+  let hash = 0;
+  for (let i = 0; i < seed.length; i++) {
+    hash = (hash << 5) - hash + seed.charCodeAt(i);
+    hash |= 0;
+  }
+
+  const pool = products
+    .filter(
+      (p) =>
+        !!p.number &&
+        /^\d{4}$/.test(p.number) &&
+        getProductImages(p.number).length > 0,
+    );
+
+  if (pool.length === 0) return [];
+
+  const picked: NamedProduct[] = [];
+  const seen = new Set<string>();
+  let h = Math.abs(hash);
+
+  while (picked.length < count && seen.size < pool.length) {
+    const idx = h % pool.length;
+    const p = pool[idx];
+    if (!seen.has(p.id)) {
+      seen.add(p.id);
+      picked.push(p);
+    }
+    h = (h * 1103515245 + 12345) >>> 0;
+    if (h === 0) h = 1;
+  }
+
+  return picked.map((p) => ({
+    src: getMainImagePath(p.number!),
+    alt: `${p.name} — custom ${p.category.toLowerCase()} from SublimApparel`,
+  }));
+}
