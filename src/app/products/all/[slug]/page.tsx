@@ -14,6 +14,7 @@ import {
 } from "@/lib/products-data";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 import { ProductGallery } from "@/components/product-gallery";
+import { KeywordCloud } from "@/components/keyword-cloud";
 import { getProductImages } from "@/lib/product-images";
 
 export function generateStaticParams() {
@@ -396,6 +397,28 @@ export default async function ProductDetailPage({
           </div>
         </section>
       )}
+
+      {/* RELATED SEARCHES — SEO */}
+      <section className="border-t-2 border-black bg-white">
+        <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-16">
+          <div className="mb-8">
+            <p className="mb-1 text-[10px] font-bold uppercase tracking-widest text-[#ff4d00] md:text-xs">
+              Continue browsing
+            </p>
+            <h2 className="text-2xl font-black uppercase leading-tight tracking-tight text-black md:text-3xl">
+              More custom apparel by keyword
+            </h2>
+            <p className="mt-3 max-w-3xl text-sm text-black/70 md:text-base">
+              {`This is one of ${products.length}+ custom-printed garments we make at our Yiwu factory. Pick a sport you coach, a use case you serve, or a garment type to keep browsing — all shipped DDP to your door.`}
+            </p>
+          </div>
+          <div className="grid gap-8 md:grid-cols-3">
+            <KeywordCloud dimension="category" title="By apparel type" />
+            <KeywordCloud dimension="sport" title="By sport" />
+            <KeywordCloud dimension="scenario" title="By use case" />
+          </div>
+        </div>
+      </section>
 
       {/* CTA BAND */}
       <section className="border-t-2 border-black bg-[#0A0A0A] text-white">

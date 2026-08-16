@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { MapPin, Mail, MessageCircle, Phone, Building2, Warehouse } from "lucide-react";
+import { FullKeywordCloud } from "@/components/keyword-cloud";
 
 const linkGroups = [
   {
@@ -106,6 +107,21 @@ export function Footer() {
               )}
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* Keyword directory - SEO */}
+      <div className="border-t-2 border-black bg-[#f5f5f5]">
+        <div className="mx-auto max-w-7xl px-6 py-10">
+          <div className="mb-6">
+            <h2 className="text-base font-black uppercase tracking-tight md:text-lg">
+              Browse our full catalog by apparel type, sport, and use case
+            </h2>
+            <p className="mt-1 text-sm text-black/60">
+              {`13 apparel categories · 41 sports · 29 use-case scenarios. Every link below leads to a curated page with custom-printed garments ready to ship DDP to your door.`}
+            </p>
+          </div>
+          <FullKeywordCloud />
         </div>
       </div>
 

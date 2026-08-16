@@ -14,6 +14,7 @@ import {
   slugify,
   seoForTag,
 } from "@/lib/tag-archive";
+import { KeywordCloud } from "@/components/keyword-cloud";
 import { JsonLd } from "@/components/json-ld";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 
@@ -325,6 +326,23 @@ export default async function TagArchivePage({ params }: PageProps) {
                   <span>{info.label}</span>
                 </Link>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Cross-dimension keyword directory - SEO */}
+        <section className="border-t border-border bg-background">
+          <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+            <h2 className="text-lg font-bold tracking-tight mb-2">
+              Related custom apparel searches
+            </h2>
+            <p className="text-sm text-muted-foreground mb-6">
+              {`Continue browsing the catalog by ${dim === "category" ? "sport or use case" : "apparel type, sport, or use case"}. Every link below leads to a tag page with sublimation-printed garments ready to ship DDP worldwide.`}
+            </p>
+            <div className="grid gap-8 md:grid-cols-2">
+              {dim !== "category" && <KeywordCloud dimension="category" title="By apparel type" />}
+              {dim !== "sport" && <KeywordCloud dimension="sport" title="By sport" />}
+              {dim !== "scenario" && <KeywordCloud dimension="scenario" title="By use case" />}
             </div>
           </div>
         </section>

@@ -4,9 +4,10 @@ import Link from "next/link";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { tagArchiveLink, resolveArchiveLink } from "@/lib/tag-utils";
 import { CATEGORY_TAGS } from "@/lib/tag-archive";
+import { KeywordCloud } from "@/components/keyword-cloud";
 
 export const metadata = {
-  title: "Custom Sublimation & Cotton Apparel — T-Shirts, Jerseys, Hoodies",
+  title: "Custom Sublimation & Cotton Apparel — T-Shirts, Hoodies, Sportswear",
   description:
     "Custom sublimated apparel for B2B: t-shirts, jerseys, hoodies, cycling kits, golf polos, racing suits. No setup fees, MOQ 50 pcs, full color all-over print, sample in 5 days.",
 
@@ -181,7 +182,7 @@ export default function ProductsPage() {
               <div className="mt-6 flex flex-wrap gap-2">
                 {[
                   { name: "All products", href: "/products/all/" },
-                  { name: "Jerseys", href: tagArchiveLink("category", "Jersey / Kit") },
+                  { name: "Sportswear", href: tagArchiveLink("category", "Sportswear") },
                   { name: "T-Shirts", href: tagArchiveLink("category", "T-Shirt") },
                   { name: "Hoodies", href: tagArchiveLink("category", "Hoodie") },
                   { name: "Polo Shirts", href: tagArchiveLink("category", "Polo Shirt") },
@@ -315,6 +316,28 @@ export default function ProductsPage() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* BROWSE BY KEYWORD — SEO */}
+      <section className="border-b-2 border-black bg-[#faf9f6]">
+        <div className="mx-auto max-w-7xl px-6 py-16">
+          <div className="mb-8 max-w-3xl">
+            <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-[#ff4d00] md:text-xs">
+              Cross-link every page
+            </p>
+            <h2 className="text-3xl font-black uppercase leading-tight tracking-tight md:text-5xl">
+              Jump to your custom apparel by keyword
+            </h2>
+            <p className="mt-3 text-sm text-black/70 md:text-base">
+              {`Pick a sport, a use case, or an apparel type below — every link routes to a curated tag page with sublimation-printed garments ready for DDP shipping to your door. ${Object.keys(CATEGORY_TAGS).length} apparel types · 41 sports · 29 use cases.`}
+            </p>
+          </div>
+          <div className="grid gap-8 md:grid-cols-3">
+            <KeywordCloud dimension="category" title="By apparel type" />
+            <KeywordCloud dimension="sport" title="By sport" />
+            <KeywordCloud dimension="scenario" title="By use case" />
           </div>
         </div>
       </section>

@@ -11,10 +11,10 @@ const fabrics = [
 const categories = [
   { num: "01", name: "T-shirts", href: "/tag/category/t-shirt/" },
   { num: "02", name: "Hoodies", href: "/tag/category/hoodie/" },
-  { num: "03", name: "Jerseys", href: "/tag/category/jersey-kit/" },
-  { num: "04", name: "Racing", href: "/tag/category/jersey-kit/" },
+  { num: "03", name: "Polos", href: "/tag/category/polo-shirt/" },
+  { num: "04", name: "Sportswear", href: "/tag/category/sportswear/" },
   { num: "05", name: "Cycling", href: "/tag/sport/cycling/" },
-  { num: "06", name: "Golf / Bowling", href: "/tag/sport/golf/" },
+  { num: "06", name: "Soccer", href: "/tag/sport/soccer/" },
 ];
 
 const stats = [
@@ -118,11 +118,12 @@ export function Hero() {
         <p className="mb-4 max-w-2xl text-sm text-white/80 md:mb-5 md:text-lg">
           <Link href="/tag/category/t-shirt/" className="font-semibold text-white underline-offset-4 hover:text-[#ff4d00] hover:underline">T-shirts</Link>,{" "}
           <Link href="/tag/category/hoodie/" className="font-semibold text-white underline-offset-4 hover:text-[#ff4d00] hover:underline">hoodies</Link>,{" "}
-          <Link href="/tag/category/jersey-kit/" className="font-semibold text-white underline-offset-4 hover:text-[#ff4d00] hover:underline">jerseys</Link>,{" "}
-          <Link href="/tag/category/jersey-kit/" className="font-semibold text-white underline-offset-4 hover:text-[#ff4d00] hover:underline">racing kits</Link>,{" "}
+          <Link href="/tag/category/polo-shirt/" className="font-semibold text-white underline-offset-4 hover:text-[#ff4d00] hover:underline">polo shirts</Link>,{" "}
+          <Link href="/tag/category/sweatshirt/" className="font-semibold text-white underline-offset-4 hover:text-[#ff4d00] hover:underline">sweatshirts</Link>,{" "}
+          <Link href="/tag/category/tank-top-and-camis/" className="font-semibold text-white underline-offset-4 hover:text-[#ff4d00] hover:underline">tank tops</Link>,{" "}
           <Link href="/tag/sport/cycling/" className="font-semibold text-white underline-offset-4 hover:text-[#ff4d00] hover:underline">cycling kits</Link>,{" "}
-          <Link href="/tag/sport/golf/" className="font-semibold text-white underline-offset-4 hover:text-[#ff4d00] hover:underline">golf</Link>,{" "}
-          <Link href="/tag/sport/bowling/" className="font-semibold text-white underline-offset-4 hover:text-[#ff4d00] hover:underline">bowling</Link>,{" "}
+          <Link href="/tag/sport/soccer/" className="font-semibold text-white underline-offset-4 hover:text-[#ff4d00] hover:underline">soccer</Link>,{" "}
+          <Link href="/tag/sport/basketball/" className="font-semibold text-white underline-offset-4 hover:text-[#ff4d00] hover:underline">basketball</Link>,{" "}
           <Link href="/tag/sport/esports/" className="font-semibold text-white underline-offset-4 hover:text-[#ff4d00] hover:underline">esports</Link>
           {" "}&mdash; full sublimation on{" "}
           <Link href="/fabric/polyester" className="font-semibold text-white underline-offset-4 hover:text-[#ff4d00] hover:underline">polyester</Link>{" "}

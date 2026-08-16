@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { tagArchiveLink, resolveArchiveLink } from "@/lib/tag-utils";
+import { CATEGORY_TAGS } from "@/lib/tag-archive";
 
 export function Products() {
   const categories = [
@@ -146,20 +147,46 @@ export function Products() {
                       itemHref = item.tag;
                     } else {
                       const [dim, value] = item.tag.split(":");
-                      if (dim === "category")
-                        itemHref = tagArchiveLink("category", value);
-                      else if (dim === "sport")
+                      if (dim === "category") {
+                        // Only link to category if it still exists in CATEGORY_TAGS
+                        itemHref = CATEGORY_TAGS[value]
+                          ? tagArchiveLink("category", value)
+                          : "/products/all/";
+                      } else if (dim === "sport")
                         itemHref = tagArchiveLink("sport", value);
                       else if (dim === "scenario")
                         itemHref = tagArchiveLink("scenario", value);
-                      else
+                      else if (CATEGORY_TAGS[item.tag])
                         itemHref = tagArchiveLink("category", item.tag);
+                      else
+                        itemHref = "/products/all/";
                     }
                   }
                   // Fallback: try resolveArchiveLink on the label itself
-                  if (!itemHref) itemHref = resolveArchiveLink(itemName);
-                  // Last resort: link to the category's own page
-                  if (!itemHref) itemHref = cat.href;
+                  if (!itemHref) {
+                    const resolved = resolveArchiveLink(itemName);
+                    // Only use the resolved link if it points to an active category
+                    if (resolved && !resolved.includes("/tag/category/apron/")
+                      && !resolved.includes("/tag/category/baseball-cap/")
+                      && !resolved.includes("/tag/category/bucket-hat/")
+                      && !resolved.includes("/tag/category/jersey-kit/")
+                      && !resolved.includes("/tag/category/sports-top-kit/")
+                      && !resolved.includes("/tag/category/combat-gear/")
+                      && !resolved.includes("/tag/category/sleepwear-and-underwear/")
+                      && !resolved.includes("/tag/category/dress/")
+                      && !resolved.includes("/tag/category/coord-set/")
+                      && !resolved.includes("/tag/category/knitwear/")
+                      && !resolved.includes("/tag/category/romper-and-jumpsuit/")
+                      && !resolved.includes("/tag/category/bodysuit/")
+                      && !resolved.includes("/tag/category/leggings/")
+                    ) {
+                      itemHref = resolved;
+                    } else {
+                      itemHref = "/products/all/";
+                    }
+                  }
+                  // Last resort: link to /products/all/
+                  if (!itemHref) itemHref = "/products/all/";
                   const baseCls =
                     "border border-black px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide";
                   if (itemHref) {

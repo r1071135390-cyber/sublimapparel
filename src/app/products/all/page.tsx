@@ -3,7 +3,10 @@ import Link from "next/link";
 import { Sparkles, ArrowRight, Truck, BadgeCheck } from "lucide-react";
 import { JsonLd } from "@/components/json-ld";
 import { ProductCatalog } from "@/components/product-catalog";
+import { KeywordCloud } from "@/components/keyword-cloud";
+import { HeroGallery } from "@/components/hero-gallery";
 import { products, allSports, allScenarios } from "@/lib/products-data";
+import { pickHeroImages } from "@/lib/product-images";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 
 export const metadata: Metadata = {
@@ -53,36 +56,56 @@ export default function AllProductsPage() {
             }}
           />
         </div>
-        <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-20">
+        <div className="relative mx-auto max-w-7xl px-4 py-10 md:px-8 md:py-16">
           <div className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-[#ff4d00] md:text-xs">
             <Sparkles className="h-3.5 w-3.5" />
-            <span>The full catalog · 100 products</span>
+            <span>The full catalog · {products.length} products</span>
           </div>
-          <h1 className="mb-4 text-3xl font-black uppercase leading-[0.95] tracking-tight md:mb-6 md:text-6xl lg:text-7xl">
-            Pick a garment.<br />
-            Pick a sport.<br />
-            <span className="text-[#ff4d00]">Pick a scenario.</span>
-          </h1>
-          <p className="mb-6 max-w-2xl text-sm leading-relaxed text-white/80 md:mb-8 md:text-base">
-            {products.length} all-over print products, cross-filtered three ways. Polyester sublimation or all-over digital print on cotton. MOQ {products[0]?.moq ?? 50} pcs. DDP to your door — duty paid.
-          </p>
-          <div className="flex flex-wrap gap-2 md:gap-3">
-            <span className="inline-flex items-center gap-1.5 rounded-sm bg-white/10 px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-wide backdrop-blur-sm md:text-xs">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#ff4d00]" />
-              {products.length} products
-            </span>
-            <span className="inline-flex items-center gap-1.5 rounded-sm bg-white/10 px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-wide backdrop-blur-sm md:text-xs">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#00c2ff]" />
-              {allSports.length} sports
-            </span>
-            <span className="inline-flex items-center gap-1.5 rounded-sm bg-white/10 px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-wide backdrop-blur-sm md:text-xs">
-              <span className="h-1.5 w-1.5 rounded-full bg-white" />
-              {allScenarios.length} scenarios
-            </span>
-            <span className="inline-flex items-center gap-1.5 rounded-sm bg-white/10 px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-wide backdrop-blur-sm md:text-xs">
-              <Truck className="h-3 w-3" />
-              DDP worldwide
-            </span>
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-12 lg:items-end">
+            <div>
+              <h1 className="mb-4 text-3xl font-black uppercase leading-[0.95] tracking-tight md:mb-6 md:text-5xl lg:text-6xl">
+                Pick a garment.<br />
+                Pick a sport.<br />
+                <span className="text-[#ff4d00]">Pick a scenario.</span>
+              </h1>
+              <p className="mb-6 max-w-2xl text-sm leading-relaxed text-white/80 md:mb-8 md:text-base">
+                {products.length} all-over print products, cross-filtered three ways. Polyester sublimation or all-over digital print on cotton. MOQ {products[0]?.moq ?? 50} pcs. DDP to your door — duty paid.
+              </p>
+              <div className="flex flex-wrap gap-2 md:gap-3">
+                <span className="inline-flex items-center gap-1.5 rounded-sm bg-white/10 px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-wide backdrop-blur-sm md:text-xs">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#ff4d00]" />
+                  {products.length} products
+                </span>
+                <span className="inline-flex items-center gap-1.5 rounded-sm bg-white/10 px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-wide backdrop-blur-sm md:text-xs">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#00c2ff]" />
+                  {allSports.length} sports
+                </span>
+                <span className="inline-flex items-center gap-1.5 rounded-sm bg-white/10 px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-wide backdrop-blur-sm md:text-xs">
+                  <span className="h-1.5 w-1.5 rounded-full bg-white" />
+                  {allScenarios.length} scenarios
+                </span>
+                <span className="inline-flex items-center gap-1.5 rounded-sm bg-white/10 px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-wide backdrop-blur-sm md:text-xs">
+                  <Truck className="h-3 w-3" />
+                  DDP worldwide
+                </span>
+              </div>
+              <div className="mt-6 flex flex-wrap items-center gap-3">
+                <Link
+                  href="/get-a-quote/"
+                  className="inline-flex items-center justify-center gap-2 rounded-sm bg-[#ff4d00] px-5 py-3 text-sm font-black uppercase tracking-wide text-white transition-colors hover:bg-[#e64500] md:text-base"
+                >
+                  Get a quote
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link
+                  href="#catalog"
+                  className="inline-flex items-center justify-center gap-2 rounded-sm border-2 border-white/30 bg-transparent px-5 py-3 text-sm font-black uppercase tracking-wide text-white transition-colors hover:border-white hover:bg-white/10"
+                >
+                  Filter the catalog ↓
+                </Link>
+              </div>
+            </div>
+            <HeroGallery images={pickHeroImages(products, 4, "all-products")} />
           </div>
         </div>
       </section>
@@ -108,6 +131,28 @@ export default function AllProductsPage() {
 
       {/* CATALOG WITH 3-DIM FILTER */}
       <ProductCatalog />
+
+      {/* BROWSE BY KEYWORD — SEO */}
+      <section className="border-t-2 border-black bg-[#faf9f6]">
+        <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-16">
+          <div className="mb-8">
+            <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-[#ff4d00] md:text-xs">
+              Cross-link every page
+            </p>
+            <h2 className="text-2xl font-black uppercase leading-tight tracking-tight md:text-4xl">
+              Find your custom apparel by sport, scenario, or garment type
+            </h2>
+            <p className="mt-3 max-w-3xl text-sm text-black/70 md:text-base">
+              Every tag below routes to a filtered page of sublimation-printed garments. Polyester or 100% cotton, full-bleed all-over print, MOQ {products[0]?.moq ?? 50} pcs, DDP shipping to US / EU / UK / AU.
+            </p>
+          </div>
+          <div className="grid gap-8 md:grid-cols-3">
+            <KeywordCloud dimension="category" title="By apparel type" />
+            <KeywordCloud dimension="sport" title="By sport" />
+            <KeywordCloud dimension="scenario" title="By use case" />
+          </div>
+        </div>
+      </section>
 
       {/* HOW IT WORKS — closed loop */}
       <section className="border-t-2 border-black bg-[#0A0A0A] text-white">
