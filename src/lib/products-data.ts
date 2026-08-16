@@ -27,6 +27,7 @@ export type ProductCategory =
   | "Jacket";
 
 
+
 export type Sport =
   | "AFL" | "Athletics" | "Badminton" | "Baseball" | "Basketball"
   | "Beach" | "Bowling" | "Boxing" | "Cheer" | "Cricket"
@@ -1510,28 +1511,6 @@ export const products: Product[] = [
   },
   {
     id: "NEWAOP0003",
-    slug: "all-over-print-hospitality-fb-hoodie-classic",
-    name: "Custom All-Over Print Hospitality & F&B Hoodie",
-    category: "Hoodie",
-    sports: [],
-    scenarios: ["Hospitality & F&B"],
-    fabrics: [
-      { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
-      { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
-      { gsm: "190GSM", material: "Polyester", process: "Sublimation" },
-      { gsm: "180GSM", material: "Polyester", process: "Sublimation" },
-      { gsm: "160GSM", material: "Polyester", process: "Sublimation" },
-      { gsm: "145GSM", material: "Polyester", process: "Sublimation" },
-      { gsm: "190GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
-      { gsm: "180GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
-      { gsm: "160GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
-      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
-    ],
-    moq: 50,
-    description: "All-Over Print Hospitality & F&B Hoodie. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
-  },
-  {
-    id: "NEWAOP0004",
     slug: "all-over-print-hospitality-fb-uniform",
     name: "Custom All-Over Print Hospitality & F&B Uniform",
     category: "Jacket",
@@ -1553,7 +1532,7 @@ export const products: Product[] = [
     description: "All-Over Print Hospitality & F&B Uniform. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
   },
   {
-    id: "NEWAOP0005",
+    id: "NEWAOP0004",
     slug: "all-over-print-hospitality-fb-hoodie",
     name: "Custom All-Over Print Hospitality & F&B Hoodie",
     category: "Hoodie",
@@ -1575,7 +1554,7 @@ export const products: Product[] = [
     description: "All-Over Print Hospitality & F&B Hoodie. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
   },
   {
-    id: "NEWAOP0006",
+    id: "NEWAOP0005",
     slug: "all-over-print-security-property-t-shirt",
     name: "Custom All-Over Print Security & Property T-shirt",
     category: "T-Shirt",
@@ -1597,7 +1576,7 @@ export const products: Product[] = [
     description: "All-Over Print Security & Property T-shirt. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
   },
   {
-    id: "NEWAOP0007",
+    id: "NEWAOP0006",
     slug: "all-over-print-retail-supermarket-jacket",
     name: "Custom All-Over Print Retail & Supermarket Jacket",
     category: "Jacket",
@@ -1619,7 +1598,7 @@ export const products: Product[] = [
     description: "All-Over Print Retail & Supermarket Jacket. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
   },
   {
-    id: "NEWAOP0008",
+    id: "NEWAOP0007",
     slug: "all-over-print-festival-holiday-shirt",
     name: "Custom All-Over Print Festival & Holiday Shirt",
     category: "Shirt",
@@ -1641,7 +1620,7 @@ export const products: Product[] = [
     description: "All-Over Print Festival & Holiday Shirt. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
   },
   {
-    id: "NEWAOP0009",
+    id: "NEWAOP0008",
     slug: "all-over-print-music-tour-festival-merch-shirt",
     name: "Custom All-Over Print Music Tour & Festival Merch Shirt",
     category: "Shirt",
@@ -1663,7 +1642,7 @@ export const products: Product[] = [
     description: "All-Over Print Music Tour & Festival Merch Shirt. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
   },
   {
-    id: "NEWAOP0010",
+    id: "NEWAOP0009",
     slug: "all-over-print-music-tour-festival-merch-t-shirt",
     name: "Custom All-Over Print Music Tour & Festival Merch T-shirt",
     category: "T-Shirt",
@@ -1685,7 +1664,7 @@ export const products: Product[] = [
     description: "All-Over Print Music Tour & Festival Merch T-shirt. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
   },
   {
-    id: "NEWAOP0011",
+    id: "NEWAOP0010",
     slug: "all-over-print-music-tour-festival-merch-hoodie",
     name: "Custom All-Over Print Music Tour & Festival Merch Hoodie",
     category: "Hoodie",
@@ -1707,7 +1686,7 @@ export const products: Product[] = [
     description: "All-Over Print Music Tour & Festival Merch Hoodie. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
   },
   {
-    id: "NEWAOP0012",
+    id: "NEWAOP0011",
     slug: "all-over-print-military-wear-cap",
     name: "Custom All-Over Print Military Wear Cap",
     category: "Cap",
@@ -1729,7 +1708,7 @@ export const products: Product[] = [
     description: "All-Over Print Military Wear Cap. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
   },
   {
-    id: "NEWAOP0013",
+    id: "NEWAOP0012",
     slug: "all-over-print-military-wear-hoodie",
     name: "Custom All-Over Print Military Wear Hoodie",
     category: "Hoodie",
@@ -1751,7 +1730,7 @@ export const products: Product[] = [
     description: "All-Over Print Military Wear Hoodie. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
   },
   {
-    id: "NEWAOP0014",
+    id: "NEWAOP0013",
     slug: "all-over-print-trade-show-display-t-shirt",
     name: "Custom All-Over Print Trade Show & Display T-shirt",
     category: "T-Shirt",
@@ -1773,7 +1752,7 @@ export const products: Product[] = [
     description: "All-Over Print Trade Show & Display T-shirt. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
   },
   {
-    id: "NEWAOP0015",
+    id: "NEWAOP0014",
     slug: "all-over-print-trade-show-display-polo-shirt",
     name: "Custom All-Over Print Trade Show & Display Polo shirt",
     category: "Polo Shirt",
@@ -1795,7 +1774,7 @@ export const products: Product[] = [
     description: "All-Over Print Trade Show & Display Polo shirt. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
   },
   {
-    id: "NEWAOP0016",
+    id: "NEWAOP0015",
     slug: "all-over-print-trade-show-display-hoodie",
     name: "Custom All-Over Print Trade Show & Display Hoodie",
     category: "Hoodie",
@@ -1817,7 +1796,7 @@ export const products: Product[] = [
     description: "All-Over Print Trade Show & Display Hoodie. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
   },
   {
-    id: "NEWAOP0017",
+    id: "NEWAOP0016",
     slug: "all-over-print-trade-show-display-cap",
     name: "Custom All-Over Print Trade Show & Display Cap",
     category: "Cap",
@@ -1839,7 +1818,7 @@ export const products: Product[] = [
     description: "All-Over Print Trade Show & Display Cap. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
   },
   {
-    id: "NEWAOP0018",
+    id: "NEWAOP0017",
     slug: "all-over-print-political-campaigns-t-shirt",
     name: "Custom All-Over Print Political Campaigns T-shirt",
     category: "T-Shirt",
@@ -1861,7 +1840,7 @@ export const products: Product[] = [
     description: "All-Over Print Political Campaigns T-shirt. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
   },
   {
-    id: "NEWAOP0019",
+    id: "NEWAOP0018",
     slug: "all-over-print-political-campaigns-polo-shirt",
     name: "Custom All-Over Print Political Campaigns Polo shirt",
     category: "Polo Shirt",
@@ -1883,7 +1862,7 @@ export const products: Product[] = [
     description: "All-Over Print Political Campaigns Polo shirt. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
   },
   {
-    id: "NEWAOP0020",
+    id: "NEWAOP0019",
     slug: "all-over-print-political-campaigns-hoodie",
     name: "Custom All-Over Print Political Campaigns Hoodie",
     category: "Hoodie",
@@ -1905,7 +1884,7 @@ export const products: Product[] = [
     description: "All-Over Print Political Campaigns Hoodie. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
   },
   {
-    id: "NEWAOP0021",
+    id: "NEWAOP0020",
     slug: "all-over-print-political-campaigns-cap",
     name: "Custom All-Over Print Political Campaigns Cap",
     category: "Cap",
@@ -1927,7 +1906,7 @@ export const products: Product[] = [
     description: "All-Over Print Political Campaigns Cap. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
   },
   {
-    id: "NEWAOP0022",
+    id: "NEWAOP0021",
     slug: "all-over-print-medical-healthcare-nurse-skirt",
     name: "Custom All-Over Print Medical & Healthcare Nurse Skirt",
     category: "Skirt",
@@ -1949,7 +1928,7 @@ export const products: Product[] = [
     description: "All-Over Print Medical & Healthcare Nurse Skirt. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
   },
   {
-    id: "NEWAOP0023",
+    id: "NEWAOP0022",
     slug: "all-over-print-medical-healthcare-jacket",
     name: "Custom All-Over Print Medical & Healthcare Jacket",
     category: "Jacket",
@@ -1971,7 +1950,7 @@ export const products: Product[] = [
     description: "All-Over Print Medical & Healthcare Jacket. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
   },
   {
-    id: "NEWAOP0024",
+    id: "NEWAOP0023",
     slug: "all-over-print-transit-transport-t-shirt",
     name: "Custom All-Over Print Transit & Transport T-shirt",
     category: "T-Shirt",
@@ -1993,7 +1972,7 @@ export const products: Product[] = [
     description: "All-Over Print Transit & Transport T-shirt. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
   },
   {
-    id: "NEWAOP0025",
+    id: "NEWAOP0024",
     slug: "all-over-print-studio-gym-hoodie",
     name: "Custom All-Over Print Studio & Gym Hoodie",
     category: "Hoodie",
