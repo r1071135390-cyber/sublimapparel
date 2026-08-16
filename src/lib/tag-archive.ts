@@ -209,6 +209,17 @@ export const CATEGORY_TAGS: Record<string, Omit<TagInfo, "slug" | "dimension">> 
     process: "Sublimation on Polyester Eyelet",
     icon: "👙",
   },
+  "Vest": {
+    label: "Vest",
+    description: "Sublimated safety and utility vests for construction crews, event staff, and roadside teams. High-vis color blocks combined with edge-to-edge printed panels on chest, back, and shoulders.",
+    benefits: [
+      "Hi-vis yellow or orange base with reflective tape",
+      "Polyester 220 GSM for durability",
+      "Zip or hook-and-loop front closure",
+    ],
+    process: "Sublimation on Polyester",
+    icon: "🦺",
+  },
   "Pants": {
     label: "Pants",
     description: "Sublimated pants for tracksuits, joggers, snow pants, and workwear. Full-coverage print on the body and legs; waistband, pockets, and cuffs finished cleanly without breaking the pattern.",

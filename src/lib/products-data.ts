@@ -24,7 +24,8 @@ export type ProductCategory =
   | "Skirt"
   | "Polo Shirt"
   | "Cap"
-  | "Jacket";
+  | "Jacket"
+  | "Vest";
 
 
 
@@ -1566,7 +1567,7 @@ export const products: Product[] = [
     number: "0101",
     slug: "all-over-print-construction-vest-hi-vis-option",
     name: "Custom All-Over Print Construction Vest (Hi-Vis Option)",
-    category: "T-Shirt",
+    category: "Vest",
     sports: [],
     scenarios: ["Construction & Engineering", "Uniform & Workwear"],
     fabrics: [

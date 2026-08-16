@@ -46,6 +46,7 @@ function getCategoryEmoji(category: ProductCategory) {
     "Polo Shirt": "👔",
     "Cap": "🧢",
     "Jacket": "🧥",
+    "Vest": "🦺",
   };
   return map[category] ?? "👕";
 }
