@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ChevronRight } from "lucide-react";
 import { products, type Product } from "@/lib/products-data";
-import { pickHeroImages } from "@/lib/product-images";
+import { pickHeroImages, getMainImagePath } from "@/lib/product-images";
 import { HeroGallery } from "@/components/hero-gallery";
 import {
   ALL_TAGS,
@@ -283,7 +283,7 @@ export default async function TagArchivePage({ params }: PageProps) {
                 >
                   <div className="relative aspect-[4/5] overflow-hidden bg-[#f5f5f5]">
                     <Image
-                      src={`/products/${p.number}/1.webp`}
+                      src={getMainImagePath(p.number)}
                       alt={p.name}
                       width={600}
                       height={750}

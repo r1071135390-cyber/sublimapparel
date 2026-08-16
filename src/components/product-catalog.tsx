@@ -14,6 +14,7 @@ import {
   type Sport,
   type Scenario,
 } from "@/lib/products-data";
+import { getMainImagePath } from "@/lib/product-images";
 
 const PLACEHOLDER_GRADIENTS = [
   "from-orange-500 to-red-500",
@@ -268,7 +269,7 @@ export function ProductCatalog() {
                 >
                   <div className="relative aspect-square w-full overflow-hidden border-b-2 border-black bg-[#f5f5f5]">
                     <Image
-                      src={`/products/${p.number}/1.webp`}
+                      src={getMainImagePath(p.number)}
                       alt={p.name}
                       width={600}
                       height={600}
