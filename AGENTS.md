@@ -4,7 +4,7 @@
 - **手动部署**: 只有用户明确说"上传"、"部署"、"push"时，才执行 `git commit` + `git push` → 触发 Cloudflare 自动部署到 sublimapparel.com
 - **节省时间**: 这样避免每次小改动都等待 Cloudflare 1-2 分钟部署
 - **生产现状（截至最后确认）**:
-  - Header logo: `/logo-main.webp`
+  - Header logo: `/sublimapparel-logo.webp` (PNG backup at `/sublimapparel-logo.png`)
   - Favicon: `/icon.png`
 
 # 项目上下文

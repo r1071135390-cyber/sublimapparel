@@ -75,7 +75,7 @@ export default async function TechniqueDetailPage({ params }: PageProps) {
       name: "SublimApparel",
       logo: {
         "@type": "ImageObject",
-        url: "https://sublimapparel.com/logo-main.webp",
+        url: "https://sublimapparel.com/sublimapparel-logo.webp",
       },
     },
     mainEntityOfPage: {

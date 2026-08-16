@@ -18,7 +18,7 @@ export function Navbar() {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-1.5">
         <Link href="/" className="group flex items-center gap-2">
           <img
-            src="/logo-main.webp"
+            src="/sublimapparel-logo.webp"
             alt="SublimApparel"
             className="h-11 w-auto"
           />
