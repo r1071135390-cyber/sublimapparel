@@ -241,10 +241,10 @@ export default function ProductsPage() {
             <div className="md:col-span-8">
               <div className="mb-3 inline-flex items-center gap-1.5 rounded-sm bg-[#ff4d00] px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest md:text-xs">
                 <Sparkles className="h-3 w-3" />
-                New · 100-product catalog
+                All-over print apparel catalog
               </div>
               <h2 className="mb-3 text-2xl font-black uppercase leading-tight tracking-tight md:text-4xl">
-                Browse 100 all-over print products
+                Browse our all-over print products
               </h2>
               <p className="max-w-2xl text-sm leading-relaxed text-white/80 md:text-base">
                 Cross-filter by garment (29 types), sport (42), and scenario (27). Polyester sublimation + all-over digital print on cotton. MOQ 50 pcs, DDP to door.
