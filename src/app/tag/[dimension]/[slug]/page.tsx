@@ -4,6 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { ChevronRight } from "lucide-react";
 import { products, type Product } from "@/lib/products-data";
+import { pickHeroImages } from "@/lib/product-images";
+import { HeroGallery } from "@/components/hero-gallery";
 import {
   ALL_TAGS,
   type TagDimension,
@@ -168,7 +170,7 @@ export default async function TagArchivePage({ params }: PageProps) {
               <span className="text-background/90">{tag.label}</span>
             </nav>
 
-            <div className="grid lg:grid-cols-[1fr,auto] gap-8 items-end">
+            <div className="grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] gap-8 lg:gap-12 items-end">
               <div>
                 <div className="flex items-center gap-2 mb-4">
                   <span className="inline-flex items-center gap-1.5 rounded-full bg-background/10 px-3 py-1 text-xs font-medium uppercase tracking-wider text-background/80">
@@ -196,14 +198,15 @@ export default async function TagArchivePage({ params }: PageProps) {
                     MOQ from 30 pcs
                   </span>
                 </div>
+                <Link
+                  href={`/products/all/?${dim === "category" ? "category" : dim === "sport" ? "sport" : "scenario"}=${encodeURIComponent(tag.value)}`}
+                  className="mt-8 inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition-colors"
+                >
+                  Open in filter view →
+                </Link>
               </div>
 
-              <Link
-                href={`/products/all/?${dim === "category" ? "category" : dim === "sport" ? "sport" : "scenario"}=${encodeURIComponent(tag.value)}`}
-                className="hidden lg:inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition-colors"
-              >
-                Open in filter view →
-              </Link>
+              <HeroGallery images={pickHeroImages(matches, 4, `${dim}-${params.slug}`)} />
             </div>
           </div>
         </section>
