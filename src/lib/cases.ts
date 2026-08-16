@@ -64,7 +64,7 @@ export const industries: IndustryCase[] = [
     pitch:
       "Cut-and-sew patterns that fit, named and numbered per unit, delivered before the season opens.",
     relatedScenario: "Sports League",
-    relatedCategory: "Jersey / Kit",
+    relatedCategory: "Sportswear",
     cases: [],
   },
   {

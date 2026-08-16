@@ -101,25 +101,25 @@ Each product has a 4-digit number for image naming (e.g. 0001-1.jpg, 0001-2.jpg)
 | 0095 | 3WBEACH01 | Home | Custom All-Over Print Beach Sarong (180×110cm) | all-over-print-beach-sarong |
 | 0096 | NEWAOP0001 | T-Shirt | Custom All-Over Print Construction Vest (Hi-Vis Option) | all-over-print-construction-vest-hi-vis-option |
 | 0097 | NEWAOP0002 | Polo Shirt | Custom All-Over Print Construction Polo shirt (Hi-Vis Option) | all-over-print-construction-polo-shirt-hi-vis-option |
-| 0098 | NEWAOP0003 | Jacket | Custom All-Over Print Hospitality & F&B Uniform | all-over-print-hospitality-fb-uniform |
-| 0099 | NEWAOP0004 | Hoodie | Custom All-Over Print Hospitality & F&B Hoodie | all-over-print-hospitality-fb-hoodie |
-| 0100 | NEWAOP0005 | T-Shirt | Custom All-Over Print Security & Property T-shirt | all-over-print-security-property-t-shirt |
-| 0101 | NEWAOP0006 | Jacket | Custom All-Over Print Retail & Supermarket Jacket | all-over-print-retail-supermarket-jacket |
-| 0102 | NEWAOP0007 | Shirt | Custom All-Over Print Festival & Holiday Shirt | all-over-print-festival-holiday-shirt |
-| 0103 | NEWAOP0008 | Shirt | Custom All-Over Print Music Tour & Festival Merch Shirt | all-over-print-music-tour-festival-merch-shirt |
-| 0104 | NEWAOP0009 | T-Shirt | Custom All-Over Print Music Tour & Festival Merch T-shirt | all-over-print-music-tour-festival-merch-t-shirt |
-| 0105 | NEWAOP0010 | Hoodie | Custom All-Over Print Music Tour & Festival Merch Hoodie | all-over-print-music-tour-festival-merch-hoodie |
-| 0106 | NEWAOP0011 | Cap | Custom All-Over Print Military Wear Cap | all-over-print-military-wear-cap |
-| 0107 | NEWAOP0012 | Hoodie | Custom All-Over Print Military Wear Hoodie | all-over-print-military-wear-hoodie |
-| 0108 | NEWAOP0013 | T-Shirt | Custom All-Over Print Trade Show & Display T-shirt | all-over-print-trade-show-display-t-shirt |
-| 0109 | NEWAOP0014 | Polo Shirt | Custom All-Over Print Trade Show & Display Polo shirt | all-over-print-trade-show-display-polo-shirt |
-| 0110 | NEWAOP0015 | Hoodie | Custom All-Over Print Trade Show & Display Hoodie | all-over-print-trade-show-display-hoodie |
-| 0111 | NEWAOP0016 | Cap | Custom All-Over Print Trade Show & Display Cap | all-over-print-trade-show-display-cap |
-| 0112 | NEWAOP0017 | T-Shirt | Custom All-Over Print Political Campaigns T-shirt | all-over-print-political-campaigns-t-shirt |
-| 0113 | NEWAOP0018 | Polo Shirt | Custom All-Over Print Political Campaigns Polo shirt | all-over-print-political-campaigns-polo-shirt |
-| 0114 | NEWAOP0019 | Hoodie | Custom All-Over Print Political Campaigns Hoodie | all-over-print-political-campaigns-hoodie |
-| 0115 | NEWAOP0020 | Cap | Custom All-Over Print Political Campaigns Cap | all-over-print-political-campaigns-cap |
-| 0116 | NEWAOP0021 | T-Shirt | Custom All-Over Print Transit & Transport Hoodie | all-over-print-transit-transport-hoodie |
+| 0098 | NEWAOP0003 | Hoodie | Custom All-Over Print Hospitality & F&B Hoodie | all-over-print-hospitality-fb-hoodie-classic |
+| 0099 | NEWAOP0004 | Jacket | Custom All-Over Print Hospitality & F&B Uniform | all-over-print-hospitality-fb-uniform |
+| 0100 | NEWAOP0005 | Hoodie | Custom All-Over Print Hospitality & F&B Hoodie | all-over-print-hospitality-fb-hoodie |
+| 0101 | NEWAOP0006 | T-Shirt | Custom All-Over Print Security & Property T-shirt | all-over-print-security-property-t-shirt |
+| 0102 | NEWAOP0007 | Jacket | Custom All-Over Print Retail & Supermarket Jacket | all-over-print-retail-supermarket-jacket |
+| 0103 | NEWAOP0008 | Shirt | Custom All-Over Print Festival & Holiday Shirt | all-over-print-festival-holiday-shirt |
+| 0104 | NEWAOP0009 | Shirt | Custom All-Over Print Music Tour & Festival Merch Shirt | all-over-print-music-tour-festival-merch-shirt |
+| 0105 | NEWAOP0010 | T-Shirt | Custom All-Over Print Music Tour & Festival Merch T-shirt | all-over-print-music-tour-festival-merch-t-shirt |
+| 0106 | NEWAOP0011 | Hoodie | Custom All-Over Print Music Tour & Festival Merch Hoodie | all-over-print-music-tour-festival-merch-hoodie |
+| 0107 | NEWAOP0012 | Cap | Custom All-Over Print Military Wear Cap | all-over-print-military-wear-cap |
+| 0108 | NEWAOP0013 | Hoodie | Custom All-Over Print Military Wear Hoodie | all-over-print-military-wear-hoodie |
+| 0109 | NEWAOP0014 | T-Shirt | Custom All-Over Print Trade Show & Display T-shirt | all-over-print-trade-show-display-t-shirt |
+| 0110 | NEWAOP0015 | Polo Shirt | Custom All-Over Print Trade Show & Display Polo shirt | all-over-print-trade-show-display-polo-shirt |
+| 0111 | NEWAOP0016 | Hoodie | Custom All-Over Print Trade Show & Display Hoodie | all-over-print-trade-show-display-hoodie |
+| 0112 | NEWAOP0017 | Cap | Custom All-Over Print Trade Show & Display Cap | all-over-print-trade-show-display-cap |
+| 0113 | NEWAOP0018 | T-Shirt | Custom All-Over Print Political Campaigns T-shirt | all-over-print-political-campaigns-t-shirt |
+| 0114 | NEWAOP0019 | Polo Shirt | Custom All-Over Print Political Campaigns Polo shirt | all-over-print-political-campaigns-polo-shirt |
+| 0115 | NEWAOP0020 | Hoodie | Custom All-Over Print Political Campaigns Hoodie | all-over-print-political-campaigns-hoodie |
+| 0116 | NEWAOP0021 | Cap | Custom All-Over Print Political Campaigns Cap | all-over-print-political-campaigns-cap |
 | 0117 | NEWAOP0022 | Skirt | Custom All-Over Print Medical & Healthcare Nurse Skirt | all-over-print-medical-healthcare-nurse-skirt |
 | 0118 | NEWAOP0023 | Jacket | Custom All-Over Print Medical & Healthcare Jacket | all-over-print-medical-healthcare-jacket |
 | 0119 | NEWAOP0024 | T-Shirt | Custom All-Over Print Transit & Transport T-shirt | all-over-print-transit-transport-t-shirt |

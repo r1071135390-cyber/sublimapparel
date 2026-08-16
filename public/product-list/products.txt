@@ -289,62 +289,62 @@
 0097  [Polo Shirt        ]  Custom All-Over Print Construction Polo shirt (Hi-Vis Option)
       id=NEWAOP0002  /products/all/all-over-print-construction-polo-shirt-hi-vis-option/
 
-0098  [Jacket            ]  Custom All-Over Print Hospitality & F&B Uniform
-      id=NEWAOP0003  /products/all/all-over-print-hospitality-fb-uniform/
+0098  [Hoodie            ]  Custom All-Over Print Hospitality & F&B Hoodie
+      id=NEWAOP0003  /products/all/all-over-print-hospitality-fb-hoodie-classic/
 
-0099  [Hoodie            ]  Custom All-Over Print Hospitality & F&B Hoodie
-      id=NEWAOP0004  /products/all/all-over-print-hospitality-fb-hoodie/
+0099  [Jacket            ]  Custom All-Over Print Hospitality & F&B Uniform
+      id=NEWAOP0004  /products/all/all-over-print-hospitality-fb-uniform/
 
-0100  [T-Shirt           ]  Custom All-Over Print Security & Property T-shirt
-      id=NEWAOP0005  /products/all/all-over-print-security-property-t-shirt/
+0100  [Hoodie            ]  Custom All-Over Print Hospitality & F&B Hoodie
+      id=NEWAOP0005  /products/all/all-over-print-hospitality-fb-hoodie/
 
-0101  [Jacket            ]  Custom All-Over Print Retail & Supermarket Jacket
-      id=NEWAOP0006  /products/all/all-over-print-retail-supermarket-jacket/
+0101  [T-Shirt           ]  Custom All-Over Print Security & Property T-shirt
+      id=NEWAOP0006  /products/all/all-over-print-security-property-t-shirt/
 
-0102  [Shirt             ]  Custom All-Over Print Festival & Holiday Shirt
-      id=NEWAOP0007  /products/all/all-over-print-festival-holiday-shirt/
+0102  [Jacket            ]  Custom All-Over Print Retail & Supermarket Jacket
+      id=NEWAOP0007  /products/all/all-over-print-retail-supermarket-jacket/
 
-0103  [Shirt             ]  Custom All-Over Print Music Tour & Festival Merch Shirt
-      id=NEWAOP0008  /products/all/all-over-print-music-tour-festival-merch-shirt/
+0103  [Shirt             ]  Custom All-Over Print Festival & Holiday Shirt
+      id=NEWAOP0008  /products/all/all-over-print-festival-holiday-shirt/
 
-0104  [T-Shirt           ]  Custom All-Over Print Music Tour & Festival Merch T-shirt
-      id=NEWAOP0009  /products/all/all-over-print-music-tour-festival-merch-t-shirt/
+0104  [Shirt             ]  Custom All-Over Print Music Tour & Festival Merch Shirt
+      id=NEWAOP0009  /products/all/all-over-print-music-tour-festival-merch-shirt/
 
-0105  [Hoodie            ]  Custom All-Over Print Music Tour & Festival Merch Hoodie
-      id=NEWAOP0010  /products/all/all-over-print-music-tour-festival-merch-hoodie/
+0105  [T-Shirt           ]  Custom All-Over Print Music Tour & Festival Merch T-shirt
+      id=NEWAOP0010  /products/all/all-over-print-music-tour-festival-merch-t-shirt/
 
-0106  [Cap               ]  Custom All-Over Print Military Wear Cap
-      id=NEWAOP0011  /products/all/all-over-print-military-wear-cap/
+0106  [Hoodie            ]  Custom All-Over Print Music Tour & Festival Merch Hoodie
+      id=NEWAOP0011  /products/all/all-over-print-music-tour-festival-merch-hoodie/
 
-0107  [Hoodie            ]  Custom All-Over Print Military Wear Hoodie
-      id=NEWAOP0012  /products/all/all-over-print-military-wear-hoodie/
+0107  [Cap               ]  Custom All-Over Print Military Wear Cap
+      id=NEWAOP0012  /products/all/all-over-print-military-wear-cap/
 
-0108  [T-Shirt           ]  Custom All-Over Print Trade Show & Display T-shirt
-      id=NEWAOP0013  /products/all/all-over-print-trade-show-display-t-shirt/
+0108  [Hoodie            ]  Custom All-Over Print Military Wear Hoodie
+      id=NEWAOP0013  /products/all/all-over-print-military-wear-hoodie/
 
-0109  [Polo Shirt        ]  Custom All-Over Print Trade Show & Display Polo shirt
-      id=NEWAOP0014  /products/all/all-over-print-trade-show-display-polo-shirt/
+0109  [T-Shirt           ]  Custom All-Over Print Trade Show & Display T-shirt
+      id=NEWAOP0014  /products/all/all-over-print-trade-show-display-t-shirt/
 
-0110  [Hoodie            ]  Custom All-Over Print Trade Show & Display Hoodie
-      id=NEWAOP0015  /products/all/all-over-print-trade-show-display-hoodie/
+0110  [Polo Shirt        ]  Custom All-Over Print Trade Show & Display Polo shirt
+      id=NEWAOP0015  /products/all/all-over-print-trade-show-display-polo-shirt/
 
-0111  [Cap               ]  Custom All-Over Print Trade Show & Display Cap
-      id=NEWAOP0016  /products/all/all-over-print-trade-show-display-cap/
+0111  [Hoodie            ]  Custom All-Over Print Trade Show & Display Hoodie
+      id=NEWAOP0016  /products/all/all-over-print-trade-show-display-hoodie/
 
-0112  [T-Shirt           ]  Custom All-Over Print Political Campaigns T-shirt
-      id=NEWAOP0017  /products/all/all-over-print-political-campaigns-t-shirt/
+0112  [Cap               ]  Custom All-Over Print Trade Show & Display Cap
+      id=NEWAOP0017  /products/all/all-over-print-trade-show-display-cap/
 
-0113  [Polo Shirt        ]  Custom All-Over Print Political Campaigns Polo shirt
-      id=NEWAOP0018  /products/all/all-over-print-political-campaigns-polo-shirt/
+0113  [T-Shirt           ]  Custom All-Over Print Political Campaigns T-shirt
+      id=NEWAOP0018  /products/all/all-over-print-political-campaigns-t-shirt/
 
-0114  [Hoodie            ]  Custom All-Over Print Political Campaigns Hoodie
-      id=NEWAOP0019  /products/all/all-over-print-political-campaigns-hoodie/
+0114  [Polo Shirt        ]  Custom All-Over Print Political Campaigns Polo shirt
+      id=NEWAOP0019  /products/all/all-over-print-political-campaigns-polo-shirt/
 
-0115  [Cap               ]  Custom All-Over Print Political Campaigns Cap
-      id=NEWAOP0020  /products/all/all-over-print-political-campaigns-cap/
+0115  [Hoodie            ]  Custom All-Over Print Political Campaigns Hoodie
+      id=NEWAOP0020  /products/all/all-over-print-political-campaigns-hoodie/
 
-0116  [T-Shirt           ]  Custom All-Over Print Transit & Transport Hoodie
-      id=NEWAOP0021  /products/all/all-over-print-transit-transport-hoodie/
+0116  [Cap               ]  Custom All-Over Print Political Campaigns Cap
+      id=NEWAOP0021  /products/all/all-over-print-political-campaigns-cap/
 
 0117  [Skirt             ]  Custom All-Over Print Medical & Healthcare Nurse Skirt
       id=NEWAOP0022  /products/all/all-over-print-medical-healthcare-nurse-skirt/
