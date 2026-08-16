@@ -49,7 +49,7 @@ const fabricChoices = [
   { name: "Birdseye Mesh Knit", best: "Side panels · max airflow · long sessions", moq: "50 pcs" },
   { name: "Performance Interlock", best: "Smooth hand · premium feel · tournament jerseys", moq: "50 pcs" },
   { name: "Brushed Poly Fleece", best: "Hoodies · 320 GSM · cold LAN halls", moq: "50 pcs" },
-  { name: "Recycled Poly (rPET)", best: "Eco-aware orgs · sustainability story", moq: "100 pcs" },
+  { name: "Recycled Poly (rPET)", best: "Eco-aware orgs · sustainability story", moq: "50 pcs" },
 ];
 
 const customisation = [

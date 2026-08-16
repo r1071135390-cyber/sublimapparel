@@ -680,7 +680,7 @@ export const fabricTypes: Fabric[] = [
     ],
     h1: "Polyester Satin & Chiffon Fabric — Lightweight, Sheer, Sublimation-Ready",
     metaDescription:
-      "100% polyester satin and chiffon, 80-120 gsm. Smooth, lustrous, drapey. Fashion blouses, dresses, scarves, lining. Vivid sublimation printing. Low MOQ 100 pcs.",
+      "100% polyester satin and chiffon, 80-120 gsm. Smooth, lustrous, drapey. Fashion blouses, dresses, scarves, lining. Vivid sublimation printing. Low MOQ 50 pcs.",
     intro:
       "Polyester satin and chiffon are the go-to substrates for lightweight, fashion-forward garments. Satin has a glossy face and matte back; chiffon is sheer with a soft, drapey hand. Both accept sublimation ink beautifully — the smooth surface yields sharp, photographic detail.",
     characteristics: [
@@ -711,7 +711,7 @@ export const fabricTypes: Fabric[] = [
       },
       {
         q: "Can I get custom colors on satin?",
-        a: "Yes — through sublimation we can match any color or print photographic detail. Minimum order is typically 100 pieces per design for custom dye-sub on satin.",
+        a: "Yes — through sublimation we can match any color or print photographic detail. Minimum order is typically 50 pieces per design for custom dye-sub on satin.",
       },
     ],
   },

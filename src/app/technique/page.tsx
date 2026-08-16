@@ -56,7 +56,7 @@ const techniques = [
     description:
 "The industry standard for bold, durable graphics. Thick ink layers deliver vivid, opaque color that survives hundreds of washes.",
     bestFor:"T-shirts, hoodies, sportswear, bulk runs",
-    moq:"100 pcs",
+    moq:"50 pcs",
   },
   {
     name:"Embroidery",
@@ -74,7 +74,7 @@ const techniques = [
     description:
 "Direct-to-garment digital printing with unlimited colors and photo-level detail. No screens needed — perfect for complex artwork.",
     bestFor:"100% cotton, small runs, photo prints",
-    moq:"30 pcs",
+    moq:"50 pcs",
   },
   {
     name:"DTF Printing",
@@ -83,7 +83,7 @@ const techniques = [
     description:
 "Print to film, then heat-press onto fabric. Works on nearly any blend or color — vibrant, flexible, and crack-resistant.",
     bestFor:"Any fabric, complex artwork, small runs",
-    moq:"30 pcs",
+    moq:"50 pcs",
   },
   {
     name:"3D Puff Printing",
@@ -92,7 +92,7 @@ const techniques = [
     description:
 "Heat-activated ink rises into a rounded, raised print with real tactile depth — a streetwear staple.",
     bestFor:"Streetwear, caps, sweatshirts",
-    moq:"100 pcs",
+    moq:"50 pcs",
   },
   {
     name:"3D Embroidery",
@@ -101,7 +101,7 @@ const techniques = [
     description:
 "Foam-backed stitching raises your logo into a bold, three-dimensional statement with serious shelf presence.",
     bestFor:"Caps, varsity jackets, premium brands",
-    moq:"100 pcs",
+    moq:"50 pcs",
   },
   {
     name:"Rhinestone Embellishment",
@@ -119,7 +119,7 @@ const techniques = [
     description:
 "Heat and pressure create a subtle, tone-on-tone raised texture directly in the fabric — quiet, premium branding.",
     bestFor:"Premium tees, loungewear, minimalist labels",
-    moq:"100 pcs",
+    moq:"50 pcs",
   },
   {
     name:"Beaded Embroidery",
@@ -128,7 +128,7 @@ const techniques = [
     description:
 "Hand-finished beadwork adds luxurious texture and shimmer to high-fashion and couture pieces.",
     bestFor:"Couture, runway, high-end occasion wear",
-    moq:"100 pcs",
+    moq:"50 pcs",
   },
   {
     name:"Yarn Embroidery",
@@ -137,7 +137,7 @@ const techniques = [
     description:
 "Chunky, heavy-thread stitching with a tactile, handcrafted character that stands out on knits and cozy fabrics.",
     bestFor:"Knitwear, sweaters, winter accessories",
-    moq:"100 pcs",
+    moq:"50 pcs",
   },
   {
     name:"Terry Embroidery (Chenille)",
@@ -146,7 +146,7 @@ const techniques = [
     description:
 "Soft, looped stitches with a plush, towel-like texture — the classic varsity and retro aesthetic.",
     bestFor:"Varsity jackets, retro apparel, collegiate",
-    moq:"100 pcs",
+    moq:"50 pcs",
   },
   {
     name:"Glitter Printing",
@@ -155,7 +155,7 @@ const techniques = [
     description:
 "Sparkling glitter inks catch the light from every angle, with soft-hand formulas that keep the fabric comfortable.",
     bestFor:"Kids wear, dance, festival, pageant",
-    moq:"100 pcs",
+    moq:"50 pcs",
   },
   {
     name:"Metallic Printing (Foil)",
@@ -164,7 +164,7 @@ const techniques = [
     description:
 "Gold, silver, and holographic foils pressed onto fabric for a luxe, mirror-shine metallic finish.",
     bestFor:"Premium tees, packaging, brand logos",
-    moq:"100 pcs",
+    moq:"50 pcs",
   },
   {
     name:"Reflective Printing",
@@ -173,7 +173,7 @@ const techniques = [
     description:
 "Glass-bead inks reflect light for high-visibility graphics that glow under headlights — safety meets style.",
     bestFor:"Safety wear, cycling, running, workwear",
-    moq:"100 pcs",
+    moq:"50 pcs",
   },
   {
     name:"Flocking",
@@ -182,7 +182,7 @@ const techniques = [
     description:
 "Velvety, raised fibers give a soft suede-like touch with rich color depth — a tactile vintage favorite.",
     bestFor:"Vintage tees, sportswear, premium packaging",
-    moq:"100 pcs",
+    moq:"50 pcs",
   },
   {
     name:"Silicone Printing",
@@ -191,7 +191,7 @@ const techniques = [
     description:
 "Flexible, rubbery ink with a smooth matte finish that stretches and moves with performance fabrics.",
     bestFor:"Performance wear, sportswear, swimwear",
-    moq:"100 pcs",
+    moq:"50 pcs",
   },
   {
     name:"Appliqué Embroidery",
@@ -200,7 +200,7 @@ const techniques = [
     description:
 "Fabric panels stitched onto the garment for bold, layered designs with crisp, clean edges.",
     bestFor:"Team jerseys, varsity, bold logo wear",
-    moq:"100 pcs",
+    moq:"50 pcs",
   },
   {
     name:"Laser Carving",

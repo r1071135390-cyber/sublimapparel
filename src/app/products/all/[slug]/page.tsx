@@ -153,7 +153,7 @@ export default async function ProductDetailPage({
             className="mb-4 inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-white/70 hover:text-white md:text-xs"
           >
             <ArrowLeft className="h-3 w-3" />
-            All 100 products
+            All products
           </Link>
           <div className="mb-3 flex flex-wrap items-center gap-2 text-[10px] font-bold uppercase tracking-widest md:text-xs">
             <span className="rounded-sm bg-[#ff4d00] px-2 py-1 text-white">{product.category}</span>
@@ -443,7 +443,7 @@ export default async function ProductDetailPage({
                 href="/products/all/"
                 className="hidden text-[10px] font-bold uppercase tracking-wide text-[#ff4d00] hover:underline md:inline md:text-xs"
               >
-                See all 100 →
+                See all →
               </Link>
             </div>
             <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5">

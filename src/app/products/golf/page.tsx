@@ -48,8 +48,8 @@ const fabricChoices = [
   { name: "Poly-Spandex Stretch", best: "Polos · 4-way stretch · swing-friendly · anti-wrinkle", moq: "50 pcs" },
   { name: "Birdseye Mesh Knit", best: "Hot climates · max airflow · textured look", moq: "50 pcs" },
   { name: "UPF 30+ Sun", best: "All-day rounds · UV protection · mid-summer", moq: "50 pcs" },
-  { name: "Recycled Poly (rPET)", best: "Eco-aware clubs · sustainability story · GRS certified", moq: "100 pcs" },
-  { name: "Brushed Poly Fleece", best: "Quarter-zips · shoulder season · cooler rounds", moq: "100 pcs" },
+  { name: "Recycled Poly (rPET)", best: "Eco-aware clubs · sustainability story · GRS certified", moq: "50 pcs" },
+  { name: "Brushed Poly Fleece", best: "Quarter-zips · shoulder season · cooler rounds", moq: "50 pcs" },
 ];
 
 const customisation = [

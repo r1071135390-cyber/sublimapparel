@@ -47,7 +47,7 @@ const fabricChoices = [
   { name: "Interlock Poly", best: "Smooth hand · premium feel · screen-print ready backing", moq: "50 pcs" },
   { name: "Pique Poly", best: "Textured retro feel · tournament shirts", moq: "50 pcs" },
   { name: "Performance Poly-Spandex", best: "Athletic cut · 4-way stretch · modern centres", moq: "50 pcs" },
-  { name: "Recycled Poly (rPET)", best: "Eco-aware centres · sustainability story", moq: "100 pcs" },
+  { name: "Recycled Poly (rPET)", best: "Eco-aware centres · sustainability story", moq: "50 pcs" },
 ];
 
 const customisation = [

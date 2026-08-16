@@ -70,7 +70,7 @@ const useCases = [
 ];
 
 const faqs = [
-  { q: "What's the smallest order you'll take?", a: "Per style: 50 pieces (sublimation), 100 pieces (mixed). Per order: 100 pieces across any styles. For sample runs, we have a 1-3 piece sample service at $35-65 freight via DHL." },
+  { q: "What's the smallest order you'll take?", a: "Per style: 50 pieces (sublimation), 50 pieces (mixed). Per order: 50 pieces across any styles. For sample runs, we have a 1-3 piece sample service at $35-65 freight via DHL." },
   { q: "Do you handle rush orders?", a: "Yes. 200 pieces in 5-7 days, 500 pieces in 7-9 days, 1,000 pieces in 9-12 days. Rush incurs a 15-25% surcharge but is available on most orders. We've done 5,000-piece campaign orders in 8 days." },
   { q: "Can you match our existing kit design?", a: "Yes. Send the original art file (AI, PSD, or layered PDF) and a reference garment. We reverse-engineer construction, fabric, color, and print placement. We can also build a tech-pack from scratch if you only have a sketch." },
   { q: "Do you sign NDAs?", a: "Yes, mutual NDA before any sensitive artwork is shared. Standard 2-year term, mutual confidentiality, no use of your design or brand for any purpose other than your order." },

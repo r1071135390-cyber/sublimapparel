@@ -204,7 +204,7 @@ const faqs = [
   },
   {
     q: "What is the MOQ for all-over print?",
-    a: "MOQ is 50 pieces per design for polyester sublimation, DTG, and DTF. For allover digital print on cotton (cut-and-sew workflow), MOQ is 100 pieces per design. Smaller runs can be quoted case-by-case for established clients.",
+    a: "MOQ is 50 pieces per design for polyester sublimation, DTG, DTF, and allover digital print on cotton. Smaller runs can be quoted case-by-case for established clients.",
   },
   {
     q: "Can you print my exact Pantone color?",
@@ -342,7 +342,7 @@ export default function AllOverPrintPage() {
                 href="/products/all/"
                 className="inline-flex items-center gap-2 border-2 border-white px-6 py-3 text-sm font-black uppercase tracking-widest text-white transition hover:bg-white hover:text-black"
               >
-                Browse 100 products
+                Browse all products
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
@@ -415,7 +415,7 @@ export default function AllOverPrintPage() {
                   <span>
                     <strong>Allover digital print on cotton</strong> — print on
                     cotton with reactive dyes, cut & sew. Same look, real
-                    cotton, MOQ 100.
+                    cotton, MOQ 50 pcs.
                   </span>
                 </li>
               </ol>
@@ -531,7 +531,7 @@ export default function AllOverPrintPage() {
               004
             </span>
             <h2 className="text-3xl font-black tracking-tight md:text-5xl">
-              12 categories. 100 products.
+              12 categories. All products.
             </h2>
           </div>
           <p className="mb-8 max-w-3xl text-lg text-neutral-300">
@@ -695,7 +695,7 @@ export default function AllOverPrintPage() {
               href="/products/all/"
               className="inline-flex items-center gap-2 border-2 border-white px-8 py-4 text-base font-black uppercase tracking-widest text-white transition hover:bg-white hover:text-black"
             >
-              Browse 100 products
+              Browse all products
               <ArrowRight className="h-5 w-5" />
             </Link>
           </div>

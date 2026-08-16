@@ -45,10 +45,10 @@ const styles = [
 const fabricChoices = [
   { name: "Polyester Interlock", best: "All sports · smooth face · true all-over print", moq: "50 pcs" },
   { name: "Polyester Mesh (eyelet)", best: "Soccer/Baseball · breathability · game day", moq: "50 pcs" },
-  { name: "Polyester Birdseye", best: "Reversibles · textured · two-face", moq: "100 pcs" },
-  { name: "Coolmax / Performance", best: "High-intensity · moisture-wicking · premium", moq: "100 pcs" },
-  { name: "Spandex Blend (92/8)", best: "Compression · stretch · base layer", moq: "100 pcs" },
-  { name: "Recycled Poly Interlock", best: "Eco story · 8 bottles per jersey · retail", moq: "100 pcs" },
+  { name: "Polyester Birdseye", best: "Reversibles · textured · two-face", moq: "50 pcs" },
+  { name: "Coolmax / Performance", best: "High-intensity · moisture-wicking · premium", moq: "50 pcs" },
+  { name: "Spandex Blend (92/8)", best: "Compression · stretch · base layer", moq: "50 pcs" },
+  { name: "Recycled Poly Interlock", best: "Eco story · 8 bottles per jersey · retail", moq: "50 pcs" },
 ];
 
 const customisation = [

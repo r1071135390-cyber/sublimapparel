@@ -55,10 +55,10 @@ const styles = [
 const fabricChoices = [
   { name: "100% Polyester", best: "Sublimation · all-over print · sportswear", moq: "50 pcs" },
   { name: "100% Cotton", best: "DTG/DTF · soft hand feel · lifestyle", moq: "50 pcs" },
-  { name: "Cotton-Poly Blend (65/35)", best: "Hybrid · matte finish · retail feel", moq: "100 pcs" },
-  { name: "Organic Cotton (GOTS)", best: "Eco line · natural dyes · premium brands", moq: "100 pcs" },
-  { name: "Recycled Poly (rPET)", best: "Sustainability story · 12–20 bottles per shirt", moq: "100 pcs" },
-  { name: "Tri-Blend (poly/cotton/rayon)", best: "Vintage feel · fashion · music merch", moq: "100 pcs" },
+  { name: "Cotton-Poly Blend (65/35)", best: "Hybrid · matte finish · retail feel", moq: "50 pcs" },
+  { name: "Organic Cotton (GOTS)", best: "Eco line · natural dyes · premium brands", moq: "50 pcs" },
+  { name: "Recycled Poly (rPET)", best: "Sustainability story · 12–20 bottles per shirt", moq: "50 pcs" },
+  { name: "Tri-Blend (poly/cotton/rayon)", best: "Vintage feel · fashion · music merch", moq: "50 pcs" },
 ];
 
 const customisation = [

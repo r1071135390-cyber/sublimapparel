@@ -279,7 +279,7 @@ export default async function TagArchivePage({ params }: PageProps) {
             <div className="rounded-lg border border-dashed border-border bg-muted/30 p-12 text-center">
               <p className="text-sm text-muted-foreground">
                 No products in this archive yet. Browse{" "}
-                <Link href="/products/all/" className="text-primary hover:underline">all 100 products</Link>{" "}
+                <Link href="/products/all/" className="text-primary hover:underline">all products</Link>{" "}
                 or contact us for a custom quote.
               </p>
             </div>

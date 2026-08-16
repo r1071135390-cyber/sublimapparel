@@ -282,7 +282,7 @@ const faqs = [
   },
   {
     q:"What is the minimum order for DDP?",
-    a:"There is no minimum for DDP shipping itself — we can DDP a single carton if needed. The minimum order quantity is on the production side (typically 50-100 pieces per design). For tiny orders (under 30 pieces) we usually recommend express DDP by DHL/FedEx since air freight has minimums.",
+    a:"There is no minimum for DDP shipping itself — we can DDP a single carton if needed. The minimum order quantity is on the production side (typically 50 pieces per design). For tiny orders (under 30 pieces) we usually recommend express DDP by DHL/FedEx since air freight has minimums.",
   },
   {
     q:"Can I use my own freight forwarder?",

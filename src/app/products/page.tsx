@@ -35,7 +35,7 @@ const categories = [
       { name: "Vests", category: "Vest" },
       { name: "Combat Gear" },
     ],
-    note: "Polyester or 100% cotton. Cotton runs on DTG/DTF (A4–A3 per panel); polyester runs on sublimation (true all-over, edge-to-edge). Allover digital print on cotton also available (cut-and-sew, true full-body, MOQ 100).",
+    note: "Polyester or 100% cotton. Cotton runs on DTG/DTF (A4–A3 per panel); polyester runs on sublimation (true all-over, edge-to-edge). Allover digital print on cotton also available (cut-and-sew, true full-body, MOQ 50 pcs).",
   },
   {
     id: "home",
@@ -397,7 +397,7 @@ export default function ProductsPage() {
               Our specialty
             </div>
             <p className="mt-2 text-lg font-bold text-black">
-              Allover digital print on 100% cotton is rare. We run it in-house — true edge-to-edge, cut-and-sew workflow, photorealistic color, soft hand feel. MOQ 100 pcs per design.
+              Allover digital print on 100% cotton is rare. We run it in-house — true edge-to-edge, cut-and-sew workflow, photorealistic color, soft hand feel. MOQ 50 pcs per design.
             </p>
           </div>
         </div>

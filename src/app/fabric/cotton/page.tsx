@@ -51,8 +51,8 @@ const alloverDigital = [
   },
   {
     icon: Ruler,
-    title: "MOQ 100 pcs for allover cotton",
-    desc: "Allover digital print on cotton requires cut-and-sew, so MOQ is 100 pcs per design (vs 50 for DTG/DTF on stocked blanks). Lead time 20–25 days. Ask for a custom quote.",
+    title: "MOQ 50 pcs for allover cotton",
+    desc: "Allover digital print on cotton requires cut-and-sew, so MOQ is 50 pcs per design (vs 50 for DTG/DTF on stocked blanks). Lead time 20–25 days. Ask for a custom quote.",
   },
 ];
 

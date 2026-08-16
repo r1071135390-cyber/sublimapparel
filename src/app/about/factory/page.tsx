@@ -97,7 +97,7 @@ const useCases = [
 const faqs = [
   { q: "Can I visit the factory in person?", a: "Yes. We're 90 minutes by high-speed train from Shanghai Hongqiao, or 20 minutes from Yiwu Airport. Schedule a 2-day visit and we'll arrange hotel, factory tour, and a dinner with the production team. Bring your tech-pack — we can discuss it on the floor." },
   { q: "Do you have social compliance audits?", a: "Yes. BSCI audited (last audit Q1 2024, grade C). Sedex SMETA 4-pillar available on request. We can share audit reports under NDA." },
-  { q: "What's your minimum order quantity (MOQ)?", a: "Per style: 50 pieces (sublimation) / 100 pieces (mixed). Per order: 100 pieces across any styles. First-time buyers usually start with 200-500 pieces as a trial." },
+  { q: "What's your minimum order quantity (MOQ)?", a: "Per style: 50 pieces sublimation, 50 pieces mixed. Per order: 50 pieces across any styles. First-time buyers usually start with 200-500 pieces as a trial." },
   { q: "Can you handle technical performance fabrics?", a: "Yes. We run poly-spandex, poly-mesh, brushed poly, micro-poly, recycled poly, and 100% cotton. We don't run silk, leather, or pure wool." },
 ];
 

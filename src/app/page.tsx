@@ -16,7 +16,7 @@ import { JsonLd } from "@/components/json-ld";
 export const metadata = {
   title: "Yiwu Sublimation & All-Over Cotton Printing | DDP 100+",
   description:
-    "Sublimation on polyester (true all-over, edge-to-edge). DTG and DTF on 100% cotton (A4–A3 per panel, soft hand). Allover digital print on cotton also available (cut-and-sew, true full-body, MOQ 100). MOQ 50 for DTG/DTF, DDP shipping to 100+ countries, US warehouse in Fontana CA. 12 production lines, since 2014.",
+    "Sublimation on polyester (true all-over, edge-to-edge). DTG and DTF on 100% cotton (A4–A3 per panel, soft hand). Allover digital print on cotton also available (cut-and-sew, true full-body, MOQ 50 pcs). MOQ 50 for DTG/DTF, DDP shipping to 100+ countries, US warehouse in Fontana CA. 12 production lines, since 2014.",
 
   openGraph: {
     images: ["/product-hero-products.webp"],
@@ -69,7 +69,7 @@ const homeJsonLd = [
         name: "What is the minimum order quantity (MOQ) for custom sublimation apparel?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "MOQ is 50 pieces per design for DTG and DTF printing on cotton, and 100 pieces for true allover digital print on cotton (cut-and-sew). Polyester sublimation starts at 50 pieces per design. Mixed sizes and styles count toward the same MOQ.",
+          text: "MOQ is 50 pieces per design for DTG and DTF printing on cotton, and 50 pieces for true allover digital print on cotton (cut-and-sew). Polyester sublimation starts at 50 pieces per design. Mixed sizes and styles count toward the same MOQ.",
         },
       },
       {
@@ -77,7 +77,7 @@ const homeJsonLd = [
         name: "Can you print all-over on 100% cotton?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Yes. We run two cotton paths: DTG/DTF (A4–A3 per panel, soft hand, MOQ 50) for placement prints, and true allover digital print on cotton (cut-and-sew, full body, MOQ 100) for edge-to-edge designs. Most factories can only do polyester — we invested in both.",
+          text: "Yes. We run two cotton paths: DTG/DTF (A4–A3 per panel, soft hand, MOQ 50) for placement prints, and true allover digital print on cotton (cut-and-sew, full body, MOQ 50) for edge-to-edge designs. Most factories can only do polyester — we invested in both.",
         },
       },
       {

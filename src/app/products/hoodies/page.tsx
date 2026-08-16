@@ -44,11 +44,11 @@ const styles = [
 
 const fabricChoices = [
   { name: "100% Polyester Fleece", best: "All-over print · streetwear · warm", moq: "50 pcs" },
-  { name: "Poly-Cotton Blend (65/35)", best: "Hybrid · matte finish · retail feel", moq: "100 pcs" },
+  { name: "Poly-Cotton Blend (65/35)", best: "Hybrid · matte finish · retail feel", moq: "50 pcs" },
   { name: "French Terry (Poly)", best: "Looser knit · mid-weight · lifestyle", moq: "50 pcs" },
-  { name: "Brushed Back Fleece", best: "Soft inner · warmth · premium feel", moq: "100 pcs" },
-  { name: "Recycled Poly Fleece (rPET)", best: "12 bottles per hoodie · eco story", moq: "100 pcs" },
-  { name: "Organic Cotton Fleece", best: "GOTS · natural · premium brands", moq: "100 pcs" },
+  { name: "Brushed Back Fleece", best: "Soft inner · warmth · premium feel", moq: "50 pcs" },
+  { name: "Recycled Poly Fleece (rPET)", best: "12 bottles per hoodie · eco story", moq: "50 pcs" },
+  { name: "Organic Cotton Fleece", best: "GOTS · natural · premium brands", moq: "50 pcs" },
 ];
 
 const customisation = [
@@ -94,7 +94,7 @@ const faq = [
   },
   {
     q: "What about sustainability?",
-    a: "We run recycled poly fleece (rPET) made from 12 plastic bottles per hoodie, and GOTS-certified organic cotton fleece. Both available at MOQ 100. The eco story sells — most streetwear buyers now ask.",
+    a: "We run recycled poly fleece (rPET) made from 12 plastic bottles per hoodie, and GOTS-certified organic cotton fleece. Both available at MOQ 50 pcs. The eco story sells — most streetwear buyers now ask.",
   },
 ];
 

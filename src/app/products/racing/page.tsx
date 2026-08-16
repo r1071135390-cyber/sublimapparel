@@ -45,9 +45,9 @@ const styles = [
 const fabricChoices = [
   { name: "Polyester Interlock", best: "All-around · smooth · true all-over print", moq: "50 pcs" },
   { name: "Birdseye Mesh", best: "Hot pit lanes · breathability · quick-dry", moq: "50 pcs" },
-  { name: "Fire-Resistant (Nomex IIIA)", best: "Pit crew · track-side · FR-rated", moq: "100 pcs" },
-  { name: "Coolmax Performance", best: "Long race days · premium · moisture-wicking", moq: "100 pcs" },
-  { name: "Recycled Poly", best: "Eco story · paddock-friendly · retail", moq: "100 pcs" },
+  { name: "Fire-Resistant (Nomex IIIA)", best: "Pit crew · track-side · FR-rated", moq: "50 pcs" },
+  { name: "Coolmax Performance", best: "Long race days · premium · moisture-wicking", moq: "50 pcs" },
+  { name: "Recycled Poly", best: "Eco story · paddock-friendly · retail", moq: "50 pcs" },
 ];
 
 const customisation = [

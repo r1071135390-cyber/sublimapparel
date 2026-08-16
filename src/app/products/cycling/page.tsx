@@ -46,8 +46,8 @@ const fabricChoices = [
   { name: "Italian Performance Poly", best: "Pro race jerseys · moisture-wicking · 4-way stretch", moq: "50 pcs" },
   { name: "Birdseye Mesh Panels", best: "Side panels · under-arm gussets · max ventilation", moq: "50 pcs" },
   { name: "UPF 50+ Sun Protection", best: "Long-distance · UV-rated · mid-day rides", moq: "50 pcs" },
-  { name: "Recycled Poly (rPET)", best: "Eco story · carbon-conscious teams · retail-friendly", moq: "100 pcs" },
-  { name: "Compression Lycra", best: "Shorts · base layers · body-hugging fit", moq: "100 pcs" },
+  { name: "Recycled Poly (rPET)", best: "Eco story · carbon-conscious teams · retail-friendly", moq: "50 pcs" },
+  { name: "Compression Lycra", best: "Shorts · base layers · body-hugging fit", moq: "50 pcs" },
 ];
 
 const customisation = [
