@@ -34,7 +34,7 @@ export function HeroGallery({ images, intervalMs = 3500 }: Props) {
   if (images.length === 0) return null;
 
   return (
-    <div className="relative hidden lg:block max-w-md mx-auto lg:ml-auto lg:mr-0">
+    <div className="relative hidden lg:block w-full max-w-md mx-auto lg:ml-auto lg:mr-0">
       {/* gradient mask: fade left edge of images into the dark background */}
       <div
         aria-hidden
