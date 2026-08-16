@@ -29,7 +29,7 @@ export const metadata: Metadata = {
       "100 all-over print apparel products, cross-filtered by garment, sport and scenario. Polyester sublimation + all-over digital print on cotton. MOQ 50 pcs, DDP worldwide.",
     url: "/products/all/",
     type: "website",
-    images: ["/hero-products.webp"],
+    images: ["/product-hero-products.webp"],
   },
 };
 

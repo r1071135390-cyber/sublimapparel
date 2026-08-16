@@ -69,13 +69,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: seo.description,
       url: path,
       type: "website",
-      images: ["/hero-products.webp"],
+      images: ["/product-hero-products.webp"],
     },
     twitter: {
       card: "summary_large_image",
       title: seo.title,
       description: seo.description,
-      images: ["/hero-products.webp"],
+      images: ["/product-hero-products.webp"],
     },
   };
 }

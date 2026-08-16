@@ -19,7 +19,7 @@ export const metadata = {
     "Sublimation on polyester (true all-over, edge-to-edge). DTG and DTF on 100% cotton (A4–A3 per panel, soft hand). Allover digital print on cotton also available (cut-and-sew, true full-body, MOQ 100). MOQ 50 for DTG/DTF, DDP shipping to 100+ countries, US warehouse in Fontana CA. 12 production lines, since 2014.",
 
   openGraph: {
-    images: ["/hero-products.webp"],
+    images: ["/product-hero-products.webp"],
   },
 };
 
@@ -45,7 +45,7 @@ const homeJsonLd = [
     },
     primaryImageOfPage: {
       "@type": "ImageObject",
-      url: "https://sublimapparel.com/hero-products.webp",
+      url: "https://sublimapparel.com/product-hero-products.webp",
     },
   },
   {

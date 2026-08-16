@@ -51,7 +51,7 @@ export async function generateMetadata({
       description: product.description,
       url: `/products/all/${product.slug}/`,
       type: "website",
-      images: ["/hero-products.webp"],
+      images: ["/product-hero-products.webp"],
     },
   };
 }
@@ -116,7 +116,7 @@ export default async function ProductDetailPage({
     "@type": "Product",
     name: product.name,
     description: product.description,
-    image: "https://sublimapparel.com/hero-products.webp",
+    image: "https://sublimapparel.com/product-hero-products.webp",
     brand: { "@type": "Brand", name: "SublimApparel" },
     category: product.category,
     offers: {
