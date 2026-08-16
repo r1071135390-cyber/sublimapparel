@@ -32,7 +32,7 @@ type SitemapRoute = {
 };
 
 const ROUTES: SitemapRoute[] = [
-  // ── L1 顶层（最高权重）──────────────────────────────────
+  // ── L1 （）──────────────────────────────────
   { path: "/", priority: 1.0, changeFrequency: "weekly" },
   { path: "/products", priority: 0.9, changeFrequency: "weekly" },
   { path: "/products/t-shirts", priority: 0.85, changeFrequency: "monthly" },
@@ -46,7 +46,7 @@ const ROUTES: SitemapRoute[] = [
   { path: "/get-a-quote", priority: 0.95, changeFrequency: "monthly" }, // 询盘主入口
   { path: "/contact", priority: 0.7, changeFrequency: "monthly" },
 
-  // ── L2 蓝海 SEO 王炸（新加的，吃 0 竞争词）──────────────
+  // ── L2  SEO （， 0 ）──────────────
   { path: "/fabric", priority: 0.85, changeFrequency: "monthly" },
   { path: "/fabric/cotton", priority: 0.9, changeFrequency: "monthly" }, // 王炸
   { path: "/technique", priority: 0.85, changeFrequency: "monthly" },
@@ -55,14 +55,14 @@ const ROUTES: SitemapRoute[] = [
   { path: "/shipping/us-warehouse", priority: 0.1, changeFrequency: "yearly" }, // placeholder — not actively promoted
   { path: "/shipping/global", priority: 0.9, changeFrequency: "monthly" }, // 王炸
 
-  // ── 王炸关键词落地页（精准流量承接）──────────
+  // ── （）──────────
   { path: "/all-over-print", priority: 0.95, changeFrequency: "monthly" }, // P1 — all over print 流量入口
 
-  // ── 账户系统（占位）──────────────────────────
+  // ── （）──────────────────────────
   { path: "/login", priority: 0.3, changeFrequency: "yearly" },
   { path: "/register", priority: 0.3, changeFrequency: "yearly" },
 
-  // ── L2 信任 / 案例 ────────────────────────────────────
+  // ── L2  /  ────────────────────────────────────
   { path: "/about", priority: 0.7, changeFrequency: "monthly" },
   { path: "/about/factory", priority: 0.75, changeFrequency: "monthly" },
   { path: "/about/production", priority: 0.75, changeFrequency: "monthly" },
@@ -71,10 +71,10 @@ const ROUTES: SitemapRoute[] = [
   { path: "/about/faq", priority: 0.7, changeFrequency: "monthly" },
   { path: "/cases", priority: 0.7, changeFrequency: "weekly" },
 
-  // ── L2 博客（内容营销 / 长尾词布局）─────────────────
+  // ── L2 （ / ）─────────────────
   { path: "/blog", priority: 0.8, changeFrequency: "weekly" },
 
-  // ── L3 法务（必要但不指望流量）────────────────────────
+  // ── L3 （）────────────────────────
   { path: "/privacy", priority: 0.3, changeFrequency: "yearly" },
   { path: "/terms", priority: 0.3, changeFrequency: "yearly" },
   { path: "/shipping-policy", priority: 0.3, changeFrequency: "yearly" },
@@ -111,7 +111,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Excluding them from sitemap so Google doesn't waste crawl budget on them.
   // Re-add here once their content is rewritten to ≥ 600 words.
 
-  // ── 20 个工艺详情页（SEO 关键词布局）────────────────
+  // ── 20 （SEO ）────────────────
   const techniqueEntries: MetadataRoute.Sitemap = techniques.map((t) => ({
     url: `${SITE_URL}${withSlash(`/technique/${t.slug}`)}`,
     lastModified: now,
@@ -120,7 +120,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     images: [`${SITE_URL}/og-default.jpg`],
   }));
 
-  // ── 博客详情页（长尾流量入口）────────────────────
+  // ── （）────────────────────
   const blogEntries: MetadataRoute.Sitemap = blogPosts.map((p) => ({
     url: `${SITE_URL}${withSlash(`/blog/${p.slug}`)}`,
     lastModified: new Date(p.date),
@@ -129,7 +129,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     images: [`${SITE_URL}/og-default.jpg`],
   }));
 
-  // ── 98 个 tag archive 页（29 类目 + 42 运动 + 27 场景）────
+  // ── 98  tag archive （29  + 42  + 27 ）────
   const tagEntries: MetadataRoute.Sitemap = (["category", "sport", "scenario"] as const).flatMap(
     (dim) =>
       getAllTagSlugs(dim).map(({ slug }) => ({
@@ -141,7 +141,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       }))
   );
 
-  // ── 120 个产品详情页（all-over-print 主营转化页）────
+  // ── 120 （all-over-print ）────
   const productEntries: MetadataRoute.Sitemap = products.map((p) => ({
     url: `${SITE_URL}${withSlash(`/products/all/${p.slug}`)}`,
     lastModified: now,

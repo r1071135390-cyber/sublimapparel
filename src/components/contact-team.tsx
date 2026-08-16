@@ -29,7 +29,7 @@ export function TeamSection() {
             <div className="grid grid-cols-2 gap-px bg-black">
               <Stat label="Average tenure" value="10+ yrs" sub="per account manager" />
               <Stat label="Markets served" value="50+" sub="countries since 2018" />
-              <Stat label="Languages" value="3" sub="EN · ES · 中" />
+              <Stat label="Languages" value="3" sub="EN · ES · CN" />
               <Stat label="Reply time" value="< 24 h" sub="business hours" />
             </div>
             <p className="mt-3 text-[11px] font-medium leading-snug text-black/50">
@@ -63,7 +63,7 @@ export function TeamSection() {
             name="Mark"
             role="Account Manager · AU + NZ + JP"
             bio="7 years focused on the Pacific. Works with Australian uniform suppliers, NZ rugby clubs and Japanese promo houses. Knows the AU compliance paperwork inside-out."
-            tag="EN · 日本語"
+            tag="EN · JP"
             tagColor="bg-[#00c2ff]"
           />
           <Person

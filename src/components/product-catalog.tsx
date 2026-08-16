@@ -266,11 +266,14 @@ export function ProductCatalog() {
                   className="group flex flex-col border-2 border-black bg-white transition-all hover:border-[#ff4d00] hover:shadow-[4px_4px_0_0_#ff4d00] md:hover:shadow-[6px_6px_0_0_#ff4d00]"
                 >
                   <div className="relative aspect-square w-full overflow-hidden border-b-2 border-black bg-[#f5f5f5]">
-                    <div
-                      className={`flex h-full w-full items-center justify-center bg-gradient-to-br ${getGradient(p.id)} text-5xl md:text-7xl`}
-                    >
-                      <span className="opacity-80">{getCategoryEmoji(p.category)}</span>
-                    </div>
+                    <Image
+                      src={`/products/${p.number}/1.webp`}
+                      alt={p.name}
+                      width={600}
+                      height={600}
+                      className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                      loading="lazy"
+                    />
                     <div className="absolute left-2 top-2 rounded-sm bg-black/70 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-white md:text-[10px]">
                       {p.category}
                     </div>

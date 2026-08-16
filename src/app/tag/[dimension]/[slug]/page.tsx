@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { ChevronRight } from "lucide-react";
 import { products, type Product } from "@/lib/products-data";
 import {
@@ -271,10 +272,15 @@ export default async function TagArchivePage({ params }: PageProps) {
                   href={`/products/all/${p.slug}/`}
                   className="group flex flex-col overflow-hidden rounded-lg border border-border bg-card hover:border-primary/50 hover:shadow-lg transition-all"
                 >
-                  <div className={`relative aspect-[4/5] bg-gradient-to-br ${gradientFor(p.slug)}`}>
-                    <div className="absolute inset-0 flex items-center justify-center text-6xl sm:text-7xl drop-shadow-md">
-                      {tag.icon}
-                    </div>
+                  <div className="relative aspect-[4/5] overflow-hidden bg-[#f5f5f5]">
+                    <Image
+                      src={`/products/${p.number}/1.webp`}
+                      alt={p.name}
+                      width={600}
+                      height={750}
+                      className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                      loading="lazy"
+                    />
                     <div className="absolute top-2 left-2 rounded bg-black/30 backdrop-blur-sm px-2 py-0.5 text-[10px] font-semibold text-white">
                       MOQ {p.moq}
                     </div>
