@@ -173,7 +173,7 @@ export default async function ProductDetailPage({
         <div className="mx-auto max-w-7xl px-4 py-8 md:px-8 md:py-16">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-12">
             <ProductGallery
-              images={getProductImages(String(products.findIndex(p => p.slug === product.slug) + 1).padStart(4, "0"))}
+              images={getProductImages(product.number)}
               productName={product.name}
             />
 

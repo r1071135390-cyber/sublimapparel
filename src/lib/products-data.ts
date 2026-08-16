@@ -1609,7 +1609,7 @@ export const products: Product[] = [
   },
   {
     id: "NEWAOP0003",
-    number: "0103",
+    number: "0104",
     slug: "all-over-print-hospitality-fb-uniform",
     name: "Custom All-Over Print Hospitality & F&B Uniform",
     category: "Jacket",
@@ -1632,7 +1632,7 @@ export const products: Product[] = [
   },
   {
     id: "NEWAOP0004",
-    number: "0104",
+    number: "0105",
     slug: "all-over-print-hospitality-fb-hoodie",
     name: "Custom All-Over Print Hospitality & F&B Hoodie",
     category: "Hoodie",
@@ -1655,7 +1655,7 @@ export const products: Product[] = [
   },
   {
     id: "NEWAOP0005",
-    number: "0105",
+    number: "0106",
     slug: "all-over-print-security-property-t-shirt",
     name: "Custom All-Over Print Security & Property T-shirt",
     category: "T-Shirt",
@@ -1678,7 +1678,7 @@ export const products: Product[] = [
   },
   {
     id: "NEWAOP0006",
-    number: "0106",
+    number: "0107",
     slug: "all-over-print-retail-supermarket-jacket",
     name: "Custom All-Over Print Retail & Supermarket Jacket",
     category: "Jacket",
@@ -1701,7 +1701,7 @@ export const products: Product[] = [
   },
   {
     id: "NEWAOP0007",
-    number: "0107",
+    number: "0109",
     slug: "all-over-print-festival-holiday-shirt",
     name: "Custom All-Over Print Festival & Holiday Shirt",
     category: "Shirt",
@@ -1724,7 +1724,7 @@ export const products: Product[] = [
   },
   {
     id: "NEWAOP0008",
-    number: "0109",
+    number: "0110",
     slug: "all-over-print-music-tour-festival-merch-shirt",
     name: "Custom All-Over Print Music Tour & Festival Merch Shirt",
     category: "Shirt",
@@ -1747,7 +1747,7 @@ export const products: Product[] = [
   },
   {
     id: "NEWAOP0009",
-    number: "0110",
+    number: "0111",
     slug: "all-over-print-music-tour-festival-merch-t-shirt",
     name: "Custom All-Over Print Music Tour & Festival Merch T-shirt",
     category: "T-Shirt",
@@ -1770,7 +1770,7 @@ export const products: Product[] = [
   },
   {
     id: "NEWAOP0010",
-    number: "0111",
+    number: "0112",
     slug: "all-over-print-music-tour-festival-merch-hoodie",
     name: "Custom All-Over Print Music Tour & Festival Merch Hoodie",
     category: "Hoodie",
@@ -1793,7 +1793,7 @@ export const products: Product[] = [
   },
   {
     id: "NEWAOP0011",
-    number: "0112",
+    number: "0113",
     slug: "all-over-print-military-wear-cap",
     name: "Custom All-Over Print Military Wear Cap",
     category: "Cap",
@@ -1816,7 +1816,7 @@ export const products: Product[] = [
   },
   {
     id: "NEWAOP0012",
-    number: "0113",
+    number: "0114",
     slug: "all-over-print-military-wear-hoodie",
     name: "Custom All-Over Print Military Wear Hoodie",
     category: "Hoodie",
@@ -1839,7 +1839,7 @@ export const products: Product[] = [
   },
   {
     id: "NEWAOP0013",
-    number: "0114",
+    number: "0115",
     slug: "all-over-print-trade-show-display-t-shirt",
     name: "Custom All-Over Print Trade Show & Display T-shirt",
     category: "T-Shirt",
@@ -1862,7 +1862,7 @@ export const products: Product[] = [
   },
   {
     id: "NEWAOP0014",
-    number: "0115",
+    number: "0116",
     slug: "all-over-print-trade-show-display-polo-shirt",
     name: "Custom All-Over Print Trade Show & Display Polo shirt",
     category: "Polo Shirt",
@@ -1885,7 +1885,7 @@ export const products: Product[] = [
   },
   {
     id: "NEWAOP0015",
-    number: "0116",
+    number: "0117",
     slug: "all-over-print-trade-show-display-hoodie",
     name: "Custom All-Over Print Trade Show & Display Hoodie",
     category: "Hoodie",
@@ -1908,7 +1908,7 @@ export const products: Product[] = [
   },
   {
     id: "NEWAOP0016",
-    number: "0117",
+    number: "0118",
     slug: "all-over-print-trade-show-display-cap",
     name: "Custom All-Over Print Trade Show & Display Cap",
     category: "Cap",
@@ -1931,7 +1931,7 @@ export const products: Product[] = [
   },
   {
     id: "NEWAOP0017",
-    number: "0118",
+    number: "0119",
     slug: "all-over-print-political-campaigns-t-shirt",
     name: "Custom All-Over Print Political Campaigns T-shirt",
     category: "T-Shirt",
@@ -1954,7 +1954,7 @@ export const products: Product[] = [
   },
   {
     id: "NEWAOP0018",
-    number: "0119",
+    number: "0120",
     slug: "all-over-print-political-campaigns-polo-shirt",
     name: "Custom All-Over Print Political Campaigns Polo shirt",
     category: "Polo Shirt",
@@ -1977,7 +1977,7 @@ export const products: Product[] = [
   },
   {
     id: "NEWAOP0019",
-    number: "0120",
+    number: "0121",
     slug: "all-over-print-political-campaigns-hoodie",
     name: "Custom All-Over Print Political Campaigns Hoodie",
     category: "Hoodie",
@@ -2000,7 +2000,7 @@ export const products: Product[] = [
   },
   {
     id: "NEWAOP0020",
-    number: "0121",
+    number: "0122",
     slug: "all-over-print-political-campaigns-cap",
     name: "Custom All-Over Print Political Campaigns Cap",
     category: "Cap",
@@ -2023,7 +2023,7 @@ export const products: Product[] = [
   },
   {
     id: "NEWAOP0021",
-    number: "0122",
+    number: "0124",
     slug: "all-over-print-medical-healthcare-nurse-skirt",
     name: "Custom All-Over Print Medical & Healthcare Nurse Skirt",
     category: "Skirt",
@@ -2046,7 +2046,7 @@ export const products: Product[] = [
   },
   {
     id: "NEWAOP0022",
-    number: "0123",
+    number: "0125",
     slug: "all-over-print-medical-healthcare-jacket",
     name: "Custom All-Over Print Medical & Healthcare Jacket",
     category: "Jacket",
@@ -2069,7 +2069,7 @@ export const products: Product[] = [
   },
   {
     id: "NEWAOP0023",
-    number: "0124",
+    number: "0126",
     slug: "all-over-print-transit-transport-t-shirt",
     name: "Custom All-Over Print Transit & Transport T-shirt",
     category: "T-Shirt",
@@ -2092,7 +2092,7 @@ export const products: Product[] = [
   },
   {
     id: "NEWAOP0024",
-    number: "0125",
+    number: "0127",
     slug: "all-over-print-studio-gym-hoodie",
     name: "Custom All-Over Print Studio & Gym Hoodie",
     category: "Hoodie",
