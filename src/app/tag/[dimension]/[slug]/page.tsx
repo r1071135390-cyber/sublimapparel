@@ -212,7 +212,7 @@ export default async function TagArchivePage({ params }: PageProps) {
                 </Link>
               </div>
 
-              <HeroGallery images={pickHeroImages(matches, 4, `${dim}-${params.slug}`)} />
+              <HeroGallery images={pickHeroImages(matches, 4, `${dim}-${slug}`)} />
             </div>
           </div>
         </section>

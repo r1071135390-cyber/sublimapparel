@@ -106,7 +106,7 @@ export function slugify(s: string): string {
 }
 
 // ------------------------------------------------------------
-// 29 Categories
+// 13 Categories (must match products-data.ts categories)
 // ------------------------------------------------------------
 
 export const CATEGORY_TAGS: Record<string, Omit<TagInfo, "slug" | "dimension">> = {
@@ -143,28 +143,6 @@ export const CATEGORY_TAGS: Record<string, Omit<TagInfo, "slug" | "dimension">> 
     process: "Sublimation on Polyester Piqué",
     icon: "👔",
   },
-  "Jersey / Kit": {
-    label: "Jersey / Kit",
-    description: "Pro-grade sublimated jerseys for club, league, and tournament play. We print names, numbers, sponsors, and full-coverage patterns into the polyester mesh before sewing — nothing sits on top of the fabric, so it won't crack or peel.",
-    benefits: [
-      "Set-in or raglan cut, 140–160 GSM eyelet",
-      "Player names + numbers sublimated into the fabric",
-      "Fast-turn 14 days for 30–500 pc runs",
-    ],
-    process: "Sublimation on Polyester Mesh",
-    icon: "⚽",
-  },
-  "Sports Top / Kit": {
-    label: "Sports Top / Kit",
-    description: "Women's-cut and unisex sports tops for training, league play, and team kits. Full sublimation into lightweight polyester eyelet with flat-lock seams — sits smooth under pads and doesn't snag during play.",
-    benefits: [
-      "Women's and unisex fit blocks",
-      "140–160 GSM moisture-wicking eyelet",
-      "Custom name/number sublimated in fabric",
-    ],
-    process: "Sublimation on Polyester Eyelet",
-    icon: "👚",
-  },
   "Jacket": {
     label: "Jacket",
     description: "Lightweight sublimated jackets for training warmups, team travel, and event staff. Print covers the body, sleeves, and collar stand; zip pockets and storm flap don't interrupt the pattern.",
@@ -175,17 +153,6 @@ export const CATEGORY_TAGS: Record<string, Omit<TagInfo, "slug" | "dimension">> 
     ],
     process: "Sublimation on Polyester Softshell",
     icon: "🧥",
-  },
-  "Combat Gear": {
-    label: "Combat Gear",
-    description: "MMA, boxing, wrestling, and martial arts kits with full-coverage sublimation that survives grappling. Lightweight polyester mesh breathes, prints stay sharp through sparring, rash guards and fight shorts match across the kit.",
-    benefits: [
-      "Rash guard + fight short + hoodie set",
-      "180–200 GSM 4-way stretch",
-      "Reinforced flat-lock seams for grappling",
-    ],
-    process: "Sublimation on Polyester Spandex",
-    icon: "🥊",
   },
   "Shirt": {
     label: "Shirt",
@@ -242,61 +209,6 @@ export const CATEGORY_TAGS: Record<string, Omit<TagInfo, "slug" | "dimension">> 
     process: "Sublimation on Polyester Fleece",
     icon: "🧶",
   },
-  "Sleepwear & Underwear": {
-    label: "Sleepwear & Underwear",
-    description: "Sublimated sleepwear, loungewear, and underwear for direct-to-consumer brands. Soft hand-feel polyester or modal-blend with full print coverage — bright patterns and brand artwork print clearly at small scale.",
-    benefits: [
-      "Modal-blend or polyester options",
-      "Soft hand-feel for skin contact",
-      "Small MOQ 50 pcs per design",
-    ],
-    process: "Sublimation on Polyester / Modal",
-    icon: "🩱",
-  },
-  "Dress": {
-    label: "Dress",
-    description: "Full-print dresses for resort wear, festival merch, and boutique collections. Cut-and-sewn from panel pieces so the print flows across the body, waist, and hem without seams breaking the pattern.",
-    benefits: [
-      "A-line, bodycon, or wrap cuts",
-      "180–220 GSM polyester or silk-feel",
-      "Full print from neckline to hem",
-    ],
-    process: "Sublimation on Polyester",
-    icon: "👗",
-  },
-  "Coord Set": {
-    label: "Coord Set",
-    description: "Matching top-and-bottom sets printed from a single artwork so the pattern aligns across the seam. Built for streetwear drops, loungewear collections, and resort merch.",
-    benefits: [
-      "Top + bottom printed as one kit",
-      "200–280 GSM fleece or interlock",
-      "Pattern alignment across waist seam",
-    ],
-    process: "Sublimation on Polyester",
-    icon: "🧵",
-  },
-  "Knitwear": {
-    label: "Knitwear",
-    description: "Sublimated knit sweaters and pullovers for cold-weather merch, ski resort uniforms, and brand collections. Yarn-dyed look from sublimation on polyester knit — soft hand-feel without losing print detail.",
-    benefits: [
-      "Cable, rib, or jersey knit texture",
-      "280–350 GSM yarn-dyed look",
-      "Full print across body and sleeves",
-    ],
-    process: "Sublimation on Polyester Knit",
-    icon: "🧶",
-  },
-  "Romper & Jumpsuit": {
-    label: "Romper & Jumpsuit",
-    description: "Full-print rompers and jumpsuits for boutique, festival, and kidswear brands. One-piece construction with the print running across the bodice, waist, and leg.",
-    benefits: [
-      "Adult and kids sizing",
-      "180–220 GSM polyester or rayon-feel",
-      "Full print from neckline to hem",
-    ],
-    process: "Sublimation on Polyester",
-    icon: "🩱",
-  },
   "Skirt": {
     label: "Skirt",
     description: "Sublimated skirts for team uniforms, dance, retail, and resort wear. Full print across the body and waistband; pleats and panels don't break the pattern.",
@@ -307,138 +219,6 @@ export const CATEGORY_TAGS: Record<string, Omit<TagInfo, "slug" | "dimension">> 
     ],
     process: "Sublimation on Polyester",
     icon: "👗",
-  },
-  "Bodysuit": {
-    label: "Bodysuit",
-    description: "Sublimated bodysuits for dance, gymnastics, fitness, and streetwear. Full print across the body with snap closure at the gusset — pattern flows cleanly across torso and legs.",
-    benefits: [
-      "Long-sleeve, sleeveless, or racer cuts",
-      "200–240 GSM polyester-spandex",
-      "Snap gusset or zip-back closure",
-    ],
-    process: "Sublimation on Polyester Spandex",
-    icon: "🩱",
-  },
-  "Sports Top": {
-    label: "Sports Top",
-    description: "Long-sleeve and short-sleeve sports tops for training, league play, and tournament staff. Full sublimation into lightweight eyelet with custom names, numbers, and sponsors all printed into the fabric.",
-    benefits: [
-      "Compressions or relaxed fit",
-      "140–180 GSM eyelet",
-      "Custom name/number in the print",
-    ],
-    process: "Sublimation on Polyester Eyelet",
-    icon: "👕",
-  },
-  "Baby Bodysuit": {
-    label: "Baby Bodysuit",
-    description: "Full-print baby onesies for gifts, baby-shower merch, and family-matching collections. Soft polyester with full print across the front, back, and sleeves.",
-    benefits: [
-      "Snap-shoulder for easy dressing",
-      "Soft polyester 180 GSM",
-      "Full print front, back, and sleeves",
-    ],
-    process: "Sublimation on Polyester",
-    icon: "👶",
-  },
-  "Kids Sportswear": {
-    label: "Kids Sportswear",
-    description: "Sublimated kids jerseys, tees, and hoodies for youth leagues, school teams, and tournament merch. Same print quality as adult gear, sized for kids 4–14.",
-    benefits: [
-      "Youth sizing 4–14",
-      "Same print quality as adult kit",
-      "Low MOQ 30 pcs per design",
-    ],
-    process: "Sublimation on Polyester",
-    icon: "🧒",
-  },
-  "Winter Wear": {
-    label: "Winter Wear",
-    description: "Sublimated winter wear — base layers, mid-layers, and insulated jackets for ski, snowboard, and cold-weather team uniforms. Print survives cold, abrasion, and repeat washing.",
-    benefits: [
-      "Base, mid, and outer layer options",
-      "Insulation and water-resistant finishes",
-      "Full print across body and sleeves",
-    ],
-    process: "Sublimation on Polyester",
-    icon: "❄️",
-  },
-  "Activewear": {
-    label: "Activewear",
-    description: "Sublimated leggings, sports bras, and tops for fitness brands, yoga studios, and direct-to-consumer activewear. Four-way stretch polyester with full print that doesn't distort during wear.",
-    benefits: [
-      "Leggings, bras, crops, and tanks",
-      "220–240 GSM polyester-spandex",
-      "Full print that survives stretch",
-    ],
-    process: "Sublimation on Polyester Spandex",
-    icon: "🏃",
-  },
-  "Swimwear": {
-    label: "Swimwear",
-    description: "Full-print swimwear for team swimsuits, surf brands, and resort collections. Chlorine-resistant polyester-spandex with UV-stable inks — colors stay vibrant through pool and salt water.",
-    benefits: [
-      "One-piece or two-piece cuts",
-      "Chlorine-resistant 200 GSM poly-spandex",
-      "UV-stable inks, no fade",
-    ],
-    process: "Sublimation on Polyester Spandex",
-    icon: "👙",
-  },
-  "Beachwear": {
-    label: "Beachwear",
-    description: "Sublimated beachwear — board shorts, cover-ups, rash guards, and tank tops for surf, swim, and resort brands. Full print from waistband to hem, no center seam.",
-    benefits: [
-      "Board shorts, rash guards, cover-ups",
-      "Quick-dry polyester or poly-spandex",
-      "Full print, no fading in salt water",
-    ],
-    process: "Sublimation on Polyester",
-    icon: "🏖️",
-  },
-  "Leggings": {
-    label: "Leggings",
-    description: "Full-print leggings for fitness, yoga, and streetwear. Four-way stretch polyester-spandex with a wide waistband that doesn't roll — full-coverage print holds shape through squat, lunge, and run.",
-    benefits: [
-      "High-waist, 7/8, or full length",
-      "220–240 GSM poly-spandex",
-      "Full print with squat-proof opacity",
-    ],
-    process: "Sublimation on Polyester Spandex",
-    icon: "🩱",
-  },
-  "Apron": {
-    label: "Apron",
-    description: "Sublimated aprons for cafés, breweries, restaurants, and retail staff. Full print across the bib, waist, and tie straps — perfect for branded uniforms and event merch.",
-    benefits: [
-      "Bib, waist, or cross-back cuts",
-      "280–320 GSM polyester canvas",
-      "Full print on bib, body, and straps",
-    ],
-    process: "Sublimation on Polyester",
-    icon: "🍳",
-  },
-  "Bucket Hat": {
-    label: "Bucket Hat",
-    description: "Full-print bucket hats for festivals, streetwear, and outdoor brands. Pattern wraps the crown and brim without a visible seam break.",
-    benefits: [
-      "Reversible construction",
-      "Soft polyester twill or mesh",
-      "Full print on crown and brim",
-    ],
-    process: "Sublimation on Polyester",
-    icon: "🎩",
-  },
-  "Baseball Cap": {
-    label: "Baseball Cap",
-    description: "Sublimated baseball caps for sports teams, streetwear, and brand merch. Full coverage print across the crown, brim, and back closure — logos and patterns sit cleanly on every panel.",
-    benefits: [
-      "6-panel structured or 5-panel unstructured",
-      "Snapback, velcro, or fitted closure",
-      "Full print on crown, brim, and underbill",
-    ],
-    process: "Sublimation on Polyester",
-    icon: "🧢",
   },
   "Sportswear": {
     label: "Sportswear",
