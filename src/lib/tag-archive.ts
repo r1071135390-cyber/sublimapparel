@@ -429,6 +429,39 @@ export const CATEGORY_TAGS: Record<string, Omit<TagInfo, "slug" | "dimension">> 
     process: "Sublimation on Polyester",
     icon: "🧢",
   },
+  "Sportswear": {
+    label: "Sportswear",
+    description: "Performance and team-wear pieces built for club play, league kits, training, and event drops. Full-sublimation construction so player names, numbers, sponsors, and full-coverage patterns sit inside the fabric — no cracking, no peeling, no heavy decals.",
+    benefits: [
+      "Full print wraps sleeves, side panels, and back",
+      "Set-in or raglan cut, 140–200 GSM eyelet/piqué",
+      "Fast-turn 7–14 days for 30–500 pc runs",
+    ],
+    process: "Sublimation on Polyester Mesh / Interlock",
+    icon: "🏃",
+  },
+  "Home": {
+    label: "Home",
+    description: "Cozy home-textile pieces — onesies, loungewear, hooded jumpsuits, and plush towels — printed edge-to-edge with your design. Soft hand feel, color-fast through repeated washing, perfect for gifting, dropship, and small-batch home collections.",
+    benefits: [
+      "Full print across body, sleeves, and hood",
+      "160–320 GSM brushed or terry fabrics",
+      "DDP shipping with US warehouse in Fontana CA",
+    ],
+    process: "Sublimation on Polyester Fleece / Towel",
+    icon: "🏠",
+  },
+  "Cap": {
+    label: "Cap",
+    description: "Sublimated headwear for teams, streetwear, and event merch. Full-coverage print across crown, brim, and back closure — your logo or pattern wraps the entire cap without stitched patches or heat-press logos.",
+    benefits: [
+      "5-panel / 6-panel structured or unstructured",
+      "Snapback, velcro, fitted, or flex closure",
+      "Full print on crown, brim, underbill, and strap",
+    ],
+    process: "Sublimation on Polyester Twill / Mesh",
+    icon: "🧢",
+  },
 };
 
 // ------------------------------------------------------------

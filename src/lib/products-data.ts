@@ -1,5 +1,5 @@
 // ============================================================
-// All-Over Print Product Catalog — 100 products, 3-dim tags
+// All-Over Print Product Catalog — 120 products, 3-dim tags
 // ============================================================
 //
 // Each product carries three tag dimensions:
@@ -41,7 +41,10 @@ export type ProductCategory =
   | "Leggings"
   | "Apron"
   | "Bucket Hat"
-  | "Baseball Cap";
+  | "Baseball Cap"
+  | "Sportswear"
+  | "Cap"
+  | "Home";
 
 export type Sport =
   | "AFL" | "Athletics" | "Badminton" | "Baseball" | "Basketball"
@@ -114,15 +117,14 @@ const SPORT_SCENARIOS: Scenario[] = [
 ];
 
 // ============================================================
-// PRODUCT CATALOG (100 items)
+// PRODUCT CATALOG (120 items)
 // ============================================================
 
 export const products: Product[] = [
-  // ---------- 1–23: Cross-cutting products (all sports + all scenarios) ----------
   {
     id: "2AHAYR15",
     slug: "all-over-print-womens-rectangle-scarf",
-    name: "All-Over Print Womens Rectangle Scarf 170X45cm",
+    name: "Custom All-Over Print Womens Rectangle Scarf",
     category: "Hoodie",  // tagged as Hoodie in source (group with 服装)
     sports: ALL_SPORTS,
     scenarios: ALL_SCENARIOS,
@@ -148,7 +150,7 @@ export const products: Product[] = [
   {
     id: "2KTXDM69",
     slug: "childrens-t-shirts-printed-usa-gildan-64000b",
-    name: "Childrens T-Shirts Printed in USA — Gildan 64000B (DTG)",
+    name: "Custom All-Over Print Childrens T-Shirts",
     category: "T-Shirt",
     sports: ALL_SPORTS,
     scenarios: ALL_SCENARIOS,
@@ -173,7 +175,7 @@ export const products: Product[] = [
   {
     id: "1WPXZY10",
     slug: "all-over-print-womens-high-stretch-tights",
-    name: "All-Over Print Womens High-Stretch Tights",
+    name: "Custom All-Over Print Womens High-Stretch Tights",
     category: "Pants",
     sports: ALL_SPORTS,
     scenarios: ALL_SCENARIOS,
@@ -197,8 +199,8 @@ export const products: Product[] = [
   {
     id: "2MHPDM39",
     slug: "unisex-durable-pullover-sweatshirt-290gsm",
-    name: "Unisex Durable Pullover Sweatshirt 290GSM (DTG)",
-    category: "Shirt",
+    name: "Custom All-Over Print Unisex Durable Pullover Sweatshirt 290GSM",
+    category: "Sweatshirt",
     sports: ALL_SPORTS,
     scenarios: ALL_SCENARIOS,
     fabrics: [
@@ -220,8 +222,8 @@ export const products: Product[] = [
   {
     id: "2MHPJR90",
     slug: "mens-fleece-lined-vintage-wash-zip-hoodie",
-    name: "Mens Fleece-Lined Vintage Wash Zip Hoodie 360GSM (DTF)",
-    category: "Jacket",
+    name: "Custom All-Over Print Mens Fleece Hoodie 360GSM",
+    category: "Hoodie",
     sports: ALL_SPORTS,
     scenarios: ALL_SCENARIOS,
     fabrics: [
@@ -245,30 +247,9 @@ export const products: Product[] = [
     description: "Fleece-lined vintage wash zip hoodie, 360gsm, 15 fabric options.",
   },
   {
-    id: "2WUSMG97",
-    slug: "womens-seamless-briefs-printed-usa-180gsm",
-    name: "Womens Seamless Briefs Printed in USA 180GSM (DTF)",
-    category: "Sleepwear & Underwear",
-    sports: ALL_SPORTS,
-    scenarios: ALL_SCENARIOS,
-    fabrics: [
-      { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
-      { gsm: "190GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
-      { gsm: "180GSM", material: "Polyester", process: "Sublimation" },
-      { gsm: "180GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
-      { gsm: "115GSM", material: "棉/府绸", process: "All-Over Digital Print on Cotton", gsmOptions: "80100120 g" },
-      { gsm: "—", material: "抓绒", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
-      { gsm: "—", material: "毛绒", process: "Sublimation", gsmOptions: "200220240260280300 g" },
-      { gsm: "—", material: "涤纶/抓绒/羊羔绒", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
-      { gsm: "—", material: "缎面", process: "Sublimation", gsmOptions: "80100120140160180200 g" },
-    ],
-    moq: 50,
-    description: "Womens seamless briefs, 180gsm, 9 fabric options.",
-  },
-  {
     id: "2MBXMA09",
     slug: "mens-loose-sleeveless-hoodie-320gsm",
-    name: "Mens Loose Sleeveless Hoodie 320GSM (DTF)",
+    name: "Custom All-Over Print Mens Loose Sleeveless Hoodie 320GSM",
     category: "Tank Top & Camis",
     sports: ALL_SPORTS,
     scenarios: ALL_SCENARIOS,
@@ -286,8 +267,8 @@ export const products: Product[] = [
   {
     id: "3WBXGZ50",
     slug: "all-over-print-womens-tank-vest-dress",
-    name: "All-Over Print Womens Tank Vest Dress",
-    category: "Dress",
+    name: "Custom All-Over Print Womens Tank Vest Dress",
+    category: "Sportswear",
     sports: ALL_SPORTS,
     scenarios: ALL_SCENARIOS,
     fabrics: [
@@ -301,7 +282,7 @@ export const products: Product[] = [
   {
     id: "2MHPSA03",
     slug: "mens-distressed-vintage-wash-sweatshirt-360gsm",
-    name: "Mens Distressed Vintage Wash Sweatshirt 360GSM (DTG)",
+    name: "Custom All-Over Print Mens Distressed Sweatshirt 360GSM",
     category: "Sweatshirt",
     sports: ALL_SPORTS,
     scenarios: ALL_SCENARIOS,
@@ -317,8 +298,8 @@ export const products: Product[] = [
   {
     id: "3KCSZJ10",
     slug: "plamix-all-over-print-childrens-shirt-with-pocket",
-    name: "Plamix All-Over Print Childrens Shirt With Pocket 140GSM Slub Cotton",
-    category: "Coord Set",
+    name: "Custom All-Over Print Childrens Shirt With Pocket 140GSM Slub Cotton",
+    category: "Shirt",
     sports: ALL_SPORTS,
     scenarios: ALL_SCENARIOS,
     fabrics: [
@@ -332,8 +313,8 @@ export const products: Product[] = [
   {
     id: "2MHPHR99",
     slug: "mens-vintage-crewneck-knit-sweater-285gsm",
-    name: "Mens Vintage Crewneck Knit Sweater 285GSM (DTG)",
-    category: "Knitwear",
+    name: "Custom All-Over Print Mens Vintage Crewneck Knit Sweater",
+    category: "Sweatshirt",
     sports: ALL_SPORTS,
     scenarios: ALL_SCENARIOS,
     fabrics: [
@@ -348,8 +329,8 @@ export const products: Product[] = [
   {
     id: "3MJMJH01",
     slug: "all-over-print-unisex-thickened-home-jumpsuit",
-    name: "All-Over Print Unisex Thickened Home Jumpsuit",
-    category: "Romper & Jumpsuit",
+    name: "Custom All-Over Print Unisex Thickened Home Jumpsuit",
+    category: "Home",
     sports: ALL_SPORTS,
     scenarios: ALL_SCENARIOS,
     fabrics: [
@@ -363,7 +344,7 @@ export const products: Product[] = [
   {
     id: "3CDDAQ01",
     slug: "all-over-print-kids-short-sleeve-dress",
-    name: "All-Over Print Kids Short-Sleeve Dress",
+    name: "Custom All-Over Print Kids Short-Sleeve Dress",
     category: "Skirt",
     sports: ALL_SPORTS,
     scenarios: ALL_SCENARIOS,
@@ -376,8 +357,8 @@ export const products: Product[] = [
   {
     id: "3WJMBX16",
     slug: "all-over-print-womens-tank-bodysuit",
-    name: "All-Over Print Womens Tank Bodysuit",
-    category: "Bodysuit",
+    name: "Custom All-Over Print Womens Tank Bodysuit",
+    category: "Sportswear",
     sports: ALL_SPORTS,
     scenarios: ALL_SCENARIOS,
     fabrics: [
@@ -390,7 +371,7 @@ export const products: Product[] = [
   {
     id: "3KTXPL29",
     slug: "all-over-print-childrens-lapel-polo-shirt",
-    name: "All-Over Print Childrens Lapel Polo Shirt 145GSM Birdseye",
+    name: "Custom All-Over Print Childrens Lapel Polo Shirt",
     category: "Polo Shirt",
     sports: ALL_SPORTS,
     scenarios: ALL_SCENARIOS,
@@ -404,8 +385,8 @@ export const products: Product[] = [
   {
     id: "3AHGYD02",
     slug: "sports-square-towel",
-    name: "Sports Square Towel",
-    category: "Sports Top",
+    name: "Custom All-Over Print Sports Square Towel",
+    category: "Home",
     sports: ALL_SPORTS,
     scenarios: ALL_SCENARIOS,
     fabrics: [
@@ -418,8 +399,8 @@ export const products: Product[] = [
   {
     id: "2KBBMB01",
     slug: "baby-short-sleeve-onesie-usa-190gsm",
-    name: "Baby Short-Sleeve Onesie Printed in USA 190GSM Front (DTF)",
-    category: "Baby Bodysuit",
+    name: "Custom All-Over Print Baby Short-Sleeve Onesie Printed",
+    category: "Home",
     sports: ALL_SPORTS,
     scenarios: ALL_SCENARIOS,
     fabrics: [
@@ -432,8 +413,8 @@ export const products: Product[] = [
   {
     id: "3KCSSY02",
     slug: "all-over-print-kids-baseball-jersey",
-    name: "All-Over Print Kids Baseball Jersey",
-    category: "Kids Sportswear",
+    name: "Custom All-Over Print Kids Baseball Jersey",
+    category: "Sportswear",
     sports: ALL_SPORTS,
     scenarios: ALL_SCENARIOS,
     fabrics: [
@@ -445,8 +426,8 @@ export const products: Product[] = [
   {
     id: "3MHZDM41",
     slug: "all-over-print-mens-half-zip-pullover",
-    name: "All-Over Print Mens Half-Zip Pullover",
-    category: "Winter Wear",
+    name: "Custom All-Over Print Mens Half-Zip Pullover",
+    category: "Hoodie",
     sports: ALL_SPORTS,
     scenarios: ALL_SCENARIOS,
     fabrics: [
@@ -459,8 +440,8 @@ export const products: Product[] = [
   {
     id: "3MPHTU08",
     slug: "all-over-print-mens-long-sleeve-t-shirt-dropped-shoulders",
-    name: "All-Over Print Mens Long-Sleeve T-Shirt With Dropped Shoulders Interlock",
-    category: "Activewear",
+    name: "Custom All-Over Print Mens Long-Sleeve T-Shirt With Dropped Shoulders",
+    category: "Sportswear",
     sports: ALL_SPORTS,
     scenarios: ALL_SCENARIOS,
     fabrics: [
@@ -472,8 +453,8 @@ export const products: Product[] = [
   {
     id: "2HKAWQ05",
     slug: "all-over-print-apron",
-    name: "All-Over Print Apron",
-    category: "Apron",
+    name: "Custom All-Over Print Apron",
+    category: "Home",
     sports: ALL_SPORTS,
     scenarios: ALL_SCENARIOS,
     fabrics: [
@@ -485,8 +466,8 @@ export const products: Product[] = [
   {
     id: "2AAOYF03",
     slug: "all-over-print-bucket-hat",
-    name: "All-Over Print Bucket Hat",
-    category: "Bucket Hat",
+    name: "Custom All-Over Print Bucket Hat",
+    category: "Cap",
     sports: ALL_SPORTS,
     scenarios: ALL_SCENARIOS,
     fabrics: [
@@ -498,8 +479,8 @@ export const products: Product[] = [
   {
     id: "2AMSMG90",
     slug: "all-over-print-baseball-cap",
-    name: "All-Over Print Baseball Cap",
-    category: "Baseball Cap",
+    name: "Custom All-Over Print Baseball Cap",
+    category: "Cap",
     sports: ALL_SPORTS,
     scenarios: ALL_SCENARIOS,
     fabrics: [
@@ -510,13 +491,11 @@ export const products: Product[] = [
     moq: 50,
     description: "All-over print baseball cap, 3 fabric options.",
   },
-
-  // ---------- 24–64: Sport-specific jerseys ----------
   {
     id: "3MPXDK57",
     slug: "all-over-print-soccer-jersey-kit",
-    name: "All-Over Print Soccer Jersey Kit (Shirt + Shorts)",
-    category: "Jersey / Kit",
+    name: "Custom All-Over Print Soccer Jersey Kit (Shirt + Shorts)",
+    category: "Sportswear",
     sports: ["Soccer"],
     scenarios: SPORT_SCENARIOS,
     fabrics: [
@@ -532,8 +511,8 @@ export const products: Product[] = [
   {
     id: "3MBXVL01",
     slug: "all-over-print-basketball-jersey-kit",
-    name: "All-Over Print Basketball Jersey Kit (Reversible option)",
-    category: "Jersey / Kit",
+    name: "Custom All-Over Print Basketball Jersey Kit (Reversible option)",
+    category: "Sportswear",
     sports: ["Basketball"],
     scenarios: SPORT_SCENARIOS,
     fabrics: [
@@ -547,8 +526,8 @@ export const products: Product[] = [
   {
     id: "3MBXGT28",
     slug: "all-over-print-badminton-outfit",
-    name: "All-Over Print Badminton Outfit",
-    category: "Sports Top / Kit",
+    name: "Custom All-Over Print Badminton Outfit",
+    category: "Sportswear",
     sports: ["Badminton"],
     scenarios: SPORT_SCENARIOS,
     fabrics: [
@@ -561,8 +540,8 @@ export const products: Product[] = [
   {
     id: "3MTXLB56",
     slug: "all-over-print-hockey-jersey",
-    name: "All-Over Print Hockey Jersey (Lycra option)",
-    category: "Jersey / Kit",
+    name: "Custom All-Over Print Hockey Jersey",
+    category: "Sportswear",
     sports: ["Hockey"],
     scenarios: SPORT_SCENARIOS,
     fabrics: [
@@ -575,8 +554,8 @@ export const products: Product[] = [
   {
     id: "3MBXGT27",
     slug: "all-over-print-running-wear-kit",
-    name: "All-Over Print Running Wear (Shirt + Shorts)",
-    category: "Sports Top / Kit",
+    name: "Custom All-Over Print Running Wear (Shirt + Shorts)",
+    category: "Sportswear",
     sports: ["Running", "Athletics"],
     scenarios: SPORT_SCENARIOS,
     fabrics: [
@@ -589,8 +568,8 @@ export const products: Product[] = [
   {
     id: "3MTXUB79",
     slug: "all-over-print-cycling-wear-kit",
-    name: "All-Over Print Cycling Wear Kit (Jersey + Bib Shorts)",
-    category: "Sports Top / Kit",
+    name: "Custom All-Over Print Cycling Wear Kit (Jersey + Bib Shorts)",
+    category: "Sportswear",
     sports: ["Cycling"],
     scenarios: SPORT_SCENARIOS,
     fabrics: [
@@ -603,8 +582,8 @@ export const products: Product[] = [
   {
     id: "3CPXX001",
     slug: "all-over-print-yoga-wear-set",
-    name: "All-Over Print Yoga Wear Set (Top + Leggings)",
-    category: "Sports Top / Kit",
+    name: "Custom All-Over Print Yoga Wear Set (Top + Leggings)",
+    category: "Sportswear",
     sports: ["Yoga", "Pilates"],
     scenarios: SPORT_SCENARIOS,
     fabrics: [
@@ -617,8 +596,8 @@ export const products: Product[] = [
   {
     id: "3KYYOP05",
     slug: "all-over-print-swimwear-one-piece",
-    name: "All-Over Print Swimwear (One-Piece / Bikini / Trunks)",
-    category: "Swimwear",
+    name: "Custom All-Over Print Swimwear (One-Piece / Bikini / Trunks)",
+    category: "Sportswear",
     sports: ["Swimwear", "Surf", "Beach", "Dive"],
     scenarios: SPORT_SCENARIOS,
     fabrics: [
@@ -630,7 +609,7 @@ export const products: Product[] = [
   {
     id: "3KCSFH01",
     slug: "all-over-print-golf-polo-shirt",
-    name: "All-Over Print Golf Polo Shirt",
+    name: "Custom All-Over Print Golf Polo Shirt",
     category: "Polo Shirt",
     sports: ["Golf"],
     scenarios: SPORT_SCENARIOS,
@@ -644,8 +623,8 @@ export const products: Product[] = [
   {
     id: "3MBSBL01",
     slug: "all-over-print-baseball-jersey-kit",
-    name: "All-Over Print Baseball Jersey Kit (Shirt + Pants)",
-    category: "Jersey / Kit",
+    name: "Custom All-Over Print Baseball Jersey Kit (Shirt + Pants)",
+    category: "Sportswear",
     sports: ["Baseball", "Softball"],
     scenarios: SPORT_SCENARIOS,
     fabrics: [
@@ -658,8 +637,8 @@ export const products: Product[] = [
   {
     id: "3MFBJK01",
     slug: "all-over-print-american-football-jersey",
-    name: "All-Over Print American Football Jersey",
-    category: "Jersey / Kit",
+    name: "Custom All-Over Print American Football Jersey",
+    category: "Sportswear",
     sports: ["Football"],
     scenarios: SPORT_SCENARIOS,
     fabrics: [
@@ -672,8 +651,8 @@ export const products: Product[] = [
   {
     id: "3MRGJK01",
     slug: "all-over-print-rugby-jersey",
-    name: "All-Over Print Rugby Jersey",
-    category: "Jersey / Kit",
+    name: "Custom All-Over Print Rugby Jersey",
+    category: "Sportswear",
     sports: ["Rugby"],
     scenarios: SPORT_SCENARIOS,
     fabrics: [
@@ -686,8 +665,8 @@ export const products: Product[] = [
   {
     id: "3MVBJK01",
     slug: "all-over-print-volleyball-jersey-kit",
-    name: "All-Over Print Volleyball Jersey Kit",
-    category: "Jersey / Kit",
+    name: "Custom All-Over Print Volleyball Jersey Kit",
+    category: "Sportswear",
     sports: ["Volleyball"],
     scenarios: SPORT_SCENARIOS,
     fabrics: [
@@ -700,8 +679,8 @@ export const products: Product[] = [
   {
     id: "3MTNJK01",
     slug: "all-over-print-tennis-outfit",
-    name: "All-Over Print Tennis Outfit (Shirt + Skirt/Shorts)",
-    category: "Sports Top / Kit",
+    name: "Custom All-Over Print Tennis Outfit (Shirt + Skirt/Shorts)",
+    category: "Sportswear",
     sports: ["Tennis"],
     scenarios: SPORT_SCENARIOS,
     fabrics: [
@@ -714,8 +693,8 @@ export const products: Product[] = [
   {
     id: "3MTTJK01",
     slug: "all-over-print-table-tennis-outfit",
-    name: "All-Over Print Table Tennis Outfit",
-    category: "Sports Top / Kit",
+    name: "Custom All-Over Print Table Tennis Outfit",
+    category: "Sportswear",
     sports: ["Table Tennis"],
     scenarios: SPORT_SCENARIOS,
     fabrics: [
@@ -727,8 +706,8 @@ export const products: Product[] = [
   {
     id: "3MCKJK01",
     slug: "all-over-print-cricket-jersey",
-    name: "All-Over Print Cricket Jersey",
-    category: "Jersey / Kit",
+    name: "Custom All-Over Print Cricket Jersey",
+    category: "Sportswear",
     sports: ["Cricket"],
     scenarios: SPORT_SCENARIOS,
     fabrics: [
@@ -741,8 +720,8 @@ export const products: Product[] = [
   {
     id: "3MLC001",
     slug: "all-over-print-lacrosse-jersey",
-    name: "All-Over Print Lacrosse Jersey",
-    category: "Jersey / Kit",
+    name: "Custom All-Over Print Lacrosse Jersey",
+    category: "Sportswear",
     sports: ["Lacrosse"],
     scenarios: SPORT_SCENARIOS,
     fabrics: [
@@ -754,8 +733,8 @@ export const products: Product[] = [
   {
     id: "3MSB001",
     slug: "all-over-print-softball-jersey",
-    name: "All-Over Print Softball Jersey",
-    category: "Jersey / Kit",
+    name: "Custom All-Over Print Softball Jersey",
+    category: "Sportswear",
     sports: ["Softball"],
     scenarios: SPORT_SCENARIOS,
     fabrics: [
@@ -767,8 +746,8 @@ export const products: Product[] = [
   {
     id: "3MSF001",
     slug: "all-over-print-surf-lycra-top",
-    name: "All-Over Print Surf Lycra Top (Rash Guard)",
-    category: "Sports Top / Kit",
+    name: "Custom All-Over Print Surf Lycra Top (Rash Guard)",
+    category: "Sportswear",
     sports: ["Surf", "Swimwear", "Beach"],
     scenarios: SPORT_SCENARIOS,
     fabrics: [
@@ -778,36 +757,9 @@ export const products: Product[] = [
     description: "Surf Lycra top / rash guard, 1 fabric option.",
   },
   {
-    id: "3MSK001",
-    slug: "all-over-print-ski-jacket",
-    name: "All-Over Print Ski Jacket (Insulated)",
-    category: "Jacket",
-    sports: ["Ski", "Snowboard"],
-    scenarios: SPORT_SCENARIOS,
-    fabrics: [
-      { gsm: "—", material: "涤纶", process: "Sublimation", gsmOptions: "100120140160180200 g" },
-      { gsm: "—", material: "抓绒/帆布", process: "Sublimation", gsmOptions: "300 g" },
-    ],
-    moq: 50,
-    description: "Ski jacket insulated, 2 fabric options.",
-  },
-  {
-    id: "3MSB002",
-    slug: "all-over-print-snowboard-jacket",
-    name: "All-Over Print Snowboard Jacket",
-    category: "Jacket",
-    sports: ["Snowboard", "Ski"],
-    scenarios: SPORT_SCENARIOS,
-    fabrics: [
-      { gsm: "—", material: "涤纶", process: "Sublimation", gsmOptions: "100120140160180200 g" },
-    ],
-    moq: 50,
-    description: "Snowboard jacket, 1 fabric option.",
-  },
-  {
     id: "3MKT001",
     slug: "all-over-print-skate-t-shirt",
-    name: "All-Over Print Skate T-Shirt",
+    name: "Custom All-Over Print Skate T-Shirt",
     category: "T-Shirt",
     sports: ["Skate", "Skating"],
     scenarios: SPORT_SCENARIOS,
@@ -821,8 +773,8 @@ export const products: Product[] = [
   {
     id: "3MBX001",
     slug: "all-over-print-boxing-shorts",
-    name: "All-Over Print Boxing Shorts",
-    category: "Combat Gear",
+    name: "Custom All-Over Print Boxing Shorts",
+    category: "Sportswear",
     sports: ["Boxing", "MMA", "Martial Arts"],
     scenarios: SPORT_SCENARIOS,
     fabrics: [
@@ -835,8 +787,8 @@ export const products: Product[] = [
   {
     id: "3MWR001",
     slug: "all-over-print-wrestling-singlet",
-    name: "All-Over Print Wrestling Singlet",
-    category: "Combat Gear",
+    name: "Custom All-Over Print Wrestling Singlet",
+    category: "Sportswear",
     sports: ["Wrestling", "MMA"],
     scenarios: SPORT_SCENARIOS,
     fabrics: [
@@ -848,8 +800,8 @@ export const products: Product[] = [
   {
     id: "3MMA001",
     slug: "all-over-print-mma-fight-shorts",
-    name: "All-Over Print MMA Fight Shorts",
-    category: "Combat Gear",
+    name: "Custom All-Over Print MMA Fight Shorts",
+    category: "Sportswear",
     sports: ["MMA", "Boxing", "Martial Arts"],
     scenarios: SPORT_SCENARIOS,
     fabrics: [
@@ -861,8 +813,8 @@ export const products: Product[] = [
   {
     id: "3MMA002",
     slug: "all-over-print-martial-arts-gi",
-    name: "All-Over Print Martial Arts Gi (Top + Pants)",
-    category: "Combat Gear",
+    name: "Custom All-Over Print Martial Arts Gi",
+    category: "Sportswear",
     sports: ["Martial Arts"],
     scenarios: SPORT_SCENARIOS,
     fabrics: [
@@ -874,8 +826,8 @@ export const products: Product[] = [
   {
     id: "3MPL001",
     slug: "all-over-print-pilates-top-leggings",
-    name: "All-Over Print Pilates Set (Top + Leggings)",
-    category: "Sports Top / Kit",
+    name: "Custom All-Over Print Pilates Set (Top + Leggings)",
+    category: "Sportswear",
     sports: ["Pilates", "Yoga"],
     scenarios: SPORT_SCENARIOS,
     fabrics: [
@@ -887,8 +839,8 @@ export const products: Product[] = [
   {
     id: "3MDC001",
     slug: "all-over-print-dance-leotard",
-    name: "All-Over Print Dance Leotard",
-    category: "Sports Top / Kit",
+    name: "Custom All-Over Print Dance Leotard",
+    category: "Sportswear",
     sports: ["Dance", "Cheer", "Gym"],
     scenarios: SPORT_SCENARIOS,
     fabrics: [
@@ -900,8 +852,8 @@ export const products: Product[] = [
   {
     id: "3MCR001",
     slug: "all-over-print-cheer-uniform",
-    name: "All-Over Print Cheer Uniform (Top + Skirt)",
-    category: "Sports Top / Kit",
+    name: "Custom All-Over Print Cheer Uniform (Top + Skirt)",
+    category: "Sportswear",
     sports: ["Cheer", "Dance"],
     scenarios: SPORT_SCENARIOS,
     fabrics: [
@@ -911,24 +863,10 @@ export const products: Product[] = [
     description: "Cheer uniform (top + skirt), 1 fabric option.",
   },
   {
-    id: "3MCF001",
-    slug: "all-over-print-crossfit-t-shirt",
-    name: "All-Over Print CrossFit T-Shirt",
-    category: "T-Shirt",
-    sports: ["CrossFit", "Gym", "Athletics"],
-    scenarios: SPORT_SCENARIOS,
-    fabrics: [
-      { gsm: "—", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
-      { gsm: "—", material: "Interlock布", process: "Sublimation", gsmOptions: "160180200220 g" },
-    ],
-    moq: 50,
-    description: "CrossFit T-shirt, 2 fabric options.",
-  },
-  {
     id: "3MBW001",
     slug: "all-over-print-bowling-shirt",
-    name: "All-Over Print Bowling Shirt",
-    category: "Shirt",
+    name: "Custom All-Over Print Bowling Shirt",
+    category: "Polo Shirt",
     sports: ["Bowling"],
     scenarios: SPORT_SCENARIOS,
     fabrics: [
@@ -940,8 +878,8 @@ export const products: Product[] = [
   {
     id: "3MES001",
     slug: "all-over-print-esports-jersey",
-    name: "All-Over Print Esports Jersey",
-    category: "Jersey / Kit",
+    name: "Custom All-Over Print Esports Jersey",
+    category: "Sportswear",
     sports: ["Esports"],
     scenarios: SPORT_SCENARIOS,
     fabrics: [
@@ -954,8 +892,8 @@ export const products: Product[] = [
   {
     id: "3MTR001",
     slug: "all-over-print-triathlon-suit",
-    name: "All-Over Print Triathlon Suit (One-Piece)",
-    category: "Sports Top / Kit",
+    name: "Custom All-Over Print Triathlon Suit (One-Piece)",
+    category: "Sportswear",
     sports: ["Triathlon", "Cycling", "Running"],
     scenarios: SPORT_SCENARIOS,
     fabrics: [
@@ -967,8 +905,8 @@ export const products: Product[] = [
   {
     id: "3MAF001",
     slug: "all-over-print-australian-rules-jersey",
-    name: "All-Over Print Australian Rules (AFL) Jersey",
-    category: "Jersey / Kit",
+    name: "Custom All-Over Print Australian Rules (AFL) Jersey",
+    category: "Sportswear",
     sports: ["AFL"],
     scenarios: SPORT_SCENARIOS,
     fabrics: [
@@ -980,8 +918,8 @@ export const products: Product[] = [
   {
     id: "3MNB001",
     slug: "all-over-print-netball-dress",
-    name: "All-Over Print Netball Dress (Bib Style)",
-    category: "Sports Top / Kit",
+    name: "Custom All-Over Print Netball Dress (Bib Style)",
+    category: "Sportswear",
     sports: ["Netball"],
     scenarios: SPORT_SCENARIOS,
     fabrics: [
@@ -993,8 +931,8 @@ export const products: Product[] = [
   {
     id: "3MAT001",
     slug: "all-over-print-athletics-singlet",
-    name: "All-Over Print Athletics Singlet (Track & Field)",
-    category: "Sports Top / Kit",
+    name: "Custom All-Over Print Athletics Singlet (Track & Field)",
+    category: "Sportswear",
     sports: ["Athletics", "Running"],
     scenarios: SPORT_SCENARIOS,
     fabrics: [
@@ -1007,8 +945,8 @@ export const products: Product[] = [
   {
     id: "3MFS001",
     slug: "all-over-print-fishing-shirt-upf50",
-    name: "All-Over Print Fishing Shirt (UPF 50+)",
-    category: "Sports Top / Kit",
+    name: "Custom All-Over Print Fishing Shirt (UPF 50+)",
+    category: "Sportswear",
     sports: ["Fishing"],
     scenarios: SPORT_SCENARIOS,
     fabrics: [
@@ -1020,7 +958,7 @@ export const products: Product[] = [
   {
     id: "3MGM001",
     slug: "all-over-print-gym-tank-top",
-    name: "All-Over Print Gym Tank Top",
+    name: "Custom All-Over Print Gym Tank Top",
     category: "Tank Top & Camis",
     sports: ["Gym", "CrossFit", "Athletics"],
     scenarios: SPORT_SCENARIOS,
@@ -1034,8 +972,8 @@ export const products: Product[] = [
   {
     id: "3MDV001",
     slug: "all-over-print-dive-lycra-suit",
-    name: "All-Over Print Dive Lycra Suit",
-    category: "Sports Top / Kit",
+    name: "Custom All-Over Print Dive Lycra Suit",
+    category: "Sportswear",
     sports: ["Dive", "Surf", "Swimwear"],
     scenarios: SPORT_SCENARIOS,
     fabrics: [
@@ -1047,8 +985,8 @@ export const products: Product[] = [
   {
     id: "3MSK002",
     slug: "all-over-print-skating-dress",
-    name: "All-Over Print Skating Dress (Figure / Roller)",
-    category: "Sports Top / Kit",
+    name: "Custom All-Over Print Skating Dress (Figure / Roller)",
+    category: "Sportswear",
     sports: ["Skating"],
     scenarios: SPORT_SCENARIOS,
     fabrics: [
@@ -1060,8 +998,8 @@ export const products: Product[] = [
   {
     id: "2HBTSJ19",
     slug: "all-over-print-beach-sports-jersey",
-    name: "All-Over Print Beach Sports Jersey (Volleyball / Soccer / Rugby)",
-    category: "Jersey / Kit",
+    name: "Custom All-Over Print Beach Sports Jersey (Volleyball / Soccer / Rugby)",
+    category: "Sportswear",
     sports: ["Beach", "Volleyball", "Soccer", "Rugby"],
     scenarios: SPORT_SCENARIOS,
     fabrics: [
@@ -1071,12 +1009,10 @@ export const products: Product[] = [
     moq: 50,
     description: "Beach sports jersey — volleyball, soccer, rugby, 2 fabric options.",
   },
-
-  // ---------- 65–99: Industry-specific workwear ----------
   {
     id: "3WEXPL01",
     slug: "all-over-print-express-logistics-polo-shirt",
-    name: "All-Over Print Express & Logistics Polo Shirt",
+    name: "Custom All-Over Print Express & Logistics Polo Shirt",
     category: "Polo Shirt",
     sports: [],
     scenarios: ["Uniform & Workwear", "Corporate & Branding", "Construction & Engineering", "Express & Logistics"],
@@ -1090,7 +1026,7 @@ export const products: Product[] = [
   {
     id: "3WEXPL02",
     slug: "all-over-print-express-logistics-t-shirt",
-    name: "All-Over Print Express & Logistics T-Shirt",
+    name: "Custom All-Over Print Express & Logistics T-Shirt",
     category: "T-Shirt",
     sports: [],
     scenarios: ["Uniform & Workwear", "Express & Logistics", "Corporate & Branding"],
@@ -1104,7 +1040,7 @@ export const products: Product[] = [
   {
     id: "3WEXPL03",
     slug: "all-over-print-express-logistics-hoodie",
-    name: "All-Over Print Express & Logistics Hoodie",
+    name: "Custom All-Over Print Express & Logistics Hoodie",
     category: "Hoodie",
     sports: [],
     scenarios: ["Uniform & Workwear", "Express & Logistics", "Corporate & Branding"],
@@ -1118,7 +1054,7 @@ export const products: Product[] = [
   {
     id: "3WCON01",
     slug: "all-over-print-construction-hoodie",
-    name: "All-Over Print Construction Hoodie (Hi-Vis Option)",
+    name: "Custom All-Over Print Construction Hoodie (Hi-Vis Option)",
     category: "Hoodie",
     sports: [],
     scenarios: ["Construction & Engineering", "Uniform & Workwear", "Construction & Engineering"],
@@ -1132,7 +1068,7 @@ export const products: Product[] = [
   {
     id: "3WCON02",
     slug: "all-over-print-construction-jacket",
-    name: "All-Over Print Construction Jacket (Insulated)",
+    name: "Custom All-Over Print Construction Jacket (Insulated)",
     category: "Jacket",
     sports: [],
     scenarios: ["Construction & Engineering", "Uniform & Workwear"],
@@ -1146,7 +1082,7 @@ export const products: Product[] = [
   {
     id: "3WCON03",
     slug: "all-over-print-construction-pants",
-    name: "All-Over Print Construction Pants (Cargo)",
+    name: "Custom All-Over Print Construction Pants (Cargo)",
     category: "Pants",
     sports: [],
     scenarios: ["Construction & Engineering", "Uniform & Workwear"],
@@ -1159,7 +1095,7 @@ export const products: Product[] = [
   {
     id: "3WCON04",
     slug: "all-over-print-construction-t-shirt",
-    name: "All-Over Print Construction T-Shirt (Hi-Vis Option)",
+    name: "Custom All-Over Print Construction T-Shirt (Hi-Vis Option)",
     category: "T-Shirt",
     sports: [],
     scenarios: ["Construction & Engineering", "Uniform & Workwear"],
@@ -1173,7 +1109,7 @@ export const products: Product[] = [
   {
     id: "3WHOS01",
     slug: "all-over-print-hospitality-polo-shirt",
-    name: "All-Over Print Hospitality & F&B Polo Shirt",
+    name: "Custom All-Over Print Hospitality & F&B Polo Shirt",
     category: "Polo Shirt",
     sports: [],
     scenarios: ["Hospitality & F&B", "Uniform & Workwear", "Corporate & Branding"],
@@ -1187,7 +1123,7 @@ export const products: Product[] = [
   {
     id: "3WHOS02",
     slug: "all-over-print-hospitality-t-shirt",
-    name: "All-Over Print Hospitality & F&B T-Shirt",
+    name: "Custom All-Over Print Hospitality & F&B T-Shirt",
     category: "T-Shirt",
     sports: [],
     scenarios: ["Hospitality & F&B", "Uniform & Workwear"],
@@ -1200,7 +1136,7 @@ export const products: Product[] = [
   {
     id: "3WHOS03",
     slug: "all-over-print-hospitality-sweatshirt",
-    name: "All-Over Print Hospitality & F&B Sweatshirt",
+    name: "Custom All-Over Print Hospitality & F&B Sweatshirt",
     category: "Sweatshirt",
     sports: [],
     scenarios: ["Hospitality & F&B", "Uniform & Workwear"],
@@ -1213,7 +1149,7 @@ export const products: Product[] = [
   {
     id: "3WMED01",
     slug: "all-over-print-medical-scrubs-t-shirt",
-    name: "All-Over Print Medical & Healthcare Scrubs T-Shirt",
+    name: "Custom All-Over Print Medical & Healthcare Scrubs T-Shirt",
     category: "T-Shirt",
     sports: [],
     scenarios: ["Medical & Healthcare", "Uniform & Workwear"],
@@ -1227,7 +1163,7 @@ export const products: Product[] = [
   {
     id: "3WMED02",
     slug: "all-over-print-medical-polo-shirt",
-    name: "All-Over Print Medical & Healthcare Polo Shirt",
+    name: "Custom All-Over Print Medical & Healthcare Polo Shirt",
     category: "Polo Shirt",
     sports: [],
     scenarios: ["Medical & Healthcare", "Uniform & Workwear"],
@@ -1238,22 +1174,9 @@ export const products: Product[] = [
     description: "Medical & healthcare polo shirt, 1 fabric option.",
   },
   {
-    id: "3WMED03",
-    slug: "all-over-print-medical-tank-top",
-    name: "All-Over Print Medical & Healthcare Tank Top",
-    category: "Tank Top & Camis",
-    sports: [],
-    scenarios: ["Medical & Healthcare", "Uniform & Workwear"],
-    fabrics: [
-      { gsm: "—", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
-    ],
-    moq: 50,
-    description: "Medical & healthcare tank top, 1 fabric option.",
-  },
-  {
     id: "3WSEC01",
     slug: "all-over-print-security-polo-shirt",
-    name: "All-Over Print Security & Property Polo Shirt",
+    name: "Custom All-Over Print Security & Property Polo Shirt",
     category: "Polo Shirt",
     sports: [],
     scenarios: ["Security & Property", "Uniform & Workwear", "Construction & Engineering"],
@@ -1267,7 +1190,7 @@ export const products: Product[] = [
   {
     id: "3WSEC02",
     slug: "all-over-print-security-hoodie",
-    name: "All-Over Print Security & Property Hoodie",
+    name: "Custom All-Over Print Security & Property Hoodie",
     category: "Hoodie",
     sports: [],
     scenarios: ["Security & Property", "Uniform & Workwear"],
@@ -1280,7 +1203,7 @@ export const products: Product[] = [
   {
     id: "3WSEC03",
     slug: "all-over-print-security-jacket",
-    name: "All-Over Print Security & Property Jacket",
+    name: "Custom All-Over Print Security & Property Jacket",
     category: "Jacket",
     sports: [],
     scenarios: ["Security & Property", "Uniform & Workwear"],
@@ -1293,7 +1216,7 @@ export const products: Product[] = [
   {
     id: "3WRTL01",
     slug: "all-over-print-retail-polo-shirt",
-    name: "All-Over Print Retail & Supermarket Polo Shirt",
+    name: "Custom All-Over Print Retail & Supermarket Polo Shirt",
     category: "Polo Shirt",
     sports: [],
     scenarios: ["Retail & Supermarket", "Uniform & Workwear", "Retail & Fashion"],
@@ -1306,7 +1229,7 @@ export const products: Product[] = [
   {
     id: "3WRTL02",
     slug: "all-over-print-retail-t-shirt",
-    name: "All-Over Print Retail & Supermarket T-Shirt",
+    name: "Custom All-Over Print Retail & Supermarket T-Shirt",
     category: "T-Shirt",
     sports: [],
     scenarios: ["Retail & Supermarket", "Uniform & Workwear", "Retail & Fashion"],
@@ -1319,7 +1242,7 @@ export const products: Product[] = [
   {
     id: "3WRTL03",
     slug: "all-over-print-retail-hoodie",
-    name: "All-Over Print Retail & Supermarket Hoodie",
+    name: "Custom All-Over Print Retail & Supermarket Hoodie",
     category: "Hoodie",
     sports: [],
     scenarios: ["Retail & Supermarket", "Uniform & Workwear"],
@@ -1332,7 +1255,7 @@ export const products: Product[] = [
   {
     id: "3WEDU01",
     slug: "all-over-print-school-t-shirt",
-    name: "All-Over Print School & Education T-Shirt",
+    name: "Custom All-Over Print School & Education T-Shirt",
     category: "T-Shirt",
     sports: [],
     scenarios: ["Education & School", "School & Education", "Uniform & Workwear"],
@@ -1346,7 +1269,7 @@ export const products: Product[] = [
   {
     id: "3WEDU02",
     slug: "all-over-print-school-polo-shirt",
-    name: "All-Over Print School & Education Polo Shirt",
+    name: "Custom All-Over Print School & Education Polo Shirt",
     category: "Polo Shirt",
     sports: [],
     scenarios: ["Education & School", "School & Education", "Uniform & Workwear"],
@@ -1360,8 +1283,8 @@ export const products: Product[] = [
   {
     id: "3WEDU03",
     slug: "all-over-print-school-jacket",
-    name: "All-Over Print School & Education Jacket",
-    category: "Jacket",
+    name: "Custom All-Over Print School & Education Hoodie",
+    category: "Hoodie",
     sports: [],
     scenarios: ["Education & School", "School & Education", "Uniform & Workwear"],
     fabrics: [
@@ -1373,7 +1296,7 @@ export const products: Product[] = [
   {
     id: "3WCOR01",
     slug: "all-over-print-corporate-promo-polo-shirt",
-    name: "All-Over Print Corporate & Promo Polo Shirt",
+    name: "Custom All-Over Print Corporate & Promo Polo Shirt",
     category: "Polo Shirt",
     sports: [],
     scenarios: ["Corporate & Promo", "Corporate & Branding", "Uniform & Workwear", "Promotional Swag"],
@@ -1387,7 +1310,7 @@ export const products: Product[] = [
   {
     id: "3WCOR02",
     slug: "all-over-print-corporate-promo-t-shirt",
-    name: "All-Over Print Corporate & Promo T-Shirt",
+    name: "Custom All-Over Print Corporate & Promo T-Shirt",
     category: "T-Shirt",
     sports: [],
     scenarios: ["Corporate & Promo", "Corporate & Branding", "Promotional Swag"],
@@ -1401,7 +1324,7 @@ export const products: Product[] = [
   {
     id: "3WCOR03",
     slug: "all-over-print-corporate-promo-hoodie",
-    name: "All-Over Print Corporate & Promo Hoodie",
+    name: "Custom All-Over Print Corporate & Promo Hoodie",
     category: "Hoodie",
     sports: [],
     scenarios: ["Corporate & Promo", "Corporate & Branding", "Promotional Swag"],
@@ -1415,7 +1338,7 @@ export const products: Product[] = [
   {
     id: "3WTRN01",
     slug: "all-over-print-transit-polo-shirt",
-    name: "All-Over Print Transit & Transport Polo Shirt",
+    name: "Custom All-Over Print Transit & Transport Polo Shirt",
     category: "Polo Shirt",
     sports: [],
     scenarios: ["Transit & Transport", "Uniform & Workwear", "Express & Logistics"],
@@ -1428,7 +1351,7 @@ export const products: Product[] = [
   {
     id: "3WTRN02",
     slug: "all-over-print-transit-jacket",
-    name: "All-Over Print Transit & Transport Jacket",
+    name: "Custom All-Over Print Transit & Transport Jacket",
     category: "Jacket",
     sports: [],
     scenarios: ["Transit & Transport", "Uniform & Workwear"],
@@ -1441,7 +1364,7 @@ export const products: Product[] = [
   {
     id: "3WTRN03",
     slug: "all-over-print-transit-hoodie",
-    name: "All-Over Print Transit & Transport Hoodie",
+    name: "Custom All-Over Print Transit & Transport Hoodie",
     category: "Hoodie",
     sports: [],
     scenarios: ["Transit & Transport", "Uniform & Workwear"],
@@ -1454,7 +1377,7 @@ export const products: Product[] = [
   {
     id: "3WSTU01",
     slug: "all-over-print-studio-gym-tank-top",
-    name: "All-Over Print Studio & Gym Tank Top",
+    name: "Custom All-Over Print Studio & Gym Tank Top",
     category: "Tank Top & Camis",
     sports: [],
     scenarios: ["Studio & Gym", "Uniform & Workwear"],
@@ -1468,7 +1391,7 @@ export const products: Product[] = [
   {
     id: "3WSTU02",
     slug: "all-over-print-studio-gym-t-shirt",
-    name: "All-Over Print Studio & Gym T-Shirt",
+    name: "Custom All-Over Print Studio & Gym T-Shirt",
     category: "T-Shirt",
     sports: [],
     scenarios: ["Studio & Gym", "Uniform & Workwear"],
@@ -1481,8 +1404,8 @@ export const products: Product[] = [
   {
     id: "3WSTU03",
     slug: "all-over-print-studio-gym-leggings",
-    name: "All-Over Print Studio & Gym Leggings",
-    category: "Leggings",
+    name: "Custom All-Over Print Studio & Gym Leggings",
+    category: "Pants",
     sports: [],
     scenarios: ["Studio & Gym", "Uniform & Workwear"],
     fabrics: [
@@ -1494,7 +1417,7 @@ export const products: Product[] = [
   {
     id: "3WFES01",
     slug: "all-over-print-festival-t-shirt",
-    name: "All-Over Print Festival & Holiday T-Shirt",
+    name: "Custom All-Over Print Festival & Holiday T-Shirt",
     category: "T-Shirt",
     sports: [],
     scenarios: ["Festival & Holiday", "Event & Festival", "Music & Merch", "Promotional Swag"],
@@ -1508,7 +1431,7 @@ export const products: Product[] = [
   {
     id: "3WFES02",
     slug: "all-over-print-festival-hoodie",
-    name: "All-Over Print Festival & Holiday Hoodie",
+    name: "Custom All-Over Print Festival & Holiday Hoodie",
     category: "Hoodie",
     sports: [],
     scenarios: ["Festival & Holiday", "Event & Festival", "Music & Merch"],
@@ -1522,7 +1445,7 @@ export const products: Product[] = [
   {
     id: "3WMIL01",
     slug: "all-over-print-military-training-t-shirt",
-    name: "All-Over Print Military Wear Training T-Shirt",
+    name: "Custom All-Over Print Military Wear Training T-Shirt",
     category: "T-Shirt",
     sports: [],
     scenarios: ["Military", "Uniform & Workwear", "Construction & Engineering"],
@@ -1536,7 +1459,7 @@ export const products: Product[] = [
   {
     id: "3WMIL02",
     slug: "all-over-print-military-casual-polo",
-    name: "All-Over Print Military Wear Casual Polo",
+    name: "Custom All-Over Print Military Wear Casual Polo",
     category: "Polo Shirt",
     sports: [],
     scenarios: ["Military", "Uniform & Workwear"],
@@ -1549,8 +1472,8 @@ export const products: Product[] = [
   {
     id: "3WBEACH01",
     slug: "all-over-print-beach-sarong",
-    name: "All-Over Print Beach Sarong (180×110cm)",
-    category: "Beachwear",
+    name: "Custom All-Over Print Beach Sarong (180×110cm)",
+    category: "Home",
     sports: ["Beach", "Swimwear", "Surf"],
     scenarios: ["Event & Festival", "Retail & Fashion", "Promotional Swag"],
     fabrics: [
@@ -1559,6 +1482,556 @@ export const products: Product[] = [
     ],
     moq: 50,
     description: "Beach sarong 180×110cm, 2 fabric options, ideal for resort & event merch.",
+  },
+  {
+    id: "NEWAOP0001",
+    slug: "all-over-print-construction-vest-hi-vis-option",
+    name: "Custom All-Over Print Construction Vest (Hi-Vis Option)",
+    category: "T-Shirt",
+    sports: [],
+    scenarios: ["Construction & Engineering", "Uniform & Workwear"],
+    fabrics: [
+      { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "180GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "160GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "145GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "180GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "160GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
+    ],
+    moq: 50,
+    description: "All-Over Print Construction Vest (Hi-Vis Option). All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
+  },
+  {
+    id: "NEWAOP0002",
+    slug: "all-over-print-construction-polo-shirt-hi-vis-option",
+    name: "Custom All-Over Print Construction Polo shirt (Hi-Vis Option)",
+    category: "Polo Shirt",
+    sports: ALL_SPORTS,
+    scenarios: ["Construction & Engineering", "Uniform & Workwear"],
+    fabrics: [
+      { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "180GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "160GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "145GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "180GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "160GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
+    ],
+    moq: 50,
+    description: "All-Over Print Construction Polo shirt (Hi-Vis Option). All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
+  },
+  {
+    id: "NEWAOP0003",
+    slug: "all-over-print-hospitality-fb-uniform",
+    name: "Custom All-Over Print Hospitality & F&B Uniform",
+    category: "Jacket",
+    sports: ALL_SPORTS,
+    scenarios: ["Hospitality & F&B", "Uniform & Workwear"],
+    fabrics: [
+      { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "180GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "160GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "145GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "180GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "160GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
+    ],
+    moq: 50,
+    description: "All-Over Print Hospitality & F&B Uniform. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
+  },
+  {
+    id: "NEWAOP0004",
+    slug: "all-over-print-hospitality-fb-hoodie",
+    name: "Custom All-Over Print Hospitality & F&B Hoodie",
+    category: "Hoodie",
+    sports: [],
+    scenarios: ["Hospitality & F&B"],
+    fabrics: [
+      { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "180GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "160GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "145GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "180GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "160GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
+    ],
+    moq: 50,
+    description: "All-Over Print Hospitality & F&B Hoodie. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
+  },
+  {
+    id: "NEWAOP0005",
+    slug: "all-over-print-security-property-t-shirt",
+    name: "Custom All-Over Print Security & Property T-shirt",
+    category: "T-Shirt",
+    sports: [],
+    scenarios: ["Security & Property"],
+    fabrics: [
+      { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "180GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "160GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "145GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "180GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "160GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
+    ],
+    moq: 50,
+    description: "All-Over Print Security & Property T-shirt. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
+  },
+  {
+    id: "NEWAOP0006",
+    slug: "all-over-print-retail-supermarket-jacket",
+    name: "Custom All-Over Print Retail & Supermarket Jacket",
+    category: "Jacket",
+    sports: [],
+    scenarios: ["Retail & Supermarket"],
+    fabrics: [
+      { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "180GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "160GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "145GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "180GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "160GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
+    ],
+    moq: 50,
+    description: "All-Over Print Retail & Supermarket Jacket. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
+  },
+  {
+    id: "NEWAOP0007",
+    slug: "all-over-print-festival-holiday-shirt",
+    name: "Custom All-Over Print Festival & Holiday Shirt",
+    category: "Shirt",
+    sports: [],
+    scenarios: ["Event & Festival"],
+    fabrics: [
+      { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "180GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "160GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "145GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "180GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "160GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
+    ],
+    moq: 50,
+    description: "All-Over Print Festival & Holiday Shirt. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
+  },
+  {
+    id: "NEWAOP0008",
+    slug: "all-over-print-music-tour-festival-merch-shirt",
+    name: "Custom All-Over Print Music Tour & Festival Merch Shirt",
+    category: "Shirt",
+    sports: [],
+    scenarios: ["Music & Merch", "Event & Festival"],
+    fabrics: [
+      { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "180GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "160GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "145GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "180GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "160GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
+    ],
+    moq: 50,
+    description: "All-Over Print Music Tour & Festival Merch Shirt. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
+  },
+  {
+    id: "NEWAOP0009",
+    slug: "all-over-print-music-tour-festival-merch-t-shirt",
+    name: "Custom All-Over Print Music Tour & Festival Merch T-shirt",
+    category: "T-Shirt",
+    sports: [],
+    scenarios: ["Music & Merch", "Event & Festival"],
+    fabrics: [
+      { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "180GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "160GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "145GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "180GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "160GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
+    ],
+    moq: 50,
+    description: "All-Over Print Music Tour & Festival Merch T-shirt. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
+  },
+  {
+    id: "NEWAOP0010",
+    slug: "all-over-print-music-tour-festival-merch-hoodie",
+    name: "Custom All-Over Print Music Tour & Festival Merch Hoodie",
+    category: "Hoodie",
+    sports: [],
+    scenarios: ["Music & Merch", "Event & Festival"],
+    fabrics: [
+      { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "180GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "160GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "145GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "180GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "160GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
+    ],
+    moq: 50,
+    description: "All-Over Print Music Tour & Festival Merch Hoodie. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
+  },
+  {
+    id: "NEWAOP0011",
+    slug: "all-over-print-military-wear-cap",
+    name: "Custom All-Over Print Military Wear Cap",
+    category: "Cap",
+    sports: [],
+    scenarios: ["Military"],
+    fabrics: [
+      { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "180GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "160GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "145GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "180GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "160GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
+    ],
+    moq: 50,
+    description: "All-Over Print Military Wear Cap. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
+  },
+  {
+    id: "NEWAOP0012",
+    slug: "all-over-print-military-wear-hoodie",
+    name: "Custom All-Over Print Military Wear Hoodie",
+    category: "Hoodie",
+    sports: [],
+    scenarios: ["Military"],
+    fabrics: [
+      { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "180GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "160GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "145GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "180GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "160GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
+    ],
+    moq: 50,
+    description: "All-Over Print Military Wear Hoodie. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
+  },
+  {
+    id: "NEWAOP0013",
+    slug: "all-over-print-trade-show-display-t-shirt",
+    name: "Custom All-Over Print Trade Show & Display T-shirt",
+    category: "T-Shirt",
+    sports: [],
+    scenarios: ["Event & Festival", "Corporate & Branding"],
+    fabrics: [
+      { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "180GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "160GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "145GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "180GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "160GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
+    ],
+    moq: 50,
+    description: "All-Over Print Trade Show & Display T-shirt. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
+  },
+  {
+    id: "NEWAOP0014",
+    slug: "all-over-print-trade-show-display-polo-shirt",
+    name: "Custom All-Over Print Trade Show & Display Polo shirt",
+    category: "Polo Shirt",
+    sports: ALL_SPORTS,
+    scenarios: ["Event & Festival", "Corporate & Branding"],
+    fabrics: [
+      { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "180GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "160GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "145GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "180GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "160GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
+    ],
+    moq: 50,
+    description: "All-Over Print Trade Show & Display Polo shirt. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
+  },
+  {
+    id: "NEWAOP0015",
+    slug: "all-over-print-trade-show-display-hoodie",
+    name: "Custom All-Over Print Trade Show & Display Hoodie",
+    category: "Hoodie",
+    sports: [],
+    scenarios: ["Event & Festival", "Corporate & Branding"],
+    fabrics: [
+      { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "180GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "160GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "145GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "180GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "160GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
+    ],
+    moq: 50,
+    description: "All-Over Print Trade Show & Display Hoodie. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
+  },
+  {
+    id: "NEWAOP0016",
+    slug: "all-over-print-trade-show-display-cap",
+    name: "Custom All-Over Print Trade Show & Display Cap",
+    category: "Cap",
+    sports: [],
+    scenarios: ["Event & Festival", "Corporate & Branding"],
+    fabrics: [
+      { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "180GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "160GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "145GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "180GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "160GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
+    ],
+    moq: 50,
+    description: "All-Over Print Trade Show & Display Cap. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
+  },
+  {
+    id: "NEWAOP0017",
+    slug: "all-over-print-political-campaigns-t-shirt",
+    name: "Custom All-Over Print Political Campaigns T-shirt",
+    category: "T-Shirt",
+    sports: [],
+    scenarios: ["Political Campaign"],
+    fabrics: [
+      { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "180GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "160GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "145GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "180GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "160GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
+    ],
+    moq: 50,
+    description: "All-Over Print Political Campaigns T-shirt. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
+  },
+  {
+    id: "NEWAOP0018",
+    slug: "all-over-print-political-campaigns-polo-shirt",
+    name: "Custom All-Over Print Political Campaigns Polo shirt",
+    category: "Polo Shirt",
+    sports: ALL_SPORTS,
+    scenarios: ["Political Campaign"],
+    fabrics: [
+      { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "180GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "160GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "145GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "180GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "160GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
+    ],
+    moq: 50,
+    description: "All-Over Print Political Campaigns Polo shirt. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
+  },
+  {
+    id: "NEWAOP0019",
+    slug: "all-over-print-political-campaigns-hoodie",
+    name: "Custom All-Over Print Political Campaigns Hoodie",
+    category: "Hoodie",
+    sports: [],
+    scenarios: ["Political Campaign"],
+    fabrics: [
+      { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "180GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "160GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "145GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "180GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "160GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
+    ],
+    moq: 50,
+    description: "All-Over Print Political Campaigns Hoodie. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
+  },
+  {
+    id: "NEWAOP0020",
+    slug: "all-over-print-political-campaigns-cap",
+    name: "Custom All-Over Print Political Campaigns Cap",
+    category: "Cap",
+    sports: [],
+    scenarios: ["Political Campaign"],
+    fabrics: [
+      { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "180GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "160GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "145GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "180GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "160GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
+    ],
+    moq: 50,
+    description: "All-Over Print Political Campaigns Cap. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
+  },
+  {
+    id: "NEWAOP0021",
+    slug: "all-over-print-transit-transport-hoodie",
+    name: "Custom All-Over Print Transit & Transport Hoodie",
+    category: "T-Shirt",
+    sports: ALL_SPORTS,
+    scenarios: ["Transit & Transport", "Sports League"],
+    fabrics: [
+      { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "180GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "160GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "145GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "180GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "160GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
+    ],
+    moq: 50,
+    description: "All-Over Print Transit & Transport Hoodie. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
+  },
+  {
+    id: "NEWAOP0022",
+    slug: "all-over-print-medical-healthcare-nurse-skirt",
+    name: "Custom All-Over Print Medical & Healthcare Nurse Skirt",
+    category: "Skirt",
+    sports: ALL_SPORTS,
+    scenarios: ["Medical & Healthcare"],
+    fabrics: [
+      { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "180GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "160GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "145GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "180GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "160GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
+    ],
+    moq: 50,
+    description: "All-Over Print Medical & Healthcare Nurse Skirt. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
+  },
+  {
+    id: "NEWAOP0023",
+    slug: "all-over-print-medical-healthcare-jacket",
+    name: "Custom All-Over Print Medical & Healthcare Jacket",
+    category: "Jacket",
+    sports: [],
+    scenarios: ["Medical & Healthcare"],
+    fabrics: [
+      { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "180GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "160GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "145GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "180GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "160GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
+    ],
+    moq: 50,
+    description: "All-Over Print Medical & Healthcare Jacket. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
+  },
+  {
+    id: "NEWAOP0024",
+    slug: "all-over-print-transit-transport-t-shirt",
+    name: "Custom All-Over Print Transit & Transport T-shirt",
+    category: "T-Shirt",
+    sports: ALL_SPORTS,
+    scenarios: ["Transit & Transport", "Sports League"],
+    fabrics: [
+      { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "180GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "160GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "145GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "180GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "160GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
+    ],
+    moq: 50,
+    description: "All-Over Print Transit & Transport T-shirt. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
+  },
+  {
+    id: "NEWAOP0025",
+    slug: "all-over-print-studio-gym-hoodie",
+    name: "Custom All-Over Print Studio & Gym Hoodie",
+    category: "Hoodie",
+    sports: ALL_SPORTS,
+    scenarios: ["Studio & Gym"],
+    fabrics: [
+      { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "180GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "160GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "145GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "190GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "180GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "160GSM", material: "棉", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
+      { gsm: "—", material: "网眼布", process: "Sublimation", gsmOptions: "100120140160180200 g" },
+    ],
+    moq: 50,
+    description: "All-Over Print Studio & Gym Hoodie. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
   },
 ];
 

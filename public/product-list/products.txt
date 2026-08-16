@@ -1,100 +1,360 @@
-0001	Hoodie                	All-Over Print Womens Rectangle Scarf 170X45cm
-0002	T-Shirt               	Childrens T-Shirts Printed in USA — Gildan 64000B (DTG)
-0003	Pants                 	All-Over Print Womens High-Stretch Tights
-0004	Shirt                 	Unisex Durable Pullover Sweatshirt 290GSM (DTG)
-0005	Jacket                	Mens Fleece-Lined Vintage Wash Zip Hoodie 360GSM (DTF)
-0006	Sleepwear & Underwear 	Womens Seamless Briefs Printed in USA 180GSM (DTF)
-0007	Tank Top & Camis      	Mens Loose Sleeveless Hoodie 320GSM (DTF)
-0008	Dress                 	All-Over Print Womens Tank Vest Dress
-0009	Sweatshirt            	Mens Distressed Vintage Wash Sweatshirt 360GSM (DTG)
-0010	Coord Set             	Plamix All-Over Print Childrens Shirt With Pocket 140GSM Slub Cotton
-0011	Knitwear              	Mens Vintage Crewneck Knit Sweater 285GSM (DTG)
-0012	Romper & Jumpsuit     	All-Over Print Unisex Thickened Home Jumpsuit
-0013	Skirt                 	All-Over Print Kids Short-Sleeve Dress
-0014	Bodysuit              	All-Over Print Womens Tank Bodysuit
-0015	Polo Shirt            	All-Over Print Childrens Lapel Polo Shirt 145GSM Birdseye
-0016	Sports Top            	Sports Square Towel
-0017	Baby Bodysuit         	Baby Short-Sleeve Onesie Printed in USA 190GSM Front (DTF)
-0018	Kids Sportswear       	All-Over Print Kids Baseball Jersey
-0019	Winter Wear           	All-Over Print Mens Half-Zip Pullover
-0020	Activewear            	All-Over Print Mens Long-Sleeve T-Shirt With Dropped Shoulders Interlock
-0021	Apron                 	All-Over Print Apron
-0022	Bucket Hat            	All-Over Print Bucket Hat
-0023	Baseball Cap          	All-Over Print Baseball Cap
-0024	Jersey / Kit          	All-Over Print Soccer Jersey Kit (Shirt + Shorts)
-0025	Jersey / Kit          	All-Over Print Basketball Jersey Kit (Reversible option)
-0026	Sports Top / Kit      	All-Over Print Badminton Outfit
-0027	Jersey / Kit          	All-Over Print Hockey Jersey (Lycra option)
-0028	Sports Top / Kit      	All-Over Print Running Wear (Shirt + Shorts)
-0029	Sports Top / Kit      	All-Over Print Cycling Wear Kit (Jersey + Bib Shorts)
-0030	Sports Top / Kit      	All-Over Print Yoga Wear Set (Top + Leggings)
-0031	Swimwear              	All-Over Print Swimwear (One-Piece / Bikini / Trunks)
-0032	Polo Shirt            	All-Over Print Golf Polo Shirt
-0033	Jersey / Kit          	All-Over Print Baseball Jersey Kit (Shirt + Pants)
-0034	Jersey / Kit          	All-Over Print American Football Jersey
-0035	Jersey / Kit          	All-Over Print Rugby Jersey
-0036	Jersey / Kit          	All-Over Print Volleyball Jersey Kit
-0037	Sports Top / Kit      	All-Over Print Tennis Outfit (Shirt + Skirt/Shorts)
-0038	Sports Top / Kit      	All-Over Print Table Tennis Outfit
-0039	Jersey / Kit          	All-Over Print Cricket Jersey
-0040	Jersey / Kit          	All-Over Print Lacrosse Jersey
-0041	Jersey / Kit          	All-Over Print Softball Jersey
-0042	Sports Top / Kit      	All-Over Print Surf Lycra Top (Rash Guard)
-0043	Jacket                	All-Over Print Ski Jacket (Insulated)
-0044	Jacket                	All-Over Print Snowboard Jacket
-0045	T-Shirt               	All-Over Print Skate T-Shirt
-0046	Combat Gear           	All-Over Print Boxing Shorts
-0047	Combat Gear           	All-Over Print Wrestling Singlet
-0048	Combat Gear           	All-Over Print MMA Fight Shorts
-0049	Combat Gear           	All-Over Print Martial Arts Gi (Top + Pants)
-0050	Sports Top / Kit      	All-Over Print Pilates Set (Top + Leggings)
-0051	Sports Top / Kit      	All-Over Print Dance Leotard
-0052	Sports Top / Kit      	All-Over Print Cheer Uniform (Top + Skirt)
-0053	T-Shirt               	All-Over Print CrossFit T-Shirt
-0054	Shirt                 	All-Over Print Bowling Shirt
-0055	Jersey / Kit          	All-Over Print Esports Jersey
-0056	Sports Top / Kit      	All-Over Print Triathlon Suit (One-Piece)
-0057	Jersey / Kit          	All-Over Print Australian Rules (AFL) Jersey
-0058	Sports Top / Kit      	All-Over Print Netball Dress (Bib Style)
-0059	Sports Top / Kit      	All-Over Print Athletics Singlet (Track & Field)
-0060	Sports Top / Kit      	All-Over Print Fishing Shirt (UPF 50+)
-0061	Tank Top & Camis      	All-Over Print Gym Tank Top
-0062	Sports Top / Kit      	All-Over Print Dive Lycra Suit
-0063	Sports Top / Kit      	All-Over Print Skating Dress (Figure / Roller)
-0064	Jersey / Kit          	All-Over Print Beach Sports Jersey (Volleyball / Soccer / Rugby)
-0065	Polo Shirt            	All-Over Print Express & Logistics Polo Shirt
-0066	T-Shirt               	All-Over Print Express & Logistics T-Shirt
-0067	Hoodie                	All-Over Print Express & Logistics Hoodie
-0068	Hoodie                	All-Over Print Construction Hoodie (Hi-Vis Option)
-0069	Jacket                	All-Over Print Construction Jacket (Insulated)
-0070	Pants                 	All-Over Print Construction Pants (Cargo)
-0071	T-Shirt               	All-Over Print Construction T-Shirt (Hi-Vis Option)
-0072	Polo Shirt            	All-Over Print Hospitality & F&B Polo Shirt
-0073	T-Shirt               	All-Over Print Hospitality & F&B T-Shirt
-0074	Sweatshirt            	All-Over Print Hospitality & F&B Sweatshirt
-0075	T-Shirt               	All-Over Print Medical & Healthcare Scrubs T-Shirt
-0076	Polo Shirt            	All-Over Print Medical & Healthcare Polo Shirt
-0077	Tank Top & Camis      	All-Over Print Medical & Healthcare Tank Top
-0078	Polo Shirt            	All-Over Print Security & Property Polo Shirt
-0079	Hoodie                	All-Over Print Security & Property Hoodie
-0080	Jacket                	All-Over Print Security & Property Jacket
-0081	Polo Shirt            	All-Over Print Retail & Supermarket Polo Shirt
-0082	T-Shirt               	All-Over Print Retail & Supermarket T-Shirt
-0083	Hoodie                	All-Over Print Retail & Supermarket Hoodie
-0084	T-Shirt               	All-Over Print School & Education T-Shirt
-0085	Polo Shirt            	All-Over Print School & Education Polo Shirt
-0086	Jacket                	All-Over Print School & Education Jacket
-0087	Polo Shirt            	All-Over Print Corporate & Promo Polo Shirt
-0088	T-Shirt               	All-Over Print Corporate & Promo T-Shirt
-0089	Hoodie                	All-Over Print Corporate & Promo Hoodie
-0090	Polo Shirt            	All-Over Print Transit & Transport Polo Shirt
-0091	Jacket                	All-Over Print Transit & Transport Jacket
-0092	Hoodie                	All-Over Print Transit & Transport Hoodie
-0093	Tank Top & Camis      	All-Over Print Studio & Gym Tank Top
-0094	T-Shirt               	All-Over Print Studio & Gym T-Shirt
-0095	Leggings              	All-Over Print Studio & Gym Leggings
-0096	T-Shirt               	All-Over Print Festival & Holiday T-Shirt
-0097	Hoodie                	All-Over Print Festival & Holiday Hoodie
-0098	T-Shirt               	All-Over Print Military Wear Training T-Shirt
-0099	Polo Shirt            	All-Over Print Military Wear Casual Polo
-0100	Beachwear             	All-Over Print Beach Sarong (180×110cm)
+0001  [Hoodie            ]  Custom All-Over Print Womens Rectangle Scarf
+      id=2AHAYR15  /products/all/all-over-print-womens-rectangle-scarf/
+
+0002  [T-Shirt           ]  Custom All-Over Print Childrens T-Shirts
+      id=2KTXDM69  /products/all/childrens-t-shirts-printed-usa-gildan-64000b/
+
+0003  [Pants             ]  Custom All-Over Print Womens High-Stretch Tights
+      id=1WPXZY10  /products/all/all-over-print-womens-high-stretch-tights/
+
+0004  [Sweatshirt        ]  Custom All-Over Print Unisex Durable Pullover Sweatshirt 290GSM
+      id=2MHPDM39  /products/all/unisex-durable-pullover-sweatshirt-290gsm/
+
+0005  [Hoodie            ]  Custom All-Over Print Mens Fleece Hoodie 360GSM
+      id=2MHPJR90  /products/all/mens-fleece-lined-vintage-wash-zip-hoodie/
+
+0006  [Tank Top & Camis  ]  Custom All-Over Print Mens Loose Sleeveless Hoodie 320GSM
+      id=2MBXMA09  /products/all/mens-loose-sleeveless-hoodie-320gsm/
+
+0007  [Sportswear        ]  Custom All-Over Print Womens Tank Vest Dress
+      id=3WBXGZ50  /products/all/all-over-print-womens-tank-vest-dress/
+
+0008  [Sweatshirt        ]  Custom All-Over Print Mens Distressed Sweatshirt 360GSM
+      id=2MHPSA03  /products/all/mens-distressed-vintage-wash-sweatshirt-360gsm/
+
+0009  [Shirt             ]  Custom All-Over Print Childrens Shirt With Pocket 140GSM Slub Cotton
+      id=3KCSZJ10  /products/all/plamix-all-over-print-childrens-shirt-with-pocket/
+
+0010  [Sweatshirt        ]  Custom All-Over Print Mens Vintage Crewneck Knit Sweater
+      id=2MHPHR99  /products/all/mens-vintage-crewneck-knit-sweater-285gsm/
+
+0011  [Home              ]  Custom All-Over Print Unisex Thickened Home Jumpsuit
+      id=3MJMJH01  /products/all/all-over-print-unisex-thickened-home-jumpsuit/
+
+0012  [Skirt             ]  Custom All-Over Print Kids Short-Sleeve Dress
+      id=3CDDAQ01  /products/all/all-over-print-kids-short-sleeve-dress/
+
+0013  [Sportswear        ]  Custom All-Over Print Womens Tank Bodysuit
+      id=3WJMBX16  /products/all/all-over-print-womens-tank-bodysuit/
+
+0014  [Polo Shirt        ]  Custom All-Over Print Childrens Lapel Polo Shirt
+      id=3KTXPL29  /products/all/all-over-print-childrens-lapel-polo-shirt/
+
+0015  [Home              ]  Custom All-Over Print Sports Square Towel
+      id=3AHGYD02  /products/all/sports-square-towel/
+
+0016  [Home              ]  Custom All-Over Print Baby Short-Sleeve Onesie Printed
+      id=2KBBMB01  /products/all/baby-short-sleeve-onesie-usa-190gsm/
+
+0017  [Sportswear        ]  Custom All-Over Print Kids Baseball Jersey
+      id=3KCSSY02  /products/all/all-over-print-kids-baseball-jersey/
+
+0018  [Hoodie            ]  Custom All-Over Print Mens Half-Zip Pullover
+      id=3MHZDM41  /products/all/all-over-print-mens-half-zip-pullover/
+
+0019  [Sportswear        ]  Custom All-Over Print Mens Long-Sleeve T-Shirt With Dropped Shoulders
+      id=3MPHTU08  /products/all/all-over-print-mens-long-sleeve-t-shirt-dropped-shoulders/
+
+0020  [Home              ]  Custom All-Over Print Apron
+      id=2HKAWQ05  /products/all/all-over-print-apron/
+
+0021  [Cap               ]  Custom All-Over Print Bucket Hat
+      id=2AAOYF03  /products/all/all-over-print-bucket-hat/
+
+0022  [Cap               ]  Custom All-Over Print Baseball Cap
+      id=2AMSMG90  /products/all/all-over-print-baseball-cap/
+
+0023  [Sportswear        ]  Custom All-Over Print Soccer Jersey Kit (Shirt + Shorts)
+      id=3MPXDK57  /products/all/all-over-print-soccer-jersey-kit/
+
+0024  [Sportswear        ]  Custom All-Over Print Basketball Jersey Kit (Reversible option)
+      id=3MBXVL01  /products/all/all-over-print-basketball-jersey-kit/
+
+0025  [Sportswear        ]  Custom All-Over Print Badminton Outfit
+      id=3MBXGT28  /products/all/all-over-print-badminton-outfit/
+
+0026  [Sportswear        ]  Custom All-Over Print Hockey Jersey
+      id=3MTXLB56  /products/all/all-over-print-hockey-jersey/
+
+0027  [Sportswear        ]  Custom All-Over Print Running Wear (Shirt + Shorts)
+      id=3MBXGT27  /products/all/all-over-print-running-wear-kit/
+
+0028  [Sportswear        ]  Custom All-Over Print Cycling Wear Kit (Jersey + Bib Shorts)
+      id=3MTXUB79  /products/all/all-over-print-cycling-wear-kit/
+
+0029  [Sportswear        ]  Custom All-Over Print Yoga Wear Set (Top + Leggings)
+      id=3CPXX001  /products/all/all-over-print-yoga-wear-set/
+
+0030  [Sportswear        ]  Custom All-Over Print Swimwear (One-Piece / Bikini / Trunks)
+      id=3KYYOP05  /products/all/all-over-print-swimwear-one-piece/
+
+0031  [Polo Shirt        ]  Custom All-Over Print Golf Polo Shirt
+      id=3KCSFH01  /products/all/all-over-print-golf-polo-shirt/
+
+0032  [Sportswear        ]  Custom All-Over Print Baseball Jersey Kit (Shirt + Pants)
+      id=3MBSBL01  /products/all/all-over-print-baseball-jersey-kit/
+
+0033  [Sportswear        ]  Custom All-Over Print American Football Jersey
+      id=3MFBJK01  /products/all/all-over-print-american-football-jersey/
+
+0034  [Sportswear        ]  Custom All-Over Print Rugby Jersey
+      id=3MRGJK01  /products/all/all-over-print-rugby-jersey/
+
+0035  [Sportswear        ]  Custom All-Over Print Volleyball Jersey Kit
+      id=3MVBJK01  /products/all/all-over-print-volleyball-jersey-kit/
+
+0036  [Sportswear        ]  Custom All-Over Print Tennis Outfit (Shirt + Skirt/Shorts)
+      id=3MTNJK01  /products/all/all-over-print-tennis-outfit/
+
+0037  [Sportswear        ]  Custom All-Over Print Table Tennis Outfit
+      id=3MTTJK01  /products/all/all-over-print-table-tennis-outfit/
+
+0038  [Sportswear        ]  Custom All-Over Print Cricket Jersey
+      id=3MCKJK01  /products/all/all-over-print-cricket-jersey/
+
+0039  [Sportswear        ]  Custom All-Over Print Lacrosse Jersey
+      id=3MLC001  /products/all/all-over-print-lacrosse-jersey/
+
+0040  [Sportswear        ]  Custom All-Over Print Softball Jersey
+      id=3MSB001  /products/all/all-over-print-softball-jersey/
+
+0041  [Sportswear        ]  Custom All-Over Print Surf Lycra Top (Rash Guard)
+      id=3MSF001  /products/all/all-over-print-surf-lycra-top/
+
+0042  [T-Shirt           ]  Custom All-Over Print Skate T-Shirt
+      id=3MKT001  /products/all/all-over-print-skate-t-shirt/
+
+0043  [Sportswear        ]  Custom All-Over Print Boxing Shorts
+      id=3MBX001  /products/all/all-over-print-boxing-shorts/
+
+0044  [Sportswear        ]  Custom All-Over Print Wrestling Singlet
+      id=3MWR001  /products/all/all-over-print-wrestling-singlet/
+
+0045  [Sportswear        ]  Custom All-Over Print MMA Fight Shorts
+      id=3MMA001  /products/all/all-over-print-mma-fight-shorts/
+
+0046  [Sportswear        ]  Custom All-Over Print Martial Arts Gi
+      id=3MMA002  /products/all/all-over-print-martial-arts-gi/
+
+0047  [Sportswear        ]  Custom All-Over Print Pilates Set (Top + Leggings)
+      id=3MPL001  /products/all/all-over-print-pilates-top-leggings/
+
+0048  [Sportswear        ]  Custom All-Over Print Dance Leotard
+      id=3MDC001  /products/all/all-over-print-dance-leotard/
+
+0049  [Sportswear        ]  Custom All-Over Print Cheer Uniform (Top + Skirt)
+      id=3MCR001  /products/all/all-over-print-cheer-uniform/
+
+0050  [Polo Shirt        ]  Custom All-Over Print Bowling Shirt
+      id=3MBW001  /products/all/all-over-print-bowling-shirt/
+
+0051  [Sportswear        ]  Custom All-Over Print Esports Jersey
+      id=3MES001  /products/all/all-over-print-esports-jersey/
+
+0052  [Sportswear        ]  Custom All-Over Print Triathlon Suit (One-Piece)
+      id=3MTR001  /products/all/all-over-print-triathlon-suit/
+
+0053  [Sportswear        ]  Custom All-Over Print Australian Rules (AFL) Jersey
+      id=3MAF001  /products/all/all-over-print-australian-rules-jersey/
+
+0054  [Sportswear        ]  Custom All-Over Print Netball Dress (Bib Style)
+      id=3MNB001  /products/all/all-over-print-netball-dress/
+
+0055  [Sportswear        ]  Custom All-Over Print Athletics Singlet (Track & Field)
+      id=3MAT001  /products/all/all-over-print-athletics-singlet/
+
+0056  [Sportswear        ]  Custom All-Over Print Fishing Shirt (UPF 50+)
+      id=3MFS001  /products/all/all-over-print-fishing-shirt-upf50/
+
+0057  [Tank Top & Camis  ]  Custom All-Over Print Gym Tank Top
+      id=3MGM001  /products/all/all-over-print-gym-tank-top/
+
+0058  [Sportswear        ]  Custom All-Over Print Dive Lycra Suit
+      id=3MDV001  /products/all/all-over-print-dive-lycra-suit/
+
+0059  [Sportswear        ]  Custom All-Over Print Skating Dress (Figure / Roller)
+      id=3MSK002  /products/all/all-over-print-skating-dress/
+
+0060  [Sportswear        ]  Custom All-Over Print Beach Sports Jersey (Volleyball / Soccer / Rugby)
+      id=2HBTSJ19  /products/all/all-over-print-beach-sports-jersey/
+
+0061  [Polo Shirt        ]  Custom All-Over Print Express & Logistics Polo Shirt
+      id=3WEXPL01  /products/all/all-over-print-express-logistics-polo-shirt/
+
+0062  [T-Shirt           ]  Custom All-Over Print Express & Logistics T-Shirt
+      id=3WEXPL02  /products/all/all-over-print-express-logistics-t-shirt/
+
+0063  [Hoodie            ]  Custom All-Over Print Express & Logistics Hoodie
+      id=3WEXPL03  /products/all/all-over-print-express-logistics-hoodie/
+
+0064  [Hoodie            ]  Custom All-Over Print Construction Hoodie (Hi-Vis Option)
+      id=3WCON01  /products/all/all-over-print-construction-hoodie/
+
+0065  [Jacket            ]  Custom All-Over Print Construction Jacket (Insulated)
+      id=3WCON02  /products/all/all-over-print-construction-jacket/
+
+0066  [Pants             ]  Custom All-Over Print Construction Pants (Cargo)
+      id=3WCON03  /products/all/all-over-print-construction-pants/
+
+0067  [T-Shirt           ]  Custom All-Over Print Construction T-Shirt (Hi-Vis Option)
+      id=3WCON04  /products/all/all-over-print-construction-t-shirt/
+
+0068  [Polo Shirt        ]  Custom All-Over Print Hospitality & F&B Polo Shirt
+      id=3WHOS01  /products/all/all-over-print-hospitality-polo-shirt/
+
+0069  [T-Shirt           ]  Custom All-Over Print Hospitality & F&B T-Shirt
+      id=3WHOS02  /products/all/all-over-print-hospitality-t-shirt/
+
+0070  [Sweatshirt        ]  Custom All-Over Print Hospitality & F&B Sweatshirt
+      id=3WHOS03  /products/all/all-over-print-hospitality-sweatshirt/
+
+0071  [T-Shirt           ]  Custom All-Over Print Medical & Healthcare Scrubs T-Shirt
+      id=3WMED01  /products/all/all-over-print-medical-scrubs-t-shirt/
+
+0072  [Polo Shirt        ]  Custom All-Over Print Medical & Healthcare Polo Shirt
+      id=3WMED02  /products/all/all-over-print-medical-polo-shirt/
+
+0073  [Polo Shirt        ]  Custom All-Over Print Security & Property Polo Shirt
+      id=3WSEC01  /products/all/all-over-print-security-polo-shirt/
+
+0074  [Hoodie            ]  Custom All-Over Print Security & Property Hoodie
+      id=3WSEC02  /products/all/all-over-print-security-hoodie/
+
+0075  [Jacket            ]  Custom All-Over Print Security & Property Jacket
+      id=3WSEC03  /products/all/all-over-print-security-jacket/
+
+0076  [Polo Shirt        ]  Custom All-Over Print Retail & Supermarket Polo Shirt
+      id=3WRTL01  /products/all/all-over-print-retail-polo-shirt/
+
+0077  [T-Shirt           ]  Custom All-Over Print Retail & Supermarket T-Shirt
+      id=3WRTL02  /products/all/all-over-print-retail-t-shirt/
+
+0078  [Hoodie            ]  Custom All-Over Print Retail & Supermarket Hoodie
+      id=3WRTL03  /products/all/all-over-print-retail-hoodie/
+
+0079  [T-Shirt           ]  Custom All-Over Print School & Education T-Shirt
+      id=3WEDU01  /products/all/all-over-print-school-t-shirt/
+
+0080  [Polo Shirt        ]  Custom All-Over Print School & Education Polo Shirt
+      id=3WEDU02  /products/all/all-over-print-school-polo-shirt/
+
+0081  [Hoodie            ]  Custom All-Over Print School & Education Hoodie
+      id=3WEDU03  /products/all/all-over-print-school-jacket/
+
+0082  [Polo Shirt        ]  Custom All-Over Print Corporate & Promo Polo Shirt
+      id=3WCOR01  /products/all/all-over-print-corporate-promo-polo-shirt/
+
+0083  [T-Shirt           ]  Custom All-Over Print Corporate & Promo T-Shirt
+      id=3WCOR02  /products/all/all-over-print-corporate-promo-t-shirt/
+
+0084  [Hoodie            ]  Custom All-Over Print Corporate & Promo Hoodie
+      id=3WCOR03  /products/all/all-over-print-corporate-promo-hoodie/
+
+0085  [Polo Shirt        ]  Custom All-Over Print Transit & Transport Polo Shirt
+      id=3WTRN01  /products/all/all-over-print-transit-polo-shirt/
+
+0086  [Jacket            ]  Custom All-Over Print Transit & Transport Jacket
+      id=3WTRN02  /products/all/all-over-print-transit-jacket/
+
+0087  [Hoodie            ]  Custom All-Over Print Transit & Transport Hoodie
+      id=3WTRN03  /products/all/all-over-print-transit-hoodie/
+
+0088  [Tank Top & Camis  ]  Custom All-Over Print Studio & Gym Tank Top
+      id=3WSTU01  /products/all/all-over-print-studio-gym-tank-top/
+
+0089  [T-Shirt           ]  Custom All-Over Print Studio & Gym T-Shirt
+      id=3WSTU02  /products/all/all-over-print-studio-gym-t-shirt/
+
+0090  [Pants             ]  Custom All-Over Print Studio & Gym Leggings
+      id=3WSTU03  /products/all/all-over-print-studio-gym-leggings/
+
+0091  [T-Shirt           ]  Custom All-Over Print Festival & Holiday T-Shirt
+      id=3WFES01  /products/all/all-over-print-festival-t-shirt/
+
+0092  [Hoodie            ]  Custom All-Over Print Festival & Holiday Hoodie
+      id=3WFES02  /products/all/all-over-print-festival-hoodie/
+
+0093  [T-Shirt           ]  Custom All-Over Print Military Wear Training T-Shirt
+      id=3WMIL01  /products/all/all-over-print-military-training-t-shirt/
+
+0094  [Polo Shirt        ]  Custom All-Over Print Military Wear Casual Polo
+      id=3WMIL02  /products/all/all-over-print-military-casual-polo/
+
+0095  [Home              ]  Custom All-Over Print Beach Sarong (180×110cm)
+      id=3WBEACH01  /products/all/all-over-print-beach-sarong/
+
+0096  [T-Shirt           ]  Custom All-Over Print Construction Vest (Hi-Vis Option)
+      id=NEWAOP0001  /products/all/all-over-print-construction-vest-hi-vis-option/
+
+0097  [Polo Shirt        ]  Custom All-Over Print Construction Polo shirt (Hi-Vis Option)
+      id=NEWAOP0002  /products/all/all-over-print-construction-polo-shirt-hi-vis-option/
+
+0098  [Jacket            ]  Custom All-Over Print Hospitality & F&B Uniform
+      id=NEWAOP0003  /products/all/all-over-print-hospitality-fb-uniform/
+
+0099  [Hoodie            ]  Custom All-Over Print Hospitality & F&B Hoodie
+      id=NEWAOP0004  /products/all/all-over-print-hospitality-fb-hoodie/
+
+0100  [T-Shirt           ]  Custom All-Over Print Security & Property T-shirt
+      id=NEWAOP0005  /products/all/all-over-print-security-property-t-shirt/
+
+0101  [Jacket            ]  Custom All-Over Print Retail & Supermarket Jacket
+      id=NEWAOP0006  /products/all/all-over-print-retail-supermarket-jacket/
+
+0102  [Shirt             ]  Custom All-Over Print Festival & Holiday Shirt
+      id=NEWAOP0007  /products/all/all-over-print-festival-holiday-shirt/
+
+0103  [Shirt             ]  Custom All-Over Print Music Tour & Festival Merch Shirt
+      id=NEWAOP0008  /products/all/all-over-print-music-tour-festival-merch-shirt/
+
+0104  [T-Shirt           ]  Custom All-Over Print Music Tour & Festival Merch T-shirt
+      id=NEWAOP0009  /products/all/all-over-print-music-tour-festival-merch-t-shirt/
+
+0105  [Hoodie            ]  Custom All-Over Print Music Tour & Festival Merch Hoodie
+      id=NEWAOP0010  /products/all/all-over-print-music-tour-festival-merch-hoodie/
+
+0106  [Cap               ]  Custom All-Over Print Military Wear Cap
+      id=NEWAOP0011  /products/all/all-over-print-military-wear-cap/
+
+0107  [Hoodie            ]  Custom All-Over Print Military Wear Hoodie
+      id=NEWAOP0012  /products/all/all-over-print-military-wear-hoodie/
+
+0108  [T-Shirt           ]  Custom All-Over Print Trade Show & Display T-shirt
+      id=NEWAOP0013  /products/all/all-over-print-trade-show-display-t-shirt/
+
+0109  [Polo Shirt        ]  Custom All-Over Print Trade Show & Display Polo shirt
+      id=NEWAOP0014  /products/all/all-over-print-trade-show-display-polo-shirt/
+
+0110  [Hoodie            ]  Custom All-Over Print Trade Show & Display Hoodie
+      id=NEWAOP0015  /products/all/all-over-print-trade-show-display-hoodie/
+
+0111  [Cap               ]  Custom All-Over Print Trade Show & Display Cap
+      id=NEWAOP0016  /products/all/all-over-print-trade-show-display-cap/
+
+0112  [T-Shirt           ]  Custom All-Over Print Political Campaigns T-shirt
+      id=NEWAOP0017  /products/all/all-over-print-political-campaigns-t-shirt/
+
+0113  [Polo Shirt        ]  Custom All-Over Print Political Campaigns Polo shirt
+      id=NEWAOP0018  /products/all/all-over-print-political-campaigns-polo-shirt/
+
+0114  [Hoodie            ]  Custom All-Over Print Political Campaigns Hoodie
+      id=NEWAOP0019  /products/all/all-over-print-political-campaigns-hoodie/
+
+0115  [Cap               ]  Custom All-Over Print Political Campaigns Cap
+      id=NEWAOP0020  /products/all/all-over-print-political-campaigns-cap/
+
+0116  [T-Shirt           ]  Custom All-Over Print Transit & Transport Hoodie
+      id=NEWAOP0021  /products/all/all-over-print-transit-transport-hoodie/
+
+0117  [Skirt             ]  Custom All-Over Print Medical & Healthcare Nurse Skirt
+      id=NEWAOP0022  /products/all/all-over-print-medical-healthcare-nurse-skirt/
+
+0118  [Jacket            ]  Custom All-Over Print Medical & Healthcare Jacket
+      id=NEWAOP0023  /products/all/all-over-print-medical-healthcare-jacket/
+
+0119  [T-Shirt           ]  Custom All-Over Print Transit & Transport T-shirt
+      id=NEWAOP0024  /products/all/all-over-print-transit-transport-t-shirt/
+
+0120  [Hoodie            ]  Custom All-Over Print Studio & Gym Hoodie
+      id=NEWAOP0025  /products/all/all-over-print-studio-gym-hoodie/
+

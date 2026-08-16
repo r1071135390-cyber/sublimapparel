@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { techniques } from "@/lib/techniques";
 import { blogPosts } from "@/lib/blog";
 import { getAllTagSlugs } from "@/lib/tag-archive";
+import { products } from "@/lib/products-data";
 
 export const dynamic = 'force-static';
 
@@ -140,5 +141,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       }))
   );
 
-  return [...staticEntries, ...techniqueEntries, ...blogEntries, ...tagEntries];
+  // ── 120 个产品详情页（all-over-print 主营转化页）────
+  const productEntries: MetadataRoute.Sitemap = products.map((p) => ({
+    url: `${SITE_URL}${withSlash(`/products/all/${p.slug}`)}`,
+    lastModified: now,
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
+    images: [`${SITE_URL}/og-default.jpg`],
+  }));
+
+  return [...staticEntries, ...techniqueEntries, ...blogEntries, ...tagEntries, ...productEntries];
 }
