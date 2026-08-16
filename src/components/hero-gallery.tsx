@@ -34,7 +34,7 @@ export function HeroGallery({ images, intervalMs = 3500 }: Props) {
   if (images.length === 0) return null;
 
   return (
-    <div className="relative hidden lg:block">
+    <div className="relative hidden lg:block max-w-md mx-auto lg:ml-auto lg:mr-0">
       {/* gradient mask: fade left edge of images into the dark background */}
       <div
         aria-hidden
@@ -42,7 +42,7 @@ export function HeroGallery({ images, intervalMs = 3500 }: Props) {
       />
 
       {/* carousel viewport */}
-      <div className="relative aspect-square overflow-hidden rounded-md">
+      <div className="relative aspect-[4/3] overflow-hidden rounded-md">
         {images.map((src, i) => (
           <div
             key={src}
@@ -54,7 +54,7 @@ export function HeroGallery({ images, intervalMs = 3500 }: Props) {
               src={src}
               alt=""
               fill
-              sizes="(min-width: 1024px) 50vw, 100vw"
+              sizes="(min-width: 1024px) 448px, 100vw"
               className="object-cover"
               priority={i === 0}
             />

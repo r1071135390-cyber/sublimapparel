@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Sparkles, ArrowRight, Truck, BadgeCheck } from "lucide-react";
 import { JsonLd } from "@/components/json-ld";
 import { ProductCatalog } from "@/components/product-catalog";
-import { KeywordCloud } from "@/components/keyword-cloud";
 import { HeroGallery } from "@/components/hero-gallery";
 import { products, allSports, allScenarios } from "@/lib/products-data";
 import { pickHeroImages } from "@/lib/product-images";
@@ -131,28 +130,6 @@ export default function AllProductsPage() {
 
       {/* CATALOG WITH 3-DIM FILTER */}
       <ProductCatalog />
-
-      {/* BROWSE BY KEYWORD — SEO */}
-      <section className="border-t-2 border-black bg-[#faf9f6]">
-        <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-16">
-          <div className="mb-8">
-            <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-[#ff4d00] md:text-xs">
-              Cross-link every page
-            </p>
-            <h2 className="text-2xl font-black uppercase leading-tight tracking-tight md:text-4xl">
-              Find your custom apparel by sport, scenario, or garment type
-            </h2>
-            <p className="mt-3 max-w-3xl text-sm text-black/70 md:text-base">
-              Every tag below routes to a filtered page of sublimation-printed garments. Polyester or 100% cotton, full-bleed all-over print, MOQ {products[0]?.moq ?? 50} pcs, DDP shipping to US / EU / UK / AU.
-            </p>
-          </div>
-          <div className="grid gap-8 md:grid-cols-3">
-            <KeywordCloud dimension="category" title="By apparel type" />
-            <KeywordCloud dimension="sport" title="By sport" />
-            <KeywordCloud dimension="scenario" title="By use case" />
-          </div>
-        </div>
-      </section>
 
       {/* HOW IT WORKS — closed loop */}
       <section className="border-t-2 border-black bg-[#0A0A0A] text-white">
