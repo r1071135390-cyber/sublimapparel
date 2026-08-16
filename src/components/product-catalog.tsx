@@ -14,7 +14,7 @@ import {
   type Sport,
   type Scenario,
 } from "@/lib/products-data";
-import { getMainImagePath } from "@/lib/product-images";
+import { getProductMainSrc } from "@/lib/product-image-helpers";
 
 const PLACEHOLDER_GRADIENTS = [
   "from-orange-500 to-red-500",
@@ -269,12 +269,19 @@ export function ProductCatalog() {
                 >
                   <div className="relative aspect-square w-full overflow-hidden border-b-2 border-black bg-[#f5f5f5]">
                     <Image
-                      src={getMainImagePath(p.number)}
+                      src={getProductMainSrc(p.number)}
                       alt={p.name}
                       width={600}
                       height={600}
                       className="h-full w-full object-cover transition-transform group-hover:scale-105"
                       loading="lazy"
+                      onError={(e) => {
+                        const img = e.currentTarget;
+                        if (img.dataset.fallback !== "1") {
+                          img.dataset.fallback = "1";
+                          img.src = `/products/${p.number}/1.webp`;
+                        }
+                      }}
                     />
                     <div className="absolute left-2 top-2 rounded-sm bg-black/70 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-white md:text-[10px]">
                       {p.category}

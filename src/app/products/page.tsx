@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { tagArchiveLink, resolveArchiveLink } from "@/lib/tag-utils";
+import { CATEGORY_TAGS } from "@/lib/tag-archive";
 
 export const metadata = {
   title: "Custom Sublimation & Cotton Apparel — T-Shirts, Jerseys, Hoodies",
@@ -200,6 +201,34 @@ export default function ProductsPage() {
                 ))}
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Browse by category — 13 apparel categories */}
+      <section className="border-b-2 border-black bg-[#faf9f6]">
+        <div className="mx-auto max-w-7xl px-4 py-8 md:px-6 md:py-12">
+          <div className="mb-5 text-center md:mb-7">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-[#ff4d00] md:text-xs">
+              Browse by category
+            </p>
+            <h2 className="mt-2 text-2xl font-black uppercase leading-tight tracking-tight text-black md:text-3xl">
+              13 apparel categories, ready to print
+            </h2>
+          </div>
+          <div className="flex flex-wrap justify-center gap-2 md:gap-3">
+            {Object.entries(CATEGORY_TAGS).map(([key, cat]) => (
+              <Link
+                key={key}
+                href={tagArchiveLink("category", key)}
+                className="group inline-flex items-center gap-2 border-2 border-black bg-white px-3.5 py-2 text-xs font-black uppercase tracking-wide text-black transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:border-[#ff4d00] hover:bg-[#ff4d00] hover:text-white hover:shadow-[3px_3px_0_0_#000] md:px-5 md:py-2.5 md:text-sm"
+              >
+                <span className="text-base md:text-lg" aria-hidden="true">
+                  {cat.icon}
+                </span>
+                <span>{cat.label}</span>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
