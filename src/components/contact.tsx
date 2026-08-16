@@ -144,7 +144,7 @@ export function Contact() {
       ];
 
       const subject = `Inquiry: ${form.product} — ${form.quantity || "TBD"} pcs — ${form.name}`;
-      const mailto = `mailto:ramon@sublimapparel.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join("\n"))}`;
+      const mailto = `mailto:info@sublimapparel.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join("\n"))}`;
 
       // Open the user's email client
       window.location.href = mailto;
@@ -192,8 +192,8 @@ export function Contact() {
                   Email
                 </div>
                 <div className="mt-1 text-base font-bold text-black">
-                  <a href="mailto:ramon@sublimapparel.com" className="hover:text-[#ff4d00]">
-                    ramon@sublimapparel.com
+                  <a href="mailto:info@sublimapparel.com" className="hover:text-[#ff4d00]">
+                    info@sublimapparel.com
                   </a>
                 </div>
               </div>
@@ -538,8 +538,8 @@ export function Contact() {
                   ✓ Your email client should have opened with the inquiry pre-filled.
                   Attach your artwork files and hit send — we&apos;ll reply within 24 hours.
                   If nothing opened, please email us directly at{" "}
-                  <a href="mailto:ramon@sublimapparel.com" className="underline">
-                    ramon@sublimapparel.com
+                  <a href="mailto:info@sublimapparel.com" className="underline">
+                    info@sublimapparel.com
                   </a>
                   .
                 </div>

@@ -21,7 +21,7 @@ export const organizationJsonLd = {
   contactPoint: {
     "@type": "ContactPoint",
     contactType: "sales",
-    email: "sales@sublimapparel.com",
+    email: "info@sublimapparel.com",
     availableLanguage: ["English"],
   },
   areaServed: [

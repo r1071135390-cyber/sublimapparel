@@ -290,11 +290,11 @@ export default function TermsPage() {
               business day.
             </p>
             <a
-              href="mailto:ramon@sublimapparel.com?subject=Terms%20of%20sale%20question"
+              href="mailto:info@sublimapparel.com?subject=Terms%20of%20sale%20question"
               className="mt-5 inline-flex items-center gap-2 bg-[#ff4d00] px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-[#e64500]"
             >
               <Mail className="h-4 w-4" />
-              ramon@sublimapparel.com
+              info@sublimapparel.com
             </a>
           </div>
         </div>
