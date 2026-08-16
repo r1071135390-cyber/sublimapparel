@@ -22,6 +22,7 @@ const DIMENSION_ICON: Record<TagDimension, string> = {
  */
 export function KeywordCloud({
   dimension,
+  title,
   exclude = [],
   className = "",
   maxItems,
@@ -30,6 +31,8 @@ export function KeywordCloud({
   variant = "default",
 }: {
   dimension: TagDimension;
+  /** Custom heading text (overrides default "Browse X (N)") */
+  title?: string;
   /** Slugs or display names to exclude */
   exclude?: string[];
   className?: string;
@@ -63,7 +66,7 @@ export function KeywordCloud({
             {DIMENSION_ICON[dimension]}
           </span>
           <h3 className="text-xs font-black uppercase tracking-widest text-[#ff4d00]">
-            Browse {DIMENSION_LABELS[dimension].toLowerCase()} ({items.length})
+            {title ?? `Browse ${DIMENSION_LABELS[dimension].toLowerCase()} (${items.length})`}
           </h3>
         </div>
       )}

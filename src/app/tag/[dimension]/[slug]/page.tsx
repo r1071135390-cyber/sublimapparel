@@ -96,9 +96,18 @@ function productsForTag(dimension: TagDimension, value: string): Product[] {
     return products.filter((p: Product) => p.category === value);
   }
   if (dimension === "sport") {
-    return products.filter((p: Product) => p.sports.includes(value as never));
+    // Exclude products tagged with ALL_SPORTS (cross-cutting items like scarves)
+    // Only show products that are specifically for this sport
+    return products.filter((p: Product) => {
+      const isAllSports = Array.isArray(p.sports) && p.sports.length >= 30;
+      return p.sports.includes(value as never) && !isAllSports;
+    });
   }
-  return products.filter((p: Product) => p.scenarios.includes(value as never));
+  // scenario
+  return products.filter((p: Product) => {
+    const isAllScenarios = Array.isArray(p.scenarios) && p.scenarios.length >= 20;
+    return p.scenarios.includes(value as never) && !isAllScenarios;
+  });
 }
 
 const GRADIENTS = [
