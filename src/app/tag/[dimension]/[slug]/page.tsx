@@ -29,6 +29,12 @@ const DIMENSION_LABEL: Record<TagDimension, string> = {
   scenario: "Use Case",
 };
 
+const DIMENSION_PLURAL: Record<TagDimension, string> = {
+  category: "categories",
+  sport: "sports",
+  scenario: "use cases",
+};
+
 const DIMENSION_DESC: Record<TagDimension, string> = {
   category: "Garment type",
   sport: "Sport or activity",
@@ -293,7 +299,7 @@ export default async function TagArchivePage({ params }: PageProps) {
                       {p.name}
                     </h3>
                     <p className="text-[11px] text-muted-foreground line-clamp-1">
-                      {p.fabrics[0]?.material || "Polyester"} · {p.fabrics[0]?.gsm}
+                      {p.category}
                     </p>
                   </div>
                 </Link>
@@ -306,7 +312,7 @@ export default async function TagArchivePage({ params }: PageProps) {
         <section className="border-t border-border bg-muted/30">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
             <h2 className="text-lg font-bold tracking-tight mb-4">
-              Other {DIMENSION_LABEL[dim].toLowerCase()} archives
+              Other {DIMENSION_PLURAL[dim]}
             </h2>
             <div className="flex flex-wrap gap-2">
               {allTagsInDim.map(([value, info]) => (
