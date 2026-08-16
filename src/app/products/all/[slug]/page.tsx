@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArrowLeft, CheckCircle2, Sparkles, ArrowRight, Truck, Ruler } from "lucide-react";
 import { JsonLd } from "@/components/json-ld";
@@ -372,16 +373,29 @@ export default async function ProductDetailPage({
               </Link>
             </div>
             <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5">
-              {related.map((p) => (
+              {related.map((p) => {
+                const imgs = getProductImages(p.number);
+                const mainImg = imgs[0];
+                return (
                 <Link
                   key={p.id}
                   href={`/products/all/${p.slug}/`}
                   className="group flex flex-col border-2 border-black bg-white transition-all hover:border-[#ff4d00] hover:shadow-[4px_4px_0_0_#ff4d00] md:hover:shadow-[6px_6px_0_0_#ff4d00]"
                 >
-                  <div
-                    className={`flex aspect-square w-full items-center justify-center border-b-2 border-black bg-gradient-to-br ${getGradient(p.id)} text-5xl md:text-7xl`}
-                  >
-                    <span className="opacity-80">{getCategoryEmoji(p.category)}</span>
+                  <div className="relative aspect-square w-full overflow-hidden border-b-2 border-black bg-[#f5f5f5]">
+                    {mainImg ? (
+                      <Image
+                        src={mainImg}
+                        alt={p.name}
+                        fill
+                        sizes="(max-width: 768px) 50vw, 25vw"
+                        className="object-contain transition-transform duration-300 group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className={`flex h-full w-full items-center justify-center bg-gradient-to-br ${getGradient(p.id)} text-5xl md:text-7xl`}>
+                        <span className="opacity-80">{getCategoryEmoji(p.category)}</span>
+                      </div>
+                    )}
                   </div>
                   <div className="p-3 md:p-4">
                     <h3 className="text-[11px] font-black uppercase leading-tight text-black md:text-sm">
@@ -392,7 +406,8 @@ export default async function ProductDetailPage({
                     </p>
                   </div>
                 </Link>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>
