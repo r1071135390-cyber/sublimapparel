@@ -411,7 +411,10 @@ export function Contact() {
                     </select>
                   </Field>
                 </div>
-                <Field label="Size breakdown" className="mt-6">
+                <Field
+                  label="Size breakdown (optional — can be confirmed in the formal order)"
+                  className="mt-6"
+                >
                   <SizeQuantityPicker
                     rows={sizeRows}
                     onBump={bumpRowQty}
