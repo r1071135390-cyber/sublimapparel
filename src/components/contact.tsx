@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { Plus, Minus, X } from "lucide-react";
 
 const MAX_FILES = 5;
 const MAX_SIZE_MB = 25;
@@ -13,6 +14,26 @@ type Attached = {
   name: string;
   size: number;
 };
+
+type SizeRow = {
+  /** Stable id so React keys stay stable when adding/removing rows */
+  id: string;
+  /** The size label shown in the column header, e.g. "S", "M", "3XL", "Tall" */
+  size: string;
+  /** Quantity for this size; 0 means "not needed" */
+  qty: number;
+  /** True for the 6 default rows that can't be removed; false for user-added rows */
+  fixed: boolean;
+};
+
+const DEFAULT_SIZES: SizeRow[] = [
+  { id: "sz-xs", size: "XS", qty: 0, fixed: true },
+  { id: "sz-s", size: "S", qty: 0, fixed: true },
+  { id: "sz-m", size: "M", qty: 0, fixed: true },
+  { id: "sz-l", size: "L", qty: 0, fixed: true },
+  { id: "sz-xl", size: "XL", qty: 0, fixed: true },
+  { id: "sz-xxl", size: "2XL", qty: 0, fixed: true },
+];
 
 function formatSize(bytes: number) {
   if (bytes < 1024) return `${bytes} B`;
@@ -30,12 +51,12 @@ export function Contact() {
     fabric: "Polyester",
     designStatus: "Have design ready",
     quantity: "",
-    sizeBreakdown: "",
     shipCountry: "",
     shipZip: "",
     deadline: "",
     message: "",
   });
+  const [sizeRows, setSizeRows] = useState<SizeRow[]>(DEFAULT_SIZES);
   const [files, setFiles] = useState<Attached[]>([]);
   const [status, setStatus] = useState<"idle" | "sending" | "ok" | "err">("idle");
   const [errorMsg, setErrorMsg] = useState("");
@@ -46,6 +67,39 @@ export function Contact() {
   ) => {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
   };
+
+  // --- Size row helpers ---
+  const setRowQty = (id: string, qty: number) => {
+    const clamped = Math.max(0, Math.min(99999, Math.floor(qty || 0)));
+    setSizeRows((rows) => rows.map((r) => (r.id === id ? { ...r, qty: clamped } : r)));
+  };
+  const bumpRowQty = (id: string, delta: number) => {
+    setSizeRows((rows) =>
+      rows.map((r) =>
+        r.id === id ? { ...r, qty: Math.max(0, Math.min(99999, r.qty + delta)) } : r
+      )
+    );
+  };
+  const addCustomSize = () => {
+    setSizeRows((rows) => [
+      ...rows,
+      { id: `sz-c-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`, size: "", qty: 0, fixed: false },
+    ]);
+  };
+  const removeCustomSize = (id: string) => {
+    setSizeRows((rows) => rows.filter((r) => r.id !== id));
+  };
+  const renameCustomSize = (id: string, size: string) => {
+    // Limit to a few characters so it doesn't blow up the column header
+    const trimmed = size.replace(/\s+/g, "").slice(0, 8);
+    setSizeRows((rows) => rows.map((r) => (r.id === id ? { ...r, size: trimmed } : r)));
+  };
+  const totalPieces = sizeRows.reduce((sum, r) => sum + r.qty, 0);
+  /** Render the size breakdown as a compact string for the email body */
+  const sizeBreakdownText = sizeRows
+    .filter((r) => r.size && r.qty > 0)
+    .map((r) => `${r.size} ${r.qty}`)
+    .join(" / ");
 
   const onPickFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
     const picked = Array.from(e.target.files ?? []);
@@ -126,7 +180,7 @@ export function Contact() {
         `Print method: ${form.process}`,
         `Fabric: ${form.fabric}`,
         `Design status: ${form.designStatus}`,
-        `Size breakdown: ${form.sizeBreakdown || "—"}`,
+        `Size breakdown: ${sizeBreakdownText || "—"}`,
         ``,
         `Ship to:`,
         `  Country: ${form.shipCountry || "—"}`,
@@ -358,13 +412,14 @@ export function Contact() {
                   </Field>
                 </div>
                 <Field label="Size breakdown" className="mt-6">
-                  <input
-                    type="text"
-                    name="sizeBreakdown"
-                    value={form.sizeBreakdown}
-                    onChange={onChange}
-                    placeholder="e.g. S 60 / M 120 / L 80 / XL 40 — or 'standard size run, advise'"
-                    className="w-full border-b-2 border-black bg-transparent py-2 text-sm font-medium text-black placeholder:text-black/30 focus:border-[#ff4d00] focus:outline-none"
+                  <SizeQuantityPicker
+                    rows={sizeRows}
+                    onBump={bumpRowQty}
+                    onSetQty={setRowQty}
+                    onAdd={addCustomSize}
+                    onRemove={removeCustomSize}
+                    onRename={renameCustomSize}
+                    totalPieces={totalPieces}
                   />
                 </Field>
               </div>
@@ -572,6 +627,147 @@ function Field({
         {label}
       </label>
       {children}
+    </div>
+  );
+}
+
+/**
+ * Stepper for a single size column.
+ *  - [-] [ qty ] [+]
+ *  - The +/- buttons bump the qty
+ *  - The number can also be typed directly
+ */
+function SizeQtyStepper({
+  qty,
+  onBump,
+  onSet,
+}: {
+  qty: number;
+  onBump: (delta: number) => void;
+  onSet: (n: number) => void;
+}) {
+  return (
+    <div className="flex items-center justify-between rounded-md border border-black/15 bg-white">
+      <button
+        type="button"
+        aria-label="Decrease quantity"
+        onClick={() => onBump(-1)}
+        className="flex h-9 w-9 items-center justify-center text-black/60 transition-colors hover:bg-black/5 hover:text-[#ff4d00] disabled:cursor-not-allowed disabled:opacity-30"
+        disabled={qty <= 0}
+      >
+        <Minus className="h-3.5 w-3.5" strokeWidth={2.5} />
+      </button>
+      <input
+        type="number"
+        inputMode="numeric"
+        min={0}
+        max={99999}
+        value={qty}
+        onChange={(e) => onSet(parseInt(e.target.value, 10))}
+        onFocus={(e) => e.currentTarget.select()}
+        className="w-full bg-transparent text-center text-sm font-bold tabular-nums text-black focus:outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+      />
+      <button
+        type="button"
+        aria-label="Increase quantity"
+        onClick={() => onBump(1)}
+        className="flex h-9 w-9 items-center justify-center text-black/60 transition-colors hover:bg-[#ff4d00]/10 hover:text-[#ff4d00]"
+      >
+        <Plus className="h-3.5 w-3.5" strokeWidth={2.5} />
+      </button>
+    </div>
+  );
+}
+
+/**
+ * Structured "Size breakdown" picker:
+ *   - Default 6 columns: XS / S / M / L / XL / 2XL (cannot be removed)
+ *   - "+ Add special size" button appends a removable, renamable row (e.g. 3XL, 4XL, Tall, Kids-8)
+ *   - Live "N pcs" total below the picker
+ *   - leave 0 if not needed
+ */
+function SizeQuantityPicker({
+  rows,
+  onBump,
+  onSetQty,
+  onAdd,
+  onRemove,
+  onRename,
+  totalPieces,
+}: {
+  rows: SizeRow[];
+  onBump: (id: string, delta: number) => void;
+  onSetQty: (id: string, n: number) => void;
+  onAdd: () => void;
+  onRemove: (id: string) => void;
+  onRename: (id: string, label: string) => void;
+  totalPieces: number;
+}) {
+  const fixedRows = rows.filter((r) => r.fixed);
+  const customRows = rows.filter((r) => !r.fixed);
+
+  return (
+    <div className="space-y-4">
+      {/* Default 6-column grid */}
+      <div className="grid grid-cols-3 gap-3 md:grid-cols-6">
+        {fixedRows.map((r) => (
+          <div key={r.id} className="flex flex-col">
+            <div className="mb-1.5 text-center text-xs font-black uppercase tracking-widest text-black">
+              {r.size}
+            </div>
+            <SizeQtyStepper qty={r.qty} onBump={(d) => onBump(r.id, d)} onSet={(n) => onSetQty(r.id, n)} />
+          </div>
+        ))}
+      </div>
+
+      {/* Custom rows (3XL, 4XL, Tall, etc.) */}
+      {customRows.length > 0 && (
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {customRows.map((r) => (
+            <div key={r.id} className="flex flex-col">
+              <div className="mb-1.5 flex items-center gap-1.5">
+                <input
+                  type="text"
+                  value={r.size}
+                  onChange={(e) => onRename(r.id, e.target.value)}
+                  placeholder="e.g. 3XL"
+                  maxLength={8}
+                  aria-label="Custom size label"
+                  className="w-full border-b-2 border-black/30 bg-transparent py-1 text-center text-xs font-black uppercase tracking-widest text-black placeholder:text-black/30 focus:border-[#ff4d00] focus:outline-none"
+                />
+                <button
+                  type="button"
+                  onClick={() => onRemove(r.id)}
+                  aria-label={`Remove ${r.size || "custom size"}`}
+                  className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full text-black/40 transition-colors hover:bg-black/5 hover:text-[#ff4d00]"
+                >
+                  <X className="h-3.5 w-3.5" strokeWidth={2.5} />
+                </button>
+              </div>
+              <SizeQtyStepper qty={r.qty} onBump={(d) => onBump(r.id, d)} onSet={(n) => onSetQty(r.id, n)} />
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Add special size button */}
+      <button
+        type="button"
+        onClick={onAdd}
+        className="w-full rounded-md border border-dashed border-black/20 px-3 py-2.5 text-xs font-bold text-[#ff4d00] transition-colors hover:border-[#ff4d00] hover:bg-[#ff4d00]/5"
+      >
+        + Add special size (e.g. 3XL, 4XL, Tall) — add as many rows as you need
+      </button>
+
+      {/* Live total */}
+      <div className="flex items-baseline justify-between border-t border-black/10 pt-3">
+        <div className="text-xs font-bold uppercase tracking-widest text-black/60">
+          Total <span className="ml-1 text-base font-black tabular-nums text-black">{totalPieces.toLocaleString()}</span> pcs
+        </div>
+        <div className="text-[10px] font-bold uppercase tracking-wider text-black/40">
+          leave 0 if not needed
+        </div>
+      </div>
     </div>
   );
 }
