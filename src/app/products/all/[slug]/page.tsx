@@ -13,6 +13,8 @@ import {
   type Scenario,
 } from "@/lib/products-data";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
+import { ProductGallery } from "@/components/product-gallery";
+import { getProductImages } from "@/lib/product-images";
 
 export function generateStaticParams() {
   return products.map((p) => ({ slug: p.slug }));
@@ -170,23 +172,10 @@ export default async function ProductDetailPage({
       <section className="bg-white">
         <div className="mx-auto max-w-7xl px-4 py-8 md:px-8 md:py-16">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-12">
-            {/* Image placeholder */}
-            <div className="relative aspect-square w-full overflow-hidden border-2 border-black bg-[#f5f5f5]">
-              <div
-                className={`flex h-full w-full items-center justify-center bg-gradient-to-br ${gradient} text-9xl md:text-[12rem]`}
-              >
-                <span className="opacity-80">{emoji}</span>
-              </div>
-              <div className="absolute left-3 top-3 rounded-sm bg-black/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white md:text-xs">
-                Photo placeholder
-              </div>
-              <div className="absolute right-3 top-3 rounded-sm bg-[#ff4d00] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white md:text-xs">
-                {product.category}
-              </div>
-              <div className="absolute bottom-3 left-3 right-3 rounded-sm bg-black/70 px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-wide text-white/80 backdrop-blur-sm md:text-xs">
-                Real product shots coming soon — inquire for current samples
-              </div>
-            </div>
+            <ProductGallery
+              images={getProductImages(String(products.findIndex(p => p.slug === product.slug) + 1).padStart(4, "0"))}
+              productName={product.name}
+            />
 
             {/* Specs */}
             <div>
