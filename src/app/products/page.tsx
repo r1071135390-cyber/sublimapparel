@@ -24,15 +24,15 @@ const categories = [
       { name: "T-Shirts", category: "T-Shirt" },
       { name: "Hoodies", category: "Hoodie" },
       { name: "Sweatshirts", category: "Sweatshirt" },
-      { name: "Jerseys", category: "Jersey / Kit" },
-      { name: "Cycling Kits", category: "Sports Top / Kit" },
+      { name: "Jerseys" },
+      { name: "Cycling Kits" },
       { name: "Polo / Golf", category: "Polo Shirt" },
       { name: "Bowling Shirts", category: "Shirt" },
       { name: "Pants & Shorts", category: "Pants" },
-      { name: "Leggings", category: "Leggings" },
+      { name: "Leggings" },
       { name: "Tank Tops", category: "Tank Top & Camis" },
-      { name: "Vests", category: "Jacket" },
-      { name: "Combat Gear", category: "Combat Gear" },
+      { name: "Vests", category: "Vest" },
+      { name: "Combat Gear" },
     ],
     note: "Polyester or 100% cotton. Cotton runs on DTG/DTF (A4–A3 per panel); polyester runs on sublimation (true all-over, edge-to-edge). Allover digital print on cotton also available (cut-and-sew, true full-body, MOQ 100).",
   },
@@ -59,11 +59,11 @@ const categories = [
       { name: "Drawstring Bags" },
       { name: "Backpacks" },
       { name: "Tote Bags" },
-      { name: "Baseball Caps", category: "Baseball Cap" },
-      { name: "Bucket Hats", category: "Bucket Hat" },
+      { name: "Baseball Caps" },
+      { name: "Bucket Hats" },
       { name: "Scarves & Bandanas" },
       { name: "Lanyards" },
-      { name: "Aprons", category: "Apron" },
+      { name: "Aprons" },
     ],
     note: "Durable sublimation-ready materials. Custom hardware and closures.",
   },
@@ -180,7 +180,7 @@ export default function ProductsPage() {
               {/* Quick-filter tags */}
               <div className="mt-6 flex flex-wrap gap-2">
                 {[
-                  { name: "All 100 products", href: "/products/all/" },
+                  { name: "All products", href: "/products/all/" },
                   { name: "Jerseys", href: tagArchiveLink("category", "Jersey / Kit") },
                   { name: "T-Shirts", href: tagArchiveLink("category", "T-Shirt") },
                   { name: "Hoodies", href: tagArchiveLink("category", "Hoodie") },
@@ -254,7 +254,7 @@ export default function ProductsPage() {
                 href="/products/all/"
                 className="inline-flex items-center justify-center gap-2 rounded-sm bg-[#ff4d00] px-5 py-3 text-sm font-black uppercase tracking-wide text-white transition-colors hover:bg-[#e64500] md:text-base"
               >
-                See all 100 products
+                See all products
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <p className="text-[10px] uppercase tracking-widest text-white/50 md:text-xs">
@@ -294,9 +294,11 @@ export default function ProductsPage() {
                     <div className="grid grid-cols-2 gap-2 md:grid-cols-3">
                       {cat.items.map((item) => {
                         const itemName = item.name;
-                        const itemHref = item.category
-                          ? tagArchiveLink("category", item.category)
-                          : resolveArchiveLink(itemName) ?? `/products/#${cat.id}`;
+                        // If item has an active category, link to it; otherwise link to /products/all/
+                        const itemHref =
+                          item.category && CATEGORY_TAGS[item.category]
+                            ? tagArchiveLink("category", item.category)
+                            : "/products/all/";
                         return (
                           <Link
                             key={itemName}
