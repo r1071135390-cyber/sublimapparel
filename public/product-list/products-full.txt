@@ -1,0 +1,717 @@
+SublimApparel — Complete Product List (119 items)
+======================================================================
+
+#0001  ID=2AHAYR15
+        Name: Custom All-Over Print Womens Rectangle Scarf
+        Cat:  Hoodie
+        Sports: AFL, Athletics, Badminton, Baseball, Basketball, Beach, Bowling, Boxing, Cheer, Cricket, CrossFit, Cycling, Dance, Dive, Esports, Fishing, Football, Golf, Gym, Hockey, Lacrosse, MMA, Martial Arts, Netball, Pilates, Rugby, Running, Skate, Skating, Ski, Snowboard, Soccer, Softball, Surf, Swimwear, Table Tennis, Tennis, Triathlon, Volleyball, Wrestling, Yoga
+        Scenarios: Corporate & Branding, Team & Club, Event & Festival, School & Education, Fundraiser & Charity, Retail & Fashion, Uniform & Workwear, Music & Merch, Sports League, Wedding & Party, Gift & Souvenir, Promotional Swag, Political Campaign
+
+#0002  ID=2KTXDM69
+        Name: Custom All-Over Print Childrens T-Shirts
+        Cat:  T-Shirt
+        Sports: AFL, Athletics, Badminton, Baseball, Basketball, Beach, Bowling, Boxing, Cheer, Cricket, CrossFit, Cycling, Dance, Dive, Esports, Fishing, Football, Golf, Gym, Hockey, Lacrosse, MMA, Martial Arts, Netball, Pilates, Rugby, Running, Skate, Skating, Ski, Snowboard, Soccer, Softball, Surf, Swimwear, Table Tennis, Tennis, Triathlon, Volleyball, Wrestling, Yoga
+        Scenarios: Corporate & Branding, Team & Club, Event & Festival, School & Education, Fundraiser & Charity, Retail & Fashion, Uniform & Workwear, Music & Merch, Sports League, Wedding & Party, Gift & Souvenir, Promotional Swag, Political Campaign
+
+#0003  ID=1WPXZY10
+        Name: Custom All-Over Print Womens High-Stretch Tights
+        Cat:  Pants
+        Sports: AFL, Athletics, Badminton, Baseball, Basketball, Beach, Bowling, Boxing, Cheer, Cricket, CrossFit, Cycling, Dance, Dive, Esports, Fishing, Football, Golf, Gym, Hockey, Lacrosse, MMA, Martial Arts, Netball, Pilates, Rugby, Running, Skate, Skating, Ski, Snowboard, Soccer, Softball, Surf, Swimwear, Table Tennis, Tennis, Triathlon, Volleyball, Wrestling, Yoga
+        Scenarios: Corporate & Branding, Team & Club, Event & Festival, School & Education, Fundraiser & Charity, Retail & Fashion, Uniform & Workwear, Music & Merch, Sports League, Wedding & Party, Gift & Souvenir, Promotional Swag, Political Campaign
+
+#0004  ID=2MHPDM39
+        Name: Custom All-Over Print Unisex Durable Pullover Sweatshirt 290GSM
+        Cat:  Sweatshirt
+        Sports: AFL, Athletics, Badminton, Baseball, Basketball, Beach, Bowling, Boxing, Cheer, Cricket, CrossFit, Cycling, Dance, Dive, Esports, Fishing, Football, Golf, Gym, Hockey, Lacrosse, MMA, Martial Arts, Netball, Pilates, Rugby, Running, Skate, Skating, Ski, Snowboard, Soccer, Softball, Surf, Swimwear, Table Tennis, Tennis, Triathlon, Volleyball, Wrestling, Yoga
+        Scenarios: Corporate & Branding, Team & Club, Event & Festival, School & Education, Fundraiser & Charity, Retail & Fashion, Uniform & Workwear, Music & Merch, Sports League, Wedding & Party, Gift & Souvenir, Promotional Swag, Political Campaign
+
+#0005  ID=2MHPJR90
+        Name: Custom All-Over Print Mens Fleece Hoodie 360GSM
+        Cat:  Hoodie
+        Sports: AFL, Athletics, Badminton, Baseball, Basketball, Beach, Bowling, Boxing, Cheer, Cricket, CrossFit, Cycling, Dance, Dive, Esports, Fishing, Football, Golf, Gym, Hockey, Lacrosse, MMA, Martial Arts, Netball, Pilates, Rugby, Running, Skate, Skating, Ski, Snowboard, Soccer, Softball, Surf, Swimwear, Table Tennis, Tennis, Triathlon, Volleyball, Wrestling, Yoga
+        Scenarios: Corporate & Branding, Team & Club, Event & Festival, School & Education, Fundraiser & Charity, Retail & Fashion, Uniform & Workwear, Music & Merch, Sports League, Wedding & Party, Gift & Souvenir, Promotional Swag, Political Campaign
+
+#0006  ID=2MBXMA09
+        Name: Custom All-Over Print Mens Loose Sleeveless Hoodie 320GSM
+        Cat:  Tank Top & Camis
+        Sports: AFL, Athletics, Badminton, Baseball, Basketball, Beach, Bowling, Boxing, Cheer, Cricket, CrossFit, Cycling, Dance, Dive, Esports, Fishing, Football, Golf, Gym, Hockey, Lacrosse, MMA, Martial Arts, Netball, Pilates, Rugby, Running, Skate, Skating, Ski, Snowboard, Soccer, Softball, Surf, Swimwear, Table Tennis, Tennis, Triathlon, Volleyball, Wrestling, Yoga
+        Scenarios: Corporate & Branding, Team & Club, Event & Festival, School & Education, Fundraiser & Charity, Retail & Fashion, Uniform & Workwear, Music & Merch, Sports League, Wedding & Party, Gift & Souvenir, Promotional Swag, Political Campaign
+
+#0007  ID=3WBXGZ50
+        Name: Custom All-Over Print Womens Tank Vest Dress
+        Cat:  Sportswear
+        Sports: AFL, Athletics, Badminton, Baseball, Basketball, Beach, Bowling, Boxing, Cheer, Cricket, CrossFit, Cycling, Dance, Dive, Esports, Fishing, Football, Golf, Gym, Hockey, Lacrosse, MMA, Martial Arts, Netball, Pilates, Rugby, Running, Skate, Skating, Ski, Snowboard, Soccer, Softball, Surf, Swimwear, Table Tennis, Tennis, Triathlon, Volleyball, Wrestling, Yoga
+        Scenarios: Corporate & Branding, Team & Club, Event & Festival, School & Education, Fundraiser & Charity, Retail & Fashion, Uniform & Workwear, Music & Merch, Sports League, Wedding & Party, Gift & Souvenir, Promotional Swag, Political Campaign
+
+#0008  ID=2MHPSA03
+        Name: Custom All-Over Print Mens Distressed Sweatshirt 360GSM
+        Cat:  Sweatshirt
+        Sports: AFL, Athletics, Badminton, Baseball, Basketball, Beach, Bowling, Boxing, Cheer, Cricket, CrossFit, Cycling, Dance, Dive, Esports, Fishing, Football, Golf, Gym, Hockey, Lacrosse, MMA, Martial Arts, Netball, Pilates, Rugby, Running, Skate, Skating, Ski, Snowboard, Soccer, Softball, Surf, Swimwear, Table Tennis, Tennis, Triathlon, Volleyball, Wrestling, Yoga
+        Scenarios: Corporate & Branding, Team & Club, Event & Festival, School & Education, Fundraiser & Charity, Retail & Fashion, Uniform & Workwear, Music & Merch, Sports League, Wedding & Party, Gift & Souvenir, Promotional Swag, Political Campaign
+
+#0009  ID=3KCSZJ10
+        Name: Custom All-Over Print Childrens Shirt With Pocket 140GSM Slub Cotton
+        Cat:  Shirt
+        Sports: AFL, Athletics, Badminton, Baseball, Basketball, Beach, Bowling, Boxing, Cheer, Cricket, CrossFit, Cycling, Dance, Dive, Esports, Fishing, Football, Golf, Gym, Hockey, Lacrosse, MMA, Martial Arts, Netball, Pilates, Rugby, Running, Skate, Skating, Ski, Snowboard, Soccer, Softball, Surf, Swimwear, Table Tennis, Tennis, Triathlon, Volleyball, Wrestling, Yoga
+        Scenarios: Corporate & Branding, Team & Club, Event & Festival, School & Education, Fundraiser & Charity, Retail & Fashion, Uniform & Workwear, Music & Merch, Sports League, Wedding & Party, Gift & Souvenir, Promotional Swag, Political Campaign
+
+#0010  ID=2MHPHR99
+        Name: Custom All-Over Print Mens Vintage Crewneck Knit Sweater
+        Cat:  Sweatshirt
+        Sports: AFL, Athletics, Badminton, Baseball, Basketball, Beach, Bowling, Boxing, Cheer, Cricket, CrossFit, Cycling, Dance, Dive, Esports, Fishing, Football, Golf, Gym, Hockey, Lacrosse, MMA, Martial Arts, Netball, Pilates, Rugby, Running, Skate, Skating, Ski, Snowboard, Soccer, Softball, Surf, Swimwear, Table Tennis, Tennis, Triathlon, Volleyball, Wrestling, Yoga
+        Scenarios: Corporate & Branding, Team & Club, Event & Festival, School & Education, Fundraiser & Charity, Retail & Fashion, Uniform & Workwear, Music & Merch, Sports League, Wedding & Party, Gift & Souvenir, Promotional Swag, Political Campaign
+
+#0011  ID=3MJMJH01
+        Name: Custom All-Over Print Unisex Thickened Home Jumpsuit
+        Cat:  Home
+        Sports: AFL, Athletics, Badminton, Baseball, Basketball, Beach, Bowling, Boxing, Cheer, Cricket, CrossFit, Cycling, Dance, Dive, Esports, Fishing, Football, Golf, Gym, Hockey, Lacrosse, MMA, Martial Arts, Netball, Pilates, Rugby, Running, Skate, Skating, Ski, Snowboard, Soccer, Softball, Surf, Swimwear, Table Tennis, Tennis, Triathlon, Volleyball, Wrestling, Yoga
+        Scenarios: Corporate & Branding, Team & Club, Event & Festival, School & Education, Fundraiser & Charity, Retail & Fashion, Uniform & Workwear, Music & Merch, Sports League, Wedding & Party, Gift & Souvenir, Promotional Swag, Political Campaign
+
+#0012  ID=3CDDAQ01
+        Name: Custom All-Over Print Kids Short-Sleeve Dress
+        Cat:  Skirt
+        Sports: AFL, Athletics, Badminton, Baseball, Basketball, Beach, Bowling, Boxing, Cheer, Cricket, CrossFit, Cycling, Dance, Dive, Esports, Fishing, Football, Golf, Gym, Hockey, Lacrosse, MMA, Martial Arts, Netball, Pilates, Rugby, Running, Skate, Skating, Ski, Snowboard, Soccer, Softball, Surf, Swimwear, Table Tennis, Tennis, Triathlon, Volleyball, Wrestling, Yoga
+        Scenarios: Corporate & Branding, Team & Club, Event & Festival, School & Education, Fundraiser & Charity, Retail & Fashion, Uniform & Workwear, Music & Merch, Sports League, Wedding & Party, Gift & Souvenir, Promotional Swag, Political Campaign
+
+#0013  ID=3WJMBX16
+        Name: Custom All-Over Print Womens Tank Bodysuit
+        Cat:  Sportswear
+        Sports: AFL, Athletics, Badminton, Baseball, Basketball, Beach, Bowling, Boxing, Cheer, Cricket, CrossFit, Cycling, Dance, Dive, Esports, Fishing, Football, Golf, Gym, Hockey, Lacrosse, MMA, Martial Arts, Netball, Pilates, Rugby, Running, Skate, Skating, Ski, Snowboard, Soccer, Softball, Surf, Swimwear, Table Tennis, Tennis, Triathlon, Volleyball, Wrestling, Yoga
+        Scenarios: Corporate & Branding, Team & Club, Event & Festival, School & Education, Fundraiser & Charity, Retail & Fashion, Uniform & Workwear, Music & Merch, Sports League, Wedding & Party, Gift & Souvenir, Promotional Swag, Political Campaign
+
+#0014  ID=3KTXPL29
+        Name: Custom All-Over Print Childrens Lapel Polo Shirt
+        Cat:  Polo Shirt
+        Sports: AFL, Athletics, Badminton, Baseball, Basketball, Beach, Bowling, Boxing, Cheer, Cricket, CrossFit, Cycling, Dance, Dive, Esports, Fishing, Football, Golf, Gym, Hockey, Lacrosse, MMA, Martial Arts, Netball, Pilates, Rugby, Running, Skate, Skating, Ski, Snowboard, Soccer, Softball, Surf, Swimwear, Table Tennis, Tennis, Triathlon, Volleyball, Wrestling, Yoga
+        Scenarios: Corporate & Branding, Team & Club, Event & Festival, School & Education, Fundraiser & Charity, Retail & Fashion, Uniform & Workwear, Music & Merch, Sports League, Wedding & Party, Gift & Souvenir, Promotional Swag, Political Campaign
+
+#0015  ID=3AHGYD02
+        Name: Custom All-Over Print Sports Square Towel
+        Cat:  Home
+        Sports: AFL, Athletics, Badminton, Baseball, Basketball, Beach, Bowling, Boxing, Cheer, Cricket, CrossFit, Cycling, Dance, Dive, Esports, Fishing, Football, Golf, Gym, Hockey, Lacrosse, MMA, Martial Arts, Netball, Pilates, Rugby, Running, Skate, Skating, Ski, Snowboard, Soccer, Softball, Surf, Swimwear, Table Tennis, Tennis, Triathlon, Volleyball, Wrestling, Yoga
+        Scenarios: Corporate & Branding, Team & Club, Event & Festival, School & Education, Fundraiser & Charity, Retail & Fashion, Uniform & Workwear, Music & Merch, Sports League, Wedding & Party, Gift & Souvenir, Promotional Swag, Political Campaign
+
+#0016  ID=2KBBMB01
+        Name: Custom All-Over Print Baby Short-Sleeve Onesie Printed
+        Cat:  Home
+        Sports: AFL, Athletics, Badminton, Baseball, Basketball, Beach, Bowling, Boxing, Cheer, Cricket, CrossFit, Cycling, Dance, Dive, Esports, Fishing, Football, Golf, Gym, Hockey, Lacrosse, MMA, Martial Arts, Netball, Pilates, Rugby, Running, Skate, Skating, Ski, Snowboard, Soccer, Softball, Surf, Swimwear, Table Tennis, Tennis, Triathlon, Volleyball, Wrestling, Yoga
+        Scenarios: Corporate & Branding, Team & Club, Event & Festival, School & Education, Fundraiser & Charity, Retail & Fashion, Uniform & Workwear, Music & Merch, Sports League, Wedding & Party, Gift & Souvenir, Promotional Swag, Political Campaign
+
+#0017  ID=3KCSSY02
+        Name: Custom All-Over Print Kids Baseball Jersey
+        Cat:  Sportswear
+        Sports: AFL, Athletics, Badminton, Baseball, Basketball, Beach, Bowling, Boxing, Cheer, Cricket, CrossFit, Cycling, Dance, Dive, Esports, Fishing, Football, Golf, Gym, Hockey, Lacrosse, MMA, Martial Arts, Netball, Pilates, Rugby, Running, Skate, Skating, Ski, Snowboard, Soccer, Softball, Surf, Swimwear, Table Tennis, Tennis, Triathlon, Volleyball, Wrestling, Yoga
+        Scenarios: Corporate & Branding, Team & Club, Event & Festival, School & Education, Fundraiser & Charity, Retail & Fashion, Uniform & Workwear, Music & Merch, Sports League, Wedding & Party, Gift & Souvenir, Promotional Swag, Political Campaign
+
+#0018  ID=3MHZDM41
+        Name: Custom All-Over Print Mens Half-Zip Pullover
+        Cat:  Hoodie
+        Sports: AFL, Athletics, Badminton, Baseball, Basketball, Beach, Bowling, Boxing, Cheer, Cricket, CrossFit, Cycling, Dance, Dive, Esports, Fishing, Football, Golf, Gym, Hockey, Lacrosse, MMA, Martial Arts, Netball, Pilates, Rugby, Running, Skate, Skating, Ski, Snowboard, Soccer, Softball, Surf, Swimwear, Table Tennis, Tennis, Triathlon, Volleyball, Wrestling, Yoga
+        Scenarios: Corporate & Branding, Team & Club, Event & Festival, School & Education, Fundraiser & Charity, Retail & Fashion, Uniform & Workwear, Music & Merch, Sports League, Wedding & Party, Gift & Souvenir, Promotional Swag, Political Campaign
+
+#0019  ID=3MPHTU08
+        Name: Custom All-Over Print Mens Long-Sleeve T-Shirt With Dropped Shoulders
+        Cat:  Sportswear
+        Sports: AFL, Athletics, Badminton, Baseball, Basketball, Beach, Bowling, Boxing, Cheer, Cricket, CrossFit, Cycling, Dance, Dive, Esports, Fishing, Football, Golf, Gym, Hockey, Lacrosse, MMA, Martial Arts, Netball, Pilates, Rugby, Running, Skate, Skating, Ski, Snowboard, Soccer, Softball, Surf, Swimwear, Table Tennis, Tennis, Triathlon, Volleyball, Wrestling, Yoga
+        Scenarios: Corporate & Branding, Team & Club, Event & Festival, School & Education, Fundraiser & Charity, Retail & Fashion, Uniform & Workwear, Music & Merch, Sports League, Wedding & Party, Gift & Souvenir, Promotional Swag, Political Campaign
+
+#0020  ID=2HKAWQ05
+        Name: Custom All-Over Print Apron
+        Cat:  Home
+        Sports: AFL, Athletics, Badminton, Baseball, Basketball, Beach, Bowling, Boxing, Cheer, Cricket, CrossFit, Cycling, Dance, Dive, Esports, Fishing, Football, Golf, Gym, Hockey, Lacrosse, MMA, Martial Arts, Netball, Pilates, Rugby, Running, Skate, Skating, Ski, Snowboard, Soccer, Softball, Surf, Swimwear, Table Tennis, Tennis, Triathlon, Volleyball, Wrestling, Yoga
+        Scenarios: Corporate & Branding, Team & Club, Event & Festival, School & Education, Fundraiser & Charity, Retail & Fashion, Uniform & Workwear, Music & Merch, Sports League, Wedding & Party, Gift & Souvenir, Promotional Swag, Political Campaign
+
+#0021  ID=2AAOYF03
+        Name: Custom All-Over Print Bucket Hat
+        Cat:  Cap
+        Sports: AFL, Athletics, Badminton, Baseball, Basketball, Beach, Bowling, Boxing, Cheer, Cricket, CrossFit, Cycling, Dance, Dive, Esports, Fishing, Football, Golf, Gym, Hockey, Lacrosse, MMA, Martial Arts, Netball, Pilates, Rugby, Running, Skate, Skating, Ski, Snowboard, Soccer, Softball, Surf, Swimwear, Table Tennis, Tennis, Triathlon, Volleyball, Wrestling, Yoga
+        Scenarios: Corporate & Branding, Team & Club, Event & Festival, School & Education, Fundraiser & Charity, Retail & Fashion, Uniform & Workwear, Music & Merch, Sports League, Wedding & Party, Gift & Souvenir, Promotional Swag, Political Campaign
+
+#0022  ID=2AMSMG90
+        Name: Custom All-Over Print Baseball Cap
+        Cat:  Cap
+        Sports: AFL, Athletics, Badminton, Baseball, Basketball, Beach, Bowling, Boxing, Cheer, Cricket, CrossFit, Cycling, Dance, Dive, Esports, Fishing, Football, Golf, Gym, Hockey, Lacrosse, MMA, Martial Arts, Netball, Pilates, Rugby, Running, Skate, Skating, Ski, Snowboard, Soccer, Softball, Surf, Swimwear, Table Tennis, Tennis, Triathlon, Volleyball, Wrestling, Yoga
+        Scenarios: Corporate & Branding, Team & Club, Event & Festival, School & Education, Fundraiser & Charity, Retail & Fashion, Uniform & Workwear, Music & Merch, Sports League, Wedding & Party, Gift & Souvenir, Promotional Swag, Political Campaign
+
+#0023  ID=3MPXDK57
+        Name: Custom All-Over Print Soccer Jersey Kit (Shirt + Shorts)
+        Cat:  Sportswear
+        Sports: Soccer
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0024  ID=3MBXVL01
+        Name: Custom All-Over Print Basketball Jersey Kit (Reversible option)
+        Cat:  Sportswear
+        Sports: Basketball
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0025  ID=3MBXGT28
+        Name: Custom All-Over Print Badminton Outfit
+        Cat:  Sportswear
+        Sports: Badminton
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0026  ID=3MTXLB56
+        Name: Custom All-Over Print Hockey Jersey
+        Cat:  Sportswear
+        Sports: Hockey
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0027  ID=3MBXGT27
+        Name: Custom All-Over Print Running Wear (Shirt + Shorts)
+        Cat:  Sportswear
+        Sports: Running
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0028  ID=3MTXUB79
+        Name: Custom All-Over Print Cycling Wear Kit (Jersey + Bib Shorts)
+        Cat:  Sportswear
+        Sports: Cycling
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0029  ID=3CPXX001
+        Name: Custom All-Over Print Yoga Wear Set (Top + Leggings)
+        Cat:  Sportswear
+        Sports: Yoga
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0030  ID=3KYYOP05
+        Name: Custom All-Over Print Swimwear (One-Piece / Bikini / Trunks)
+        Cat:  Sportswear
+        Sports: Swimwear
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0031  ID=3KCSFH01
+        Name: Custom All-Over Print Golf Polo Shirt
+        Cat:  Polo Shirt
+        Sports: Golf
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0032  ID=3MBSBL01
+        Name: Custom All-Over Print Baseball Jersey Kit (Shirt + Pants)
+        Cat:  Sportswear
+        Sports: Baseball
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0033  ID=3MFBJK01
+        Name: Custom All-Over Print American Football Jersey
+        Cat:  Sportswear
+        Sports: Football
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0034  ID=3MRGJK01
+        Name: Custom All-Over Print Rugby Jersey
+        Cat:  Sportswear
+        Sports: Rugby
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0035  ID=3MVBJK01
+        Name: Custom All-Over Print Volleyball Jersey Kit
+        Cat:  Sportswear
+        Sports: Volleyball
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0036  ID=3MTNJK01
+        Name: Custom All-Over Print Tennis Outfit (Shirt + Skirt/Shorts)
+        Cat:  Sportswear
+        Sports: Tennis
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0037  ID=3MTTJK01
+        Name: Custom All-Over Print Table Tennis Outfit
+        Cat:  Sportswear
+        Sports: Table Tennis
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0038  ID=3MCKJK01
+        Name: Custom All-Over Print Cricket Jersey
+        Cat:  Sportswear
+        Sports: Cricket
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0039  ID=3MLC001
+        Name: Custom All-Over Print Lacrosse Jersey
+        Cat:  Sportswear
+        Sports: Lacrosse
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0040  ID=3MSB001
+        Name: Custom All-Over Print Softball Jersey
+        Cat:  Sportswear
+        Sports: Softball
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0041  ID=3MSF001
+        Name: Custom All-Over Print Surf Lycra Top (Rash Guard)
+        Cat:  Sportswear
+        Sports: Surf
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0042  ID=3MKT001
+        Name: Custom All-Over Print Skate T-Shirt
+        Cat:  T-Shirt
+        Sports: Skate
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0043  ID=3MBX001
+        Name: Custom All-Over Print Boxing Shorts
+        Cat:  Sportswear
+        Sports: Boxing
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0044  ID=3MWR001
+        Name: Custom All-Over Print Wrestling Singlet
+        Cat:  Sportswear
+        Sports: Wrestling
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0045  ID=3MMA001
+        Name: Custom All-Over Print MMA Fight Shorts
+        Cat:  Sportswear
+        Sports: MMA
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0046  ID=3MMA002
+        Name: Custom All-Over Print Martial Arts Gi
+        Cat:  Sportswear
+        Sports: Martial Arts
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0047  ID=3MPL001
+        Name: Custom All-Over Print Pilates Set (Top + Leggings)
+        Cat:  Sportswear
+        Sports: Pilates
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0048  ID=3MDC001
+        Name: Custom All-Over Print Dance Leotard
+        Cat:  Sportswear
+        Sports: Dance
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0049  ID=3MCR001
+        Name: Custom All-Over Print Cheer Uniform (Top + Skirt)
+        Cat:  Sportswear
+        Sports: Cheer
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0050  ID=3MBW001
+        Name: Custom All-Over Print Bowling Shirt
+        Cat:  Polo Shirt
+        Sports: Bowling
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0051  ID=3MES001
+        Name: Custom All-Over Print Esports Jersey
+        Cat:  Sportswear
+        Sports: Esports
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0052  ID=3MTR001
+        Name: Custom All-Over Print Triathlon Suit (One-Piece)
+        Cat:  Sportswear
+        Sports: Triathlon
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0053  ID=3MAF001
+        Name: Custom All-Over Print Australian Rules (AFL) Jersey
+        Cat:  Sportswear
+        Sports: AFL
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0054  ID=3MNB001
+        Name: Custom All-Over Print Netball Dress (Bib Style)
+        Cat:  Sportswear
+        Sports: Netball
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0055  ID=3MAT001
+        Name: Custom All-Over Print Athletics Singlet (Track & Field)
+        Cat:  Sportswear
+        Sports: Athletics
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0056  ID=3MFS001
+        Name: Custom All-Over Print Fishing Shirt (UPF 50+)
+        Cat:  Sportswear
+        Sports: Fishing
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0057  ID=3MGM001
+        Name: Custom All-Over Print Gym Tank Top
+        Cat:  Tank Top & Camis
+        Sports: Gym
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0058  ID=3MDV001
+        Name: Custom All-Over Print Dive Lycra Suit
+        Cat:  Sportswear
+        Sports: Dive
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0059  ID=3MSK002
+        Name: Custom All-Over Print Skating Dress (Figure / Roller)
+        Cat:  Sportswear
+        Sports: Skating
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0060  ID=2HBTSJ19
+        Name: Custom All-Over Print Beach Sports Jersey (Volleyball / Soccer / Rugby)
+        Cat:  Sportswear
+        Sports: Beach
+        Scenarios: Team & Club, Event & Festival, Sports League, School & Education, Promotional Swag
+
+#0061  ID=3WEXPL01
+        Name: Custom All-Over Print Express & Logistics Polo Shirt
+        Cat:  Polo Shirt
+        Sports: 
+        Scenarios: Uniform & Workwear, Corporate & Branding, Construction & Engineering, Express & Logistics
+
+#0062  ID=3WEXPL02
+        Name: Custom All-Over Print Express & Logistics T-Shirt
+        Cat:  T-Shirt
+        Sports: 
+        Scenarios: Uniform & Workwear, Express & Logistics, Corporate & Branding
+
+#0063  ID=3WEXPL03
+        Name: Custom All-Over Print Express & Logistics Hoodie
+        Cat:  Hoodie
+        Sports: 
+        Scenarios: Uniform & Workwear, Express & Logistics, Corporate & Branding
+
+#0064  ID=3WCON01
+        Name: Custom All-Over Print Construction Hoodie (Hi-Vis Option)
+        Cat:  Hoodie
+        Sports: 
+        Scenarios: Construction & Engineering, Uniform & Workwear, Construction & Engineering
+
+#0065  ID=3WCON02
+        Name: Custom All-Over Print Construction Jacket (Insulated)
+        Cat:  Jacket
+        Sports: 
+        Scenarios: Construction & Engineering, Uniform & Workwear
+
+#0066  ID=3WCON03
+        Name: Custom All-Over Print Construction Pants (Cargo)
+        Cat:  Pants
+        Sports: 
+        Scenarios: Construction & Engineering, Uniform & Workwear
+
+#0067  ID=3WCON04
+        Name: Custom All-Over Print Construction T-Shirt (Hi-Vis Option)
+        Cat:  T-Shirt
+        Sports: 
+        Scenarios: Construction & Engineering, Uniform & Workwear
+
+#0068  ID=3WHOS01
+        Name: Custom All-Over Print Hospitality & F&B Polo Shirt
+        Cat:  Polo Shirt
+        Sports: 
+        Scenarios: Hospitality & F&B, Uniform & Workwear, Corporate & Branding
+
+#0069  ID=3WHOS02
+        Name: Custom All-Over Print Hospitality & F&B T-Shirt
+        Cat:  T-Shirt
+        Sports: 
+        Scenarios: Hospitality & F&B, Uniform & Workwear
+
+#0070  ID=3WHOS03
+        Name: Custom All-Over Print Hospitality & F&B Sweatshirt
+        Cat:  Sweatshirt
+        Sports: 
+        Scenarios: Hospitality & F&B, Uniform & Workwear
+
+#0071  ID=3WMED01
+        Name: Custom All-Over Print Medical & Healthcare Scrubs T-Shirt
+        Cat:  T-Shirt
+        Sports: 
+        Scenarios: Medical & Healthcare, Uniform & Workwear
+
+#0072  ID=3WMED02
+        Name: Custom All-Over Print Medical & Healthcare Polo Shirt
+        Cat:  Polo Shirt
+        Sports: 
+        Scenarios: Medical & Healthcare, Uniform & Workwear
+
+#0073  ID=3WSEC01
+        Name: Custom All-Over Print Security & Property Polo Shirt
+        Cat:  Polo Shirt
+        Sports: 
+        Scenarios: Security & Property, Uniform & Workwear, Construction & Engineering
+
+#0074  ID=3WSEC02
+        Name: Custom All-Over Print Security & Property Hoodie
+        Cat:  Hoodie
+        Sports: 
+        Scenarios: Security & Property, Uniform & Workwear
+
+#0075  ID=3WSEC03
+        Name: Custom All-Over Print Security & Property Jacket
+        Cat:  Jacket
+        Sports: 
+        Scenarios: Security & Property, Uniform & Workwear
+
+#0076  ID=3WRTL01
+        Name: Custom All-Over Print Retail & Supermarket Polo Shirt
+        Cat:  Polo Shirt
+        Sports: 
+        Scenarios: Retail & Supermarket, Uniform & Workwear, Retail & Fashion
+
+#0077  ID=3WRTL02
+        Name: Custom All-Over Print Retail & Supermarket T-Shirt
+        Cat:  T-Shirt
+        Sports: 
+        Scenarios: Retail & Supermarket, Uniform & Workwear, Retail & Fashion
+
+#0078  ID=3WRTL03
+        Name: Custom All-Over Print Retail & Supermarket Hoodie
+        Cat:  Hoodie
+        Sports: 
+        Scenarios: Retail & Supermarket, Uniform & Workwear
+
+#0079  ID=3WEDU01
+        Name: Custom All-Over Print School & Education T-Shirt
+        Cat:  T-Shirt
+        Sports: 
+        Scenarios: Education & School, School & Education, Uniform & Workwear
+
+#0080  ID=3WEDU02
+        Name: Custom All-Over Print School & Education Polo Shirt
+        Cat:  Polo Shirt
+        Sports: 
+        Scenarios: Education & School, School & Education, Uniform & Workwear
+
+#0081  ID=3WEDU03
+        Name: Custom All-Over Print School & Education Hoodie
+        Cat:  Hoodie
+        Sports: 
+        Scenarios: Education & School, School & Education, Uniform & Workwear
+
+#0082  ID=3WCOR01
+        Name: Custom All-Over Print Corporate & Promo Polo Shirt
+        Cat:  Polo Shirt
+        Sports: 
+        Scenarios: Corporate & Promo, Corporate & Branding, Uniform & Workwear, Promotional Swag
+
+#0083  ID=3WCOR02
+        Name: Custom All-Over Print Corporate & Promo T-Shirt
+        Cat:  T-Shirt
+        Sports: 
+        Scenarios: Corporate & Promo, Corporate & Branding, Promotional Swag
+
+#0084  ID=3WCOR03
+        Name: Custom All-Over Print Corporate & Promo Hoodie
+        Cat:  Hoodie
+        Sports: 
+        Scenarios: Corporate & Promo, Corporate & Branding, Promotional Swag
+
+#0085  ID=3WTRN01
+        Name: Custom All-Over Print Transit & Transport Polo Shirt
+        Cat:  Polo Shirt
+        Sports: 
+        Scenarios: Transit & Transport, Uniform & Workwear, Express & Logistics
+
+#0086  ID=3WTRN02
+        Name: Custom All-Over Print Transit & Transport Jacket
+        Cat:  Jacket
+        Sports: 
+        Scenarios: Transit & Transport, Uniform & Workwear
+
+#0087  ID=3WTRN03
+        Name: Custom All-Over Print Transit & Transport Hoodie
+        Cat:  Hoodie
+        Sports: 
+        Scenarios: Transit & Transport, Uniform & Workwear
+
+#0088  ID=3WSTU01
+        Name: Custom All-Over Print Studio & Gym Tank Top
+        Cat:  Tank Top & Camis
+        Sports: 
+        Scenarios: Studio & Gym, Uniform & Workwear
+
+#0089  ID=3WSTU02
+        Name: Custom All-Over Print Studio & Gym T-Shirt
+        Cat:  T-Shirt
+        Sports: 
+        Scenarios: Studio & Gym, Uniform & Workwear
+
+#0090  ID=3WSTU03
+        Name: Custom All-Over Print Studio & Gym Leggings
+        Cat:  Pants
+        Sports: 
+        Scenarios: Studio & Gym, Uniform & Workwear
+
+#0091  ID=3WFES01
+        Name: Custom All-Over Print Festival & Holiday T-Shirt
+        Cat:  T-Shirt
+        Sports: 
+        Scenarios: Festival & Holiday, Event & Festival, Music & Merch, Promotional Swag
+
+#0092  ID=3WFES02
+        Name: Custom All-Over Print Festival & Holiday Hoodie
+        Cat:  Hoodie
+        Sports: 
+        Scenarios: Festival & Holiday, Event & Festival, Music & Merch
+
+#0093  ID=3WMIL01
+        Name: Custom All-Over Print Military Wear Training T-Shirt
+        Cat:  T-Shirt
+        Sports: 
+        Scenarios: Military, Uniform & Workwear, Construction & Engineering
+
+#0094  ID=3WMIL02
+        Name: Custom All-Over Print Military Wear Casual Polo
+        Cat:  Polo Shirt
+        Sports: 
+        Scenarios: Military, Uniform & Workwear
+
+#0095  ID=3WBEACH01
+        Name: Custom All-Over Print Beach Sarong (180×110cm)
+        Cat:  Home
+        Sports: Beach
+        Scenarios: Event & Festival, Retail & Fashion, Promotional Swag
+
+#0096  ID=NEWAOP0001
+        Name: Custom All-Over Print Construction Vest (Hi-Vis Option)
+        Cat:  T-Shirt
+        Sports: 
+        Scenarios: Construction & Engineering, Uniform & Workwear
+
+#0097  ID=NEWAOP0002
+        Name: Custom All-Over Print Construction Polo shirt (Hi-Vis Option)
+        Cat:  Polo Shirt
+        Sports: AFL, Athletics, Badminton, Baseball, Basketball, Beach, Bowling, Boxing, Cheer, Cricket, CrossFit, Cycling, Dance, Dive, Esports, Fishing, Football, Golf, Gym, Hockey, Lacrosse, MMA, Martial Arts, Netball, Pilates, Rugby, Running, Skate, Skating, Ski, Snowboard, Soccer, Softball, Surf, Swimwear, Table Tennis, Tennis, Triathlon, Volleyball, Wrestling, Yoga
+        Scenarios: Construction & Engineering, Uniform & Workwear
+
+#0098  ID=NEWAOP0003
+        Name: Custom All-Over Print Hospitality & F&B Uniform
+        Cat:  Jacket
+        Sports: AFL, Athletics, Badminton, Baseball, Basketball, Beach, Bowling, Boxing, Cheer, Cricket, CrossFit, Cycling, Dance, Dive, Esports, Fishing, Football, Golf, Gym, Hockey, Lacrosse, MMA, Martial Arts, Netball, Pilates, Rugby, Running, Skate, Skating, Ski, Snowboard, Soccer, Softball, Surf, Swimwear, Table Tennis, Tennis, Triathlon, Volleyball, Wrestling, Yoga
+        Scenarios: Hospitality & F&B, Uniform & Workwear
+
+#0099  ID=NEWAOP0004
+        Name: Custom All-Over Print Hospitality & F&B Hoodie
+        Cat:  Hoodie
+        Sports: 
+        Scenarios: Hospitality & F&B
+
+#0100  ID=NEWAOP0005
+        Name: Custom All-Over Print Security & Property T-shirt
+        Cat:  T-Shirt
+        Sports: 
+        Scenarios: Security & Property
+
+#0101  ID=NEWAOP0006
+        Name: Custom All-Over Print Retail & Supermarket Jacket
+        Cat:  Jacket
+        Sports: 
+        Scenarios: Retail & Supermarket
+
+#0102  ID=NEWAOP0007
+        Name: Custom All-Over Print Festival & Holiday Shirt
+        Cat:  Shirt
+        Sports: 
+        Scenarios: Event & Festival
+
+#0103  ID=NEWAOP0008
+        Name: Custom All-Over Print Music Tour & Festival Merch Shirt
+        Cat:  Shirt
+        Sports: 
+        Scenarios: Music & Merch, Event & Festival
+
+#0104  ID=NEWAOP0009
+        Name: Custom All-Over Print Music Tour & Festival Merch T-shirt
+        Cat:  T-Shirt
+        Sports: 
+        Scenarios: Music & Merch, Event & Festival
+
+#0105  ID=NEWAOP0010
+        Name: Custom All-Over Print Music Tour & Festival Merch Hoodie
+        Cat:  Hoodie
+        Sports: 
+        Scenarios: Music & Merch, Event & Festival
+
+#0106  ID=NEWAOP0011
+        Name: Custom All-Over Print Military Wear Cap
+        Cat:  Cap
+        Sports: 
+        Scenarios: Military
+
+#0107  ID=NEWAOP0012
+        Name: Custom All-Over Print Military Wear Hoodie
+        Cat:  Hoodie
+        Sports: 
+        Scenarios: Military
+
+#0108  ID=NEWAOP0013
+        Name: Custom All-Over Print Trade Show & Display T-shirt
+        Cat:  T-Shirt
+        Sports: 
+        Scenarios: Event & Festival, Corporate & Branding
+
+#0109  ID=NEWAOP0014
+        Name: Custom All-Over Print Trade Show & Display Polo shirt
+        Cat:  Polo Shirt
+        Sports: AFL, Athletics, Badminton, Baseball, Basketball, Beach, Bowling, Boxing, Cheer, Cricket, CrossFit, Cycling, Dance, Dive, Esports, Fishing, Football, Golf, Gym, Hockey, Lacrosse, MMA, Martial Arts, Netball, Pilates, Rugby, Running, Skate, Skating, Ski, Snowboard, Soccer, Softball, Surf, Swimwear, Table Tennis, Tennis, Triathlon, Volleyball, Wrestling, Yoga
+        Scenarios: Event & Festival, Corporate & Branding
+
+#0110  ID=NEWAOP0015
+        Name: Custom All-Over Print Trade Show & Display Hoodie
+        Cat:  Hoodie
+        Sports: 
+        Scenarios: Event & Festival, Corporate & Branding
+
+#0111  ID=NEWAOP0016
+        Name: Custom All-Over Print Trade Show & Display Cap
+        Cat:  Cap
+        Sports: 
+        Scenarios: Event & Festival, Corporate & Branding
+
+#0112  ID=NEWAOP0017
+        Name: Custom All-Over Print Political Campaigns T-shirt
+        Cat:  T-Shirt
+        Sports: 
+        Scenarios: Political Campaign
+
+#0113  ID=NEWAOP0018
+        Name: Custom All-Over Print Political Campaigns Polo shirt
+        Cat:  Polo Shirt
+        Sports: AFL, Athletics, Badminton, Baseball, Basketball, Beach, Bowling, Boxing, Cheer, Cricket, CrossFit, Cycling, Dance, Dive, Esports, Fishing, Football, Golf, Gym, Hockey, Lacrosse, MMA, Martial Arts, Netball, Pilates, Rugby, Running, Skate, Skating, Ski, Snowboard, Soccer, Softball, Surf, Swimwear, Table Tennis, Tennis, Triathlon, Volleyball, Wrestling, Yoga
+        Scenarios: Political Campaign
+
+#0114  ID=NEWAOP0019
+        Name: Custom All-Over Print Political Campaigns Hoodie
+        Cat:  Hoodie
+        Sports: 
+        Scenarios: Political Campaign
+
+#0115  ID=NEWAOP0020
+        Name: Custom All-Over Print Political Campaigns Cap
+        Cat:  Cap
+        Sports: 
+        Scenarios: Political Campaign
+
+#0116  ID=NEWAOP0021
+        Name: Custom All-Over Print Medical & Healthcare Nurse Skirt
+        Cat:  Skirt
+        Sports: AFL, Athletics, Badminton, Baseball, Basketball, Beach, Bowling, Boxing, Cheer, Cricket, CrossFit, Cycling, Dance, Dive, Esports, Fishing, Football, Golf, Gym, Hockey, Lacrosse, MMA, Martial Arts, Netball, Pilates, Rugby, Running, Skate, Skating, Ski, Snowboard, Soccer, Softball, Surf, Swimwear, Table Tennis, Tennis, Triathlon, Volleyball, Wrestling, Yoga
+        Scenarios: Medical & Healthcare
+
+#0117  ID=NEWAOP0022
+        Name: Custom All-Over Print Medical & Healthcare Jacket
+        Cat:  Jacket
+        Sports: 
+        Scenarios: Medical & Healthcare
+
+#0118  ID=NEWAOP0023
+        Name: Custom All-Over Print Transit & Transport T-shirt
+        Cat:  T-Shirt
+        Sports: AFL, Athletics, Badminton, Baseball, Basketball, Beach, Bowling, Boxing, Cheer, Cricket, CrossFit, Cycling, Dance, Dive, Esports, Fishing, Football, Golf, Gym, Hockey, Lacrosse, MMA, Martial Arts, Netball, Pilates, Rugby, Running, Skate, Skating, Ski, Snowboard, Soccer, Softball, Surf, Swimwear, Table Tennis, Tennis, Triathlon, Volleyball, Wrestling, Yoga
+        Scenarios: Transit & Transport, Sports League
+
+#0119  ID=NEWAOP0024
+        Name: Custom All-Over Print Studio & Gym Hoodie
+        Cat:  Hoodie
+        Sports: AFL, Athletics, Badminton, Baseball, Basketball, Beach, Bowling, Boxing, Cheer, Cricket, CrossFit, Cycling, Dance, Dive, Esports, Fishing, Football, Golf, Gym, Hockey, Lacrosse, MMA, Martial Arts, Netball, Pilates, Rugby, Running, Skate, Skating, Ski, Snowboard, Soccer, Softball, Surf, Swimwear, Table Tennis, Tennis, Triathlon, Volleyball, Wrestling, Yoga
+        Scenarios: Studio & Gym
+
