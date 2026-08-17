@@ -206,28 +206,23 @@ export default async function ProductDetailPage({
                 </h2>
               </div>
 
-              <div className="space-y-2 md:space-y-3">
+              <div className="space-y-1.5">
                 {product.fabrics.map((f, i) => (
                   <div
                     key={i}
-                    className="flex flex-col gap-1 border-2 border-black/10 bg-[#f5f5f5] p-3 md:flex-row md:items-center md:justify-between md:gap-4 md:p-4"
+                    className="flex items-center justify-between gap-2 border border-black/10 bg-[#f5f5f5] px-3 py-1.5"
                   >
-                    <div className="flex-1">
-                      <div className="text-[11px] font-black uppercase text-black md:text-sm">
+                    <div className="flex flex-1 items-center gap-2 min-w-0">
+                      <span className="text-[10px] font-black uppercase text-black md:text-xs">
                         {f.material}
-                      </div>
-                      <div className="mt-0.5 text-[10px] uppercase tracking-wide text-[#6b6b6b] md:text-xs">
-                        {f.process}
-                      </div>
-                      {f.gsmOptions && (
-                        <div className="mt-0.5 text-[10px] text-[#6b6b6b] md:text-[11px]">
-                          GSM: {f.gsmOptions}
-                        </div>
-                      )}
+                      </span>
+                      <span className="hidden text-[9px] uppercase tracking-wide text-[#6b6b6b] sm:inline md:text-[10px]">
+                        · {f.process}
+                      </span>
                     </div>
-                    <div className="rounded-sm bg-white px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-black md:text-xs">
+                    <span className="flex-shrink-0 bg-white px-1.5 py-0.5 text-[10px] font-black tracking-wide text-black md:text-xs">
                       {f.gsm}
-                    </div>
+                    </span>
                   </div>
                 ))}
               </div>
