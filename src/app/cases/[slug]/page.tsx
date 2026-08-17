@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import {
   CalendarDays,
   Megaphone,
@@ -22,6 +23,7 @@ import {
 import { industries, getIndustryBySlug } from "@/lib/cases";
 import { products, type Product } from "@/lib/products-data";
 import { tagArchiveLink } from "@/lib/tag-utils";
+import { getProductImages } from "@/lib/product-images";
 
 const iconMap: Record<string, typeof CalendarDays> = {
   CalendarDays,
@@ -154,9 +156,29 @@ export default async function CaseCategoryPage({ params }: Props) {
                     href={`/products/all/${p.slug}/`}
                     className="group flex flex-col border-2 border-black bg-white p-4 transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0_0_#ff4d00]"
                   >
-                    <div className="mb-3 flex aspect-square items-center justify-center border-2 border-black bg-gradient-to-br from-[#0a0a0a] to-[#1a1a1a] text-5xl font-black text-white">
-                      {p.category.charAt(0)}
-                    </div>
+                  {(() => {
+                    const imgs = getProductImages(p.number);
+                    const first = imgs[0];
+                    if (first) {
+                      return (
+                        <div className="relative mb-3 aspect-square overflow-hidden border-2 border-black bg-[#F5F5F5]">
+                          <Image
+                            src={first}
+                            alt={`${p.name} - custom ${p.category.toLowerCase()} from SublimApparel`}
+                            fill
+                            sizes="(max-width: 768px) 50vw, 25vw"
+                            className="object-contain"
+                            loading="lazy"
+                          />
+                        </div>
+                      );
+                    }
+                    return (
+                      <div className="mb-3 flex aspect-square items-center justify-center border-2 border-black bg-gradient-to-br from-[#0a0a0a] to-[#1a1a1a] text-5xl font-black text-white">
+                        {p.category.charAt(0)}
+                      </div>
+                    );
+                  })()}
                     <div className="text-[10px] font-black uppercase tracking-widest text-[#ff4d00]">
                       {p.category}
                     </div>
