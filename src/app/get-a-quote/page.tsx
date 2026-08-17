@@ -32,7 +32,7 @@ const whatHappens = [
     icon: Clock,
     time: "Production: 7–15 days",
     title: "We start production",
-    desc: "After artwork approval + 30% deposit. We send photos of the bulk sample before shipping the full run.",
+    desc: "After artwork/sample approval + deposit. We send photos of the bulk sample before shipping your products.",
   },
   {
     icon: Check,
