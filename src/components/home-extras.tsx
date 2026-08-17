@@ -199,29 +199,16 @@ function LiveActivity() {
 
 function LogoWall() {
   return (
-    <section className="bg-white py-12 md:py-16 border-y border-neutral-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="text-center mb-6 md:mb-8">
-          <div className="text-[10px] md:text-xs uppercase tracking-widest text-neutral-500 font-semibold mb-2">
-            Trusted by brands, teams &amp; agencies worldwide
-          </div>
-          <h2 className="text-xl md:text-2xl font-bold text-[#0a0a0a]">
-            200+ organizations across 50+ countries
-          </h2>
-        </div>
-        <div className="relative w-full max-w-5xl mx-auto">
-          <Image
-            src="/logo-wall.webp"
-            alt="Client logo wall — 200+ brands, teams and agencies trust SublimApparel for custom sublimation apparel: Phantom Performance, Atlas, Ignition Training, Valor Fitness, React Sports, Elevate, Ironclad, Ocean Drive, Xplore, Summit, Fuel, Pride Athletics, Vital Wellness, Xcel, Falcon, Select, Velocity Cycling, Aspire, No Days Off, Stride, Hoop Culture"
-            width={1600}
-            height={1000}
-            className="w-full h-auto"
-            priority={false}
-          />
-        </div>
-        <div className="text-center mt-4 text-xs text-neutral-500">
-          + many more brands, racing teams, music acts and event organizers we&apos;ve produced for
-        </div>
+    <section className="bg-white py-4 md:py-6 border-y border-neutral-200">
+      <div className="w-full max-w-6xl mx-auto px-4 sm:px-6">
+        <Image
+          src="/logowall.png"
+          alt="Client logo wall — 200+ brands, teams and agencies trust SublimApparel for custom sublimation apparel"
+          width={1672}
+          height={941}
+          className="w-full h-auto max-h-20 sm:max-h-24 md:max-h-28 block"
+          priority={false}
+        />
       </div>
     </section>
   );
