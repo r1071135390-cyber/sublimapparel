@@ -7,7 +7,7 @@ import { TeamSection } from "@/components/contact-team";
 export const metadata = {
   title: "Contact Us — Real Person in Yiwu, 24h Response",
   description:
-    "Real production managers in Yiwu, China — not chatbots. WhatsApp, email, WeChat. Reply in 24h, quote in 12h, sample in 5 days, bulk in 21 days.",
+    "Real production managers in Yiwu, China — not chatbots. WhatsApp, email. Reply in 24h, quote in 12h, sample in 5 days, bulk in 21 days.",
 
   openGraph: {
     images: ["/contact-hero.webp"],
@@ -58,7 +58,7 @@ export default function ContactPage() {
             </h1>
             <p className="mt-4 max-w-md text-base leading-relaxed text-white/80 md:text-lg">
               Real production managers in Yiwu, China — not chatbots.
-              WhatsApp, email, WeChat. Average reply time: under 24 hours.
+              WhatsApp, email. Average reply time: under 24 hours.
             </p>
           </div>
         </div>
