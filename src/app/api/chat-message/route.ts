@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseClient } from "@/lib/supabase-client";
+import { sendChatNotificationEmail } from "@/lib/email";
 
 // Email format validation
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -73,10 +74,26 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Send notification email to info@sublimapparel.com
+    // We don't fail the request if email fails — DB record is the source of truth
+    const emailResult = await sendChatNotificationEmail({
+      id: data?.id ?? "",
+      name,
+      email,
+      topic,
+      message,
+      pageUrl,
+      userAgent: req.headers.get("user-agent")?.slice(0, 500) ?? null,
+      createdAt: data?.created_at,
+    });
+
     return NextResponse.json({
       ok: true,
       id: data?.id,
       received_at: data?.created_at,
+      email_sent: emailResult.ok,
+      // Only surface email errors in dev — in prod we silently log
+      ...(emailResult.ok ? {} : { email_error: "notification unavailable" }),
     });
   } catch (err) {
     console.error("[/api/chat-message] exception:", err);
