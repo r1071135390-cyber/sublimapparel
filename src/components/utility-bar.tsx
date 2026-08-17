@@ -25,7 +25,7 @@ export function UtilityBar() {
         <ul className="flex flex-wrap items-center gap-x-5 gap-y-1">
           <li>
             <a
-              href="https://wa.me/86138XXXXXXXX"
+              href="https://wa.me/8619817930190"
               className="hover:text-[#ff4d00]"
             >
               <span className="font-bold uppercase tracking-wider text-white/60">

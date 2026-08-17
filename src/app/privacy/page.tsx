@@ -29,7 +29,7 @@ const SECTIONS = [
           <br />
           <strong>Email:</strong> info@sublimapparel.com
           <br />
-          <strong>WhatsApp:</strong> +86 137 6459 3988
+          <strong>WhatsApp:</strong> +86 198 1793 0190
         </p>
       </>
     ),

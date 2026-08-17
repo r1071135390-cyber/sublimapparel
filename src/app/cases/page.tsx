@@ -53,7 +53,7 @@ export default function CasesPage() {
             <span>MOQ from 50 pcs</span>
           </div>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-1">
-            <span>WhatsApp · +86 137 6459 3988</span>
+            <span>WhatsApp · +86 198 1793 0190</span>
             <span className="text-[#00c2ff]">·</span>
             <span>Replies within 1 business day</span>
           </div>
@@ -83,7 +83,7 @@ export default function CasesPage() {
               <ArrowRight size={16} strokeWidth={3} />
             </Link>
             <a
-              href="https://wa.me/8613757901100"
+              href="https://wa.me/8619817930190"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 border-2 border-black bg-white px-6 py-3 text-sm font-black uppercase tracking-wider transition-all hover:bg-black hover:text-white"

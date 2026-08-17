@@ -236,8 +236,8 @@ export function Contact() {
                   WhatsApp
                 </div>
                 <div className="mt-1 text-base font-bold text-black">
-                  <a href="https://wa.me/8613764593988" target="_blank" rel="noopener noreferrer" className="hover:text-[#ff4d00]">
-                    +86 137 6459 3988
+                  <a href="https://wa.me/8619817930190" target="_blank" rel="noopener noreferrer" className="hover:text-[#ff4d00]">
+                    +86 198 1793 0190
                   </a>
                 </div>
               </div>
