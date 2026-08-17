@@ -199,14 +199,15 @@ function LiveActivity() {
 
 function LogoWall() {
   return (
-    <section className="bg-white py-4 md:py-6 border-y border-neutral-200">
-      <div className="w-full max-w-6xl mx-auto px-4 sm:px-6">
+    <section className="bg-white py-6 md:py-8 border-y border-neutral-200">
+      <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <Image
-          src="/logowall.png"
+          src="/logowall.webp"
           alt="Client logo wall — 200+ brands, teams and agencies trust SublimApparel for custom sublimation apparel"
           width={1672}
           height={941}
-          className="w-full h-auto max-h-20 sm:max-h-24 md:max-h-28 block"
+          sizes="(max-width: 768px) 100vw, 1152px"
+          className="w-full h-auto block"
           priority={false}
         />
       </div>
