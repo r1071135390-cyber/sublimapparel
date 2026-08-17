@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Contact } from "@/components/contact";
 import Image from "next/image";
 import Link from "next/link";
@@ -6,12 +7,29 @@ import { tagArchiveLink, resolveArchiveLink } from "@/lib/tag-utils";
 import { CATEGORY_TAGS } from "@/lib/tag-archive";
 import { KeywordCloud } from "@/components/keyword-cloud";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Custom Sublimation & Cotton Apparel — T-Shirts, Hoodies, Sportswear",
   description:
     "Custom sublimated apparel for B2B: t-shirts, jerseys, hoodies, cycling kits, golf polos, racing suits. No setup fees, MOQ 50 pcs, full color all-over print, sample in 5 days.",
+  keywords: [
+    "custom sublimation apparel",
+    "all-over print manufacturer",
+    "sublimated t-shirts",
+    "custom jerseys",
+    "sublimation hoodies",
+    "cycling kits custom",
+    "golf polos custom",
+    "racing suits sublimation",
+    "B2B apparel manufacturer",
+    "MOQ 50 custom apparel",
+    "all over print t-shirts",
+    "sublimation factory China",
+  ],
 
   openGraph: {
+    title: "Custom Sublimation & Cotton Apparel — T-Shirts, Hoodies, Sportswear",
+    description:
+      "Custom sublimated apparel for B2B: t-shirts, jerseys, hoodies, cycling kits, golf polos, racing suits. No setup fees, MOQ 50 pcs, full color all-over print, sample in 5 days.",
     images: ["/product-hero-products.webp"],
   },
 };

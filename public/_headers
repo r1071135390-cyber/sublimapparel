@@ -1,0 +1,46 @@
+# sublimapparel.com - Cloudflare Pages edge rules
+# https://developers.cloudflare.com/pages/configuration/headers/
+
+/*
+  # Edge cache: 5 min fresh, 1 day stale-while-revalidate (deploys are fast, OK to revalidate)
+  Cache-Control: public, max-age=0, must-revalidate, s-maxage=300, stale-while-revalidate=86400
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  # HSTS: 1 year, include subdomains, preload-ready
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  # Remove server fingerprint
+  X-Powered-By: ""
+
+# Hashed Next.js assets — long cache, immutable
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# User-uploaded media — week browser, month edge
+/*.webp
+  Cache-Control: public, max-age=604800, s-maxage=2592000, stale-while-revalidate=31536000
+/*.jpg
+  Cache-Control: public, max-age=604800, s-maxage=2592000, stale-while-revalidate=31536000
+/*.jpeg
+  Cache-Control: public, max-age=604800, s-maxage=2592000, stale-while-revalidate=31536000
+/*.png
+  Cache-Control: public, max-age=604800, s-maxage=2592000, stale-while-revalidate=31536000
+/*.gif
+  Cache-Control: public, max-age=604800, s-maxage=2592000, stale-while-revalidate=31536000
+/*.svg
+  Cache-Control: public, max-age=604800, s-maxage=2592000, stale-while-revalidate=31536000
+/*.avif
+  Cache-Control: public, max-age=604800, s-maxage=2592000, stale-while-revalidate=31536000
+/*.mp4
+  Cache-Control: public, max-age=604800, s-maxage=2592000, stale-while-revalidate=31536000
+/*.webm
+  Cache-Control: public, max-age=604800, s-maxage=2592000, stale-while-revalidate=31536000
+
+# Sitemap & robots — short edge cache so updates propagate
+/sitemap.xml
+  Cache-Control: public, max-age=0, must-revalidate, s-maxage=3600
+  Content-Type: application/xml; charset=utf-8
+/robots.txt
+  Cache-Control: public, max-age=0, must-revalidate, s-maxage=3600
+  Content-Type: text/plain; charset=utf-8

@@ -9,7 +9,7 @@ export const organizationJsonLd = {
   name: "SublimApparel",
   url: SITE_URL,
   logo: `${SITE_URL}/icon.png`,
-  foundingDate: "2014",
+  foundingDate: "2018",
   description:
     "Yiwu-based sublimation printing factory. All-over print on polyester and cotton, MOQ 50, DDP to 100+ countries, US warehouse in Fontana CA.",
   address: {

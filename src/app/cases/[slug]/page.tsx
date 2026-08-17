@@ -281,7 +281,7 @@ export default async function CaseCategoryPage({ params }: Props) {
       <section className="border-b-2 border-black bg-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-12 md:py-16">
           <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.3em] text-muted-foreground">
-            12 industries · serving 50+ countries · since 2014
+            12 industries · serving 50+ countries · since 2018
           </p>
           <h2 className="mb-6 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
             [ Other industries — {industries.length - 1} more ]

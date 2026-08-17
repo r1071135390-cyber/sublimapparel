@@ -22,6 +22,8 @@ const nextConfig: NextConfig = {
     reactRemoveProperties: { properties: ['^data-inspector-'] },
     removeConsole: { exclude: ['error'] },
   },
+  // Edge cache & security headers are configured in `public/_headers`
+  // (Next.js output:export does not support headers() — must be a static file)
 };
 
 export default nextConfig;
