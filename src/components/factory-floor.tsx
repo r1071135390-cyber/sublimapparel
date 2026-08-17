@@ -8,7 +8,7 @@ export function FactoryFloor() {
         <div className="mb-12 flex items-end justify-between border-b-2 border-black pb-6">
           <div>
             <div className="mb-2 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
-              [ 004.5 / Factory Floor ]
+              [ 002 / Factory Floor ]
             </div>
             <h2 className="text-4xl font-black uppercase leading-none tracking-tight md:text-6xl">
               Inside the<br />

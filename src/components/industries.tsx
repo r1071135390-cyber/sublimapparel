@@ -124,7 +124,7 @@ export function Industries() {
         {/* Header */}
         <div className="mb-12 border-b-2 border-black pb-6">
           <div className="mb-2 text-xs font-black uppercase tracking-widest">
-            [ 006 / Industries We Serve ]
+            [ 009 / Industries We Serve ]
           </div>
           <h2 className="text-4xl font-black uppercase leading-none tracking-tight md:text-6xl">
             Who we work<br />

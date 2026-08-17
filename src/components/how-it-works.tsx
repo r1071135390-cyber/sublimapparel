@@ -48,7 +48,7 @@ export function HowItWorks() {
         <div className="mb-12 flex items-end justify-between border-b border-white/15 pb-6 md:mb-16">
           <div>
             <div className="mb-2 text-xs font-black uppercase tracking-widest text-white/60">
-              [ 003 / How it works ]
+              [ 005 / How it works ]
             </div>
             <h2 className="text-4xl font-black uppercase leading-none tracking-tight md:text-6xl">
               From artwork to door.

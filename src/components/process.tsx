@@ -51,7 +51,7 @@ export function Process() {
         <div className="mb-12 flex items-end justify-between border-b-2 border-white pb-6">
           <div>
             <div className="mb-2 text-xs font-black uppercase tracking-widest text-[#00c2ff]">
-              [ 004 / Process ]
+              [ 007 / Process ]
             </div>
             <h2 className="text-4xl font-black uppercase leading-none tracking-tight md:text-6xl">
               How it <span className="italic text-[#ff4d00]">works.</span>

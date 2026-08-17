@@ -124,13 +124,13 @@ export default function Home() {
       <Hero />
       <BeyondApparel />
       <InquiryCTA />
+      <FactoryFloor />
+      <VideoShowcase />
       <Features />
       <ArtworkCTA />
       <HowItWorks />
       <Products />
       <Process />
-      <FactoryFloor />
-      <VideoShowcase />
       <DDP />
       <Industries />
       <HomeExtras />

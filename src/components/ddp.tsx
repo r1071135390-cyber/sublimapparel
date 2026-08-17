@@ -8,7 +8,7 @@ export function DDP() {
         {/* Section header */}
         <div className="mb-12 border-b-2 border-black pb-6">
           <div className="mb-2 text-xs font-black uppercase tracking-widest">
-            [ 005 / Logistics ]
+            [ 008 / Logistics ]
           </div>
           <h2 className="text-2xl font-black uppercase leading-tight tracking-tight md:whitespace-nowrap md:text-4xl md:leading-none">
             You order. We deliver.{" "}

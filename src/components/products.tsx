@@ -96,7 +96,7 @@ export function Products() {
         <div className="mb-12 flex items-end justify-between border-b-2 border-black pb-6">
           <div>
             <div className="mb-2 text-xs font-black uppercase tracking-widest text-black/60">
-              [ 003 / Products ]
+              [ 006 / Products ]
             </div>
             <h2 className="text-4xl font-black uppercase leading-none tracking-tight text-black md:text-6xl">
               What we make.
