@@ -177,19 +177,6 @@ export function FloatingChat() {
               WhatsApp
             </span>
           </a>
-
-          {/* BOTTOM: Vertical "Contact Us" tab — MyStickyElements style */}
-          <div
-            className="flex h-32 w-14 items-center justify-center rounded-l-xl bg-[#1a1a1a] text-white shadow-lg ring-1 ring-black/10 md:h-40 md:w-16"
-            aria-hidden
-          >
-            <span
-              className="select-none text-[10px] font-black uppercase tracking-[0.25em] text-white/90 md:text-xs"
-              style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
-            >
-              Contact Us
-            </span>
-          </div>
         </div>
       </div>
 
