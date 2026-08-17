@@ -38,7 +38,7 @@ const whatHappens = [
     icon: Check,
     time: "Delivered to your door",
     title: "DDP to 100+ countries",
-    desc: "We pick the most economical shipping option based on your delivery deadline. And we will handle customs, duties, and last-mile if needed.",
+    desc: "We review the shipping options with you based on your delivery deadline, then handle customs, duties, and last-mile if needed.",
   },
 ];
 
