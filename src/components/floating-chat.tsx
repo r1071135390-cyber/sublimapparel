@@ -38,6 +38,11 @@ const TOPICS: TopicChip[] = [
 
 type SubmitState = "idle" | "submitting" | "success" | "error";
 
+// Update this to the real WhatsApp number (international format, no + or spaces)
+const WHATSAPP_NUMBER = "8619817930190";
+const WHATSAPP_PREFILL =
+  "Hi SublimApparel, I'd like to chat about a custom sublimation order.";
+
 export function FloatingChat() {
   const [open, setOpen] = useState(false);
   const [topic, setTopic] = useState<TopicKey>("quote");
@@ -48,29 +53,43 @@ export function FloatingChat() {
   const [errorText, setErrorText] = useState("");
   const panelRef = useRef<HTMLDivElement | null>(null);
 
-  // Close on outside click
+  // Close on outside click + Escape
   useEffect(() => {
     if (!open) return;
-    const handler = (e: MouseEvent) => {
-      if (
-        panelRef.current &&
-        !panelRef.current.contains(e.target as Node) &&
-        !(e.target as HTMLElement).closest("[data-chat-trigger]")
-      ) {
-        setOpen(false);
+    const onClick = (e: MouseEvent) => {
+      if (panelRef.current && !panelRef.current.contains(e.target as Node)) {
+        const target = e.target as HTMLElement;
+        if (!target.closest("[data-floating-chat-trigger]")) {
+          setOpen(false);
+        }
       }
     };
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("mousedown", onClick);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onClick);
+      document.removeEventListener("keydown", onKey);
+    };
   }, [open]);
 
-  const handleTopic = (key: TopicKey) => {
-    setTopic(key);
-    const t = TOPICS.find((x) => x.key === key);
-    if (t && t.draft) setMessage(t.draft);
+  const onTopicClick = (chip: TopicChip) => {
+    setTopic(chip.key);
+    setMessage(chip.draft);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const reset = () => {
+    setName("");
+    setEmail("");
+    setMessage(TOPICS[0].draft);
+    setTopic("quote");
+    setState("idle");
+    setErrorText("");
+  };
+
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (state === "submitting") return;
     setState("submitting");
@@ -88,121 +107,183 @@ export function FloatingChat() {
         }),
       });
       const data = await res.json();
-      if (!res.ok || !data?.ok) {
-        setErrorText(data?.error || `HTTP ${res.status}`);
+      if (!res.ok || !data.ok) {
         setState("error");
+        setErrorText(data?.error ?? "Failed to send. Please try again.");
         return;
       }
       setState("success");
     } catch (err) {
-      setErrorText(err instanceof Error ? err.message : "Network error");
       setState("error");
+      setErrorText("Network error. Please check your connection and retry.");
     }
   };
 
-  const resetForm = () => {
-    setName("");
-    setEmail("");
-    setTopic("quote");
-    setMessage(TOPICS[0].draft);
-    setState("idle");
-    setErrorText("");
-  };
+  const whatsappHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+    WHATSAPP_PREFILL
+  )}`;
 
   return (
     <>
-      {/* Floating trigger button */}
-      <button
-        type="button"
-        data-chat-trigger
-        onClick={() => setOpen((o) => !o)}
-        aria-label={open ? "Close chat" : "Open chat"}
-        className="fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#ff4d00] text-white shadow-[0_8px_30px_rgba(255,77,0,0.45)] transition hover:scale-105 hover:bg-[#ff5a14] active:scale-95 md:bottom-7 md:right-7"
+      {/* Sticky right-side sidebar — MyStickyElements style */}
+      <div
+        className="fixed right-0 top-1/2 z-40 -translate-y-1/2 select-none"
+        aria-label="Quick contact"
       >
-        {open ? (
-          <svg className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M6 6l12 12M6 18L18 6" />
-          </svg>
-        ) : (
-          <svg className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.86 9.86 0 01-4-.8L3 21l1.8-5A7.96 7.96 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-          </svg>
-        )}
-        {/* Unread pulse dot when closed */}
-        {!open && (
-          <span className="absolute right-1 top-1 h-3 w-3 rounded-full border-2 border-white bg-[#00c2ff]" />
-        )}
-      </button>
+        <div className="flex flex-col gap-1.5 pr-0">
+          {/* TOP: Message (opens chat panel) */}
+          <button
+            type="button"
+            data-floating-chat-trigger
+            onClick={() => {
+              reset();
+              setOpen((o) => !o);
+            }}
+            aria-label={open ? "Close message" : "Send us a message"}
+            className="group relative flex h-14 w-14 items-center justify-center rounded-l-xl bg-[#ff4d00] text-white shadow-lg ring-1 ring-black/10 transition-all duration-200 hover:w-20 hover:shadow-2xl md:h-16 md:w-16 md:hover:w-24"
+          >
+            <svg
+              className="h-6 w-6 md:h-7 md:w-7"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+            </svg>
+            <span className="pointer-events-none ml-2 hidden whitespace-nowrap text-xs font-black uppercase tracking-wider opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-hover:inline md:text-sm">
+              {open ? "Close" : "Message"}
+            </span>
+          </button>
 
-      {/* Chat panel */}
+          {/* MIDDLE: WhatsApp (top tab label rotated) */}
+          <a
+            href={whatsappHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Chat on WhatsApp"
+            className="group relative flex h-14 w-14 items-center justify-center rounded-l-xl bg-[#25D366] text-white shadow-lg ring-1 ring-black/10 transition-all duration-200 hover:w-20 hover:shadow-2xl md:h-16 md:w-16 md:hover:w-24"
+          >
+            <svg
+              className="h-6 w-6 md:h-7 md:w-7"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z" />
+            </svg>
+            <span className="pointer-events-none ml-2 hidden whitespace-nowrap text-xs font-black uppercase tracking-wider opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-hover:inline md:text-sm">
+              WhatsApp
+            </span>
+          </a>
+
+          {/* BOTTOM: Vertical "Contact Us" tab — MyStickyElements style */}
+          <div
+            className="flex h-32 w-14 items-center justify-center rounded-l-xl bg-[#1a1a1a] text-white shadow-lg ring-1 ring-black/10 md:h-40 md:w-16"
+            aria-hidden
+          >
+            <span
+              className="select-none text-[10px] font-black uppercase tracking-[0.25em] text-white/90 md:text-xs"
+              style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
+            >
+              Contact Us
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Chat panel (slides in from right) */}
       {open && (
         <div
           ref={panelRef}
-          className="fixed bottom-24 right-3 z-50 w-[calc(100vw-24px)] max-w-[360px] overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-[0_20px_60px_rgba(0,0,0,0.25)] md:right-7"
           role="dialog"
-          aria-label="Chat with SublimApparel"
+          aria-label="Send us a message"
+          className="fixed bottom-4 right-20 z-50 w-[calc(100vw-2rem)] max-w-[360px] overflow-hidden rounded-2xl border border-black/10 bg-white shadow-2xl ring-1 ring-black/5 md:bottom-auto md:right-24 md:top-1/2 md:-translate-y-1/2"
         >
           {/* Header */}
-          <div className="bg-[#0a0a0a] px-5 py-4 text-white">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <span className="relative flex h-2.5 w-2.5">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#00c2ff] opacity-75" />
-                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#00c2ff]" />
-                </span>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-white/90">
-                  Online · 24h reply
-                </span>
+          <div className="flex items-center justify-between gap-2 bg-[#0a0a0a] px-4 py-3 text-white">
+            <div className="flex items-center gap-2">
+              <div className="relative">
+                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#ff4d00] text-sm font-black">
+                  SA
+                </div>
+                <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-[#0a0a0a] bg-emerald-400" />
               </div>
-              <span className="text-[10px] text-white/50">EN / 中文</span>
+              <div className="leading-tight">
+                <div className="text-sm font-bold">SublimApparel</div>
+                <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-emerald-400">
+                  <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                  Online · 24h reply
+                </div>
+              </div>
             </div>
-            <h3 className="mt-2 text-lg font-black leading-tight">
-              Send us a message
-            </h3>
-            <p className="mt-1 text-xs text-white/70">
-              Real person, no chatbot. We reply within 24h, Mon–Sat.
-            </p>
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              aria-label="Close"
+              className="rounded p-1 text-white/60 transition hover:bg-white/10 hover:text-white"
+            >
+              <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                <path d="M6 6l12 12M6 18L18 6" />
+              </svg>
+            </button>
           </div>
 
           {/* Body */}
-          <div className="max-h-[70vh] overflow-y-auto bg-white">
-            {/* Bot bubble */}
-            <div className="px-5 pt-4">
-              <div className="flex items-start gap-2">
-                <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-[#ff4d00] text-[11px] font-black text-white">
-                  SA
-                </div>
-                <div className="rounded-2xl rounded-tl-sm bg-neutral-100 px-3 py-2 text-sm text-neutral-800">
-                  Hi! What can we help you with today?
-                </div>
-              </div>
-            </div>
-
+          <div className="max-h-[70vh] overflow-y-auto p-4">
             {state === "success" ? (
-              <SuccessView onReset={resetForm} />
+              <div className="py-6 text-center">
+                <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+                  <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <div className="text-base font-bold text-black">Message sent</div>
+                <div className="mt-1 text-sm text-black/60">
+                  We&apos;ll reply to <span className="font-semibold text-black">{email}</span> within 24 hours.
+                </div>
+                <button
+                  type="button"
+                  onClick={reset}
+                  className="mt-5 inline-flex items-center gap-1.5 rounded-full bg-[#0a0a0a] px-4 py-2 text-xs font-bold uppercase tracking-wider text-white transition hover:bg-[#ff4d00]"
+                >
+                  Send another →
+                </button>
+              </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-3 px-5 py-4">
+              <form onSubmit={onSubmit} className="space-y-3">
+                {/* Bot bubble intro */}
+                <div className="flex items-start gap-2">
+                  <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-[#0a0a0a] text-[10px] font-black text-white">
+                    SA
+                  </div>
+                  <div className="rounded-2xl rounded-tl-sm bg-black/5 px-3 py-2 text-xs leading-relaxed text-black/80">
+                    Hi! Pick a topic and tell us what you need — we&apos;ll reply within 24h.
+                  </div>
+                </div>
+
                 {/* Topic chips */}
                 <div className="flex flex-wrap gap-1.5">
-                  {TOPICS.map((t) => (
+                  {TOPICS.map((chip) => (
                     <button
-                      key={t.key}
+                      key={chip.key}
                       type="button"
-                      onClick={() => handleTopic(t.key)}
-                      className={
-                        "rounded-full border px-3 py-1 text-xs font-semibold transition " +
-                        (topic === t.key
-                          ? "border-[#ff4d00] bg-[#ff4d00] text-white"
-                          : "border-neutral-300 bg-white text-neutral-700 hover:border-neutral-500")
-                      }
+                      onClick={() => onTopicClick(chip)}
+                      className={`rounded-full px-3 py-1.5 text-[11px] font-bold transition ${
+                        topic === chip.key
+                          ? "bg-[#ff4d00] text-white"
+                          : "bg-black/5 text-black/70 hover:bg-black/10"
+                      }`}
                     >
-                      {t.label}
+                      {chip.label}
                     </button>
                   ))}
                 </div>
 
+                {/* Name */}
                 <div>
-                  <label className="mb-1 block text-[10px] font-bold uppercase tracking-widest text-neutral-500">
+                  <label className="mb-1 block text-[10px] font-black uppercase tracking-widest text-black/60">
                     Your name
                   </label>
                   <input
@@ -211,13 +292,14 @@ export function FloatingChat() {
                     maxLength={120}
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="Alex Johnson"
-                    className="w-full rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm outline-none transition focus:border-[#ff4d00] focus:ring-2 focus:ring-[#ff4d00]/20"
+                    placeholder="Jane Doe"
+                    className="w-full rounded-lg border border-black/10 bg-white px-3 py-2 text-sm text-black outline-none transition focus:border-[#ff4d00] focus:ring-2 focus:ring-[#ff4d00]/20"
                   />
                 </div>
 
+                {/* Reply email */}
                 <div>
-                  <label className="mb-1 block text-[10px] font-bold uppercase tracking-widest text-neutral-500">
+                  <label className="mb-1 block text-[10px] font-black uppercase tracking-widest text-black/60">
                     Reply email
                   </label>
                   <input
@@ -226,13 +308,14 @@ export function FloatingChat() {
                     maxLength={200}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="alex@brand.com"
-                    className="w-full rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm outline-none transition focus:border-[#ff4d00] focus:ring-2 focus:ring-[#ff4d00]/20"
+                    placeholder="jane@brand.com"
+                    className="w-full rounded-lg border border-black/10 bg-white px-3 py-2 text-sm text-black outline-none transition focus:border-[#ff4d00] focus:ring-2 focus:ring-[#ff4d00]/20"
                   />
                 </div>
 
+                {/* Message */}
                 <div>
-                  <label className="mb-1 block text-[10px] font-bold uppercase tracking-widest text-neutral-500">
+                  <label className="mb-1 block text-[10px] font-black uppercase tracking-widest text-black/60">
                     Message
                   </label>
                   <textarea
@@ -243,46 +326,43 @@ export function FloatingChat() {
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     placeholder="Tell us about your project..."
-                    className="w-full resize-none rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm leading-relaxed outline-none transition focus:border-[#ff4d00] focus:ring-2 focus:ring-[#ff4d00]/20"
+                    className="w-full resize-none rounded-lg border border-black/10 bg-white px-3 py-2 text-sm leading-relaxed text-black outline-none transition focus:border-[#ff4d00] focus:ring-2 focus:ring-[#ff4d00]/20"
                   />
-                  <div className="mt-1 text-right text-[10px] text-neutral-400">
+                  <div className="mt-1 text-right text-[10px] text-black/40">
                     {message.length}/4000
                   </div>
                 </div>
 
                 {state === "error" && (
-                  <div className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700">
-                    <strong>Send failed:</strong> {errorText}
-                    <button
-                      type="button"
-                      onClick={() => setState("idle")}
-                      className="ml-2 underline"
-                    >
-                      Try again
-                    </button>
+                  <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700">
+                    {errorText || "Failed to send. Please retry."}
                   </div>
                 )}
 
                 <button
                   type="submit"
                   disabled={state === "submitting"}
-                  className="flex w-full items-center justify-center gap-2 rounded-md bg-[#ff4d00] px-4 py-2.5 text-sm font-bold uppercase tracking-wider text-white transition hover:bg-[#ff5a14] disabled:cursor-not-allowed disabled:opacity-60"
+                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#ff4d00] px-4 py-2.5 text-sm font-black uppercase tracking-wider text-white transition hover:bg-[#e64400] disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {state === "submitting" ? (
                     <>
-                      <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none">
-                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" className="opacity-25" />
-                        <path d="M22 12a10 10 0 0 1-10 10" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+                      <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                        <path d="M12 2a10 10 0 0 1 10 10" strokeLinecap="round" />
                       </svg>
                       Sending...
                     </>
                   ) : (
-                    "Send message"
+                    <>
+                      Send message
+                      <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M5 12h14M13 5l7 7-7 7" />
+                      </svg>
+                    </>
                   )}
                 </button>
 
-                <p className="pt-1 text-center text-[10px] text-neutral-400">
-                  Delivered to info@sublimapparel.com
+                <p className="text-center text-[10px] text-black/40">
+                  Stored securely · Replies within 24h
                 </p>
               </form>
             )}
@@ -293,28 +373,4 @@ export function FloatingChat() {
   );
 }
 
-function SuccessView({ onReset }: { onReset: () => void }) {
-  return (
-    <div className="px-5 py-8 text-center">
-      <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
-        <svg className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={3} viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-        </svg>
-      </div>
-      <h4 className="text-base font-black text-neutral-900">Message sent</h4>
-      <p className="mt-1 text-sm text-neutral-600">
-        We&apos;ve received your message and will reply within 24 hours.
-      </p>
-      <p className="mt-3 text-[11px] text-neutral-400">
-        A copy is stored in our inbox. Check your email (including spam) for our reply.
-      </p>
-      <button
-        type="button"
-        onClick={onReset}
-        className="mt-5 rounded-md border border-neutral-300 px-4 py-1.5 text-xs font-semibold text-neutral-700 transition hover:border-neutral-500"
-      >
-        Send another message
-      </button>
-    </div>
-  );
-}
+export default FloatingChat;
