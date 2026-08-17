@@ -26,7 +26,7 @@ const whatHappens = [
     icon: MessageCircle,
     time: "Within 1 business day",
     title: "We send a landed quote + free mockup",
-    desc: "A single line item — unit price + shipping + duties. No setup fee. Plus a free 3D mockup of your design on the actual garment.",
+    desc: "A single line item — unit price + shipping + duties. No setup fee. Plus free mockup of your design on the actual garment.",
   },
   {
     icon: Clock,
