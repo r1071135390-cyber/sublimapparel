@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import { Plus, Minus, X } from "lucide-react";
+import { DatePickerEn } from "@/components/date-picker-en";
 
 const MAX_FILES = 5;
 const MAX_SIZE_MB = 25;
@@ -14,6 +15,12 @@ const MIN_DELIVERY_DATE = (() => {
   const d = new Date();
   d.setDate(d.getDate() + 7);
   return d.toISOString().split("T")[0];
+})();
+const MIN_DELIVERY_DATE_OBJ = (() => {
+  const d = new Date();
+  d.setDate(d.getDate() + 7);
+  d.setHours(0, 0, 0, 0);
+  return d;
 })();
 
 type Attached = {
@@ -470,14 +477,12 @@ export function Contact() {
 
               <div className="mt-6 grid gap-6 md:grid-cols-2">
                 <Field label="Required delivery date (to your door) *">
-                  <input
-                    type="date"
+                  <DatePickerEn
                     name="deadline"
                     required
-                    min={MIN_DELIVERY_DATE}
+                    minDate={MIN_DELIVERY_DATE_OBJ}
                     value={form.deadline}
-                    onChange={onChange}
-                    className="w-full border-b-2 border-black bg-transparent py-2 text-base font-medium text-black focus:border-[#ff4d00] focus:outline-none"
+                    onChange={(v) => onChange({ target: { name: "deadline", value: v } } as React.ChangeEvent<HTMLInputElement>)}
                   />
                 </Field>
               </div>

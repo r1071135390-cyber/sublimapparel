@@ -10,6 +10,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { DatePickerEn } from "@/components/date-picker-en";
 import { X, FileText, Send, Loader2, Upload } from "lucide-react";
 import {
   SizeQuantityPicker,
@@ -32,6 +33,12 @@ const MIN_DELIVERY_DATE = (() => {
   const d = new Date();
   d.setDate(d.getDate() + 7);
   return d.toISOString().split("T")[0];
+})();
+const MIN_DELIVERY_DATE_OBJ = (() => {
+  const d = new Date();
+  d.setDate(d.getDate() + 7);
+  d.setHours(0, 0, 0, 0);
+  return d;
 })();
 
 type Attached = {
@@ -544,14 +551,12 @@ function RequestQuoteModal() {
             {/* Required delivery date */}
             <div className="mt-5 grid grid-cols-1 gap-4 border-t-2 border-[#0a0a0a] pt-4 md:grid-cols-2">
               <Field label="Required delivery date (to your door) *" required>
-                <input
-                  type="date"
+                <DatePickerEn
                   name="deadline"
                   required
-                  min={MIN_DELIVERY_DATE}
+                  minDate={MIN_DELIVERY_DATE_OBJ}
                   value={form.deadline}
-                  onChange={onChange}
-                  className="w-full border-b-2 border-[#0a0a0a] bg-transparent py-2 text-sm font-medium text-[#0a0a0a] focus:border-[#ff4d00] focus:outline-none"
+                  onChange={(v) => onChange({ target: { name: "deadline", value: v } } as React.ChangeEvent<HTMLInputElement>)}
                 />
               </Field>
             </div>
