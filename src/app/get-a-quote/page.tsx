@@ -38,7 +38,7 @@ const whatHappens = [
     icon: Check,
     time: "Delivered to your door",
     title: "DDP to 100+ countries",
-    desc: "We handle customs, duties, and last-mile. Or US domestic from our Fontana, CA warehouse in 2–5 days.",
+    desc: "We pick the most economical shipping option based on your delivery deadline. And we will handle customs, duties, and last-mile if needed.",
   },
 ];
 
