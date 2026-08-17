@@ -72,6 +72,15 @@ const ROUTES: SitemapRoute[] = [
   { path: "/about/faq", priority: 0.7, changeFrequency: "monthly" },
   { path: "/cases", priority: 0.7, changeFrequency: "weekly" },
 
+  // ── Case study detail pages ──
+  { path: "/cases/endurance-race-events", priority: 0.7, changeFrequency: "monthly" },
+  { path: "/cases/music-tour-festival", priority: 0.7, changeFrequency: "monthly" },
+  { path: "/cases/sports-teams", priority: 0.7, changeFrequency: "monthly" },
+  { path: "/cases/endurance-race-events/lakeshore-marathon-2025", priority: 0.65, changeFrequency: "yearly" },
+  { path: "/cases/endurance-race-events/alpine-ultra-50k-2024", priority: 0.65, changeFrequency: "yearly" },
+  { path: "/cases/music-tour-festival/harbor-sound-festival-2025", priority: 0.65, changeFrequency: "yearly" },
+  { path: "/cases/sports-teams/nova-racing-academy-2025", priority: 0.65, changeFrequency: "yearly" },
+
   // ── L2 （ / ）─────────────────
   { path: "/blog", priority: 0.8, changeFrequency: "weekly" },
 

@@ -11,6 +11,7 @@ import { DDP } from "@/components/ddp";
 import { Industries } from "@/components/industries";
 import { Contact } from "@/components/contact";
 import { KeywordCloud } from "@/components/keyword-cloud";
+import { HomeExtras } from "@/components/home-extras";
 import { JsonLd } from "@/components/json-ld";
 
 export const metadata = {
@@ -152,6 +153,7 @@ export default function Home() {
         </div>
       </section>
       <Contact />
+      <HomeExtras />
     </main>
   );
 }

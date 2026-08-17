@@ -4,6 +4,7 @@ import { Footer } from "@/components/footer";
 import { UtilityBar } from "@/components/utility-bar";
 import { MobileBottomNav } from "@/components/mobile-bottom-nav";
 import { RequestQuoteProvider } from "@/components/request-quote-modal";
+import { FloatingChat } from "@/components/floating-chat";
 import { JsonLd } from "@/components/json-ld";
 import { organizationJsonLd } from "@/lib/json-ld-data";
 import "./globals.css";
@@ -78,6 +79,7 @@ export default function RootLayout({
           <main className="pb-16 md:pb-0">{children}</main>
           <Footer />
           <MobileBottomNav />
+          <FloatingChat />
         </RequestQuoteProvider>
       </body>
     </html>

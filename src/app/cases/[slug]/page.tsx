@@ -212,9 +212,10 @@ export default async function CaseCategoryPage({ params }: Props) {
               </div>
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {ind.cases.map((c) => (
-                  <article
+                  <Link
                     key={c.id}
-                    className="flex flex-col border-2 border-black bg-white p-5"
+                    href={`/cases/${ind.slug}/${c.id}`}
+                    className="group flex flex-col border-2 border-black bg-white p-5 transition-all hover:shadow-[6px_6px_0_0_#000] hover:-translate-x-1 hover:-translate-y-1"
                   >
                     <div className="mb-4 aspect-[4/3] overflow-hidden border-2 border-black bg-[#faf9f6]">
                       {c.images[0] ? (
@@ -242,7 +243,10 @@ export default async function CaseCategoryPage({ params }: Props) {
                     <p className="text-sm font-medium leading-relaxed text-black/75">
                       {c.summary}
                     </p>
-                  </article>
+                    <div className="mt-auto pt-4 text-xs font-black uppercase tracking-wider text-[#ff4d00]">
+                      Read case study →
+                    </div>
+                  </Link>
                 ))}
               </div>
             </>

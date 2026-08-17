@@ -65,7 +65,18 @@ export const industries: IndustryCase[] = [
       "Cut-and-sew patterns that fit, named and numbered per unit, delivered before the season opens.",
     relatedScenario: "Sports League",
     relatedCategory: "Sportswear",
-    cases: [],
+    cases: [
+      {
+        id: "nova-racing-academy-2025",
+        title: "Nova Racing Academy — 24 riders, 3 kits, custom cut-and-sew",
+        client: "Nova Racing Academy (Junior Cycling)",
+        year: "2025",
+        summary:
+          "24 junior riders, 3 kits (training, race, podium), custom cut-and-sew patterns sized per individual body measurement, full sublimation on 220gsm polyester mesh. Numbered 1-24, named per unit. Delivered 28 days after pattern lock. Coach kit + spare jersey sets included.",
+        products: ["Custom Cycling Jersey", "Custom Cycling Shorts", "Custom Tracksuit"],
+        images: [],
+      },
+    ],
   },
   {
     slug: "music-tour-festival",
@@ -77,7 +88,18 @@ export const industries: IndustryCase[] = [
       "Full-bleed printing on 100% cotton — merch your fans will actually want to wear.",
     relatedScenario: "Music & Merch",
     relatedCategory: "T-Shirt",
-    cases: [],
+    cases: [
+      {
+        id: "harbor-sound-festival-2025",
+        title: "Harbor Sound Festival 2025 — 14,000 tees, 3 designs, 21-day rush",
+        client: "Harbor Sound Festival Production Team",
+        year: "2025",
+        summary:
+          "Three festival designs (Main Stage, Acoustic Stage, After-Hours) printed on heavyweight all-cotton tees. 14,000 pieces total split across three SKUs. 21-day production from artwork lock to venue delivery, DDP air to Miami, FL. Two mid-production photo checks against the locked mockup.",
+        products: ["All-Over Print Cotton T-Shirt", "Custom Sublimation Hoodie", "Custom Tote Bag"],
+        images: [],
+      },
+    ],
   },
   {
     slug: "trade-show-display",
@@ -160,7 +182,28 @@ export const industries: IndustryCase[] = [
       "Final numbers land two weeks out. LA stock absorbs the difference.",
     relatedScenario: "Sports League",
     relatedSport: "Running",
-    cases: [],
+    cases: [
+      {
+        id: "lakeshore-marathon-2025",
+        title: "Lakeshore International Marathon 2025 — 8,200 finisher tees in 12 days",
+        client: "Lakeshore Marathon Organizing Committee",
+        year: "2025",
+        summary:
+          "Final registration numbers landed 12 days before the race — 8,200 finishers across three distance categories. Cut-and-sew cotton tees with full-bleed sublimation on the back, three distinct designs (5K / 10K / Marathon), and a 1,500-piece volunteer staff batch on polyester. Lake County, United States.",
+        products: ["Custom Sublimation Cotton T-Shirt", "Custom Sublimation Polyester T-Shirt", "Volunteer Staff Tee"],
+        images: [],
+      },
+      {
+        id: "alpine-ultra-50k-2024",
+        title: "Alpine Ultra 50K — Mountain-graphic finisher tees in all-cotton",
+        client: "Alpine Trail Race Series",
+        year: "2024",
+        summary:
+          "1,800 finisher tees printed on heavyweight 220gsm cotton with a full-color mountain panorama on the back. 5 design revisions over 3 weeks; final mockup locked 21 days before race day. Bulk shipped by DDP air to Denver with the route banner drop.",
+        products: ["Custom Sublimation Cotton T-Shirt", "Custom Race Banner"],
+        images: [],
+      },
+    ],
   },
   {
     slug: "ecommerce-fulfillment",
