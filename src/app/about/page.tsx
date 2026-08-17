@@ -234,6 +234,36 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Factory intro video */}
+      <section className="border-b-2 border-black bg-[#0a0a0a] text-white">
+        <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
+          <div className="mb-8 max-w-3xl">
+            <div className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+              Watch · 40 seconds
+            </div>
+            <h2 className="text-3xl font-black leading-[1.05] tracking-tight md:text-5xl">
+              <span className="text-white">A 40-second walk </span>
+              <span className="text-[#ff4d00]">through our Yiwu factory.</span>
+            </h2>
+            <p className="mt-3 text-sm text-white/70 md:text-base">
+              Sublimation printers, DTG lines, cut-and-sew, QC, packing &mdash; one roof, one team, one quote. Real footage, no voice-over, no fluff.
+            </p>
+          </div>
+          <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-white/10 bg-black">
+            <video
+              src="/videos/sublimapparel-factory-intro.mp4"
+              poster="/about-hero.webp"
+              controls
+              preload="metadata"
+              playsInline
+              className="absolute inset-0 h-full w-full object-cover"
+            >
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      </section>
+
       {/* What we do — 6 process photos */}
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto max-w-7xl px-6 py-20">
