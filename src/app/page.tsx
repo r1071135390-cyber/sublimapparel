@@ -11,7 +11,7 @@ import { DDP } from "@/components/ddp";
 import { Industries } from "@/components/industries";
 import { Contact } from "@/components/contact";
 import { HomeExtras } from "@/components/home-extras";
-import { Newsletter, VideoShowcase } from "@/components/home-extras";
+import { Newsletter, VideoShowcase, FreeDesignService, RecentCaseStudies, LogoWall } from "@/components/home-extras";
 import { JsonLd } from "@/components/json-ld";
 
 export const metadata = {
@@ -127,6 +127,9 @@ export default function Home() {
       <FactoryFloor />
       <VideoShowcase />
       <Features />
+      <FreeDesignService />
+      <RecentCaseStudies />
+      <LogoWall />
       <ArtworkCTA />
       <HowItWorks />
       <Products />

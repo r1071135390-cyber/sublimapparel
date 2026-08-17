@@ -357,13 +357,10 @@ export function HomeExtras() {
   return (
     <>
       <LiveActivity />
-      <FreeDesignService />
-      <RecentCaseStudies />
       <LiveInventory />
-      <LogoWall />
     </>
   );
 }
 
 // Also export individual components in case other pages want them
-export { FreeDesignService, LiveInventory, LiveActivity, LogoWall, VideoShowcase, Newsletter };
+export { FreeDesignService, LiveInventory, LiveActivity, LogoWall, RecentCaseStudies, VideoShowcase, Newsletter };
