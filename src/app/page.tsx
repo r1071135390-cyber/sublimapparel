@@ -10,8 +10,8 @@ import { FactoryFloor } from "@/components/factory-floor";
 import { DDP } from "@/components/ddp";
 import { Industries } from "@/components/industries";
 import { Contact } from "@/components/contact";
-import { KeywordCloud } from "@/components/keyword-cloud";
 import { HomeExtras } from "@/components/home-extras";
+import { Newsletter } from "@/components/home-extras";
 import { JsonLd } from "@/components/json-ld";
 
 export const metadata = {
@@ -132,28 +132,9 @@ export default function Home() {
       <FactoryFloor />
       <DDP />
       <Industries />
-      <section className="border-t-2 border-black bg-[#faf9f6]">
-        <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-16">
-          <div className="mb-8 max-w-3xl">
-            <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-[#ff4d00] md:text-xs">
-              Cross-link every page
-            </p>
-            <h2 className="text-2xl font-black uppercase leading-tight tracking-tight md:text-4xl">
-              Browse our 100+ sublimation-printed products by keyword
-            </h2>
-            <p className="mt-3 text-sm text-black/70 md:text-base">
-              Every link below routes to a curated tag page — full-bleed all-over print on polyester or all-over digital print on 100% cotton, MOQ 50 pcs, DDP shipping to US / EU / UK / AU. Pick the sport you coach, the use case you serve, or the garment type your team needs.
-            </p>
-          </div>
-          <div className="grid gap-8 md:grid-cols-3">
-            <KeywordCloud dimension="category" title="By apparel type" />
-            <KeywordCloud dimension="sport" title="By sport" />
-            <KeywordCloud dimension="scenario" title="By use case" />
-          </div>
-        </div>
-      </section>
-      <Contact />
       <HomeExtras />
+      <Contact />
+      <Newsletter />
     </main>
   );
 }

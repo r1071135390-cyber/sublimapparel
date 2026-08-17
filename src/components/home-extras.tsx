@@ -361,7 +361,6 @@ export function HomeExtras() {
       <LiveInventory />
       <LogoWall />
       <VideoShowcase />
-      <Newsletter />
     </>
   );
 }
