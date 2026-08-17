@@ -17,7 +17,7 @@ import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 import { ProductGallery } from "@/components/product-gallery";
 import { KeywordCloud } from "@/components/keyword-cloud";
 import { getProductImages } from "@/lib/product-images";
-import { buildSeoContent, buildProductFaqLd } from "@/lib/product-content";
+import { buildSeoContent, buildProductFaqLd, isJersey } from "@/lib/product-content";
 
 export function generateStaticParams() {
   return products.map((p) => ({ slug: p.slug }));
@@ -157,6 +157,15 @@ export default async function ProductDetailPage({
           </Link>
           <div className="mb-3 flex flex-wrap items-center gap-2 text-[10px] font-bold uppercase tracking-widest md:text-xs">
             <span className="rounded-sm bg-[#ff4d00] px-2 py-1 text-white">{product.category}</span>
+            {isJersey(product) && (
+              <Link
+                href="/products/jerseys/"
+                className="rounded-sm bg-[#00C2FF] px-2 py-1 text-white transition-all hover:bg-white hover:text-[#0a0a0a]"
+                title="Browse all custom sport jerseys"
+              >
+                Jersey
+              </Link>
+            )}
             <span className="rounded-sm bg-white/15 px-2 py-1 text-white backdrop-blur-sm">
               MOQ {product.moq} pcs
             </span>

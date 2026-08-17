@@ -3,6 +3,10 @@ import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Shirt, Users, Palette, Ruler, Layers, Sparkles } from "lucide-react";
+import Image from "next/image";
+import { products } from "@/lib/products-data";
+import { getProductImages } from "@/lib/product-images";
+import { isJersey } from "@/lib/product-content";
 
 export const metadata: Metadata = {
   title: "Custom Team Jerseys | Soccer, Baseball, Basketball",
@@ -99,6 +103,9 @@ const faq = [
 ];
 
 export default function JerseysPage() {
+  // Build the list of jersey products (sport T-shirts)
+  const jerseys = products.filter(isJersey).slice(0, 24);
+
   return (
     <main>
       <JsonLd data={buildBreadcrumbJsonLd([
@@ -296,6 +303,67 @@ export default function JerseysPage() {
             </Link>
             <Link href="/products" className="inline-flex items-center gap-2 border-2 border-black bg-transparent px-6 py-3 text-sm font-black uppercase tracking-widest text-black transition-all hover:bg-black hover:text-white">
               See All Apparel
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 009 / Browse sport jerseys */}
+      <section className="bg-white">
+        <div className="mx-auto max-w-7xl px-6 py-20 md:py-28">
+          <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#ff4d00]">[ 009 / Browse sport jerseys ]</div>
+          <h2 className="mb-4 text-4xl font-black leading-tight text-[#0a0a0a] md:text-6xl">
+            Every sport T-shirt, ready to print.
+          </h2>
+          <p className="mb-12 max-w-3xl text-base leading-relaxed text-[#3a3a3a] md:text-lg">
+            Below is the live catalog of our T-shirt products that we cut, sew, and dye-sublimation-print in our Yiwu factory. Every one of these is a fully sublimated jersey &mdash; pick your sport, send your roster, and we ship DDP to your door.
+          </p>
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:gap-6">
+            {jerseys.map((p) => {
+              const imgs = getProductImages(p.number);
+              return (
+                <Link
+                  key={p.id}
+                  href={`/products/all/${p.slug}/`}
+                  className="group block overflow-hidden border-2 border-[#0a0a0a] bg-white transition-all hover:border-[#ff4d00] hover:shadow-[8px_8px_0px_#ff4d00]"
+                >
+                  <div className="relative aspect-square w-full bg-[#F5F5F5]">
+                    <Image
+                      src={imgs[0]}
+                      alt={`Custom ${p.name} sport jersey from SublimApparel`}
+                      fill
+                      className="object-contain transition-transform group-hover:scale-105"
+                      sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                      loading="lazy"
+                    />
+                    <div className="absolute left-2 top-2 bg-[#ff4d00] px-2 py-0.5 text-[10px] font-black uppercase tracking-widest text-white">
+                      Jersey
+                    </div>
+                  </div>
+                  <div className="p-3 md:p-4">
+                    <div className="line-clamp-2 text-xs font-bold text-[#0a0a0a] md:text-sm">
+                      {p.name.replace(/^Custom All-Over Print /i, "")}
+                    </div>
+                    <div className="mt-1 text-[10px] uppercase tracking-widest text-[#6B6B6B]">
+                      No. {p.number}
+                    </div>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+            <Link
+              href="/products/all/"
+              className="group inline-flex items-center gap-2 border-2 border-[#0a0a0a] bg-white px-6 py-3 text-sm font-black uppercase tracking-widest text-[#0a0a0a] transition-all hover:bg-[#0a0a0a] hover:text-white"
+            >
+              See all 120 products <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
+            </Link>
+            <Link
+              href="/get-a-quote"
+              className="group inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-black"
+            >
+              Get a jersey quote <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
             </Link>
           </div>
         </div>

@@ -470,6 +470,37 @@ export function buildSeoContent(product: Product): SeoContent {
   };
 }
 
+// ---- Jersey helpers --------------------------------------------------------
+//
+// "Jersey" is a B2B keyword with strong search volume that the site was missing
+// even though most T-Shirt products are intended for team / sport use. We treat
+// any T-Shirt with at least one sport as a "jersey" and surface that word
+// throughout the SEO content, H1, title, and a dedicated tag page.
+
+export function isJersey(product: Product): boolean {
+  return product.category === "T-Shirt" && product.sports.length > 0;
+}
+
+export function getJerseyTitle(product: Product): string | null {
+  if (!isJersey(product)) return null;
+  // Pick the first sport as the headline sport (e.g. "Football")
+  // Falls back to the category if no sports (shouldn't happen since isJersey gates this)
+  const sport = product.sports[0] ?? product.category;
+  return `Custom ${sport} Jersey`;
+}
+
+export function getJerseyLabel(product: Product): string {
+  if (!isJersey(product)) return product.category;
+  const sport = product.sports[0] ?? "";
+  return sport ? `${sport} Jersey` : "Jersey";
+}
+
+// Slug used by the /tag/[dimension]/[slug] route for the "Jersey" landing page.
+export const JERSEY_SLUG = "jersey";
+
+// URL of the jersey tag page.
+export const JERSEY_TAG_HREF = `/tag/garment/${JERSEY_SLUG}/`;
+
 // ---- Re-exported metadata helpers used by JSON-LD ------------------------
 
 export function buildProductFaqLd(faq: { question: string; answer: string }[]) {
