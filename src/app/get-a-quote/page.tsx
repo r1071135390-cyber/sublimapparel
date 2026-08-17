@@ -1,7 +1,9 @@
+import Link from "next/link";
+import Image from "next/image";
 import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
-import { Check, Clock, FileText, MessageCircle } from "lucide-react";
+import { Check, Clock, FileText, MessageCircle, ArrowRight } from "lucide-react";
 
 export const metadata = {
   title: "Get a Quote | Custom Sublimation & Cotton Apparel Manufacturer",
@@ -9,7 +11,7 @@ export const metadata = {
     "Request a landed-cost quote in under 12 hours. Free digital mockup, free sample round on first order. Sublimation on polyester, DTG / DTF on 100% cotton, DDP shipping to 100+ countries.",
 
   openGraph: {
-    images: ["/contact-hero.webp"],
+    images: ["/quote-hero-showroom.webp"],
   },
 };
 
@@ -57,37 +59,132 @@ export default function GetAQuotePage() {
         { name: "Get a Quote", path: "/get-a-quote" },
       ])} />
       <main>
-      {/* HERO */}
-      <section className="border-b-2 border-black bg-white">
-        <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
-          <div className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
-            Get a Quote
+      {/* HERO — matches home page hero style: dark background, full-bleed image, gradient overlay, text on top */}
+      <section
+        id="hero"
+        className="relative overflow-hidden bg-[#0a0a0a] text-white"
+      >
+        {/* Desktop background image (full bleed) — hidden on mobile */}
+        <div className="absolute inset-0 hidden lg:block">
+          <Image
+            src="/quote-hero-showroom.webp"
+            alt="SublimApparel showroom — four people (two Chinese sales reps, two European/American clients) at a wooden table reviewing color swatches, design sketches, sample garments, and laptop quotes in the Yiwu factory"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center opacity-95 brightness-105"
+          />
+          {/* Brighter gradient mask — image clearly visible, text still readable */}
+          <div
+            aria-hidden
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(90deg, rgba(10,10,10,0.82) 0%, rgba(10,10,10,0.55) 45%, rgba(10,10,10,0.18) 100%)",
+            }}
+          />
+        </div>
+
+        {/* Mobile hero image — same image, no overlay, max impact */}
+        <div className="relative block w-full lg:hidden">
+          <div className="relative aspect-[16/9] w-full">
+            <Image
+              src="/quote-hero-showroom.webp"
+              alt="SublimApparel showroom meeting — color swatches, sample garments and laptops on the table"
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover object-center brightness-105"
+            />
+            {/* Subtle bottom-to-top darken so it joins the dark section seamlessly */}
+            <div
+              aria-hidden
+              className="absolute inset-x-0 bottom-0 h-20"
+              style={{
+                background:
+                  "linear-gradient(180deg, rgba(10,10,10,0) 0%, rgba(10,10,10,1) 100%)",
+              }}
+            />
           </div>
-          <h1 className="text-5xl font-black leading-[0.95] tracking-tight text-black md:text-8xl">
-            Tell us your
-            <br />
-            <span className="text-[#ff4d00]">product, quantity</span>
-            <br />
-            and deadline.
+          {/* Tiny caption strip — anchors the image as "showroom meeting" */}
+          <div className="absolute bottom-2 left-3 right-3 flex items-center justify-between gap-2 text-[10px] font-bold uppercase tracking-[0.18em] text-white drop-shadow">
+            <span className="inline-flex items-center gap-1.5 rounded-sm bg-black/55 px-2 py-1 backdrop-blur-sm">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#ff4d00]" />
+              Yiwu showroom
+            </span>
+            <span className="rounded-sm bg-black/55 px-2 py-1 backdrop-blur-sm">
+              4-person order review
+            </span>
+          </div>
+        </div>
+
+        <div className="relative mx-auto max-w-7xl px-4 py-8 md:px-8 md:py-12 lg:py-16">
+          {/* Top badge */}
+          <div className="mb-3 flex items-center gap-3 md:mb-4">
+            <span className="inline-flex h-6 items-center rounded-sm border border-white/30 bg-white/10 px-2.5 text-[10px] font-bold uppercase tracking-[0.18em] text-white backdrop-blur-sm md:h-7 md:px-3 md:text-xs">
+              Get a Quote · Reply in 1 business day
+            </span>
+          </div>
+
+          {/* Status line */}
+          <div className="mb-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-white/70 md:mb-6 md:text-sm">
+            <span>
+              <span className="font-bold text-white">DDP to 100+ countries</span>
+              <span className="mx-2 text-white/40">·</span>
+              <span>Free 3D mockup</span>
+              <span className="mx-2 text-white/40">·</span>
+              <span>No setup fee</span>
+            </span>
+          </div>
+
+          {/* Headline — 3 lines, flat / full width */}
+          <h1 className="mb-4 max-w-4xl text-3xl font-black leading-[1.05] tracking-tight md:mb-5 md:text-5xl lg:text-6xl xl:text-7xl">
+            <span className="block text-white">Tell us your</span>
+            <span className="block text-[#ff4d00]">product, quantity</span>
+            <span className="block text-[#ff4d00]">and deadline.</span>
           </h1>
-          <p className="mt-6 max-w-2xl text-base text-neutral-600 md:text-lg">
+
+          {/* Subhead */}
+          <p className="mb-6 max-w-2xl text-sm text-white/80 md:mb-8 md:text-lg">
             You will have a landed, duty-paid price within one business day.
             If your deadline is not achievable, we will say so in the same
             reply rather than take the order and manage the problem later.
           </p>
-          <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium text-neutral-700">
-            <span className="flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-[#ff4d00]" />
+
+          {/* Status pills row — matches home page hero category chips */}
+          <div className="mb-4 flex flex-wrap items-center gap-2.5 md:mb-6 md:gap-4">
+            <span className="border-l-4 border-[#ff4d00] pl-3 text-xs font-black uppercase tracking-widest text-white">
+              Why us
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-sm border border-white/25 bg-white/5 px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-white backdrop-blur-sm md:px-3 md:text-xs">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#ff4d00]" />
               Reply within 1 business day
             </span>
-            <span className="flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-[#ff4d00]" />
-              Team hours overlap US Pacific and UK
+            <span className="inline-flex items-center gap-1.5 rounded-sm border border-white/25 bg-white/5 px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-white backdrop-blur-sm md:px-3 md:text-xs">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#00c2ff]" />
+              Team hours overlap US Pacific &amp; UK
             </span>
-            <span className="flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-[#ff4d00]" />
-              Yiwu factory + Fontana, CA warehouse
+            <span className="inline-flex items-center gap-1.5 rounded-sm border border-white/25 bg-white/5 px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-white backdrop-blur-sm md:px-3 md:text-xs">
+              <span className="h-1.5 w-1.5 rounded-full bg-white" />
+              Yiwu factory + Fontana, CA
             </span>
+          </div>
+
+          {/* CTA — scroll to form */}
+          <div className="mt-2 flex flex-wrap items-center gap-3">
+            <Link
+              href="#inquiry"
+              className="inline-flex items-center gap-2 rounded-sm bg-[#ff4d00] px-5 py-3 text-sm font-black uppercase tracking-widest text-white shadow-[3px_3px_0_0_rgba(255,255,255,0.25)] transition-all hover:-translate-y-0.5 hover:shadow-[4px_4px_0_0_rgba(255,255,255,0.45)] md:text-base"
+            >
+              Start your quote
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link
+              href="/products/all/"
+              className="inline-flex items-center gap-2 rounded-sm border border-white/30 bg-white/5 px-5 py-3 text-sm font-bold uppercase tracking-widest text-white backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-[#ff4d00] hover:bg-[#ff4d00]/20 md:text-base"
+            >
+              Browse 120+ products
+            </Link>
           </div>
         </div>
       </section>
@@ -186,7 +283,9 @@ export default function GetAQuotePage() {
       </section>
 
       {/* THE FORM */}
-      <Contact />
+      <div id="inquiry" className="scroll-mt-20">
+        <Contact />
+      </div>
     </main>
     </>
   );
