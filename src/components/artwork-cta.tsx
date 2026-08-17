@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { RequestQuoteLink } from "@/components/request-quote-link";
+import { RequestSampleButton } from "@/components/request-sample-button";
 import { ArrowRight } from "lucide-react";
 
 export function ArtworkCTA() {
@@ -10,22 +12,12 @@ export function ArtworkCTA() {
           business day.
         </h2>
         <div className="flex flex-wrap items-center gap-3">
-          <Link
-            href="/get-a-quote"
-            className="group inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-wider text-white transition-colors hover:bg-white hover:text-black"
-          >
-            Get a quote
+          <RequestQuoteLink label="Site / Get a quote" className="group inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-wider text-white transition-colors hover:bg-white hover:text-black">Get a quote
             <ArrowRight
               size={16}
               className="transition-transform group-hover:translate-x-1"
-            />
-          </Link>
-          <Link
-            href="/get-a-quote"
-            className="inline-flex items-center gap-2 border-2 border-white px-6 py-3 text-sm font-black uppercase tracking-wider text-white transition-colors hover:bg-white hover:text-black"
-          >
-            Request a sample kit
-          </Link>
+            /></RequestQuoteLink>
+          <RequestSampleButton variant="outline-light" className="inline-flex items-center gap-2 border-2 border-white px-6 py-3 text-sm font-black uppercase tracking-wider text-white transition-colors hover:bg-white hover:text-black">Request a sample kit</RequestSampleButton>
         </div>
       </div>
     </section>

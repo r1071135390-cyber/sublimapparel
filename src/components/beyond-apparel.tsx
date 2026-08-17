@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { RequestQuoteLink } from "@/components/request-quote-link";
 import { ArrowRight } from "lucide-react";
 
 export function BeyondApparel() {
@@ -64,13 +65,7 @@ export function BeyondApparel() {
 
             {/* CTAs */}
             <div className="flex flex-wrap gap-3">
-              <Link
-                href="/get-a-quote"
-                className="group inline-flex items-center gap-2 bg-[#ff4d00] px-7 py-4 text-sm font-black uppercase tracking-wider text-white transition-all hover:bg-[#e64500]"
-              >
-                Get a quote
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Link>
+              <RequestQuoteLink label="Home / Beyond apparel" className="group inline-flex items-center gap-2 bg-[#ff4d00] px-7 py-4 text-sm font-black uppercase tracking-wider text-white transition-all hover:bg-[#e64500]">Get a quote</RequestQuoteLink>
               <Link
                 href="/products"
                 className="group inline-flex items-center gap-2 border-2 border-[#0a0a0a] bg-white px-7 py-4 text-sm font-black uppercase tracking-wider text-[#0a0a0a] transition-all hover:bg-[#0a0a0a] hover:text-white"

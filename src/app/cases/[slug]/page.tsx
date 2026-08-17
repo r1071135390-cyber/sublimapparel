@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { RequestQuoteLink } from "@/components/request-quote-link";
 import Image from "next/image";
 import {
   CalendarDays,
@@ -258,13 +259,8 @@ export default async function CaseCategoryPage({ params }: Props) {
                 We&apos;re putting together real examples for this category. In the meantime, send us your artwork and we&apos;ll come back with a free mockup and a landed, duty-paid quote within 1 business day.
               </p>
               <div className="flex flex-wrap items-center justify-center gap-3">
-                <Link
-                  href="/get-a-quote"
-                  className="inline-flex items-center gap-2 border-2 border-black bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-wider text-white transition-all hover:bg-black hover:shadow-[4px_4px_0_0_#000] hover:-translate-x-1 hover:-translate-y-1"
-                >
-                  Get a quote
-                  <ArrowRight size={16} strokeWidth={3} />
-                </Link>
+                <RequestQuoteLink label="[slug] / page / Get a quote" className="inline-flex items-center gap-2 border-2 border-black bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-wider text-white transition-all hover:bg-black hover:shadow-[4px_4px_0_0_#000] hover:-translate-x-1 hover:-translate-y-1">Get a quote
+                  <ArrowRight size={16} strokeWidth={3} /></RequestQuoteLink>
                 <Link
                   href="/cases"
                   className="inline-flex items-center gap-2 border-2 border-black bg-white px-6 py-3 text-sm font-black uppercase tracking-wider transition-all hover:bg-black hover:text-white"

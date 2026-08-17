@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { RequestQuoteLink } from "@/components/request-quote-link";
 import {
   CalendarDays,
   Megaphone,
@@ -75,13 +76,8 @@ export default function CasesPage() {
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-4">
-            <Link
-              href="/get-a-quote"
-              className="inline-flex items-center gap-2 border-2 border-black bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-wider text-white transition-all hover:bg-black hover:shadow-[4px_4px_0_0_#000] hover:-translate-x-1 hover:-translate-y-1"
-            >
-              Start your project
-              <ArrowRight size={16} strokeWidth={3} />
-            </Link>
+            <RequestQuoteLink label="Cases / page / Get a quote" className="inline-flex items-center gap-2 border-2 border-black bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-wider text-white transition-all hover:bg-black hover:shadow-[4px_4px_0_0_#000] hover:-translate-x-1 hover:-translate-y-1">Start your project
+              <ArrowRight size={16} strokeWidth={3} /></RequestQuoteLink>
             <a
               href="https://wa.me/8619817930190"
               target="_blank"
@@ -145,13 +141,8 @@ export default function CasesPage() {
           <p className="mx-auto mb-8 max-w-2xl text-base font-bold leading-relaxed text-white/80 md:text-lg">
             Send us your artwork, quantity and delivery deadline. We&apos;ll send a free mockup and a landed, duty-paid quote within 1 business day.
           </p>
-          <Link
-            href="/get-a-quote"
-            className="inline-flex items-center gap-2 border-2 border-white bg-[#ff4d00] px-8 py-4 text-base font-black uppercase tracking-wider transition-all hover:bg-white hover:text-black hover:shadow-[6px_6px_0_0_#00c2ff] hover:-translate-x-1 hover:-translate-y-1"
-          >
-            Get a quote
-            <ArrowRight size={18} strokeWidth={3} />
-          </Link>
+          <RequestQuoteLink label="Cases / page / Get a quote" className="inline-flex items-center gap-2 border-2 border-white bg-[#ff4d00] px-8 py-4 text-base font-black uppercase tracking-wider transition-all hover:bg-white hover:text-black hover:shadow-[6px_6px_0_0_#00c2ff] hover:-translate-x-1 hover:-translate-y-1">Get a quote
+            <ArrowRight size={18} strokeWidth={3} /></RequestQuoteLink>
         </div>
       </section>
     </>

@@ -66,8 +66,9 @@ const GROUPS: SitemapGroup[] = [
     accent: "orange",
     nodes: [
       { path: "/", label: "Home", note: "Hero · Beyond Apparel · Inquiry · Features · Artwork · Products · Process · DDP · Industries · Contact" },
-      { path: "/products", label: "Products", note: "6 apparel categories + 6 hard-surface categories" },
-      { path: "/get-a-quote", label: "Get a Quote", note: "★ main conversion · RFP-style 12-field form" },
+      { path: "/products", label: "Products (category hub)", note: "6 apparel categories + jersey/all-over-print/cycling" },
+      { path: "/products/all", label: "All-over print catalog", note: "★ 120 individual product detail pages", new: true },
+      { path: "/get-a-quote", label: "Get a Quote (modal)", note: "★ main conversion · opens as modal from any page, source-tracked" },
       { path: "/contact", label: "Contact", note: "Address, WhatsApp, email, response commitment" },
     ],
   },
@@ -257,6 +258,13 @@ export default function SiteMapPage() {
             <code className="font-mono">/shipping/us-warehouse</code>,{" "}
             <code className="font-mono">/fabric/dtg-vs-sublimation</code>,{" "}
             <code className="font-mono">/fabric/specs</code>. Each one eats a 0–1 competitor keyword.
+          </p>
+          <p className="mt-3">
+            Submit to search engines:{" "}
+            <a href="/sitemap.xml" className="font-mono text-[#ff4d00] underline" target="_blank" rel="noreferrer">
+              /sitemap.xml
+            </a>{" "}
+            (264 URLs · 1 static + 20 technique + 12 blog + 98 tag + 120 product)
           </p>
         </div>
       </section>

@@ -3,6 +3,7 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { UtilityBar } from "@/components/utility-bar";
 import { MobileBottomNav } from "@/components/mobile-bottom-nav";
+import { RequestQuoteProvider } from "@/components/request-quote-modal";
 import { JsonLd } from "@/components/json-ld";
 import { organizationJsonLd } from "@/lib/json-ld-data";
 import "./globals.css";
@@ -73,9 +74,11 @@ export default function RootLayout({
         <JsonLd data={organizationJsonLd} />
         <UtilityBar />
         <Navbar />
-        <main className="pb-16 md:pb-0">{children}</main>
-        <Footer />
-        <MobileBottomNav />
+        <RequestQuoteProvider>
+          <main className="pb-16 md:pb-0">{children}</main>
+          <Footer />
+          <MobileBottomNav />
+        </RequestQuoteProvider>
       </body>
     </html>
   );

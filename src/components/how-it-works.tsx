@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { RequestQuoteLink } from "@/components/request-quote-link";
 import { ArrowRight, Layers, Brush, Calculator, Truck } from "lucide-react";
 
 const steps = [
@@ -118,13 +119,8 @@ export function HowItWorks() {
             Production starts after artwork approval and deposit — typically within 1–3
             business days.
           </p>
-          <Link
-            href="/get-a-quote"
-            className="group inline-flex items-center gap-2 rounded-sm border-2 border-[#ff4d00] bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-wider text-white shadow-[4px_4px_0_0_#ffffff] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:bg-[#e64500] hover:shadow-[2px_2px_0_0_#ffffff]"
-          >
-            Start your project
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </Link>
+          <RequestQuoteLink label="Site / Get a quote" className="group inline-flex items-center gap-2 rounded-sm border-2 border-[#ff4d00] bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-wider text-white shadow-[4px_4px_0_0_#ffffff] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:bg-[#e64500] hover:shadow-[2px_2px_0_0_#ffffff]">Start your project
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></RequestQuoteLink>
         </div>
       </div>
     </section>

@@ -1,8 +1,12 @@
-import Link from "next/link";
+"use client";
+
 import Image from "next/image";
 import { ArrowRight, Clock, Globe2, Warehouse } from "lucide-react";
+import { useRequestQuote } from "@/components/request-quote-modal";
+import { RequestSampleButton } from "@/components/request-sample-button";
 
 export function InquiryCTA() {
+  const { openQuote } = useRequestQuote();
   return (
     <section className="border-b-2 border-black bg-[#ff4d00] text-white">
       <div className="mx-auto max-w-7xl px-6 py-20 md:py-28">
@@ -20,8 +24,9 @@ export function InquiryCTA() {
               reply rather than take the order and manage the problem later.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
-              <Link
-                href="/get-a-quote"
+              <button
+                type="button"
+                onClick={() => openQuote({ label: "Home page / Inquiry CTA" })}
                 className="group inline-flex items-center gap-2 bg-black px-7 py-4 text-sm font-black uppercase tracking-wider text-white transition-colors hover:bg-white hover:text-black"
               >
                 Get a quote
@@ -29,13 +34,12 @@ export function InquiryCTA() {
                   size={16}
                   className="transition-transform group-hover:translate-x-1"
                 />
-              </Link>
-              <Link
-                href="/get-a-quote"
+              </button>
+              <RequestSampleButton
                 className="inline-flex items-center gap-2 border-2 border-white bg-transparent px-7 py-4 text-sm font-black uppercase tracking-wider text-white transition-colors hover:bg-white hover:text-black"
               >
                 Request a sample kit
-              </Link>
+              </RequestSampleButton>
             </div>
           </div>
 

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { RequestQuoteLink } from "@/components/request-quote-link";
 import { MapPin, Mail, MessageCircle, Phone, Building2, Warehouse } from "lucide-react";
 import { FullKeywordCloud } from "@/components/keyword-cloud";
 
@@ -194,12 +195,12 @@ export function Footer() {
               Pacific and UK business hours. Quotes are landed and duty paid,
               with any exclusions stated on the quote.
             </p>
-            <Link
-              href="/get-a-quote"
+            <RequestQuoteLink
+              label="Footer / Get a quote"
               className="mt-4 inline-flex items-center gap-2 border-2 border-black bg-[#ff4d00] px-4 py-2 text-xs font-black uppercase tracking-wider text-white transition-all hover:bg-black hover:border-black"
             >
               Get a quote →
-            </Link>
+            </RequestQuoteLink>
           </div>
         </div>
       </div>

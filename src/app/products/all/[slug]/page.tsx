@@ -5,6 +5,8 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, CheckCircle2, Sparkles, ArrowRight, Truck, Ruler } from "lucide-react";
 import { JsonLd } from "@/components/json-ld";
 import { tagArchiveLink } from "@/lib/tag-utils";
+import { RequestQuoteLink } from "@/components/request-quote-link";
+import { RequestSampleButton } from "@/components/request-sample-button";
 import {
   products,
   getProductBySlug,
@@ -231,19 +233,13 @@ export default async function ProductDetailPage({
               </div>
 
               <div className="mt-6 flex flex-col gap-2 sm:flex-row md:mt-8">
-                <Link
-                  href="/get-a-quote/"
-                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-sm bg-[#ff4d00] px-4 py-3 text-sm font-black uppercase tracking-wide text-white transition-colors hover:bg-[#e64500] md:text-base"
-                >
+                <RequestQuoteLink label={`Product / ${product.name} / Get a quote`} className="inline-flex flex-1 items-center justify-center gap-2 rounded-sm bg-[#ff4d00] px-4 py-3 text-sm font-black uppercase tracking-wide text-white transition-colors hover:bg-[#e64500] md:text-base">
                   Get a quote
                   <ArrowRight className="h-4 w-4" />
-                </Link>
-                <Link
-                  href="/contact/"
-                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-sm border-2 border-black bg-white px-4 py-3 text-sm font-black uppercase tracking-wide text-black transition-colors hover:border-[#ff4d00] hover:text-[#ff4d00] md:text-base"
-                >
+                </RequestQuoteLink>
+                <RequestSampleButton className="inline-flex flex-1 items-center justify-center gap-2 rounded-sm border-2 border-black bg-white px-4 py-3 text-sm font-black uppercase tracking-wide text-black transition-colors hover:border-[#ff4d00] hover:text-[#ff4d00] md:text-base">
                   Request a sample
-                </Link>
+                </RequestSampleButton>
               </div>
             </div>
           </div>

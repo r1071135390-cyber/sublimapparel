@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { RequestQuoteLink } from "@/components/request-quote-link";
 import {
   ShieldCheck,
   Search,
@@ -120,9 +121,7 @@ export default function QualityPage() {
             <Link href="/about/production" className="inline-flex items-center justify-center gap-2 border-2 border-[#ff4d00] bg-[#ff4d00] px-8 py-4 text-base font-bold uppercase tracking-wide text-white transition-colors hover:bg-[#e64400] hover:border-[#e64400]">
               See production process →
             </Link>
-            <Link href="/get-a-quote" className="inline-flex items-center justify-center gap-2 border-2 border-[#faf9f6] px-8 py-4 text-base font-bold uppercase tracking-wide text-[#faf9f6] transition-colors hover:bg-[#faf9f6] hover:text-[#0a0a0a]">
-              Get a quote →
-            </Link>
+            <RequestQuoteLink label="quality / page / Get a quote" className="inline-flex items-center justify-center gap-2 border-2 border-[#faf9f6] px-8 py-4 text-base font-bold uppercase tracking-wide text-[#faf9f6] transition-colors hover:bg-[#faf9f6] hover:text-[#0a0a0a]">Get a quote →</RequestQuoteLink>
           </div>
         </div>
       </section>

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { RequestQuoteLink } from "@/components/request-quote-link";
 import { ArrowRight, Globe, ShieldCheck, Truck, Warehouse, MapPin, Package } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -95,13 +96,8 @@ export default function DdpPage() {
             (overstock only — not a standard service).
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link
-              href="/get-a-quote"
-              className="group inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-black hover:text-white"
-            >
-              Get DDP Quote
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
-            </Link>
+            <RequestQuoteLink label="ddp / page / Get a quote" className="group inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-black hover:text-white">Get DDP Quote
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} /></RequestQuoteLink>
             <Link
               href="/shipping/us-warehouse"
               className="group inline-flex items-center gap-2 border-2 border-white bg-transparent px-6 py-3 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-white hover:text-black"
@@ -313,13 +309,8 @@ export default function DdpPage() {
             Tell us the destination country, postal code, and quantity.
             We&apos;ll come back with a single landed price.
           </p>
-          <Link
-            href="/get-a-quote"
-            className="mt-8 inline-flex items-center gap-2 bg-white px-8 py-4 text-sm font-black uppercase tracking-widest text-black transition-all hover:bg-black hover:text-white"
-          >
-            Get DDP Quote
-            <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
-          </Link>
+          <RequestQuoteLink label="ddp / page / Get a quote" className="mt-8 inline-flex items-center gap-2 bg-white px-8 py-4 text-sm font-black uppercase tracking-widest text-black transition-all hover:bg-black hover:text-white">Get DDP Quote
+            <ArrowRight className="h-4 w-4" strokeWidth={2.5} /></RequestQuoteLink>
         </div>
       </section>
     </main>

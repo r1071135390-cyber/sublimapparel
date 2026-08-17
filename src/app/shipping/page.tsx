@@ -22,6 +22,7 @@ import {
   Tag,
   Calendar,
 } from"lucide-react";
+import { RequestQuoteLink } from "@/components/request-quote-link";
 
 export const metadata: Metadata = {
   title:"Shipping & Fulfillment — DDP Worldwide",
@@ -894,13 +895,8 @@ export default function ShippingPage() {
             come back with a side-by-side DDP vs FOB quote within 24 hours.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-            <Link
-              href="/get-a-quote"
-              className="inline-flex items-center gap-2 bg-white px-8 py-4 text-sm font-black uppercase tracking-widest text-black transition-all hover:bg-black hover:text-white"
-            >
-              Get Quote
-              <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
-            </Link>
+            <RequestQuoteLink label="shipping / page / Get a quote" className="inline-flex items-center gap-2 bg-white px-8 py-4 text-sm font-black uppercase tracking-widest text-black transition-all hover:bg-black hover:text-white">Get Quote
+              <ArrowRight className="h-4 w-4" strokeWidth={2.5} /></RequestQuoteLink>
             <Link
               href="/shipping/ddp"
               className="inline-flex items-center gap-2 border-2 border-white px-8 py-4 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-white hover:text-black"
