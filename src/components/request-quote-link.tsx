@@ -9,6 +9,7 @@ type Props = {
   /** Optional prefill for product detail pages */
   prefill?: {
     productName?: string;
+    productNumber?: string;
     productCategory?: string;
     fabric?: string;
   };

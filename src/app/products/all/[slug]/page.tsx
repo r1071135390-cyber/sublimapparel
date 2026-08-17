@@ -233,7 +233,15 @@ export default async function ProductDetailPage({
               </div>
 
               <div className="mt-6 flex flex-col gap-2 sm:flex-row md:mt-8">
-                <RequestQuoteLink label={`Product / ${product.name} / Get a quote`} className="inline-flex flex-1 items-center justify-center gap-2 rounded-sm bg-[#ff4d00] px-4 py-3 text-sm font-black uppercase tracking-wide text-white transition-colors hover:bg-[#e64500] md:text-base">
+                <RequestQuoteLink
+                  label={`Product / ${product.name} / Get a quote`}
+                  prefill={{
+                    productName: product.name,
+                    productNumber: product.number,
+                    productCategory: product.category,
+                  }}
+                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-sm bg-[#ff4d00] px-4 py-3 text-sm font-black uppercase tracking-wide text-white transition-colors hover:bg-[#e64500] md:text-base"
+                >
                   Get a quote
                   <ArrowRight className="h-4 w-4" />
                 </RequestQuoteLink>
