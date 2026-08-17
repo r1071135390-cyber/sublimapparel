@@ -197,13 +197,193 @@ function LiveActivity() {
 }
 
 /**
- * LogoWall – client logos (placeholders until user provides images)
+ * LogoWall – 24 client brand logos in a clean grid.
+ * The provided image shows real brand marks; we render them as styled
+ * typographic marks (different weights / colors / glyphs) so the wall
+ * is sharp at any size and not depending on an external image asset.
  */
+type Brand = {
+  name: string;
+  sub?: string;
+  icon: "P" | "A" | "run" | "crown" | "R" | "kanji" | "wings" | "dumbbell"
+       | "wave" | "panther" | "XP" | "mountain" | "F" | "bolt" | "lion" | "leaf"
+       | "X" | "falcon" | "shield" | "bike" | "triangle" | "no" | "S" | "ball";
+  color: string;
+  weight?: "black" | "extrabold" | "bold" | "semibold" | "italic" | "condensed";
+};
+
+const BRANDS: Brand[] = [
+  { name: "PHANTOM",    sub: "PERFORMANCE", icon: "P",        color: "#0a0a0a", weight: "black"     },
+  { name: "ATLAS",      sub: "TRAINING",    icon: "A",        color: "#0a0a0a", weight: "italic"    },
+  { name: "IGNITION",   sub: "TRAINING",    icon: "run",      color: "#ff4d00", weight: "extrabold" },
+  { name: "VALOR",      sub: "FITNESS",     icon: "crown",    color: "#1a1a1a", weight: "black"     },
+  { name: "REACT",      sub: "SPORTS",      icon: "R",        color: "#0fae8f", weight: "extrabold" },
+  { name: "禅",         sub: "MARTIAL",     icon: "kanji",    color: "#c0172e", weight: "bold"      },
+  { name: "ELEVATE",    sub: "YOUR LIMITS", icon: "wings",    color: "#1e88e5", weight: "black"     },
+  { name: "IRONCLAD",   sub: "STRENGTH",    icon: "dumbbell", color: "#1a1a1a", weight: "condensed" },
+
+  { name: "OCEAN DRIVE",sub: "SURF CO.",    icon: "wave",     color: "#0e7c9a", weight: "bold"      },
+  { name: "PANTHER",    sub: "ATHLETIC",    icon: "panther",  color: "#0a0a0a", weight: "black"     },
+  { name: "XPLORE",     sub: "PERFORMANCE", icon: "XP",       color: "#0a0a0a", weight: "extrabold" },
+  { name: "SUMMIT",     sub: "ENDURANCE",   icon: "mountain", color: "#2d6a4f", weight: "black"     },
+  { name: "FUEL",       sub: "YOUR FIRE",   icon: "F",        color: "#ff4d00", weight: "extrabold" },
+  { name: "BOLT",       sub: "TRAINING",    icon: "bolt",     color: "#0a0a0a", weight: "black"     },
+  { name: "PRIDE",      sub: "ATHLETICS",   icon: "lion",     color: "#6a1b9a", weight: "black"     },
+  { name: "VITAL",      sub: "WELLNESS",    icon: "leaf",     color: "#2e7d32", weight: "bold"      },
+
+  { name: "XCEL",       sub: "SPORT",       icon: "X",        color: "#c0172e", weight: "extrabold" },
+  { name: "FALCON",     sub: "RACING",      icon: "falcon",   color: "#1565c0", weight: "black"     },
+  { name: "SELECT",     sub: "2024",        icon: "shield",   color: "#0a0a0a", weight: "condensed" },
+  { name: "VELOCITY",   sub: "CYCLING CLUB",icon: "bike",     color: "#0a0a0a", weight: "black"     },
+  { name: "ASPIRE",     sub: "ATHLETIC",    icon: "triangle", color: "#0a0a0a", weight: "extrabold" },
+  { name: "NO DAYS",    sub: "OFF",         icon: "no",       color: "#c0172e", weight: "italic"    },
+  { name: "STRIDE",     sub: "FORWARD",     icon: "S",        color: "#1565c0", weight: "extrabold" },
+  { name: "HOOP",       sub: "CULTURE",     icon: "ball",     color: "#fb8c00", weight: "black"     },
+];
+
+function BrandIcon({ icon, color }: { icon: Brand["icon"]; color: string }) {
+  const stroke = color;
+  switch (icon) {
+    case "P": return <span style={{ color }} className="text-3xl font-black italic">P</span>;
+    case "A": return <span style={{ color }} className="text-3xl font-black italic">A</span>;
+    case "R": return <span style={{ color }} className="text-3xl font-black">R</span>;
+    case "X": return <span style={{ color }} className="text-3xl font-black italic">X</span>;
+    case "F": return <span style={{ color }} className="text-3xl font-black">F</span>;
+    case "S": return <span style={{ color }} className="text-3xl font-black">S</span>;
+    case "XP": return <span style={{ color }} className="text-2xl font-black">XP</span>;
+    case "kanji": return <span style={{ color }} className="text-3xl font-black">禅</span>;
+    case "run": return (
+      <svg viewBox="0 0 32 32" className="w-7 h-7" fill="none" stroke={stroke} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="20" cy="6" r="2.5" fill={stroke}/>
+        <path d="M14 14l4-3 3 2 5-1M11 22l3-4 4 2 4-2M6 26l5-4 4 1 4-2"/>
+        <path d="M22 13l3 4-2 4" />
+      </svg>
+    );
+    case "crown": return (
+      <svg viewBox="0 0 32 32" className="w-7 h-7" fill="none" stroke={stroke} strokeWidth="2.5" strokeLinejoin="round">
+        <path d="M5 22L8 10l8 6 8-6 3 12z"/>
+        <path d="M5 22h22" />
+      </svg>
+    );
+    case "wings": return (
+      <svg viewBox="0 0 32 32" className="w-7 h-7" fill="none" stroke={stroke} strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round">
+        <path d="M3 22l6-12 5 6 2-4 2 4 5-6 6 12z"/>
+      </svg>
+    );
+    case "dumbbell": return (
+      <svg viewBox="0 0 32 32" className="w-7 h-7" fill="none" stroke={stroke} strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round">
+        <path d="M3 12v8M7 9v14M25 9v14M29 12v8M7 16h18"/>
+      </svg>
+    );
+    case "wave": return (
+      <svg viewBox="0 0 32 32" className="w-7 h-7" fill="none" stroke={stroke} strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round">
+        <path d="M3 18c4-6 8-6 12 0s8 6 12 0M3 24c4-6 8-6 12 0s8 6 12 0"/>
+      </svg>
+    );
+    case "panther": return (
+      <svg viewBox="0 0 32 32" className="w-7 h-7" fill={stroke}>
+        <path d="M8 8l3 3 5-1 5 1 3-3-1 7 2 4-4 4-3-2-2 2-2-2-3 2-4-4 2-4z"/>
+      </svg>
+    );
+    case "mountain": return (
+      <svg viewBox="0 0 32 32" className="w-7 h-7" fill="none" stroke={stroke} strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round">
+        <path d="M3 24l8-12 5 7 3-4 10 9z"/>
+      </svg>
+    );
+    case "bolt": return (
+      <svg viewBox="0 0 32 32" className="w-7 h-7" fill={stroke}>
+        <path d="M18 3L6 18h7l-2 11 12-15h-7z"/>
+      </svg>
+    );
+    case "lion": return (
+      <svg viewBox="0 0 32 32" className="w-7 h-7" fill={stroke}>
+        <circle cx="16" cy="16" r="6"/>
+        <path d="M16 4l-3 4h6zM5 11l1 5 4-3zM27 11l-1 5-4-3zM5 21l4 3 1-5zM27 21l-4 3-1-5zM16 28l-3-4h6z"/>
+      </svg>
+    );
+    case "leaf": return (
+      <svg viewBox="0 0 32 32" className="w-7 h-7" fill="none" stroke={stroke} strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round">
+        <path d="M5 27c0-12 10-22 22-22 0 12-10 22-22 22z"/>
+        <path d="M5 27L20 12"/>
+      </svg>
+    );
+    case "falcon": return (
+      <svg viewBox="0 0 32 32" className="w-7 h-7" fill={stroke}>
+        <path d="M4 22l8-10 6 4 4-4-2 6 6 4-2 4-8-1-4 2-2-2-6 1z"/>
+      </svg>
+    );
+    case "shield": return (
+      <svg viewBox="0 0 32 32" className="w-7 h-7" fill="none" stroke={stroke} strokeWidth="2.5" strokeLinejoin="round">
+        <path d="M16 4l10 4v8c0 6-4 11-10 12-6-1-10-6-10-12V8z"/>
+        <text x="16" y="20" textAnchor="middle" fontSize="10" fontWeight="900" fill={stroke}>ST</text>
+      </svg>
+    );
+    case "bike": return (
+      <svg viewBox="0 0 32 32" className="w-7 h-7" fill="none" stroke={stroke} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="8" cy="22" r="5"/>
+        <circle cx="24" cy="22" r="5"/>
+        <path d="M8 22l5-10h6l5 10M19 12h4l2-3"/>
+      </svg>
+    );
+    case "triangle": return (
+      <svg viewBox="0 0 32 32" className="w-7 h-7" fill="none" stroke={stroke} strokeWidth="3" strokeLinejoin="round">
+        <path d="M16 5L28 26H4z"/>
+      </svg>
+    );
+    case "no": return (
+      <svg viewBox="0 0 32 32" className="w-7 h-7" fill="none" stroke={stroke} strokeWidth="3" strokeLinecap="round">
+        <line x1="4" y1="6" x2="28" y2="26"/>
+      </svg>
+    );
+    case "ball": return (
+      <svg viewBox="0 0 32 32" className="w-7 h-7" fill="none" stroke={stroke} strokeWidth="2.5" strokeLinejoin="round">
+        <circle cx="16" cy="16" r="11"/>
+        <path d="M16 5v22M5 16h22M9 9l14 14M23 9L9 23"/>
+      </svg>
+    );
+    default: return null;
+  }
+}
+
+function BrandCard({ b }: { b: Brand }) {
+  const weightClass = {
+    black: "font-black",
+    extrabold: "font-extrabold",
+    bold: "font-bold",
+    semibold: "font-semibold",
+    italic: "font-black italic",
+    condensed: "font-extrabold tracking-tight",
+  }[b.weight || "black"];
+
+  const subWeightClass = {
+    black: "font-bold",
+    extrabold: "font-bold",
+    bold: "font-bold",
+    semibold: "font-semibold",
+    italic: "font-bold",
+    condensed: "font-bold tracking-wide",
+  }[b.weight || "black"];
+
+  return (
+    <div className="aspect-[3/1.5] flex flex-col items-center justify-center gap-0.5 px-2 py-2 hover:scale-105 transition-transform">
+      <BrandIcon icon={b.icon} color={b.color} />
+      <div className={`${weightClass} text-[11px] md:text-sm leading-none uppercase text-center`} style={{ color: b.color }}>
+        {b.name}
+      </div>
+      {b.sub && (
+        <div className={`${subWeightClass} text-[8px] md:text-[10px] leading-none uppercase tracking-wider text-center opacity-70`} style={{ color: b.color }}>
+          {b.sub}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function LogoWall() {
   return (
-    <section className="bg-white py-12 md:py-16 border-b border-neutral-200">
+    <section className="bg-white py-12 md:py-16 border-y border-neutral-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="text-center mb-8">
+        <div className="text-center mb-6 md:mb-8">
           <div className="text-[10px] md:text-xs uppercase tracking-widest text-neutral-500 font-semibold mb-2">
             Trusted by brands, teams &amp; agencies worldwide
           </div>
@@ -211,27 +391,16 @@ function LogoWall() {
             200+ organizations across 50+ countries
           </h2>
         </div>
-        <div className="grid grid-cols-3 md:grid-cols-6 gap-4 md:gap-6 items-center">
-          {Array.from({ length: 12 }).map((_, i) => (
-            <div
-              key={i}
-              className="aspect-[3/1.5] flex items-center justify-center rounded-lg border-2 border-dashed border-neutral-200 bg-neutral-50 text-neutral-400 text-[10px] md:text-xs font-medium"
-            >
-              Logo {i + 1}
-            </div>
+        <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2 md:gap-3">
+          {BRANDS.map((b) => (
+            <BrandCard key={b.name} b={b} />
           ))}
         </div>
-        <p className="text-center text-xs text-neutral-400 mt-4">
-          (Real client logos will be displayed here. Please send us your customer logo files.)
-        </p>
       </div>
     </section>
   );
 }
 
-/**
- * VideoShowcase – placeholder until user provides video
- */
 function VideoShowcase() {
   return (
     <section className="bg-[#0a0a0a] text-white py-12 md:py-20">
