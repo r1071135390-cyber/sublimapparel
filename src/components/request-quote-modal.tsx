@@ -27,6 +27,13 @@ const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024;
 const ACCEPTED = [".jpg", ".jpeg", ".png", ".pdf", ".ai", ".eps", ".psd", ".svg", ".tif", ".tiff"];
 const ACCEPT_ATTR = ACCEPTED.join(",");
 
+// Min delivery date: 7 days from module load (stable across renders)
+const MIN_DELIVERY_DATE = (() => {
+  const d = new Date();
+  d.setDate(d.getDate() + 7);
+  return d.toISOString().split("T")[0];
+})();
+
 type Attached = {
   file: File;
   name: string;
@@ -536,15 +543,15 @@ function RequestQuoteModal() {
 
             {/* Required delivery date */}
             <div className="mt-5 grid grid-cols-1 gap-4 border-t-2 border-[#0a0a0a] pt-4 md:grid-cols-2">
-              <Field label="Required delivery date *" required>
+              <Field label="Required delivery date (to your door) *" required>
                 <input
-                  type="text"
+                  type="date"
                   name="deadline"
                   required
+                  min={MIN_DELIVERY_DATE}
                   value={form.deadline}
                   onChange={onChange}
-                  placeholder="e.g. Need by Sept 15, 2026"
-                  className="w-full border-b-2 border-[#0a0a0a] bg-transparent py-2 text-sm font-medium text-[#0a0a0a] placeholder:text-[#0a0a0a]/30 focus:border-[#ff4d00] focus:outline-none"
+                  className="w-full border-b-2 border-[#0a0a0a] bg-transparent py-2 text-sm font-medium text-[#0a0a0a] focus:border-[#ff4d00] focus:outline-none"
                 />
               </Field>
             </div>

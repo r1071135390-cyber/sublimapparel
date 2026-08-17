@@ -520,6 +520,92 @@ export const blogPosts: BlogPost[] = [
 "Send us your design and we will recommend the right method for free",
     ],
   },
+  {
+    slug:"how-to-prepare-artwork-files-for-sublimation",
+    title:"How to Prepare Artwork Files for Sublimation Printing (AI, EPS, PDF, PSD)",
+    excerpt:
+"Bad artwork files are the #1 reason sublimation prints come out wrong. Here is the exact file setup we ask every B2B client to follow — and the mistakes that delay 80% of first-time orders.",
+    category:"Product Guide",
+    date:"2026-08-18",
+    readTime:"7 min read",
+    author:"SublimApparel Team",
+    coverImage:"/designer-workstation.webp",
+    coverAlt:"Designer workstation with vector artwork and sublimation fabric swatches",
+    tags: ["artwork preparation","vector file","sublimation","file formats","design tips","pre-production"],
+    metaTitle: "How to Prepare Artwork Files for Sublimation Printing (2025 Guide)",
+    metaDescription:
+"Step-by-step guide to preparing AI, EPS, PDF, and PSD files for sublimation printing. DPI, color mode, embedding, bleed, and the 5 most common mistakes that delay production. Free template.",
+    intro: [
+"Sublimation printing rewards clean, well-built artwork and punishes sloppy files. Because the ink dyes the polyester fibers, every pixel of your file ends up on the fabric — there is no ink layer to hide behind, no thread to mask with, no plate to engrave differently. What you send is what you get.",
+"This guide walks you through the exact artwork specifications we ask every B2B client to follow. It is the same checklist our pre-press team uses when we review incoming files, and following it will cut your first-sample approval time in half.",
+    ],
+    sections: [
+      {
+        heading:"1. Pick the Right File Format",
+        paragraphs: [
+"Best formats (in order of preference):",
+"AI (.ai) — Adobe Illustrator native. Best for vector logos, type, and any flat color artwork. Editable, scalable to any garment size without quality loss.",
+"EPS (.eps) — universal vector format. Works in every pre-press software. Use this if you don't have AI.",
+"PDF (.pdf) — vector PDF with text outlined and images embedded. Industry standard for production files. Use \"Press Quality\" or \"PDF/X-4\" preset when exporting.",
+"PSD (.psd) — Photoshop native. Best for full-color photo-realistic designs and all-over prints. Keep layers intact and flattened only as a final step.",
+"SVG (.svg) — modern vector format. Works for simple web-style designs. Not preferred for production but acceptable for sample-stage files.",
+"Formats to avoid: JPG/PNG (raster — quality degrades with scaling), DOC/PPTX (not for production), low-res screenshots, flattened bitmaps below 150 DPI.",
+        ],
+      },
+      {
+        heading:"2. Set Up Your Document Correctly",
+        paragraphs: [
+"Use the actual garment size at 1:1 scale. If you are printing a design on a 30 cm wide x 40 cm tall print area on the front of a t-shirt, set your document to 30 x 40 cm (or the equivalent in mm/inches). Do not design at A4 and assume we will scale it.",
+"Resolution for raster elements: 150 DPI at final print size is the minimum. 200-300 DPI is preferred for photo elements. Lower than 150 DPI will produce visible pixelation, especially on small text or fine details.",
+"Color mode: CMYK for accurate print color matching, or RGB if you are okay with the printer's automatic conversion. Avoid spot colors (Pantone) unless you specifically request Pantone-matching inks (extra cost).",
+"Bleed: extend any background colors or edge-to-edge designs 3-5 mm past the cut line. Sublimation is usually a panel print with sewn seams, so bleed helps cover minor alignment shifts between panels.",
+        ],
+      },
+      {
+        heading:"3. Embed or Outline Everything",
+        paragraphs: [
+"Two things cause 80% of production delays: missing fonts and missing images.",
+"For fonts: either embed them in the PDF (check the box when exporting) or convert all text to outlines / paths before sending. Outlined text cannot be edited, so save a separate editable version for yourself and send the outlined version to us.",
+"For images: place all images into the document at final size and resolution. Do not link to external files. Do not send a folder of loose images alongside the main file. Embed everything into one self-contained master file.",
+"If you send a layered PSD, keep all text layers editable and all images embedded. Do not flatten until we confirm the design.",
+        ],
+      },
+      {
+        heading:"4. Color Management and Pantone Matching",
+        paragraphs: [
+"Sublimation printers produce millions of colors, but not every color on screen is reproducible. Bright neons, metallic inks, and very dark blacks often shift slightly on fabric.",
+"For critical brand colors: provide a Pantone (PMS) reference. We will color-match the print to the closest reproducible Pantone. Note that on polyester, the color will look slightly different than on paper — fabric absorbs ink differently than coated stock.",
+"For dark colors: avoid pure black (CMYK 0,0,0,100). Use rich black (CMYK 60,40,40,100) for a deeper, more saturated black on fabric.",
+"For white elements: they will not print. The white you see on the final garment is the white of the polyester fabric. If your design has white text or elements, just leave those areas transparent in the file.",
+        ],
+      },
+      {
+        heading:"5. Common Mistakes That Delay Production",
+        paragraphs: [
+"Mistake 1: Sending a low-res JPG. We have to redraw or upscale the artwork, adding 2-3 days to the sample timeline. Start with a 1:1 vector or 200+ DPI raster.",
+"Mistake 2: Not outlining the text. We don't have your custom font. The file opens with substituted fonts and the layout shifts. Always outline text before sending.",
+"Mistake 3: Forgetting the back of the garment. Many clients send a beautiful front design and forget they also need artwork for the back, sleeves, or collar. Specify all print locations in one file or label layers clearly.",
+"Mistake 4: Designing on a transparent background but expecting a white background. We print what you give us. If the background is transparent, the garment color shows through.",
+"Mistake 5: Sending artwork at the wrong scale. A logo designed for a business card is 5 cm wide. The same logo printed 30 cm wide on a jersey will look pixelated. Always design at final print size.",
+        ],
+      },
+      {
+        heading:"6. Our Free Artwork Template",
+        paragraphs: [
+"We provide a free Adobe Illustrator template with pre-set artboards for every garment type we make — t-shirts, polos, hoodies, jerseys, tank tops, and shorts. Each artboard is set to the actual printable area for that garment, with seam lines and safe zones marked.",
+"Download it from the Artwork Upload section of any quote request, or ask us to send it. Using the template is the single fastest way to get your file approved on the first review.",
+"If you are not an Illustrator user, ask us for a PDF template with the same dimensions. Just place your design inside the marked area and save as a vector PDF.",
+        ],
+      },
+    ],
+    keyTakeaways: [
+"Send AI, EPS, or vector PDF for flat designs; PSD (200+ DPI) for photo-realistic",
+"Design at final 1:1 print size — never send a small file and ask us to scale up",
+"Outline all text and embed all images before sending",
+"Use rich black (60,40,40,100) for dark areas; transparent for white",
+"Download our free AI/PDF artwork template to speed up approval",
+    ],
+  },
 ];
 
 export const getPostBySlug = (slug: string): BlogPost | undefined =>
