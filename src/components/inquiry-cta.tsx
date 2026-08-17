@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Clock, Globe2, Warehouse } from "lucide-react";
 
 export function InquiryCTA() {
@@ -39,7 +40,17 @@ export function InquiryCTA() {
           </div>
 
           <div className="md:col-span-4">
-            <ul className="space-y-3 border-2 border-white bg-black/15 p-5 text-sm font-bold">
+            <div className="relative aspect-[3/2] w-full overflow-hidden border-2 border-white bg-black/10">
+              <Image
+                src="/order-folder-desk.webp"
+                alt="SublimApparel order folder on desk — single line-item quote with logo, pricing, shipping and duties"
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className="object-cover"
+                loading="lazy"
+              />
+            </div>
+            <ul className="mt-4 space-y-3 border-2 border-white bg-black/15 p-5 text-sm font-bold">
               <li className="flex items-center gap-3">
                 <Clock size={18} className="text-black" />
                 <span>Reply within 1 business day</span>
