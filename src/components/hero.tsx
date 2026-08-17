@@ -175,17 +175,21 @@ export function Hero() {
 
         {/* Price + Lead time — the "B2B elevator pitch" banner */}
         <div className="mb-4 grid grid-cols-1 gap-2 sm:grid-cols-2 md:mb-5 md:gap-3">
-          <div className="flex items-center gap-3 rounded-sm border-2 border-[#ff4d00] bg-[#ff4d00]/15 px-4 py-3 backdrop-blur-sm">
-            <div className="flex-shrink-0 text-2xl font-black text-white md:text-3xl">
-              $8
+          <div className="rounded-sm border-2 border-[#ff4d00] bg-[#ff4d00]/15 px-4 py-3 backdrop-blur-sm">
+            <div className="flex items-baseline gap-2">
+              <span className="text-[10px] font-black uppercase tracking-[0.15em] text-[#ff4d00] md:text-xs">
+                From
+              </span>
+              <span className="text-2xl font-black text-white md:text-3xl">
+                $8<span className="text-base font-black md:text-xl">/pc</span>
+              </span>
             </div>
-            <div className="leading-tight">
-              <div className="text-[10px] font-black uppercase tracking-[0.15em] text-[#ff4d00] md:text-xs">
-                From / pc
-              </div>
-              <div className="text-[11px] text-white/90 md:text-xs">
-                Polyester sublimation T-shirts, to your door, MOQ 50
-              </div>
+            <div className="mt-1 text-[11px] leading-snug text-white/90 md:text-xs">
+              for Polyester sublimation T-shirts,{" "}
+              <span className="font-black text-[#00c2ff] underline decoration-[#00c2ff]/60 underline-offset-2">
+                to your door
+              </span>
+              , MOQ 50
             </div>
           </div>
           <div className="flex items-center gap-3 rounded-sm border-2 border-white/40 bg-white/10 px-4 py-3 backdrop-blur-sm">
