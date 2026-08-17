@@ -227,25 +227,29 @@ function RequestQuoteModal() {
               />
             )}
 
-            {/* Product context banner — only shown on product detail pages, otherwise modal is identical */}
-            {state.source.prefill?.productName && (
-              <div className="mb-5 flex items-center gap-3 border-2 border-[#00C2FF] bg-[#f0fbff] px-3 py-2">
-                <FileText className="h-4 w-4 flex-shrink-0 text-[#00C2FF]" />
-                <div className="flex-1 text-xs">
-                  <span className="font-black uppercase tracking-widest text-[#0a0a0a]">
-                    Quoting for:{" "}
-                  </span>
-                  <span className="font-bold text-[#0a0a0a]">
-                    {state.source.prefill.productName}
-                    {state.source.prefill.productNumber && (
-                      <span className="ml-1 text-[10px] text-[#6B6B6B]">
-                        (No. {state.source.prefill.productNumber})
-                      </span>
-                    )}
-                  </span>
+            {/* Quote context banner — appears on every modal; product name is added on product detail pages */}
+            <div className="mb-5 flex items-start gap-3 border-2 border-[#ff4d00] bg-[#fff5f0] p-3">
+              <FileText className="mt-0.5 h-5 w-5 flex-shrink-0 text-[#ff4d00]" />
+              <div className="text-xs">
+                <div className="font-black uppercase tracking-widest text-[#ff4d00]">
+                  Quote context
+                </div>
+                <div className="mt-1 font-bold text-[#0a0a0a]">
+                  {state.source.label}
+                </div>
+                <div className="mt-0.5 text-[10px] text-[#6B6B6B]">
+                  Source: <code className="bg-white px-1">{state.source.path}</code>
+                  {state.source.prefill?.productName && (
+                    <> · Quoting for{" "}
+                      <span className="font-bold text-[#0a0a0a]">{state.source.prefill.productName}</span>
+                      {state.source.prefill.productNumber && (
+                        <span className="text-[#6B6B6B]"> (No. {state.source.prefill.productNumber})</span>
+                      )}
+                    </>
+                  )}
                 </div>
               </div>
-            )}
+            </div>
 
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <Field label="Your name *" required>
