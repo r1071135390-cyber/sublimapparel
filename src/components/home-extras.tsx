@@ -54,23 +54,23 @@ function FreeDesignService() {
             </RequestSampleButton>
           </div>
 
-          {/* Right: visual / mockup placeholder */}
-          <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] border border-white/10">
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-center px-6">
-                <div className="text-7xl md:text-8xl font-extrabold text-[#ff4d00]/20 leading-none">
-                  ?
-                </div>
-                <div className="text-sm md:text-base text-white/40 mt-2">
-                  Your rough idea &rarr; our polished design
-                </div>
-              </div>
+          {/* Right: design workspace visual */}
+          <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 bg-[#1a1a1a]">
+            <Image
+              src="/design-workspace.webp"
+              alt="SublimApparel in-house design team working on a custom sublimation t-shirt mockup in Adobe Photoshop on a curved ultrawide monitor"
+              width={1200}
+              height={900}
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="absolute inset-0 w-full h-full object-cover"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/40 to-transparent" />
+            {/* Caption tag */}
+            <div className="absolute bottom-4 left-4 right-4 flex items-center gap-2 text-white/90 text-xs md:text-sm font-semibold">
+              <Sparkles className="w-4 h-4 text-[#ff4d00]" />
+              <span>Your rough idea &rarr; our polished design</span>
             </div>
-            {/* Animated sparkle dots */}
-            <div className="absolute top-6 left-6 w-2 h-2 bg-[#ff4d00] rounded-full animate-ping" />
-            <div className="absolute top-12 right-12 w-1.5 h-1.5 bg-[#00c2ff] rounded-full animate-ping" style={{ animationDelay: "0.6s" }} />
-            <div className="absolute bottom-16 left-1/4 w-1 h-1 bg-white rounded-full animate-ping" style={{ animationDelay: "1.2s" }} />
-            <div className="absolute bottom-8 right-8 w-2 h-2 bg-[#ff4d00] rounded-full animate-ping" style={{ animationDelay: "0.3s" }} />
           </div>
         </div>
       </div>
