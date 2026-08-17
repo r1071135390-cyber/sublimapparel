@@ -234,32 +234,40 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Factory intro video */}
+      {/* Factory intro video — matches home VideoShowcase layout */}
       <section className="border-b-2 border-black bg-[#0a0a0a] text-white">
-        <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
-          <div className="mb-8 max-w-3xl">
-            <div className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
-              Watch · 40 seconds
+        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 md:py-20">
+          <div className="grid items-center gap-8 md:grid-cols-2 md:gap-12">
+            <div>
+              <div className="mb-3 text-[10px] font-bold uppercase tracking-widest text-[#ff4d00] md:text-xs">
+                [ 002 / Watch · 40 seconds ]
+              </div>
+              <h2 className="mb-4 text-3xl font-extrabold leading-[1.1] md:text-5xl">
+                <span className="text-white">A 40-second walk </span>
+                <span className="text-[#ff4d00]">through our Yiwu factory.</span>
+              </h2>
+              <p className="mb-6 text-base leading-relaxed text-white/70 md:text-lg">
+                Sublimation printers, DTG lines, cut-and-sew, QC, packing &mdash; one roof, one team, one quote. Real footage, no voice-over, no fluff.
+              </p>
+              <ul className="space-y-2 text-sm text-white/70 md:text-base">
+                <li>&bull; Sublimation printing &mdash; large format, edge-to-edge</li>
+                <li>&bull; DTG &amp; DTF on 100% cotton</li>
+                <li>&bull; Cut-and-sew assembly lines</li>
+                <li>&bull; QC, packing, DDP shipping prep</li>
+              </ul>
             </div>
-            <h2 className="text-3xl font-black leading-[1.05] tracking-tight md:text-5xl">
-              <span className="text-white">A 40-second walk </span>
-              <span className="text-[#ff4d00]">through our Yiwu factory.</span>
-            </h2>
-            <p className="mt-3 text-sm text-white/70 md:text-base">
-              Sublimation printers, DTG lines, cut-and-sew, QC, packing &mdash; one roof, one team, one quote. Real footage, no voice-over, no fluff.
-            </p>
-          </div>
-          <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-white/10 bg-black">
-            <video
-              src="/videos/sublimapparel-factory-intro.mp4"
-              poster="/about-hero.webp"
-              controls
-              preload="metadata"
-              playsInline
-              className="absolute inset-0 h-full w-full object-cover"
-            >
-              Your browser does not support the video tag.
-            </video>
+            <div className="relative aspect-video overflow-hidden rounded-2xl border border-white/10 bg-black">
+              <video
+                src="/videos/sublimapparel-factory-intro.mp4"
+                poster="/about-hero.webp"
+                controls
+                preload="metadata"
+                playsInline
+                className="absolute inset-0 h-full w-full object-cover"
+              >
+                Your browser does not support the video tag.
+              </video>
+            </div>
           </div>
         </div>
       </section>
