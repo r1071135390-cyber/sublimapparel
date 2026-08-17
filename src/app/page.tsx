@@ -11,7 +11,7 @@ import { DDP } from "@/components/ddp";
 import { Industries } from "@/components/industries";
 import { Contact } from "@/components/contact";
 import { HomeExtras } from "@/components/home-extras";
-import { Newsletter } from "@/components/home-extras";
+import { Newsletter, VideoShowcase } from "@/components/home-extras";
 import { JsonLd } from "@/components/json-ld";
 
 export const metadata = {
@@ -130,6 +130,7 @@ export default function Home() {
       <Products />
       <Process />
       <FactoryFloor />
+      <VideoShowcase />
       <DDP />
       <Industries />
       <HomeExtras />

@@ -222,14 +222,14 @@ function VideoShowcase() {
         <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
           <div>
             <div className="text-[10px] md:text-xs uppercase tracking-widest text-[#ff4d00] font-bold mb-3">
-              Watch · 90 seconds
+              Watch · 40 seconds
             </div>
             <h2 className="text-3xl md:text-5xl font-extrabold leading-[1.1] mb-4">
               <span className="text-white">See our </span>
               <span className="text-[#ff4d00]">factory in action.</span>
             </h2>
             <p className="text-base md:text-lg text-white/70 leading-relaxed mb-6">
-              Walk through our 8,000 m² Yiwu facility &mdash; 12 production lines, digital sublimation printers, cut-and-sew lines, quality control, packing. 90 seconds, real footage, no fluff.
+              Walk through our 8,000 m² Yiwu facility &mdash; 12 production lines, digital sublimation printers, cut-and-sew lines, quality control, packing. 40 seconds, real footage, no fluff.
             </p>
             <ul className="space-y-2 text-sm md:text-base text-white/70">
               <li>&bull; Sublimation printing &mdash; large format, edge-to-edge</li>
@@ -238,16 +238,17 @@ function VideoShowcase() {
               <li>&bull; QC, packing, DDP shipping prep</li>
             </ul>
           </div>
-          <div className="relative aspect-video rounded-2xl overflow-hidden bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] border border-white/10 flex items-center justify-center">
-            <div className="text-center">
-              <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white/10 border-2 border-white/30 flex items-center justify-center mx-auto mb-3">
-                <svg className="w-6 h-6 md:w-8 md:h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-              </div>
-              <div className="text-sm text-white/60">Factory tour video</div>
-              <div className="text-xs text-white/40 mt-1">Coming soon</div>
-            </div>
+          <div className="relative aspect-video rounded-2xl overflow-hidden bg-black border border-white/10">
+            <video
+              src="/videos/sublimapparel-intro.mp4"
+              poster="/factory-floor.webp"
+              controls
+              preload="metadata"
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover"
+            >
+              Your browser does not support the video tag.
+            </video>
           </div>
         </div>
       </div>
@@ -360,7 +361,6 @@ export function HomeExtras() {
       <RecentCaseStudies />
       <LiveInventory />
       <LogoWall />
-      <VideoShowcase />
     </>
   );
 }
