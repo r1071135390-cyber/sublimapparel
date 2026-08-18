@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VividPrint Product Classification Rules</title>
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --fg: #e5e5e5;
+    --muted: #a0a0a0;
+    --accent: #ff4d00;
+    --card: #1a1a1a;
+    --border: #2a2a2a;
+    --blue: #00c2ff;
+    --good: #4ade80;
+    --bad: #f87171;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+  }
+  .container { max-width: 900px; margin: 0 auto; padding: 40px 24px; }
+  h1 { font-size: 2.5rem; margin: 0 0 8px; color: var(--accent); }
+  .subtitle { color: var(--muted); font-size: 0.95rem; margin-bottom: 40px; }
+  h2 { color: var(--accent); margin-top: 48px; border-bottom: 2px solid var(--accent); padding-bottom: 8px; }
+  h3 { color: var(--blue); margin-top: 32px; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+  th, td { text-align: left; padding: 10px 14px; border: 1px solid var(--border); }
+  th { background: var(--card); color: var(--blue); font-weight: 600; }
+  tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+  code { background: var(--card); padding: 2px 6px; border-radius: 4px; font-size: 0.9em; color: var(--blue); }
+  pre {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    padding: 16px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 0.85em;
+  }
+  .tag {
+    display: inline-block;
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 2px 10px;
+    border-radius: 12px;
+    margin: 2px;
+    font-size: 0.85em;
+  }
+  .tag.cat { border-color: var(--accent); color: var(--accent); }
+  .tag.sport { border-color: var(--blue); color: var(--blue); }
+  .tag.scenario { border-color: var(--good); color: var(--good); }
+  .callout {
+    background: var(--card);
+    border-left: 4px solid var(--accent);
+    padding: 12px 18px;
+    border-radius: 4px;
+    margin: 16px 0;
+  }
+  .callout.warn { border-left-color: var(--bad); }
+  .callout.good { border-left-color: var(--good); }
+  .label-good { color: var(--good); }
+  .label-bad { color: var(--bad); }
+  .summary-box {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .summary-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px;
+    text-align: center;
+  }
+  .summary-card .count { font-size: 2.2rem; color: var(--accent); font-weight: 700; }
+  .summary-card .name { color: var(--muted); font-size: 0.9rem; }
+  .back { display: inline-block; color: var(--muted); text-decoration: none; margin-bottom: 24px; }
+  .back:hover { color: var(--accent); }
+  ul li { margin-bottom: 6px; }
+  .open-q { color: var(--bad); }
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back" href="/">← Back to VividPrint</a>
+  <h1>VividPrint Product Classification Rules</h1>
+  <div class="subtitle">Version 2026-08-18 · Source: <code>src/lib/products-data.ts</code> + <code>src/lib/tag-archive.ts</code></div>
+
+  <div class="summary-box">
+    <div class="summary-card">
+      <div class="count">13</div>
+      <div class="name">Categories (mutually exclusive)</div>
+    </div>
+    <div class="summary-card">
+      <div class="count">41</div>
+      <div class="name">Sports tags (0–5 per product)</div>
+    </div>
+    <div class="summary-card">
+      <div class="count">25</div>
+      <div class="name">Scenario tags (2–5 per product)</div>
+    </div>
+  </div>
+
+  <h2>1. Category — Pick exactly one</h2>
+  <p>Each product has exactly <strong>one</strong> category. The category is the primary visual label on the product card and drives the <code>/tag/category/&lt;slug&gt;/</code> archive pages.</p>
+  <table>
+    <thead><tr><th>Category</th><th>What it covers</th><th>Examples</th></tr></thead>
+    <tbody>
+      <tr><td><span class="tag cat">Hoodie</span></td><td>Knit caps, beanies, ski masks</td><td>Beanie Caps, Cycling Caps, Sun Caps</td></tr>
+      <tr><td><span class="tag cat">T-Shirt</span></td><td>Short-sleeve tops, jerseys, singlets, suits, GIs, fishing shirts</td><td>Basketball Jersey, Wrestling Singlet, MMA Gi, Cycling Top</td></tr>
+      <tr><td><span class="tag cat">Pants</span></td><td>Long pants, shorts, leggings, tights, swim trunks</td><td>Boxing Trunks, Cycling Shorts, Yoga Legging, MMA Shorts</td></tr>
+      <tr><td><span class="tag cat">Sweatshirt</span></td><td>Long-sleeve sweatshirts, hoodies, pullovers</td><td>Pullover Hoodie, Crewneck Sweatshirt</td></tr>
+      <tr><td><span class="tag cat">Tank Top & Camis</span></td><td>Sleeveless tops, rash guards, lycra tops</td><td>Surf Lycra Top, Rash Guard</td></tr>
+      <tr><td><span class="tag cat">Shirt</span></td><td>Standard collared shirts (not polo)</td><td>Button-up Shirt, Dress Shirt</td></tr>
+      <tr><td><span class="tag cat">Home</span></td><td>Home goods, household items, gifts</td><td>Scarf, Apron, Beach Sarong, Towel, Onesie, Home Jumpsuit</td></tr>
+      <tr><td><span class="tag cat">Skirt</span></td><td>Skirts, dresses, leotards, cheer uniforms</td><td>Dance Dress, Cheerleading Dress, Netball Dress, Leotard</td></tr>
+      <tr><td><span class="tag cat">Polo Shirt</span></td><td>Polo-style collared shirts (with buttons + collar)</td><td>Sublimation Polo, Sport Polo</td></tr>
+      <tr><td><span class="tag cat">Cap</span></td><td>Baseball caps, visors</td><td>Baseball Cap, Trucker Cap, Sun Visor</td></tr>
+      <tr><td><span class="tag cat">Jacket</span></td><td>Outerwear, windbreakers, ski jackets</td><td>Windbreaker, Softshell Jacket, Down Jacket</td></tr>
+      <tr><td><span class="tag cat">Vest</span></td><td>Safety vests, reflective vests, hi-vis vests</td><td>Construction Vest, Safety Vest, Reflective Vest</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout warn">
+    ⚠️ <strong>Sportswear is removed</strong> (2026-08-18). All 38 products previously in <code>Sportswear</code> have been redistributed to the categories above based on their product name. See <a href="/product-review/07-sportswear-reclassification.tsv" style="color:var(--blue)">07-sportswear-reclassification.tsv</a> for the mapping.
+  </div>
+
+  <h2>2. Sports — Pick 0–5 from 41</h2>
+  <p><strong>Rule of thumb:</strong> Pick the 1–5 sports the product is <em>primarily designed for</em>. If the product is not sport-specific (e.g. a scarf, home goods), pick <code>[]</code> (empty).</p>
+
+  <h3>Full list (41)</h3>
+  <p>
+    <span class="tag sport">AFL</span> <span class="tag sport">Athletics</span> <span class="tag sport">Badminton</span> <span class="tag sport">Baseball</span> <span class="tag sport">Basketball</span> <span class="tag sport">Beach</span> <span class="tag sport">Bowling</span> <span class="tag sport">Boxing</span> <span class="tag sport">Cheer</span> <span class="tag sport">Cricket</span> <span class="tag sport">CrossFit</span> <span class="tag sport">Cycling</span> <span class="tag sport">Dance</span> <span class="tag sport">Dive</span> <span class="tag sport">Esports</span> <span class="tag sport">Fishing</span> <span class="tag sport">Football</span> <span class="tag sport">Golf</span> <span class="tag sport">Gym</span> <span class="tag sport">Hockey</span> <span class="tag sport">Lacrosse</span> <span class="tag sport">MMA</span> <span class="tag sport">Martial Arts</span> <span class="tag sport">Netball</span> <span class="tag sport">Pilates</span> <span class="tag sport">Rugby</span> <span class="tag sport">Running</span> <span class="tag sport">Skate</span> <span class="tag sport">Skating</span> <span class="tag sport">Ski</span> <span class="tag sport">Snowboard</span> <span class="tag sport">Soccer</span> <span class="tag sport">Softball</span> <span class="tag sport">Surf</span> <span class="tag sport">Swimwear</span> <span class="tag sport">Table Tennis</span> <span class="tag sport">Tennis</span> <span class="tag sport">Triathlon</span> <span class="tag sport">Volleyball</span> <span class="tag sport">Wrestling</span> <span class="tag sport">Yoga</span>
+  </p>
+
+  <h3>Examples</h3>
+  <table>
+    <thead><tr><th>Product</th><th>Sports</th></tr></thead>
+    <tbody>
+      <tr><td>Basketball Jersey Wear</td><td><code>[Basketball]</code></td></tr>
+      <tr><td>Cycling Set (top + shorts)</td><td><code>[Cycling]</code></td></tr>
+      <tr><td>Yoga Set</td><td><code>[Yoga, Pilates, Gym]</code></td></tr>
+      <tr><td>Wrestling Singlet</td><td><code>[Wrestling, MMA, Martial Arts]</code></td></tr>
+      <tr><td>Scarf (0001)</td><td><code>[]</code> (no sport)</td></tr>
+      <tr><td>Baby Onesie</td><td><code>[]</code> (no sport)</td></tr>
+      <tr><td>Beach Sarong</td><td><code>[Beach, Swimwear, Surf]</code></td></tr>
+      <tr><td>Construction Vest</td><td><code>[]</code> (no sport)</td></tr>
+      <tr><td>Surf Lycra Top</td><td><code>[Surf, Swimwear, Beach]</code></td></tr>
+      <tr><td>MMA Gi</td><td><code>[MMA, Martial Arts]</code></td></tr>
+      <tr><td>Fishing Shirt</td><td><code>[Fishing]</code></td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout bad">
+    ❌ <strong>Anti-pattern:</strong> Do NOT tag a product with all 41 sports. This was the root cause of "achieve 不准确" — every product showed up on every sport archive page, making them all look the same.
+  </div>
+
+  <h2>3. Scenarios — Pick 2–5 from 25</h2>
+  <p><strong>Rule of thumb:</strong> Pick the 2–5 use cases the product best serves. Most products should have 2–4 scenarios.</p>
+
+  <h3>Full list (25)</h3>
+  <p>
+    <span class="tag scenario">Promotional Swag</span> <span class="tag scenario">Event & Festival</span> <span class="tag scenario">School & Education</span> <span class="tag scenario">Team & Club</span> <span class="tag scenario">Sports League</span> <span class="tag scenario">Corporate & Branding</span> <span class="tag scenario">Uniform & Workwear</span> <span class="tag scenario">Retail & Fashion</span> <span class="tag scenario">Political Campaign</span> <span class="tag scenario">Fundraiser & Charity</span> <span class="tag scenario">Music & Merch</span> <span class="tag scenario">Wedding & Party</span> <span class="tag scenario">Gift & Souvenir</span> <span class="tag scenario">Construction & Engineering</span> <span class="tag scenario">Express & Logistics</span> <span class="tag scenario">Hospitality & F&B</span> <span class="tag scenario">Medical & Healthcare</span> <span class="tag scenario">Security & Property</span> <span class="tag scenario">Retail & Supermarket</span> <span class="tag scenario">Education & School</span> <span class="tag scenario">Corporate & Promo</span> <span class="tag scenario">Transit & Transport</span> <span class="tag scenario">Studio & Gym</span> <span class="tag scenario">Military</span> <span class="tag scenario">Festival & Holiday</span>
+  </p>
+
+  <h3>Examples</h3>
+  <table>
+    <thead><tr><th>Product</th><th>Scenarios</th></tr></thead>
+    <tbody>
+      <tr><td>Basketball Jersey</td><td><code>[Sports League, Team & Club, School & Education]</code></td></tr>
+      <tr><td>Cheerleading Dress</td><td><code>[School & Education, Sports League, Team & Club]</code></td></tr>
+      <tr><td>Scarf (0001)</td><td><code>[Retail & Fashion, Gift & Souvenir, Promotional Swag]</code></td></tr>
+      <tr><td>Construction Vest (0101)</td><td><code>[Construction & Engineering, Security & Property, Uniform & Workwear]</code></td></tr>
+      <tr><td>Baby Onesie</td><td><code>[Gift & Souvenir, Retail & Fashion]</code></td></tr>
+      <tr><td>Beach Sarong</td><td><code>[Festival & Holiday, Event & Festival, Retail & Fashion]</code></td></tr>
+      <tr><td>Fishing Shirt</td><td><code>[Retail & Fashion, Gift & Souvenir]</code></td></tr>
+      <tr><td>Polo Shirt</td><td><code>[Corporate & Branding, Uniform & Workwear, Retail & Fashion]</code></td></tr>
+      <tr><td>MMA Gi</td><td><code>[Sports League, Team & Club]</code></td></tr>
+      <tr><td>Yoga Set</td><td><code>[Studio & Gym, Retail & Fashion, Promotional Swag]</code></td></tr>
+    </tbody>
+  </table>
+
+  <h2>4. The Categorization Algorithm</h2>
+  <p>Used to redistribute the 38 Sportswear products (see <a href="/product-review/07-sportswear-reclassification.tsv" style="color:var(--blue)">07-sportswear-reclassification.tsv</a>):</p>
+  <pre><code>function categorizeByName(name) {
+  const n = name.toLowerCase();
+
+  // Rule 1: Bottom-wear → Pants
+  if (n.includes("shorts") || n.includes("legging") ||
+      n.includes("tights") ||
+      (n.includes("swimwear") && n.includes("trunks"))) return "Pants";
+
+  // Rule 2: Tank-top dress → Tank Top & Camis
+  if (n.includes("vest") && n.includes("tank") && n.includes("dress")) {
+    return "Tank Top & Camis"; // e.g. 0008
+  }
+
+  // Rule 3: Other vests → Vest
+  if (n.includes("vest")) return "Vest";
+
+  // Rule 4: Tight-fitting tops → Tank Top & Camis
+  if (n.includes("rash guard") || n.includes("lycra top") ||
+      n.includes("lycra suit")) return "Tank Top & Camis";
+
+  // Rule 5: Singlet → T-Shirt
+  if (n.includes("singlet")) return "T-Shirt";
+
+  // Rule 6: Dress / leotard → Skirt
+  if (n.includes("leotard")) return "Skirt";
+  if (n.includes("dress") && !n.includes("tank vest")) return "Skirt";
+
+  // Rule 7: Uniform with skirt → Skirt
+  if (n.includes("uniform") &&
+      (n.includes("skirt") || n.includes("top + skirt"))) return "Skirt";
+
+  // Rule 8: Other sport tops → T-Shirt
+  if (n.includes("jersey") || n.includes("outfit") ||
+      n.includes("wear") || n.includes("set") ||
+      n.includes("suit") || n.includes("gi") ||
+      n.includes("fishing shirt")) return "T-Shirt";
+
+  // Fallback: T-Shirt
+  return "T-Shirt";
+}</code></pre>
+
+  <h3>Distribution (38 Sportswear products reclassified)</h3>
+  <table>
+    <thead><tr><th>New Category</th><th>Count</th></tr></thead>
+    <tbody>
+      <tr><td><span class="tag cat">T-Shirt</span></td><td>23</td></tr>
+      <tr><td><span class="tag cat">Pants</span></td><td>8</td></tr>
+      <tr><td><span class="tag cat">Skirt</span></td><td>4</td></tr>
+      <tr><td><span class="tag cat">Tank Top & Camis</span></td><td>2</td></tr>
+      <tr><td><span class="tag cat">Vest</span></td><td>1</td></tr>
+    </tbody>
+  </table>
+
+  <h2>5. Open Questions / Edge Cases</h2>
+  <ul>
+    <li class="open-q"><strong>0008 Womens Tank Vest Dress</strong> → my rule picks "Tank Top & Camis"; user said "should be Sports" but Sports category does not exist — need decision</li>
+    <li><strong>0042 Surf Lycra Top</strong> → "Tank Top & Camis" ✓</li>
+    <li><strong>Cheerleading Dress (0023)</strong> → "Skirt" ✓</li>
+    <li><strong>Netball Dress</strong> → "Skirt" ✓</li>
+    <li><strong>Dance Dress</strong> → "Skirt" ✓</li>
+    <li><strong>Hip-Hop Street Dance Outfit</strong> → "T-Shirt" (rule picks "outfit" → T-Shirt; could be "Skirt" if the outfit is mainly a dress — review)</li>
+  </ul>
+
+  <h2>6. Related Files & Downloads</h2>
+  <ul>
+    <li>Source data: <code>src/lib/products-data.ts</code></li>
+    <li>Tag archive metadata: <code>src/lib/tag-archive.ts</code></li>
+    <li>Product list (119 products): <a href="/product-review/01-products.tsv" style="color:var(--blue)">01-products.tsv</a></li>
+    <li>Categories (13): <a href="/product-review/02-categories.tsv" style="color:var(--blue)">02-categories.tsv</a></li>
+    <li>Sports (41): <a href="/product-review/03-sports.tsv" style="color:var(--blue)">03-sports.tsv</a></li>
+    <li>Scenarios (25): <a href="/product-review/04-scenarios.tsv" style="color:var(--blue)">04-scenarios.tsv</a></li>
+    <li>Tag archives in production (83): <a href="/product-review/05-tag-archives-on-production.tsv" style="color:var(--blue)">05-tag-archives-on-production.tsv</a></li>
+    <li>Real product counts per tag: <a href="/product-review/06-real-product-counts.tsv" style="color:var(--blue)">06-real-product-counts.tsv</a></li>
+    <li>Sportswear reclassification (38 products): <a href="/product-review/07-sportswear-reclassification.tsv" style="color:var(--blue)">07-sportswear-reclassification.tsv</a></li>
+  </ul>
+</div>
+</body>
+</html>
