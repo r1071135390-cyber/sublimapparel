@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Shirt, Wrench, Mail } from "lucide-react";
+import { Home, Shirt, Layers, Wrench, Truck, Mail } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type Tab = {
@@ -23,7 +23,19 @@ const tabs: Tab[] = [
     href: "/products",
     label: "Products",
     icon: Shirt,
-    match: (p) => p === "/products" || p.startsWith("/products/") || p.startsWith("/tag/") || p.startsWith("/all-over-print") || p.startsWith("/cases/") || p.startsWith("/fabric/") || p.startsWith("/industry/") || p.startsWith("/technique/") || p.startsWith("/blog/") || p.startsWith("/about/") || p.startsWith("/shipping"),
+    match: (p) =>
+      p === "/products" ||
+      p.startsWith("/products/") ||
+      p.startsWith("/tag/") ||
+      p.startsWith("/cases/") ||
+      p.startsWith("/blog/") ||
+      p.startsWith("/about/"),
+  },
+  {
+    href: "/fabric",
+    label: "Fabrics",
+    icon: Layers,
+    match: (p) => p === "/fabric" || p.startsWith("/fabric/"),
   },
   {
     href: "/technique/sublimation",
@@ -32,10 +44,16 @@ const tabs: Tab[] = [
     match: (p) => p === "/technique" || p.startsWith("/technique/"),
   },
   {
+    href: "/shipping/ddp",
+    label: "Shipping",
+    icon: Truck,
+    match: (p) => p === "/shipping" || p.startsWith("/shipping/"),
+  },
+  {
     href: "/contact",
     label: "Contact",
     icon: Mail,
-    match: (p) => p === "/contact",
+    match: (p) => p === "/contact" || p.startsWith("/get-a-quote"),
   },
 ];
 
@@ -57,7 +75,7 @@ export function MobileBottomNav() {
               <Link
                 href={tab.href}
                 className={cn(
-                  "flex h-full w-full flex-col items-center justify-center gap-0.5 text-[11px] font-medium transition-colors",
+                  "flex h-full w-full flex-col items-center justify-center gap-0.5 text-[10px] font-medium transition-colors",
                   active
                     ? "text-[#ff4d00]"
                     : "text-neutral-500 hover:text-black"
