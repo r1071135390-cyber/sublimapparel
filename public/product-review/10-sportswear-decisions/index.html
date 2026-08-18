@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sportswear 38 产品重分决策页</title>
+<script src="./data.js"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #0a0a0a; color: #e5e5e5; padding: 20px; }
+.container { max-width: 1400px; margin: 0 auto; }
+h1 { color: #ff4d00; font-size: 24px; margin-bottom: 8px; }
+.subtitle { color: #a0a0a0; font-size: 14px; margin-bottom: 24px; }
+.stats { display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+.stat { background: #1a1a1a; padding: 12px 20px; border-radius: 6px; border: 1px solid #2a2a2a; }
+.stat-label { color: #6b6b6b; font-size: 11px; text-transform: uppercase; }
+.stat-value { color: #ff4d00; font-size: 24px; font-weight: 700; }
+.controls { background: #1a1a1a; padding: 16px; border-radius: 6px; margin-bottom: 16px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+button { background: #ff4d00; color: white; border: 0; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 500; }
+button:hover { background: #ff6a33; }
+button.secondary { background: #2a2a2a; color: #e5e5e5; }
+button.secondary:hover { background: #3a3a3a; }
+.filter-select { background: #2a2a2a; color: #e5e5e5; border: 1px solid #3a3a3a; padding: 8px 12px; border-radius: 4px; font-size: 14px; }
+table { width: 100%; border-collapse: collapse; background: #1a1a1a; border-radius: 6px; overflow: hidden; }
+th { background: #2a2a2a; color: #a0a0a0; text-align: left; padding: 12px 10px; font-size: 12px; text-transform: uppercase; font-weight: 600; }
+td { padding: 12px 10px; border-bottom: 1px solid #2a2a2a; font-size: 13px; vertical-align: top; }
+tr:hover { background: #222; }
+.prod-num { color: #00c2ff; font-family: monospace; font-weight: 600; }
+.prod-name { color: #e5e5e5; font-weight: 500; }
+.old-cat { color: #6b6b6b; text-decoration: line-through; }
+.new-select { background: #2a2a2a; color: #e5e5e5; border: 1px solid #3a3a3a; padding: 6px 8px; border-radius: 4px; font-size: 12px; min-width: 140px; }
+.new-select.changed { background: #ff4d00; color: white; font-weight: 600; }
+.accept-btn { background: #00c2ff; color: #0a0a0a; border: 0; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 600; }
+.accept-btn.accepted { background: #2a4a2a; color: #88dd88; }
+.sports { color: #6b6b6b; font-size: 11px; }
+.output { background: #1a1a1a; padding: 16px; border-radius: 6px; margin-top: 16px; font-family: monospace; font-size: 12px; white-space: pre; max-height: 400px; overflow-y: auto; color: #88dd88; border: 1px solid #2a2a2a; }
+.legend { background: #1a1a1a; padding: 12px 16px; border-radius: 6px; margin-bottom: 16px; font-size: 13px; color: #a0a0a0; }
+.badge { display: inline-block; background: #2a2a2a; color: #a0a0a0; padding: 2px 8px; border-radius: 3px; font-size: 11px; margin-right: 4px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>🎯 Sportswear 38 产品重分决策页</h1>
+  <p class="subtitle">从 Sportswear 类别移除，按款式（产品名中的运动项目）重分到 12 个新类目</p>
+
+  <div class="legend">
+    <strong>📌 操作说明：</strong>
+    <span class="badge">下拉框</span> 修改目标类目 ·
+    <span class="badge">✓ Accept</span> 确认接受 ·
+    <span class="badge">Export TSV</span> 导出最终结果（可粘贴到 src/lib/products-data.ts）·
+    <span class="badge">统计</span> 实时显示各 Class 分布
+  </div>
+
+  <div class="stats" id="stats">
+    <div class="stat"><div class="stat-label">总产品</div><div class="stat-value" id="stat-total">38</div></div>
+    <div class="stat"><div class="stat-label">已接受</div><div class="stat-value" id="stat-accepted">0</div></div>
+    <div class="stat"><div class="stat-label">已修改</div><div class="stat-value" id="stat-modified">0</div></div>
+    <div class="stat"><div class="stat-label">类目数</div><div class="stat-value" id="stat-cats">0</div></div>
+  </div>
+
+  <div class="controls">
+    <label style="color:#a0a0a0;font-size:13px;">筛选:</label>
+    <select class="filter-select" id="filter-cat" onchange="render()">
+      <option value="">所有建议类目</option>
+    </select>
+    <button class="secondary" onclick="acceptAll()">✓ 全部接受</button>
+    <button class="secondary" onclick="resetAll()">↺ 重置</button>
+    <button onclick="exportTSV()">📥 导出 TSV</button>
+    <button onclick="copyToClipboard()">📋 复制到剪贴板</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width:60px;">#</th>
+        <th>产品名</th>
+        <th style="width:120px;">原类目</th>
+        <th style="width:200px;">新类目（可改）</th>
+        <th>运动标签</th>
+        <th style="width:100px;">操作</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+
+  <h2 style="color:#ff4d00;font-size:18px;margin:24px 0 8px;">📋 导出预览</h2>
+  <div class="output" id="output">点击 "Export TSV" 生成...</div>
+</div>
+
+<script>
+const data = window.SPORTSWEAR_DATA;
+const CATEGORIES = window.CATEGORIES;
+const state = {};
+
+data.forEach(p => {
+  state[p.num] = { newCat: p.new, accepted: false, original: p.new };
+});
+
+function buildFilter() {
+  const sel = document.getElementById('filter-cat');
+  const cats = [...new Set(data.map(p => p.new))].sort();
+  cats.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c; opt.textContent = c;
+    sel.appendChild(opt);
+  });
+}
+
+function render() {
+  const filter = document.getElementById('filter-cat').value;
+  const tbody = document.getElementById('tbody');
+  const filtered = filter ? data.filter(p => p.new === filter) : data;
+
+  tbody.innerHTML = filtered.map(p => {
+    const s = state[p.num];
+    const changed = s.newCat !== s.original;
+    const opts = CATEGORIES.map(c =>
+      `<option value="${c}" ${s.newCat === c ? 'selected' : ''}>${c}</option>`
+    ).join('');
+    return `<tr>
+      <td><span class="prod-num">${p.num}</span></td>
+      <td><div class="prod-name">${p.name}</div></td>
+      <td><span class="old-cat">${p.old}</span></td>
+      <td>
+        <select class="new-select ${changed ? 'changed' : ''}" data-num="${p.num}" onchange="onChange(this)">
+          ${opts}
+        </select>
+      </td>
+      <td><div class="sports">${p.sports}</div></td>
+      <td>
+        <button class="accept-btn ${s.accepted ? 'accepted' : ''}" data-num="${p.num}" onclick="toggleAccept(this)">
+          ${s.accepted ? '✓ 已接受' : '✓ Accept'}
+        </button>
+      </td>
+    </tr>`;
+  }).join('');
+
+  updateStats();
+}
+
+function onChange(sel) {
+  const num = sel.dataset.num;
+  state[num].newCat = sel.value;
+  render();
+}
+
+function toggleAccept(btn) {
+  const num = btn.dataset.num;
+  state[num].accepted = !state[num].accepted;
+  render();
+}
+
+function acceptAll() {
+  data.forEach(p => state[p.num].accepted = true);
+  render();
+}
+
+function resetAll() {
+  data.forEach(p => {
+    state[p.num].newCat = p.new;
+    state[p.num].accepted = false;
+  });
+  render();
+}
+
+function updateStats() {
+  const accepted = data.filter(p => state[p.num].accepted).length;
+  const modified = data.filter(p => state[p.num].newCat !== p.new).length;
+  const cats = new Set(data.map(p => state[p.num].newCat)).size;
+  document.getElementById('stat-accepted').textContent = accepted;
+  document.getElementById('stat-modified').textContent = modified;
+  document.getElementById('stat-cats').textContent = cats;
+}
+
+function generateTSV() {
+  const lines = ['number\tname\told_category\tnew_category\tsports\tstatus'];
+  data.forEach(p => {
+    const s = state[p.num];
+    const status = s.accepted ? 'ACCEPTED' : (s.newCat !== s.original ? 'MODIFIED' : 'PENDING');
+    lines.push([p.num, p.name, p.old, s.newCat, p.sports, status].join('\t'));
+  });
+  return lines.join('\n');
+}
+
+function exportTSV() {
+  const tsv = generateTSV();
+  document.getElementById('output').textContent = tsv;
+  const blob = new Blob([tsv], { type: 'text/tab-separated-values' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'sportswear-final-decisions.tsv';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function copyToClipboard() {
+  const tsv = generateTSV();
+  document.getElementById('output').textContent = tsv;
+  navigator.clipboard.writeText(tsv).then(() => {
+    alert('已复制到剪贴板！\n\n' + tsv.split('\n').length + ' 行');
+  });
+}
+
+buildFilter();
+render();
+</script>
+</body>
+</html>
