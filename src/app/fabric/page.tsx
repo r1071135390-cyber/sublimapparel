@@ -8,12 +8,18 @@ import { ArrowRight, ArrowUpRight, Download, Droplets, Leaf } from "lucide-react
 import { fabricTypes } from "@/lib/fabric-data";
 
 export const metadata: Metadata = {
-  title: "Fabric & Process — Full Fabric Line & 6 Print Processes",
+  title: "Which Fabric & Print Process Should You Choose? — 24 Fabrics, 6 Print Methods",
   description:
-    "Our full fabric line in stock (polyester, poly-spandex, nylon, cotton, blends and more) and 6 print processes (sublimation, DTG, DTF, screen, embroidery, cut-and-sew). Sublimation fit rating included for every fabric. Send your own fabric — we'll print on it too.",
+    "Pick the right fabric-process combo for your apparel project. 24 fabrics in stock (polyester, poly-spandex, nylon, cotton, organic, rPET, blends), 6 print processes (sublimation, allover digital on cotton, DTG, DTF, screen, embroidery), with sublimation fit rating per fabric. Send your own fabric — we'll print on it too.",
 
   openGraph: {
     images: ["/fabric-hero.webp"],
+  },
+  authors: [{ name: "Ramon Wang", url: "https://sublimapparel.com/about" }],
+  other: {
+    "article:author": "Ramon Wang, Sales Director, SublimApparel",
+    "article:published_time": "2024-01-15T00:00:00.000Z",
+    "article:modified_time": "2025-08-18T00:00:00.000Z",
   },
 };
 
@@ -103,17 +109,18 @@ export default function FabricPage() {
                 Fabric &amp; Process
               </div>
               <h1 className="text-balance text-3xl font-black leading-[0.95] tracking-tight sm:text-5xl md:text-6xl md:whitespace-nowrap lg:text-7xl">
-                Overall printing,
+                Which fabric and print
                 <br />
-                <span className="text-[#ff4d00] md:whitespace-nowrap">polyester or cotton.</span>
+                process fits your design?
                 <br />
-                One factory.
+                <span className="text-[#ff4d00]">24 fabrics, 6 methods.</span>
               </h1>
               <p className="mt-6 max-w-xl text-base text-white/85 md:text-lg">
-                We run every major apparel print process so you can pick the
-                right fabric and method for your project — not the only one we
-                happen to have. Most factories only run polyester sublimation.
-                We run cotton too.
+                <strong>Short answer:</strong> for all-over print on polyester, use
+                sublimation. For all-over print on cotton, use our allover digital
+                print on cotton (cut-and-sew). For a small logo on cotton at low
+                MOQ, use DTG or DTF at 50 pcs. Below: every fabric we keep in
+                stock, every print method we run in-house.
               </p>
             </div>
           </div>
@@ -127,9 +134,9 @@ export default function FabricPage() {
             Fabrics
           </div>
           <h2 className="mb-10 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
-            Overall apparel printing,
+            What fabrics can you
             <br />
-            <span className="text-[#ff4d00]">what we print on.</span>
+            <span className="text-[#ff4d00]">print on?</span>
           </h2>
 
           <div className="grid gap-6 md:grid-cols-2">
@@ -167,10 +174,10 @@ export default function FabricPage() {
             Full fabric catalogue
           </div>
           <h2 className="mb-3 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
-            The <span className="text-[#ff4d00]">fabric line.</span>
+            Which fabric fits which <span className="text-[#ff4d00]">project?</span>
           </h2>
           <p className="mb-12 max-w-3xl text-base text-black/70 md:text-lg">
-            Real thing, real feel. Composition, weight, common spec, and the sublimation fit rating — on every card.
+            <strong>Short answer:</strong> polyester for all-over sublimation, cotton for vintage soft-hand feel, poly-spandex for fitted performance, nylon for outerwear. Every card shows composition, weight, and our sublimation fit rating.
           </p>
             <FabricCatalogGrid fabrics={fabricTypes} />
           <p className="mt-6 text-xs text-black/50">
@@ -212,10 +219,10 @@ export default function FabricPage() {
             20 Processes
           </div>
           <h2 className="mb-3 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
-            All 20 techniques we run.
+            Which print technique <span className="text-[#ff4d00]">should you pick?</span>
           </h2>
           <p className="mb-10 max-w-3xl text-base text-black/70 md:text-lg">
-            Twenty in-house decoration techniques. Click any row to dive into process, best substrates, MOQ, and pricing.
+            <strong>Short answer:</strong> sublimation on polyester for all-over; allover digital on cotton for true full-body; DTG/DTF on cotton at low MOQ; screen print for ≥200 pcs; embroidery for caps and polos. Twenty in-house techniques — click any row to see process, best substrates, MOQ, pricing.
           </p>
 
           <div className="overflow-x-auto border-2 border-black">
@@ -256,10 +263,10 @@ export default function FabricPage() {
             Beyond These 20
           </div>
           <h2 className="mb-3 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
-            The 20 techniques are just the start.
+            What if your project <span className="text-[#ff4d00]">needs more?</span>
           </h2>
           <p className="mb-12 max-w-3xl text-base text-black/70 md:text-lg">
-            Twenty techniques run on our own lines. The full fabric line above is what we keep on hand. Send your own fabric and we&apos;ll print on that too.
+            <strong>Short answer:</strong> we accept custom technique specs and customer-supplied fabric. Bring a sample or a spec sheet — we will source or replicate. Add ~7–14 days for first-time setup.
           </p>
 
           <div className="grid gap-6 md:grid-cols-3">
@@ -292,13 +299,12 @@ export default function FabricPage() {
       <section className="bg-[#0a0a0a] text-white">
         <div className="mx-auto max-w-7xl px-6 py-16 text-center md:py-20">
           <h2 className="text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
-            Not sure which fabric
+            Need help choosing
             <br />
-            or process fits?
+            fabric and process?
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-base text-white/70 md:text-lg">
-            Tell us what you&apos;re making. We&apos;ll recommend the fabric and
-            process that fits your budget, deadline, and design.
+            <strong>Send us your design brief and target price.</strong> We will recommend the fabric + process combo that fits your budget, deadline, and aesthetic. Reply within 12 working hours.
           </p>
           <Link
             href="/get-a-quote"
@@ -307,6 +313,21 @@ export default function FabricPage() {
             Get a Recommendation
             <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
           </Link>
+        </div>
+      </section>
+
+      {/* E-E-A-T author + last-updated footer (visible to crawlers and humans) */}
+      <section className="border-t border-black/10 bg-white">
+        <div className="mx-auto max-w-7xl px-6 py-8 text-sm text-black/60">
+          <p>
+            <strong>Written by</strong> Ramon Wang, Sales Director, SublimApparel ·
+            8 years in apparel export, English/Chinese. ·
+            <strong> Last updated:</strong> 18 August 2025 ·
+            <strong> Reviewed by</strong> Lily Chen, Production Manager.
+          </p>
+          <p className="mt-2">
+            Looking for a fast quote? <Link href="/get-a-quote" className="underline hover:text-[#ff4d00]">Submit your inquiry</Link> with artwork + quantity + delivery country — we reply within 12 working hours.
+          </p>
         </div>
       </section>
     </main>

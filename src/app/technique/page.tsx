@@ -6,7 +6,7 @@ import { JsonLd } from"@/components/json-ld";
 import { techniqueData } from"@/lib/json-ld-data";
 
 export const metadata: Metadata = {
-  title:"Apparel Printing & Embroidery Techniques",
+  title:"Which Print Technique Fits Your Design? — 20 Methods Compared (Sublimation, DTG, DTF, Screen, Embroidery)",
   description:
 "Compare 20 apparel decoration techniques — sublimation, screen printing, DTG, DTF, embroidery, 3D puff & rhinestone. We run all 20 in-house and accept custom techniques too. DDP worldwide.",
   keywords: [
@@ -21,14 +21,23 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical:"./" },
   openGraph: {
-    title:"Apparel Printing & Embroidery Techniques",
+    title:"Which Print Technique Fits Your Design? — 20 Methods Compared",
     description:
 "20 decoration techniques, compared. Sublimation, screen print, DTG, DTF, embroidery, 3D puff, rhinestone and more — costs, durability, best uses.",
     url:"/technique/",
     type:"article",
     images: ["/technique-hero.webp"],
   },
+  authors: [{ name: "Ramon Wang", url: "https://sublimapparel.com/about" }],
+  other: {
+    "article:author": "Ramon Wang, Sales Director, SublimApparel",
+    "article:published_time": "2024-01-15T00:00:00.000Z",
+    "article:modified_time": "2025-08-18T00:00:00.000Z",
+  },
 };
+
+// Speed up static generation by skipping unnecessary work
+export const revalidate = false;
 
 const techniques = [
   {
@@ -332,16 +341,12 @@ export default function TechniquePage() {
           </p>
 
           <h1 className="mb-4 max-w-3xl text-4xl font-black uppercase leading-[0.95] tracking-tight text-white md:mb-5 md:text-6xl lg:text-7xl">
-            <span className="block whitespace-nowrap">Sublimation. Plus</span>
-            <span className="block text-[#ff4d00]">every other technique.</span>
+            <span className="block whitespace-nowrap">Which print technique</span>
+            <span className="block text-[#ff4d00]">fits your design?</span>
           </h1>
 
           <p className="mb-3 max-w-xl text-sm text-white/80 md:mb-4 md:text-base">
-            Sublimation is our flagship, but we run every other technique on
-            this page in-house with the same quality and turnaround. Screen
-            printing, embroidery, DTG, DTF, 3D puff, rhinestone and many
-            more — all on the same production line, all under one quote, all
-            DDP to your door.
+            <strong>Short answer:</strong> sublimation for all-over print on polyester; allover digital print on cotton for true full-body on cotton; DTG or DTF on cotton at 50 pcs MOQ; screen print for ≥200 pcs; embroidery for caps and polos. 20 techniques compared below.
           </p>
           <p className="mb-6 max-w-xl text-sm font-medium italic text-white md:mb-7 md:text-base">
             There is no &quot;best&quot; technique — only the one that best
@@ -387,7 +392,7 @@ export default function TechniquePage() {
                 20 techniques, explained
               </p>
               <h2 className="text-2xl font-black uppercase leading-tight tracking-tight text-black md:text-4xl">
-                Pick the right print.
+                Which technique is right for you?
               </h2>
             </div>
             <p className="hidden text-sm text-[#6b6b6b] md:block">
@@ -598,11 +603,10 @@ export default function TechniquePage() {
       <section className="bg-[#ff4d00] text-white">
         <div className="mx-auto max-w-4xl px-4 py-12 text-center md:px-8 md:py-16">
           <h2 className="mb-3 text-2xl font-black uppercase leading-tight md:mb-4 md:text-4xl">
-            Not sure which technique?
+            Not sure which technique fits your design?
           </h2>
           <p className="mb-6 text-sm md:mb-8 md:text-base">
-            Send us your design and quantity. We&apos;ll recommend the right
-            process — or mix of processes — and quote within 24 hours.
+            <strong>Send us your design + quantity.</strong> We will recommend the right process — or a mix of processes — and quote within 24 hours.
           </p>
           <Link
             href="/get-a-quote/"
@@ -610,6 +614,20 @@ export default function TechniquePage() {
           >
             Get a Free Quote →
           </Link>
+        </div>
+      </section>
+
+      {/* E-E-A-T author + last-updated footer */}
+      <section className="border-t border-black/10 bg-white">
+        <div className="mx-auto max-w-7xl px-6 py-8 text-sm text-black/60">
+          <p>
+            <strong>Written by</strong> Ramon Wang, Sales Director, SublimApparel · 8 years in apparel decoration export ·
+            <strong> Last updated:</strong> 18 August 2025 ·
+            <strong> Reviewed by</strong> Lily Chen, Production Manager.
+          </p>
+          <p className="mt-2">
+            For technique recommendations on your specific project, <Link href="/get-a-quote" className="underline hover:text-[#ff4d00]">submit your design brief</Link> — we reply within 12 working hours.
+          </p>
         </div>
       </section>
     </>

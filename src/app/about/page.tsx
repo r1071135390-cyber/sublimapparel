@@ -6,12 +6,18 @@ import { MapPin } from"lucide-react";
 import Image from"next/image";
 
 export const metadata = {
-  title:"About SublimApparel | Yiwu Sublimation & Cotton Printing Factory",
+  title:"About SublimApparel — Yiwu Custom Apparel Factory Since 2018 (12 Lines, 70% In-House, DDP 100+ Countries)",
   description:
-"2,000 sqm Yiwu factory. 12 lines, 50+ staff, 99.2% QC. Sublimation + allover cotton print. DDP 100+ countries.",
+    "SublimApparel is a Yiwu-based apparel factory producing custom sublimated, all-over digital printed, DTG, DTF, and screen-printed apparel for B2B customers worldwide. Founded 2018. 12 production lines. 70% in-house production. DDP to 100+ countries. US warehouse in Fontana CA.",
 
   openGraph: {
     images: ["/about-hero.webp"],
+  },
+  authors: [{ name: "Ramon Wang", url: "https://sublimapparel.com/about" }],
+  other: {
+    "article:author": "Ramon Wang, Sales Director, SublimApparel",
+    "article:published_time": "2018-01-01T00:00:00.000Z",
+    "article:modified_time": "2025-08-18T00:00:00.000Z",
   },
 };
 

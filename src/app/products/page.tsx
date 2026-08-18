@@ -8,7 +8,7 @@ import { CATEGORY_TAGS } from "@/lib/tag-archive";
 import { KeywordCloud } from "@/components/keyword-cloud";
 
 export const metadata: Metadata = {
-  title: "Custom Sublimation & Cotton Apparel — T-Shirts, Hoodies, Sportswear",
+  title: "Which Custom Apparel Do You Need? — 119 Products, 13 Categories, MOQ 50",
   description:
     "Custom sublimated apparel for B2B: t-shirts, jerseys, hoodies, cycling kits, golf polos, racing suits. No setup fees, MOQ 50 pcs, full color all-over print, sample in 5 days.",
   keywords: [
@@ -27,10 +27,16 @@ export const metadata: Metadata = {
   ],
 
   openGraph: {
-    title: "Custom Sublimation & Cotton Apparel — T-Shirts, Hoodies, Sportswear",
+    title: "Which Custom Apparel Do You Need? — 119 Products, 13 Categories",
     description:
-      "Custom sublimated apparel for B2B: t-shirts, jerseys, hoodies, cycling kits, golf polos, racing suits. No setup fees, MOQ 50 pcs, full color all-over print, sample in 5 days.",
+      "119 custom sublimated apparel products for B2B: t-shirts, jerseys, hoodies, cycling kits, golf polos, racing suits, plus 100% cotton allover digital print. No setup fees, MOQ 50 pcs, full color all-over print, sample in 5 days.",
     images: ["/product-hero-products.webp"],
+  },
+  authors: [{ name: "Ramon Wang", url: "https://sublimapparel.com/about" }],
+  other: {
+    "article:author": "Ramon Wang, Sales Director, SublimApparel",
+    "article:published_time": "2024-01-01T00:00:00.000Z",
+    "article:modified_time": "2025-08-18T00:00:00.000Z",
   },
 };
 

@@ -6,7 +6,7 @@ import { MobileBottomNav } from "@/components/mobile-bottom-nav";
 import { RequestQuoteProvider } from "@/components/request-quote-modal";
 import { FloatingChat } from "@/components/floating-chat";
 import { JsonLd } from "@/components/json-ld";
-import { organizationJsonLd } from "@/lib/json-ld-data";
+import { organizationJsonLd, websiteJsonLd, localBusinessJsonLd, personJsonLd, faqPageJsonLd, aboutArticleJsonLd } from "@/lib/json-ld-data";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -73,6 +73,11 @@ export default function RootLayout({
     <html lang="en">
       <body className="min-h-screen bg-[#faf9f6] font-sans text-black antialiased">
         <JsonLd data={organizationJsonLd} />
+        <JsonLd data={websiteJsonLd} />
+        <JsonLd data={localBusinessJsonLd} />
+        <JsonLd data={personJsonLd} />
+        <JsonLd data={faqPageJsonLd} />
+        <JsonLd data={aboutArticleJsonLd} />
         <UtilityBar />
         <Navbar />
         <RequestQuoteProvider>

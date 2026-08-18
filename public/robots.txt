@@ -1,0 +1,68 @@
+# robots.txt for sublimapparel.com
+# Last updated: 2026-01
+
+User-agent: *
+Allow: /
+
+# === AI Search Crawlers (HIGH PRIORITY - allow) ===
+# OpenAI ChatGPT search crawler
+User-agent: OAI-SearchBot
+Allow: /
+
+# OpenAI ChatGPT user-triggered fetcher
+User-agent: ChatGPT-User
+Allow: /
+
+# OpenAI training crawler (optional - allow if you want training)
+User-agent: GPTBot
+Allow: /
+
+# Anthropic Claude crawler
+User-agent: ClaudeBot
+Allow: /
+
+# Anthropic Claude user-triggered fetcher
+User-agent: Claude-Web
+Allow: /
+
+# Google AI (Gemini, etc.)
+User-agent: Google-Extended
+Allow: /
+
+# Perplexity AI
+User-agent: PerplexityBot
+Allow: /
+
+# Apple Intelligence
+User-agent: Applebot-Extended
+Allow: /
+
+# Microsoft Bing (powers ChatGPT search)
+User-agent: Bingbot
+Allow: /
+User-agent: MSNBot-Media
+Allow: /
+
+# === Search Engine Crawlers ===
+User-agent: Googlebot
+Allow: /
+User-agent: Slurp
+Allow: /
+User-agent: DuckDuckBot
+Allow: /
+User-agent: Baiduspider
+Allow: /
+
+# === Block bad bots ===
+User-agent: AhrefsBot
+Disallow: /
+User-agent: SemrushBot
+Disallow: /
+User-agent: MJ12bot
+Disallow: /
+User-agent: DotBot
+Disallow: /
+
+# Sitemaps
+Sitemap: https://sublimapparel.com/sitemap.xml
+Sitemap: https://sublimapparel.com/llms.txt

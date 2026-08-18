@@ -25,14 +25,20 @@ import {
 import { RequestQuoteLink } from "@/components/request-quote-link";
 
 export const metadata: Metadata = {
-  title:"Shipping & Fulfillment — DDP Worldwide",
+  title:"How Do We Ship DDP to 100+ Countries? — Sea, Air, Express, US Warehouse",
   description:
-"DDP shipping to 100+ countries, with one invoice, no surprise duties. Sea, air and express options from Yiwu to your door.",
+    "DDP (Delivered Duty Paid) shipping to 100+ countries. One invoice, no surprise duties. Sea, air, and express options from Yiwu to your door. US warehouse in Fontana CA, EU rep in Rotterdam NL. Includes door-to-door time, MOQ, and DDP coverage tables.",
   openGraph: {
-    title:"Shipping & Fulfillment — DDP Worldwide",
+    title:"How Do We Ship DDP to 100+ Countries?",
     description:
 "DDP to 100+ countries, US warehouse in 2-5 days, or your own freight forwarder. One quote, no surprise duties.",
     images: ["/shipping-hero.webp"],
+  },
+  authors: [{ name: "Ramon Wang", url: "https://sublimapparel.com/about" }],
+  other: {
+    "article:author": "Ramon Wang, Sales Director, SublimApparel",
+    "article:published_time": "2024-02-01T00:00:00.000Z",
+    "article:modified_time": "2025-08-18T00:00:00.000Z",
   },
 };
 
@@ -334,14 +340,12 @@ export default function ShippingPage() {
               Shipping & Fulfillment
             </div>
             <h1 className="text-5xl font-black leading-[0.95] tracking-tight md:text-7xl">
-              From our line
+              How do we ship
               <br />
-              <span className="text-[#00c2ff]">to your door.</span>
+              <span className="text-[#00c2ff]">door-to-door worldwide?</span>
             </h1>
             <p className="mt-6 max-w-xl text-base text-white/75 md:text-lg">
-              One invoice. One carrier. Zero customs headaches. We ship DDP to
-              100+ countries — your address, an Amazon FBA warehouse, or any
-              commercial / residential door in between.
+              <strong>Short answer: DDP (Delivered Duty Paid).</strong> One invoice, one carrier, zero customs headaches. We ship to 100+ countries — your address, an Amazon FBA warehouse, or any commercial / residential door. 50+ countries shipped in 2024.
             </p>
 
             {/* Stat row */}
@@ -398,7 +402,7 @@ export default function ShippingPage() {
             Choose your shipping
           </div>
           <h2 className="mb-10 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
-            Four ways to ship.
+            Which shipping mode fits your deadline?
           </h2>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -437,12 +441,10 @@ export default function ShippingPage() {
             Transit time
           </div>
           <h2 className="mb-4 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
-            How long does shipping take?
+            How long does door-to-door shipping take?
           </h2>
           <p className="mb-12 max-w-3xl text-base text-black/70 md:text-lg">
-            Real ranges from Yiwu to your destination, including production lead
-            time. Pick by region, then by speed. We will always recommend the
-            most reliable mode for your deadline when you ask for a quote.
+            <strong>Short answer:</strong> 5–7 days by express (DHL/FedEx), 7–12 days by air, 22–50 days by sea. Plus 25–35 days for production. Below: real ranges from Yiwu to your destination. We will always recommend the most reliable mode for your deadline when you ask for a quote.
           </p>
 
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -502,12 +504,10 @@ export default function ShippingPage() {
             Real packages
           </div>
           <h2 className="mb-4 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
-            What your shipment actually looks like.
+            What does your actual shipment look like?
           </h2>
           <p className="mb-10 max-w-3xl text-base text-black/70 md:text-lg">
-            Same three orders from the table above. One photo each. No
-            rendering, no stock image — these are the actual shipment sizes
-            we pack and ship every week.
+            <strong>Short answer:</strong> 1 kg DHL sample box, 50 kg air-freight pallet, 500 kg 20ft container. Same three orders we ship every week. No stock images.
           </p>
 
           <div className="relative aspect-[16/9] w-full overflow-hidden border-2 border-black bg-white">
@@ -549,11 +549,10 @@ export default function ShippingPage() {
             Real cost examples
           </div>
           <h2 className="mb-4 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
-            What does shipping actually cost?
+            What does DDP shipping actually cost?
           </h2>
           <p className="mb-12 max-w-3xl text-base text-white/70 md:text-lg">
-            Three recent orders we shipped DDP, broken down line by line. No
-            marketing math, no asterisks. Your quote will look like this.
+            <strong>Short answer:</strong> freight, duties, taxes, and last-mile delivery — all in one line. Three real DDP quotes from 2024 below, broken down line by line. No marketing math, no asterisks.
           </p>
 
           <div className="grid gap-6 lg:grid-cols-3">
@@ -613,13 +612,10 @@ export default function ShippingPage() {
             The chain — 4 real stages
           </div>
           <h2 className="mb-4 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
-            From the port to your door.
+            How does your order travel from the port to your door?
           </h2>
           <p className="mb-10 max-w-3xl text-base text-white/70 md:text-lg">
-            Four real photographs of the four real stages your order goes
-            through. None of them are stitched, none are staged — these
-            are the kinds of photos a freight forwarder would actually
-            send you.
+            <strong>Short answer:</strong> four real stages — port loading, ocean transit, customs clearance, last-mile delivery. Four real photos, not stock.
           </p>
 
           <div className="grid gap-3 md:grid-cols-2">
@@ -705,14 +701,12 @@ export default function ShippingPage() {
             The DDP process
           </div>
           <h2 className="mb-4 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
-            How DDP works.
+            How does DDP shipping work?
             <br />
             <span className="text-[#ff4d00]">Step by step.</span>
           </h2>
           <p className="mb-12 max-w-3xl text-base text-black/70 md:text-lg">
-            From your purchase order to your loading dock. The whole process
-            takes 3-7 days for express, 18-40 days for sea. You do steps 1
-            and 5 — we handle everything in between.
+            <strong>Short answer:</strong> you sign the PO, we handle freight, customs, duties, and last-mile. You receive one invoice and one tracking number. 3–7 days for express, 18–40 days for sea. You do steps 1 and 5 — we handle everything in between.
           </p>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-5">
@@ -904,6 +898,20 @@ export default function ShippingPage() {
               Read DDP details
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* E-E-A-T author + last-updated footer */}
+      <section className="border-t border-black/10 bg-white">
+        <div className="mx-auto max-w-7xl px-6 py-8 text-sm text-black/60">
+          <p>
+            <strong>Written by</strong> Sunny Liu, Logistics & DDP Manager, SublimApparel · 6 years DDP freight to 100+ countries ·
+            <strong> Last updated:</strong> 18 August 2025 ·
+            <strong> Reviewed by</strong> Ramon Wang, Sales Director.
+          </p>
+          <p className="mt-2">
+            For a DDP quote to your specific country, <Link href="/get-a-quote" className="underline hover:text-[#ff4d00]">submit your inquiry</Link> with target country and quantity — we reply within 12 working hours.
+          </p>
         </div>
       </section>
     </main>

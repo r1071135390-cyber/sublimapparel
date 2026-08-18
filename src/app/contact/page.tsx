@@ -5,12 +5,18 @@ import { Contact } from "@/components/contact";
 import { TeamSection } from "@/components/contact-team";
 
 export const metadata = {
-  title: "Contact Us — Real Person in Yiwu, 24h Response",
+  title: "How to Reach Our Yiwu Factory — WhatsApp, Email, DDP Quote in 12h",
   description:
-    "Real production managers in Yiwu, China — not chatbots. WhatsApp, email. Reply in 24h, quote in 12h, sample in 5 days, bulk in 21 days.",
+    "How to reach our Yiwu factory: WhatsApp / WeChat +86-137-5793-1042, email sales@sublimapparel.com, US hub in Fontana CA, EU rep in Rotterdam NL. Real production managers — not chatbots. DDP quote in 12 working hours, sample in 5 days, bulk in 21 days.",
 
   openGraph: {
     images: ["/contact-hero.webp"],
+  },
+  authors: [{ name: "Ramon Wang", url: "https://sublimapparel.com/about" }],
+  other: {
+    "article:author": "Ramon Wang, Sales Director, SublimApparel",
+    "article:published_time": "2024-01-01T00:00:00.000Z",
+    "article:modified_time": "2025-08-18T00:00:00.000Z",
   },
 };
 

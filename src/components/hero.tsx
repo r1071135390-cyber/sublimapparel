@@ -135,6 +135,11 @@ export function Hero() {
           started, and it&rsquo;s still what we do best.
         </p>
 
+        {/* Answer capsule — for AI engines + skim readers (ChatGPT AEO/GEO) */}
+        <p className="mb-4 max-w-2xl rounded border-l-4 border-[#ff4d00] bg-white/5 px-4 py-3 text-sm text-white/90 md:mb-5 md:text-base">
+          <strong>What you get:</strong> custom sublimated apparel, MOQ 50 pcs (DTG/DTF) or 100 pcs (sublimation cut &amp; sew), 30-day production, DDP shipping to 100+ countries, US warehouse in Fontana CA. 12 production lines in Yiwu since 2018.
+        </p>
+
         {/* FABRICS bar */}
         <div className="mb-2 flex flex-wrap items-center gap-2.5 md:mb-3 md:gap-4">
           <span className="border-l-4 border-[#ff4d00] pl-3 text-xs font-black uppercase tracking-widest text-white">

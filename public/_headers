@@ -44,3 +44,49 @@
 /robots.txt
   Cache-Control: public, max-age=0, must-revalidate, s-maxage=3600
   Content-Type: text/plain; charset=utf-8
+
+# Markdown alternates — point AI crawlers at plain-text versions of every page
+/*.html.md
+  Cache-Control: public, max-age=0, must-revalidate, s-maxage=3600
+  Content-Type: text/markdown; charset=utf-8
+
+# LLM-friendly files — explicit content types
+/llms.txt
+  Cache-Control: public, max-age=0, must-revalidate, s-maxage=3600
+  Content-Type: text/markdown; charset=utf-8
+/llms-full.txt
+  Cache-Control: public, max-age=0, must-revalidate, s-maxage=3600
+  Content-Type: text/markdown; charset=utf-8
+
+# HTTP Link header — discover markdown alternates for every HTML page
+/
+  Link: </llms.txt>; rel="describedby"
+  Link: </home.html.md>; rel="alternate"; type="text/markdown"
+/products
+  Link: </llms.txt>; rel="describedby"
+  Link: </products.html.md>; rel="alternate"; type="text/markdown"
+/products/*
+  Link: </llms.txt>; rel="describedby"
+/fabric
+  Link: </llms.txt>; rel="describedby"
+  Link: </fabric.html.md>; rel="alternate"; type="text/markdown"
+/fabric/*
+  Link: </llms.txt>; rel="describedby"
+/technique
+  Link: </llms.txt>; rel="describedby"
+  Link: </technique.html.md>; rel="alternate"; type="text/markdown"
+/technique/*
+  Link: </llms.txt>; rel="describedby"
+/shipping
+  Link: </llms.txt>; rel="describedby"
+  Link: </shipping.html.md>; rel="alternate"; type="text/markdown"
+/shipping/*
+  Link: </llms.txt>; rel="describedby"
+/about
+  Link: </llms.txt>; rel="describedby"
+  Link: </about.html.md>; rel="alternate"; type="text/markdown"
+/contact
+  Link: </llms.txt>; rel="describedby"
+  Link: </contact.html.md>; rel="alternate"; type="text/markdown"
+/get-a-quote
+  Link: </llms.txt>; rel="describedby"
