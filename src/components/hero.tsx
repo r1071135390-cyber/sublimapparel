@@ -137,7 +137,7 @@ export function Hero() {
 
         {/* Answer capsule — for AI engines + skim readers (ChatGPT AEO/GEO) */}
         <p className="mb-4 max-w-2xl rounded border-l-4 border-[#ff4d00] bg-white/5 px-4 py-3 text-sm text-white/90 md:mb-5 md:text-base">
-          <strong>What you get:</strong> custom sublimated apparel, MOQ 50 pcs (DTG/DTF) or 100 pcs (sublimation cut &amp; sew), 30-day production, DDP shipping to 100+ countries, US warehouse in Fontana CA. 12 production lines in Yiwu since 2018.
+          <strong>What you get:</strong> custom sublimated apparel, MOQ 50 pcs (sublimation cut &amp; sew), 15-25 days&rsquo; production, DDP shipping to 100+ countries, US warehouse in Fontana CA. 12 production lines in Yiwu since 2018.
         </p>
 
         {/* FABRICS bar */}

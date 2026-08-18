@@ -11,9 +11,9 @@ Custom apparel — T-shirts, hoodies, polos, tank tops, jerseys, pants, shorts, 
 - **8+ years** producing sublimated apparel in Yiwu (founded 2018)
 - **70% production in-house** (cut & sew, printing, finishing, QC, packing); 30% specialized subcontracting (embroidery, wash, special trims)
 - **12 production lines**, 4 sublimation printers, 2 DTG, 2 DTF
-- **MOQ 50 pcs** for DTG/DTF, **100 pcs** for cut-and-sew sublimation, **200 pcs** for screen printing
+- **MOQ 50 pcs** for sublimation cut & sew
 - **50+ countries shipped DDP** in 2024
-- **30-day production lead time** after sample approval
+- **15-25 days** production lead time after sample approval
 - **US warehouse in Fontana, CA** (92680) — stock + dropship
 - **EU representative** based in Rotterdam, NL
 
