@@ -91,12 +91,72 @@ if (fs.existsSync(PUBLIC_DIR)) {
   }
 }
 
-// 6. Generate sitemap.xml + robots.txt
-console.log("[5/5] Generating sitemap.xml + robots.txt...");
+// 6. Inline critical CSS via critters (reduces render-blocking CSS)
+console.log("[5/6] Inlining critical CSS via critters...");
+try {
+  const Critters = (await import("critters")).default;
+  const critters = new Critters({
+    path: OUT,
+    publicPath: "/",
+    preload: "swap",
+    fonts: false, // don't preload woff
+    pruneSource: true, // remove unused selectors
+    logLevel: "warn",
+  });
+  const htmlFiles = execSync(`find ${OUT} -name "*.html"`).toString().trim().split("\n").filter(Boolean);
+  let inlinedCount = 0;
+  for (const htmlPath of htmlFiles) {
+    const html = fs.readFileSync(htmlPath, "utf-8");
+    const result = await critters.process(html);
+    if (result !== html) {
+      fs.writeFileSync(htmlPath, result);
+      inlinedCount++;
+    }
+  }
+  console.log(`   ${inlinedCount} HTML files processed`);
+} catch (e) {
+  console.warn("   critters failed (non-fatal):", e.message);
+}
+
+// 7. Generate sitemap.xml + robots.txt
+console.log("[6/6] Generating sitemap.xml + robots.txt...");
 try {
   execSync("node scripts/gen-sitemap-robots.mjs", { stdio: "inherit" });
 } catch (e) {
   console.warn("   sitemap gen failed (non-fatal):", e.message);
+}
+
+// 8. Add fetchpriority="high" to LCP image preloads (Next.js 16 doesn't always emit it)
+console.log("[7/7] Adding fetchpriority=\"high\" to LCP image preloads...");
+try {
+  const lcpImages = ["/hero-jersey.webp"];
+  const htmlFiles7 = execSync(`find ${OUT} -name "*.html"`).toString().trim().split("\n").filter(Boolean);
+  let fixCount = 0;
+  for (const htmlPath of htmlFiles7) {
+    let html = fs.readFileSync(htmlPath, "utf-8");
+    let changed = false;
+    for (const lcp of lcpImages) {
+      // Add fetchpriority="high" to preload link if missing
+      const re1 = new RegExp(`<link rel="preload"([^>]*href="${lcp.replace(/\./g, "\\.")}"[^>]*)>`, "g");
+      if (re1.test(html) && !html.match(re1)?.[0]?.includes("fetchpriority")) {
+        html = html.replace(re1, (m) => m.replace(">", ' fetchpriority="high">'));
+        changed = true;
+      }
+      // Add fetchpriority="high" to img tag if missing
+      const re2 = new RegExp(`<img([^>]*src="${lcp.replace(/\./g, "\\.")}"[^>]*)>`, "g");
+      if (re2.test(html) && !html.match(re2)?.[0]?.includes("fetchpriority")) {
+        html = html.replace(re2, (m) => m.replace(/<img/, '<img fetchpriority="high"'));
+        changed = true;
+      }
+    }
+    if (changed) {
+      fs.writeFileSync(htmlPath, html);
+      fixCount++;
+    }
+  }
+  console.log(`   ${fixCount} HTML files updated with fetchpriority="high"`);
+} catch (e) {
+  console.warn("   fetchpriority fix failed (non-fatal):", e.message);
 }
 
 console.log("\n✅ out/ assembled");
