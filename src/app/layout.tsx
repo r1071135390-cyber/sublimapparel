@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     template: "%s | SublimApparel",
   },
   description:
-    "Sublimation on polyester, DTG & DTF on 100% cotton. MOQ 50, DDP to your door in 100+ countries, US warehouse in Fontana CA. Yiwu factory est. 2018.",
+    "Sublimation on polyester, All-over digital print 100% cotton. MOQ 50, DDP to your door in 100+ countries, US warehouse in Fontana CA. Yiwu factory est. 2018.",
   alternates: {
     canonical: "./",
     languages: {
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     title: "SublimApparel — Yiwu Sublimation & All-Over Cotton Printing Factory, DDP to 100+ Countries",
     description:
-      "Sublimation on polyester, DTG & DTF on 100% cotton. MOQ 50, DDP worldwide, US warehouse in Fontana CA.",
+      "Sublimation on polyester, All-over digital print 100% cotton. MOQ 50, DDP worldwide, US warehouse in Fontana CA.",
     images: [
       {
         url: "/og-default.jpg",
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "SublimApparel — Yiwu Sublimation & All-Over Cotton Printing Factory, DDP to 100+ Countries",
     description:
-      "Sublimation on polyester, DTG & DTF on 100% cotton. MOQ 50, DDP worldwide, US warehouse in Fontana CA.",
+      "Sublimation on polyester, All-over digital print 100% cotton. MOQ 50, DDP worldwide, US warehouse in Fontana CA.",
     images: ["/og-default.jpg"],
   },
   robots: {

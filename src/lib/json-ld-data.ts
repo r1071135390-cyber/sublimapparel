@@ -131,7 +131,7 @@ export const faqPageJsonLd = {
       name: "Can you print all-over on cotton T-shirts?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes. We run digital pigment ink on 100% cotton via direct-to-garment (DTG) printing, which holds color on cotton without polyester. We also offer all-over sublimation on polyester and DTF for blended fabrics.",
+        text: "Yes. We run digital pigment ink on 100% cotton via direct-to-garment (DTG) printing, which holds color on cotton without polyester. We also offer allover digital print on cotton for true edge-to-edge, and DTF for blended fabrics.",
       },
     },
     {

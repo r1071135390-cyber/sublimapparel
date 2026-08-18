@@ -233,7 +233,7 @@ function VideoShowcase() {
             </p>
             <ul className="space-y-2 text-sm md:text-base text-white/70">
               <li>&bull; Sublimation printing &mdash; large format, edge-to-edge</li>
-              <li>&bull; DTG &amp; DTF on 100% cotton</li>
+              <li>&bull; All-over digital print 100% cotton</li>
               <li>&bull; Cut-and-sew assembly lines</li>
               <li>&bull; QC, packing, DDP shipping prep</li>
             </ul>
