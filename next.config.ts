@@ -22,6 +22,10 @@ const nextConfig: NextConfig = {
     reactRemoveProperties: { properties: ['^data-inspector-'] },
     removeConsole: { exclude: ['error'] },
   },
+  // Performance: enable modern image format hints + experimental CSS optimization
+  experimental: {
+    optimizePackageImports: ['lucide-react', 'date-fns'],
+  },
   // Edge cache & security headers are configured in `public/_headers`
   // (Next.js output:export does not support headers() — must be a static file)
 };

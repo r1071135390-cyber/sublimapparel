@@ -2,6 +2,13 @@
   "name": "projects",
   "version": "0.1.0",
   "private": true,
+  "browserslist": [
+    "chrome >= 90",
+    "firefox >= 90",
+    "safari >= 14",
+    "edge >= 90",
+    "ios_saf >= 14"
+  ],
   "scripts": {
     "build": "bash ./scripts/build.sh",
     "build:cf": "next build && next-on-pages",

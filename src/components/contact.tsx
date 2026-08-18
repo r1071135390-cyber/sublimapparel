@@ -452,22 +452,30 @@ export function Contact() {
                   </span>
                 </div>
                 <div className="grid gap-6 md:grid-cols-2">
-                  <input
-                    type="text"
-                    name="shipCountry"
-                    value={form.shipCountry}
-                    onChange={onChange}
-                    placeholder="Country (e.g. United States)"
-                    className="w-full border-b-2 border-black bg-transparent py-2 text-base font-medium text-black placeholder:text-black/30 focus:border-[#ff4d00] focus:outline-none"
-                  />
-                  <input
-                    type="text"
-                    name="shipZip"
-                    value={form.shipZip}
-                    onChange={onChange}
-                    placeholder="ZIP / postal code"
-                    className="w-full border-b-2 border-black bg-transparent py-2 text-base font-medium text-black placeholder:text-black/30 focus:border-[#ff4d00] focus:outline-none"
-                  />
+                  <label className="block">
+                    <span className="sr-only">Ship to country</span>
+                    <input
+                      type="text"
+                      name="shipCountry"
+                      aria-label="Ship to country"
+                      value={form.shipCountry}
+                      onChange={onChange}
+                      placeholder="Country (e.g. United States)"
+                      className="w-full border-b-2 border-black bg-transparent py-2 text-base font-medium text-black placeholder:text-black/30 focus:border-[#ff4d00] focus:outline-none"
+                    />
+                  </label>
+                  <label className="block">
+                    <span className="sr-only">Ship to ZIP / postal code</span>
+                    <input
+                      type="text"
+                      name="shipZip"
+                      aria-label="Ship to ZIP / postal code"
+                      value={form.shipZip}
+                      onChange={onChange}
+                      placeholder="ZIP / postal code"
+                      className="w-full border-b-2 border-black bg-transparent py-2 text-base font-medium text-black placeholder:text-black/30 focus:border-[#ff4d00] focus:outline-none"
+                    />
+                  </label>
                 </div>
                 <p className="mt-2 text-[11px] leading-snug text-black/60">
                   We need the destination country + postal code to calculate the
@@ -637,12 +645,12 @@ function Field({
   className?: string;
 }) {
   return (
-    <div className={className}>
-      <label className="mb-2 block text-xs font-black uppercase tracking-widest text-black">
+    <label className={`block ${className}`}>
+      <span className="mb-2 block text-xs font-black uppercase tracking-widest text-black">
         {label}
-      </label>
+      </span>
       {children}
-    </div>
+    </label>
   );
 }
 
@@ -656,16 +664,18 @@ function SizeQtyStepper({
   qty,
   onBump,
   onSet,
+  sizeLabel,
 }: {
   qty: number;
   onBump: (delta: number) => void;
   onSet: (n: number) => void;
+  sizeLabel?: string;
 }) {
   return (
     <div className="flex items-center justify-between rounded-md border border-black/15 bg-white">
       <button
         type="button"
-        aria-label="Decrease quantity"
+        aria-label={`Decrease quantity for size ${sizeLabel ?? ""}`.trim()}
         onClick={() => onBump(-1)}
         className="flex h-9 w-9 items-center justify-center text-black/60 transition-colors hover:bg-black/5 hover:text-[#ff4d00] disabled:cursor-not-allowed disabled:opacity-30"
         disabled={qty <= 0}
@@ -678,6 +688,9 @@ function SizeQtyStepper({
         min={0}
         max={99999}
         value={qty}
+        aria-label={
+          sizeLabel ? `Quantity for size ${sizeLabel}` : "Quantity"
+        }
         onChange={(e) => onSet(parseInt(e.target.value, 10))}
         onFocus={(e) => e.currentTarget.select()}
         className="w-full bg-transparent text-center text-sm font-bold tabular-nums text-black focus:outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
@@ -730,7 +743,7 @@ function SizeQuantityPicker({
             <div className="mb-1.5 text-center text-xs font-black uppercase tracking-widest text-black">
               {r.size}
             </div>
-            <SizeQtyStepper qty={r.qty} onBump={(d) => onBump(r.id, d)} onSet={(n) => onSetQty(r.id, n)} />
+            <SizeQtyStepper qty={r.qty} onBump={(d) => onBump(r.id, d)} onSet={(n) => onSetQty(r.id, n)} sizeLabel={r.size} />
           </div>
         ))}
       </div>
@@ -759,7 +772,7 @@ function SizeQuantityPicker({
                   <X className="h-3.5 w-3.5" strokeWidth={2.5} />
                 </button>
               </div>
-              <SizeQtyStepper qty={r.qty} onBump={(d) => onBump(r.id, d)} onSet={(n) => onSetQty(r.id, n)} />
+              <SizeQtyStepper qty={r.qty} onBump={(d) => onBump(r.id, d)} onSet={(n) => onSetQty(r.id, n)} sizeLabel={r.size || "custom size"} />
             </div>
           ))}
         </div>

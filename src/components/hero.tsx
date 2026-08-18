@@ -145,7 +145,7 @@ export function Hero() {
               href={f.href}
               className={
                 f.highlight
-                  ? "rounded-sm border border-[#ff4d00] bg-[#ff4d00] px-2.5 py-1.5 text-[11px] font-black uppercase tracking-wider text-white shadow-[3px_3px_0_0_rgba(255,255,255,0.25)] transition-all hover:-translate-y-0.5 hover:shadow-[4px_4px_0_0_rgba(255,255,255,0.45)] md:px-3 md:text-xs"
+                  ? "rounded-sm border border-[#ff4d00] bg-[#ff4d00] px-2.5 py-1.5 text-[11px] font-black uppercase tracking-wider text-black shadow-[3px_3px_0_0_rgba(255,255,255,0.25)] transition-all hover:-translate-y-0.5 hover:shadow-[4px_4px_0_0_rgba(255,255,255,0.45)] md:px-3 md:text-xs"
                   : "rounded-sm border border-white/25 bg-white/5 px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-white backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-[#ff4d00] hover:bg-[#ff4d00]/20 md:px-3 md:text-xs"
               }
             >

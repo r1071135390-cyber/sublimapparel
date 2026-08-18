@@ -99,10 +99,15 @@ export function FabricCatalogGrid({ fabrics }: Props) {
             )}
           </div>
           <div className="flex items-center gap-3">
-            <label className="text-[10px] font-black uppercase tracking-widest text-black">
+            <label
+              htmlFor="fabric-sort"
+              className="text-[10px] font-black uppercase tracking-widest text-black"
+            >
               Sort:
             </label>
             <select
+              id="fabric-sort"
+              aria-label="Sort fabrics"
               value={sort}
               onChange={(e) => setSort(e.target.value)}
               className="border-2 border-black bg-white px-2 py-1 text-xs font-bold uppercase tracking-wider"

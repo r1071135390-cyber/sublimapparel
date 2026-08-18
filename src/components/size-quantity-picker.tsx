@@ -103,6 +103,7 @@ export function SizeQuantityPicker({
               qty={r.qty}
               onBump={(d) => onBump(r.id, d)}
               onSet={(n) => onSetQty(r.id, n)}
+              sizeLabel={r.size}
             />
           </div>
         ))}
@@ -136,6 +137,7 @@ export function SizeQuantityPicker({
                 qty={r.qty}
                 onBump={(d) => onBump(r.id, d)}
                 onSet={(n) => onSetQty(r.id, n)}
+                sizeLabel={r.size || "custom size"}
               />
             </div>
           ))}
@@ -172,16 +174,18 @@ function SizeQtyStepper({
   qty,
   onBump,
   onSet,
+  sizeLabel,
 }: {
   qty: number;
   onBump: (delta: number) => void;
   onSet: (n: number) => void;
+  sizeLabel?: string;
 }) {
   return (
     <div className="flex items-center justify-between border border-[#0a0a0a]/20 bg-white">
       <button
         type="button"
-        aria-label="Decrease quantity"
+        aria-label={`Decrease quantity for size ${sizeLabel ?? ""}`.trim()}
         onClick={() => onBump(-1)}
         className="flex h-8 w-8 items-center justify-center text-[#0a0a0a]/60 transition-colors hover:bg-black/5 hover:text-[#ff4d00] disabled:cursor-not-allowed disabled:opacity-30"
         disabled={qty <= 0}
@@ -194,6 +198,9 @@ function SizeQtyStepper({
         min={0}
         max={99999}
         value={qty}
+        aria-label={
+          sizeLabel ? `Quantity for size ${sizeLabel}` : "Quantity"
+        }
         onChange={(e) => onSet(parseInt(e.target.value, 10))}
         className="w-full min-w-0 border-x border-[#0a0a0a]/15 bg-transparent py-1 text-center text-sm font-black tabular-nums text-[#0a0a0a] focus:outline-none"
       />
