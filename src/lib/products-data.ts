@@ -110,7 +110,7 @@ export const products: Product[] = [
     number: "0001",
     slug: "all-over-print-womens-rectangle-scarf",
     name: "Custom All-Over Print Womens Rectangle Scarf",
-    category: "Hoodie",  // tagged as Hoodie in source (group with apparel)
+    category: "Home",  // Scarf is a home/textile accessory, not apparel
     sports: ALL_SPORTS,
     scenarios: ALL_SCENARIOS,
     fabrics: [
