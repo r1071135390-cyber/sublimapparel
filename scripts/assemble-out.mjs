@@ -33,12 +33,34 @@ function copyDir(src, dst) {
     const d = path.join(dst, entry.name);
     if (entry.isDirectory()) {
       copyDir(s, d);
-    } else if (entry.name.endsWith(".html") || entry.name.endsWith(".meta") || entry.name.endsWith(".rsc")) {
+    } else if (
+      entry.name.endsWith(".html") ||
+      entry.name.endsWith(".meta") ||
+      entry.name.endsWith(".rsc") ||
+      entry.name.endsWith(".txt") ||
+      entry.name.endsWith(".body")
+    ) {
       fs.copyFileSync(s, d);
     }
   }
 }
 copyDir(NEXT_APP, OUT);
+
+// Copy full static assets (JS, CSS, fonts) — for app HTML pages only
+function copyStaticDir(src, dst) {
+  if (!fs.existsSync(src)) return;
+  fs.mkdirSync(dst, { recursive: true });
+  for (const entry of fs.readdirSync(src, { withFileTypes: true })) {
+    const s = path.join(src, entry.name);
+    const d = path.join(dst, entry.name);
+    if (entry.isDirectory()) {
+      copyStaticDir(s, d);
+    } else {
+      // Copy ALL static files (js, css, woff, woff2, etc.)
+      fs.copyFileSync(s, d);
+    }
+  }
+}
 
 // 3. Apply trailing slash convention: app/page.tsx → out/page.html
 // Cloudflare Pages with trailingSlash:true serves out/page.html at /
@@ -46,15 +68,15 @@ copyDir(NEXT_APP, OUT);
 // Actually for static export with trailingSlash, Next generates app/blog/page.tsx → out/blog.html
 // Cloudflare Pages will serve /blog/ → blog.html automatically when trailingSlash is on
 
-// 4. Copy static assets
+// 4. Copy static assets (all .js, .css, .woff, etc.)
 console.log("[3/5] Copying .next/static/ to out/_next/static/...");
 const nextStatic = path.join(ROOT, ".next/static");
 const outStatic = path.join(OUT, "_next/static");
 if (fs.existsSync(nextStatic)) {
-  copyDir(nextStatic, outStatic);
+  copyStaticDir(nextStatic, outStatic);
 }
 
-// 5. Copy public/
+// 5. Copy public/ (all files including subdirs)
 console.log("[4/5] Copying public/ to out/...");
 if (fs.existsSync(PUBLIC_DIR)) {
   for (const entry of fs.readdirSync(PUBLIC_DIR, { withFileTypes: true })) {
@@ -62,7 +84,7 @@ if (fs.existsSync(PUBLIC_DIR)) {
     const d = path.join(OUT, entry.name);
     if (entry.name.startsWith(".")) continue; // skip hidden
     if (entry.isDirectory()) {
-      copyDir(s, d);
+      copyStaticDir(s, d);
     } else {
       fs.copyFileSync(s, d);
     }

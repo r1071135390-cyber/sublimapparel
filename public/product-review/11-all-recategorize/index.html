@@ -50,6 +50,38 @@
   .toast { position: fixed; bottom: 20px; right: 20px; background: #00c853; color: #fff; padding: 12px 20px; border-radius: 6px; z-index: 300; opacity: 0; transition: opacity 0.3s; }
   .toast.show { opacity: 1; }
   .legend { font-size: 11px; color: #666; }
+
+  /* Mobile responsive */
+  @media (max-width: 768px) {
+    body { padding: 10px; font-size: 14px; }
+    .topbar { padding: 12px; flex-direction: column; align-items: stretch; }
+    .topbar > div:first-child { text-align: center; margin-bottom: 8px; }
+    .stats { justify-content: space-between; gap: 4px; }
+    .stat { flex: 1; text-align: center; padding: 6px 4px; }
+    .stat b { font-size: 14px; }
+    .stat { font-size: 10px; }
+    .actions { justify-content: center; gap: 4px; }
+    .btn { padding: 6px 8px; font-size: 11px; flex: 1; min-width: 60px; }
+    .filters { padding: 8px; flex-direction: column; align-items: stretch; }
+    .filters input { min-width: 0; }
+    .table { border-radius: 4px; }
+    .row { grid-template-columns: 1fr; gap: 8px; padding: 12px; }
+    .row.header { display: none; }
+    .row > div { width: 100% !important; }
+    .row .num { font-size: 18px; }
+    .row .name { font-size: 15px; }
+    .row .cat-old { display: block; margin-bottom: 4px; }
+    .row .accept-btn { width: 100%; padding: 12px; }
+    .row .pill { display: inline-block; margin: 2px 4px 2px 0; }
+    .modal-content { padding: 12px; max-height: 90vh; }
+    .modal-content pre { font-size: 10px; padding: 8px; }
+    .toast { left: 10px; right: 10px; bottom: 80px; text-align: center; }
+  }
+  @media (max-width: 380px) {
+    .stats { font-size: 9px; }
+    .stat b { font-size: 12px; }
+    .btn { font-size: 10px; padding: 4px 6px; }
+  }
 </style>
 </head>
 <body>
