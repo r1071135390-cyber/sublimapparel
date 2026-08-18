@@ -1,270 +1,231 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VividPrint Product Classification Rules</title>
+<meta charset="UTF-8" />
+<title>Product & Tag Classification Rules | VividPrint</title>
 <style>
-  :root {
-    --bg: #0a0a0a;
-    --fg: #e5e5e5;
-    --muted: #a0a0a0;
-    --accent: #ff4d00;
-    --card: #1a1a1a;
-    --border: #2a2a2a;
-    --blue: #00c2ff;
-    --good: #4ade80;
-    --bad: #f87171;
-  }
-  * { box-sizing: border-box; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: var(--bg);
-    color: var(--fg);
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-  }
-  .container { max-width: 900px; margin: 0 auto; padding: 40px 24px; }
-  h1 { font-size: 2.5rem; margin: 0 0 8px; color: var(--accent); }
-  .subtitle { color: var(--muted); font-size: 0.95rem; margin-bottom: 40px; }
-  h2 { color: var(--accent); margin-top: 48px; border-bottom: 2px solid var(--accent); padding-bottom: 8px; }
-  h3 { color: var(--blue); margin-top: 32px; }
-  table { width: 100%; border-collapse: collapse; margin: 16px 0; }
-  th, td { text-align: left; padding: 10px 14px; border: 1px solid var(--border); }
-  th { background: var(--card); color: var(--blue); font-weight: 600; }
-  tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
-  code { background: var(--card); padding: 2px 6px; border-radius: 4px; font-size: 0.9em; color: var(--blue); }
-  pre {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-left: 4px solid var(--accent);
-    padding: 16px;
-    border-radius: 6px;
-    overflow-x: auto;
-    font-size: 0.85em;
-  }
-  .tag {
-    display: inline-block;
-    background: var(--card);
-    border: 1px solid var(--border);
-    padding: 2px 10px;
-    border-radius: 12px;
-    margin: 2px;
-    font-size: 0.85em;
-  }
-  .tag.cat { border-color: var(--accent); color: var(--accent); }
-  .tag.sport { border-color: var(--blue); color: var(--blue); }
-  .tag.scenario { border-color: var(--good); color: var(--good); }
-  .callout {
-    background: var(--card);
-    border-left: 4px solid var(--accent);
-    padding: 12px 18px;
-    border-radius: 4px;
-    margin: 16px 0;
-  }
-  .callout.warn { border-left-color: var(--bad); }
-  .callout.good { border-left-color: var(--good); }
-  .label-good { color: var(--good); }
-  .label-bad { color: var(--bad); }
-  .summary-box {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin: 24px 0;
-  }
-  .summary-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 16px;
-    text-align: center;
-  }
-  .summary-card .count { font-size: 2.2rem; color: var(--accent); font-weight: 700; }
-  .summary-card .name { color: var(--muted); font-size: 0.9rem; }
-  .back { display: inline-block; color: var(--muted); text-decoration: none; margin-bottom: 24px; }
-  .back:hover { color: var(--accent); }
-  ul li { margin-bottom: 6px; }
-  .open-q { color: var(--bad); }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif; max-width: 960px; margin: 0 auto; padding: 32px 24px; line-height: 1.65; color: #1a1a1a; background: #fafafa; }
+  h1 { color: #ff4d00; border-bottom: 3px solid #ff4d00; padding-bottom: 12px; font-size: 32px; }
+  h2 { color: #0a0a0a; border-left: 5px solid #ff4d00; padding-left: 12px; margin-top: 36px; font-size: 24px; }
+  h3 { color: #1a1a1a; margin-top: 24px; font-size: 18px; }
+  code, pre { background: #1a1a1a; color: #e5e5e5; padding: 12px 16px; border-radius: 6px; font-size: 14px; display: block; overflow-x: auto; line-height: 1.5; }
+  code { display: inline; padding: 2px 6px; }
+  pre { white-space: pre-wrap; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; background: white; }
+  th, td { border: 1px solid #e5e5e5; padding: 10px 14px; text-align: left; font-size: 14px; }
+  th { background: #ff4d00; color: white; }
+  tr:nth-child(even) { background: #f5f5f5; }
+  blockquote { border-left: 4px solid #00c2ff; padding: 12px 16px; margin: 16px 0; background: #eaf7ff; color: #0a0a0a; }
+  ul, ol { padding-left: 24px; }
+  li { margin-bottom: 4px; }
+  .key { color: #ff4d00; font-weight: 600; }
+  .val { color: #00c2ff; font-weight: 600; }
+  .ok { color: #2e7d32; font-weight: 600; }
+  .no { color: #c62828; font-weight: 600; }
+  .print-btn { position: fixed; top: 16px; right: 16px; padding: 8px 16px; background: #ff4d00; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; z-index: 1000; }
+  .print-btn:hover { background: #e64500; }
+  @media print { .print-btn { display: none; } body { background: white; } }
 </style>
 </head>
 <body>
-<div class="container">
-  <a class="back" href="/">← Back to VividPrint</a>
-  <h1>VividPrint Product Classification Rules</h1>
-  <div class="subtitle">Version 2026-08-18 · Source: <code>src/lib/products-data.ts</code> + <code>src/lib/tag-archive.ts</code></div>
+<button class="print-btn" onclick="window.print()">🖨 Print</button>
 
-  <div class="summary-box">
-    <div class="summary-card">
-      <div class="count">13</div>
-      <div class="name">Categories (mutually exclusive)</div>
-    </div>
-    <div class="summary-card">
-      <div class="count">41</div>
-      <div class="name">Sports tags (0–5 per product)</div>
-    </div>
-    <div class="summary-card">
-      <div class="count">25</div>
-      <div class="name">Scenario tags (2–5 per product)</div>
-    </div>
-  </div>
+<h1>Product & Tag Classification Rules</h1>
+<blockquote>
+<strong>3 个维度</strong>：<br>
+• <span class="key">Category</span>（互斥，1 个）= 按<strong>款式 + 用途大类</strong>分（如 T-Shirt / Pants / Skirt / Vest / Hoodie / Cap）<br>
+• <span class="key">Sports</span>（多选 1-5 个）= 产品<strong>用在哪项运动</strong>（如 Basketball, Soccer, Yoga, Surf）<br>
+• <span class="key">Scenarios</span>（多选 2-5 个）= 产品<strong>适合什么场景/行业</strong>（如 Promotional Swag, Event, School）
+</blockquote>
 
-  <h2>1. Category — Pick exactly one</h2>
-  <p>Each product has exactly <strong>one</strong> category. The category is the primary visual label on the product card and drives the <code>/tag/category/&lt;slug&gt;/</code> archive pages.</p>
-  <table>
-    <thead><tr><th>Category</th><th>What it covers</th><th>Examples</th></tr></thead>
-    <tbody>
-      <tr><td><span class="tag cat">Hoodie</span></td><td>Knit caps, beanies, ski masks</td><td>Beanie Caps, Cycling Caps, Sun Caps</td></tr>
-      <tr><td><span class="tag cat">T-Shirt</span></td><td>Short-sleeve tops, jerseys, singlets, suits, GIs, fishing shirts</td><td>Basketball Jersey, Wrestling Singlet, MMA Gi, Cycling Top</td></tr>
-      <tr><td><span class="tag cat">Pants</span></td><td>Long pants, shorts, leggings, tights, swim trunks</td><td>Boxing Trunks, Cycling Shorts, Yoga Legging, MMA Shorts</td></tr>
-      <tr><td><span class="tag cat">Sweatshirt</span></td><td>Long-sleeve sweatshirts, hoodies, pullovers</td><td>Pullover Hoodie, Crewneck Sweatshirt</td></tr>
-      <tr><td><span class="tag cat">Tank Top & Camis</span></td><td>Sleeveless tops, rash guards, lycra tops</td><td>Surf Lycra Top, Rash Guard</td></tr>
-      <tr><td><span class="tag cat">Shirt</span></td><td>Standard collared shirts (not polo)</td><td>Button-up Shirt, Dress Shirt</td></tr>
-      <tr><td><span class="tag cat">Home</span></td><td>Home goods, household items, gifts</td><td>Scarf, Apron, Beach Sarong, Towel, Onesie, Home Jumpsuit</td></tr>
-      <tr><td><span class="tag cat">Skirt</span></td><td>Skirts, dresses, leotards, cheer uniforms</td><td>Dance Dress, Cheerleading Dress, Netball Dress, Leotard</td></tr>
-      <tr><td><span class="tag cat">Polo Shirt</span></td><td>Polo-style collared shirts (with buttons + collar)</td><td>Sublimation Polo, Sport Polo</td></tr>
-      <tr><td><span class="tag cat">Cap</span></td><td>Baseball caps, visors</td><td>Baseball Cap, Trucker Cap, Sun Visor</td></tr>
-      <tr><td><span class="tag cat">Jacket</span></td><td>Outerwear, windbreakers, ski jackets</td><td>Windbreaker, Softshell Jacket, Down Jacket</td></tr>
-      <tr><td><span class="tag cat">Vest</span></td><td>Safety vests, reflective vests, hi-vis vests</td><td>Construction Vest, Safety Vest, Reflective Vest</td></tr>
-    </tbody>
-  </table>
+<h2>1. 数据模型总览</h2>
+<p>每个产品在 <code>src/lib/products-data.ts</code> 中定义 4 个核心字段：</p>
+<pre><code>{
+  number: "0001",                              // 唯一编号
+  name: "Sublimation Scarf",                   // 产品名
+  category: "Home",                            // 1 个类目（互斥）
+  sports: ["Beach", "Surf"],                   // 0-5 个运动（多选）
+  scenarios: ["Retail & Fashion", ...],        // 0-5 个场景（多选）
+}</code></pre>
 
-  <div class="callout warn">
-    ⚠️ <strong>Sportswear is removed</strong> (2026-08-18). All 38 products previously in <code>Sportswear</code> have been redistributed to the categories above based on their product name. See <a href="/product-review/07-sportswear-reclassification.tsv" style="color:var(--blue)">07-sportswear-reclassification.tsv</a> for the mapping.
-  </div>
+<h2>2. Category 规则</h2>
+<p><strong>13 个互斥类目</strong>（每个产品<strong>只能选 1 个</strong>）。分类哲学：<span class="key">款式 + 用途大类</span>。</p>
 
-  <h2>2. Sports — Pick 0–5 from 41</h2>
-  <p><strong>Rule of thumb:</strong> Pick the 1–5 sports the product is <em>primarily designed for</em>. If the product is not sport-specific (e.g. a scarf, home goods), pick <code>[]</code> (empty).</p>
+<table>
+<thead>
+<tr><th>Category</th><th>款式 / 用途</th><th>包含</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Hoodie</strong></td><td>帽子/套头衫（含套头运动衫）</td><td>Baseball Cap, Beanie</td></tr>
+<tr><td><strong>T-Shirt</strong></td><td>短袖 T 恤 + 长袖 T 恤 + 球衣 + Jersey</td><td>T-Shirt, Long-Sleeve, Basketball Jersey, Fishing Shirt, Rugby Jersey, Singlet, Gi, Suit, Wear</td></tr>
+<tr><td><strong>Pants</strong></td><td>裤子 + 短裤 + 紧身裤 + 长裤</td><td>Shorts, Trunks, Legging, Tights, Tracksuit Pant</td></tr>
+<tr><td><strong>Sweatshirt</strong></td><td>卫衣（套头长袖）</td><td>Crewneck, Hoodie Sweat</td></tr>
+<tr><td><strong>Tank Top &amp; Camis</strong></td><td>无袖背心 / 紧身背心</td><td>Tank Top, Camisole, Lycra Top, Rash Guard, Tank Vest Dress (0008)</td></tr>
+<tr><td><strong>Shirt</strong></td><td>普通衬衫（非 T 恤）</td><td>Button-Down, Dress Shirt</td></tr>
+<tr><td><strong>Home</strong></td><td>家居/非穿着</td><td>Scarf, Apron, Towel, Sarong, Baby Onesie, Jumpsuit</td></tr>
+<tr><td><strong>Skirt</strong></td><td>裙子 / 连衣裙 / 体操服</td><td>Skirt, Dress (非 Tank), Leotard, Cheerleading Dress</td></tr>
+<tr><td><strong>Polo Shirt</strong></td><td>POLO 衫</td><td>POLO</td></tr>
+<tr><td><strong>Cap</strong></td><td>帽子</td><td>Baseball Cap, Beanie, Snapback</td></tr>
+<tr><td><strong>Jacket</strong></td><td>外套</td><td>Windbreaker, Ski Jacket, Bomber</td></tr>
+<tr><td><strong>Vest</strong></td><td>背心（带袖孔的）</td><td>Construction Vest (0101), Team Vest</td></tr>
+<tr style="background:#ffe5e0;"><td><strong>Sportswear</strong> ⚠️ 废弃</td><td>（之前是混合类，<strong>不推荐使用</strong>）</td><td>-</td></tr>
+</tbody>
+</table>
 
-  <h3>Full list (41)</h3>
-  <p>
-    <span class="tag sport">AFL</span> <span class="tag sport">Athletics</span> <span class="tag sport">Badminton</span> <span class="tag sport">Baseball</span> <span class="tag sport">Basketball</span> <span class="tag sport">Beach</span> <span class="tag sport">Bowling</span> <span class="tag sport">Boxing</span> <span class="tag sport">Cheer</span> <span class="tag sport">Cricket</span> <span class="tag sport">CrossFit</span> <span class="tag sport">Cycling</span> <span class="tag sport">Dance</span> <span class="tag sport">Dive</span> <span class="tag sport">Esports</span> <span class="tag sport">Fishing</span> <span class="tag sport">Football</span> <span class="tag sport">Golf</span> <span class="tag sport">Gym</span> <span class="tag sport">Hockey</span> <span class="tag sport">Lacrosse</span> <span class="tag sport">MMA</span> <span class="tag sport">Martial Arts</span> <span class="tag sport">Netball</span> <span class="tag sport">Pilates</span> <span class="tag sport">Rugby</span> <span class="tag sport">Running</span> <span class="tag sport">Skate</span> <span class="tag sport">Skating</span> <span class="tag sport">Ski</span> <span class="tag sport">Snowboard</span> <span class="tag sport">Soccer</span> <span class="tag sport">Softball</span> <span class="tag sport">Surf</span> <span class="tag sport">Swimwear</span> <span class="tag sport">Table Tennis</span> <span class="tag sport">Tennis</span> <span class="tag sport">Triathlon</span> <span class="tag sport">Volleyball</span> <span class="tag sport">Wrestling</span> <span class="tag sport">Yoga</span>
-  </p>
+<h3>关键原则</h3>
+<ul>
+<li><span class="val">按款式大类分</span>，<span class="val">不按运动</span> —— Basketball Jersey / Fishing Shirt 都是 T-Shirt</li>
+<li><strong>Cheerleading Dress / Netball Dress / Dance Dress</strong> 都是 Skirt/Dress</li>
+<li><strong>0008 Tank Vest Dress</strong> 是无袖背心 → <span class="key">Tank Top &amp; Camis</span>（不是 Vest）</li>
+<li><strong>0101 Construction Vest</strong> 是有袖孔背心 → <span class="key">Vest</span></li>
+<li><strong>0001 Scarf</strong> 是家居用品 → <span class="key">Home</span></li>
+<li><strong>0007 Sleeveless Hoodie</strong> 是 T 恤款式 → <span class="key">T-Shirt</span></li>
+</ul>
 
-  <h3>Examples</h3>
-  <table>
-    <thead><tr><th>Product</th><th>Sports</th></tr></thead>
-    <tbody>
-      <tr><td>Basketball Jersey Wear</td><td><code>[Basketball]</code></td></tr>
-      <tr><td>Cycling Set (top + shorts)</td><td><code>[Cycling]</code></td></tr>
-      <tr><td>Yoga Set</td><td><code>[Yoga, Pilates, Gym]</code></td></tr>
-      <tr><td>Wrestling Singlet</td><td><code>[Wrestling, MMA, Martial Arts]</code></td></tr>
-      <tr><td>Scarf (0001)</td><td><code>[]</code> (no sport)</td></tr>
-      <tr><td>Baby Onesie</td><td><code>[]</code> (no sport)</td></tr>
-      <tr><td>Beach Sarong</td><td><code>[Beach, Swimwear, Surf]</code></td></tr>
-      <tr><td>Construction Vest</td><td><code>[]</code> (no sport)</td></tr>
-      <tr><td>Surf Lycra Top</td><td><code>[Surf, Swimwear, Beach]</code></td></tr>
-      <tr><td>MMA Gi</td><td><code>[MMA, Martial Arts]</code></td></tr>
-      <tr><td>Fishing Shirt</td><td><code>[Fishing]</code></td></tr>
-    </tbody>
-  </table>
+<h2>3. Sports 规则</h2>
+<p><strong>41 个运动标签</strong>（每个产品<strong>可多选 0-5 个</strong>）。标识产品<strong>用在哪项运动</strong>。</p>
+<p><code>AFL, Athletics, Badminton, Baseball, Basketball, Beach, Bowling, Boxing, Cheer, Cricket, CrossFit, Cycling, Dance, Dive, Esports, Fishing, Football, Golf, Gym, Hockey, Lacrosse, MMA, Martial Arts, Netball, Pilates, Rugby, Running, Skate, Skating, Ski, Snowboard, Soccer, Softball, Surf, Swimwear, Table Tennis, Tennis, Triathlon, Volleyball, Wrestling, Yoga</code></p>
 
-  <div class="callout bad">
-    ❌ <strong>Anti-pattern:</strong> Do NOT tag a product with all 41 sports. This was the root cause of "achieve 不准确" — every product showed up on every sport archive page, making them all look the same.
-  </div>
+<h3>推荐范围</h3>
+<table>
+<thead><tr><th>产品类型</th><th>Sports 数量</th><th>例子</th></tr></thead>
+<tbody>
+<tr><td>通用家居/非运动产品</td><td><strong>0 个</strong></td><td>Scarf, Apron, Baby Onesie, Towel</td></tr>
+<tr><td>通用运动上衣</td><td><strong>1-2 个</strong></td><td>Long-Sleeve Training T-Shirt → Running, Gym</td></tr>
+<tr><td>专项运动服装</td><td><strong>1-3 个</strong></td><td>Basketball Jersey → Basketball</td></tr>
+<tr><td>多用途运动套装</td><td><strong>3-5 个</strong></td><td>Yoga Set → Yoga, Pilates, Gym, Athletics</td></tr>
+</tbody>
+</table>
 
-  <h2>3. Scenarios — Pick 2–5 from 25</h2>
-  <p><strong>Rule of thumb:</strong> Pick the 2–5 use cases the product best serves. Most products should have 2–4 scenarios.</p>
+<h3>错误 vs 正确</h3>
+<p><span class="no">❌ 任何产品<strong>不要打 41 个全选</strong></span>（这就是当前 archive 页面雷同的根因）<br>
+<span class="no">❌ 通用产品<strong>不要硬塞运动</strong></span>（如 Scarf 打了 41 个运动）</p>
 
-  <h3>Full list (25)</h3>
-  <p>
-    <span class="tag scenario">Promotional Swag</span> <span class="tag scenario">Event & Festival</span> <span class="tag scenario">School & Education</span> <span class="tag scenario">Team & Club</span> <span class="tag scenario">Sports League</span> <span class="tag scenario">Corporate & Branding</span> <span class="tag scenario">Uniform & Workwear</span> <span class="tag scenario">Retail & Fashion</span> <span class="tag scenario">Political Campaign</span> <span class="tag scenario">Fundraiser & Charity</span> <span class="tag scenario">Music & Merch</span> <span class="tag scenario">Wedding & Party</span> <span class="tag scenario">Gift & Souvenir</span> <span class="tag scenario">Construction & Engineering</span> <span class="tag scenario">Express & Logistics</span> <span class="tag scenario">Hospitality & F&B</span> <span class="tag scenario">Medical & Healthcare</span> <span class="tag scenario">Security & Property</span> <span class="tag scenario">Retail & Supermarket</span> <span class="tag scenario">Education & School</span> <span class="tag scenario">Corporate & Promo</span> <span class="tag scenario">Transit & Transport</span> <span class="tag scenario">Studio & Gym</span> <span class="tag scenario">Military</span> <span class="tag scenario">Festival & Holiday</span>
-  </p>
+<h3>正确示例</h3>
+<table>
+<thead><tr><th>产品</th><th>Sports</th></tr></thead>
+<tbody>
+<tr><td>Sublimation Scarf (0001)</td><td><code>[]</code>（无运动属性）</td></tr>
+<tr><td>Womens Tank Vest Dress (0008)</td><td><code>["Dance", "Gym", "Athletics"]</code></td></tr>
+<tr><td>Construction Vest (0101)</td><td><code>[]</code>（非运动）</td></tr>
+<tr><td>Basketball Jersey</td><td><code>["Basketball"]</code></td></tr>
+<tr><td>Yoga Set</td><td><code>["Yoga", "Pilates", "Gym"]</code></td></tr>
+<tr><td>Beach Sarong</td><td><code>["Beach", "Swimwear", "Surf"]</code></td></tr>
+<tr><td>Fishing Shirt</td><td><code>["Fishing"]</code></td></tr>
+</tbody>
+</table>
 
-  <h3>Examples</h3>
-  <table>
-    <thead><tr><th>Product</th><th>Scenarios</th></tr></thead>
-    <tbody>
-      <tr><td>Basketball Jersey</td><td><code>[Sports League, Team & Club, School & Education]</code></td></tr>
-      <tr><td>Cheerleading Dress</td><td><code>[School & Education, Sports League, Team & Club]</code></td></tr>
-      <tr><td>Scarf (0001)</td><td><code>[Retail & Fashion, Gift & Souvenir, Promotional Swag]</code></td></tr>
-      <tr><td>Construction Vest (0101)</td><td><code>[Construction & Engineering, Security & Property, Uniform & Workwear]</code></td></tr>
-      <tr><td>Baby Onesie</td><td><code>[Gift & Souvenir, Retail & Fashion]</code></td></tr>
-      <tr><td>Beach Sarong</td><td><code>[Festival & Holiday, Event & Festival, Retail & Fashion]</code></td></tr>
-      <tr><td>Fishing Shirt</td><td><code>[Retail & Fashion, Gift & Souvenir]</code></td></tr>
-      <tr><td>Polo Shirt</td><td><code>[Corporate & Branding, Uniform & Workwear, Retail & Fashion]</code></td></tr>
-      <tr><td>MMA Gi</td><td><code>[Sports League, Team & Club]</code></td></tr>
-      <tr><td>Yoga Set</td><td><code>[Studio & Gym, Retail & Fashion, Promotional Swag]</code></td></tr>
-    </tbody>
-  </table>
+<h2>4. Scenarios 规则</h2>
+<p><strong>25 个场景标签</strong>（每个产品<strong>可多选 2-5 个</strong>）。标识产品<strong>适合什么场景/行业</strong>。</p>
+<p><code>Promotional Swag, Event &amp; Festival, School &amp; Education, Team &amp; Club, Sports League, Corporate &amp; Branding, Uniform &amp; Workwear, Retail &amp; Fashion, Political Campaign, Fundraiser &amp; Charity, Music &amp; Merch, Wedding &amp; Party, Gift &amp; Souvenir, Construction &amp; Engineering, Express &amp; Logistics, Hospitality &amp; F&amp;B, Medical &amp; Healthcare, Security &amp; Property, Retail &amp; Supermarket, Education &amp; School, Corporate &amp; Promo, Transit &amp; Transport, Studio &amp; Gym, Military, Festival &amp; Holiday</code></p>
 
-  <h2>4. The Categorization Algorithm</h2>
-  <p>Used to redistribute the 38 Sportswear products (see <a href="/product-review/07-sportswear-reclassification.tsv" style="color:var(--blue)">07-sportswear-reclassification.tsv</a>):</p>
-  <pre><code>function categorizeByName(name) {
+<h3>推荐范围</h3>
+<table>
+<thead><tr><th>产品类型</th><th>Scenarios 数量</th><th>例子</th></tr></thead>
+<tbody>
+<tr><td>通用家居/非运动产品</td><td><strong>2-3 个</strong></td><td>Scarf → Retail &amp; Fashion, Gift &amp; Souvenir, Promotional Swag</td></tr>
+<tr><td>通用运动上衣</td><td><strong>2-3 个</strong></td><td>Training T-Shirt → Sports League, Team &amp; Club, School &amp; Education</td></tr>
+<tr><td>专项运动服装</td><td><strong>2-4 个</strong></td><td>Basketball Jersey → Sports League, Team &amp; Club, School &amp; Education</td></tr>
+<tr><td>多用途运动套装</td><td><strong>3-5 个</strong></td><td>Yoga Set → Studio &amp; Gym, Sports League, Team &amp; Club, Health</td></tr>
+</tbody>
+</table>
+
+<p><span class="no">❌ 不要打 13+ 个 scenarios</span><br>
+<span class="no">❌ 不相关场景不要硬塞</span>（如围巾不应该有 Sports League）</p>
+
+<h3>正确示例</h3>
+<table>
+<thead><tr><th>产品</th><th>Scenarios</th></tr></thead>
+<tbody>
+<tr><td>Sublimation Scarf (0001)</td><td><code>["Retail &amp; Fashion", "Gift &amp; Souvenir", "Promotional Swag"]</code></td></tr>
+<tr><td>Womens Tank Vest Dress (0008)</td><td><code>["Studio &amp; Gym", "Dance", "Retail &amp; Fashion"]</code></td></tr>
+<tr><td>Construction Vest (0101)</td><td><code>["Construction &amp; Engineering", "Security &amp; Property", "Uniform &amp; Workwear"]</code></td></tr>
+<tr><td>Basketball Jersey</td><td><code>["Sports League", "Team &amp; Club", "School &amp; Education"]</code></td></tr>
+<tr><td>Baby Onesie</td><td><code>["Gift &amp; Souvenir", "Retail &amp; Fashion"]</code></td></tr>
+<tr><td>Beach Sarong</td><td><code>["Beach", "Travel", "Retail &amp; Fashion"]</code></td></tr>
+</tbody>
+</table>
+
+<h2>5. 38 个 Sportswear 产品重新分类规则</h2>
+<p><strong>目标</strong>：删除 <code>Sportswear</code> 类别，把 38 个产品<strong>按款式</strong>归到 12 个细分类目：</p>
+
+<pre><code>function categorizeByName(name) {
   const n = name.toLowerCase();
 
-  // Rule 1: Bottom-wear → Pants
-  if (n.includes("shorts") || n.includes("legging") ||
-      n.includes("tights") ||
-      (n.includes("swimwear") && n.includes("trunks"))) return "Pants";
+  // 规则 1: 短裤/紧身裤类 → Pants
+  if (n.includes("shorts")) return "Pants";
+  if (n.includes("legging")) return "Pants";
+  if (n.includes("tights")) return "Pants";
+  if (n.includes("swimwear") &amp;&amp; n.includes("trunks")) return "Pants";
 
-  // Rule 2: Tank-top dress → Tank Top & Camis
-  if (n.includes("vest") && n.includes("tank") && n.includes("dress")) {
-    return "Tank Top & Camis"; // e.g. 0008
-  }
+  // 规则 2: Tank Vest Dress（无袖背心裙）→ Tank Top &amp; Camis
+  if (n.includes("tank vest") &amp;&amp; n.includes("dress")) return "Tank Top &amp; Camis";
 
-  // Rule 3: Other vests → Vest
+  // 规则 3: 其他 Vest（带袖孔）→ Vest
   if (n.includes("vest")) return "Vest";
 
-  // Rule 4: Tight-fitting tops → Tank Top & Camis
-  if (n.includes("rash guard") || n.includes("lycra top") ||
-      n.includes("lycra suit")) return "Tank Top & Camis";
+  // 规则 4: 紧身面料上衣 → Tank Top &amp; Camis
+  if (n.includes("rash guard")) return "Tank Top &amp; Camis";
+  if (n.includes("lycra top")) return "Tank Top &amp; Camis";
+  if (n.includes("lycra suit")) return "Tank Top &amp; Camis";
 
-  // Rule 5: Singlet → T-Shirt
-  if (n.includes("singlet")) return "T-Shirt";
-
-  // Rule 6: Dress / leotard → Skirt
+  // 规则 5: 体操服/Leotard → Skirt
   if (n.includes("leotard")) return "Skirt";
-  if (n.includes("dress") && !n.includes("tank vest")) return "Skirt";
 
-  // Rule 7: Uniform with skirt → Skirt
-  if (n.includes("uniform") &&
-      (n.includes("skirt") || n.includes("top + skirt"))) return "Skirt";
+  // 规则 6: 连衣裙（除 Tank Vest Dress）→ Skirt
+  if (n.includes("dress")) return "Skirt";
 
-  // Rule 8: Other sport tops → T-Shirt
-  if (n.includes("jersey") || n.includes("outfit") ||
-      n.includes("wear") || n.includes("set") ||
-      n.includes("suit") || n.includes("gi") ||
-      n.includes("fishing shirt")) return "T-Shirt";
+  // 规则 7: 制服 + 含 skirt → Skirt
+  if (n.includes("uniform") &amp;&amp; n.includes("skirt")) return "Skirt";
+  if (n.includes("uniform") &amp;&amp; n.includes("top + skirt")) return "Skirt";
 
-  // Fallback: T-Shirt
+  // 规则 8: 球衣/套装/上衣/钓鱼衫 → T-Shirt
+  if (n.includes("jersey")) return "T-Shirt";
+  if (n.includes("outfit")) return "T-Shirt";
+  if (n.includes("wear") || n.includes("set")) return "T-Shirt";
+  if (n.includes("suit") &amp;&amp; !n.includes("tracksuit")) return "T-Shirt";
+  if (n.includes("gi")) return "T-Shirt";
+  if (n.includes("fishing shirt")) return "T-Shirt";
+
+  // 兜底: 全部归 T-Shirt
   return "T-Shirt";
 }</code></pre>
 
-  <h3>Distribution (38 Sportswear products reclassified)</h3>
-  <table>
-    <thead><tr><th>New Category</th><th>Count</th></tr></thead>
-    <tbody>
-      <tr><td><span class="tag cat">T-Shirt</span></td><td>23</td></tr>
-      <tr><td><span class="tag cat">Pants</span></td><td>8</td></tr>
-      <tr><td><span class="tag cat">Skirt</span></td><td>4</td></tr>
-      <tr><td><span class="tag cat">Tank Top & Camis</span></td><td>2</td></tr>
-      <tr><td><span class="tag cat">Vest</span></td><td>1</td></tr>
-    </tbody>
-  </table>
+<h3>4 个 sports 标签为 41 全选的产品额外修复</h3>
+<table>
+<thead><tr><th>编号</th><th>产品名</th><th>建议 sports</th></tr></thead>
+<tbody>
+<tr><td>0008</td><td>Womens Tank Vest Dress</td><td><code>["Dance", "Gym", "Athletics"]</code></td></tr>
+<tr><td>0014</td><td>Womens Tank Bodysuit</td><td><code>["Dance", "Gym", "Athletics"]</code></td></tr>
+<tr><td>0018</td><td>Kids Baseball Jersey</td><td><code>["Baseball", "Softball"]</code></td></tr>
+<tr><td>0020</td><td>Mens Long-Sleeve T-Shirt</td><td><code>["Running", "Gym", "Soccer", "Basketball"]</code></td></tr>
+</tbody>
+</table>
 
-  <h2>5. Open Questions / Edge Cases</h2>
-  <ul>
-    <li class="open-q"><strong>0008 Womens Tank Vest Dress</strong> → my rule picks "Tank Top & Camis"; user said "should be Sports" but Sports category does not exist — need decision</li>
-    <li><strong>0042 Surf Lycra Top</strong> → "Tank Top & Camis" ✓</li>
-    <li><strong>Cheerleading Dress (0023)</strong> → "Skirt" ✓</li>
-    <li><strong>Netball Dress</strong> → "Skirt" ✓</li>
-    <li><strong>Dance Dress</strong> → "Skirt" ✓</li>
-    <li><strong>Hip-Hop Street Dance Outfit</strong> → "T-Shirt" (rule picks "outfit" → T-Shirt; could be "Skirt" if the outfit is mainly a dress — review)</li>
-  </ul>
+<h2>6. 当前状态</h2>
+<table>
+<thead><tr><th>维度</th><th>数量</th><th>问题</th></tr></thead>
+<tbody>
+<tr><td>产品</td><td>119</td><td>-</td></tr>
+<tr><td>Category</td><td>12（去掉 Sportswear）</td><td>38 个产品被错放 Sportswear</td></tr>
+<tr><td>Sports</td><td>41</td><td>4 个产品打了 41 全选，29 个产品打了 41</td></tr>
+<tr><td>Scenarios</td><td>25</td><td>22 个产品打了 13+，但相对合理</td></tr>
+</tbody>
+</table>
 
-  <h2>6. Related Files & Downloads</h2>
-  <ul>
-    <li>Source data: <code>src/lib/products-data.ts</code></li>
-    <li>Tag archive metadata: <code>src/lib/tag-archive.ts</code></li>
-    <li>Product list (119 products): <a href="/product-review/01-products.tsv" style="color:var(--blue)">01-products.tsv</a></li>
-    <li>Categories (13): <a href="/product-review/02-categories.tsv" style="color:var(--blue)">02-categories.tsv</a></li>
-    <li>Sports (41): <a href="/product-review/03-sports.tsv" style="color:var(--blue)">03-sports.tsv</a></li>
-    <li>Scenarios (25): <a href="/product-review/04-scenarios.tsv" style="color:var(--blue)">04-scenarios.tsv</a></li>
-    <li>Tag archives in production (83): <a href="/product-review/05-tag-archives-on-production.tsv" style="color:var(--blue)">05-tag-archives-on-production.tsv</a></li>
-    <li>Real product counts per tag: <a href="/product-review/06-real-product-counts.tsv" style="color:var(--blue)">06-real-product-counts.tsv</a></li>
-    <li>Sportswear reclassification (38 products): <a href="/product-review/07-sportswear-reclassification.tsv" style="color:var(--blue)">07-sportswear-reclassification.tsv</a></li>
-  </ul>
-</div>
+<h2>7. 修改操作流程</h2>
+<ol>
+<li>下载 <code>08-sportswear-reclassification-v2.tsv</code> 看 38 个产品的 new_category</li>
+<li>下载 <code>01-products.tsv</code> 看 119 个产品的 sports/scenarios</li>
+<li>编辑 <code>src/lib/products-data.ts</code>：
+<ul>
+<li>38 个 product 的 <code>category: "Sportswear"</code> → 对应 new_category</li>
+<li>4 个 product 的 <code>sports: [41 个]</code> → 对应 suggested_sports</li>
+</ul>
+</li>
+<li>重新 build + 部署</li>
+<li>验证 13 个 category 页面 + 79 个 tag archive 全部 200</li>
+</ol>
+
 </body>
 </html>

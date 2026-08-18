@@ -1,53 +1,62 @@
-# VividPrint Product Classification Rules
-**Version:** 2026-08-18
-**Status:** Active — used in `src/lib/products-data.ts` and `src/lib/tag-archive.ts`
+# Product & Tag Classification Rules
+
+> **3 个维度**：
+> - **Category**（互斥，1 个）= 按**款式 + 用途大类**分（如 T-Shirt / Pants / Skirt / Vest / Hoodie / Cap）
+> - **Sports**（多选 1-5 个）= 产品**用在哪项运动**（如 Basketball, Soccer, Yoga, Surf）
+> - **Scenarios**（多选 2-5 个）= 产品**适合什么场景/行业**（如 Promotional Swag, Event, School）
 
 ---
 
-## Overview
+## 1. 数据模型总览
 
-Every product in VividPrint has **three classification dimensions** that drive how it appears on the website (especially on tag archive pages):
+每个产品在 `src/lib/products-data.ts` 中定义 4 个核心字段：
 
-| Dimension | Cardinality | Count | Cardinality Rule |
-|---|---|---|---|
-| **Category** | Exactly 1 | 13 (after Sportswear removed) | One and only one |
-| **Sports** | 0–5 | 41 | Pick only relevant ones |
-| **Scenarios** | 2–5 | 25 | Pick only relevant ones |
-
-Source files:
-- `src/lib/products-data.ts` — `products` array, `ProductCategory` type, `ALL_SPORTS`, `ALL_SCENARIOS`
-- `src/lib/tag-archive.ts` — `CATEGORY_TAGS`, `SPORT_TAGS`, `SCENARIO_TAGS`, `findTagBySlug`
+```ts
+{
+  number: "0001"                              // 唯一编号
+  name: "Sublimation Scarf"                   // 产品名
+  category: "Home"                            // 1 个类目（互斥）
+  sports: ["Beach", "Surf"]                   // 0-5 个运动（多选）
+  scenarios: ["Retail & Fashion", ...]        // 0-5 个场景（多选）
+}
+```
 
 ---
 
-## 1. Category (13 mutually exclusive options)
+## 2. Category 规则
 
-Each product **must have exactly one** category. The category is the primary visual label on the product card.
+**13 个互斥类目**（每个产品**只能选 1 个**）。分类哲学：**款式 + 用途大类**。
 
-| Category | Definition | Examples |
+| Category | 款式 / 用途 | 包含 |
 |---|---|---|
-| **Hoodie** | Caps, headwear, beanies, ski masks | Beanie Caps, Cycling Caps, Sun Caps |
-| **T-Shirt** | Short-sleeve tops, jerseys, singlets, suits (上衣), GIs, wrestling wear, fishing shirts | Basketball Jersey, Wrestling Singlet, MMA Gi, Cycling Top |
-| **Pants** | Long pants, shorts, leggings, tights, swim trunks | Boxing Trunks, Cycling Shorts, Yoga Legging, MMA Shorts |
-| **Sweatshirt** | Long-sleeve sweatshirts, hoodies, pullovers, track jackets (上衣类长袖) | Pullover Hoodie, Crewneck Sweatshirt |
-| **Tank Top & Camis** | Sleeveless tops, rash guards, lycra tops, body suits | Surf Lycra Top, Rash Guard, Singlet (when tight-fitting) |
-| **Shirt** | Standard collared shirts (not polo) | Button-up Shirt, Dress Shirt |
-| **Home** | Home goods, household items, gifts | Scarf, Apron, Beach Sarong, Towel, Onesie, Home Jumpsuit, Blanket |
-| **Skirt** | Skirts, dresses, leotards, cheer uniforms | Dance Dress, Cheerleading Dress, Netball Dress, Leotard |
-| **Polo Shirt** | Polo-style collared shirts (with buttons + collar) | Sublimation Polo, Sport Polo |
-| **Cap** | Baseball caps, visors (different from Hoodie which is knit caps) | Baseball Cap, Trucker Cap, Sun Visor |
-| **Jacket** | Outerwear, windbreakers, ski jackets | Windbreaker, Softshell Jacket, Down Jacket |
-| **Vest** | Safety vests, reflective vests, hi-vis vests (NOT tank tops) | Construction Vest, Safety Vest, Reflective Vest |
+| **Hoodie** | 帽子/套头衫（含套头运动衫） | Baseball Cap, Beanie |
+| **T-Shirt** | 短袖 T 恤 + 长袖 T 恤 + 球衣 + Jersey | T-Shirt, Long-Sleeve, Basketball Jersey, Fishing Shirt, Rugby Jersey, Singlet, Gi, Suit, Wear |
+| **Pants** | 裤子 + 短裤 + 紧身裤 + 长裤 | Shorts, Trunks, Legging, Tights, Tracksuit Pant |
+| **Sweatshirt** | 卫衣（套头长袖） | Crewneck, Hoodie Sweat |
+| **Tank Top & Camis** | 无袖背心 / 紧身背心 | Tank Top, Camisole, Lycra Top, Rash Guard, Tank Vest Dress (0008) |
+| **Shirt** | 普通衬衫（非 T 恤） | Button-Down, Dress Shirt |
+| **Home** | 家居/非穿着 | Scarf, Apron, Towel, Sarong, Baby Onesie, Jumpsuit |
+| **Skirt** | 裙子 / 连衣裙 / 体操服 | Skirt, Dress (非 Tank), Leotard, Cheerleading Dress |
+| **Polo Shirt** | POLO 衫 | POLO |
+| **Cap** | 帽子 | Baseball Cap, Beanie, Snapback |
+| **Jacket** | 外套 | Windbreaker, Ski Jacket, Bomber |
+| **Vest** | 背心（带袖孔的） | Construction Vest (0101), Team Vest |
+| **Sportswear** ⚠️ 废弃 | （之前是混合类，**不推荐使用**）| - |
 
-> ⚠️ **Sportswear is removed** (2026-08-18). All 38 products previously in Sportswear have been redistributed to the categories above based on their product name.
+### 关键原则
+
+- **按款式大类分**，**不按运动** —— Basketball Jersey / Fishing Shirt 都是 T-Shirt
+- **Cheerleading Dress / Netball Dress / Dance Dress** 都是 Skirt/Dress
+- **0008 Tank Vest Dress** 是无袖背心 → **Tank Top & Camis**（不是 Vest）
+- **0101 Construction Vest** 是有袖孔背心 → **Vest**
+- **0001 Scarf** 是家居用品 → **Home**
+- **0007 Sleeveless Hoodie** 是 T 恤款式 → **T-Shirt**
 
 ---
 
-## 2. Sports (0–5 selections from 41)
+## 3. Sports 规则
 
-**Rule of thumb:** Pick the 1–5 sports the product is *primarily designed for*. If the product is not sport-specific (e.g. a scarf), pick `[]` (empty).
-
-### Full list (41)
+**41 个运动标签**（每个产品**可多选 0-5 个**）。标识产品**用在哪项运动**。
 
 ```
 AFL, Athletics, Badminton, Baseball, Basketball, Beach, Bowling, Boxing,
@@ -57,157 +66,151 @@ Running, Skate, Skating, Ski, Snowboard, Soccer, Softball, Surf, Swimwear,
 Table Tennis, Tennis, Triathlon, Volleyball, Wrestling, Yoga
 ```
 
-### Examples
+### 推荐范围
 
-| Product | Sports |
+| 产品类型 | Sports 数量 | 例子 |
+|---|---|---|
+| 通用家居/非运动产品 | **0 个** | Scarf, Apron, Baby Onesie, Towel |
+| 通用运动上衣 | **1-2 个** | Long-Sleeve Training T-Shirt → Running, Gym |
+| 专项运动服装 | **1-3 个** | Basketball Jersey → Basketball |
+| 多用途运动套装 | **3-5 个** | Yoga Set → Yoga, Pilates, Gym, Athletics |
+
+### 错误做法
+
+❌ 任何产品**不要打 41 个全选**（这就是当前 archive 页面雷同的根因）
+❌ 通用产品**不要硬塞运动**（如 Scarf 打了 41 个运动）
+
+### 正确示例
+
+| 产品 | Sports |
 |---|---|
-| Basketball Jersey Wear | `[Basketball]` |
-| Cycling Set (top + shorts) | `[Cycling]` |
-| Yoga Set | `[Yoga, Pilates, Gym]` |
-| Wrestling Singlet | `[Wrestling, MMA, Martial Arts]` |
-| Scarf (0001) | `[]` (no sport) |
-| Baby Onesie | `[]` (no sport) |
-| Beach Sarong | `[Beach, Swimwear, Surf]` |
-| Construction Vest | `[]` (no sport) |
-| Surf Lycra Top | `[Surf, Swimwear, Beach]` |
-| MMA Gi | `[MMA, Martial Arts]` |
-| Fishing Shirt | `[Fishing]` |
-
-### Anti-pattern ❌
-
-**Do NOT** do this:
-```ts
-sports: ["AFL", "Athletics", "Badminton", "Baseball", "Basketball", "Beach", "Bowling", "Boxing", "Cheer", "Cricket", "CrossFit", "Cycling", "Dance", "Dive", "Esports", "Fishing", "Football", "Golf", "Gym", "Hockey", "Lacrosse", "MMA", "Martial Arts", "Netball", "Pilates", "Rugby", "Running", "Skate", "Skating", "Ski", "Snowboard", "Soccer", "Softball", "Surf", "Swimwear", "Table Tennis", "Tennis", "Triathlon", "Volleyball", "Wrestling", "Yoga"]
-```
-
-This is what caused "achieve 不准确" — every product showed up on every sport archive page.
+| Sublimation Scarf (0001) | `[]`（无运动属性）|
+| Womens Tank Vest Dress (0008) | `["Dance", "Gym", "Athletics"]` |
+| Construction Vest (0101) | `[]`（非运动）|
+| Basketball Jersey | `["Basketball"]` |
+| Yoga Set | `["Yoga", "Pilates", "Gym"]` |
+| Beach Sarong | `["Beach", "Swimwear", "Surf"]` |
+| Fishing Shirt | `["Fishing"]` |
 
 ---
 
-## 3. Scenarios (2–5 selections from 25)
+## 4. Scenarios 规则
 
-**Rule of thumb:** Pick the 2–5 use cases the product best serves. Most products should have 2–4 scenarios.
-
-### Full list (25)
+**25 个场景标签**（每个产品**可多选 2-5 个**）。标识产品**适合什么场景/行业**。
 
 ```
 Promotional Swag, Event & Festival, School & Education, Team & Club,
 Sports League, Corporate & Branding, Uniform & Workwear, Retail & Fashion,
 Political Campaign, Fundraiser & Charity, Music & Merch, Wedding & Party,
 Gift & Souvenir, Construction & Engineering, Express & Logistics,
-Hospitality & F&B, Medical & Healthcare, Security & Property,
-Retail & Supermarket, Education & School, Corporate & Promo,
-Transit & Transport, Studio & Gym, Military, Festival & Holiday
+Hospitality & F&B, Medical & Healthcare, Security & Property, Retail & Supermarket,
+Education & School, Corporate & Promo, Transit & Transport, Studio & Gym,
+Military, Festival & Holiday
 ```
 
-### Examples
+### 推荐范围
 
-| Product | Scenarios |
+| 产品类型 | Scenarios 数量 | 例子 |
+|---|---|---|
+| 通用家居/非运动产品 | **2-3 个** | Scarf → Retail & Fashion, Gift & Souvenir, Promotional Swag |
+| 通用运动上衣 | **2-3 个** | Training T-Shirt → Sports League, Team & Club, School & Education |
+| 专项运动服装 | **2-4 个** | Basketball Jersey → Sports League, Team & Club, School & Education |
+| 多用途运动套装 | **3-5 个** | Yoga Set → Studio & Gym, Sports League, Team & Club, Health |
+
+### 错误做法
+
+❌ 任何产品**不要打 13+ 个 scenarios**
+❌ **不相关**的不要硬塞（如围巾不应该有 Sports League）
+
+### 正确示例
+
+| 产品 | Scenarios |
 |---|---|
-| Basketball Jersey | `[Sports League, Team & Club, School & Education]` |
-| Cheerleading Dress | `[School & Education, Sports League, Team & Club]` |
-| Scarf (0001) | `[Retail & Fashion, Gift & Souvenir, Promotional Swag]` |
-| Construction Vest (0101) | `[Construction & Engineering, Security & Property, Uniform & Workwear]` |
-| Baby Onesie | `[Gift & Souvenir, Retail & Fashion]` |
-| Beach Sarong | `[Beach, Travel, Retail & Fashion]` (Travel is NOT in scenarios; use "Festival & Holiday" or "Event & Festival") |
-| Fishing Shirt | `[Retail & Fashion, Gift & Souvenir]` |
-| Polo Shirt | `[Corporate & Branding, Uniform & Workwear, Retail & Fashion]` |
-| MMA Gi | `[Sports League, Team & Club]` |
-| Yoga Set | `[Studio & Gym, Retail & Fashion, Promotional Swag]` |
-
-### Anti-pattern ❌
-
-Do NOT tag every product with all 13+ scenarios. Pick the 2–5 most relevant ones.
+| Sublimation Scarf (0001) | `["Retail & Fashion", "Gift & Souvenir", "Promotional Swag"]` |
+| Womens Tank Vest Dress (0008) | `["Studio & Gym", "Dance", "Retail & Fashion"]` |
+| Construction Vest (0101) | `["Construction & Engineering", "Security & Property", "Uniform & Workwear"]` |
+| Basketball Jersey | `["Sports League", "Team & Club", "School & Education"]` |
+| Baby Onesie | `["Gift & Souvenir", "Retail & Fashion"]` |
+| Beach Sarong | `["Beach", "Travel", "Retail & Fashion"]` |
 
 ---
 
-## 4. The Categorization Algorithm (used in 07-sportswear-reclassification.tsv)
+## 5. 38 个 Sportswear 产品重新分类规则
 
-```js
+**目标**：删除 `Sportswear` 类别，把 38 个产品**按款式**归到 12 个细分类目：
+
+```javascript
 function categorizeByName(name) {
   const n = name.toLowerCase();
 
-  // Rule 1: Bottom-wear → Pants
-  if (
-    n.includes("shorts") ||
-    n.includes("legging") ||
-    n.includes("tights") ||
-    (n.includes("swimwear") && n.includes("trunks"))
-  ) return "Pants";
+  // 规则 1: 短裤/紧身裤类 → Pants
+  if (n.includes("shorts")) return "Pants";
+  if (n.includes("legging")) return "Pants";
+  if (n.includes("tights")) return "Pants";
+  if (n.includes("swimwear") && n.includes("trunks")) return "Pants";
 
-  // Rule 2: Tank-top style dress → Tank Top & Camis
-  if (n.includes("vest") && n.includes("tank") && n.includes("dress")) {
-    return "Tank Top & Camis"; // e.g. 0008
-  }
+  // 规则 2: Tank Vest Dress（无袖背心裙）→ Tank Top & Camis
+  if (n.includes("tank vest") && n.includes("dress")) return "Tank Top & Camis";
 
-  // Rule 3: Other vests → Vest (safety/reflective)
+  // 规则 3: 其他 Vest（带袖孔）→ Vest
   if (n.includes("vest")) return "Vest";
 
-  // Rule 4: Tight-fitting tops → Tank Top & Camis
-  if (
-    n.includes("rash guard") ||
-    n.includes("lycra top") ||
-    n.includes("lycra suit")
-  ) return "Tank Top & Camis";
+  // 规则 4: 紧身面料上衣 → Tank Top & Camis
+  if (n.includes("rash guard")) return "Tank Top & Camis";
+  if (n.includes("lycra top")) return "Tank Top & Camis";
+  if (n.includes("lycra suit")) return "Tank Top & Camis";
 
-  // Rule 5: Sleeveless top → T-Shirt
-  if (n.includes("singlet")) return "T-Shirt";
-
-  // Rule 6: Dress / leotard → Skirt
+  // 规则 5: 体操服/Leotard → Skirt
   if (n.includes("leotard")) return "Skirt";
-  if (n.includes("dress") && !n.includes("tank vest")) return "Skirt";
 
-  // Rule 7: Uniform with skirt → Skirt
-  if (n.includes("uniform") && (n.includes("skirt") || n.includes("top + skirt"))) {
-    return "Skirt";
-  }
+  // 规则 6: 连衣裙（除 Tank Vest Dress）→ Skirt
+  if (n.includes("dress")) return "Skirt";
 
-  // Rule 8: All other sport tops → T-Shirt
-  if (
-    n.includes("jersey") ||
-    n.includes("outfit") ||
-    n.includes("wear") ||
-    n.includes("set") ||
-    n.includes("suit") ||
-    n.includes("gi") ||
-    n.includes("fishing shirt")
-  ) return "T-Shirt";
+  // 规则 7: 制服 + 含 skirt → Skirt
+  if (n.includes("uniform") && n.includes("skirt")) return "Skirt";
+  if (n.includes("uniform") && n.includes("top + skirt")) return "Skirt";
 
-  // Fallback: T-Shirt
+  // 规则 8: 球衣/套装/上衣/钓鱼衫 → T-Shirt
+  if (n.includes("jersey")) return "T-Shirt";
+  if (n.includes("outfit")) return "T-Shirt";
+  if (n.includes("wear") || n.includes("set")) return "T-Shirt";
+  if (n.includes("suit") && !n.includes("tracksuit")) return "T-Shirt";
+  if (n.includes("gi")) return "T-Shirt";
+  if (n.includes("fishing shirt")) return "T-Shirt";
+
+  // 兜底: 全部归 T-Shirt
   return "T-Shirt";
 }
 ```
 
-### Distribution (38 Sportswear products reclassified)
+### 4 个 sports 标签为 41 全选的产品额外修复
 
-| New Category | Count |
-|---|---|
-| T-Shirt | 23 |
-| Pants | 8 |
-| Skirt | 4 |
-| Tank Top & Camis | 2 |
-| Vest | 1 |
-
----
-
-## 5. Open Questions / Edge Cases
-
-These products need user review before applying:
-
-1. **0008 Womens Tank Vest Dress** → "Tank Top & Camis" (currently rule picks this; user mentioned "should be Sports" but Sports category does not exist; review)
-2. **0042 Surf Lycra Top** → "Tank Top & Camis" ✓
-3. **Cheerleading Dress (0023)** → "Skirt" ✓
-4. **Netball Dress** → "Skirt" ✓
-5. **Dance Dress** → "Skirt" ✓
-6. **Hip-Hop Street Dance Outfit** → "T-Shirt" (rule picks this since "outfit" matches; but could be "Skirt" depending on style)
+| 编号 | 产品名 | 建议 sports |
+|---|---|---|
+| 0008 | Womens Tank Vest Dress | `["Dance", "Gym", "Athletics"]` |
+| 0014 | Womens Tank Bodysuit | `["Dance", "Gym", "Athletics"]` |
+| 0018 | Kids Baseball Jersey | `["Baseball", "Softball"]` |
+| 0020 | Mens Long-Sleeve T-Shirt | `["Running", "Gym", "Soccer", "Basketball"]` |
 
 ---
 
-## 6. Related Files
+## 6. 当前状态
 
-- `src/lib/products-data.ts` — main data source
-- `src/lib/tag-archive.ts` — tag archive pages metadata
-- `scripts/export-prod-status.mjs` — generates 01-06 TSVs from production data
-- `scripts/generate-missing-tag-pages.mjs` — generates 75 missing tag archive static pages
-- `public/product-review/01-products.tsv` — full product list with tags
-- `public/product-review/07-sportswear-reclassification.tsv` — proposed reclassification of 38 products
+| 维度 | 数量 | 问题 |
+|---|---|---|
+| 产品 | 119 | - |
+| Category | 12（去掉 Sportswear）| 38 个产品被错放 Sportswear |
+| Sports | 41 | 4 个产品打了 41 全选，29 个产品打了 41 |
+| Scenarios | 25 | 22 个产品打了 13+，但相对合理 |
+
+---
+
+## 7. 修改操作流程
+
+1. 下载 `08-sportswear-reclassification-v2.tsv` 看 38 个产品的 new_category
+2. 下载 `01-products.tsv` 看 119 个产品的 sports/scenarios
+3. 编辑 `src/lib/products-data.ts`：
+   - 38 个 product 的 `category: "Sportswear"` → 对应 new_category
+   - 4 个 product 的 `sports: [41 个]` → 对应 suggested_sports
+4. 重新 build + 部署
+5. 验证 13 个 category 页面 + 79 个 tag archive 全部 200
