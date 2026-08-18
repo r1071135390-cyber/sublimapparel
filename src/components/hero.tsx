@@ -106,7 +106,7 @@ export function Hero() {
 
         {/* Headline — 3 lines, flat / full width */}
         <h1 className="mb-4 max-w-4xl whitespace-nowrap text-2xl font-black leading-[1.05] tracking-tight md:mb-5 md:text-4xl lg:text-5xl xl:text-6xl">
-          <span className="block text-white">Yiwu sublimate apparel factory</span>
+          <span className="block text-white">Yiwu custom sublimate factory</span>
           <span className="block text-[#ff4d00]">
             <Link href="/fabric/polyester" className="hover:underline hover:underline-offset-4">polyester sublimation</Link> &amp;
           </span>
