@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>119 Products Decision Page</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 20px; background: #f5f5f5; color: #1a1a1a; }
+  .container { max-width: 1400px; margin: 0 auto; }
+  .topbar { background: #0a0a0a; color: #fff; padding: 16px 20px; border-radius: 8px; margin-bottom: 16px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .stats { display: flex; gap: 16px; font-size: 14px; }
+  .stat { background: #1a1a1a; padding: 8px 12px; border-radius: 6px; }
+  .stat b { color: #ff4d00; font-size: 18px; }
+  .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .btn { background: #ff4d00; color: #fff; border: none; padding: 8px 14px; border-radius: 6px; font-size: 13px; cursor: pointer; font-weight: 500; }
+  .btn:hover { background: #e64400; }
+  .btn-secondary { background: #2a2a2a; }
+  .btn-secondary:hover { background: #3a3a3a; }
+  .btn-ghost { background: transparent; border: 1px solid #555; }
+  .btn-ghost:hover { background: #1a1a1a; }
+  .filters { background: #fff; padding: 12px 16px; border-radius: 8px; margin-bottom: 12px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .filters input, .filters select { padding: 6px 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 13px; }
+  .filters input { flex: 1; min-width: 200px; }
+  .table { background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+  .row { display: grid; grid-template-columns: 70px 1fr 200px 320px 100px; gap: 12px; padding: 10px 16px; align-items: center; border-bottom: 1px solid #f0f0f0; }
+  .row.header { background: #1a1a1a; color: #fff; font-weight: 600; font-size: 12px; text-transform: uppercase; padding: 12px 16px; }
+  .row:hover { background: #fafafa; }
+  .row.accepted { background: #e8f5e9 !important; }
+  .row.changed { background: #fff3e0 !important; }
+  .row.collapsed { display: none; }
+  .num { font-family: monospace; font-weight: 600; color: #ff4d00; }
+  .name { font-weight: 500; font-size: 14px; }
+  .cat-old { text-decoration: line-through; color: #999; font-size: 12px; }
+  select { width: 100%; padding: 6px 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 13px; background: #fff; }
+  .tag-input { width: 100%; padding: 6px 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 12px; min-height: 32px; resize: vertical; font-family: inherit; }
+  .tag-input:focus { outline: none; border-color: #ff4d00; }
+  .accept-btn { background: #00c853; color: #fff; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 600; }
+  .accept-btn:hover { background: #00a844; }
+  .accept-btn.done { background: #4caf50; }
+  .pill { display: inline-block; background: #f0f0f0; padding: 2px 6px; border-radius: 10px; font-size: 10px; margin: 2px; }
+  .pill.all { background: #ff4d00; color: #fff; }
+  .pill.custom { background: #00c2ff; color: #fff; }
+  .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 200; align-items: center; justify-content: center; padding: 20px; }
+  .modal.show { display: flex; }
+  .modal-content { background: #fff; border-radius: 8px; padding: 20px; max-width: 800px; width: 100%; max-height: 80vh; overflow: auto; }
+  .modal-content pre { background: #1a1a1a; color: #0f0; padding: 16px; border-radius: 4px; overflow: auto; font-size: 12px; }
+  .modal-content h3 { margin-top: 0; }
+  .modal-content .actions { margin-top: 16px; }
+  .toast { position: fixed; bottom: 20px; right: 20px; background: #00c853; color: #fff; padding: 12px 20px; border-radius: 6px; z-index: 300; opacity: 0; transition: opacity 0.3s; }
+  .toast.show { opacity: 1; }
+  .legend { font-size: 11px; color: #666; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="topbar">
+    <div>
+      <div style="font-size: 16px; font-weight: 600;">📋 119 Products · Recategorize</div>
+      <div class="legend">Category (13) + Scenarios (70, 1-5 per product)</div>
+    </div>
+    <div class="stats">
+      <div class="stat"><b id="stat-total">0</b> total</div>
+      <div class="stat"><b id="stat-accepted">0</b> accepted</div>
+      <div class="stat"><b id="stat-changed">0</b> changed</div>
+      <div class="stat"><b id="stat-remaining">0</b> remaining</div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-secondary" onclick="exportTSV()">📥 Export TSV</button>
+      <button class="btn btn-secondary" onclick="showTSV()">👁️ Preview TSV</button>
+      <button class="btn" onclick="copyTSV()">📋 Copy</button>
+      <button class="btn btn-ghost" onclick="resetAll()">↺ Reset</button>
+      <button class="btn btn-ghost" onclick="acceptAll()">✓ Accept All</button>
+    </div>
+  </div>
+
+  <div class="filters">
+    <input type="text" id="search" placeholder="Search by name or number..." oninput="render()">
+    <select id="filter-cat" onchange="render()">
+      <option value="">All Categories</option>
+    </select>
+    <select id="filter-status" onchange="render()">
+      <option value="">All Status</option>
+      <option value="pending">Pending</option>
+      <option value="accepted">Accepted</option>
+      <option value="changed">Changed</option>
+    </select>
+    <span class="legend">Tip: Click row to expand. Press <kbd>Tab</kbd> to navigate. <kbd>Ctrl+Enter</kbd> to accept.</span>
+  </div>
+
+  <div class="table">
+    <div class="row header">
+      <div>#</div>
+      <div>Product Name</div>
+      <div>Category (13)</div>
+      <div>Scenarios (1-5, | separated)</div>
+      <div>Action</div>
+    </div>
+    <div id="rows"></div>
+  </div>
+</div>
+
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <h3>📄 Exported TSV</h3>
+    <p class="legend">Copy this TSV and paste it back to me. I'll update src/lib/products-data.ts.</p>
+    <pre id="tsv-preview"></pre>
+    <div class="actions">
+      <button class="btn" onclick="copyTSV()">📋 Copy to Clipboard</button>
+      <button class="btn btn-secondary" onclick="downloadTSV()">📥 Download</button>
+      <button class="btn btn-ghost" onclick="hideModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Copied!</div>
+
+<script src="products-data.js"></script>
+<script>
+const CATEGORIES = ["T-Shirt", "Hoodie", "Polo Shirt", "Sweatshirt", "Jacket", "Tank Top & Camis", "Pants", "Skirt", "Shirt", "Cap", "Home", "Uniform & Workwear", "Sportswear"];
+const SCENARIOS = ["Promotional Swag", "Political Campaign", "Event & Festival", "Corporate & Branding", "School & Education", "Uniform & Workwear", "Team & Club", "Sports League", "Construction & Engineering", "Hospitality & F&B", "Medical & Healthcare", "Security & Property", "Retail & Fashion", "Gift & Souvenir", "Wedding & Party", "Military", "Festival & Holiday", "Express & Logistics", "Fundraiser & Charity", "Transit & Transport", "Music & Merch", "Studio & Gym", "Retail & Supermarket", "Education & School", "Corporate & Promo", "AFL", "Athletics", "Australian Football", "Badminton", "Baseball", "Basketball", "Bowling", "Boxing", "Cheerleading", "Cricket", "Cycling", "Diving", "Esports", "Fishing", "Football", "Golf", "Gymnastics", "Hockey", "Hunting", "Lacrosse", "Martial Arts", "MMA", "Motorsport", "Netball", "Pickleball", "Racing", "Rodeo", "Rowing", "Rugby", "Sailing", "Ski & Snow", "Soccer", "Softball", "Squash", "Swimming", "Table Tennis", "Tennis", "Track & Field", "Triathlon", "Volleyball", "Water Polo", "Wrestling", "Yoga"];
+
+// Load decisions from localStorage
+const STORAGE_KEY = "vividprint-recat-119";
+let decisions = {};
+try { decisions = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); } catch(e) {}
+
+// Build filter dropdown
+const filterCat = document.getElementById("filter-cat");
+CATEGORIES.forEach(c => {
+  const opt = document.createElement("option");
+  opt.value = c; opt.textContent = c;
+  filterCat.appendChild(opt);
+});
+
+function getDecision(p) {
+  if (!decisions[p.num]) {
+    decisions[p.num] = { cat: p.cat, scen: "" };
+  }
+  return decisions[p.num];
+}
+
+function setDecision(p, cat, scen) {
+  decisions[p.num] = { cat, scen };
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(decisions));
+}
+
+function saveDecisions() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(decisions));
+}
+
+function getStatus(p) {
+  const d = getDecision(p);
+  if (!d.accepted) return "pending";
+  if (d.cat !== p.cat || d.scen !== "" && d.scen !== p.scen) return "changed";
+  return "accepted";
+}
+
+function updateStats() {
+  const total = window.PRODUCTS.length;
+  let accepted = 0, changed = 0, remaining = 0;
+  window.PRODUCTS.forEach(p => {
+    const s = getStatus(p);
+    if (s === "accepted") accepted++;
+    else if (s === "changed") changed++;
+    else remaining++;
+  });
+  document.getElementById("stat-total").textContent = total;
+  document.getElementById("stat-accepted").textContent = accepted;
+  document.getElementById("stat-changed").textContent = changed;
+  document.getElementById("stat-remaining").textContent = remaining;
+}
+
+function render() {
+  const search = document.getElementById("search").value.toLowerCase();
+  const filterCatVal = document.getElementById("filter-cat").value;
+  const filterStatus = document.getElementById("filter-status").value;
+  const rowsEl = document.getElementById("rows");
+  rowsEl.innerHTML = "";
+
+  window.PRODUCTS.forEach(p => {
+    if (search && !p.name.toLowerCase().includes(search) && !p.num.includes(search)) return;
+    if (filterCatVal && p.cat !== filterCatVal) return;
+    const status = getStatus(p);
+    if (filterStatus && filterStatus !== status) return;
+
+    const d = getDecision(p);
+    const row = document.createElement("div");
+    row.className = "row" + (status === "accepted" ? " accepted" : status === "changed" ? " changed" : "");
+    row.innerHTML = `
+      <div class="num">${p.num}</div>
+      <div>
+        <div class="name">${p.name}</div>
+        <div class="legend">
+          <span class="pill ${p.sports.startsWith("ALL") ? "all" : "custom"}">sports: ${p.sports}</span>
+          <span class="pill ${p.scenarios.startsWith("ALL") ? "all" : "custom"}">scenarios: ${p.scenarios}</span>
+        </div>
+      </div>
+      <div>
+        <div class="cat-old">${p.cat}</div>
+        <select onchange="onChange('${p.num}', 'cat', this.value)">
+          ${CATEGORIES.map(c => `<option value="${c}" ${c === d.cat ? "selected" : ""}>${c}</option>`).join("")}
+        </select>
+      </div>
+      <div>
+        <textarea class="tag-input" rows="2" placeholder="e.g. Promotional Swag | School & Education" onchange="onChange('${p.num}', 'scen', this.value)">${d.scen}</textarea>
+        <div class="legend">Type to filter scenarios:</div>
+        <select onchange="appendScenario('${p.num}', this.value); this.value=''">
+          <option value="">+ Add scenario</option>
+          ${SCENARIOS.map(s => `<option value="${s}">${s}</option>`).join("")}
+        </select>
+      </div>
+      <div>
+        <button class="accept-btn ${status === 'accepted' ? 'done' : ''}" onclick="accept('${p.num}')">${status === 'accepted' ? '✓ Done' : '✓ Accept'}</button>
+      </div>
+    `;
+    rowsEl.appendChild(row);
+  });
+  updateStats();
+}
+
+function onChange(num, field, value) {
+  const p = window.PRODUCTS.find(x => x.num === num);
+  const d = getDecision(p);
+  if (field === "cat") d.cat = value;
+  else if (field === "scen") d.scen = value;
+  setDecision(p, d.cat, d.scen);
+  // If was accepted, mark as changed
+  if (d.accepted) d.accepted = false;
+  render();
+}
+
+function appendScenario(num, scen) {
+  if (!scen) return;
+  const p = window.PRODUCTS.find(x => x.num === num);
+  const d = getDecision(p);
+  const existing = d.scen.split("|").map(s => s.trim()).filter(s => s);
+  if (!existing.includes(scen)) existing.push(scen);
+  d.scen = existing.join(" | ");
+  d.accepted = false;
+  setDecision(p, d.cat, d.scen);
+  render();
+}
+
+function accept(num) {
+  const p = window.PRODUCTS.find(x => x.num === num);
+  const d = getDecision(p);
+  d.accepted = true;
+  setDecision(p, d.cat, d.scen);
+  render();
+}
+
+function acceptAll() {
+  if (!confirm("Accept all current selections as final?")) return;
+  window.PRODUCTS.forEach(p => {
+    const d = getDecision(p);
+    d.accepted = true;
+    setDecision(p, d.cat, d.scen);
+  });
+  render();
+  showToast("All accepted!");
+}
+
+function resetAll() {
+  if (!confirm("Reset all decisions? This cannot be undone.")) return;
+  decisions = {};
+  saveDecisions();
+  render();
+  showToast("Reset!");
+}
+
+function generateTSV() {
+  const lines = ["num\tname\tcategory\tscenarios"];
+  window.PRODUCTS.forEach(p => {
+    const d = getDecision(p);
+    const scen = d.scen || p.scenarios;
+    lines.push([p.num, p.name, d.cat, scen].join("\t"));
+  });
+  return lines.join("\n");
+}
+
+function showTSV() {
+  document.getElementById("tsv-preview").textContent = generateTSV();
+  document.getElementById("modal").classList.add("show");
+}
+
+function hideModal() {
+  document.getElementById("modal").classList.remove("show");
+}
+
+function copyTSV() {
+  const tsv = generateTSV();
+  navigator.clipboard.writeText(tsv).then(() => {
+    showToast("TSV copied to clipboard!");
+  }).catch(() => {
+    showTSV();
+  });
+}
+
+function downloadTSV() {
+  const tsv = generateTSV();
+  const blob = new Blob([tsv], { type: "text/tab-separated-values" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "119-products-recategorized.tsv";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 2000);
+}
+
+// Initial render
+render();
+</script>
+</body>
+</html>
