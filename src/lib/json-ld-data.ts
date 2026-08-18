@@ -8,7 +8,7 @@ export const organizationJsonLd = {
   "@id": `${SITE_URL}/#organization`,
   name: "SublimApparel",
   url: SITE_URL,
-  logo: `${SITE_URL}/icon.png`,
+  logo: `${SITE_URL}/sublimapparel-logo.webp`,
   foundingDate: "2018",
   description:
     "Yiwu-based sublimation printing factory. All-over print on polyester and cotton, MOQ 50, DDP to 100+ countries, US warehouse in Fontana CA.",
@@ -47,7 +47,7 @@ export const localBusinessJsonLd = {
   "@type": "LocalBusiness",
   "@id": `${SITE_URL}/shipping/us-warehouse/#localbusiness`,
   name: "SublimApparel US Warehouse",
-  image: `${SITE_URL}/icon.png`,
+  image: `${SITE_URL}/sublimapparel-logo.webp`,
   description:
     "SublimApparel US fulfillment warehouse in Fontana, California. 2-5 day domestic shipping, no customs, no duties for US customers.",
   address: {
