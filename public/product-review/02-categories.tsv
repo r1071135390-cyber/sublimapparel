@@ -1,17 +1,14 @@
-# Categories (29)
-# Total: 13
-
-index	key	dimension	label	slug
-1	T-Shirt	category	T-Shirt	T-Shirt
-2	Hoodie	category	Hoodie	Hoodie
-3	Polo Shirt	category	Polo Shirt	Polo Shirt
-4	Jacket	category	Jacket	Jacket
-5	Shirt	category	Shirt	Shirt
-6	Tank Top & Camis	category	Tank Top & Camis	Tank Top & Camis
-7	Vest	category	Vest	Vest
-8	Pants	category	Pants	Pants
-9	Sweatshirt	category	Sweatshirt	Sweatshirt
-10	Skirt	category	Skirt	Skirt
-11	Sportswear	category	Sportswear	Sportswear
-12	Home	category	Home	Home
-13	Cap	category	Cap	Cap
+category	product_count	has_archive_page
+Hoodie	17	check
+T-Shirt	17	check
+Pants	3	check
+Sweatshirt	4	check
+Tank Top & Camis	3	check
+Sportswear	38	check
+Shirt	3	check
+Home	5	check
+Skirt	2	check
+Polo Shirt	15	check
+Cap	5	check
+Jacket	6	check
+Vest	1	check

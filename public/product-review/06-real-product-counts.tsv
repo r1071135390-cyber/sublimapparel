@@ -1,0 +1,84 @@
+dimension	slug	label	real_product_count
+category	t-shirt	T-Shirt	12
+category	hoodie	Hoodie	12
+category	polo-shirt	Polo Shirt	12
+category	jacket	Jacket	12
+category	shirt	Shirt	14
+category	tank-top-and-camis	??? tank-top-and-camis	14
+category	vest	Vest	14
+category	pants	Pants	14
+category	sweatshirt	Sweatshirt	14
+category	skirt	Skirt	14
+category	sportswear	Sportswear	14
+category	home	Home	14
+category	cap	Cap	14
+sport	afl	AFL	14
+sport	athletics	Athletics	14
+sport	badminton	Badminton	14
+sport	baseball	Baseball	14
+sport	basketball	Basketball	14
+sport	beach	Beach	14
+sport	bowling	Bowling	8
+sport	boxing	Boxing	14
+sport	cheer	Cheer	14
+sport	cricket	Cricket	14
+sport	crossfit	CrossFit	14
+sport	cycling	Cycling	8
+sport	dance	Dance	14
+sport	dive	Dive	14
+sport	esports	Esports	8
+sport	fishing	Fishing	14
+sport	football	Football	14
+sport	golf	Golf	8
+sport	gym	Gym	14
+sport	hockey	Hockey	14
+sport	lacrosse	Lacrosse	14
+sport	mma	MMA	14
+sport	martial-arts	Martial Arts	14
+sport	netball	Netball	14
+sport	pilates	Pilates	14
+sport	rugby	Rugby	14
+sport	running	Running	14
+sport	skate	Skate	14
+sport	skating	Skating	14
+sport	ski	Ski	14
+sport	snowboard	Snowboard	14
+sport	soccer	Soccer	14
+sport	softball	Softball	14
+sport	surf	Surf	14
+sport	swimwear	Swimwear	14
+sport	table-tennis	Table Tennis	14
+sport	tennis	Tennis	14
+sport	triathlon	Triathlon	14
+sport	volleyball	Volleyball	14
+sport	wrestling	Wrestling	14
+sport	yoga	Yoga	14
+scenario	promotional-swag	Promotional Swag	14
+scenario	event-and-festival	??? event-and-festival	14
+scenario	school-and-education	??? school-and-education	14
+scenario	team-and-club	??? team-and-club	14
+scenario	sports-league	Sports League	14
+scenario	corporate-and-branding	??? corporate-and-branding	14
+scenario	uniform-and-workwear	??? uniform-and-workwear	14
+scenario	retail-and-fashion	??? retail-and-fashion	14
+scenario	political-campaign	Political Campaign	14
+scenario	fundraiser-and-charity	??? fundraiser-and-charity	14
+scenario	music-and-merch	??? music-and-merch	14
+scenario	wedding-and-party	??? wedding-and-party	14
+scenario	gift-and-souvenir	??? gift-and-souvenir	14
+scenario	construction-and-engineering	??? construction-and-engineering	14
+scenario	express-and-logistics	??? express-and-logistics	14
+scenario	hospitality-and-fandb	??? hospitality-and-fandb	14
+scenario	medical-and-healthcare	??? medical-and-healthcare	14
+scenario	security-and-property	??? security-and-property	14
+scenario	retail-and-supermarket	??? retail-and-supermarket	14
+scenario	education-and-school	??? education-and-school	14
+scenario	corporate-and-promo	??? corporate-and-promo	14
+scenario	transit-and-transport	??? transit-and-transport	14
+scenario	studio-and-gym	??? studio-and-gym	14
+scenario	military	Military	14
+scenario	festival-and-holiday	??? festival-and-holiday	14
+scenario	beach	??? beach	14
+scenario	lycra	??? lycra	14
+scenario	sublimation	??? sublimation	14
+scenario	polyester	??? polyester	14

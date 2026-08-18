@@ -1,0 +1,84 @@
+dimension	slug	label
+category	t-shirt	T-Shirt
+category	hoodie	Hoodie
+category	polo-shirt	Polo Shirt
+category	jacket	Jacket
+category	shirt	Shirt
+category	tank-top-and-camis	??? tank-top-and-camis
+category	vest	Vest
+category	pants	Pants
+category	sweatshirt	Sweatshirt
+category	skirt	Skirt
+category	sportswear	Sportswear
+category	home	Home
+category	cap	Cap
+sport	afl	AFL
+sport	athletics	Athletics
+sport	badminton	Badminton
+sport	baseball	Baseball
+sport	basketball	Basketball
+sport	beach	Beach
+sport	bowling	Bowling
+sport	boxing	Boxing
+sport	cheer	Cheer
+sport	cricket	Cricket
+sport	crossfit	CrossFit
+sport	cycling	Cycling
+sport	dance	Dance
+sport	dive	Dive
+sport	esports	Esports
+sport	fishing	Fishing
+sport	football	Football
+sport	golf	Golf
+sport	gym	Gym
+sport	hockey	Hockey
+sport	lacrosse	Lacrosse
+sport	mma	MMA
+sport	martial-arts	Martial Arts
+sport	netball	Netball
+sport	pilates	Pilates
+sport	rugby	Rugby
+sport	running	Running
+sport	skate	Skate
+sport	skating	Skating
+sport	ski	Ski
+sport	snowboard	Snowboard
+sport	soccer	Soccer
+sport	softball	Softball
+sport	surf	Surf
+sport	swimwear	Swimwear
+sport	table-tennis	Table Tennis
+sport	tennis	Tennis
+sport	triathlon	Triathlon
+sport	volleyball	Volleyball
+sport	wrestling	Wrestling
+sport	yoga	Yoga
+scenario	promotional-swag	Promotional Swag
+scenario	event-and-festival	??? event-and-festival
+scenario	school-and-education	??? school-and-education
+scenario	team-and-club	??? team-and-club
+scenario	sports-league	Sports League
+scenario	corporate-and-branding	??? corporate-and-branding
+scenario	uniform-and-workwear	??? uniform-and-workwear
+scenario	retail-and-fashion	??? retail-and-fashion
+scenario	political-campaign	Political Campaign
+scenario	fundraiser-and-charity	??? fundraiser-and-charity
+scenario	music-and-merch	??? music-and-merch
+scenario	wedding-and-party	??? wedding-and-party
+scenario	gift-and-souvenir	??? gift-and-souvenir
+scenario	construction-and-engineering	??? construction-and-engineering
+scenario	express-and-logistics	??? express-and-logistics
+scenario	hospitality-and-fandb	??? hospitality-and-fandb
+scenario	medical-and-healthcare	??? medical-and-healthcare
+scenario	security-and-property	??? security-and-property
+scenario	retail-and-supermarket	??? retail-and-supermarket
+scenario	education-and-school	??? education-and-school
+scenario	corporate-and-promo	??? corporate-and-promo
+scenario	transit-and-transport	??? transit-and-transport
+scenario	studio-and-gym	??? studio-and-gym
+scenario	military	Military
+scenario	festival-and-holiday	??? festival-and-holiday
+scenario	beach	??? beach
+scenario	lycra	??? lycra
+scenario	sublimation	??? sublimation
+scenario	polyester	??? polyester
