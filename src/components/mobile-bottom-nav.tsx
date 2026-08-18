@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Shirt, Layers, Wrench, Truck, Mail } from "lucide-react";
+import { Home, Shirt, Layers, Wrench, Truck, NotebookPen } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type Tab = {
@@ -28,7 +28,6 @@ const tabs: Tab[] = [
       p.startsWith("/products/") ||
       p.startsWith("/tag/") ||
       p.startsWith("/cases/") ||
-      p.startsWith("/blog/") ||
       p.startsWith("/about/"),
   },
   {
@@ -50,10 +49,10 @@ const tabs: Tab[] = [
     match: (p) => p === "/shipping" || p.startsWith("/shipping/"),
   },
   {
-    href: "/contact",
-    label: "Contact",
-    icon: Mail,
-    match: (p) => p === "/contact" || p.startsWith("/get-a-quote"),
+    href: "/blog",
+    label: "Blog",
+    icon: NotebookPen,
+    match: (p) => p === "/blog" || p.startsWith("/blog/"),
   },
 ];
 
