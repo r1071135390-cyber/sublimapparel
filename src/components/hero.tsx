@@ -19,9 +19,9 @@ const categories = [
 ];
 
 const stats = [
-  { num: "50", label: "MOQ (pcs)", color: "text-[#ff4d00]" },
+  { num: "50", label: "MOQ (pcs)", color: "text-[#cc3d00]" },
   { num: "15–25", label: "Days lead time", color: "text-white" },
-  { num: "0", label: "Setup fee", color: "text-[#ff4d00]" },
+  { num: "0", label: "Setup fee", color: "text-[#cc3d00]" },
   { num: "100%", label: "Cotton capable", color: "text-white" },
 ];
 
@@ -108,29 +108,29 @@ export function Hero() {
         {/* Headline — 3 lines, flat / full width */}
         <h1 className="mb-4 max-w-4xl whitespace-nowrap text-2xl font-black leading-[1.22] tracking-tight md:mb-5 md:text-4xl lg:text-5xl xl:text-6xl">
           <span className="block pb-2 text-white md:pb-2.5">Yiwu custom sublimate apparel factory</span>
-          <span className="block pb-2 text-[#ff4d00] md:pb-2.5">
+          <span className="block pb-2 text-[#cc3d00] md:pb-2.5">
             <Link href="/fabric/polyester" className="hover:underline hover:underline-offset-4">polyester sublimation</Link> &amp;
           </span>
-          <span className="block pb-2 text-[#ff4d00] md:pb-2.5">
+          <span className="block pb-2 text-[#cc3d00] md:pb-2.5">
             <Link href="/fabric/cotton" className="hover:underline hover:underline-offset-4">allover digital print cotton</Link>.
           </span>
         </h1>
 
         {/* Subhead */}
         <p className="mb-4 max-w-2xl text-sm text-white/80 md:mb-5 md:text-lg">
-          <Link href="/tag/category/t-shirt/" className="font-semibold text-white underline-offset-4 hover:text-[#ff4d00] hover:underline">T-shirts</Link>,{" "}
-          <Link href="/tag/category/hoodie/" className="font-semibold text-white underline-offset-4 hover:text-[#ff4d00] hover:underline">hoodies</Link>,{" "}
-          <Link href="/tag/category/polo-shirt/" className="font-semibold text-white underline-offset-4 hover:text-[#ff4d00] hover:underline">polo shirts</Link>,{" "}
-          <Link href="/tag/category/sweatshirt/" className="font-semibold text-white underline-offset-4 hover:text-[#ff4d00] hover:underline">sweatshirts</Link>,{" "}
-          <Link href="/tag/category/tank-top-and-camis/" className="font-semibold text-white underline-offset-4 hover:text-[#ff4d00] hover:underline">tank tops</Link>,{" "}
-          <Link href="/tag/sport/cycling/" className="font-semibold text-white underline-offset-4 hover:text-[#ff4d00] hover:underline">cycling kits</Link>,{" "}
-          <Link href="/tag/sport/soccer/" className="font-semibold text-white underline-offset-4 hover:text-[#ff4d00] hover:underline">soccer</Link>,{" "}
-          <Link href="/tag/sport/basketball/" className="font-semibold text-white underline-offset-4 hover:text-[#ff4d00] hover:underline">basketball</Link>,{" "}
-          <Link href="/tag/sport/esports/" className="font-semibold text-white underline-offset-4 hover:text-[#ff4d00] hover:underline">esports</Link>
+          <Link href="/tag/category/t-shirt/" className="font-semibold text-white underline-offset-4 hover:text-[#cc3d00] hover:underline">T-shirts</Link>,{" "}
+          <Link href="/tag/category/hoodie/" className="font-semibold text-white underline-offset-4 hover:text-[#cc3d00] hover:underline">hoodies</Link>,{" "}
+          <Link href="/tag/category/polo-shirt/" className="font-semibold text-white underline-offset-4 hover:text-[#cc3d00] hover:underline">polo shirts</Link>,{" "}
+          <Link href="/tag/category/sweatshirt/" className="font-semibold text-white underline-offset-4 hover:text-[#cc3d00] hover:underline">sweatshirts</Link>,{" "}
+          <Link href="/tag/category/tank-top-and-camis/" className="font-semibold text-white underline-offset-4 hover:text-[#cc3d00] hover:underline">tank tops</Link>,{" "}
+          <Link href="/tag/sport/cycling/" className="font-semibold text-white underline-offset-4 hover:text-[#cc3d00] hover:underline">cycling kits</Link>,{" "}
+          <Link href="/tag/sport/soccer/" className="font-semibold text-white underline-offset-4 hover:text-[#cc3d00] hover:underline">soccer</Link>,{" "}
+          <Link href="/tag/sport/basketball/" className="font-semibold text-white underline-offset-4 hover:text-[#cc3d00] hover:underline">basketball</Link>,{" "}
+          <Link href="/tag/sport/esports/" className="font-semibold text-white underline-offset-4 hover:text-[#cc3d00] hover:underline">esports</Link>
           {" "}&mdash; full sublimation on{" "}
-          <Link href="/fabric/polyester" className="font-semibold text-white underline-offset-4 hover:text-[#ff4d00] hover:underline">polyester</Link>{" "}
+          <Link href="/fabric/polyester" className="font-semibold text-white underline-offset-4 hover:text-[#cc3d00] hover:underline">polyester</Link>{" "}
           and{" "}
-          <Link href="/fabric/cotton" className="font-semibold text-white underline-offset-4 hover:text-[#ff4d00] hover:underline">allover digital print on 100% cotton</Link>.
+          <Link href="/fabric/cotton" className="font-semibold text-white underline-offset-4 hover:text-[#cc3d00] hover:underline">allover digital print on 100% cotton</Link>.
           From a 50-piece rush job to a 10,000-piece event run. This is where we
           started, and it&rsquo;s still what we do best.
         </p>
@@ -214,7 +214,7 @@ export function Hero() {
         <div className="pt-2 md:pt-3">
           <Link
             href="/products/"
-            className="group inline-flex items-center gap-3 text-xs text-white/80 transition-colors hover:text-[#ff4d00] md:text-sm"
+            className="group inline-flex items-center gap-3 text-xs text-white/80 transition-colors hover:text-[#cc3d00] md:text-sm"
           >
             <span className="font-bold uppercase tracking-[0.18em]">
               And we don&rsquo;t stop at apparel

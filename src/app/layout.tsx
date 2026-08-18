@@ -71,7 +71,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-[#faf9f6] font-sans text-black antialiased">
+      <body className="min-h-screen bg-white font-sans text-black antialiased">
         <JsonLd data={organizationJsonLd} />
         <JsonLd data={websiteJsonLd} />
         <JsonLd data={localBusinessJsonLd} />

@@ -50,11 +50,11 @@ export function Process() {
         {/* Section header */}
         <div className="mb-12 flex items-end justify-between border-b-2 border-white pb-6">
           <div>
-            <div className="mb-2 text-xs font-black uppercase tracking-widest text-[#00c2ff]">
+            <div className="mb-2 text-xs font-black uppercase tracking-widest text-[#0078a8]">
               [ 007 / Process ]
             </div>
             <h2 className="text-4xl font-black uppercase leading-none tracking-tight md:text-6xl">
-              How it <span className="italic text-[#ff4d00]">works.</span>
+              How it <span className="italic text-[#cc3d00]">works.</span>
             </h2>
           </div>
           <div className="hidden text-right text-xs font-bold uppercase tracking-widest text-white/60 md:block">
@@ -73,7 +73,7 @@ export function Process() {
             >
               {/* Number */}
               <div className="mb-3 flex items-center justify-between">
-                <span className="font-mono text-5xl font-black leading-none text-[#ff4d00] group-hover:text-[#ff4d00]">
+                <span className="font-mono text-5xl font-black leading-none text-[#cc3d00] group-hover:text-[#cc3d00]">
                   {step.num}
                 </span>
                 <span className="text-3xl">{step.icon}</span>
@@ -106,25 +106,25 @@ export function Process() {
         {/* Timeline summary */}
         <div className="mt-12 grid grid-cols-2 gap-4 border-2 border-white p-6 md:grid-cols-4">
           <div>
-            <div className="text-2xl font-black text-[#00c2ff] md:text-3xl">3-5 days</div>
+            <div className="text-2xl font-black text-[#0078a8] md:text-3xl">3-5 days</div>
             <div className="mt-1 text-[10px] font-bold uppercase tracking-widest text-white/60">
               Sample
             </div>
           </div>
           <div>
-            <div className="text-2xl font-black text-[#00c2ff] md:text-3xl">7-15 days</div>
+            <div className="text-2xl font-black text-[#0078a8] md:text-3xl">7-15 days</div>
             <div className="mt-1 text-[10px] font-bold uppercase tracking-widest text-white/60">
               Production
             </div>
           </div>
           <div>
-            <div className="text-2xl font-black text-[#00c2ff] md:text-3xl">5-10 days</div>
+            <div className="text-2xl font-black text-[#0078a8] md:text-3xl">5-10 days</div>
             <div className="mt-1 text-[10px] font-bold uppercase tracking-widest text-white/60">
               DDP shipping
             </div>
           </div>
           <div>
-            <div className="text-2xl font-black text-[#ff4d00] md:text-3xl">2-5 days</div>
+            <div className="text-2xl font-black text-[#cc3d00] md:text-3xl">2-5 days</div>
             <div className="mt-1 text-[10px] font-bold uppercase tracking-widest text-white/60">
               US domestic (LA)
             </div>

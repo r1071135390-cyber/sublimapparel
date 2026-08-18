@@ -182,7 +182,7 @@ export default function ProductsPage() {
                 to customize
                 <br />
                 <span
-                  className="text-[#ff4d00]"
+                  className="text-[#cc3d00]"
                   style={{
                     WebkitTextStroke: "2px #ffffff",
                     paintOrder: "stroke fill",
@@ -234,7 +234,7 @@ export default function ProductsPage() {
       <section className="border-b-2 border-black bg-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-4 py-8 md:px-6 md:py-12">
           <div className="mb-5 text-center md:mb-7">
-            <p className="text-[10px] font-bold uppercase tracking-widest text-[#ff4d00] md:text-xs">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-[#cc3d00] md:text-xs">
               Browse by category
             </p>
             <h2 className="mt-2 text-2xl font-black uppercase leading-tight tracking-tight text-black md:text-3xl">
@@ -302,7 +302,7 @@ export default function ProductsPage() {
               >
                 <div className="grid gap-6 md:grid-cols-12">
                   <div className="md:col-span-4">
-                    <div className="mb-2 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
+                    <div className="mb-2 text-xs font-black uppercase tracking-widest text-[#cc3d00]">
                       Category 0{i + 1}
                     </div>
                     <h2 className="text-4xl font-black text-black md:text-5xl">
@@ -348,7 +348,7 @@ export default function ProductsPage() {
       <section className="border-b-2 border-black bg-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16">
           <div className="mb-8 max-w-3xl">
-            <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-[#ff4d00] md:text-xs">
+            <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-[#cc3d00] md:text-xs">
               Cross-link every page
             </p>
             <h2 className="text-3xl font-black uppercase leading-tight tracking-tight md:text-5xl">
@@ -417,7 +417,7 @@ export default function ProductsPage() {
           </div>
 
           <div className="mt-8 border-2 border-[#ff4d00] bg-[#ff4d00]/5 p-6">
-            <div className="text-xs font-black uppercase tracking-widest text-[#ff4d00]">
+            <div className="text-xs font-black uppercase tracking-widest text-[#cc3d00]">
               Our specialty
             </div>
             <p className="mt-2 text-lg font-bold text-black">

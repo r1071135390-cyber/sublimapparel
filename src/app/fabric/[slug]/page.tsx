@@ -119,7 +119,7 @@ export default async function FabricDetailPage(
           <div className="container mx-auto px-4 md:px-8 py-20 md:py-32">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
-                <p className="text-xs font-bold uppercase tracking-wider text-[#ff4d00] mb-4">
+                <p className="text-xs font-bold uppercase tracking-wider text-[#cc3d00] mb-4">
                   {fabric.tags[0]} / {fabric.tags[1] || fabric.tags[0]}
                 </p>
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-6">
@@ -201,13 +201,13 @@ export default async function FabricDetailPage(
               </p>
             </div>
             <div>
-              <p className="text-xs font-bold uppercase tracking-widest text-[#ff4d00] mb-4">
+              <p className="text-xs font-bold uppercase tracking-widest text-[#cc3d00] mb-4">
                 Key characteristics
               </p>
               <ul className="space-y-3">
                 {fabric.characteristics || [].map((c, i) => (
                   <li key={i} className="flex gap-2 text-sm text-[#1a1a1a]">
-                    <span className="text-[#ff4d00] font-black flex-shrink-0">→</span>
+                    <span className="text-[#cc3d00] font-black flex-shrink-0">→</span>
                     <span>{c}</span>
                   </li>
                 ))}
@@ -219,7 +219,7 @@ export default async function FabricDetailPage(
         {/* PRINT METHODS */}
         <section className="bg-[#0a0a0a] text-white">
           <div className="container mx-auto px-4 md:px-8 py-16 md:py-24">
-            <p className="text-xs font-bold uppercase tracking-widest text-[#00c2ff] mb-4">
+            <p className="text-xs font-bold uppercase tracking-widest text-[#0078a8] mb-4">
               Compatible print methods
             </p>
             <h2 className="text-3xl md:text-4xl font-black mb-8">
@@ -247,7 +247,7 @@ export default async function FabricDetailPage(
 
         {/* BEST FOR */}
         <section className="container mx-auto px-4 md:px-8 py-16 md:py-24">
-          <p className="text-xs font-bold uppercase tracking-widest text-[#ff4d00] mb-4">
+          <p className="text-xs font-bold uppercase tracking-widest text-[#cc3d00] mb-4">
             Best for
           </p>
           <h2 className="text-3xl md:text-4xl font-black text-black mb-8">
@@ -259,7 +259,7 @@ export default async function FabricDetailPage(
                 key={i}
                 className="border-2 border-black p-6 hover:bg-[#0a0a0a] hover:text-white transition-colors group"
               >
-                <p className="text-xs font-bold uppercase tracking-widest text-[#6b6b6b] group-hover:text-[#00c2ff] mb-2">
+                <p className="text-xs font-bold uppercase tracking-widest text-[#6b6b6b] group-hover:text-[#0078a8] mb-2">
                   Application {String(i + 1).padStart(2, "0")}
                 </p>
                 <p className="text-base font-bold text-black group-hover:text-white">
@@ -275,7 +275,7 @@ export default async function FabricDetailPage(
           <div className="container mx-auto px-4 md:px-8 py-16 md:py-24">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               <div>
-                <p className="text-xs font-bold uppercase tracking-widest text-[#ff4d00] mb-4">
+                <p className="text-xs font-bold uppercase tracking-widest text-[#cc3d00] mb-4">
                   Care instructions
                 </p>
                 <h2 className="text-2xl md:text-3xl font-black text-black mb-6">
@@ -284,14 +284,14 @@ export default async function FabricDetailPage(
                 <ul className="space-y-3">
                   {fabric.careNotes.map((c, i) => (
                     <li key={i} className="flex gap-3 text-sm md:text-base text-[#1a1a1a]">
-                      <span className="text-[#ff4d00] font-black flex-shrink-0">✓</span>
+                      <span className="text-[#cc3d00] font-black flex-shrink-0">✓</span>
                       <span>{c}</span>
                     </li>
                   ))}
                 </ul>
               </div>
               <div>
-                <p className="text-xs font-bold uppercase tracking-widest text-[#ff4d00] mb-4">
+                <p className="text-xs font-bold uppercase tracking-widest text-[#cc3d00] mb-4">
                   Tags & categories
                 </p>
                 <h2 className="text-2xl md:text-3xl font-black text-black mb-6">
@@ -318,7 +318,7 @@ export default async function FabricDetailPage(
         {/* FAQ */}
         {fabric.faq.length > 0 && (
           <section className="container mx-auto px-4 md:px-8 py-16 md:py-24">
-            <p className="text-xs font-bold uppercase tracking-widest text-[#ff4d00] mb-4">
+            <p className="text-xs font-bold uppercase tracking-widest text-[#cc3d00] mb-4">
               FAQ
             </p>
             <h2 className="text-3xl md:text-4xl font-black text-black mb-8">
@@ -343,7 +343,7 @@ export default async function FabricDetailPage(
         {relatedFabrics.length > 0 && (
           <section className="bg-[#1a1a1a] text-white">
             <div className="container mx-auto px-4 md:px-8 py-16 md:py-24">
-              <p className="text-xs font-bold uppercase tracking-widest text-[#00c2ff] mb-4">
+              <p className="text-xs font-bold uppercase tracking-widest text-[#0078a8] mb-4">
                 Related fabrics
               </p>
               <h2 className="text-3xl md:text-4xl font-black mb-8">
@@ -365,7 +365,7 @@ export default async function FabricDetailPage(
                         className="object-cover"
                       />
                     </div>
-                    <p className="text-sm font-bold uppercase mt-3 group-hover:text-[#ff4d00]">
+                    <p className="text-sm font-bold uppercase mt-3 group-hover:text-[#cc3d00]">
                       {related!.name}
                     </p>
                     <p className="text-xs text-white/60 mt-1">

@@ -45,13 +45,13 @@ export default function BlogIndexPage() {
       {/* HERO */}
       <section className="border-b-2 border-black bg-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-20">
-          <p className="mb-3 text-xs font-bold uppercase tracking-widest text-[#ff4d00] md:mb-4 md:text-sm">
+          <p className="mb-3 text-xs font-bold uppercase tracking-widest text-[#cc3d00] md:mb-4 md:text-sm">
             [ The Journal ]
           </p>
           <h1 className="text-4xl font-black uppercase leading-[0.95] tracking-tight text-black md:text-7xl">
             Apparel, from the
             <br />
-            <span className="text-[#ff4d00]">factory floor.</span>
+            <span className="text-[#cc3d00]">factory floor.</span>
           </h1>
           <p className="mt-6 max-w-3xl text-base text-[#3a3a3a] md:mt-8 md:text-lg">
             Industry guides, factory stories, and B2B apparel manufacturing
@@ -67,7 +67,7 @@ export default function BlogIndexPage() {
         <section className="border-b-2 border-black bg-white">
           <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-16">
             <div className="mb-6 flex items-end justify-between border-b-2 border-black pb-4 md:mb-8 md:pb-6">
-              <p className="text-xs font-bold uppercase tracking-widest text-[#ff4d00] md:text-sm">
+              <p className="text-xs font-bold uppercase tracking-widest text-[#cc3d00] md:text-sm">
                 Featured article
               </p>
               <span className="hidden text-xs text-[#6b6b6b] md:block">
@@ -112,7 +112,7 @@ export default function BlogIndexPage() {
                 <p className="mt-4 text-sm leading-relaxed text-[#3a3a3a] md:mt-6 md:text-base">
                   {featured.excerpt}
                 </p>
-                <div className="mt-6 inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-[#ff4d00] transition group-hover:gap-3">
+                <div className="mt-6 inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-[#cc3d00] transition group-hover:gap-3">
                   Read article
                   <ArrowRight className="h-4 w-4" />
                 </div>
@@ -146,7 +146,7 @@ export default function BlogIndexPage() {
         <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-20">
           <div className="mb-8 flex items-end justify-between border-b-2 border-black pb-4 md:mb-12 md:pb-6">
             <div>
-              <p className="mb-2 text-xs font-bold uppercase tracking-widest text-[#ff4d00] md:text-sm">
+              <p className="mb-2 text-xs font-bold uppercase tracking-widest text-[#cc3d00] md:text-sm">
                 Latest articles
               </p>
               <h2 className="text-2xl font-black uppercase leading-tight tracking-tight text-black md:text-4xl">
@@ -199,7 +199,7 @@ export default function BlogIndexPage() {
                   <p className="mb-4 flex-1 text-xs leading-relaxed text-[#3a3a3a] md:text-sm">
                     {post.excerpt}
                   </p>
-                  <div className="mt-auto inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-[#ff4d00] transition group-hover:gap-2">
+                  <div className="mt-auto inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-[#cc3d00] transition group-hover:gap-2">
                     Read more
                     <ArrowRight className="h-3 w-3" />
                   </div>
@@ -222,7 +222,7 @@ export default function BlogIndexPage() {
           </p>
           <Link
             href="/get-a-quote/"
-            className="inline-flex items-center gap-2 border-2 border-white bg-transparent px-6 py-3 text-sm font-bold uppercase tracking-wide transition-colors hover:bg-white hover:text-[#ff4d00] md:px-8 md:py-4 md:text-base"
+            className="inline-flex items-center gap-2 border-2 border-white bg-transparent px-6 py-3 text-sm font-bold uppercase tracking-wide transition-colors hover:bg-white hover:text-[#cc3d00] md:px-8 md:py-4 md:text-base"
           >
             Get a Free Quote →
           </Link>

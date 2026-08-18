@@ -60,7 +60,7 @@ export default function LogoConceptsPage() {
         <div className="max-w-7xl mx-auto px-6">
           {/* Page title */}
           <div className="mb-16">
-            <div className="text-xs tracking-[0.3em] text-[#ff4d00] mb-4">
+            <div className="text-xs tracking-[0.3em] text-[#cc3d00] mb-4">
               INTERNAL PREVIEW · LOGO CONCEPTS
             </div>
             <h1 className="text-5xl md:text-6xl font-bold mb-6">
@@ -77,7 +77,7 @@ export default function LogoConceptsPage() {
           {CONCEPTS.map((c, i) => (
             <section key={c.id} className="mb-20">
               <div className="flex items-baseline gap-6 mb-6">
-                <div className="text-7xl md:text-8xl font-bold text-[#ff4d00] leading-none">
+                <div className="text-7xl md:text-8xl font-bold text-[#cc3d00] leading-none">
                   {c.id}
                 </div>
                 <div>
@@ -109,20 +109,20 @@ export default function LogoConceptsPage() {
               {/* Pros + use */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="bg-[#1a1a1a] border border-[#2a2a2a] p-5">
-                  <div className="text-xs tracking-[0.2em] text-[#00c2ff] mb-3">
+                  <div className="text-xs tracking-[0.2em] text-[#0078a8] mb-3">
                     WHY IT WORKS
                   </div>
                   <ul className="space-y-2 text-sm text-white/90">
                     {c.pros.map((p) => (
                       <li key={p} className="flex gap-2">
-                        <span className="text-[#ff4d00]">+</span>
+                        <span className="text-[#cc3d00]">+</span>
                         <span>{p}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
                 <div className="bg-[#1a1a1a] border border-[#2a2a2a] p-5">
-                  <div className="text-xs tracking-[0.2em] text-[#00c2ff] mb-3">
+                  <div className="text-xs tracking-[0.2em] text-[#0078a8] mb-3">
                     BEST USED FOR
                   </div>
                   <p className="text-sm text-white/90">{c.use}</p>
@@ -133,12 +133,12 @@ export default function LogoConceptsPage() {
 
           {/* Recommendation footer */}
           <section className="mt-24 p-8 md:p-12 bg-[#1a1a1a] border border-[#2a2a2a] rounded-sm">
-            <div className="text-xs tracking-[0.3em] text-[#ff4d00] mb-4">
+            <div className="text-xs tracking-[0.3em] text-[#cc3d00] mb-4">
               MY RECOMMENDATION
             </div>
             <h3 className="text-2xl md:text-3xl font-bold mb-4">
-              工厂网站 + 展会物料 → 选 <span className="text-[#ff4d00]">A (Monogram)</span> +{" "}
-              <span className="text-[#ff4d00]">C (Heat Wave)</span> 双 logo 体系
+              工厂网站 + 展会物料 → 选 <span className="text-[#cc3d00]">A (Monogram)</span> +{" "}
+              <span className="text-[#cc3d00]">C (Heat Wave)</span> 双 logo 体系
             </h3>
             <ul className="space-y-3 text-[#a0a0a0] text-base">
               <li>

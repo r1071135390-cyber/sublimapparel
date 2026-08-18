@@ -127,7 +127,7 @@ export function Products() {
               <h3 className="mb-3 text-2xl font-black leading-tight text-black md:text-3xl">
                 <Link
                   href={cat.href}
-                  className="transition-colors hover:text-[#ff4d00]"
+                  className="transition-colors hover:text-[#cc3d00]"
                 >
                   {cat.headline}
                   <ArrowRight className="ml-2 inline h-5 w-5 align-middle" />

@@ -136,7 +136,7 @@ export default function HoodiesPage() {
               <br />
               sublimation
               <br />
-              <span className="text-[#ff4d00]">hoodies.</span>
+              <span className="text-[#cc3d00]">hoodies.</span>
             </h1>
             <p className="mt-6 max-w-xl text-base text-neutral-700 md:text-lg">
               All-over print on 320–400 GSM fleece. No setup fee, MOQ 50 pcs, 10–18 day production, DDP to 100+ countries. Pullover, zip-up, heavyweight, kids' — all from one factory.
@@ -153,7 +153,7 @@ export default function HoodiesPage() {
           </div>
           <div className="md:col-span-5 border-t-2 border-black md:border-l-2 md:border-t-0 bg-[#faf9f6] flex items-center justify-center p-10">
             <div className="text-center">
-              <Cloud className="mx-auto h-24 w-24 text-[#ff4d00] md:h-32 md:w-32" strokeWidth={1.5} />
+              <Cloud className="mx-auto h-24 w-24 text-[#cc3d00] md:h-32 md:w-32" strokeWidth={1.5} />
               <p className="mt-4 text-xs font-bold uppercase tracking-widest text-neutral-600">Pullover · Zip-up · Heavyweight</p>
               <p className="mt-1 text-xs font-bold uppercase tracking-widest text-neutral-600">320–400 GSM · All-over print</p>
             </div>
@@ -165,7 +165,7 @@ export default function HoodiesPage() {
         <div className="mx-auto grid max-w-7xl grid-cols-2 px-0 md:grid-cols-4">
           {stats.map((s, i) => (
             <div key={s.label} className={`p-8 ${i < 3 ? "border-r-2 border-black" : ""} ${i < 2 ? "border-b-2 border-black md:border-b-0" : ""}`}>
-              <div className={`text-5xl font-black md:text-6xl ${s.color === "orange" ? "text-[#ff4d00]" : "text-black"}`}>{s.value}</div>
+              <div className={`text-5xl font-black md:text-6xl ${s.color === "orange" ? "text-[#cc3d00]" : "text-black"}`}>{s.value}</div>
               <div className="mt-1 text-xs font-black uppercase tracking-widest text-black">{s.label}</div>
               <div className="mt-1 text-xs text-neutral-500">{s.note}</div>
             </div>
@@ -176,7 +176,7 @@ export default function HoodiesPage() {
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="mb-3 text-xs font-black uppercase tracking-widest text-neutral-500">[ 002 / Styles ]</div>
-          <h2 className="text-4xl font-black leading-tight md:text-6xl">Six cuts. <span className="text-[#ff4d00]">All printable.</span></h2>
+          <h2 className="text-4xl font-black leading-tight md:text-6xl">Six cuts. <span className="text-[#cc3d00]">All printable.</span></h2>
           <p className="mt-4 max-w-2xl text-base text-neutral-700 md:text-lg">From the workhorse pullover to the heavyweight streetwear cut — same low MOQ, same 10–18 day production.</p>
           <div className="mt-10 grid gap-0 md:grid-cols-2 lg:grid-cols-3">
             {styles.map((s, i) => (
@@ -193,7 +193,7 @@ export default function HoodiesPage() {
       <section className="border-b-2 border-black bg-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="mb-3 text-xs font-black uppercase tracking-widest text-neutral-500">[ 003 / Fabric ]</div>
-          <h2 className="text-4xl font-black leading-tight md:text-6xl">Poly or cotton. <span className="text-[#ff4d00]">Both fleece.</span></h2>
+          <h2 className="text-4xl font-black leading-tight md:text-6xl">Poly or cotton. <span className="text-[#cc3d00]">Both fleece.</span></h2>
           <p className="mt-4 max-w-2xl text-base text-neutral-700 md:text-lg">Poly for true all-over print, cotton for soft hand feel, blends for the middle ground.</p>
           <div className="mt-10 border-2 border-black bg-white">
             <div className="grid grid-cols-12 border-b-2 border-black bg-black text-xs font-black uppercase tracking-widest text-white">
@@ -205,7 +205,7 @@ export default function HoodiesPage() {
               <div key={f.name} className={`grid grid-cols-12 text-sm ${i < fabricChoices.length - 1 ? "border-b-2 border-black" : ""}`}>
                 <div className="col-span-3 border-r-2 border-black p-3 font-black text-black">{f.name}</div>
                 <div className="col-span-6 border-r-2 border-black p-3 text-neutral-700">{f.best}</div>
-                <div className="col-span-3 p-3 font-black text-[#ff4d00]">{f.moq}</div>
+                <div className="col-span-3 p-3 font-black text-[#cc3d00]">{f.moq}</div>
               </div>
             ))}
           </div>
@@ -215,11 +215,11 @@ export default function HoodiesPage() {
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="mb-3 text-xs font-black uppercase tracking-widest text-neutral-500">[ 004 / Customisation ]</div>
-          <h2 className="text-4xl font-black leading-tight md:text-6xl">Your design. <span className="text-[#ff4d00]">Your trims.</span></h2>
+          <h2 className="text-4xl font-black leading-tight md:text-6xl">Your design. <span className="text-[#cc3d00]">Your trims.</span></h2>
           <div className="mt-10 grid gap-0 md:grid-cols-2 lg:grid-cols-4">
             {customisation.map((c, i) => (
               <div key={c.title} className={`p-6 ${i < 3 ? "lg:border-r-2 border-black" : ""} ${i < 2 ? "border-b-2 lg:border-b-0 border-black" : ""} ${i === 2 ? "border-b-2 lg:border-b-0 border-black" : ""}`}>
-                <c.icon className="h-8 w-8 text-[#ff4d00]" strokeWidth={2} />
+                <c.icon className="h-8 w-8 text-[#cc3d00]" strokeWidth={2} />
                 <div className="mt-3 text-xl font-black text-black">{c.title}</div>
                 <p className="mt-2 text-sm text-neutral-700">{c.desc}</p>
               </div>
@@ -231,12 +231,12 @@ export default function HoodiesPage() {
       <section className="border-b-2 border-black bg-[#0a0a0a] text-white">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="mb-3 text-xs font-black uppercase tracking-widest text-neutral-400">[ 005 / Who orders this ]</div>
-          <h2 className="text-4xl font-black leading-tight md:text-6xl"><span className="text-[#ff4d00]">50–10,000 pcs</span> per order.</h2>
+          <h2 className="text-4xl font-black leading-tight md:text-6xl"><span className="text-[#cc3d00]">50–10,000 pcs</span> per order.</h2>
           <p className="mt-4 max-w-2xl text-base text-neutral-300 md:text-lg">From a single chapter drop to a multi-thousand-piece corporate rebrand.</p>
           <div className="mt-10 grid gap-0 md:grid-cols-2 lg:grid-cols-3">
             {useCases.map((u, i) => (
               <div key={u.who} className={`p-6 ${i < 3 ? "lg:border-r-2 border-neutral-800" : ""} ${i < 3 ? "border-b-2 lg:border-b-0 border-neutral-800" : ""} ${i === 3 || i === 4 ? "border-b-2 lg:border-b-0 border-neutral-800 md:border-r-2 md:border-b-0" : ""}`}>
-                <Users className="h-6 w-6 text-[#ff4d00]" strokeWidth={2} />
+                <Users className="h-6 w-6 text-[#cc3d00]" strokeWidth={2} />
                 <div className="mt-3 text-lg font-black text-white">{u.who}</div>
                 <p className="mt-1 text-sm text-neutral-400">{u.what}</p>
               </div>
@@ -248,7 +248,7 @@ export default function HoodiesPage() {
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="mb-3 text-xs font-black uppercase tracking-widest text-neutral-500">[ 006 / Pricing ]</div>
-          <h2 className="text-4xl font-black leading-tight md:text-6xl">Transparent. <span className="text-[#ff4d00]">No quotes required</span> to see the range.</h2>
+          <h2 className="text-4xl font-black leading-tight md:text-6xl">Transparent. <span className="text-[#cc3d00]">No quotes required</span> to see the range.</h2>
           <p className="mt-4 max-w-2xl text-base text-neutral-700 md:text-lg">Starting prices for 340 GSM full-print sublimation hoodies. Heavier GSM, premium trims, and rush orders quoted separately.</p>
           <div className="mt-10 border-2 border-black bg-white">
             <div className="grid grid-cols-12 border-b-2 border-black bg-black text-xs font-black uppercase tracking-widest text-white">
@@ -260,8 +260,8 @@ export default function HoodiesPage() {
             {pricing.map((p, i) => (
               <div key={p.qty} className={`grid grid-cols-12 text-sm ${i < pricing.length - 1 ? "border-b-2 border-black" : ""}`}>
                 <div className="col-span-3 border-r-2 border-black p-3 font-black text-black">{p.qty}</div>
-                <div className="col-span-3 border-r-2 border-black p-3 font-black text-[#ff4d00]">{p.poly}</div>
-                <div className="col-span-3 border-r-2 border-black p-3 font-black text-[#ff4d00]">{p.cotton}</div>
+                <div className="col-span-3 border-r-2 border-black p-3 font-black text-[#cc3d00]">{p.poly}</div>
+                <div className="col-span-3 border-r-2 border-black p-3 font-black text-[#cc3d00]">{p.cotton}</div>
                 <div className="col-span-3 p-3 text-neutral-600">{p.note}</div>
               </div>
             ))}
@@ -278,7 +278,7 @@ export default function HoodiesPage() {
               <details key={f.q} className={`group p-6 ${i < faq.length - 1 ? "border-b-2 border-black" : ""}`}>
                 <summary className="flex cursor-pointer items-start justify-between gap-4">
                   <span className="text-lg font-black text-black">{f.q}</span>
-                  <span className="ml-4 shrink-0 text-2xl font-black text-[#ff4d00] transition-transform group-open:rotate-45">+</span>
+                  <span className="ml-4 shrink-0 text-2xl font-black text-[#cc3d00] transition-transform group-open:rotate-45">+</span>
                 </summary>
                 <p className="mt-4 text-base text-neutral-700">{f.a}</p>
               </details>
@@ -292,7 +292,7 @@ export default function HoodiesPage() {
           <div className="mb-3 text-xs font-black uppercase tracking-widest text-white/80">[ 008 / Next step ]</div>
           <h2 className="text-4xl font-black leading-tight md:text-7xl">Send us your design.<br />Get a hoodie quote in 1 business day.</h2>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link href="/get-a-quote" className="group inline-flex items-center gap-2 bg-black px-6 py-3 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-white hover:text-[#ff4d00]">
+            <Link href="/get-a-quote" className="group inline-flex items-center gap-2 bg-black px-6 py-3 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-white hover:text-[#cc3d00]">
               Get a Hoodie Quote <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
             </Link>
             <Link href="/products" className="inline-flex items-center gap-2 border-2 border-black bg-transparent px-6 py-3 text-sm font-black uppercase tracking-widest text-black transition-all hover:bg-black hover:text-white">

@@ -237,7 +237,7 @@ export function Contact() {
             <h2 className="text-5xl font-black leading-[0.95] tracking-tight text-black md:text-7xl">
               Got a
               <br />
-              <span className="text-[#ff4d00]">project?</span>
+              <span className="text-[#cc3d00]">project?</span>
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-black/70">
               Send us your design, your quantity, and your deadline. We&apos;ll reply with a
@@ -250,7 +250,7 @@ export function Contact() {
                   WhatsApp
                 </div>
                 <div className="mt-1 text-base font-bold text-black">
-                  <a href="https://wa.me/8619817930190" target="_blank" rel="noopener noreferrer" className="hover:text-[#ff4d00]">
+                  <a href="https://wa.me/8619817930190" target="_blank" rel="noopener noreferrer" className="hover:text-[#cc3d00]">
                     +86 198 1793 0190
                   </a>
                 </div>
@@ -260,7 +260,7 @@ export function Contact() {
                   Email
                 </div>
                 <div className="mt-1 text-base font-bold text-black">
-                  <a href="mailto:info@sublimapparel.com" className="hover:text-[#ff4d00]">
+                  <a href="mailto:info@sublimapparel.com" className="hover:text-[#cc3d00]">
                     info@sublimapparel.com
                   </a>
                 </div>
@@ -548,7 +548,7 @@ export function Contact() {
                     <line x1="12" y1="3" x2="12" y2="15" />
                   </svg>
                   <div className="text-sm font-bold text-black">
-                    Drop files here or <span className="text-[#ff4d00] underline">browse</span>
+                    Drop files here or <span className="text-[#cc3d00] underline">browse</span>
                   </div>
                   <div className="mt-1 text-[10px] font-medium text-black/50">
                     JPG · PNG · PDF · AI · EPS · PSD · SVG · TIFF
@@ -582,7 +582,7 @@ export function Contact() {
                         <button
                           type="button"
                           onClick={() => removeFile(i)}
-                          className="shrink-0 text-xs font-black text-[#ff4d00] hover:text-black"
+                          className="shrink-0 text-xs font-black text-[#cc3d00] hover:text-black"
                           aria-label={`Remove ${a.name}`}
                         >
                           ✕
@@ -677,7 +677,7 @@ function SizeQtyStepper({
         type="button"
         aria-label={`Decrease quantity for size ${sizeLabel ?? ""}`.trim()}
         onClick={() => onBump(-1)}
-        className="flex h-9 w-9 items-center justify-center text-black/60 transition-colors hover:bg-black/5 hover:text-[#ff4d00] disabled:cursor-not-allowed disabled:opacity-30"
+        className="flex h-9 w-9 items-center justify-center text-black/60 transition-colors hover:bg-black/5 hover:text-[#cc3d00] disabled:cursor-not-allowed disabled:opacity-30"
         disabled={qty <= 0}
       >
         <Minus className="h-3.5 w-3.5" strokeWidth={2.5} />
@@ -699,7 +699,7 @@ function SizeQtyStepper({
         type="button"
         aria-label="Increase quantity"
         onClick={() => onBump(1)}
-        className="flex h-9 w-9 items-center justify-center text-black/60 transition-colors hover:bg-[#ff4d00]/10 hover:text-[#ff4d00]"
+        className="flex h-9 w-9 items-center justify-center text-black/60 transition-colors hover:bg-[#ff4d00]/10 hover:text-[#cc3d00]"
       >
         <Plus className="h-3.5 w-3.5" strokeWidth={2.5} />
       </button>
@@ -767,7 +767,7 @@ function SizeQuantityPicker({
                   type="button"
                   onClick={() => onRemove(r.id)}
                   aria-label={`Remove ${r.size || "custom size"}`}
-                  className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full text-black/40 transition-colors hover:bg-black/5 hover:text-[#ff4d00]"
+                  className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full text-black/40 transition-colors hover:bg-black/5 hover:text-[#cc3d00]"
                 >
                   <X className="h-3.5 w-3.5" strokeWidth={2.5} />
                 </button>
@@ -782,7 +782,7 @@ function SizeQuantityPicker({
       <button
         type="button"
         onClick={onAdd}
-        className="w-full rounded-md border border-dashed border-black/20 px-3 py-2.5 text-xs font-bold text-[#ff4d00] transition-colors hover:border-[#ff4d00] hover:bg-[#ff4d00]/5"
+        className="w-full rounded-md border border-dashed border-black/20 px-3 py-2.5 text-xs font-bold text-[#cc3d00] transition-colors hover:border-[#ff4d00] hover:bg-[#ff4d00]/5"
       >
         + Add special size (e.g. 3XL, 4XL, Tall) — add as many rows as you need
       </button>

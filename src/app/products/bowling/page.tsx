@@ -133,7 +133,7 @@ export default function BowlingPage() {
             <h1 className="text-5xl font-black leading-[0.95] tracking-tight md:text-8xl">
               Custom bowling.
               <br />
-              <span className="text-[#ff4d00]">Loose fit. Loud print.</span>
+              <span className="text-[#cc3d00]">Loose fit. Loud print.</span>
             </h1>
             <p className="mt-6 max-w-xl text-base text-neutral-700 md:text-lg">
               Sublimated bowling jerseys and retro shirts for leagues, tournaments, and boutique centres. Contrasting side panels, name & number front and back, all printed — not stitched. At factory-direct pricing.
@@ -150,7 +150,7 @@ export default function BowlingPage() {
           </div>
           <div className="md:col-span-5 border-t-2 border-black md:border-l-2 md:border-t-0 bg-[#0a0a0a] flex items-center justify-center p-10">
             <div className="text-center">
-              <Sparkles className="mx-auto h-24 w-24 text-[#ff4d00] md:h-32 md:w-32" strokeWidth={1.5} />
+              <Sparkles className="mx-auto h-24 w-24 text-[#cc3d00] md:h-32 md:w-32" strokeWidth={1.5} />
               <p className="mt-4 text-xs font-bold uppercase tracking-widest text-white">Bowling Leagues</p>
               <p className="mt-1 text-xs font-bold uppercase tracking-widest text-white">Tournaments · Retro</p>
             </div>
@@ -162,7 +162,7 @@ export default function BowlingPage() {
         <div className="mx-auto grid max-w-7xl grid-cols-2 px-0 md:grid-cols-4">
           {stats.map((s, i) => (
             <div key={s.label} className={`p-8 ${i < 3 ? "border-r-2 border-black" : ""} ${i < 2 ? "border-b-2 border-black md:border-b-0" : ""}`}>
-              <div className={`text-4xl font-black md:text-5xl ${s.color === "orange" ? "text-[#ff4d00]" : "text-black"}`}>{s.value}</div>
+              <div className={`text-4xl font-black md:text-5xl ${s.color === "orange" ? "text-[#cc3d00]" : "text-black"}`}>{s.value}</div>
               <div className="mt-1 text-xs font-black uppercase tracking-widest text-black">{s.label}</div>
               <div className="mt-1 text-xs text-neutral-500">{s.note}</div>
             </div>
@@ -173,7 +173,7 @@ export default function BowlingPage() {
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="mb-3 text-xs font-black uppercase tracking-widest text-neutral-500">[ 001.5 / Gallery ]</div>
-          <h2 className="text-4xl font-black leading-tight md:text-6xl">From <span className="text-[#ff4d00]">the lanes</span> to the league wall.</h2>
+          <h2 className="text-4xl font-black leading-tight md:text-6xl">From <span className="text-[#cc3d00]">the lanes</span> to the league wall.</h2>
           <div className="mt-10 grid gap-0 md:grid-cols-3">
             <div className="border-2 border-black bg-white">
               <img src="/bowling-jersey-striker.webp" alt="Custom sublimated cream bowling jersey with retro print, name and number" className="aspect-[4/5] w-full object-cover" />
@@ -194,7 +194,7 @@ export default function BowlingPage() {
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="mb-3 text-xs font-black uppercase tracking-widest text-neutral-500">[ 002 / Styles ]</div>
-          <h2 className="text-4xl font-black leading-tight md:text-6xl">From <span className="text-[#ff4d00]">classic jersey</span> to raglan retro.</h2>
+          <h2 className="text-4xl font-black leading-tight md:text-6xl">From <span className="text-[#cc3d00]">classic jersey</span> to raglan retro.</h2>
           <p className="mt-4 max-w-2xl text-base text-neutral-700 md:text-lg">The full range of bowling tops — all sublimation-ready, all with name & number options.</p>
           <div className="mt-10 grid gap-0 md:grid-cols-2 lg:grid-cols-3">
             {styles.map((s, i) => (
@@ -211,7 +211,7 @@ export default function BowlingPage() {
       <section className="border-b-2 border-black bg-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="mb-3 text-xs font-black uppercase tracking-widest text-neutral-500">[ 003 / Fabric ]</div>
-          <h2 className="text-4xl font-black leading-tight md:text-6xl">Light. <span className="text-[#ff4d00]">Breathable.</span> Built to throw strikes.</h2>
+          <h2 className="text-4xl font-black leading-tight md:text-6xl">Light. <span className="text-[#cc3d00]">Breathable.</span> Built to throw strikes.</h2>
           <p className="mt-4 max-w-2xl text-base text-neutral-700 md:text-lg">All fabrics are poly or poly-spandex — we never use cotton for performance bowling jerseys.</p>
           <div className="mt-10 border-2 border-black bg-white">
             <div className="grid grid-cols-12 border-b-2 border-black bg-black text-xs font-black uppercase tracking-widest text-white">
@@ -223,7 +223,7 @@ export default function BowlingPage() {
               <div key={f.name} className={`grid grid-cols-12 text-sm ${i < fabricChoices.length - 1 ? "border-b-2 border-black" : ""}`}>
                 <div className="col-span-3 border-r-2 border-black p-3 font-black text-black">{f.name}</div>
                 <div className="col-span-6 border-r-2 border-black p-3 text-neutral-700">{f.best}</div>
-                <div className="col-span-3 p-3 font-black text-[#ff4d00]">{f.moq}</div>
+                <div className="col-span-3 p-3 font-black text-[#cc3d00]">{f.moq}</div>
               </div>
             ))}
           </div>
@@ -233,11 +233,11 @@ export default function BowlingPage() {
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="mb-3 text-xs font-black uppercase tracking-widest text-neutral-500">[ 004 / Customisation ]</div>
-          <h2 className="text-4xl font-black leading-tight md:text-6xl">Roster-ready <span className="text-[#ff4d00]">detail.</span></h2>
+          <h2 className="text-4xl font-black leading-tight md:text-6xl">Roster-ready <span className="text-[#cc3d00]">detail.</span></h2>
           <div className="mt-10 grid gap-0 md:grid-cols-2 lg:grid-cols-4">
             {customisation.map((c, i) => (
               <div key={c.title} className={`p-6 ${i < 3 ? "lg:border-r-2 border-black" : ""} ${i < 2 ? "border-b-2 lg:border-b-0 border-black" : ""} ${i === 2 ? "border-b-2 lg:border-b-0 border-black" : ""}`}>
-                <c.icon className="h-8 w-8 text-[#ff4d00]" strokeWidth={2} />
+                <c.icon className="h-8 w-8 text-[#cc3d00]" strokeWidth={2} />
                 <div className="mt-3 text-xl font-black text-black">{c.title}</div>
                 <p className="mt-2 text-sm text-neutral-700">{c.desc}</p>
               </div>
@@ -249,11 +249,11 @@ export default function BowlingPage() {
       <section className="border-b-2 border-black bg-[#0a0a0a] text-white">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="mb-3 text-xs font-black uppercase tracking-widest text-neutral-400">[ 005 / Who orders this ]</div>
-          <h2 className="text-4xl font-black leading-tight md:text-6xl">From <span className="text-[#ff4d00]">the lanes</span> to the pro shop.</h2>
+          <h2 className="text-4xl font-black leading-tight md:text-6xl">From <span className="text-[#cc3d00]">the lanes</span> to the pro shop.</h2>
           <div className="mt-10 grid gap-0 md:grid-cols-2 lg:grid-cols-3">
             {useCases.map((u, i) => (
               <div key={u.who} className={`p-6 ${i < 3 ? "lg:border-r-2 border-neutral-800" : ""} ${i < 3 ? "border-b-2 lg:border-b-0 border-neutral-800" : ""} ${i === 3 || i === 4 ? "border-b-2 lg:border-b-0 border-neutral-800 md:border-r-2 md:border-b-0" : ""}`}>
-                <Users className="h-6 w-6 text-[#ff4d00]" strokeWidth={2} />
+                <Users className="h-6 w-6 text-[#cc3d00]" strokeWidth={2} />
                 <div className="mt-3 text-lg font-black text-white">{u.who}</div>
                 <p className="mt-1 text-sm text-neutral-400">{u.what}</p>
               </div>
@@ -265,7 +265,7 @@ export default function BowlingPage() {
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="mb-3 text-xs font-black uppercase tracking-widest text-neutral-500">[ 006 / Pricing ]</div>
-          <h2 className="text-4xl font-black leading-tight md:text-6xl">A fraction of <span className="text-[#ff4d00]">retail.</span></h2>
+          <h2 className="text-4xl font-black leading-tight md:text-6xl">A fraction of <span className="text-[#cc3d00]">retail.</span></h2>
           <p className="mt-4 max-w-2xl text-base text-neutral-700 md:text-lg">Starting prices for sublimation bowling jerseys and shirts. Retail equivalent is $45+ — you get the same fabric and quality, factory-direct.</p>
           <div className="mt-10 border-2 border-black bg-white">
             <div className="grid grid-cols-12 border-b-2 border-black bg-black text-xs font-black uppercase tracking-widest text-white">
@@ -277,8 +277,8 @@ export default function BowlingPage() {
             {pricing.map((p, i) => (
               <div key={p.qty} className={`grid grid-cols-12 text-sm ${i < pricing.length - 1 ? "border-b-2 border-black" : ""}`}>
                 <div className="col-span-3 border-r-2 border-black p-3 font-black text-black">{p.qty}</div>
-                <div className="col-span-3 border-r-2 border-black p-3 font-black text-[#ff4d00]">{p.jersey}</div>
-                <div className="col-span-3 border-r-2 border-black p-3 font-black text-[#ff4d00]">{p.shirt}</div>
+                <div className="col-span-3 border-r-2 border-black p-3 font-black text-[#cc3d00]">{p.jersey}</div>
+                <div className="col-span-3 border-r-2 border-black p-3 font-black text-[#cc3d00]">{p.shirt}</div>
                 <div className="col-span-3 p-3 text-neutral-600">{p.note}</div>
               </div>
             ))}
@@ -295,7 +295,7 @@ export default function BowlingPage() {
               <details key={f.q} className={`group p-6 ${i < faq.length - 1 ? "border-b-2 border-black" : ""}`}>
                 <summary className="flex cursor-pointer items-start justify-between gap-4">
                   <span className="text-lg font-black text-black">{f.q}</span>
-                  <span className="ml-4 shrink-0 text-2xl font-black text-[#ff4d00] transition-transform group-open:rotate-45">+</span>
+                  <span className="ml-4 shrink-0 text-2xl font-black text-[#cc3d00] transition-transform group-open:rotate-45">+</span>
                 </summary>
                 <p className="mt-4 text-base text-neutral-700">{f.a}</p>
               </details>
@@ -309,7 +309,7 @@ export default function BowlingPage() {
           <div className="mb-3 text-xs font-black uppercase tracking-widest text-white/80">[ 008 / Next step ]</div>
           <h2 className="text-4xl font-black leading-tight md:text-7xl">Got a tournament? <br />Get a quote in 1 business day.</h2>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link href="/get-a-quote" className="group inline-flex items-center gap-2 bg-black px-6 py-3 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-white hover:text-[#ff4d00]">
+            <Link href="/get-a-quote" className="group inline-flex items-center gap-2 bg-black px-6 py-3 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-white hover:text-[#cc3d00]">
               Get a Bowling Quote <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
             </Link>
             <Link href="/products" className="inline-flex items-center gap-2 border-2 border-black bg-transparent px-6 py-3 text-sm font-black uppercase tracking-widest text-black transition-all hover:bg-black hover:text-white">

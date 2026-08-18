@@ -24,7 +24,7 @@ function FreeDesignService() {
             </div>
             <h2 className="text-3xl md:text-5xl font-extrabold leading-[1.1] mb-4">
               <span className="text-white">Free </span>
-              <span className="text-[#ff4d00]">design service</span>
+              <span className="text-[#cc3d00]">design service</span>
               <span className="text-white">.</span>
             </h2>
             <p className="text-base md:text-lg text-white/70 leading-relaxed mb-6">
@@ -32,19 +32,19 @@ function FreeDesignService() {
             </p>
             <ul className="space-y-2.5 mb-6 text-sm md:text-base text-white/80">
               <li className="flex items-start gap-2.5">
-                <Sparkles className="w-4 h-4 text-[#ff4d00] mt-0.5 shrink-0" />
+                <Sparkles className="w-4 h-4 text-[#cc3d00] mt-0.5 shrink-0" />
                 <span>Hand-drawn sketch &rarr; production-ready artwork</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <Sparkles className="w-4 h-4 text-[#ff4d00] mt-0.5 shrink-0" />
+                <Sparkles className="w-4 h-4 text-[#cc3d00] mt-0.5 shrink-0" />
                 <span>Logo clean-up, color matching, placement guidance</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <Sparkles className="w-4 h-4 text-[#ff4d00] mt-0.5 shrink-0" />
+                <Sparkles className="w-4 h-4 text-[#cc3d00] mt-0.5 shrink-0" />
                 <span>Free mockup on the actual garment before you commit</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <Sparkles className="w-4 h-4 text-[#ff4d00] mt-0.5 shrink-0" />
+                <Sparkles className="w-4 h-4 text-[#cc3d00] mt-0.5 shrink-0" />
                 <span>Unlimited revisions during the artwork stage</span>
               </li>
             </ul>
@@ -68,7 +68,7 @@ function FreeDesignService() {
             <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/40 to-transparent" />
             {/* Caption tag */}
             <div className="absolute bottom-4 left-4 right-4 flex items-center gap-2 text-white/90 text-xs md:text-sm font-semibold">
-              <Sparkles className="w-4 h-4 text-[#ff4d00]" />
+              <Sparkles className="w-4 h-4 text-[#cc3d00]" />
               <span>Your rough idea &rarr; our polished design</span>
             </div>
           </div>
@@ -106,17 +106,17 @@ function LiveInventory() {
             <div>
               <div className="text-[10px] uppercase tracking-widest text-neutral-500 font-semibold">Live capacity</div>
               <div className="text-base md:text-lg font-bold text-[#0a0a0a]">
-                <span className="text-[#ff4d00]">{slots}</span> bulk order slots left this week
+                <span className="text-[#cc3d00]">{slots}</span> bulk order slots left this week
               </div>
             </div>
           </div>
 
           <div className="flex items-center gap-3 p-4 rounded-lg bg-gradient-to-r from-[#00c2ff]/10 to-transparent border border-[#00c2ff]/20">
-            <Calendar className="w-5 h-5 text-[#00c2ff]" />
+            <Calendar className="w-5 h-5 text-[#0078a8]" />
             <div>
               <div className="text-[10px] uppercase tracking-widest text-neutral-500 font-semibold">Lead time</div>
               <div className="text-base md:text-lg font-bold text-[#0a0a0a]">
-                Sample <span className="text-[#00c2ff]">5 days</span> &middot; Bulk <span className="text-[#00c2ff]">15 days</span>
+                Sample <span className="text-[#0078a8]">5 days</span> &middot; Bulk <span className="text-[#0078a8]">15 days</span>
               </div>
             </div>
           </div>
@@ -175,8 +175,8 @@ function LiveActivity() {
     <section className="bg-[#0a0a0a] text-white py-3">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center gap-3">
         <div className="flex items-center gap-1.5 shrink-0">
-          <Activity className="w-3.5 h-3.5 text-[#ff4d00]" />
-          <span className="text-[10px] md:text-xs uppercase tracking-widest font-bold text-[#ff4d00]">Live</span>
+          <Activity className="w-3.5 h-3.5 text-[#cc3d00]" />
+          <span className="text-[10px] md:text-xs uppercase tracking-widest font-bold text-[#cc3d00]">Live</span>
         </div>
         <div
           className={`flex-1 min-w-0 transition-opacity duration-300 ${visible ? "opacity-100" : "opacity-0"}`}
@@ -221,12 +221,12 @@ function VideoShowcase() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
           <div>
-            <div className="text-[10px] md:text-xs uppercase tracking-widest text-[#ff4d00] font-bold mb-3">
+            <div className="text-[10px] md:text-xs uppercase tracking-widest text-[#cc3d00] font-bold mb-3">
               [ 003 / Watch · 40 seconds ]
             </div>
             <h2 className="text-3xl md:text-5xl font-extrabold leading-[1.1] mb-4">
               <span className="text-white">See our </span>
-              <span className="text-[#ff4d00]">factory in action.</span>
+              <span className="text-[#cc3d00]">factory in action.</span>
             </h2>
             <p className="text-base md:text-lg text-white/70 leading-relaxed mb-6">
               Walk through our 8,000 m² Yiwu facility &mdash; 12 production lines, digital sublimation printers, cut-and-sew lines, quality control, packing. 40 seconds, real footage, no fluff.
@@ -278,7 +278,7 @@ function Newsletter() {
   return (
     <section className="bg-gradient-to-br from-[#1a1a1a] to-[#0a0a0a] text-white py-12 md:py-16">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
-        <Mail className="w-8 h-8 text-[#ff4d00] mx-auto mb-3" />
+        <Mail className="w-8 h-8 text-[#cc3d00] mx-auto mb-3" />
         <h2 className="text-2xl md:text-3xl font-extrabold mb-2">
           Monthly B2B digest
         </h2>
@@ -324,11 +324,11 @@ function RecentCaseStudies() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-10 flex items-end justify-between gap-4 flex-wrap">
           <div>
-            <p className="text-[#ff4d00] text-xs font-bold tracking-[0.2em] uppercase mb-3">Recent work</p>
+            <p className="text-[#cc3d00] text-xs font-bold tracking-[0.2em] uppercase mb-3">Recent work</p>
             <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight">Case studies from the line</h2>
             <p className="mt-3 text-white/60 text-base max-w-2xl">Real production runs, real numbers, shipped to real customers across the US, EU, and the UK.</p>
           </div>
-          <Link href="/cases" className="text-sm font-semibold text-white border-b-2 border-[#ff4d00] pb-1 hover:text-[#ff4d00] transition-colors">View all industries →</Link>
+          <Link href="/cases" className="text-sm font-semibold text-white border-b-2 border-[#ff4d00] pb-1 hover:text-[#cc3d00] transition-colors">View all industries →</Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {featured.map((c) => (
@@ -337,10 +337,10 @@ function RecentCaseStudies() {
               href={`/cases/${c.industrySlug}/${c.id}`}
               className="group block bg-[#1a1a1a] border border-white/10 rounded-xl p-6 hover:border-[#ff4d00] transition-all duration-200"
             >
-              <div className="text-[10px] font-bold tracking-widest uppercase text-[#ff4d00] mb-3">{c.industryTitle} · {c.year}</div>
-              <h3 className="text-lg font-bold leading-snug mb-3 group-hover:text-[#ff4d00] transition-colors">{c.title}</h3>
+              <div className="text-[10px] font-bold tracking-widest uppercase text-[#cc3d00] mb-3">{c.industryTitle} · {c.year}</div>
+              <h3 className="text-lg font-bold leading-snug mb-3 group-hover:text-[#cc3d00] transition-colors">{c.title}</h3>
               <p className="text-sm text-white/60 line-clamp-3 leading-relaxed">{c.summary}</p>
-              <div className="mt-5 flex items-center gap-2 text-xs font-semibold text-white/80 group-hover:text-[#ff4d00]">
+              <div className="mt-5 flex items-center gap-2 text-xs font-semibold text-white/80 group-hover:text-[#cc3d00]">
                 <span>Read the case study</span>
                 <span className="transition-transform group-hover:translate-x-1">→</span>
               </div>

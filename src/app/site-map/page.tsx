@@ -142,14 +142,14 @@ export default function SiteMapPage() {
       {/* Hero */}
       <section className="border-b-2 border-[#0a0a0a] bg-[#0a0a0a] text-white">
         <div className="mx-auto max-w-7xl px-6 py-12 md:py-16">
-          <div className="mb-3 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-[#ff4d00]">
+          <div className="mb-3 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-[#cc3d00]">
             <Map className="h-3.5 w-3.5" />
             [ 000 / Site architecture ]
           </div>
           <h1 className="text-4xl font-extrabold leading-[0.95] tracking-tight md:text-6xl">
             How this site
             <br />
-            is <span className="text-[#ff4d00]">wired together</span>.
+            is <span className="text-[#cc3d00]">wired together</span>.
           </h1>
           <p className="mt-4 max-w-2xl text-base text-white/70 md:text-lg">
             Every page that exists, grouped by role. Blue = SEO
@@ -166,7 +166,7 @@ export default function SiteMapPage() {
               { k: STATS.newPages, l: "Added recently" },
             ].map((s) => (
               <div key={s.l} className="bg-[#0a0a0a] px-5 py-4">
-                <div className="text-3xl font-extrabold text-[#ff4d00] md:text-4xl">
+                <div className="text-3xl font-extrabold text-[#cc3d00] md:text-4xl">
                   {s.k}
                 </div>
                 <div className="mt-1 font-mono text-[10px] uppercase tracking-[0.25em] text-white/60">
@@ -236,7 +236,7 @@ export default function SiteMapPage() {
                           </div>
                         )}
                       </div>
-                      <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-[#6b6b6b] transition-transform group-hover:translate-x-1 group-hover:text-[#ff4d00]" />
+                      <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-[#6b6b6b] transition-transform group-hover:translate-x-1 group-hover:text-[#cc3d00]" />
                     </Link>
                   </li>
                 ))}
@@ -261,7 +261,7 @@ export default function SiteMapPage() {
           </p>
           <p className="mt-3">
             Submit to search engines:{" "}
-            <a href="/sitemap.xml" className="font-mono text-[#ff4d00] underline" target="_blank" rel="noreferrer">
+            <a href="/sitemap.xml" className="font-mono text-[#cc3d00] underline" target="_blank" rel="noreferrer">
               /sitemap.xml
             </a>{" "}
             (264 URLs · 1 static + 20 technique + 12 blog + 98 tag + 120 product)

@@ -156,7 +156,7 @@ export function ProductCatalog() {
         <div className="mx-auto max-w-7xl px-4 py-6 md:px-8 md:py-10">
           <div className="mb-4 flex items-end justify-between md:mb-6">
             <div>
-              <p className="mb-1 text-[10px] font-bold uppercase tracking-widest text-[#ff4d00] md:text-xs">
+              <p className="mb-1 text-[10px] font-bold uppercase tracking-widest text-[#cc3d00] md:text-xs">
                 Cross-filter 3 dimensions
               </p>
               <h2 className="text-xl font-black uppercase leading-tight tracking-tight text-black md:text-3xl">
@@ -167,7 +167,7 @@ export function ProductCatalog() {
               <button
                 type="button"
                 onClick={clearAll}
-                className="inline-flex items-center gap-1 rounded-full border-2 border-black bg-white px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide text-black hover:border-[#ff4d00] hover:text-[#ff4d00] md:text-xs"
+                className="inline-flex items-center gap-1 rounded-full border-2 border-black bg-white px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide text-black hover:border-[#ff4d00] hover:text-[#cc3d00] md:text-xs"
               >
                 <X className="h-3 w-3" />
                 Clear {activeCount} filter{activeCount > 1 ? "s" : ""}
@@ -237,7 +237,7 @@ export function ProductCatalog() {
           <p className="text-xs font-bold uppercase tracking-wide text-black md:text-sm">
             {filtered.length} of {products.length} products
             {activeCount > 0 && (
-              <span className="ml-2 text-[#ff4d00]">— filtered by {activeCount} tag{activeCount > 1 ? "s" : ""}</span>
+              <span className="ml-2 text-[#cc3d00]">— filtered by {activeCount} tag{activeCount > 1 ? "s" : ""}</span>
             )}
           </p>
         </div>
@@ -254,7 +254,7 @@ export function ProductCatalog() {
               <button
                 type="button"
                 onClick={clearAll}
-                className="mt-4 inline-flex items-center gap-1 rounded-full border-2 border-[#ff4d00] bg-white px-4 py-2 text-xs font-bold uppercase tracking-wide text-[#ff4d00] hover:bg-[#ff4d00] hover:text-white"
+                className="mt-4 inline-flex items-center gap-1 rounded-full border-2 border-[#ff4d00] bg-white px-4 py-2 text-xs font-bold uppercase tracking-wide text-[#cc3d00] hover:bg-[#ff4d00] hover:text-white"
               >
                 Clear filters
               </button>
@@ -309,7 +309,7 @@ export function ProductCatalog() {
                       {p.scenarios.slice(0, 2).map((s) => (
                         <span
                           key={s}
-                          className="rounded-sm bg-[#fff5f0] px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-wide text-[#ff4d00] md:text-[9px]"
+                          className="rounded-sm bg-[#fff5f0] px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-wide text-[#cc3d00] md:text-[9px]"
                         >
                           {s}
                         </span>

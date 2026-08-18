@@ -197,7 +197,7 @@ export function FabricCatalogGrid({ fabrics }: Props) {
                   </div>
                 </div>
                 <div className="mt-auto border-t border-black/10 pt-2 md:pt-3">
-                  <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-[#ff4d00] md:text-xs">
+                  <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-[#cc3d00] md:text-xs">
                     Sublimation fit: {f.fit} <ArrowRight className="h-3 w-3" strokeWidth={2.5} />
                   </span>
                 </div>

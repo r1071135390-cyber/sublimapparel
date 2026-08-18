@@ -120,13 +120,13 @@ export default async function BlogPostPage({
         <div className="mx-auto max-w-7xl px-4 py-3 text-xs font-bold uppercase tracking-wider text-[#6b6b6b] md:px-8 md:py-4 md:text-sm">
           <ol className="flex flex-wrap items-center gap-1.5">
             <li>
-              <Link href="/" className="hover:text-[#ff4d00]">
+              <Link href="/" className="hover:text-[#cc3d00]">
                 Home
               </Link>
             </li>
             <li aria-hidden="true">/</li>
             <li>
-              <Link href="/blog/" className="hover:text-[#ff4d00]">
+              <Link href="/blog/" className="hover:text-[#cc3d00]">
                 Blog
               </Link>
             </li>
@@ -141,7 +141,7 @@ export default async function BlogPostPage({
         <div className="mx-auto max-w-5xl px-4 py-10 md:px-8 md:py-16">
           <Link
             href="/blog/"
-            className="mb-6 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-[#6b6b6b] transition-colors hover:text-[#ff4d00] md:mb-8"
+            className="mb-6 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-[#6b6b6b] transition-colors hover:text-[#cc3d00] md:mb-8"
           >
             <ArrowLeft className="h-3 w-3" />
             All articles
@@ -202,7 +202,7 @@ export default async function BlogPostPage({
                 key={i}
                 className={
                   i === 0
-                    ? "first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:text-6xl first-letter:font-black first-letter:leading-none first-letter:text-[#ff4d00] md:first-letter:text-7xl"
+                    ? "first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:text-6xl first-letter:font-black first-letter:leading-none first-letter:text-[#cc3d00] md:first-letter:text-7xl"
                     : ""
                 }
               >
@@ -214,7 +214,7 @@ export default async function BlogPostPage({
           {/* Key takeaways (callout) */}
           {post.keyTakeaways && post.keyTakeaways.length > 0 && (
             <aside className="my-10 border-2 border-black bg-[#faf9f6] p-6 md:my-12 md:p-8">
-              <p className="mb-3 text-xs font-bold uppercase tracking-widest text-[#ff4d00] md:mb-4 md:text-sm">
+              <p className="mb-3 text-xs font-bold uppercase tracking-widest text-[#cc3d00] md:mb-4 md:text-sm">
                 Key Takeaways
               </p>
               <ul className="space-y-2.5 md:space-y-3">
@@ -235,7 +235,7 @@ export default async function BlogPostPage({
           {post.sections.map((section, i) => (
             <div key={i} className="mt-10 md:mt-12">
               <h2 className="mb-4 text-2xl font-black leading-tight tracking-tight text-black md:mb-6 md:text-3xl">
-                <span className="mr-2 text-[#ff4d00]">0{i + 1}.</span>
+                <span className="mr-2 text-[#cc3d00]">0{i + 1}.</span>
                 {section.heading}
               </h2>
               <div className="space-y-4 text-base leading-relaxed text-[#1a1a1a] md:space-y-5 md:text-lg">
@@ -248,7 +248,7 @@ export default async function BlogPostPage({
 
           {/* Internal CTA */}
           <div className="mt-12 border-2 border-[#ff4d00] bg-[#ff4d00]/5 p-6 md:mt-16 md:p-8">
-            <p className="mb-2 text-xs font-bold uppercase tracking-widest text-[#ff4d00] md:text-sm">
+            <p className="mb-2 text-xs font-bold uppercase tracking-widest text-[#cc3d00] md:text-sm">
               Ready to start?
             </p>
             <h3 className="mb-3 text-xl font-black leading-tight text-black md:mb-4 md:text-2xl">
@@ -274,7 +274,7 @@ export default async function BlogPostPage({
       {related.length > 0 && (
         <section className="border-t-2 border-black bg-[#faf9f6]">
           <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-16">
-            <p className="mb-2 text-xs font-bold uppercase tracking-widest text-[#ff4d00] md:text-sm">
+            <p className="mb-2 text-xs font-bold uppercase tracking-widest text-[#cc3d00] md:text-sm">
               Continue reading
             </p>
             <h2 className="mb-8 text-2xl font-black uppercase leading-tight tracking-tight text-black md:mb-12 md:text-4xl">
@@ -307,7 +307,7 @@ export default async function BlogPostPage({
                     <p className="mb-4 flex-1 text-xs leading-relaxed text-[#3a3a3a] md:text-sm">
                       {p.excerpt}
                     </p>
-                    <div className="mt-auto inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-[#ff4d00] transition group-hover:gap-2">
+                    <div className="mt-auto inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-[#cc3d00] transition group-hover:gap-2">
                       Read article
                       <ArrowRight className="h-3 w-3" />
                     </div>

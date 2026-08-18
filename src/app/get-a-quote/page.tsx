@@ -140,8 +140,8 @@ export default function GetAQuotePage() {
           {/* Headline — 3 lines, flat / full width */}
           <h1 className="mb-4 max-w-4xl text-3xl font-black leading-[1.05] tracking-tight md:mb-5 md:text-5xl lg:text-6xl xl:text-7xl">
             <span className="block text-white">Tell us your</span>
-            <span className="block text-[#ff4d00]">product, quantity</span>
-            <span className="block text-[#ff4d00]">and deadline.</span>
+            <span className="block text-[#cc3d00]">product, quantity</span>
+            <span className="block text-[#cc3d00]">and deadline.</span>
           </h1>
 
           {/* Subhead */}
@@ -200,7 +200,7 @@ export default function GetAQuotePage() {
               <h2 className="text-4xl font-black uppercase leading-none tracking-tight md:text-6xl">
                 What happens
                 <br />
-                <span className="text-[#ff4d00]">after you submit.</span>
+                <span className="text-[#cc3d00]">after you submit.</span>
               </h2>
             </div>
             <div className="hidden text-right text-xs font-bold uppercase tracking-widest text-white/60 md:block">
@@ -218,12 +218,12 @@ export default function GetAQuotePage() {
                   className="group relative flex flex-col border-2 border-white/20 bg-white/5 p-6 backdrop-blur-sm transition-all hover:border-[#ff4d00] hover:bg-white/10"
                 >
                   <div className="mb-4 flex items-center justify-between">
-                    <span className="font-black text-[#ff4d00] text-5xl leading-none">
+                    <span className="font-black text-[#cc3d00] text-5xl leading-none">
                       0{i + 1}
                     </span>
-                    <Icon className="h-6 w-6 text-white/40 transition-colors group-hover:text-[#ff4d00]" strokeWidth={1.5} />
+                    <Icon className="h-6 w-6 text-white/40 transition-colors group-hover:text-[#cc3d00]" strokeWidth={1.5} />
                   </div>
-                  <div className="mb-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#ff4d00]">
+                  <div className="mb-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#cc3d00]">
                     {w.time}
                   </div>
                   <h3 className="mb-2 text-xl font-black leading-tight">{w.title}</h3>
@@ -246,7 +246,7 @@ export default function GetAQuotePage() {
               <h2 className="text-4xl font-black leading-[0.95] tracking-tight text-black md:text-5xl">
                 What to include for
                 <br />
-                <span className="text-[#ff4d00]">the fastest quote.</span>
+                <span className="text-[#cc3d00]">the fastest quote.</span>
               </h2>
               <p className="mt-4 text-base text-black/70">
                 You don&apos;t need everything — start with the essentials below.

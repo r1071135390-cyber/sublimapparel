@@ -53,7 +53,7 @@ export function HowItWorks() {
             <h2 className="text-4xl font-black uppercase leading-none tracking-tight md:text-6xl">
               From artwork to door.
               <br />
-              <span className="text-[#ff4d00]">Four steps.</span>
+              <span className="text-[#cc3d00]">Four steps.</span>
             </h2>
           </div>
           <div className="hidden text-right text-xs font-bold uppercase tracking-widest text-white/60 md:block">
@@ -73,10 +73,10 @@ export function HowItWorks() {
               >
                 {/* Top row: number + icon */}
                 <div className="mb-6 flex items-start justify-between">
-                  <span className="font-black text-[#ff4d00] text-6xl leading-none md:text-7xl">
+                  <span className="font-black text-[#cc3d00] text-6xl leading-none md:text-7xl">
                     {s.num}
                   </span>
-                  <Icon className="h-7 w-7 text-white/40 transition-colors group-hover:text-[#ff4d00]" strokeWidth={1.5} />
+                  <Icon className="h-7 w-7 text-white/40 transition-colors group-hover:text-[#cc3d00]" strokeWidth={1.5} />
                 </div>
 
                 {/* Step name */}

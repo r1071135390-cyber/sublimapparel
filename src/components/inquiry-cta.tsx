@@ -36,7 +36,7 @@ export function InquiryCTA() {
                 />
               </button>
               <RequestSampleButton
-                className="inline-flex items-center gap-2 border-2 border-black bg-transparent px-7 py-4 text-sm font-black uppercase tracking-wider text-black transition-colors hover:bg-black hover:text-[#ff4d00]"
+                className="inline-flex items-center gap-2 border-2 border-black bg-transparent px-7 py-4 text-sm font-black uppercase tracking-wider text-black transition-colors hover:bg-black hover:text-[#cc3d00]"
               >
                 Request a sample kit
               </RequestSampleButton>

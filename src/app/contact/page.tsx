@@ -60,7 +60,7 @@ export default function ContactPage() {
             <h1 className="text-[44px] font-black leading-[1.05] tracking-tight md:text-[64px] lg:text-[72px]">
               Let&apos;s
               <br />
-              <span className="text-[#ff4d00]">talk.</span>
+              <span className="text-[#cc3d00]">talk.</span>
             </h1>
             <p className="mt-4 max-w-md text-base leading-relaxed text-white/80 md:text-lg">
               Real production managers in Yiwu, China — not chatbots.

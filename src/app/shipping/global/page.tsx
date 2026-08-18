@@ -144,12 +144,12 @@ export default function GlobalShippingPage() {
       {/* 1 · HERO */}
       <section className="border-b-2 border-[#0a0a0a] bg-[#0a0a0a] text-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
-          <div className="mb-6 text-xs font-mono uppercase tracking-widest text-[#00c2ff]">
+          <div className="mb-6 text-xs font-mono uppercase tracking-widest text-[#0078a8]">
             [ 009 / Shipping &amp; logistics ]
           </div>
           <h1 className="max-w-4xl text-5xl font-extrabold leading-[0.95] tracking-tight md:text-7xl">
             <span className="block">Worldwide.</span>
-            <span className="block text-[#ff4d00]">Delivered duty paid.</span>
+            <span className="block text-[#cc3d00]">Delivered duty paid.</span>
             <span className="block">One landed cost.</span>
           </h1>
           <p className="mt-6 max-w-2xl text-lg text-[#a0a0a0] md:text-xl">
@@ -175,7 +175,7 @@ export default function GlobalShippingPage() {
             <div key={s.label} className="px-6 py-8 text-center md:py-10">
               <div className="text-3xl font-extrabold leading-none text-[#0a0a0a] md:text-5xl">
                 {s.value}
-                <span className="ml-1 text-base font-bold text-[#ff4d00] md:text-lg">
+                <span className="ml-1 text-base font-bold text-[#cc3d00] md:text-lg">
                   {s.unit}
                 </span>
               </div>
@@ -190,12 +190,12 @@ export default function GlobalShippingPage() {
       {/* 3 · DESCRIPTION */}
       <section className="border-b-2 border-[#0a0a0a]">
         <div className="mx-auto max-w-4xl px-6 py-16 md:py-24">
-          <div className="text-xs font-mono uppercase tracking-widest text-[#ff4d00]">
+          <div className="text-xs font-mono uppercase tracking-widest text-[#cc3d00]">
             [ Why global shipping ]
           </div>
           <h2 className="mt-3 text-3xl font-extrabold leading-tight md:text-5xl">
             The hard part of importing isn't the freight.{" "}
-            <span className="text-[#ff4d00]">It's the customs.</span>
+            <span className="text-[#cc3d00]">It's the customs.</span>
           </h2>
           <div className="mt-8 space-y-5 text-base leading-relaxed text-[#3a3a3a] md:text-lg">
             <p>
@@ -216,7 +216,7 @@ export default function GlobalShippingPage() {
             <p>
               We do have a Fontana, CA address for occasional overstock buffer storage — but it&apos;s
               a Tier-2 add-on, not a standard service. Read the{" "}
-              <Link href="/shipping/us-warehouse" className="font-bold text-[#ff4d00] underline">
+              <Link href="/shipping/us-warehouse" className="font-bold text-[#cc3d00] underline">
                 honest note about it
               </Link>
               {" "}before assuming it applies to your order.
@@ -229,7 +229,7 @@ export default function GlobalShippingPage() {
       <section className="border-b-2 border-[#0a0a0a] bg-[#1a1a1a] text-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="mb-12 max-w-3xl">
-            <div className="text-xs font-mono uppercase tracking-widest text-[#00c2ff]">
+            <div className="text-xs font-mono uppercase tracking-widest text-[#0078a8]">
               [ 009.A / Modes of transport ]
             </div>
             <h2 className="mt-3 text-3xl font-extrabold leading-tight md:text-5xl">
@@ -243,7 +243,7 @@ export default function GlobalShippingPage() {
           <div className="grid gap-px bg-[#0a0a0a] md:grid-cols-2 lg:grid-cols-3">
             {shippingModes.map((m) => (
               <div key={m.title} className="bg-[#1a1a1a] p-8">
-                <div className="mb-4 inline-flex h-10 w-10 items-center justify-center border-2 border-[#00c2ff] text-[#00c2ff]">
+                <div className="mb-4 inline-flex h-10 w-10 items-center justify-center border-2 border-[#00c2ff] text-[#0078a8]">
                   {m.icon}
                 </div>
                 <h3 className="text-lg font-bold leading-snug">{m.title}</h3>
@@ -251,11 +251,11 @@ export default function GlobalShippingPage() {
                 <div className="mt-4 flex items-center gap-4 border-t-2 border-[#0a0a0a] pt-3 text-xs">
                   <div>
                     <div className="font-mono uppercase text-[#6b6b6b]">Cost</div>
-                    <div className="font-bold text-[#ff4d00]">{m.price}</div>
+                    <div className="font-bold text-[#cc3d00]">{m.price}</div>
                   </div>
                   <div>
                     <div className="font-mono uppercase text-[#6b6b6b]">Time</div>
-                    <div className="font-bold text-[#00c2ff]">{m.time}</div>
+                    <div className="font-bold text-[#0078a8]">{m.time}</div>
                   </div>
                 </div>
               </div>
@@ -267,7 +267,7 @@ export default function GlobalShippingPage() {
       {/* 5 · REGION TRANSIT TABLE */}
       <section className="border-b-2 border-[#0a0a0a]">
         <div className="mx-auto max-w-6xl px-6 py-16 md:py-24">
-          <div className="text-xs font-mono uppercase tracking-widest text-[#ff4d00]">
+          <div className="text-xs font-mono uppercase tracking-widest text-[#cc3d00]">
             [ 009.B / Transit times by region ]
           </div>
           <h2 className="mt-3 mb-10 text-3xl font-extrabold leading-tight md:text-5xl">
@@ -285,16 +285,16 @@ export default function GlobalShippingPage() {
                   <th className="px-3 py-3 text-xs font-bold uppercase tracking-wider md:px-6 md:py-4 md:text-sm">
                     Region
                   </th>
-                  <th className="px-3 py-3 text-xs font-bold uppercase tracking-wider text-[#00c2ff] md:px-6 md:py-4 md:text-sm">
+                  <th className="px-3 py-3 text-xs font-bold uppercase tracking-wider text-[#0078a8] md:px-6 md:py-4 md:text-sm">
                     Sea
                   </th>
-                  <th className="px-3 py-3 text-xs font-bold uppercase tracking-wider text-[#00c2ff] md:px-6 md:py-4 md:text-sm">
+                  <th className="px-3 py-3 text-xs font-bold uppercase tracking-wider text-[#0078a8] md:px-6 md:py-4 md:text-sm">
                     Air
                   </th>
-                  <th className="px-3 py-3 text-xs font-bold uppercase tracking-wider text-[#00c2ff] md:px-6 md:py-4 md:text-sm">
+                  <th className="px-3 py-3 text-xs font-bold uppercase tracking-wider text-[#0078a8] md:px-6 md:py-4 md:text-sm">
                     Express
                   </th>
-                  <th className="px-3 py-3 text-xs font-bold uppercase tracking-wider text-[#ff4d00] md:px-6 md:py-4 md:text-sm">
+                  <th className="px-3 py-3 text-xs font-bold uppercase tracking-wider text-[#cc3d00] md:px-6 md:py-4 md:text-sm">
                     DDP
                   </th>
                 </tr>
@@ -314,7 +314,7 @@ export default function GlobalShippingPage() {
                     <td className="px-3 py-3 text-sm md:px-6 md:py-3 md:text-base">
                       {r.exp}
                     </td>
-                    <td className="px-3 py-3 text-sm font-bold text-[#ff4d00] md:px-6 md:py-3 md:text-base">
+                    <td className="px-3 py-3 text-sm font-bold text-[#cc3d00] md:px-6 md:py-3 md:text-base">
                       {r.ddp}
                     </td>
                   </tr>
@@ -329,7 +329,7 @@ export default function GlobalShippingPage() {
       <section className="border-b-2 border-[#0a0a0a] bg-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="mb-12 max-w-3xl">
-            <div className="text-xs font-mono uppercase tracking-widest text-[#ff4d00]">
+            <div className="text-xs font-mono uppercase tracking-widest text-[#cc3d00]">
               [ 009.C / When to use which mode ]
             </div>
             <h2 className="mt-3 text-3xl font-extrabold leading-tight md:text-5xl">
@@ -342,7 +342,7 @@ export default function GlobalShippingPage() {
                 key={u.title}
                 className="border-2 border-[#0a0a0a] bg-white p-6"
               >
-                <div className="mb-3 text-xs font-mono font-bold text-[#ff4d00]">
+                <div className="mb-3 text-xs font-mono font-bold text-[#cc3d00]">
                   0{i + 1}
                 </div>
                 <h3 className="text-lg font-bold leading-snug">{u.title}</h3>
@@ -356,7 +356,7 @@ export default function GlobalShippingPage() {
       {/* 7 · FAQ */}
       <section className="border-b-2 border-[#0a0a0a]">
         <div className="mx-auto max-w-4xl px-6 py-16 md:py-24">
-          <div className="text-xs font-mono uppercase tracking-widest text-[#ff4d00]">
+          <div className="text-xs font-mono uppercase tracking-widest text-[#cc3d00]">
             [ 009.D / FAQ ]
           </div>
           <h2 className="mt-3 mb-10 text-3xl font-extrabold leading-tight md:text-5xl">
@@ -365,7 +365,7 @@ export default function GlobalShippingPage() {
           <div className="space-y-6">
             {faqs.map((f, i) => (
               <div key={f.q} className="border-2 border-[#0a0a0a] bg-white p-6">
-                <div className="mb-2 text-xs font-mono font-bold text-[#ff4d00]">
+                <div className="mb-2 text-xs font-mono font-bold text-[#cc3d00]">
                   Q · {String(i + 1).padStart(2, "0")}
                 </div>
                 <h3 className="text-lg font-bold leading-snug md:text-xl">{f.q}</h3>
@@ -381,7 +381,7 @@ export default function GlobalShippingPage() {
       {/* 8 · CTA */}
       <section className="bg-[#0a0a0a] text-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
-          <div className="mb-8 text-xs font-mono uppercase tracking-widest text-[#00c2ff]">
+          <div className="mb-8 text-xs font-mono uppercase tracking-widest text-[#0078a8]">
             [ 009.E / Quote a shipment ]
           </div>
           <h2 className="max-w-3xl text-4xl font-extrabold leading-tight md:text-6xl">
@@ -427,7 +427,7 @@ export default function GlobalShippingPage() {
                 href={r.href}
                 className="group block border-2 border-[#0a0a0a] bg-white p-6 transition-colors hover:bg-[#0a0a0a] hover:text-[#faf9f6]"
               >
-                <div className="text-xs font-mono uppercase tracking-wider text-[#ff4d00]">
+                <div className="text-xs font-mono uppercase tracking-wider text-[#cc3d00]">
                   →
                 </div>
                 <div className="mt-2 text-lg font-bold">{r.title}</div>

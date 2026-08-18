@@ -336,13 +336,13 @@ export default function TechniquePage() {
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-16 lg:py-24">
-          <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-[#ff4d00] md:mb-4 md:text-sm">
+          <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-[#cc3d00] md:mb-4 md:text-sm">
             [ Technique Guide ]
           </p>
 
           <h1 className="mb-4 max-w-3xl text-4xl font-black uppercase leading-[0.95] tracking-tight text-white md:mb-5 md:text-6xl lg:text-7xl">
             <span className="block whitespace-nowrap">Which print technique</span>
-            <span className="block text-[#ff4d00]">fits your design?</span>
+            <span className="block text-[#cc3d00]">fits your design?</span>
           </h1>
 
           <p className="mb-3 max-w-xl text-sm text-white/80 md:mb-4 md:text-base">
@@ -358,7 +358,7 @@ export default function TechniquePage() {
           <div className="flex flex-col gap-3 md:flex-row md:gap-4">
             <Link
               href="/get-a-quote/"
-              className="inline-flex items-center justify-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-bold uppercase tracking-wide text-white transition-colors hover:bg-white hover:text-[#ff4d00] md:px-8 md:py-4 md:text-base"
+              className="inline-flex items-center justify-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-bold uppercase tracking-wide text-white transition-colors hover:bg-white hover:text-[#cc3d00] md:px-8 md:py-4 md:text-base"
             >
               Get a Quote →
             </Link>
@@ -388,7 +388,7 @@ export default function TechniquePage() {
         <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-20">
           <div className="mb-8 flex items-end justify-between border-b-2 border-black pb-4 md:mb-12 md:pb-6">
             <div>
-              <p className="mb-2 text-xs font-bold uppercase tracking-widest text-[#ff4d00] md:text-sm">
+              <p className="mb-2 text-xs font-bold uppercase tracking-widest text-[#cc3d00] md:text-sm">
                 20 techniques, explained
               </p>
               <h2 className="text-2xl font-black uppercase leading-tight tracking-tight text-black md:text-4xl">
@@ -428,7 +428,7 @@ export default function TechniquePage() {
                     {tech.description}
                   </p>
                   <div className="mt-auto border-t border-black/10 pt-2 md:pt-3">
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#ff4d00] md:text-xs">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#cc3d00] md:text-xs">
                       MOQ: {tech.moq} →
                     </span>
                   </div>
@@ -444,7 +444,7 @@ export default function TechniquePage() {
         <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-20">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:gap-12">
             <div className="md:col-span-5">
-              <p className="mb-3 text-xs font-bold uppercase tracking-widest text-[#ff4d00] md:text-sm">
+              <p className="mb-3 text-xs font-bold uppercase tracking-widest text-[#cc3d00] md:text-sm">
                 Not on this list? We probably do it too.
               </p>
               <h2 className="mb-4 text-2xl font-black uppercase leading-tight tracking-tight md:mb-6 md:text-4xl">
@@ -465,7 +465,7 @@ export default function TechniquePage() {
                 {/* Card 1 — All 20 in-house */}
                 <div className="border-2 border-white/15 bg-white/[0.03] p-5 md:p-6">
                   <div className="mb-3 inline-flex h-9 w-9 items-center justify-center border-2 border-[#ff4d00] bg-[#ff4d00]/10 md:mb-4 md:h-10 md:w-10">
-                    <Sparkles className="h-4 w-4 text-[#ff4d00] md:h-5 md:w-5" />
+                    <Sparkles className="h-4 w-4 text-[#cc3d00] md:h-5 md:w-5" />
                   </div>
                   <h3 className="mb-2 text-base font-black uppercase md:text-lg">
                     We do all 20
@@ -480,7 +480,7 @@ export default function TechniquePage() {
                 {/* Card 2 — 50+ in industry */}
                 <div className="border-2 border-white/15 bg-white/[0.03] p-5 md:p-6">
                   <div className="mb-3 inline-flex h-9 w-9 items-center justify-center border-2 border-[#00c2ff] bg-[#00c2ff]/10 md:mb-4 md:h-10 md:w-10">
-                    <span className="text-base font-black text-[#00c2ff] md:text-lg">
+                    <span className="text-base font-black text-[#0078a8] md:text-lg">
                       50+
                     </span>
                   </div>
@@ -543,7 +543,7 @@ export default function TechniquePage() {
       <section className="bg-black text-white">
         <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-20">
           <div className="mb-8 border-b border-white/20 pb-4 md:mb-12 md:pb-6">
-            <p className="mb-2 text-xs font-bold uppercase tracking-widest text-[#ff4d00] md:text-sm">
+            <p className="mb-2 text-xs font-bold uppercase tracking-widest text-[#cc3d00] md:text-sm">
               Every technique, one quality bar
             </p>
             <h2 className="text-2xl font-black uppercase leading-tight tracking-tight md:text-4xl">
@@ -553,7 +553,7 @@ export default function TechniquePage() {
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
             {qualityFeatures.map((feature) => (
               <div key={feature.name} className="flex flex-col">
-                <CheckCircle2 className="mb-3 h-8 w-8 text-[#ff4d00] md:mb-4 md:h-10 md:w-10" />
+                <CheckCircle2 className="mb-3 h-8 w-8 text-[#cc3d00] md:mb-4 md:h-10 md:w-10" />
                 <h3 className="mb-2 text-base font-black uppercase md:text-lg">
                   {feature.name}
                 </h3>
@@ -570,7 +570,7 @@ export default function TechniquePage() {
       <section className="border-t-2 border-black bg-white">
         <div className="mx-auto max-w-4xl px-4 py-12 md:px-8 md:py-20">
           <div className="mb-8 border-b-2 border-black pb-4 md:mb-12 md:pb-6">
-            <p className="mb-2 text-xs font-bold uppercase tracking-widest text-[#ff4d00] md:text-sm">
+            <p className="mb-2 text-xs font-bold uppercase tracking-widest text-[#cc3d00] md:text-sm">
               Technique questions, answered
             </p>
             <h2 className="text-2xl font-black uppercase leading-tight tracking-tight md:text-4xl">
@@ -584,9 +584,9 @@ export default function TechniquePage() {
                 className="group border-2 border-black bg-white p-4 md:p-6"
               >
                 <summary className="flex cursor-pointer items-center justify-between gap-4 text-sm font-bold text-black md:text-base">
-                  <span className="text-[#ff4d00]">Q{i + 1}.</span>
+                  <span className="text-[#cc3d00]">Q{i + 1}.</span>
                   <span className="flex-1">{item.q}</span>
-                  <span className="text-lg text-[#ff4d00] transition-transform group-open:rotate-45">
+                  <span className="text-lg text-[#cc3d00] transition-transform group-open:rotate-45">
                     +
                   </span>
                 </summary>
@@ -610,7 +610,7 @@ export default function TechniquePage() {
           </p>
           <Link
             href="/get-a-quote/"
-            className="inline-flex items-center gap-2 border-2 border-white bg-transparent px-6 py-3 text-sm font-bold uppercase tracking-wide transition-colors hover:bg-white hover:text-[#ff4d00] md:px-8 md:py-4 md:text-base"
+            className="inline-flex items-center gap-2 border-2 border-white bg-transparent px-6 py-3 text-sm font-bold uppercase tracking-wide transition-colors hover:bg-white hover:text-[#cc3d00] md:px-8 md:py-4 md:text-base"
           >
             Get a Free Quote →
           </Link>
@@ -626,7 +626,7 @@ export default function TechniquePage() {
             <strong> Reviewed by</strong> Lily Chen, Production Manager.
           </p>
           <p className="mt-2">
-            For technique recommendations on your specific project, <Link href="/get-a-quote" className="underline hover:text-[#ff4d00]">submit your design brief</Link> — we reply within 12 working hours.
+            For technique recommendations on your specific project, <Link href="/get-a-quote" className="underline hover:text-[#cc3d00]">submit your design brief</Link> — we reply within 12 working hours.
           </p>
         </div>
       </section>

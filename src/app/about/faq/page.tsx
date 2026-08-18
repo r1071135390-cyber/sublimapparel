@@ -112,12 +112,12 @@ export default function FaqPage() {
       {/* 1 · HERO */}
       <section className="border-b-2 border-[#0a0a0a] bg-[#0a0a0a] text-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
-          <div className="mb-6 text-xs font-mono uppercase tracking-widest text-[#ff4d00]">
+          <div className="mb-6 text-xs font-mono uppercase tracking-widest text-[#cc3d00]">
             [ 014 / About · FAQ ]
           </div>
           <h1 className="max-w-4xl text-5xl font-extrabold leading-[0.95] tracking-tight md:text-7xl">
             <span className="block">30 questions.</span>
-            <span className="block text-[#ff4d00]">Honest answers.</span>
+            <span className="block text-[#cc3d00]">Honest answers.</span>
             <span className="block">No marketing fluff.</span>
           </h1>
           <p className="mt-6 max-w-2xl text-lg text-[#a0a0a0] md:text-xl">
@@ -144,7 +144,7 @@ export default function FaqPage() {
             <div key={s.label} className="px-6 py-8 text-center md:py-10">
               <div className="text-3xl font-extrabold leading-none text-[#0a0a0a] md:text-5xl">
                 {s.value}
-                <span className="ml-1 text-base font-bold text-[#ff4d00] md:text-lg">{s.unit}</span>
+                <span className="ml-1 text-base font-bold text-[#cc3d00] md:text-lg">{s.unit}</span>
               </div>
               <div className="mt-2 text-xs font-bold uppercase tracking-wider text-[#6b6b6b]">{s.label}</div>
             </div>
@@ -155,7 +155,7 @@ export default function FaqPage() {
       {/* 3 · SECTION NAV */}
       <section className="border-b-2 border-[#0a0a0a] bg-[#1a1a1a] text-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-12">
-          <div className="mb-6 text-xs font-mono uppercase tracking-widest text-[#00c2ff]">
+          <div className="mb-6 text-xs font-mono uppercase tracking-widest text-[#0078a8]">
             [ Jump to section ]
           </div>
           <div className="grid gap-3 md:grid-cols-5">
@@ -165,14 +165,14 @@ export default function FaqPage() {
                 href={`#${s.id}`}
                 className="group flex items-center gap-3 border-2 border-[#0a0a0a] bg-[#1a1a1a] p-4 transition-colors hover:border-[#ff4d00] hover:bg-[#0a0a0a]"
               >
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center border-2 border-[#ff4d00] text-[#ff4d00]">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center border-2 border-[#ff4d00] text-[#cc3d00]">
                   {s.icon}
                 </div>
                 <div className="flex-1">
                   <div className="text-sm font-bold leading-snug md:text-base">{s.title}</div>
                   <div className="text-xs text-[#a0a0a0]">{s.questions.length} Q&A</div>
                 </div>
-                <ArrowRight className="h-4 w-4 text-[#ff4d00] transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="h-4 w-4 text-[#cc3d00] transition-transform group-hover:translate-x-1" />
               </a>
             ))}
           </div>
@@ -182,10 +182,10 @@ export default function FaqPage() {
       {/* 4 · DESCRIPTION */}
       <section className="border-b-2 border-[#0a0a0a]">
         <div className="mx-auto max-w-4xl px-6 py-16 md:py-20">
-          <div className="text-xs font-mono uppercase tracking-widest text-[#ff4d00]">[ How to use this ]</div>
+          <div className="text-xs font-mono uppercase tracking-widest text-[#cc3d00]">[ How to use this ]</div>
           <h2 className="mt-3 text-3xl font-extrabold leading-tight md:text-4xl">
             Pick the section that matches your question.{" "}
-            <span className="text-[#ff4d00]">Read the answer. Move on.</span>
+            <span className="text-[#cc3d00]">Read the answer. Move on.</span>
           </h2>
           <p className="mt-4 text-base leading-relaxed text-[#3a3a3a] md:text-lg">
             These are the questions we get most often from new B2B buyers. They're honest
@@ -205,7 +205,7 @@ export default function FaqPage() {
                 {s.icon}
               </div>
               <div>
-                <div className="text-xs font-mono uppercase tracking-widest text-[#ff4d00]">
+                <div className="text-xs font-mono uppercase tracking-widest text-[#cc3d00]">
                   Section {String(sIdx + 1).padStart(2, "0")} · {s.questions.length} Q&A
                 </div>
                 <h2 className="text-3xl font-extrabold leading-tight md:text-4xl">{s.title}</h2>
@@ -218,7 +218,7 @@ export default function FaqPage() {
                   className="group border-2 border-[#0a0a0a] bg-white open:bg-[#faf9f6]"
                 >
                   <summary className="flex cursor-pointer items-center gap-4 p-5 md:p-6">
-                    <div className="text-xs font-mono font-bold text-[#ff4d00] md:text-sm">
+                    <div className="text-xs font-mono font-bold text-[#cc3d00] md:text-sm">
                       Q.{String(i + 1).padStart(2, "0")}
                     </div>
                     <h3 className="flex-1 text-base font-bold leading-snug md:text-lg">{q.q}</h3>
@@ -237,7 +237,7 @@ export default function FaqPage() {
       {/* 6 · CTA */}
       <section className="bg-[#0a0a0a] text-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
-          <div className="mb-8 text-xs font-mono uppercase tracking-widest text-[#ff4d00]">
+          <div className="mb-8 text-xs font-mono uppercase tracking-widest text-[#cc3d00]">
             [ 014.A / Still have questions? ]
           </div>
           <h2 className="max-w-3xl text-4xl font-extrabold leading-tight md:text-6xl">
@@ -270,7 +270,7 @@ export default function FaqPage() {
               { href: "/fabric/cotton", title: "100% cotton", desc: "Our differentiator" },
             ].map((r) => (
               <Link key={r.href} href={r.href} className="group block border-2 border-[#0a0a0a] bg-white p-6 transition-colors hover:bg-[#0a0a0a] hover:text-[#faf9f6]">
-                <div className="text-xs font-mono uppercase tracking-wider text-[#ff4d00]">→</div>
+                <div className="text-xs font-mono uppercase tracking-wider text-[#cc3d00]">→</div>
                 <div className="mt-2 text-lg font-bold">{r.title}</div>
                 <div className="mt-1 text-sm text-[#6b6b6b] group-hover:text-[#a0a0a0]">{r.desc}</div>
               </Link>

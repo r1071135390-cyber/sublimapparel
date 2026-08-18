@@ -113,7 +113,7 @@ export default function FabricPage() {
                 <br />
                 process fits your design?
                 <br />
-                <span className="text-[#ff4d00]">24 fabrics, 6 methods.</span>
+                <span className="text-[#cc3d00]">24 fabrics, 6 methods.</span>
               </h1>
               <p className="mt-6 max-w-xl text-base text-white/85 md:text-lg">
                 <strong>Short answer:</strong> for all-over print on polyester, use
@@ -136,7 +136,7 @@ export default function FabricPage() {
           <h2 className="mb-10 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
             What fabrics can you
             <br />
-            <span className="text-[#ff4d00]">print on?</span>
+            <span className="text-[#cc3d00]">print on?</span>
           </h2>
 
           <div className="grid gap-6 md:grid-cols-2">
@@ -149,14 +149,14 @@ export default function FabricPage() {
                   className={"group relative flex flex-col border-2 border-black p-8 transition-all hover:border-[#ff4d00] " + f.color}
                 >
                   <div className="mb-4 flex items-center justify-between">
-                    <Icon className="h-8 w-8 text-[#ff4d00]" strokeWidth={1.5} />
+                    <Icon className="h-8 w-8 text-[#cc3d00]" strokeWidth={1.5} />
                     <span className={"px-2 py-1 text-[10px] font-black uppercase tracking-widest " + f.badgeColor + " text-white"}>
                       {f.badge}
                     </span>
                   </div>
                   <h3 className="mb-3 text-3xl font-black leading-none">{f.name}</h3>
                   <p className="mb-6 flex-1 text-sm text-black/70 md:text-base">{f.desc}</p>
-                  <span className="inline-flex items-center gap-2 text-sm font-black uppercase tracking-widest text-black transition-colors group-hover:text-[#ff4d00]">
+                  <span className="inline-flex items-center gap-2 text-sm font-black uppercase tracking-widest text-black transition-colors group-hover:text-[#cc3d00]">
                     Explore {f.name}
                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
                   </span>
@@ -174,7 +174,7 @@ export default function FabricPage() {
             Full fabric catalogue
           </div>
           <h2 className="mb-3 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
-            Which fabric fits which <span className="text-[#ff4d00]">project?</span>
+            Which fabric fits which <span className="text-[#cc3d00]">project?</span>
           </h2>
           <p className="mb-12 max-w-3xl text-base text-black/70 md:text-lg">
             <strong>Short answer:</strong> polyester for all-over sublimation, cotton for vintage soft-hand feel, poly-spandex for fitted performance, nylon for outerwear. Every card shows composition, weight, and our sublimation fit rating.
@@ -187,7 +187,7 @@ export default function FabricPage() {
           {/* Download CSV + Send your spec CTA */}
           <div className="mt-8 flex flex-col items-start justify-between gap-4 border-2 border-black bg-[#faf9f6] p-6 md:flex-row md:items-center">
             <div>
-              <div className="mb-1 text-[10px] font-black uppercase tracking-widest text-[#ff4d00]">Spec sheet</div>
+              <div className="mb-1 text-[10px] font-black uppercase tracking-widest text-[#cc3d00]">Spec sheet</div>
               <h4 className="text-lg font-black leading-tight">Download the full catalogue as CSV.</h4>
               <p className="mt-1 text-sm text-black/60">Our full fabric line with composition, weight, and use — for your sourcing team.</p>
             </div>
@@ -219,7 +219,7 @@ export default function FabricPage() {
             20 Processes
           </div>
           <h2 className="mb-3 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
-            Which print technique <span className="text-[#ff4d00]">should you pick?</span>
+            Which print technique <span className="text-[#cc3d00]">should you pick?</span>
           </h2>
           <p className="mb-10 max-w-3xl text-base text-black/70 md:text-lg">
             <strong>Short answer:</strong> sublimation on polyester for all-over; allover digital on cotton for true full-body; DTG/DTF on cotton at low MOQ; screen print for ≥200 pcs; embroidery for caps and polos. Twenty in-house techniques — click any row to see process, best substrates, MOQ, pricing.
@@ -240,7 +240,7 @@ export default function FabricPage() {
                     <td className="px-4 py-3 font-black">
                       <Link
                         href={`/technique/${p.slug}`}
-                        className="inline-flex items-center gap-1.5 text-black underline-offset-4 transition-colors hover:text-[#ff4d00] hover:underline"
+                        className="inline-flex items-center gap-1.5 text-black underline-offset-4 transition-colors hover:text-[#cc3d00] hover:underline"
                       >
                         {p.name}
                         <ArrowUpRight className="h-3.5 w-3.5 stroke-[2.5]" />
@@ -263,7 +263,7 @@ export default function FabricPage() {
             Beyond These 20
           </div>
           <h2 className="mb-3 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
-            What if your project <span className="text-[#ff4d00]">needs more?</span>
+            What if your project <span className="text-[#cc3d00]">needs more?</span>
           </h2>
           <p className="mb-12 max-w-3xl text-base text-black/70 md:text-lg">
             <strong>Short answer:</strong> we accept custom technique specs and customer-supplied fabric. Bring a sample or a spec sheet — we will source or replicate. Add ~7–14 days for first-time setup.
@@ -271,21 +271,21 @@ export default function FabricPage() {
 
           <div className="grid gap-6 md:grid-cols-3">
             <div className="border-2 border-black bg-white p-6">
-              <div className="mb-2 text-xs font-black uppercase tracking-widest text-[#ff4d00]">01 / Featured</div>
+              <div className="mb-2 text-xs font-black uppercase tracking-widest text-[#cc3d00]">01 / Featured</div>
               <h3 className="mb-3 text-2xl font-black leading-tight">20 techniques featured</h3>
               <p className="text-sm text-black/70">
                 The ones we run on our own lines. Optimized for cost, speed, and color.
               </p>
             </div>
             <div className="border-2 border-black bg-white p-6">
-              <div className="mb-2 text-xs font-black uppercase tracking-widest text-[#ff4d00]">02 / In stock</div>
+              <div className="mb-2 text-xs font-black uppercase tracking-widest text-[#cc3d00]">02 / In stock</div>
               <h3 className="mb-3 text-2xl font-black leading-tight">100+ fabric types in stock</h3>
               <p className="text-sm text-black/70">
                 From 80 gsm chiffon to 420 gsm fleece. See the list above for the full breakdown.
               </p>
             </div>
             <div className="border-2 border-black bg-white p-6">
-              <div className="mb-2 text-xs font-black uppercase tracking-widest text-[#ff4d00]">03 / By request</div>
+              <div className="mb-2 text-xs font-black uppercase tracking-widest text-[#cc3d00]">03 / By request</div>
               <h3 className="mb-3 text-2xl font-black leading-tight">Send your own fabric</h3>
               <p className="text-sm text-black/70">
                 Already have a fabric you want us to print on? Send it. We&apos;ll print and ship.
@@ -326,7 +326,7 @@ export default function FabricPage() {
             <strong> Reviewed by</strong> Lily Chen, Production Manager.
           </p>
           <p className="mt-2">
-            Looking for a fast quote? <Link href="/get-a-quote" className="underline hover:text-[#ff4d00]">Submit your inquiry</Link> with artwork + quantity + delivery country — we reply within 12 working hours.
+            Looking for a fast quote? <Link href="/get-a-quote" className="underline hover:text-[#cc3d00]">Submit your inquiry</Link> with artwork + quantity + delivery country — we reply within 12 working hours.
           </p>
         </div>
       </section>

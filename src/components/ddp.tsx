@@ -22,7 +22,7 @@ export function DDP() {
         <div className="grid gap-6 md:grid-cols-2">
           {/* Path 1: DDP Worldwide */}
           <div className="border-2 border-black bg-[#ff4d00] p-6 shadow-[6px_6px_0_0_#000] md:p-8">
-            <div className="mb-4 inline-block -rotate-2 border-2 border-black bg-black px-3 py-1 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
+            <div className="mb-4 inline-block -rotate-2 border-2 border-black bg-black px-3 py-1 text-xs font-black uppercase tracking-widest text-[#cc3d00]">
               ★ Path A
             </div>
             <h3 className="mb-3 text-2xl font-black uppercase leading-tight md:text-3xl">
@@ -96,7 +96,7 @@ export function DDP() {
             </ul>
 
             <div className="mt-6 border-2 border-[#00c2ff] bg-black p-3">
-              <div className="text-[10px] font-black uppercase tracking-widest text-[#00c2ff]">
+              <div className="text-[10px] font-black uppercase tracking-widest text-[#0078a8]">
                 Best for
               </div>
               <div className="mt-1 text-sm font-black uppercase text-white">
@@ -113,7 +113,7 @@ export function DDP() {
           </div>
           <div className="mt-2 text-base font-black uppercase leading-tight md:text-xl">
             Yiwu = World&apos;s Largest Small- Commodity Hub.<br />
-            <span className="text-[#ff4d00]">Daily flights · Container ships · Express couriers</span> — all at our doorstep.
+            <span className="text-[#cc3d00]">Daily flights · Container ships · Express couriers</span> — all at our doorstep.
           </div>
         </div>
 

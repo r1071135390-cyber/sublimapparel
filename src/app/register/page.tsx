@@ -13,7 +13,7 @@ export default function RegisterPage() {
   return (
     <section className="border-b-2 border-black bg-[#faf9f6] py-14 md:py-20">
       <div className="mx-auto max-w-md px-6">
-        <p className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-[#ff4d00]">
+        <p className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-[#cc3d00]">
           Join SublimApparel
         </p>
         <h1 className="mb-3 text-4xl font-extrabold leading-tight md:text-5xl">
@@ -79,7 +79,7 @@ export default function RegisterPage() {
           Already have an account?{" "}
           <Link
             href="/login/"
-            className="font-bold text-[#ff4d00] underline-offset-2 hover:underline"
+            className="font-bold text-[#cc3d00] underline-offset-2 hover:underline"
           >
             Sign in
           </Link>

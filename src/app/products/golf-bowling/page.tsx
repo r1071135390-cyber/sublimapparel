@@ -21,12 +21,12 @@ export default function GolfBowlingMoved() {
         </p>
         <a
           href="/products/golf/"
-          className="mt-8 inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-white hover:text-[#ff4d00]"
+          className="mt-8 inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-white hover:text-[#cc3d00]"
         >
           Go to Golf Apparel →
         </a>
         <p className="mt-6 text-xs text-neutral-500">
-          Bowling? Visit <a href="/products/bowling/" className="text-[#00c2ff] underline">/products/bowling/</a>.
+          Bowling? Visit <a href="/products/bowling/" className="text-[#0078a8] underline">/products/bowling/</a>.
         </p>
         <meta httpEquiv="refresh" content="2; url=/products/golf/" />
       </div>

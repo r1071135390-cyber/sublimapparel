@@ -128,7 +128,7 @@ export function Industries() {
           </div>
           <h2 className="text-4xl font-black uppercase leading-none tracking-tight md:text-6xl">
             Who we work<br />
-            <span className="italic text-[#ff4d00]">with.</span>
+            <span className="italic text-[#cc3d00]">with.</span>
           </h2>
           <p className="mt-4 max-w-2xl text-base font-bold leading-relaxed md:text-lg">
             From marathon organizers to wedding parties, from streetwear brands to political campaigns — if you need vibrant custom printing, we&apos;ve probably already done it.
@@ -152,7 +152,7 @@ export function Industries() {
                   <h3 className="text-lg font-black uppercase leading-tight tracking-tight">
                     <Link
                       href={`/cases/${ind.slug}`}
-                      className="transition-colors hover:text-[#ff4d00]"
+                      className="transition-colors hover:text-[#cc3d00]"
                     >
                       {ind.title}
                     </Link>
@@ -173,7 +173,7 @@ export function Industries() {
                 <div className="mt-auto flex items-center justify-between gap-2">
                   <Link
                     href={tagArchiveLink("scenario", ind.scenario)}
-                    className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-black transition-colors hover:text-[#ff4d00]"
+                    className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-black transition-colors hover:text-[#cc3d00]"
                   >
                     Browse products
                     <ArrowRight
@@ -196,7 +196,7 @@ export function Industries() {
 
         {/* Bottom callout */}
         <div className="mt-10 border-2 border-black bg-black p-6 text-center text-white md:p-8">
-          <div className="text-xs font-black uppercase tracking-widest text-[#00c2ff]">
+          <div className="text-xs font-black uppercase tracking-widest text-[#0078a8]">
             Not on the list?
           </div>
           <div className="mt-2 text-2xl font-black leading-tight md:text-3xl">

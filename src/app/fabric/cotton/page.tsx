@@ -89,7 +89,7 @@ export default function CottonPage() {
             <h1 className="text-5xl font-black leading-[0.95] tracking-tight md:text-8xl">
               100% cotton.
               <br />
-              <span className="text-[#ff4d00]">DTG & DTF.</span>
+              <span className="text-[#cc3d00]">DTG & DTF.</span>
             </h1>
             <p className="mt-6 max-w-xl text-base text-neutral-700 md:text-lg">
               Large-area DTG and DTF printing on 100% cotton — A4 to A3 per
@@ -114,7 +114,7 @@ export default function CottonPage() {
             </div>
           </div>
           <div className="flex flex-col justify-center border-l-2 border-black bg-[#faf9f6] p-8 md:col-span-5 md:p-12">
-            <div className="mb-4 flex items-center gap-2 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
+            <div className="mb-4 flex items-center gap-2 text-xs font-black uppercase tracking-widest text-[#cc3d00]">
               <Sparkles className="h-4 w-4" strokeWidth={2} />
               What makes us different
             </div>
@@ -128,7 +128,7 @@ export default function CottonPage() {
                 "Wash-tested to 50+ industrial cycles without fade",
               ].map((t, i) => (
                 <li key={i} className="flex items-start gap-2">
-                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#ff4d00]" strokeWidth={2.5} />
+                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#cc3d00]" strokeWidth={2.5} />
                   <span>{t}</span>
                 </li>
               ))}
@@ -146,7 +146,7 @@ export default function CottonPage() {
           <h2 className="mb-4 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
             Cotton fabrics
             <br />
-            <span className="text-[#ff4d00]">we keep on hand.</span>
+            <span className="text-[#cc3d00]">we keep on hand.</span>
           </h2>
           <p className="mb-10 max-w-2xl text-base text-black/70">
             The cotton-side of our full fabric line. Every roll wash-tested, every
@@ -186,7 +186,7 @@ export default function CottonPage() {
                     <span className="font-bold uppercase text-black/40">Best for</span>
                     <span className="font-medium text-right">{f.use}</span>
                   </div>
-                  <div className="mt-auto flex items-center justify-between border-t border-black/10 pt-3 text-[10px] font-black text-[#ff4d00]">
+                  <div className="mt-auto flex items-center justify-between border-t border-black/10 pt-3 text-[10px] font-black text-[#cc3d00]">
                     <span>Sublimation fit: {f.fit}</span>
                     <span>→</span>
                   </div>
@@ -208,7 +208,7 @@ export default function CottonPage() {
               <h2 className="text-4xl font-black uppercase leading-none tracking-tight md:text-6xl">
                 How we print on
                 <br />
-                <span className="text-[#ff4d00]">cotton at scale.</span>
+                <span className="text-[#cc3d00]">cotton at scale.</span>
               </h2>
             </div>
           </div>
@@ -218,7 +218,7 @@ export default function CottonPage() {
               const Icon = w.icon;
               return (
                 <div key={i} className="group flex flex-col border-2 border-white/20 bg-white/5 p-6 transition-all hover:border-[#ff4d00]">
-                  <Icon className="mb-4 h-7 w-7 text-[#ff4d00]" strokeWidth={1.5} />
+                  <Icon className="mb-4 h-7 w-7 text-[#cc3d00]" strokeWidth={1.5} />
                   <h3 className="mb-2 text-xl font-black leading-tight">{w.title}</h3>
                   <p className="text-sm leading-relaxed text-white/70">{w.desc}</p>
                 </div>
@@ -282,7 +282,7 @@ export default function CottonPage() {
           <h2 className="mb-4 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
             Cotton vs Polyester
             <br />
-            <span className="text-[#ff4d00]">— pick the right fabric.</span>
+            <span className="text-[#cc3d00]">— pick the right fabric.</span>
           </h2>
           <p className="mb-10 max-w-2xl text-base text-black/70">
             We run both. Most factories only run one. Use this table to decide
@@ -323,7 +323,7 @@ export default function CottonPage() {
               <h2 className="text-4xl font-black uppercase leading-none tracking-tight md:text-6xl">
                 Cotton products
                 <br />
-                <span className="text-[#ff4d00]">we make.</span>
+                <span className="text-[#cc3d00]">we make.</span>
               </h2>
             </div>
             <div className="hidden text-right md:block">
@@ -335,7 +335,7 @@ export default function CottonPage() {
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {products.map((p, i) => (
               <div key={i} className="group flex flex-col border-2 border-black bg-white p-6 transition-all hover:border-[#ff4d00]">
-                <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
+                <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#cc3d00]">
                   0{i + 1} / Cotton
                 </div>
                 <h3 className="mb-2 text-xl font-black leading-tight">{p.name}</h3>
@@ -358,7 +358,7 @@ export default function CottonPage() {
               <h2 className="text-4xl font-black leading-[0.95] tracking-tight md:text-5xl">
                 Organic cotton.
                 <br />
-                <span className="text-[#00c2ff]">GOTS-certified.</span>
+                <span className="text-[#0078a8]">GOTS-certified.</span>
                 <br />
                 Low-impact dyed.
               </h2>
@@ -377,7 +377,7 @@ export default function CottonPage() {
                   "Carbon-offset shipping available for EU & US orders",
                 ].map((t, i) => (
                   <li key={i} className="flex items-start gap-2">
-                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#00c2ff]" strokeWidth={2.5} />
+                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#0078a8]" strokeWidth={2.5} />
                     <span>{t}</span>
                   </li>
                 ))}

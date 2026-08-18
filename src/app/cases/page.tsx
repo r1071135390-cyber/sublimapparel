@@ -48,14 +48,14 @@ export default function CasesPage() {
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-6 py-2.5 text-[11px] font-bold uppercase tracking-wider">
           <div className="flex flex-wrap items-center gap-x-5 gap-y-1">
             <span>Global DDP shipping</span>
-            <span className="text-[#00c2ff]">·</span>
+            <span className="text-[#0078a8]">·</span>
             <span>US stock in Fontana, CA</span>
-            <span className="text-[#00c2ff]">·</span>
+            <span className="text-[#0078a8]">·</span>
             <span>MOQ from 50 pcs</span>
           </div>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-1">
             <span>WhatsApp · +86 198 1793 0190</span>
-            <span className="text-[#00c2ff]">·</span>
+            <span className="text-[#0078a8]">·</span>
             <span>Replies within 1 business day</span>
           </div>
         </div>
@@ -64,12 +64,12 @@ export default function CasesPage() {
       {/* Hero */}
       <section className="border-b-2 border-black bg-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
-          <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
+          <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#cc3d00]">
             [ Case Studies ]
           </div>
           <h1 className="mb-6 text-5xl font-black uppercase leading-[0.95] tracking-tight md:text-7xl">
             See what we&apos;ve<br />
-            <span className="italic text-[#ff4d00]">made.</span>
+            <span className="italic text-[#cc3d00]">made.</span>
           </h1>
           <p className="max-w-2xl text-lg font-bold leading-relaxed md:text-xl">
             A growing gallery of real sublimation prints produced for events, sports, brands, campaigns and more. Browse by industry — every project is a working example of full-bleed colour, cut-and-sew construction and DDP delivery.
@@ -132,7 +132,7 @@ export default function CasesPage() {
       {/* Bottom CTA */}
       <section className="border-b-2 border-black bg-black text-white">
         <div className="mx-auto max-w-7xl px-6 py-16 text-center md:py-20">
-          <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#00c2ff]">
+          <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#0078a8]">
             [ Your project next? ]
           </div>
           <h2 className="mx-auto mb-6 max-w-3xl text-4xl font-black uppercase leading-none tracking-tight md:text-6xl">

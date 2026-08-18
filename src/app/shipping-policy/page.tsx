@@ -87,11 +87,11 @@ export default function ShippingPolicyPage() {
         <div className="mx-auto max-w-4xl px-6 py-16 md:py-24">
           <Link
             href="/"
-            className="mb-10 inline-flex items-center gap-2 text-sm font-bold text-[#0a0a0a] hover:text-[#ff4d00]"
+            className="mb-10 inline-flex items-center gap-2 text-sm font-bold text-[#0a0a0a] hover:text-[#cc3d00]"
           >
             <ArrowLeft className="h-4 w-4" /> BACK TO HOME
           </Link>
-          <p className="mb-4 text-xs font-bold tracking-[0.2em] text-[#ff4d00]">
+          <p className="mb-4 text-xs font-bold tracking-[0.2em] text-[#cc3d00]">
             [ 007 / SHIPPING ]
           </p>
           <h1 className="text-5xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">
@@ -110,7 +110,7 @@ export default function ShippingPolicyPage() {
         <div className="mx-auto max-w-6xl px-6 py-12 md:py-16">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
             <div className="border-2 border-[#0a0a0a] bg-white p-5">
-              <Truck className="mb-3 h-6 w-6 text-[#ff4d00]" />
+              <Truck className="mb-3 h-6 w-6 text-[#cc3d00]" />
               <p className="text-xs font-bold tracking-[0.15em] text-[#0a0a0a]/60">
                 DDP TO 100+ COUNTRIES
               </p>
@@ -122,7 +122,7 @@ export default function ShippingPolicyPage() {
               </p>
             </div>
             <div className="border-2 border-[#0a0a0a] bg-white p-5">
-              <Warehouse className="mb-3 h-6 w-6 text-[#ff4d00]" />
+              <Warehouse className="mb-3 h-6 w-6 text-[#cc3d00]" />
               <p className="text-xs font-bold tracking-[0.15em] text-[#0a0a0a]/60">
                 US WAREHOUSE (FONTANA, CA)
               </p>
@@ -134,7 +134,7 @@ export default function ShippingPolicyPage() {
               </p>
             </div>
             <div className="border-2 border-[#0a0a0a] bg-white p-5">
-              <Globe className="mb-3 h-6 w-6 text-[#ff4d00]" />
+              <Globe className="mb-3 h-6 w-6 text-[#cc3d00]" />
               <p className="text-xs font-bold tracking-[0.15em] text-[#0a0a0a]/60">
                 PRODUCTION FROM YIWU
               </p>
@@ -146,7 +146,7 @@ export default function ShippingPolicyPage() {
               </p>
             </div>
             <div className="border-2 border-[#0a0a0a] bg-white p-5">
-              <Package className="mb-3 h-6 w-6 text-[#ff4d00]" />
+              <Package className="mb-3 h-6 w-6 text-[#cc3d00]" />
               <p className="text-xs font-bold tracking-[0.15em] text-[#0a0a0a]/60">
                 TRACKING
               </p>
@@ -182,7 +182,7 @@ export default function ShippingPolicyPage() {
                   <h3 className="text-2xl font-extrabold text-[#0a0a0a]">
                     {term.code}
                   </h3>
-                  <span className="text-xs font-bold text-[#ff4d00]">
+                  <span className="text-xs font-bold text-[#cc3d00]">
                     {term.title}
                   </span>
                 </div>
@@ -346,7 +346,7 @@ export default function ShippingPolicyPage() {
           </article>
 
           <div className="border-2 border-[#0a0a0a] bg-white p-6 md:p-8">
-            <p className="text-xs font-bold tracking-[0.2em] text-[#ff4d00]">
+            <p className="text-xs font-bold tracking-[0.2em] text-[#cc3d00]">
               NEED A SPECIFIC SHIPPING QUOTE?
             </p>
             <h3 className="mt-3 text-2xl font-extrabold text-[#0a0a0a]">

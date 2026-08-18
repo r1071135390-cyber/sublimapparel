@@ -56,7 +56,7 @@ export default function AllProductsPage() {
           />
         </div>
         <div className="relative mx-auto max-w-7xl px-4 py-10 md:px-8 md:py-16">
-          <div className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-[#ff4d00] md:text-xs">
+          <div className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-[#cc3d00] md:text-xs">
             <Sparkles className="h-3.5 w-3.5" />
             <span>The full catalog · {products.length} products</span>
           </div>
@@ -65,7 +65,7 @@ export default function AllProductsPage() {
               <h1 className="mb-4 text-3xl font-black uppercase leading-[0.95] tracking-tight md:mb-6 md:text-5xl lg:text-6xl">
                 Pick a garment.<br />
                 Pick a sport.<br />
-                <span className="text-[#ff4d00]">Pick a scenario.</span>
+                <span className="text-[#cc3d00]">Pick a scenario.</span>
               </h1>
               <p className="mb-6 max-w-2xl text-sm leading-relaxed text-white/80 md:mb-8 md:text-base">
                 {products.length} all-over print products, cross-filtered three ways. Polyester sublimation or all-over digital print on cotton. MOQ {products[0]?.moq ?? 50} pcs. DDP to your door — duty paid.
@@ -135,7 +135,7 @@ export default function AllProductsPage() {
       <section className="border-t-2 border-black bg-[#0A0A0A] text-white">
         <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-20">
           <div className="mb-8 text-center md:mb-12">
-            <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-[#ff4d00] md:text-xs">
+            <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-[#cc3d00] md:text-xs">
               Closed loop, in-house
             </p>
             <h2 className="text-2xl font-black uppercase leading-tight tracking-tight md:text-4xl">
@@ -180,17 +180,17 @@ export default function AllProductsPage() {
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
             {[
               {
-                icon: <BadgeCheck className="h-6 w-6 text-[#ff4d00]" />,
+                icon: <BadgeCheck className="h-6 w-6 text-[#cc3d00]" />,
                 title: "BSCI / SEDEX audited",
                 body: "Independent social-compliance audits every 12 months.",
               },
               {
-                icon: <Truck className="h-6 w-6 text-[#00c2ff]" />,
+                icon: <Truck className="h-6 w-6 text-[#0078a8]" />,
                 title: "DDP to 50+ countries",
                 body: "Duty-paid door delivery via our DDP logistics partner.",
               },
               {
-                icon: <Sparkles className="h-6 w-6 text-[#ff4d00]" />,
+                icon: <Sparkles className="h-6 w-6 text-[#cc3d00]" />,
                 title: "20 decoration techniques",
                 body: "Sublimation, DTG, DTF, screen, embroidery, 3D puff, rhinestone — all in-house.",
               },

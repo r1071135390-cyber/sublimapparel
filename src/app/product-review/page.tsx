@@ -79,7 +79,7 @@ export default function ProductReviewIndex() {
                 (f.exists ? "border-black/15 bg-white" : "border-dashed border-black/20 bg-black/5 opacity-60")
               }
             >
-              <div className="mb-1 text-[10px] font-bold uppercase tracking-wider text-[#ff4d00]">
+              <div className="mb-1 text-[10px] font-bold uppercase tracking-wider text-[#cc3d00]">
                 {f.exists ? `${f.lineCount} rows` : "missing"}
               </div>
               <div className="text-base font-black leading-tight">{f.title}</div>
@@ -102,7 +102,7 @@ export default function ProductReviewIndex() {
                 (f.exists ? "border-black/15 bg-white" : "border-dashed border-black/20 bg-black/5 opacity-60")
               }
             >
-              <div className="mb-1 text-[10px] font-bold uppercase tracking-wider text-[#00c2ff]">
+              <div className="mb-1 text-[10px] font-bold uppercase tracking-wider text-[#0078a8]">
                 {f.exists ? "available" : "missing"}
               </div>
               <div className="text-base font-black leading-tight">{f.title}</div>
@@ -122,7 +122,7 @@ export default function ProductReviewIndex() {
               href={f.href}
               className="block rounded border border-black/15 bg-white p-4 transition-shadow hover:shadow-md"
             >
-              <div className="mb-1 text-[10px] font-bold uppercase tracking-wider text-[#ff4d00]">
+              <div className="mb-1 text-[10px] font-bold uppercase tracking-wider text-[#cc3d00]">
                 React page
               </div>
               <div className="text-base font-black leading-tight">{f.title}</div>

@@ -94,7 +94,7 @@ export default function AboutPage() {
               <h1 className="text-[2.75rem] font-black leading-[1.05] tracking-tight text-white md:text-[4rem] lg:text-[4.5rem]">
                 One factory
                 <br />
-                in <span className="text-[#ff4d00]">Yiwu</span>, China.
+                in <span className="text-[#cc3d00]">Yiwu</span>, China.
                 <br />
                 Print for the world.
               </h1>
@@ -160,7 +160,7 @@ export default function AboutPage() {
               <div className="text-xs font-black uppercase tracking-widest text-black/50">
                 Established
               </div>
-              <div className="mt-2 text-4xl font-black text-[#ff4d00] md:text-5xl">
+              <div className="mt-2 text-4xl font-black text-[#cc3d00] md:text-5xl">
                 2018
               </div>
               <div className="mt-1 text-xs font-bold uppercase tracking-wider text-black/60">
@@ -228,7 +228,7 @@ export default function AboutPage() {
                 key={s.label}
                 className="border-2 border-black bg-white p-6"
               >
-                <div className="text-5xl font-black text-[#ff4d00] md:text-6xl">
+                <div className="text-5xl font-black text-[#cc3d00] md:text-6xl">
                   {s.num}
                 </div>
                 <div className="mt-2 text-xs font-black uppercase tracking-widest text-black/60">
@@ -245,12 +245,12 @@ export default function AboutPage() {
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 md:py-20">
           <div className="grid items-center gap-8 md:grid-cols-2 md:gap-12">
             <div>
-              <div className="mb-3 text-[10px] font-bold uppercase tracking-widest text-[#ff4d00] md:text-xs">
+              <div className="mb-3 text-[10px] font-bold uppercase tracking-widest text-[#cc3d00] md:text-xs">
                 [ 002 / Watch · 40 seconds ]
               </div>
               <h2 className="mb-4 text-3xl font-extrabold leading-[1.1] md:text-5xl">
                 <span className="text-white">A 40-second walk </span>
-                <span className="text-[#ff4d00]">through our Yiwu factory.</span>
+                <span className="text-[#cc3d00]">through our Yiwu factory.</span>
               </h2>
               <p className="mb-6 text-base leading-relaxed text-white/70 md:text-lg">
                 Sublimation printers, DTG lines, cut-and-sew, QC, packing &mdash; one roof, one team, one quote. Real footage, no voice-over, no fluff.
@@ -289,7 +289,7 @@ export default function AboutPage() {
               <h2 className="text-4xl font-black leading-tight text-black md:text-6xl">
                 Six steps.
                 <br />
-                <span className="text-[#ff4d00]">One roof.</span>
+                <span className="text-[#cc3d00]">One roof.</span>
               </h2>
             </div>
             <p className="max-w-md text-base text-black/70">
@@ -364,7 +364,7 @@ export default function AboutPage() {
           <h2 className="mb-12 text-4xl font-black leading-tight text-white md:text-6xl">
             From Yiwu
             <br />
-            <span className="text-[#ff4d00]">to worldwide.</span>
+            <span className="text-[#cc3d00]">to worldwide.</span>
           </h2>
           <div className="grid gap-6 md:grid-cols-2">
             {locations.map((loc, i) => (
@@ -372,14 +372,14 @@ export default function AboutPage() {
                 key={loc.city}
                 className="border-2 border-white/30 bg-white p-8"
               >
-                <div className="mb-2 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
+                <div className="mb-2 text-xs font-black uppercase tracking-widest text-[#cc3d00]">
                   0{i + 1} / {loc.role}
                 </div>
                 <h3 className="mb-4 text-3xl font-black text-black md:text-4xl">
                   {loc.city}
                 </h3>
                 <div className="mb-4 flex items-start gap-2 text-sm font-medium leading-relaxed text-black/80">
-                  <MapPin size={16} className="mt-0.5 shrink-0 text-[#ff4d00]" />
+                  <MapPin size={16} className="mt-0.5 shrink-0 text-[#cc3d00]" />
                   <div>
                     {loc.address.map((line) => (
                       <div key={line}>{line}</div>
@@ -412,7 +412,7 @@ export default function AboutPage() {
                 key={v.word}
                 className="border-2 border-black bg-[#faf9f6] p-8"
               >
-                <div className="mb-4 text-7xl font-black text-[#00c2ff]">
+                <div className="mb-4 text-7xl font-black text-[#0078a8]">
                   0{i + 1}
                 </div>
                 <h3 className="mb-3 text-3xl font-black text-black">{v.word}</h3>
@@ -432,7 +432,7 @@ export default function AboutPage() {
                 Dive deeper
               </div>
               <h2 className="text-4xl font-black leading-tight text-black md:text-6xl">
-                Five pages that go <span className="text-[#ff4d00]">deeper</span>.
+                Five pages that go <span className="text-[#cc3d00]">deeper</span>.
               </h2>
             </div>
             <p className="max-w-md text-base text-black/70">

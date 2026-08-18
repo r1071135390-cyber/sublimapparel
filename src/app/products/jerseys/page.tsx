@@ -143,7 +143,7 @@ export default function JerseysPage() {
               <br />
               sublimation
               <br />
-              <span className="text-[#ff4d00]">jerseys.</span>
+              <span className="text-[#cc3d00]">jerseys.</span>
             </h1>
             <p className="mt-6 max-w-xl text-base text-neutral-700 md:text-lg">
               All-over print team jerseys for soccer, baseball, basketball, volleyball, esports, and more. Numbers, names, logos — all printed, not stitched. No setup fee, MOQ 50 pcs.
@@ -160,7 +160,7 @@ export default function JerseysPage() {
           </div>
           <div className="md:col-span-5 border-t-2 border-black md:border-l-2 md:border-t-0 bg-[#faf9f6] flex items-center justify-center p-10">
             <div className="text-center">
-              <Shirt className="mx-auto h-24 w-24 text-[#ff4d00] md:h-32 md:w-32" strokeWidth={1.5} />
+              <Shirt className="mx-auto h-24 w-24 text-[#cc3d00] md:h-32 md:w-32" strokeWidth={1.5} />
               <p className="mt-4 text-xs font-bold uppercase tracking-widest text-neutral-600">Soccer · Baseball · Basketball</p>
               <p className="mt-1 text-xs font-bold uppercase tracking-widest text-neutral-600">Volleyball · Esports · Training</p>
             </div>
@@ -172,7 +172,7 @@ export default function JerseysPage() {
         <div className="mx-auto grid max-w-7xl grid-cols-2 px-0 md:grid-cols-4">
           {stats.map((s, i) => (
             <div key={s.label} className={`p-8 ${i < 3 ? "border-r-2 border-black" : ""} ${i < 2 ? "border-b-2 border-black md:border-b-0" : ""}`}>
-              <div className={`text-5xl font-black md:text-6xl ${s.color === "orange" ? "text-[#ff4d00]" : "text-black"}`}>{s.value}</div>
+              <div className={`text-5xl font-black md:text-6xl ${s.color === "orange" ? "text-[#cc3d00]" : "text-black"}`}>{s.value}</div>
               <div className="mt-1 text-xs font-black uppercase tracking-widest text-black">{s.label}</div>
               <div className="mt-1 text-xs text-neutral-500">{s.note}</div>
             </div>
@@ -183,7 +183,7 @@ export default function JerseysPage() {
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="mb-3 text-xs font-black uppercase tracking-widest text-neutral-500">[ 002 / Styles ]</div>
-          <h2 className="text-4xl font-black leading-tight md:text-6xl">Six cuts. <span className="text-[#ff4d00]">All sports.</span></h2>
+          <h2 className="text-4xl font-black leading-tight md:text-6xl">Six cuts. <span className="text-[#cc3d00]">All sports.</span></h2>
           <p className="mt-4 max-w-2xl text-base text-neutral-700 md:text-lg">From the workhorse short-sleeve to the high-stretch compression base layer.</p>
           <div className="mt-10 grid gap-0 md:grid-cols-2 lg:grid-cols-3">
             {styles.map((s, i) => (
@@ -200,7 +200,7 @@ export default function JerseysPage() {
       <section className="border-b-2 border-black bg-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="mb-3 text-xs font-black uppercase tracking-widest text-neutral-500">[ 003 / Fabric ]</div>
-          <h2 className="text-4xl font-black leading-tight md:text-6xl">Game-day weight. <span className="text-[#ff4d00]">Print-ready.</span></h2>
+          <h2 className="text-4xl font-black leading-tight md:text-6xl">Game-day weight. <span className="text-[#cc3d00]">Print-ready.</span></h2>
           <p className="mt-4 max-w-2xl text-base text-neutral-700 md:text-lg">From smooth interlock for maximum print vibrancy to birdseye for reversibles.</p>
           <div className="mt-10 border-2 border-black bg-white">
             <div className="grid grid-cols-12 border-b-2 border-black bg-black text-xs font-black uppercase tracking-widest text-white">
@@ -212,7 +212,7 @@ export default function JerseysPage() {
               <div key={f.name} className={`grid grid-cols-12 text-sm ${i < fabricChoices.length - 1 ? "border-b-2 border-black" : ""}`}>
                 <div className="col-span-3 border-r-2 border-black p-3 font-black text-black">{f.name}</div>
                 <div className="col-span-6 border-r-2 border-black p-3 text-neutral-700">{f.best}</div>
-                <div className="col-span-3 p-3 font-black text-[#ff4d00]">{f.moq}</div>
+                <div className="col-span-3 p-3 font-black text-[#cc3d00]">{f.moq}</div>
               </div>
             ))}
           </div>
@@ -222,11 +222,11 @@ export default function JerseysPage() {
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="mb-3 text-xs font-black uppercase tracking-widest text-neutral-500">[ 004 / Customisation ]</div>
-          <h2 className="text-4xl font-black leading-tight md:text-6xl">All printed. <span className="text-[#ff4d00]">Nothing peels.</span></h2>
+          <h2 className="text-4xl font-black leading-tight md:text-6xl">All printed. <span className="text-[#cc3d00]">Nothing peels.</span></h2>
           <div className="mt-10 grid gap-0 md:grid-cols-2 lg:grid-cols-4">
             {customisation.map((c, i) => (
               <div key={c.title} className={`p-6 ${i < 3 ? "lg:border-r-2 border-black" : ""} ${i < 2 ? "border-b-2 lg:border-b-0 border-black" : ""} ${i === 2 ? "border-b-2 lg:border-b-0 border-black" : ""}`}>
-                <c.icon className="h-8 w-8 text-[#ff4d00]" strokeWidth={2} />
+                <c.icon className="h-8 w-8 text-[#cc3d00]" strokeWidth={2} />
                 <div className="mt-3 text-xl font-black text-black">{c.title}</div>
                 <p className="mt-2 text-sm text-neutral-700">{c.desc}</p>
               </div>
@@ -238,11 +238,11 @@ export default function JerseysPage() {
       <section className="border-b-2 border-black bg-[#0a0a0a] text-white">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="mb-3 text-xs font-black uppercase tracking-widest text-neutral-400">[ 005 / Who orders this ]</div>
-          <h2 className="text-4xl font-black leading-tight md:text-6xl"><span className="text-[#ff4d00]">Roster to roster</span> · 50 to 5,000 pcs.</h2>
+          <h2 className="text-4xl font-black leading-tight md:text-6xl"><span className="text-[#cc3d00]">Roster to roster</span> · 50 to 5,000 pcs.</h2>
           <div className="mt-10 grid gap-0 md:grid-cols-2 lg:grid-cols-3">
             {useCases.map((u, i) => (
               <div key={u.who} className={`p-6 ${i < 3 ? "lg:border-r-2 border-neutral-800" : ""} ${i < 3 ? "border-b-2 lg:border-b-0 border-neutral-800" : ""} ${i === 3 || i === 4 ? "border-b-2 lg:border-b-0 border-neutral-800 md:border-r-2 md:border-b-0" : ""}`}>
-                <Users className="h-6 w-6 text-[#ff4d00]" strokeWidth={2} />
+                <Users className="h-6 w-6 text-[#cc3d00]" strokeWidth={2} />
                 <div className="mt-3 text-lg font-black text-white">{u.who}</div>
                 <p className="mt-1 text-sm text-neutral-400">{u.what}</p>
               </div>
@@ -254,7 +254,7 @@ export default function JerseysPage() {
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="mb-3 text-xs font-black uppercase tracking-widest text-neutral-500">[ 006 / Pricing ]</div>
-          <h2 className="text-4xl font-black leading-tight md:text-6xl">Transparent. <span className="text-[#ff4d00]">No quotes required</span> to see the range.</h2>
+          <h2 className="text-4xl font-black leading-tight md:text-6xl">Transparent. <span className="text-[#cc3d00]">No quotes required</span> to see the range.</h2>
           <p className="mt-4 max-w-2xl text-base text-neutral-700 md:text-lg">Starting prices for full-print sublimation jerseys with individual names and numbers. Compression base layer priced separately.</p>
           <div className="mt-10 border-2 border-black bg-white">
             <div className="grid grid-cols-12 border-b-2 border-black bg-black text-xs font-black uppercase tracking-widest text-white">
@@ -266,8 +266,8 @@ export default function JerseysPage() {
             {pricing.map((p, i) => (
               <div key={p.qty} className={`grid grid-cols-12 text-sm ${i < pricing.length - 1 ? "border-b-2 border-black" : ""}`}>
                 <div className="col-span-3 border-r-2 border-black p-3 font-black text-black">{p.qty}</div>
-                <div className="col-span-3 border-r-2 border-black p-3 font-black text-[#ff4d00]">{p.poly}</div>
-                <div className="col-span-3 border-r-2 border-black p-3 font-black text-[#ff4d00]">{p.compression}</div>
+                <div className="col-span-3 border-r-2 border-black p-3 font-black text-[#cc3d00]">{p.poly}</div>
+                <div className="col-span-3 border-r-2 border-black p-3 font-black text-[#cc3d00]">{p.compression}</div>
                 <div className="col-span-3 p-3 text-neutral-600">{p.note}</div>
               </div>
             ))}
@@ -284,7 +284,7 @@ export default function JerseysPage() {
               <details key={f.q} className={`group p-6 ${i < faq.length - 1 ? "border-b-2 border-black" : ""}`}>
                 <summary className="flex cursor-pointer items-start justify-between gap-4">
                   <span className="text-lg font-black text-black">{f.q}</span>
-                  <span className="ml-4 shrink-0 text-2xl font-black text-[#ff4d00] transition-transform group-open:rotate-45">+</span>
+                  <span className="ml-4 shrink-0 text-2xl font-black text-[#cc3d00] transition-transform group-open:rotate-45">+</span>
                 </summary>
                 <p className="mt-4 text-base text-neutral-700">{f.a}</p>
               </details>
@@ -298,7 +298,7 @@ export default function JerseysPage() {
           <div className="mb-3 text-xs font-black uppercase tracking-widest text-white/80">[ 008 / Next step ]</div>
           <h2 className="text-4xl font-black leading-tight md:text-7xl">Send your roster.<br />Get a jersey quote in 1 business day.</h2>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link href="/get-a-quote" className="group inline-flex items-center gap-2 bg-black px-6 py-3 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-white hover:text-[#ff4d00]">
+            <Link href="/get-a-quote" className="group inline-flex items-center gap-2 bg-black px-6 py-3 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-white hover:text-[#cc3d00]">
               Get a Jersey Quote <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
             </Link>
             <Link href="/products" className="inline-flex items-center gap-2 border-2 border-black bg-transparent px-6 py-3 text-sm font-black uppercase tracking-widest text-black transition-all hover:bg-black hover:text-white">
@@ -311,7 +311,7 @@ export default function JerseysPage() {
       {/* 009 / Browse sport jerseys */}
       <section className="bg-white">
         <div className="mx-auto max-w-7xl px-6 py-20 md:py-28">
-          <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#ff4d00]">[ 009 / Browse sport jerseys ]</div>
+          <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#cc3d00]">[ 009 / Browse sport jerseys ]</div>
           <h2 className="mb-4 text-4xl font-black leading-tight text-[#0a0a0a] md:text-6xl">
             Every sport T-shirt, ready to print.
           </h2>

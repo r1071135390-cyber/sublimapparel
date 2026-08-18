@@ -7,12 +7,12 @@ export function FactoryFloor() {
         {/* Section header */}
         <div className="mb-12 flex items-end justify-between border-b-2 border-black pb-6">
           <div>
-            <div className="mb-2 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
+            <div className="mb-2 text-xs font-black uppercase tracking-widest text-[#cc3d00]">
               [ 002 / Factory Floor ]
             </div>
             <h2 className="text-4xl font-black uppercase leading-none tracking-tight md:text-6xl">
               Inside the<br />
-              <span className="italic text-[#ff4d00]">workshop.</span>
+              <span className="italic text-[#cc3d00]">workshop.</span>
             </h2>
           </div>
           <div className="hidden text-right text-xs font-bold uppercase tracking-widest text-black/60 md:block">
@@ -34,7 +34,7 @@ export function FactoryFloor() {
               />
               {/* Overlay label */}
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-6 pt-20">
-                <div className="font-mono text-xs font-bold uppercase tracking-widest text-[#00c2ff]">
+                <div className="font-mono text-xs font-bold uppercase tracking-widest text-[#0078a8]">
                   Equipment #1
                 </div>
                 <h3 className="mt-1 text-2xl font-black uppercase text-white">
@@ -59,7 +59,7 @@ export function FactoryFloor() {
                 loading="lazy"
               />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-6 pt-20">
-                <div className="font-mono text-xs font-bold uppercase tracking-widest text-[#00c2ff]">
+                <div className="font-mono text-xs font-bold uppercase tracking-widest text-[#0078a8]">
                   Equipment #2
                 </div>
                 <h3 className="mt-1 text-2xl font-black uppercase text-white">

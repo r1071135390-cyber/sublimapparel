@@ -11,7 +11,7 @@ export function TeamSection() {
             <h2 className="text-5xl font-black leading-[0.95] tracking-tight text-black md:text-7xl">
               Eight people.
               <br />
-              <span className="text-[#ff4d00]">Ten years</span>
+              <span className="text-[#cc3d00]">Ten years</span>
               <br />
               of trade.
             </h2>
@@ -194,7 +194,7 @@ function Person({
 function ExpectItem({ num, title, body }: { num: string; title: string; body: string }) {
   return (
     <div>
-      <div className="mb-2 text-3xl font-black text-[#ff4d00] md:text-4xl">{num}</div>
+      <div className="mb-2 text-3xl font-black text-[#cc3d00] md:text-4xl">{num}</div>
       <div className="text-base font-black text-black md:text-lg">{title}</div>
       <p className="mt-2 text-sm leading-relaxed text-black/70">{body}</p>
     </div>

@@ -198,7 +198,7 @@ export default async function ProductDetailPage({
             {/* Specs */}
             <div>
               <div className="mb-6 border-b-2 border-black pb-3 md:mb-8 md:pb-4">
-                <p className="mb-1 text-[10px] font-bold uppercase tracking-widest text-[#ff4d00] md:text-xs">
+                <p className="mb-1 text-[10px] font-bold uppercase tracking-widest text-[#cc3d00] md:text-xs">
                   Specs at a glance
                 </p>
                 <h2 className="text-2xl font-black uppercase leading-tight text-black md:text-3xl">
@@ -240,7 +240,7 @@ export default async function ProductDetailPage({
                   Get a quote
                   <ArrowRight className="h-4 w-4" />
                 </RequestQuoteLink>
-                <RequestSampleButton className="inline-flex flex-1 items-center justify-center gap-2 rounded-sm border-2 border-black bg-white px-4 py-3 text-sm font-black uppercase tracking-wide text-black transition-colors hover:border-[#ff4d00] hover:text-[#ff4d00] md:text-base">
+                <RequestSampleButton className="inline-flex flex-1 items-center justify-center gap-2 rounded-sm border-2 border-black bg-white px-4 py-3 text-sm font-black uppercase tracking-wide text-black transition-colors hover:border-[#ff4d00] hover:text-[#cc3d00] md:text-base">
                   Request a sample
                 </RequestSampleButton>
               </div>
@@ -253,7 +253,7 @@ export default async function ProductDetailPage({
       <section className="bg-white">
         <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-20">
           <div className="mb-8 border-b-2 border-black pb-4 md:mb-12 md:pb-6">
-            <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-[#ff4d00] md:text-sm">
+            <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-[#cc3d00] md:text-sm">
               About this garment
             </p>
             <h2 className="text-2xl font-black uppercase leading-tight tracking-tight text-black md:text-4xl">
@@ -276,7 +276,7 @@ export default async function ProductDetailPage({
               <ul className="space-y-3">
                 {seo.highlights.map((h) => (
                   <li key={h} className="flex items-start gap-2 text-[12px] leading-snug text-[#1a1a1a] md:text-sm">
-                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#ff4d00]" aria-hidden />
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#cc3d00]" aria-hidden />
                     <span>{h}</span>
                   </li>
                 ))}
@@ -290,7 +290,7 @@ export default async function ProductDetailPage({
       <section className="border-y-2 border-black bg-[#f5f5f5]">
         <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-16">
           <div className="mb-6 md:mb-10">
-            <p className="mb-1 text-[10px] font-bold uppercase tracking-widest text-[#ff4d00] md:text-xs">
+            <p className="mb-1 text-[10px] font-bold uppercase tracking-widest text-[#cc3d00] md:text-xs">
               Frequently asked
             </p>
             <h2 className="text-2xl font-black uppercase leading-tight tracking-tight text-black md:text-3xl">
@@ -306,7 +306,7 @@ export default async function ProductDetailPage({
                 <summary className="cursor-pointer list-none text-[13px] font-black uppercase leading-snug text-black md:text-sm">
                   <span className="flex items-start justify-between gap-3">
                     <span>{q.question}</span>
-                    <span className="text-[#ff4d00] transition-transform group-open:rotate-45">+</span>
+                    <span className="text-[#cc3d00] transition-transform group-open:rotate-45">+</span>
                   </span>
                 </summary>
                 <p className="mt-3 text-[12px] leading-relaxed text-[#3a3a3a] md:text-[13px]">
@@ -321,7 +321,7 @@ export default async function ProductDetailPage({
       {/* TAGS BY DIMENSION */}
       <section className="border-y-2 border-black bg-[#1A1A1A] text-white">
         <div className="mx-auto max-w-7xl px-4 py-10 md:px-8 md:py-16">
-          <p className="mb-1 text-[10px] font-bold uppercase tracking-widest text-[#ff4d00] md:text-xs">
+          <p className="mb-1 text-[10px] font-bold uppercase tracking-widest text-[#cc3d00] md:text-xs">
             Cross-reference this product
           </p>
           <h2 className="mb-6 text-2xl font-black uppercase leading-tight tracking-tight md:mb-8 md:text-3xl">
@@ -386,7 +386,7 @@ export default async function ProductDetailPage({
       <section className="bg-white">
         <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-20">
           <div className="mb-8 border-b-2 border-black pb-4 md:mb-12 md:pb-6">
-            <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-[#ff4d00] md:text-sm">
+            <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-[#cc3d00] md:text-sm">
               Production, in-house
             </p>
             <h2 className="text-2xl font-black uppercase leading-tight tracking-tight text-black md:text-4xl">
@@ -440,7 +440,7 @@ export default async function ProductDetailPage({
           <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-20">
             <div className="mb-6 flex items-end justify-between border-b-2 border-black pb-4 md:mb-10 md:pb-6">
               <div>
-                <p className="mb-1 text-[10px] font-bold uppercase tracking-widest text-[#ff4d00] md:text-xs">
+                <p className="mb-1 text-[10px] font-bold uppercase tracking-widest text-[#cc3d00] md:text-xs">
                   Cross-sell
                 </p>
                 <h2 className="text-2xl font-black uppercase leading-tight tracking-tight text-black md:text-3xl">
@@ -449,7 +449,7 @@ export default async function ProductDetailPage({
               </div>
               <Link
                 href="/products/all/"
-                className="hidden text-[10px] font-bold uppercase tracking-wide text-[#ff4d00] hover:underline md:inline md:text-xs"
+                className="hidden text-[10px] font-bold uppercase tracking-wide text-[#cc3d00] hover:underline md:inline md:text-xs"
               >
                 See all →
               </Link>
@@ -499,7 +499,7 @@ export default async function ProductDetailPage({
       <section className="border-t-2 border-black bg-white">
         <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-16">
           <div className="mb-8">
-            <p className="mb-1 text-[10px] font-bold uppercase tracking-widest text-[#ff4d00] md:text-xs">
+            <p className="mb-1 text-[10px] font-bold uppercase tracking-widest text-[#cc3d00] md:text-xs">
               Continue browsing
             </p>
             <h2 className="text-2xl font-black uppercase leading-tight tracking-tight text-black md:text-3xl">
@@ -522,7 +522,7 @@ export default async function ProductDetailPage({
         <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-20">
           <div className="grid grid-cols-1 items-center gap-6 md:grid-cols-3 md:gap-8">
             <div className="md:col-span-2">
-              <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-[#ff4d00] md:text-xs">
+              <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-[#cc3d00] md:text-xs">
                 Ready to order?
               </p>
               <h2 className="text-2xl font-black uppercase leading-tight tracking-tight md:text-4xl">

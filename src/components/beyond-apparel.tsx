@@ -18,7 +18,7 @@ export function BeyondApparel() {
             <h2 className="mb-6 text-4xl font-black leading-[0.95] tracking-tight text-[#0a0a0a] md:text-5xl lg:text-6xl">
               Custom print.
               <br />
-              <span className="text-[#ff4d00]">Any material. Any product.</span>
+              <span className="text-[#cc3d00]">Any material. Any product.</span>
             </h2>
 
             <p className="mb-8 max-w-xl text-base leading-relaxed text-[#0a0a0a]/75 md:text-lg">
@@ -54,7 +54,7 @@ export function BeyondApparel() {
                 </div>
               </div>
               <div>
-                <div className="text-3xl font-black text-[#ff4d00] md:text-4xl">
+                <div className="text-3xl font-black text-[#cc3d00] md:text-4xl">
                   100%
                 </div>
                 <div className="mt-1 text-[10px] font-bold uppercase tracking-widest text-[#0a0a0a]/60">

@@ -83,12 +83,12 @@ export default function CasesPage() {
       {/* 1 · HERO */}
       <section className="border-b-2 border-[#0a0a0a] bg-[#0a0a0a] text-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
-          <div className="mb-6 text-xs font-mono uppercase tracking-widest text-[#ff4d00]">
+          <div className="mb-6 text-xs font-mono uppercase tracking-widest text-[#cc3d00]">
             [ 013 / About · industries ]
           </div>
           <h1 className="max-w-4xl text-5xl font-extrabold leading-[0.95] tracking-tight md:text-7xl">
             <span className="block">12 industries.</span>
-            <span className="block text-[#ff4d00]">1,000+ clients.</span>
+            <span className="block text-[#cc3d00]">1,000+ clients.</span>
             <span className="block">5M+ pieces last year.</span>
           </h1>
           <p className="mt-6 max-w-2xl text-lg text-[#a0a0a0] md:text-xl">
@@ -112,7 +112,7 @@ export default function CasesPage() {
             <div key={s.label} className="px-6 py-8 text-center md:py-10">
               <div className="text-3xl font-extrabold leading-none text-[#0a0a0a] md:text-5xl">
                 {s.value}
-                <span className="ml-1 text-base font-bold text-[#ff4d00] md:text-lg">{s.unit}</span>
+                <span className="ml-1 text-base font-bold text-[#cc3d00] md:text-lg">{s.unit}</span>
               </div>
               <div className="mt-2 text-xs font-bold uppercase tracking-wider text-[#6b6b6b]">{s.label}</div>
             </div>
@@ -123,10 +123,10 @@ export default function CasesPage() {
       {/* 3 · DESCRIPTION */}
       <section className="border-b-2 border-[#0a0a0a]">
         <div className="mx-auto max-w-4xl px-6 py-16 md:py-24">
-          <div className="text-xs font-mono uppercase tracking-widest text-[#ff4d00]">[ Why breadth matters ]</div>
+          <div className="text-xs font-mono uppercase tracking-widest text-[#cc3d00]">[ Why breadth matters ]</div>
           <h2 className="mt-3 text-3xl font-extrabold leading-tight md:text-5xl">
             The same 12-line factory that builds Olympic-quality race singlets{" "}
-            <span className="text-[#ff4d00]">also makes your Greek-life tees.</span>
+            <span className="text-[#cc3d00]">also makes your Greek-life tees.</span>
           </h2>
           <div className="mt-8 space-y-5 text-base leading-relaxed text-[#3a3a3a] md:text-lg">
             <p>
@@ -156,13 +156,13 @@ export default function CasesPage() {
       <section className="border-b-2 border-[#0a0a0a] bg-[#1a1a1a] text-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="mb-12 max-w-3xl">
-            <div className="text-xs font-mono uppercase tracking-widest text-[#00c2ff]">[ 013.A / The 12 verticals ]</div>
+            <div className="text-xs font-mono uppercase tracking-widest text-[#0078a8]">[ 013.A / The 12 verticals ]</div>
             <h2 className="mt-3 text-3xl font-extrabold leading-tight md:text-5xl">Who we already make for.</h2>
           </div>
           <div className="grid gap-px bg-[#0a0a0a] md:grid-cols-2 lg:grid-cols-3">
             {industries.map((ind) => (
               <div key={ind.name} className="bg-[#1a1a1a] p-8">
-                <div className="mb-4 inline-flex h-10 w-10 items-center justify-center border-2 border-[#ff4d00] text-[#ff4d00]">
+                <div className="mb-4 inline-flex h-10 w-10 items-center justify-center border-2 border-[#ff4d00] text-[#cc3d00]">
                   {ind.icon}
                 </div>
                 <h3 className="text-lg font-bold leading-snug">{ind.name}</h3>
@@ -177,13 +177,13 @@ export default function CasesPage() {
       <section className="border-b-2 border-[#0a0a0a] bg-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="mb-12 max-w-3xl">
-            <div className="text-xs font-mono uppercase tracking-widest text-[#ff4d00]">[ 013.B / Real client profiles ]</div>
+            <div className="text-xs font-mono uppercase tracking-widest text-[#cc3d00]">[ 013.B / Real client profiles ]</div>
             <h2 className="mt-3 text-3xl font-extrabold leading-tight md:text-5xl">Six real orders we've run.</h2>
           </div>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {useCases.map((u, i) => (
               <div key={u.title} className="border-2 border-[#0a0a0a] bg-white p-6">
-                <div className="mb-3 text-xs font-mono font-bold text-[#ff4d00]">0{i + 1}</div>
+                <div className="mb-3 text-xs font-mono font-bold text-[#cc3d00]">0{i + 1}</div>
                 <h3 className="text-lg font-bold leading-snug">{u.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-[#3a3a3a]">{u.body}</p>
               </div>
@@ -195,12 +195,12 @@ export default function CasesPage() {
       {/* 6 · FAQ */}
       <section className="border-b-2 border-[#0a0a0a]">
         <div className="mx-auto max-w-4xl px-6 py-16 md:py-24">
-          <div className="text-xs font-mono uppercase tracking-widest text-[#ff4d00]">[ 013.C / FAQ ]</div>
+          <div className="text-xs font-mono uppercase tracking-widest text-[#cc3d00]">[ 013.C / FAQ ]</div>
           <h2 className="mt-3 mb-10 text-3xl font-extrabold leading-tight md:text-5xl">The B2B starter questions.</h2>
           <div className="space-y-6">
             {faqs.map((f, i) => (
               <div key={f.q} className="border-2 border-[#0a0a0a] bg-white p-6">
-                <div className="mb-2 text-xs font-mono font-bold text-[#ff4d00]">Q · {String(i + 1).padStart(2, "0")}</div>
+                <div className="mb-2 text-xs font-mono font-bold text-[#cc3d00]">Q · {String(i + 1).padStart(2, "0")}</div>
                 <h3 className="text-lg font-bold leading-snug md:text-xl">{f.q}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-[#3a3a3a] md:text-base">{f.a}</p>
               </div>
@@ -212,7 +212,7 @@ export default function CasesPage() {
       {/* 7 · CTA */}
       <section className="bg-[#0a0a0a] text-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
-          <div className="mb-8 text-xs font-mono uppercase tracking-widest text-[#ff4d00]">[ 013.D / Start your project ]</div>
+          <div className="mb-8 text-xs font-mono uppercase tracking-widest text-[#cc3d00]">[ 013.D / Start your project ]</div>
           <h2 className="max-w-3xl text-4xl font-extrabold leading-tight md:text-6xl">Don't see your industry? We probably still do it.</h2>
           <p className="mt-6 max-w-2xl text-lg text-[#a0a0a0]">
             If your business needs custom sublimated apparel, we can make it. Tell us your
@@ -238,7 +238,7 @@ export default function CasesPage() {
               { href: "/fabric/cotton", title: "100% cotton", desc: "Our differentiator" },
             ].map((r) => (
               <Link key={r.href} href={r.href} className="group block border-2 border-[#0a0a0a] bg-white p-6 transition-colors hover:bg-[#0a0a0a] hover:text-[#faf9f6]">
-                <div className="text-xs font-mono uppercase tracking-wider text-[#ff4d00]">→</div>
+                <div className="text-xs font-mono uppercase tracking-wider text-[#cc3d00]">→</div>
                 <div className="mt-2 text-lg font-bold">{r.title}</div>
                 <div className="mt-1 text-sm text-[#6b6b6b] group-hover:text-[#a0a0a0]">{r.desc}</div>
               </Link>

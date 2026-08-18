@@ -33,13 +33,13 @@ export default function UsWarehousePage() {
       {/* HERO — brutally honest */}
       <section className="border-b-2 border-black bg-[#0a0a0a] text-white">
         <div className="mx-auto max-w-5xl px-6 py-20 md:py-28">
-          <p className="mb-4 text-xs font-black uppercase tracking-[0.3em] text-[#ff4d00]">
+          <p className="mb-4 text-xs font-black uppercase tracking-[0.3em] text-[#cc3d00]">
             Honest note · Not a standard feature
           </p>
           <h1 className="text-4xl font-black leading-[1.05] tracking-tight md:text-6xl">
             About our US warehouse.
             <br />
-            <span className="text-[#ff4d00]">The short version.</span>
+            <span className="text-[#cc3d00]">The short version.</span>
           </h1>
           <p className="mt-8 max-w-2xl text-lg leading-relaxed text-white/70 md:text-xl">
             We have a small US address in Fontana, CA. It&apos;s a placeholder service we keep around for occasional overstock — not a core part of how we work, and we don&apos;t promote it.

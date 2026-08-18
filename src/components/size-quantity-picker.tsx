@@ -128,7 +128,7 @@ export function SizeQuantityPicker({
                   type="button"
                   onClick={() => onRemove(r.id)}
                   aria-label={`Remove ${r.size || "custom size"}`}
-                  className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full text-[#0a0a0a]/40 transition-colors hover:bg-black/5 hover:text-[#ff4d00]"
+                  className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full text-[#0a0a0a]/40 transition-colors hover:bg-black/5 hover:text-[#cc3d00]"
                 >
                   <X className="h-3 w-3" strokeWidth={2.5} />
                 </button>
@@ -148,7 +148,7 @@ export function SizeQuantityPicker({
       <button
         type="button"
         onClick={onAdd}
-        className="w-full border border-dashed border-[#0a0a0a]/25 px-2 py-1.5 text-[10px] font-bold text-[#ff4d00] transition-colors hover:border-[#ff4d00] hover:bg-[#ff4d00]/5"
+        className="w-full border border-dashed border-[#0a0a0a]/25 px-2 py-1.5 text-[10px] font-bold text-[#cc3d00] transition-colors hover:border-[#ff4d00] hover:bg-[#ff4d00]/5"
       >
         + Add special size (e.g. 3XL, 4XL, Tall) — add as many rows as you need
       </button>
@@ -187,7 +187,7 @@ function SizeQtyStepper({
         type="button"
         aria-label={`Decrease quantity for size ${sizeLabel ?? ""}`.trim()}
         onClick={() => onBump(-1)}
-        className="flex h-8 w-8 items-center justify-center text-[#0a0a0a]/60 transition-colors hover:bg-black/5 hover:text-[#ff4d00] disabled:cursor-not-allowed disabled:opacity-30"
+        className="flex h-8 w-8 items-center justify-center text-[#0a0a0a]/60 transition-colors hover:bg-black/5 hover:text-[#cc3d00] disabled:cursor-not-allowed disabled:opacity-30"
         disabled={qty <= 0}
       >
         <Minus className="h-3 w-3" strokeWidth={2.5} />
@@ -208,7 +208,7 @@ function SizeQtyStepper({
         type="button"
         aria-label="Increase quantity"
         onClick={() => onBump(1)}
-        className="flex h-8 w-8 items-center justify-center text-[#0a0a0a]/60 transition-colors hover:bg-black/5 hover:text-[#ff4d00]"
+        className="flex h-8 w-8 items-center justify-center text-[#0a0a0a]/60 transition-colors hover:bg-black/5 hover:text-[#cc3d00]"
       >
         <Plus className="h-3 w-3" strokeWidth={2.5} />
       </button>

@@ -73,9 +73,9 @@ export default async function CaseCategoryPage({ params }: Props) {
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-6 py-2.5 text-[11px] font-bold uppercase tracking-wider">
           <div className="flex flex-wrap items-center gap-x-5 gap-y-1">
             <span>Global DDP shipping</span>
-            <span className="text-[#00c2ff]">·</span>
+            <span className="text-[#0078a8]">·</span>
             <span>US stock in Fontana, CA</span>
-            <span className="text-[#00c2ff]">·</span>
+            <span className="text-[#0078a8]">·</span>
             <span>MOQ from 50 pcs</span>
           </div>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-1">
@@ -89,7 +89,7 @@ export default async function CaseCategoryPage({ params }: Props) {
         <div className="mx-auto max-w-7xl px-6 py-12 md:py-16">
           <Link
             href="/cases"
-            className="mb-6 inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-black/70 transition-colors hover:text-[#ff4d00]"
+            className="mb-6 inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-black/70 transition-colors hover:text-[#cc3d00]"
           >
             <ArrowLeft size={14} strokeWidth={3} />
             All case studies
@@ -100,7 +100,7 @@ export default async function CaseCategoryPage({ params }: Props) {
               <Icon size={32} strokeWidth={2.5} />
             </div>
             <div>
-              <div className="mb-2 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
+              <div className="mb-2 text-xs font-black uppercase tracking-widest text-[#cc3d00]">
                 [ Industry / {String(industries.findIndex((i) => i.slug === ind.slug) + 1).padStart(3, "0")} ]
               </div>
               <h1 className="mb-4 text-4xl font-black uppercase leading-[0.95] tracking-tight md:text-6xl">
@@ -135,7 +135,7 @@ export default async function CaseCategoryPage({ params }: Props) {
             <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
               <div className="mb-6 flex flex-wrap items-end justify-between gap-4 border-b-2 border-black pb-4">
                 <div>
-                  <div className="mb-2 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
+                  <div className="mb-2 text-xs font-black uppercase tracking-widest text-[#cc3d00]">
                     [ Related products ]
                   </div>
                   <h2 className="text-2xl font-black uppercase leading-none tracking-tight md:text-3xl">
@@ -144,7 +144,7 @@ export default async function CaseCategoryPage({ params }: Props) {
                 </div>
                 <Link
                   href={tagArchiveLink("scenario", ind.relatedScenario)}
-                  className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-black transition-colors hover:text-[#ff4d00]"
+                  className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-black transition-colors hover:text-[#cc3d00]"
                 >
                   See all {ind.relatedScenario} products
                   <ArrowRight size={14} strokeWidth={3} />
@@ -180,7 +180,7 @@ export default async function CaseCategoryPage({ params }: Props) {
                       </div>
                     );
                   })()}
-                    <div className="text-[10px] font-black uppercase tracking-widest text-[#ff4d00]">
+                    <div className="text-[10px] font-black uppercase tracking-widest text-[#cc3d00]">
                       {p.category}
                     </div>
                     <h3 className="mt-0.5 text-sm font-black uppercase leading-tight tracking-tight line-clamp-2">
@@ -243,7 +243,7 @@ export default async function CaseCategoryPage({ params }: Props) {
                     <p className="text-sm font-medium leading-relaxed text-black/75">
                       {c.summary}
                     </p>
-                    <div className="mt-auto pt-4 text-xs font-black uppercase tracking-wider text-[#ff4d00]">
+                    <div className="mt-auto pt-4 text-xs font-black uppercase tracking-wider text-[#cc3d00]">
                       Read case study →
                     </div>
                   </Link>
@@ -253,7 +253,7 @@ export default async function CaseCategoryPage({ params }: Props) {
           ) : (
             /* Empty state — gallery under construction */
             <div className="border-2 border-dashed border-black/30 bg-[#faf9f6] px-6 py-20 text-center">
-              <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center border-2 border-black bg-white text-[#ff4d00]">
+              <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center border-2 border-black bg-white text-[#cc3d00]">
                 <ImageOff size={36} strokeWidth={2.5} />
               </div>
               <h2 className="mb-3 text-2xl font-black uppercase leading-tight md:text-3xl">
@@ -283,7 +283,7 @@ export default async function CaseCategoryPage({ params }: Props) {
           <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.3em] text-muted-foreground">
             12 industries · serving 50+ countries · since 2018
           </p>
-          <h2 className="mb-6 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
+          <h2 className="mb-6 text-xs font-black uppercase tracking-widest text-[#cc3d00]">
             [ Other industries — {industries.length - 1} more ]
           </h2>
           <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">

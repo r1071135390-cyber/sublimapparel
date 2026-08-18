@@ -123,12 +123,12 @@ export default function ProductionPage() {
       {/* 1 · HERO */}
       <section className="border-b-2 border-[#0a0a0a] bg-[#0a0a0a] text-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
-          <div className="mb-6 text-xs font-mono uppercase tracking-widest text-[#ff4d00]">
+          <div className="mb-6 text-xs font-mono uppercase tracking-widest text-[#cc3d00]">
             [ 011 / About · production ]
           </div>
           <h1 className="max-w-4xl text-5xl font-extrabold leading-[0.95] tracking-tight md:text-7xl">
             <span className="block">Inquiry to ship.</span>
-            <span className="block text-[#ff4d00]">21 days.</span>
+            <span className="block text-[#cc3d00]">21 days.</span>
             <span className="block">No black box.</span>
           </h1>
           <p className="mt-6 max-w-2xl text-lg text-[#a0a0a0] md:text-xl">
@@ -152,7 +152,7 @@ export default function ProductionPage() {
             <div key={s.label} className="px-6 py-8 text-center md:py-10">
               <div className="text-3xl font-extrabold leading-none text-[#0a0a0a] md:text-5xl">
                 {s.value}
-                <span className="ml-1 text-base font-bold text-[#ff4d00] md:text-lg">{s.unit}</span>
+                <span className="ml-1 text-base font-bold text-[#cc3d00] md:text-lg">{s.unit}</span>
               </div>
               <div className="mt-2 text-xs font-bold uppercase tracking-wider text-[#6b6b6b]">{s.label}</div>
             </div>
@@ -163,10 +163,10 @@ export default function ProductionPage() {
       {/* 3 · DESCRIPTION */}
       <section className="border-b-2 border-[#0a0a0a]">
         <div className="mx-auto max-w-4xl px-6 py-16 md:py-24">
-          <div className="text-xs font-mono uppercase tracking-widest text-[#ff4d00]">[ Why a defined process ]</div>
+          <div className="text-xs font-mono uppercase tracking-widest text-[#cc3d00]">[ Why a defined process ]</div>
           <h2 className="mt-3 text-3xl font-extrabold leading-tight md:text-5xl">
             Most factories won't tell you the process.{" "}
-            <span className="text-[#ff4d00]">We wrote it down.</span>
+            <span className="text-[#cc3d00]">We wrote it down.</span>
           </h2>
           <div className="mt-8 space-y-5 text-base leading-relaxed text-[#3a3a3a] md:text-lg">
             <p>
@@ -195,7 +195,7 @@ export default function ProductionPage() {
       <section className="border-b-2 border-[#0a0a0a] bg-[#1a1a1a] text-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="mb-12 max-w-3xl">
-            <div className="text-xs font-mono uppercase tracking-widest text-[#00c2ff]">[ 011.A / The 7 steps ]</div>
+            <div className="text-xs font-mono uppercase tracking-widest text-[#0078a8]">[ 011.A / The 7 steps ]</div>
             <h2 className="mt-3 text-3xl font-extrabold leading-tight md:text-5xl">Step by step, day by day.</h2>
           </div>
           <ol className="space-y-px">
@@ -203,11 +203,11 @@ export default function ProductionPage() {
               <li key={s.title} className="bg-[#1a1a1a] p-6 md:p-8">
                 <div className="flex flex-col gap-4 md:flex-row md:items-start">
                   <div className="flex shrink-0 items-center gap-3 md:w-48">
-                    <div className="flex h-12 w-12 items-center justify-center border-2 border-[#ff4d00] text-[#ff4d00]">
+                    <div className="flex h-12 w-12 items-center justify-center border-2 border-[#ff4d00] text-[#cc3d00]">
                       {s.icon}
                     </div>
                     <div>
-                      <div className="text-xs font-mono uppercase tracking-widest text-[#ff4d00]">
+                      <div className="text-xs font-mono uppercase tracking-widest text-[#cc3d00]">
                         Step {String(i + 1).padStart(2, "0")}
                       </div>
                       <div className="text-sm font-bold text-white">{s.day}</div>
@@ -227,7 +227,7 @@ export default function ProductionPage() {
       {/* 5 · TIMELINE TABLE */}
       <section className="border-b-2 border-[#0a0a0a]">
         <div className="mx-auto max-w-5xl px-6 py-16 md:py-24">
-          <div className="text-xs font-mono uppercase tracking-widest text-[#ff4d00]">[ 011.B / Timeline benchmarks ]</div>
+          <div className="text-xs font-mono uppercase tracking-widest text-[#cc3d00]">[ 011.B / Timeline benchmarks ]</div>
           <h2 className="mt-3 mb-10 text-3xl font-extrabold leading-tight md:text-5xl">The numbers, side by side.</h2>
           <div className="border-2 border-[#0a0a0a]">
             <table className="w-full text-left">
@@ -235,7 +235,7 @@ export default function ProductionPage() {
                 {timeline.map((row) => (
                   <tr key={row.stage}>
                     <td className="w-1/2 bg-[#faf9f6] px-4 py-3 text-sm font-bold md:px-6 md:py-4 md:text-base">{row.stage}</td>
-                    <td className="w-1/2 bg-white px-4 py-3 text-sm font-bold text-[#ff4d00] md:px-6 md:py-4 md:text-base">{row.days}</td>
+                    <td className="w-1/2 bg-white px-4 py-3 text-sm font-bold text-[#cc3d00] md:px-6 md:py-4 md:text-base">{row.days}</td>
                   </tr>
                 ))}
               </tbody>
@@ -248,13 +248,13 @@ export default function ProductionPage() {
       <section className="border-b-2 border-[#0a0a0a] bg-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="mb-12 max-w-3xl">
-            <div className="text-xs font-mono uppercase tracking-widest text-[#ff4d00]">[ 011.C / Real timelines ]</div>
+            <div className="text-xs font-mono uppercase tracking-widest text-[#cc3d00]">[ 011.C / Real timelines ]</div>
             <h2 className="mt-3 text-3xl font-extrabold leading-tight md:text-5xl">Six real order profiles.</h2>
           </div>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {useCases.map((u, i) => (
               <div key={u.title} className="border-2 border-[#0a0a0a] bg-white p-6">
-                <div className="mb-3 text-xs font-mono font-bold text-[#ff4d00]">0{i + 1}</div>
+                <div className="mb-3 text-xs font-mono font-bold text-[#cc3d00]">0{i + 1}</div>
                 <h3 className="text-lg font-bold leading-snug">{u.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-[#3a3a3a]">{u.body}</p>
               </div>
@@ -266,12 +266,12 @@ export default function ProductionPage() {
       {/* 7 · FAQ */}
       <section className="border-b-2 border-[#0a0a0a]">
         <div className="mx-auto max-w-4xl px-6 py-16 md:py-24">
-          <div className="text-xs font-mono uppercase tracking-widest text-[#ff4d00]">[ 011.D / FAQ ]</div>
+          <div className="text-xs font-mono uppercase tracking-widest text-[#cc3d00]">[ 011.D / FAQ ]</div>
           <h2 className="mt-3 mb-10 text-3xl font-extrabold leading-tight md:text-5xl">The timing questions.</h2>
           <div className="space-y-6">
             {faqs.map((f, i) => (
               <div key={f.q} className="border-2 border-[#0a0a0a] bg-white p-6">
-                <div className="mb-2 text-xs font-mono font-bold text-[#ff4d00]">Q · {String(i + 1).padStart(2, "0")}</div>
+                <div className="mb-2 text-xs font-mono font-bold text-[#cc3d00]">Q · {String(i + 1).padStart(2, "0")}</div>
                 <h3 className="text-lg font-bold leading-snug md:text-xl">{f.q}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-[#3a3a3a] md:text-base">{f.a}</p>
               </div>
@@ -283,7 +283,7 @@ export default function ProductionPage() {
       {/* 8 · CTA */}
       <section className="bg-[#0a0a0a] text-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
-          <div className="mb-8 text-xs font-mono uppercase tracking-widest text-[#ff4d00]">[ 011.E / Start a project ]</div>
+          <div className="mb-8 text-xs font-mono uppercase tracking-widest text-[#cc3d00]">[ 011.E / Start a project ]</div>
           <h2 className="max-w-3xl text-4xl font-extrabold leading-tight md:text-6xl">Send your design. Get a 21-day plan back.</h2>
           <p className="mt-6 max-w-2xl text-lg text-[#a0a0a0]">
             We come back within 1 business day with a quote, a sample plan, and a production
@@ -309,7 +309,7 @@ export default function ProductionPage() {
               { href: "/fabric/cotton", title: "Allover digital print on cotton", desc: "Cut-and-sew, true full-body" },
             ].map((r) => (
               <Link key={r.href} href={r.href} className="group block border-2 border-[#0a0a0a] bg-white p-6 transition-colors hover:bg-[#0a0a0a] hover:text-[#faf9f6]">
-                <div className="text-xs font-mono uppercase tracking-wider text-[#ff4d00]">→</div>
+                <div className="text-xs font-mono uppercase tracking-wider text-[#cc3d00]">→</div>
                 <div className="mt-2 text-lg font-bold">{r.title}</div>
                 <div className="mt-1 text-sm text-[#6b6b6b] group-hover:text-[#a0a0a0]">{r.desc}</div>
               </Link>

@@ -76,7 +76,7 @@ export function MobileBottomNav() {
                 className={cn(
                   "flex h-full w-full flex-col items-center justify-center gap-0.5 text-[10px] font-medium transition-colors",
                   active
-                    ? "text-[#ff4d00]"
+                    ? "text-[#cc3d00]"
                     : "text-neutral-500 hover:text-black"
                 )}
                 aria-current={active ? "page" : undefined}

@@ -36,7 +36,7 @@ export default function BlanksCatalogPage() {
   return (
     <main className="mx-auto max-w-7xl px-4 py-10 md:px-8 md:py-16">
       <div className="mb-6">
-        <Link href="/product-review/" className="text-sm font-bold text-[#ff4d00] hover:underline">
+        <Link href="/product-review/" className="text-sm font-bold text-[#cc3d00] hover:underline">
           ← Back to product review
         </Link>
       </div>
@@ -115,7 +115,7 @@ export default function BlanksCatalogPage() {
 function Stat({ label, value }: { label: string; value: number | string }) {
   return (
     <div className="rounded border-2 border-black bg-white p-4">
-      <div className="text-3xl font-black text-[#ff4d00]">{value}</div>
+      <div className="text-3xl font-black text-[#cc3d00]">{value}</div>
       <div className="mt-1 text-xs font-bold uppercase tracking-wider text-black/60">{label}</div>
     </div>
   );
@@ -126,7 +126,7 @@ function BlankCard({ r }: { r: Record<string, string> }) {
     <article className="flex flex-col rounded border border-black/15 bg-white p-4 text-sm shadow-sm transition-shadow hover:shadow-md">
       <header className="mb-2 flex items-start justify-between gap-2">
         <div>
-          <div className="text-[10px] font-bold uppercase tracking-wider text-[#ff4d00]">
+          <div className="text-[10px] font-bold uppercase tracking-wider text-[#cc3d00]">
             {r.number}
           </div>
           <h3 className="text-base font-black leading-tight">{r.blank_name}</h3>
@@ -198,7 +198,7 @@ function Craft({ name, best, moq }: { name: string; best: string; moq: string })
     <div>
       <div className="font-black uppercase text-black">{name}</div>
       <div className="text-black/70">{best}</div>
-      <div className="text-[10px] font-bold text-[#ff4d00]">MOQ {moq}</div>
+      <div className="text-[10px] font-bold text-[#cc3d00]">MOQ {moq}</div>
     </div>
   );
 }

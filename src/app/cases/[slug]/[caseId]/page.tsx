@@ -63,7 +63,7 @@ export default async function CaseDetailPage({ params }: Props) {
             <ArrowLeft size={14} />
             {ind.title}
           </Link>
-          <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[#ff4d00]">
+          <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[#cc3d00]">
             Case Study · {c.year} · {ind.title}
           </p>
           <h1 className="mb-6 max-w-4xl text-4xl font-black uppercase leading-[0.95] tracking-tight md:text-6xl">
@@ -71,15 +71,15 @@ export default async function CaseDetailPage({ params }: Props) {
           </h1>
           <div className="flex flex-wrap items-center gap-x-8 gap-y-2 text-sm text-white/70">
             <span className="flex items-center gap-2">
-              <CalendarDays size={14} className="text-[#ff4d00]" />
+              <CalendarDays size={14} className="text-[#cc3d00]" />
               {c.year}
             </span>
             <span className="flex items-center gap-2">
-              <Package size={14} className="text-[#ff4d00]" />
+              <Package size={14} className="text-[#cc3d00]" />
               {c.products.length} product type{c.products.length === 1 ? "" : "s"}
             </span>
             <span className="flex items-center gap-2">
-              <MapPin size={14} className="text-[#ff4d00]" />
+              <MapPin size={14} className="text-[#cc3d00]" />
               {c.client}
             </span>
           </div>
@@ -90,7 +90,7 @@ export default async function CaseDetailPage({ params }: Props) {
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto grid max-w-7xl gap-12 px-6 py-16 md:grid-cols-3 md:py-20">
           <div className="md:col-span-2">
-            <h2 className="mb-4 text-xs font-black uppercase tracking-[0.2em] text-[#ff4d00]">
+            <h2 className="mb-4 text-xs font-black uppercase tracking-[0.2em] text-[#cc3d00]">
               The Project
             </h2>
             <p className="text-lg leading-relaxed text-[#0a0a0a] md:text-xl">
@@ -138,7 +138,7 @@ export default async function CaseDetailPage({ params }: Props) {
                 key={i}
                 className="flex items-center gap-3 border-2 border-black bg-white p-4"
               >
-                <Package size={18} className="shrink-0 text-[#ff4d00]" />
+                <Package size={18} className="shrink-0 text-[#cc3d00]" />
                 <span className="text-sm font-semibold text-black">{p}</span>
               </li>
             ))}
@@ -187,7 +187,7 @@ export default async function CaseDetailPage({ params }: Props) {
           <h2 className="mb-4 text-3xl font-black uppercase leading-none tracking-tight md:text-5xl">
             Your project
             <br />
-            <span className="text-[#ff4d00]">could be next.</span>
+            <span className="text-[#cc3d00]">could be next.</span>
           </h2>
           <p className="mx-auto mb-8 max-w-2xl text-base text-white/70 md:text-lg">
             Send us your design, quantity and deadline. We reply with a quote in 12 hours and

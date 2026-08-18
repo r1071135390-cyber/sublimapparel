@@ -28,7 +28,7 @@ export function Navbar() {
             <Link
               key={link.href + link.label}
               href={link.href}
-              className="text-sm font-bold uppercase tracking-wider text-black transition-colors hover:text-[#ff4d00]"
+              className="text-sm font-bold uppercase tracking-wider text-black transition-colors hover:text-[#cc3d00]"
             >
               {link.label}
             </Link>
@@ -49,7 +49,7 @@ export function Navbar() {
           <div className="group relative">
             <button
               type="button"
-              className="inline-flex items-center gap-1.5 px-2 py-2 text-sm font-bold uppercase tracking-wider text-black transition-colors hover:text-[#ff4d00]"
+              className="inline-flex items-center gap-1.5 px-2 py-2 text-sm font-bold uppercase tracking-wider text-black transition-colors hover:text-[#cc3d00]"
               aria-label="Account"
             >
               <User className="h-5 w-5" strokeWidth={2.5} />

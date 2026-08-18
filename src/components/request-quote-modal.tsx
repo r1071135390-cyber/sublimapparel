@@ -306,7 +306,7 @@ function RequestQuoteModal() {
         <DialogHeader className="border-b-2 border-[#0a0a0a] bg-[#0a0a0a] p-6 text-white">
           <div className="flex items-start justify-between gap-3">
             <div>
-              <div className="text-[10px] font-black uppercase tracking-widest text-[#ff4d00]">
+              <div className="text-[10px] font-black uppercase tracking-widest text-[#cc3d00]">
                 [ Get a Quote · 24h reply ]
               </div>
               <DialogTitle className="mt-2 text-2xl font-black leading-tight md:text-3xl">
@@ -355,9 +355,9 @@ function RequestQuoteModal() {
 
             {/* Quote context banner */}
             <div className="mb-5 flex items-start gap-3 border-2 border-[#ff4d00] bg-[#fff5f0] p-3">
-              <FileText className="mt-0.5 h-5 w-5 flex-shrink-0 text-[#ff4d00]" />
+              <FileText className="mt-0.5 h-5 w-5 flex-shrink-0 text-[#cc3d00]" />
               <div className="text-xs">
-                <div className="font-black uppercase tracking-widest text-[#ff4d00]">
+                <div className="font-black uppercase tracking-widest text-[#cc3d00]">
                   Quote context
                 </div>
                 <div className="mt-1 font-bold text-[#0a0a0a]">{state.source.label}</div>
@@ -602,7 +602,7 @@ function RequestQuoteModal() {
               >
                 <Upload className="mb-1.5 h-5 w-5 text-[#0a0a0a]/60" />
                 <div className="text-xs font-bold text-[#0a0a0a]">
-                  Drop files here or <span className="text-[#ff4d00] underline">browse</span>
+                  Drop files here or <span className="text-[#cc3d00] underline">browse</span>
                 </div>
                 <div className="mt-1 text-[9px] font-medium text-[#0a0a0a]/50">
                   JPG · PNG · PDF · AI · EPS · PSD · SVG · TIFF
@@ -634,7 +634,7 @@ function RequestQuoteModal() {
                       <button
                         type="button"
                         onClick={() => removeFile(i)}
-                        className="shrink-0 text-xs font-black text-[#ff4d00] hover:text-[#0a0a0a]"
+                        className="shrink-0 text-xs font-black text-[#cc3d00] hover:text-[#0a0a0a]"
                         aria-label={`Remove ${a.name}`}
                       >
                         ✕
@@ -713,7 +713,7 @@ function Field({
     <label className="block">
       <span className="mb-1 block text-[10px] font-black uppercase tracking-widest text-[#0a0a0a]">
         {label}
-        {required && <span className="text-[#ff4d00]"> *</span>}
+        {required && <span className="text-[#cc3d00]"> *</span>}
       </span>
       {children}
     </label>

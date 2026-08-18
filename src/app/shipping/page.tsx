@@ -342,7 +342,7 @@ export default function ShippingPage() {
             <h1 className="text-5xl font-black leading-[0.95] tracking-tight md:text-7xl">
               How do we ship
               <br />
-              <span className="text-[#00c2ff]">door-to-door worldwide?</span>
+              <span className="text-[#0078a8]">door-to-door worldwide?</span>
             </h1>
             <p className="mt-6 max-w-xl text-base text-white/75 md:text-lg">
               <strong>Short answer: DDP (Delivered Duty Paid).</strong> One invoice, one carrier, zero customs headaches. We ship to 100+ countries — your address, an Amazon FBA warehouse, or any commercial / residential door. 50+ countries shipped in 2024.
@@ -357,7 +357,7 @@ export default function ShippingPage() {
                 </div>
               </div>
               <div>
-                <div className="text-3xl font-black text-[#00c2ff] md:text-4xl">0</div>
+                <div className="text-3xl font-black text-[#0078a8] md:text-4xl">0</div>
                 <div className="mt-1 text-[11px] font-bold uppercase tracking-widest text-white/60">
                   Hidden Fees
                 </div>
@@ -379,15 +379,15 @@ export default function ShippingPage() {
             {/* Trust row */}
             <div className="mt-10 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-black uppercase tracking-widest text-white/70">
               <span className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-[#00c2ff]" strokeWidth={2.5} />
+                <CheckCircle2 className="h-4 w-4 text-[#0078a8]" strokeWidth={2.5} />
                 Door-to-door insurance
               </span>
               <span className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-[#00c2ff]" strokeWidth={2.5} />
+                <CheckCircle2 className="h-4 w-4 text-[#0078a8]" strokeWidth={2.5} />
                 Real-time tracking
               </span>
               <span className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-[#00c2ff]" strokeWidth={2.5} />
+                <CheckCircle2 className="h-4 w-4 text-[#0078a8]" strokeWidth={2.5} />
                 One invoice, no surprises
               </span>
             </div>
@@ -415,15 +415,15 @@ export default function ShippingPage() {
                   className="group flex flex-col border-2 border-black bg-white p-6 transition-all hover:border-[#ff4d00]"
                 >
                   <div className="mb-4 flex items-center justify-between">
-                    <Icon className="h-7 w-7 text-[#ff4d00]" strokeWidth={1.5} />
+                    <Icon className="h-7 w-7 text-[#cc3d00]" strokeWidth={1.5} />
                     <span className={"px-2 py-1 text-[10px] font-black uppercase tracking-widest" + o.badgeColor}>
                       {o.badge}
                     </span>
                   </div>
                   <h3 className="mb-2 text-2xl font-black leading-none">{o.name}</h3>
-                  <p className="mb-4 text-xs font-black uppercase tracking-widest text-[#ff4d00]">{o.tagline}</p>
+                  <p className="mb-4 text-xs font-black uppercase tracking-widest text-[#cc3d00]">{o.tagline}</p>
                   <p className="mb-6 flex-1 text-sm text-black/70">{o.desc}</p>
-                  <span className="inline-flex items-center gap-2 text-sm font-black uppercase tracking-widest text-black transition-colors group-hover:text-[#ff4d00]">
+                  <span className="inline-flex items-center gap-2 text-sm font-black uppercase tracking-widest text-black transition-colors group-hover:text-[#cc3d00]">
                     Learn more
                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
                   </span>
@@ -457,7 +457,7 @@ export default function ShippingPage() {
                 >
                   <div className="mb-4 flex items-center justify-between border-b-2 border-black/10 pb-3">
                     <div className="flex items-center gap-2">
-                      <Icon className="h-5 w-5 text-[#ff4d00]" strokeWidth={2} />
+                      <Icon className="h-5 w-5 text-[#cc3d00]" strokeWidth={2} />
                       <h3 className="text-lg font-black">{r.region}</h3>
                     </div>
                     <span className="font-mono text-xs font-black text-black/40">
@@ -474,7 +474,7 @@ export default function ShippingPage() {
                           {row.mode}
                         </span>
                         <div className="flex items-center gap-3">
-                          <span className="font-mono text-xs font-black text-[#ff4d00]">
+                          <span className="font-mono text-xs font-black text-[#cc3d00]">
                             {row.days}d
                           </span>
                           <span className="font-mono text-xs text-black/40">
@@ -523,12 +523,12 @@ export default function ShippingPage() {
 
           <div className="mt-8 grid gap-4 md:grid-cols-3">
             <div className="border-l-4 border-[#ff4d00] bg-white p-5">
-              <div className="text-xs font-black uppercase tracking-widest text-[#ff4d00]">Left — 1 kg</div>
+              <div className="text-xs font-black uppercase tracking-widest text-[#cc3d00]">Left — 1 kg</div>
               <div className="mt-1 text-lg font-black">A single DHL box. One T-shirt inside.</div>
               <p className="mt-2 text-sm text-black/70">Used for samples and try-on orders. The shirt ships with a blank shipping label so you can re-pack it for your own customer without removing stickers.</p>
             </div>
             <div className="border-l-4 border-[#00c2ff] bg-white p-5">
-              <div className="text-xs font-black uppercase tracking-widest text-[#00c2ff]">Center — 50 kg</div>
+              <div className="text-xs font-black uppercase tracking-widest text-[#0078a8]">Center — 50 kg</div>
               <div className="mt-1 text-lg font-black">Four cartons on a wooden pallet.</div>
               <p className="mt-2 text-sm text-black/70">A typical mid-size event or team order. Stretch-wrapped, marked with your PO number, and loaded onto the next air-freight flight out of PVG or SZX.</p>
             </div>
@@ -566,7 +566,7 @@ export default function ShippingPage() {
                     {ex.title}
                   </h3>
                   <p className="text-xs text-white/60">{ex.weight}</p>
-                  <p className="mt-1 text-xs font-black uppercase tracking-widest text-[#00c2ff]">
+                  <p className="mt-1 text-xs font-black uppercase tracking-widest text-[#0078a8]">
                     {ex.mode}
                   </p>
                 </div>
@@ -588,7 +588,7 @@ export default function ShippingPage() {
                     <span className="text-xs font-black uppercase tracking-widest text-white/60">
                       All-in total
                     </span>
-                    <span className="text-2xl font-black text-[#ff4d00]">
+                    <span className="text-2xl font-black text-[#cc3d00]">
                       {ex.total}
                     </span>
                   </div>
@@ -703,7 +703,7 @@ export default function ShippingPage() {
           <h2 className="mb-4 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
             How does DDP shipping work?
             <br />
-            <span className="text-[#ff4d00]">Step by step.</span>
+            <span className="text-[#cc3d00]">Step by step.</span>
           </h2>
           <p className="mb-12 max-w-3xl text-base text-black/70 md:text-lg">
             <strong>Short answer:</strong> you sign the PO, we handle freight, customs, duties, and last-mile. You receive one invoice and one tracking number. 3–7 days for express, 18–40 days for sea. You do steps 1 and 5 — we handle everything in between.
@@ -718,7 +718,7 @@ export default function ShippingPage() {
                   className="flex flex-col border-2 border-black bg-white p-5"
                 >
                   <div className="mb-3 flex items-center justify-between">
-                    <span className="font-mono text-3xl font-black text-[#ff4d00]">
+                    <span className="font-mono text-3xl font-black text-[#cc3d00]">
                       {s.step}
                     </span>
                     <Icon className="h-6 w-6 text-black" strokeWidth={1.5} />
@@ -750,7 +750,7 @@ export default function ShippingPage() {
               const Icon = p.icon;
               return (
                 <div key={p.title} className="border-2 border-black bg-[#faf9f6] p-6">
-                  <Icon className="mb-4 h-8 w-8 text-[#ff4d00]" strokeWidth={1.5} />
+                  <Icon className="mb-4 h-8 w-8 text-[#cc3d00]" strokeWidth={1.5} />
                   <h3 className="mb-2 text-lg font-black">{p.title}</h3>
                   <p className="text-sm leading-relaxed text-black/70">{p.text}</p>
                 </div>
@@ -787,7 +787,7 @@ export default function ShippingPage() {
           <div className="grid gap-6 md:grid-cols-2">
             <div className="border-2 border-black bg-white p-8">
               <div className="mb-4 flex items-center gap-3">
-                <Globe className="h-7 w-7 text-[#ff4d00]" strokeWidth={1.5} />
+                <Globe className="h-7 w-7 text-[#cc3d00]" strokeWidth={1.5} />
                 <h3 className="text-2xl font-black">DDP — full service</h3>
               </div>
               <p className="mb-6 text-sm text-black/70">
@@ -805,7 +805,7 @@ export default function ShippingPage() {
                 ].map((line) => (
                   <li key={line} className="flex items-start gap-2">
                     <CheckCircle2
-                      className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#ff4d00]"
+                      className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#cc3d00]"
                       strokeWidth={2.5}
                     />
                     <span className="text-black/80">{line}</span>
@@ -910,7 +910,7 @@ export default function ShippingPage() {
             <strong> Reviewed by</strong> Ramon Wang, Sales Director.
           </p>
           <p className="mt-2">
-            For a DDP quote to your specific country, <Link href="/get-a-quote" className="underline hover:text-[#ff4d00]">submit your inquiry</Link> with target country and quantity — we reply within 12 working hours.
+            For a DDP quote to your specific country, <Link href="/get-a-quote" className="underline hover:text-[#cc3d00]">submit your inquiry</Link> with target country and quantity — we reply within 12 working hours.
           </p>
         </div>
       </section>

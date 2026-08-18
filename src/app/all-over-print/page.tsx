@@ -318,7 +318,7 @@ export default function AllOverPrintPage() {
             <h1 className="text-5xl font-black leading-[0.95] tracking-tight md:text-7xl lg:text-8xl">
               All-over print.
               <br />
-              <span className="text-[#ff4d00]">Any material.</span>
+              <span className="text-[#cc3d00]">Any material.</span>
               <br />
               Any product.
             </h1>
@@ -348,16 +348,16 @@ export default function AllOverPrintPage() {
             </div>
             <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-2 text-sm text-neutral-300">
               <span className="flex items-center gap-2">
-                <Check className="h-4 w-4 text-[#ff4d00]" /> MOQ 50 pcs
+                <Check className="h-4 w-4 text-[#cc3d00]" /> MOQ 50 pcs
               </span>
               <span className="flex items-center gap-2">
-                <Check className="h-4 w-4 text-[#ff4d00]" /> No setup fee
+                <Check className="h-4 w-4 text-[#cc3d00]" /> No setup fee
               </span>
               <span className="flex items-center gap-2">
-                <Check className="h-4 w-4 text-[#ff4d00]" /> 7–25 day lead time
+                <Check className="h-4 w-4 text-[#cc3d00]" /> 7–25 day lead time
               </span>
               <span className="flex items-center gap-2">
-                <Check className="h-4 w-4 text-[#ff4d00]" /> DDP 100+ countries
+                <Check className="h-4 w-4 text-[#cc3d00]" /> DDP 100+ countries
               </span>
             </div>
           </div>
@@ -368,7 +368,7 @@ export default function AllOverPrintPage() {
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto max-w-7xl px-6 py-20 md:py-24">
           <div className="mb-12 flex items-baseline gap-3">
-            <span className="font-mono text-sm font-bold text-[#ff4d00]">
+            <span className="font-mono text-sm font-bold text-[#cc3d00]">
               001
             </span>
             <h2 className="text-3xl font-black tracking-tight md:text-5xl">
@@ -432,7 +432,7 @@ export default function AllOverPrintPage() {
       <section className="border-b-2 border-black bg-neutral-50">
         <div className="mx-auto max-w-7xl px-6 py-20 md:py-24">
           <div className="mb-12 flex items-baseline gap-3">
-            <span className="font-mono text-sm font-bold text-[#ff4d00]">
+            <span className="font-mono text-sm font-bold text-[#cc3d00]">
               002
             </span>
             <h2 className="text-3xl font-black tracking-tight md:text-5xl">
@@ -452,7 +452,7 @@ export default function AllOverPrintPage() {
                 <p className="mt-3 flex-1 text-sm leading-relaxed text-neutral-700">
                   {p.desc}
                 </p>
-                <div className="mt-4 border-t-2 border-black pt-3 text-xs font-bold uppercase tracking-wide text-[#ff4d00]">
+                <div className="mt-4 border-t-2 border-black pt-3 text-xs font-bold uppercase tracking-wide text-[#cc3d00]">
                   Best for: <span className="text-black">{p.best}</span>
                 </div>
               </div>
@@ -465,7 +465,7 @@ export default function AllOverPrintPage() {
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto max-w-7xl px-6 py-20 md:py-24">
           <div className="mb-12 flex items-baseline gap-3">
-            <span className="font-mono text-sm font-bold text-[#ff4d00]">
+            <span className="font-mono text-sm font-bold text-[#cc3d00]">
               003
             </span>
             <h2 className="text-3xl font-black tracking-tight md:text-5xl">
@@ -514,7 +514,7 @@ export default function AllOverPrintPage() {
           <div className="mt-6">
             <Link
               href="/fabric/"
-              className="inline-flex items-center gap-2 text-sm font-black uppercase tracking-widest text-[#ff4d00] hover:underline"
+              className="inline-flex items-center gap-2 text-sm font-black uppercase tracking-widest text-[#cc3d00] hover:underline"
             >
               See full fabric catalog
               <ArrowRight className="h-4 w-4" />
@@ -527,7 +527,7 @@ export default function AllOverPrintPage() {
       <section className="border-b-2 border-black bg-[#0a0a0a] text-white">
         <div className="mx-auto max-w-7xl px-6 py-20 md:py-24">
           <div className="mb-12 flex items-baseline gap-3">
-            <span className="font-mono text-sm font-bold text-[#ff4d00]">
+            <span className="font-mono text-sm font-bold text-[#cc3d00]">
               004
             </span>
             <h2 className="text-3xl font-black tracking-tight md:text-5xl">
@@ -546,16 +546,16 @@ export default function AllOverPrintPage() {
                 href={c.href}
                 className="group flex gap-4 rounded-lg border-2 border-white/10 bg-white/5 p-5 transition hover:border-[#ff4d00] hover:bg-white/10"
               >
-                <div className="font-mono text-2xl font-black text-[#ff4d00]">
+                <div className="font-mono text-2xl font-black text-[#cc3d00]">
                   {c.num}
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-lg font-black transition group-hover:text-[#ff4d00]">
+                  <h3 className="text-lg font-black transition group-hover:text-[#cc3d00]">
                     {c.name}
                   </h3>
                   <p className="mt-1 text-sm text-neutral-300">{c.desc}</p>
                 </div>
-                <ArrowRight className="h-5 w-5 shrink-0 self-center text-neutral-400 transition group-hover:translate-x-1 group-hover:text-[#ff4d00]" />
+                <ArrowRight className="h-5 w-5 shrink-0 self-center text-neutral-400 transition group-hover:translate-x-1 group-hover:text-[#cc3d00]" />
               </Link>
             ))}
           </div>
@@ -566,7 +566,7 @@ export default function AllOverPrintPage() {
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto max-w-7xl px-6 py-20 md:py-24">
           <div className="mb-12 flex items-baseline gap-3">
-            <span className="font-mono text-sm font-bold text-[#ff4d00]">
+            <span className="font-mono text-sm font-bold text-[#cc3d00]">
               005
             </span>
             <h2 className="text-3xl font-black tracking-tight md:text-5xl">
@@ -596,7 +596,7 @@ export default function AllOverPrintPage() {
       <section className="border-b-2 border-black bg-neutral-50">
         <div className="mx-auto max-w-7xl px-6 py-20 md:py-24">
           <div className="mb-12 flex items-baseline gap-3">
-            <span className="font-mono text-sm font-bold text-[#ff4d00]">
+            <span className="font-mono text-sm font-bold text-[#cc3d00]">
               006
             </span>
             <h2 className="text-3xl font-black tracking-tight md:text-5xl">
@@ -622,7 +622,7 @@ export default function AllOverPrintPage() {
                   className="group flex items-center justify-between rounded border-2 border-black bg-white p-4 transition hover:bg-[#ff4d00] hover:text-white"
                 >
                   <span className="flex items-center gap-3">
-                    <span className="font-mono text-xs text-[#ff4d00] group-hover:text-white">
+                    <span className="font-mono text-xs text-[#cc3d00] group-hover:text-white">
                       {String(i + 1).padStart(3, "0")}
                     </span>
                     <span className="text-sm font-bold">{ind}</span>
@@ -639,7 +639,7 @@ export default function AllOverPrintPage() {
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto max-w-4xl px-6 py-20 md:py-24">
           <div className="mb-12 flex items-baseline gap-3">
-            <span className="font-mono text-sm font-bold text-[#ff4d00]">
+            <span className="font-mono text-sm font-bold text-[#cc3d00]">
               007
             </span>
             <h2 className="text-3xl font-black tracking-tight md:text-5xl">
@@ -654,7 +654,7 @@ export default function AllOverPrintPage() {
               >
                 <summary className="flex cursor-pointer items-center justify-between gap-4 p-5 text-lg font-black">
                   <span>{f.q}</span>
-                  <span className="text-2xl text-[#ff4d00] transition group-open:rotate-45">
+                  <span className="text-2xl text-[#cc3d00] transition group-open:rotate-45">
                     +
                   </span>
                 </summary>

@@ -80,7 +80,7 @@ export default function DdpPage() {
           <h1 className="text-5xl font-black leading-[0.95] tracking-tight md:text-8xl">
             You order.
             <br />
-            <span className="text-[#00c2ff]">We deliver.</span>
+            <span className="text-[#0078a8]">We deliver.</span>
             <br />
             No customs.
             <br />
@@ -118,7 +118,7 @@ export default function DdpPage() {
           <h2 className="mb-8 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
             What does
             <br />
-            <span className="text-[#ff4d00]">DDP actually mean?</span>
+            <span className="text-[#cc3d00]">DDP actually mean?</span>
           </h2>
           <p className="mb-10 max-w-2xl text-base text-black/70">
             Incoterms define who is responsible for shipping, insurance, customs,
@@ -178,7 +178,7 @@ export default function DdpPage() {
               <h2 className="text-4xl font-black uppercase leading-none tracking-tight md:text-6xl">
                 From our factory
                 <br />
-                <span className="text-[#ff4d00]">to your buyer&apos;s door.</span>
+                <span className="text-[#cc3d00]">to your buyer&apos;s door.</span>
               </h2>
             </div>
           </div>
@@ -188,7 +188,7 @@ export default function DdpPage() {
               const Icon = w.icon;
               return (
                 <div key={i} className="border-2 border-black bg-white p-6">
-                  <Icon className="mb-4 h-7 w-7 text-[#ff4d00]" strokeWidth={1.5} />
+                  <Icon className="mb-4 h-7 w-7 text-[#cc3d00]" strokeWidth={1.5} />
                   <h3 className="mb-2 text-lg font-black leading-tight">{w.title}</h3>
                   <p className="text-sm leading-relaxed text-black/70">{w.desc}</p>
                 </div>
@@ -209,7 +209,7 @@ export default function DdpPage() {
               <h2 className="text-4xl font-black uppercase leading-none tracking-tight md:text-6xl">
                 DDP to
                 <br />
-                <span className="text-[#ff4d00]">100+ countries.</span>
+                <span className="text-[#cc3d00]">100+ countries.</span>
               </h2>
             </div>
             <div className="hidden text-right md:block">
@@ -259,12 +259,12 @@ export default function DdpPage() {
           <h2 className="mb-10 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
             The shipping quote is
             <br />
-            <span className="text-[#ff4d00]">the price you actually pay.</span>
+            <span className="text-[#cc3d00]">the price you actually pay.</span>
           </h2>
 
           <div className="grid gap-6 md:grid-cols-3">
             <div className="border-2 border-white/20 bg-white/5 p-6">
-              <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
+              <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#cc3d00]">
                 For brand owners
               </div>
               <h3 className="mb-2 text-xl font-black">Sell at the listed price</h3>
@@ -274,7 +274,7 @@ export default function DdpPage() {
               </p>
             </div>
             <div className="border-2 border-white/20 bg-white/5 p-6">
-              <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
+              <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#cc3d00]">
                 For resellers
               </div>
               <h3 className="mb-2 text-xl font-black">Predictable margin</h3>
@@ -284,7 +284,7 @@ export default function DdpPage() {
               </p>
             </div>
             <div className="border-2 border-white/20 bg-white/5 p-6">
-              <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
+              <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#cc3d00]">
                 For event teams
               </div>
               <h3 className="mb-2 text-xl font-black">One PO, one invoice</h3>

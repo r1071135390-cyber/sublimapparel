@@ -135,7 +135,7 @@ export default function CyclingPage() {
               <br />
               sublimation
               <br />
-              <span className="text-[#ff4d00]">cycling.</span>
+              <span className="text-[#cc3d00]">cycling.</span>
             </h1>
             <p className="mt-6 max-w-xl text-base text-neutral-700 md:text-lg">
               Italian-performance fabric, full hidden zip, race-cut or club-cut. Premium cycling kits for road teams, triathlon squads, gravel crews, charity rides — at factory-direct pricing, not $335 retail.
@@ -152,7 +152,7 @@ export default function CyclingPage() {
           </div>
           <div className="md:col-span-5 border-t-2 border-black md:border-l-2 md:border-t-0 bg-[#0a0a0a] flex items-center justify-center p-10">
             <div className="text-center">
-              <Bike className="mx-auto h-24 w-24 text-[#ff4d00] md:h-32 md:w-32" strokeWidth={1.5} />
+              <Bike className="mx-auto h-24 w-24 text-[#cc3d00] md:h-32 md:w-32" strokeWidth={1.5} />
               <p className="mt-4 text-xs font-bold uppercase tracking-widest text-white">Road · Triathlon · Gravel</p>
               <p className="mt-1 text-xs font-bold uppercase tracking-widest text-white">Club · Pro · Charity</p>
             </div>
@@ -164,7 +164,7 @@ export default function CyclingPage() {
         <div className="mx-auto grid max-w-7xl grid-cols-2 px-0 md:grid-cols-4">
           {stats.map((s, i) => (
             <div key={s.label} className={`p-8 ${i < 3 ? "border-r-2 border-black" : ""} ${i < 2 ? "border-b-2 border-black md:border-b-0" : ""}`}>
-              <div className={`text-4xl font-black md:text-5xl ${s.color === "orange" ? "text-[#ff4d00]" : "text-black"}`}>{s.value}</div>
+              <div className={`text-4xl font-black md:text-5xl ${s.color === "orange" ? "text-[#cc3d00]" : "text-black"}`}>{s.value}</div>
               <div className="mt-1 text-xs font-black uppercase tracking-widest text-black">{s.label}</div>
               <div className="mt-1 text-xs text-neutral-500">{s.note}</div>
             </div>
@@ -175,7 +175,7 @@ export default function CyclingPage() {
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="mb-3 text-xs font-black uppercase tracking-widest text-neutral-500">[ 002 / Styles ]</div>
-          <h2 className="text-4xl font-black leading-tight md:text-6xl">From race-cut to <span className="text-[#ff4d00]">padded bibs.</span></h2>
+          <h2 className="text-4xl font-black leading-tight md:text-6xl">From race-cut to <span className="text-[#cc3d00]">padded bibs.</span></h2>
           <p className="mt-4 max-w-2xl text-base text-neutral-700 md:text-lg">Every piece in a full kit — jerseys, vests, base layers, shorts, bibs.</p>
           <div className="mt-10 grid gap-0 md:grid-cols-2 lg:grid-cols-3">
             {styles.map((s, i) => (
@@ -192,7 +192,7 @@ export default function CyclingPage() {
       <section className="border-b-2 border-black bg-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="mb-3 text-xs font-black uppercase tracking-widest text-neutral-500">[ 003 / Fabric ]</div>
-          <h2 className="text-4xl font-black leading-tight md:text-6xl">Italian. <span className="text-[#ff4d00]">Peloton-grade.</span></h2>
+          <h2 className="text-4xl font-black leading-tight md:text-6xl">Italian. <span className="text-[#cc3d00]">Peloton-grade.</span></h2>
           <p className="mt-4 max-w-2xl text-base text-neutral-700 md:text-lg">We use the same fabric families as $100+ retail cycling kits — just without the brand markup.</p>
           <div className="mt-10 border-2 border-black bg-white">
             <div className="grid grid-cols-12 border-b-2 border-black bg-black text-xs font-black uppercase tracking-widest text-white">
@@ -204,7 +204,7 @@ export default function CyclingPage() {
               <div key={f.name} className={`grid grid-cols-12 text-sm ${i < fabricChoices.length - 1 ? "border-b-2 border-black" : ""}`}>
                 <div className="col-span-3 border-r-2 border-black p-3 font-black text-black">{f.name}</div>
                 <div className="col-span-6 border-r-2 border-black p-3 text-neutral-700">{f.best}</div>
-                <div className="col-span-3 p-3 font-black text-[#ff4d00]">{f.moq}</div>
+                <div className="col-span-3 p-3 font-black text-[#cc3d00]">{f.moq}</div>
               </div>
             ))}
           </div>
@@ -214,11 +214,11 @@ export default function CyclingPage() {
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="mb-3 text-xs font-black uppercase tracking-widest text-neutral-500">[ 004 / Customisation ]</div>
-          <h2 className="text-4xl font-black leading-tight md:text-6xl">Team kit. <span className="text-[#ff4d00]">Built your way.</span></h2>
+          <h2 className="text-4xl font-black leading-tight md:text-6xl">Team kit. <span className="text-[#cc3d00]">Built your way.</span></h2>
           <div className="mt-10 grid gap-0 md:grid-cols-2 lg:grid-cols-4">
             {customisation.map((c, i) => (
               <div key={c.title} className={`p-6 ${i < 3 ? "lg:border-r-2 border-black" : ""} ${i < 2 ? "border-b-2 lg:border-b-0 border-black" : ""} ${i === 2 ? "border-b-2 lg:border-b-0 border-black" : ""}`}>
-                <c.icon className="h-8 w-8 text-[#ff4d00]" strokeWidth={2} />
+                <c.icon className="h-8 w-8 text-[#cc3d00]" strokeWidth={2} />
                 <div className="mt-3 text-xl font-black text-black">{c.title}</div>
                 <p className="mt-2 text-sm text-neutral-700">{c.desc}</p>
               </div>
@@ -230,11 +230,11 @@ export default function CyclingPage() {
       <section className="border-b-2 border-black bg-[#0a0a0a] text-white">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="mb-3 text-xs font-black uppercase tracking-widest text-neutral-400">[ 005 / Who orders this ]</div>
-          <h2 className="text-4xl font-black leading-tight md:text-6xl">From <span className="text-[#ff4d00]">peloton</span> to back of pack.</h2>
+          <h2 className="text-4xl font-black leading-tight md:text-6xl">From <span className="text-[#cc3d00]">peloton</span> to back of pack.</h2>
           <div className="mt-10 grid gap-0 md:grid-cols-2 lg:grid-cols-3">
             {useCases.map((u, i) => (
               <div key={u.who} className={`p-6 ${i < 3 ? "lg:border-r-2 border-neutral-800" : ""} ${i < 3 ? "border-b-2 lg:border-b-0 border-neutral-800" : ""} ${i === 3 || i === 4 ? "border-b-2 lg:border-b-0 border-neutral-800 md:border-r-2 md:border-b-0" : ""}`}>
-                <Users className="h-6 w-6 text-[#ff4d00]" strokeWidth={2} />
+                <Users className="h-6 w-6 text-[#cc3d00]" strokeWidth={2} />
                 <div className="mt-3 text-lg font-black text-white">{u.who}</div>
                 <p className="mt-1 text-sm text-neutral-400">{u.what}</p>
               </div>
@@ -246,7 +246,7 @@ export default function CyclingPage() {
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="mb-3 text-xs font-black uppercase tracking-widest text-neutral-500">[ 006 / Pricing ]</div>
-          <h2 className="text-4xl font-black leading-tight md:text-6xl">A fraction of <span className="text-[#ff4d00]">retail.</span></h2>
+          <h2 className="text-4xl font-black leading-tight md:text-6xl">A fraction of <span className="text-[#cc3d00]">retail.</span></h2>
           <p className="mt-4 max-w-2xl text-base text-neutral-700 md:text-lg">Starting prices for full sublimation cycling jerseys and padded shorts. Retail equivalent is $100–335 — you get the same fabric, factory-direct.</p>
           <div className="mt-10 border-2 border-black bg-white">
             <div className="grid grid-cols-12 border-b-2 border-black bg-black text-xs font-black uppercase tracking-widest text-white">
@@ -258,8 +258,8 @@ export default function CyclingPage() {
             {pricing.map((p, i) => (
               <div key={p.qty} className={`grid grid-cols-12 text-sm ${i < pricing.length - 1 ? "border-b-2 border-black" : ""}`}>
                 <div className="col-span-3 border-r-2 border-black p-3 font-black text-black">{p.qty}</div>
-                <div className="col-span-3 border-r-2 border-black p-3 font-black text-[#ff4d00]">{p.jersey}</div>
-                <div className="col-span-3 border-r-2 border-black p-3 font-black text-[#ff4d00]">{p.shorts}</div>
+                <div className="col-span-3 border-r-2 border-black p-3 font-black text-[#cc3d00]">{p.jersey}</div>
+                <div className="col-span-3 border-r-2 border-black p-3 font-black text-[#cc3d00]">{p.shorts}</div>
                 <div className="col-span-3 p-3 text-neutral-600">{p.note}</div>
               </div>
             ))}
@@ -276,7 +276,7 @@ export default function CyclingPage() {
               <details key={f.q} className={`group p-6 ${i < faq.length - 1 ? "border-b-2 border-black" : ""}`}>
                 <summary className="flex cursor-pointer items-start justify-between gap-4">
                   <span className="text-lg font-black text-black">{f.q}</span>
-                  <span className="ml-4 shrink-0 text-2xl font-black text-[#ff4d00] transition-transform group-open:rotate-45">+</span>
+                  <span className="ml-4 shrink-0 text-2xl font-black text-[#cc3d00] transition-transform group-open:rotate-45">+</span>
                 </summary>
                 <p className="mt-4 text-base text-neutral-700">{f.a}</p>
               </details>
@@ -290,7 +290,7 @@ export default function CyclingPage() {
           <div className="mb-3 text-xs font-black uppercase tracking-widest text-white/80">[ 008 / Next step ]</div>
           <h2 className="text-4xl font-black leading-tight md:text-7xl">Got a team? <br />Get a quote in 1 business day.</h2>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link href="/get-a-quote" className="group inline-flex items-center gap-2 bg-black px-6 py-3 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-white hover:text-[#ff4d00]">
+            <Link href="/get-a-quote" className="group inline-flex items-center gap-2 bg-black px-6 py-3 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-white hover:text-[#cc3d00]">
               Get a Cycling Quote <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
             </Link>
             <Link href="/products" className="inline-flex items-center gap-2 border-2 border-black bg-transparent px-6 py-3 text-sm font-black uppercase tracking-widest text-black transition-all hover:bg-black hover:text-white">
