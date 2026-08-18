@@ -1,6 +1,6 @@
 # SublimApparel — Yiwu Custom Sublimate Apparel Factory
 
-> Yiwu-based custom apparel factory delivering true all-over sublimation on polyester, full-body allover digital print on cotton, plus DTG/DTF on cotton, screen print, embroidery, and DDP shipping to 100+ countries.
+> Yiwu-based custom apparel factory delivering true all-over sublimation on polyester, all-over digital print 100% cotton (full-body cut & sew), plus DTG/DTF on cotton, screen print, embroidery, and DDP shipping to 100+ countries.
 
 **Last updated:** 2025-08-18 · **Author:** Ramon Wang, Sales Director · **Reading time:** 5 min
 
@@ -14,6 +14,7 @@ Custom apparel — T-shirts, hoodies, polos, tank tops, jerseys, pants, shorts, 
 - **MOQ 50 pcs** for sublimation cut & sew
 - **50+ countries shipped DDP** in 2024
 - **15-25 days** production lead time after sample approval
+- **100%** all-over digital print 100% cotton (full-body cut & sew)
 - **US warehouse in Fontana, CA** (92680) — stock + dropship
 - **EU representative** based in Rotterdam, NL
 

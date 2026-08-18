@@ -22,7 +22,7 @@ const stats = [
   { num: "50", label: "MOQ (pcs)", color: "text-[#cc3d00]" },
   { num: "15–25", label: "Days lead time", color: "text-white" },
   { num: "0", label: "Setup fee", color: "text-[#cc3d00]" },
-  { num: "100%", label: "Cotton capable", color: "text-white" },
+  { num: "100%", label: "All-over digital print 100% cotton", color: "text-white" },
 ];
 
 export function Hero() {

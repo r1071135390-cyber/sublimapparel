@@ -58,7 +58,7 @@ export function BeyondApparel() {
                   100%
                 </div>
                 <div className="mt-1 text-[10px] font-bold uppercase tracking-widest text-[#0a0a0a]/60">
-                  Cotton capable
+                  All-over digital print 100% cotton
                 </div>
               </div>
             </div>
