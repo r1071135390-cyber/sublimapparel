@@ -1,102 +1,67 @@
-# Product & Tag Classification Rules
+# VividPrint — Product Classification Rules
 
-> **3 个维度**：
-> - **Category**（互斥，1 个）= 按**款式 + 用途大类**分（如 T-Shirt / Pants / Skirt / Vest / Hoodie / Cap）
-> - **Sports**（多选 1-5 个）= 产品**用在哪项运动**（如 Basketball, Soccer, Yoga, Surf）
-> - **Scenarios**（多选 2-5 个）= 产品**适合什么场景/行业**（如 Promotional Swag, Event, School）
+> **Version**: 3.0 (Merged Model)
+> **Last updated**: 2026-08-18
+> **Status**: Awaiting user confirmation
 
----
+## 1. Core Philosophy
 
-## 1. 数据模型总览
-
-每个产品在 `src/lib/products-data.ts` 中定义 4 个核心字段：
-
-```ts
-{
-  number: "0001"                              // 唯一编号
-  name: "Sublimation Scarf"                   // 产品名
-  category: "Home"                            // 1 个类目（互斥）
-  sports: ["Beach", "Surf"]                   // 0-5 个运动（多选）
-  scenarios: ["Retail & Fashion", ...]        // 0-5 个场景（多选）
-}
+```
+Category  = 服装的"形"  ── 款式 + 用途大类  （12 选 1，互斥）
+Scenarios = 产品的"用"  ── 运动 + 场景 + 行业  （66 选 N，多选）
 ```
 
----
+**核心原则**：
+- **Category 按服装款式**分类（T-Shirt / Pants / Skirt / Vest 等）
+- **Scenarios 是单一标签云**，包含 3 大类：
+  - **运动项目**（41 个）── Basketball, Yoga, Cycling ...
+  - **使用场景**（25 个）── Promotional Swag, Wedding, Sports League ...
+  - **行业用途**（暂未单独分类，融入场景）──
 
-## 2. Category 规则
+**不变量**：
+- 每个产品**有且仅有 1 个 category**
+- 每个产品**有 0 到 N 个 scenario**（0 表示通用产品）
+- 不再有独立的 sports 字段
 
-**13 个互斥类目**（每个产品**只能选 1 个**）。分类哲学：**款式 + 用途大类**。
+## 2. Why Merged Model (vs 3-Dimension)
 
-| Category | 款式 / 用途 | 包含 |
+| 维度 | 旧 3 维模型 | 新 2 维合并模型 |
 |---|---|---|
-| **Hoodie** | 帽子/套头衫（含套头运动衫） | Baseball Cap, Beanie |
-| **T-Shirt** | 短袖 T 恤 + 长袖 T 恤 + 球衣 + Jersey | T-Shirt, Long-Sleeve, Basketball Jersey, Fishing Shirt, Rugby Jersey, Singlet, Gi, Suit, Wear |
-| **Pants** | 裤子 + 短裤 + 紧身裤 + 长裤 | Shorts, Trunks, Legging, Tights, Tracksuit Pant |
-| **Sweatshirt** | 卫衣（套头长袖） | Crewneck, Hoodie Sweat |
-| **Tank Top & Camis** | 无袖背心 / 紧身背心 | Tank Top, Camisole, Lycra Top, Rash Guard, Tank Vest Dress (0008) |
-| **Shirt** | 普通衬衫（非 T 恤） | Button-Down, Dress Shirt |
-| **Home** | 家居/非穿着 | Scarf, Apron, Towel, Sarong, Baby Onesie, Jumpsuit |
-| **Skirt** | 裙子 / 连衣裙 / 体操服 | Skirt, Dress (非 Tank), Leotard, Cheerleading Dress |
-| **Polo Shirt** | POLO 衫 | POLO |
-| **Cap** | 帽子 | Baseball Cap, Beanie, Snapback |
-| **Jacket** | 外套 | Windbreaker, Ski Jacket, Bomber |
-| **Vest** | 背心（带袖孔的） | Construction Vest (0101), Team Vest |
-| **Sportswear** ⚠️ 废弃 | （之前是混合类，**不推荐使用**）| - |
+| 字段数 | 3（category + sports + scenarios）| 2（category + scenarios）|
+| 标签总数 | 13 + 41 + 25 = 79 | 12 + 66 = 78 |
+| 标签云 | 41 sports 太多，30%产品打了 41 全选 | 66 scenarios，用户精准搜索 |
+| URL 数量 | 79 个 archive 页（13+41+25）| 78 个 archive 页（12+66）|
+| 体育项目查找 | 用户找"Basketball"要进 sport 类 | "Basketball" 在 scenarios 中 |
+| Archive 页面质量 | 41 sport 中每页 30+ 产品雷同 | 每 scenario 标签产品数 5-15 个 |
+| 维护性 | 3 套标签需分别维护 | 1 套标签 + 1 套款式 |
 
-### 关键原则
+**3-D 问题的根源**：
+- 41 个 sport 中约 30 个产品**全打**（"achieve 不准确"）
+- 球衣（Basketball Jersey / Soccer Jersey / Hockey Jersey）款式都一样，**分到不同 sport 标签无意义**
+- 但客户实际是按款式找（"我要件球衣"），不是按运动找
 
-- **按款式大类分**，**不按运动** —— Basketball Jersey / Fishing Shirt 都是 T-Shirt
-- **Cheerleading Dress / Netball Dress / Dance Dress** 都是 Skirt/Dress
-- **0008 Tank Vest Dress** 是无袖背心 → **Tank Top & Camis**（不是 Vest）
-- **0101 Construction Vest** 是有袖孔背心 → **Vest**
-- **0001 Scarf** 是家居用品 → **Home**
-- **0007 Sleeveless Hoodie** 是 T 恤款式 → **T-Shirt**
+## 3. Category — 12 个款式（互斥）
 
----
+| 类别 | 英文 | 含义 | 例子 |
+|---|---|---|---|
+| 帽子 | **Cap** | 帽子、Beanie | All-Over Print Cap, Beanie |
+| T 恤 | **T-Shirt** | T 恤、球衣、Singlet、Gi | Basketball Jersey, Wrestling Singlet, MMA Gi |
+| 长袖卫衣 | **Sweatshirt** | 长袖卫衣、运动衫 | Hoodie-Pullover Sweatshirt |
+| 背心（无袖） | **Tank Top & Camis** | 无袖上衣、Lycra Top、Rash Guard | Surf Lycra Top, Rash Guard |
+| 背心（户外） | **Vest** | 户外背心、安全背心 | Construction Vest, Reflective Vest |
+| POLO 衫 | **Polo Shirt** | POLO 衫 | Sublimation Polo |
+| 衬衫 | **Shirt** | 长袖衬衫、钓鱼衫 | Fishing Shirt, Long-Sleeve Shirt |
+| 外套 | **Jacket** | 夹克、防风服、滑雪服 | Windbreaker, Ski Jacket |
+| 裤子 | **Pants** | 短裤、紧身裤、Trunks | Boxing Shorts, Cycling Bib Shorts, Legging |
+| 裙子 | **Skirt** | 裙子、连衣裙、体操服 | Cheerleading Dress, Dance Leotard |
+| 家居 | **Home** | 围巾、围裙、毛巾、家居服 | Sublimation Scarf, Apron, Beach Towel |
+| ~~混合类~~ | ~~**Sportswear**~~ | ~~~~ | ⚠️ 类别名废弃，38 个产品重新归类 |
 
-## 3. Sports 规则
+> **移除 Sportswear 类别** —— 这是之前我误把"运动服装"全塞这里的混乱分类。
 
-**41 个运动标签**（每个产品**可多选 0-5 个**）。标识产品**用在哪项运动**。
+## 4. Scenarios — 66 个场景/运动/用途（多选）
 
-```
-AFL, Athletics, Badminton, Baseball, Basketball, Beach, Bowling, Boxing,
-Cheer, Cricket, CrossFit, Cycling, Dance, Dive, Esports, Fishing, Football,
-Golf, Gym, Hockey, Lacrosse, MMA, Martial Arts, Netball, Pilates, Rugby,
-Running, Skate, Skating, Ski, Snowboard, Soccer, Softball, Surf, Swimwear,
-Table Tennis, Tennis, Triathlon, Volleyball, Wrestling, Yoga
-```
-
-### 推荐范围
-
-| 产品类型 | Sports 数量 | 例子 |
-|---|---|---|
-| 通用家居/非运动产品 | **0 个** | Scarf, Apron, Baby Onesie, Towel |
-| 通用运动上衣 | **1-2 个** | Long-Sleeve Training T-Shirt → Running, Gym |
-| 专项运动服装 | **1-3 个** | Basketball Jersey → Basketball |
-| 多用途运动套装 | **3-5 个** | Yoga Set → Yoga, Pilates, Gym, Athletics |
-
-### 错误做法
-
-❌ 任何产品**不要打 41 个全选**（这就是当前 archive 页面雷同的根因）
-❌ 通用产品**不要硬塞运动**（如 Scarf 打了 41 个运动）
-
-### 正确示例
-
-| 产品 | Sports |
-|---|---|
-| Sublimation Scarf (0001) | `[]`（无运动属性）|
-| Womens Tank Vest Dress (0008) | `["Dance", "Gym", "Athletics"]` |
-| Construction Vest (0101) | `[]`（非运动）|
-| Basketball Jersey | `["Basketball"]` |
-| Yoga Set | `["Yoga", "Pilates", "Gym"]` |
-| Beach Sarong | `["Beach", "Swimwear", "Surf"]` |
-| Fishing Shirt | `["Fishing"]` |
-
----
-
-## 4. Scenarios 规则
-
-**25 个场景标签**（每个产品**可多选 2-5 个**）。标识产品**适合什么场景/行业**。
+### 4.1 25 个现有场景（保留）
 
 ```
 Promotional Swag, Event & Festival, School & Education, Team & Club,
@@ -108,109 +73,149 @@ Education & School, Corporate & Promo, Transit & Transport, Studio & Gym,
 Military, Festival & Holiday
 ```
 
-### 推荐范围
+### 4.2 41 个运动项目（从 sports 字段合并）
 
-| 产品类型 | Scenarios 数量 | 例子 |
-|---|---|---|
-| 通用家居/非运动产品 | **2-3 个** | Scarf → Retail & Fashion, Gift & Souvenir, Promotional Swag |
-| 通用运动上衣 | **2-3 个** | Training T-Shirt → Sports League, Team & Club, School & Education |
-| 专项运动服装 | **2-4 个** | Basketball Jersey → Sports League, Team & Club, School & Education |
-| 多用途运动套装 | **3-5 个** | Yoga Set → Studio & Gym, Sports League, Team & Club, Health |
+```
+AFL, Athletics, Badminton, Baseball, Basketball, Beach, Bowling, Boxing,
+Cheer, Cricket, CrossFit, Cycling, Dance, Dive, Esports, Fishing, Football,
+Golf, Gym, Hockey, Lacrosse, MMA, Martial Arts, Netball, Pilates, Rugby,
+Running, Skate, Skating, Ski, Snowboard, Soccer, Softball, Surf, Swimwear,
+Table Tennis, Tennis, Triathlon, Volleyball, Wrestling, Yoga
+```
 
-### 错误做法
+### 4.3 每个产品 1-5 个 Scenario 标签
 
-❌ 任何产品**不要打 13+ 个 scenarios**
-❌ **不相关**的不要硬塞（如围巾不应该有 Sports League）
+**不要全打 66 个**！每个产品按"客户实际用得到"打 1-5 个：
 
-### 正确示例
-
-| 产品 | Scenarios |
+| 产品类型 | Scenario 标签 |
 |---|---|
-| Sublimation Scarf (0001) | `["Retail & Fashion", "Gift & Souvenir", "Promotional Swag"]` |
-| Womens Tank Vest Dress (0008) | `["Studio & Gym", "Dance", "Retail & Fashion"]` |
-| Construction Vest (0101) | `["Construction & Engineering", "Security & Property", "Uniform & Workwear"]` |
-| Basketball Jersey | `["Sports League", "Team & Club", "School & Education"]` |
-| Baby Onesie | `["Gift & Souvenir", "Retail & Fashion"]` |
-| Beach Sarong | `["Beach", "Travel", "Retail & Fashion"]` |
+| Basketball Jersey | `Basketball, Sports League, Team & Club, School & Education` |
+| Cheerleading Dress | `Cheer, School & Education, Sports League, Team & Club` |
+| Sublimation Scarf | `Retail & Fashion, Gift & Souvenir, Promotional Swag, Sports League` |
+| Construction Vest | `Construction & Engineering, Security & Property, Uniform & Workwear` |
+| Beach Sarong | `Beach, Swimwear, Retail & Fashion, Gift & Souvenir` |
+| Baby Onesie | `Gift & Souvenir, Retail & Fashion, Wedding & Party` |
+| Yoga Set 上衣 | `Yoga, Pilates, Studio & Gym, Gym` |
+| Cycling Bib Shorts | `Cycling, Triathlon, Gym` |
+| Fishing Shirt | `Fishing, Beach, Sports League` |
+| Cap | `Promotional Swag, Sports League, Team & Club, Retail & Fashion` |
 
----
+## 5. Decision Tree (判断流程)
 
-## 5. 38 个 Sportswear 产品重新分类规则
+```
+[产品名]
+   │
+   ▼
+Q1: 服装款式是哪个？ (12 选 1)
+   │
+   ├─ 帽子/Beanie     → Cap
+   ├─ T恤/球衣/Gi     → T-Shirt
+   ├─ 卫衣             → Sweatshirt
+   ├─ 无袖/Lycra/Rash  → Tank Top & Camis
+   ├─ 户外背心         → Vest
+   ├─ POLO             → Polo Shirt
+   ├─ 衬衫/钓鱼衫      → Shirt
+   ├─ 外套             → Jacket
+   ├─ 裤子/短裤/紧身裤 → Pants
+   ├─ 裙子/连衣裙/体操服 → Skirt
+   ├─ 围巾/围裙/毛巾/家居服 → Home
+   └─ 其他             → T-Shirt (兜底)
+   │
+   ▼
+Q2: 客户用在哪些场景/运动？(1-5 选)
+   │
+   ├─ 服装款式决定基础场景（运动衫 → 运动场景）
+   ├─ 看产品描述/图片识别具体运动
+   ├─ 通用产品（围巾、围裙）→ 商业/赠品场景
+   └─ 不打无关标签
+```
 
-**目标**：删除 `Sportswear` 类别，把 38 个产品**按款式**归到 12 个细分类目：
+## 6. Examples — 12 个产品典型示例
+
+| 产品名 | Category | Scenarios |
+|---|---|---|
+| All-Over Print Basketball Jersey | T-Shirt | Basketball, Sports League, Team & Club, School & Education |
+| All-Over Print Wrestling Singlet | T-Shirt | Wrestling, MMA, Martial Arts, Sports League |
+| All-Over Print Cycling Bib Shorts | Pants | Cycling, Triathlon, Gym |
+| All-Over Print Surf Lycra Top | Tank Top & Camis | Surf, Beach, Swimwear, Yoga |
+| All-Over Print Cheerleading Dress | Skirt | Cheer, School & Education, Sports League, Team & Club |
+| All-Over Print Womens Tank Vest Dress | Tank Top & Camis | Dance, Gym, Yoga, Pilates |
+| All-Over Print Hip-Hop Street Dance Outfit | T-Shirt | Dance, Studio & Gym, Performance |
+| All-Over Print Construction Vest | Vest | Construction & Engineering, Security & Property, Uniform & Workwear |
+| All-Over Print Long Boxing Trunks | Pants | Boxing, MMA, Martial Arts |
+| All-Over Print Sublimation Scarf | Home | Retail & Fashion, Gift & Souvenir, Promotional Swag |
+| All-Over Print Womens Fishing Shirt | Shirt | Fishing, Beach |
+| All-Over Print Yoga Set | T-Shirt (上衣) + Pants (裤子) | Yoga, Pilates, Studio & Gym |
+
+## 7. What Changes for Existing Products
+
+### 7.1 Sports 字段被废弃
 
 ```javascript
-function categorizeByName(name) {
-  const n = name.toLowerCase();
+// 旧结构
+{
+  number: "0011",
+  name: "Basketball Jersey",
+  category: "Sportswear",  // ❌ 改为 T-Shirt
+  sports: ["Basketball"],  // ❌ 合并到 scenarios
+  scenarios: ["Sports League", "Team & Club"],
+}
 
-  // 规则 1: 短裤/紧身裤类 → Pants
-  if (n.includes("shorts")) return "Pants";
-  if (n.includes("legging")) return "Pants";
-  if (n.includes("tights")) return "Pants";
-  if (n.includes("swimwear") && n.includes("trunks")) return "Pants";
-
-  // 规则 2: Tank Vest Dress（无袖背心裙）→ Tank Top & Camis
-  if (n.includes("tank vest") && n.includes("dress")) return "Tank Top & Camis";
-
-  // 规则 3: 其他 Vest（带袖孔）→ Vest
-  if (n.includes("vest")) return "Vest";
-
-  // 规则 4: 紧身面料上衣 → Tank Top & Camis
-  if (n.includes("rash guard")) return "Tank Top & Camis";
-  if (n.includes("lycra top")) return "Tank Top & Camis";
-  if (n.includes("lycra suit")) return "Tank Top & Camis";
-
-  // 规则 5: 体操服/Leotard → Skirt
-  if (n.includes("leotard")) return "Skirt";
-
-  // 规则 6: 连衣裙（除 Tank Vest Dress）→ Skirt
-  if (n.includes("dress")) return "Skirt";
-
-  // 规则 7: 制服 + 含 skirt → Skirt
-  if (n.includes("uniform") && n.includes("skirt")) return "Skirt";
-  if (n.includes("uniform") && n.includes("top + skirt")) return "Skirt";
-
-  // 规则 8: 球衣/套装/上衣/钓鱼衫 → T-Shirt
-  if (n.includes("jersey")) return "T-Shirt";
-  if (n.includes("outfit")) return "T-Shirt";
-  if (n.includes("wear") || n.includes("set")) return "T-Shirt";
-  if (n.includes("suit") && !n.includes("tracksuit")) return "T-Shirt";
-  if (n.includes("gi")) return "T-Shirt";
-  if (n.includes("fishing shirt")) return "T-Shirt";
-
-  // 兜底: 全部归 T-Shirt
-  return "T-Shirt";
+// 新结构
+{
+  number: "0011",
+  name: "Basketball Jersey",
+  category: "T-Shirt",     // ✅
+  scenarios: [              // ✅ 合并 + 保留
+    "Basketball",           // 从 sports 合并
+    "Sports League",
+    "Team & Club",
+    "School & Education",
+  ],
 }
 ```
 
-### 4 个 sports 标签为 41 全选的产品额外修复
+### 7.2 38 个 Sportswear 产品的 Category 重新分配
 
-| 编号 | 产品名 | 建议 sports |
-|---|---|---|
-| 0008 | Womens Tank Vest Dress | `["Dance", "Gym", "Athletics"]` |
-| 0014 | Womens Tank Bodysuit | `["Dance", "Gym", "Athletics"]` |
-| 0018 | Kids Baseball Jersey | `["Baseball", "Softball"]` |
-| 0020 | Mens Long-Sleeve T-Shirt | `["Running", "Gym", "Soccer", "Basketball"]` |
+- **T-Shirt**: 23 个（球衣 / 套装上衣 / Singlet / Gi / Fishing）
+- **Pants**: 8 个（Shorts / Legging / Tights / Trunks）
+- **Skirt**: 4 个（Dress / Leotard）
+- **Vest**: 1 个（其他 Vest）
+- **Tank Top & Camis**: 2 个（Tank Vest Dress / Lycra Top）
 
----
+### 7.3 41 个 sport tag archive URL 的处理
 
-## 6. 当前状态
+选项 A：直接删除（41 sport 标签全部并入 scenarios，旧 sport URL 404）
+选项 B：保留但只 redirect（301 /tag/sport/[slug]/ → /tag/scenario/[slug]/）
+选项 C：保留 `/tag/sport/*` 路由显示空页面（无产品）
 
-| 维度 | 数量 | 问题 |
-|---|---|---|
-| 产品 | 119 | - |
-| Category | 12（去掉 Sportswear）| 38 个产品被错放 Sportswear |
-| Sports | 41 | 4 个产品打了 41 全选，29 个产品打了 41 |
-| Scenarios | 25 | 22 个产品打了 13+，但相对合理 |
+**待用户决定**
 
----
+## 8. Forbidden vs Correct
 
-## 7. 修改操作流程
+| ❌ Forbidden | ✅ Correct |
+|---|---|
+| 同一产品打 41 个 sport 全选 | 每产品 1-5 个相关 scenario |
+| 把 Fishing Shirt 归为 Sportswear | Fishing Shirt 归 Shirt（按款式） |
+| 把 Basketball Jersey 归为 Sportswear | Basketball Jersey 归 T-Shirt（按款式） |
+| 运动项目归到 Category | 运动项目归到 Scenarios |
+| 重复打 sport 和 scenario | 合并到单一 scenarios 字段 |
 
-1. 下载 `08-sportswear-reclassification-v2.tsv` 看 38 个产品的 new_category
-2. 下载 `01-products.tsv` 看 119 个产品的 sports/scenarios
-3. 编辑 `src/lib/products-data.ts`：
-   - 38 个 product 的 `category: "Sportswear"` → 对应 new_category
-   - 4 个 product 的 `sports: [41 个]` → 对应 suggested_sports
-4. 重新 build + 部署
-5. 验证 13 个 category 页面 + 79 个 tag archive 全部 200
+## 9. Migration Steps (8 步)
+
+1. 备份 src/lib/products-data.ts 到 .ts.bak
+2. 改写 ProductCategory 类型，移除 "Sportswear"
+3. 删掉 Product['sports'] 字段
+4. 改写 Product['scenarios'] 字段类型为 Scenarios（含 sport + scenario）
+5. 写迁移脚本：把每个产品的 sports[] 内容**合并到** scenarios[]
+6. 38 个 Sportswear 产品重新分配 category
+7. 删除 src/app/tag/sport/* 路由（或 redirect）
+8. 跑 build，部署，验证 66 个 scenario archive 全部 200
+
+## 10. Action Items (待你确认)
+
+- [ ] **Q1**: 2 维合并模型是否 OK？sports 并入 scenarios？
+- [ ] **Q2**: 41 sport archive URL 是**删除**/**redirect**/**保留**？
+- [ ] **Q3**: 38 个 Sportswear 产品的 category 重新分配是否同意？
+- [ ] **Q4**: Scenarios 总数 = 66（25 场景 + 41 运动），是否新增更多？
+- [ ] **Q5**: 移除 Sportswear category 类型，还是保留（不再被使用）？
