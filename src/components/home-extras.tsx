@@ -229,7 +229,7 @@ function VideoShowcase() {
               <span className="text-[#cc3d00]">factory in action.</span>
             </h2>
             <p className="text-base md:text-lg text-white/70 leading-relaxed mb-6">
-              Walk through our 8,000 m² Yiwu facility &mdash; 12 production lines, digital sublimation printers, cut-and-sew lines, quality control, packing. 40 seconds, real footage, no fluff.
+              Walk through our 2,000 m² Yiwu facility &mdash; 12 production lines, digital sublimation printers, cut-and-sew lines, quality control, packing. 40 seconds, real footage, no fluff.
             </p>
             <ul className="space-y-2 text-sm md:text-base text-white/70">
               <li>&bull; Sublimation printing &mdash; large format, edge-to-edge</li>

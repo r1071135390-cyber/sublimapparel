@@ -9,7 +9,7 @@ import { blogPosts, getFeaturedPost, getAllCategories } from"@/lib/blog";
 export const metadata: Metadata = {
   title:"Blog | Sublimation Apparel Insights & Factory Stories",
   description:
-"Industry guides, factory stories, and B2B apparel manufacturing insights from a 8,000 m² Yiwu sublimation factory. Sublimation vs DTG, DDP shipping, fabric guides, and more.",
+"Industry guides, factory stories, and B2B apparel manufacturing insights from a 2,000 m² Yiwu sublimation factory. Sublimation vs DTG, DDP shipping, fabric guides, and more.",
   keywords: [
 "sublimation printing blog",
 "apparel manufacturing insights",
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title:"SublimApparel Blog — Apparel Manufacturing Insights",
     description:
-"Industry guides, factory stories, and B2B apparel insights. Written by the team behind our 8,000 m² Yiwu sublimation factory.",
+"Industry guides, factory stories, and B2B apparel insights. Written by the team behind our 2,000 m² Yiwu sublimation factory.",
     url:"/blog/",
     type:"website",
     images: ["/product-lineup.webp"],
@@ -55,7 +55,7 @@ export default function BlogIndexPage() {
           </h1>
           <p className="mt-6 max-w-3xl text-base text-[#3a3a3a] md:mt-8 md:text-lg">
             Industry guides, factory stories, and B2B apparel manufacturing
-            insights — written by the team behind our 8,000 m² Yiwu sublimation
+            insights — written by the team behind our 2,000 m² Yiwu sublimation
             factory. No recycled content. No AI fluff. Just what we have
             learned in over a decade of making custom apparel.
           </p>

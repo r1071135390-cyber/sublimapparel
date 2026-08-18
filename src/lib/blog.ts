@@ -222,9 +222,9 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug:"yiwu-factory-tour",
-    title:"Inside Our Yiwu Factory: 8,000 m² of Sublimation, Embroidery, and Quality Control",
+    title:"Inside Our Yiwu Factory: 2,000 m² of Sublimation, Embroidery, and Quality Control",
     excerpt:
-"Take a tour of our 8,000 m² production facility in Yiwu — from fabric warehouse to 1.9m wide-format printers to 100% final QC. See how a real Chinese apparel factory operates.",
+"Take a tour of our 2,000 m² production facility in Yiwu — from fabric warehouse to 1.9m wide-format printers to 100% final QC. See how a real Chinese apparel factory operates.",
     category:"Factory Stories",
     date:"2026-07-05",
     readTime:"10 min read",
@@ -232,11 +232,11 @@ export const blogPosts: BlogPost[] = [
     coverImage:"/factory-floor.webp",
     coverAlt:"Row of sublimation printers in our Yiwu factory",
     tags: ["factory tour","Yiwu","manufacturing","behind the scenes"],
-    metaTitle: "Inside Our Yiwu Apparel Factory: 8,000m² Tour 2025",
+    metaTitle: "Inside Our Yiwu Apparel Factory: 2,000m² Tour 2025",
     metaDescription:
-"Full tour of our 8,000 m² Yiwu sublimation apparel factory. See our printers, embroidery lines, QC process, and 200+ skilled workers. Photos, video, and what to expect.",
+"Full tour of our 2,000 m² Yiwu sublimation apparel factory. See our printers, embroidery lines, QC process, and 200+ skilled workers. Photos, video, and what to expect.",
     intro: [
-"Most B2B apparel websites show a stock photo of a 'factory' and call it a day. We are going to do the opposite — give you a real, detailed walkthrough of our 8,000 m² production facility in Yiwu, China. From the fabric warehouse to the loading dock, here is what happens on our floor every day.",
+"Most B2B apparel websites show a stock photo of a 'factory' and call it a day. We are going to do the opposite — give you a real, detailed walkthrough of our 2,000 m² production facility in Yiwu, China. From the fabric warehouse to the loading dock, here is what happens on our floor every day.",
 "Yiwu is the small-commodity capital of the world, located 1.5 hours south of Hangzhou on the high-speed rail. Our factory sits in the Yiwu Industrial Park, with 200+ skilled workers across printing, embroidery, cutting, sewing, and quality control.",
     ],
     sections: [
@@ -284,7 +284,7 @@ export const blogPosts: BlogPost[] = [
       },
     ],
     keyTakeaways: [
-"8,000 m² facility, 200+ workers, 6 production zones",
+"2,000 m² facility, 200+ workers, 6 production zones",
 "50+ base fabrics stocked on-site for fast turnaround",
 "4 wide-format sublimation printers running 24/7 in peak season",
 "100% final QC under professional lighting before packing",
