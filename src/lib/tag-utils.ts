@@ -99,7 +99,7 @@ const CATEGORY_MAP: Record<string, string> = {
   "Pants & Shorts": "Pants",
   "Pants": "Pants",
   "Shorts": "Pants",
-  Vests: "Jacket",
+  Vests: "Uniform & Workwear",
   Jackets: "Jacket",
   "Polo Shirt": "Polo Shirt",
   "Polo": "Polo Shirt",

@@ -50,7 +50,7 @@ const categories = [
       { name: "Pants & Shorts", category: "Pants" },
       { name: "Leggings" },
       { name: "Tank Tops", category: "Tank Top & Camis" },
-      { name: "Vests", category: "Vest" },
+      { name: "Vests", category: "Uniform & Workwear" },
       { name: "Combat Gear" },
     ],
     note: "Polyester or 100% cotton. Cotton runs on DTG/DTF (A4–A3 per panel); polyester runs on sublimation (true all-over, edge-to-edge). Allover digital print on cotton also available (cut-and-sew, true full-body, MOQ 50 pcs).",

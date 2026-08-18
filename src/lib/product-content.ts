@@ -134,7 +134,7 @@ const CATEGORY_VERB: Record<string, string> = {
   Shirt: "shirt",
   "Tank Top & Camis": "tank",
   "Tank Top": "tank",
-  Vest: "vest",
+  "Uniform & Workwear": "uniform",
   Cap: "cap",
   Hat: "hat",
   Sportswear: "kit",

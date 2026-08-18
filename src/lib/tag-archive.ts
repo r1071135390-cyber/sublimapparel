@@ -176,8 +176,8 @@ export const CATEGORY_TAGS: Record<string, Omit<TagInfo, "slug" | "dimension">> 
     process: "Sublimation on Polyester Eyelet",
     icon: "👙",
   },
-  "Vest": {
-    label: "Vest",
+  "Uniform & Workwear": {
+    label: "Uniform & Workwear",
     description: "Sublimated safety and utility vests for construction crews, event staff, and roadside teams. High-vis color blocks combined with edge-to-edge printed panels on chest, back, and shoulders.",
     benefits: [
       "Hi-vis yellow or orange base with reflective tape",
