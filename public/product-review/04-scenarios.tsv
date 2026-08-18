@@ -1,0 +1,33 @@
+# Scenarios (27)
+# Total: 29
+
+index	key	dimension	label	slug
+1	Promotional Swag	scenario	Promotional Swag	Promotional Swag
+2	Event & Festival	scenario	Event & Festival	Event & Festival
+3	School & Education	scenario	School & Education	School & Education
+4	Team & Club	scenario	Team & Club	Team & Club
+5	Sports League	scenario	Sports League	Sports League
+6	Corporate & Branding	scenario	Corporate & Branding	Corporate & Branding
+7	Uniform & Workwear	scenario	Uniform & Workwear	Uniform & Workwear
+8	Retail & Fashion	scenario	Retail & Fashion	Retail & Fashion
+9	Political Campaign	scenario	Political Campaign	Political Campaign
+10	Fundraiser & Charity	scenario	Fundraiser & Charity	Fundraiser & Charity
+11	Music & Merch	scenario	Music & Merch	Music & Merch
+12	Wedding & Party	scenario	Wedding & Party	Wedding & Party
+13	Gift & Souvenir	scenario	Gift & Souvenir	Gift & Souvenir
+14	Construction & Engineering	scenario	Construction & Engineering	Construction & Engineering
+15	Express & Logistics	scenario	Express & Logistics	Express & Logistics
+16	Hospitality & F&B	scenario	Hospitality & F&B	Hospitality & F&B
+17	Medical & Healthcare	scenario	Medical & Healthcare	Medical & Healthcare
+18	Security & Property	scenario	Security & Property	Security & Property
+19	Retail & Supermarket	scenario	Retail & Supermarket	Retail & Supermarket
+20	Education & School	scenario	Education & School	Education & School
+21	Corporate & Promo	scenario	Corporate & Promo	Corporate & Promo
+22	Transit & Transport	scenario	Transit & Transport	Transit & Transport
+23	Studio & Gym	scenario	Studio & Gym	Studio & Gym
+24	Military	scenario	Military	Military
+25	Festival & Holiday	scenario	Festival & Holiday	Festival & Holiday
+26	Beach	scenario	Beach	Beach
+27	Lycra	scenario	Lycra	Lycra
+28	Sublimation	scenario	Sublimation	Sublimation
+29	Polyester	scenario	Polyester	Polyester

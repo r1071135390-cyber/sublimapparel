@@ -1,0 +1,85 @@
+# Tag → product count summary
+dimension	label	product_count
+category	T-Shirt	17
+category	Hoodie	17
+category	Polo Shirt	15
+category	Jacket	6
+category	Shirt	3
+category	Tank Top & Camis	3
+category	Vest	1
+category	Pants	3
+category	Sweatshirt	4
+category	Skirt	2
+category	Sportswear	38
+category	Home	5
+category	Cap	5
+sport	AFL	30
+sport	Athletics	32
+sport	Badminton	30
+sport	Baseball	30
+sport	Basketball	30
+sport	Beach	33
+sport	Bowling	30
+sport	Boxing	31
+sport	Cheer	31
+sport	Cricket	30
+sport	CrossFit	30
+sport	Cycling	31
+sport	Dance	31
+sport	Dive	31
+sport	Esports	30
+sport	Fishing	30
+sport	Football	30
+sport	Golf	30
+sport	Gym	31
+sport	Hockey	30
+sport	Lacrosse	30
+sport	MMA	32
+sport	Martial Arts	32
+sport	Netball	30
+sport	Pilates	31
+sport	Rugby	31
+sport	Running	32
+sport	Skate	30
+sport	Skating	31
+sport	Ski	29
+sport	Snowboard	29
+sport	Soccer	31
+sport	Softball	31
+sport	Surf	33
+sport	Swimwear	33
+sport	Table Tennis	30
+sport	Tennis	30
+sport	Triathlon	30
+sport	Volleyball	31
+sport	Wrestling	30
+sport	Yoga	31
+scenario	Promotional Swag	65
+scenario	Event & Festival	71
+scenario	School & Education	63
+scenario	Team & Club	60
+scenario	Sports League	61
+scenario	Corporate & Branding	33
+scenario	Uniform & Workwear	55
+scenario	Retail & Fashion	25
+scenario	Political Campaign	26
+scenario	Fundraiser & Charity	22
+scenario	Music & Merch	27
+scenario	Wedding & Party	22
+scenario	Gift & Souvenir	22
+scenario	Construction & Engineering	31
+scenario	Express & Logistics	26
+scenario	Hospitality & F&B	27
+scenario	Medical & Healthcare	26
+scenario	Security & Property	26
+scenario	Retail & Supermarket	26
+scenario	Education & School	25
+scenario	Corporate & Promo	25
+scenario	Transit & Transport	26
+scenario	Studio & Gym	26
+scenario	Military	26
+scenario	Festival & Holiday	24
+scenario	Beach	22
+scenario	Lycra	22
+scenario	Sublimation	22
+scenario	Polyester	22
