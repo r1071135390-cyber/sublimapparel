@@ -43,14 +43,14 @@ export const metadata: Metadata = {
     "China race shirt factory",
   ],
   alternates: {
-    canonical: "https://sublimapparel.com/for-events/",
+    canonical: "https://sublimapparel.com/event-apparel/",
   },
   openGraph: {
     title:
       "Custom Race Shirts & Event Apparel Manufacturer | SublimApparel",
     description:
       "Marathon, 5K, charity run, festival apparel. Participant, volunteer, sponsor. 90-day production planning. MOQ 50. DDP to 100+ countries.",
-    url: "https://sublimapparel.com/for-events/",
+    url: "https://sublimapparel.com/event-apparel/",
     images: ["/esports-jersey-prodigy.webp"],
   },
 };
@@ -205,7 +205,7 @@ export default function ForEventsPage() {
     { name: "Home", path: "/" },
     {
       name: "Custom Apparel for Events",
-      path: "/for-events/",
+      path: "/event-apparel/",
     },
   ]);
 

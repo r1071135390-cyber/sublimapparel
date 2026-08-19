@@ -3,22 +3,21 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
-  Bike,
+  Award,
+  Building2,
   Calendar,
   CheckCircle2,
   Clock,
   Heart,
   Layers,
-  MapPin,
-  Music,
   Package,
+  Palette,
   Ruler,
   Shirt,
   Shield,
   Sparkles,
   Star,
   Timer,
-  Trophy,
   Users,
 } from "lucide-react";
 import { Contact } from "@/components/contact";
@@ -28,168 +27,168 @@ import { forEventsFaqJsonLd } from "@/lib/json-ld-data";
 
 export const metadata: Metadata = {
   title:
-    "Custom Club & Community Apparel | Sports Teams, Schools, Groups | MOQ 50",
+    "Custom Corporate Apparel | Employee Uniforms, Wellness, Trade Show | MOQ 50",
   description:
-    "Custom apparel for clubs, schools, community groups, faith organizations, and amateur teams. Branded identity that doesn't look like generic sports swag. MOQ 50 pcs, fast 25-day production, US warehouse.",
+    "Custom corporate apparel for companies, events, and trade shows. Employee uniforms, wellness programs, team-building apparel, and client gifts. Brand-color matching, flexible 90-day production, MOQ 50 pcs, DDP worldwide.",
   keywords: [
-    "custom club apparel",
-    "sports team uniforms",
-    "school club shirts",
-    "community group apparel",
-    "amateur team uniforms",
-    "cycling club jerseys",
-    "running club shirts",
-    "church group apparel",
-    "non-profit merchandise",
-    "organization t-shirts",
+    "custom corporate apparel",
+    "company uniforms",
+    "employee apparel",
+    "corporate wellness shirts",
+    "trade show apparel",
+    "team building shirts",
+    "company branded merchandise",
+    "corporate gifts",
+    "office uniforms",
+    "branded swag supplier",
   ],
   alternates: {
-    canonical: "https://sublimapparel.com/for-communities/",
+    canonical: "https://sublimapparel.com/corporate-event-apparel/",
   },
   openGraph: {
-    title: "Custom Club & Community Apparel | SublimApparel",
+    title: "Custom Corporate Apparel Manufacturer | SublimApparel",
     description:
-      "Branded identity for clubs, schools, community groups, faith organizations. Sublimated, durable, designed for your group.",
-    url: "https://sublimapparel.com/for-communities/",
-    images: ["/bowling-jersey-striker.webp"],
+      "Employee uniforms, wellness programs, trade show apparel. Brand-color matching, MOQ 50, DDP worldwide.",
+    url: "https://sublimapparel.com/corporate-event-apparel/",
+    images: ["/esports-hoodie-circuit.webp"],
   },
 };
 
-const communitySegments = [
-  {
-    icon: Trophy,
-    title: "Amateur Sports Teams & Clubs",
-    desc: "Cycling clubs, running clubs, climbing gyms, rowing crews, amateur rugby, ultimate frisbee. Performance fabrics, team identity that lasts.",
-  },
+const useCases = [
   {
     icon: Users,
-    title: "School & University Organizations",
-    desc: "Clubs, Greek life, student government, sports clubs, debate teams. Branded apparel that members actually want to wear on campus.",
+    title: "Employee Uniforms & Onboarding Kits",
+    desc: "Polo shirts, performance tees, branded outerwear. Standardize sizing across departments. Roll out new hires monthly without re-sampling.",
   },
   {
     icon: Heart,
-    title: "Faith-Based & Church Groups",
-    desc: "Service trips, youth groups, retreats, mission teams. Group identity, family-friendly designs, modest cuts available.",
+    title: "Wellness & Fitness Programs",
+    desc: "Branded apparel for company gyms, step challenges, 5K team entries, charity walk participation.",
   },
   {
-    icon: Music,
-    title: "Music, Arts & Cultural Groups",
-    desc: "Bands, choirs, theater groups, cultural organizations. Custom artwork, tour merch, performance apparel.",
+    icon: Building2,
+    title: "Trade Shows & Conferences",
+    desc: "Booth staff uniforms, attendee giveaways, executive gifts. Color-matched to your brand standards.",
   },
   {
     icon: Sparkles,
-    title: "Hobby & Local Groups",
-    desc: "Book clubs, gaming groups, hobby communities, local meetups. Branded identity that turns your members into ambassadors.",
+    title: "Client Gifts & Holiday Apparel",
+    desc: "Premium-feel sweatshirts, hoodies, and caps. Embroidered logos or all-over prints for VIP clients.",
   },
   {
     icon: Star,
-    title: "Local Non-Profits & Charities",
-    desc: "Volunteer apparel, fundraiser merchandise, donor gifts. Cost-effective bulk pricing for tight budgets.",
+    title: "Team-Building Events",
+    desc: "Off-site retreats, company Olympics, group volunteer days. Custom designs that don't look like swag.",
+  },
+  {
+    icon: Award,
+    title: "Sales Team Apparel",
+    desc: "Field reps, dealership staff, customer-facing roles. Brand-consistent, durable, looks polished.",
   },
 ];
 
 const whatWeMake = [
   {
-    label: "Team Jerseys",
-    examples: "Sublimated full-kit, sponsor logos, performance fabric",
-    icon: Trophy,
+    label: "Polo Shirts",
+    examples: "Sublimated or embroidered logo, brand-color matching",
+    icon: Shirt,
   },
   {
-    label: "Club Polos & Tees",
-    examples: "Branded identity, performance cotton blend",
+    label: "Performance Tees",
+    examples: "Moisture-wicking for wellness programs, gym events",
     icon: Shirt,
   },
   {
     label: "Hoodies & Crewnecks",
-    examples: "Group identity, members-only merchandise",
+    examples: "Premium feel, all-over print, embroidered logos",
     icon: Package,
   },
   {
-    label: "Event & Trip Shirts",
-    examples: "Service trips, tours, retreats, conferences",
-    icon: MapPin,
+    label: "Caps & Accessories",
+    examples: "Embroidered or sublimated. Trade show giveaways.",
+    icon: Award,
   },
 ];
 
 const painPoints = [
   {
-    icon: Sparkles,
-    title: "&ldquo;It looks like generic team swag.&rdquo;",
-    pain: "Most club apparel looks the same — big logo, two colors, all-over print of nothing. Your members don't want to wear it outside of game day.",
-    fix: "Sublimation cut & sew gives you edge-to-edge design freedom. All-over prints, gradients, custom artwork, your group's personality — not a stock template.",
-    link: { label: "See our work", href: "/products" },
+    icon: Palette,
+    title: "&ldquo;Will the color match our brand book?&rdquo;",
+    pain: "Pantone 286 looks navy on screen but arrives royal blue in the box. You only see it after 1,000 shirts ship.",
+    fix: "We match to Pantone, with physical lab dips for orders over 500 pcs. Sample approval is the contract — bulk only ships after you sign off on the actual fabric color.",
+    link: { label: "Color matching process", href: "/quality-control" },
   },
   {
     icon: Ruler,
-    title: "&ldquo;Members are 18 to 65, all sizes.&rdquo;",
-    pain: "Your cycling club has 22-year-old riders and 60-year-old enthusiasts. Sizing range is chaos, and the small-size charge breaks budgets.",
-    fix: "Full size run from youth XS to adult 5XL. No size surcharge. Same price per piece whether you're printing a youth small or an adult 3XL.",
-    link: { label: "Get US Size Guide", href: "/us-size-guide" },
+    title: "&ldquo;How do we handle 200 new hires a month?&rdquo;",
+    pain: "Buying in bulk means 100 size-M shirts in a closet. New hires arrive in all sizes. Re-orders take weeks.",
+    fix: "Our 90-Day Program reserves capacity with a 30-day final-count lock. New hire orders slot in without restarting production. Re-order MOQ is 30 pcs.",
+    link: { label: "See 90-Day Program", href: "/90-day-program" },
   },
   {
-    icon: Heart,
-    title: "&ldquo;We need this for the season opener.&rdquo;",
-    pain: "Seasons have hard start dates. Late registrations, last-minute design approvals, and a 12-week supplier lead time don't work.",
-    fix: "25-day standard production. Rush available. US warehouse for the last-minute additions that always happen.",
+    icon: Shield,
+    title: "&ldquo;What if the bulk doesn't match the sample?&rdquo;",
+    pain: "Most suppliers charge extra for in-line inspections, or skip them entirely. You find out at delivery.",
+    fix: "Every order goes through 4 inspection stages with AQL 2.5 standards. Photo evidence at every step. Defects caught before packing, not after.",
+    link: { label: "Our QC process", href: "/quality-control" },
+  },
+  {
+    icon: Timer,
+    title: "&ldquo;When do we need to start for Q4?&rdquo;",
+    pain: "Holiday gifts, year-end events, trade show season. The deadline is fixed, the in-house procurement timeline is unclear.",
+    fix: "Event Timeline Calculator. Enter your deadline, get the exact order date, design lock date, and final-count lock date.",
     link: { label: "Check your timeline", href: "/event-timeline" },
-  },
-  {
-    icon: Trophy,
-    title: "&ldquo;Sponsors want their logos visible.&rdquo;",
-    pain: "Local bike shop, pub, gym, business sponsor the team. They want their brand visible. Putting 6 logos on a jersey looks like a NASCAR coat.",
-    fix: "Sponsor logo placement is part of the design. We work with you to place sponsor logos in zones that look intentional, not crowded.",
-    link: { label: "Custom design process", href: "/how-to-source" },
   },
 ];
 
 const whyUs = [
   {
-    title: "Branded identity, not stock templates",
-    desc: "Every design starts with your group's personality. Custom artwork, your colors, your vibe. Not a template with your logo dropped in.",
+    title: "One vendor, every apparel type",
+    desc: "Polo + tee + hoodie + cap on one purchase order, one invoice, one shipment, one contact. No juggling 4 different printers.",
   },
   {
-    title: "Sponsors are part of the design",
-    desc: "We work sponsor logos into the layout as design elements, not afterthoughts. Your team looks pro, your sponsors get visibility.",
+    title: "Brand book adherence is non-negotiable",
+    desc: "We lock Pantone, sizing chart, and placement before cutting. Your last 5 vendors couldn't say that — we say it in writing.",
   },
   {
-    title: "Members want to wear it off the field",
-    desc: "Sublimated apparel is comfortable, durable, and looks good in coffee shops, not just at practice. Members become walking ambassadors.",
+    title: "Scalable from 50 to 50,000",
+    desc: "Same factory, same quality. The team-building tees for 50 people get the same production line as your 5,000-piece trade show order.",
   },
   {
-    title: "Multi-year archiving",
-    desc: "We archive your designs, Pantones, and even the exact fabric blend. Next season's reorder is a 1-week process, not a new project.",
+    title: "US warehouse for emergencies",
+    desc: "Forgot someone for a board meeting? Need 20 extra polos by Friday? Fontana, CA warehouse ships same-day domestically.",
   },
 ];
 
 const faqs = [
   {
-    q: "Can you handle team kits with sponsor logos?",
-    a: "Yes. We regularly work with cycling, running, and amateur sports clubs that have 3-6 sponsors per kit. Sponsor logos are integrated as design elements, not afterthoughts. Send us the sponsor logo files and we'll mock them into your kit design.",
+    q: "What's the typical MOQ for corporate orders?",
+    a: "50 pieces per design for sublimation cut & sew. For embroidered polos, MOQ drops to 30 pieces. We can split larger orders across multiple production runs (e.g. 200 pcs/month for 3 months) at no extra cost.",
   },
   {
-    q: "What's the typical MOQ for club apparel?",
-    a: "50 pieces per design for sublimation cut & sew. For teams of 10-15 members, we often run the same design with member-specific customization (name, number) within that minimum. Re-orders for new members start at 30 pieces.",
+    q: "Can you match our brand Pantone colors?",
+    a: "Yes. We work from Pantone, PMS, or physical swatches. For orders over 500 pcs, we provide lab-dip samples for sign-off before production. Re-orders maintain color consistency by archiving your approved color profile.",
   },
   {
-    q: "How long does a typical club order take?",
-    a: "25 days from artwork approval. Rush available for 15-day turnaround. We recommend starting 60 days before your season opener or major event. The Event Timeline Calculator shows your specific dates.",
+    q: "Do you handle re-orders for new hires?",
+    a: "Yes — that's the 90-Day Program in action. We reserve production capacity based on your quarterly estimate, and final counts lock 30 days out. New hire orders slot into the next run without restarting the line. Re-order MOQ is 30 pcs.",
   },
   {
-    q: "Can we order custom apparel in small batches as our group grows?",
-    a: "Yes. Our 90-Day Program reserves production capacity based on your growth estimate. We run the main order, then add new members via re-orders at the same per-piece price (MOQ 30) as your group grows.",
+    q: "What's the difference between sublimation and embroidery?",
+    a: "Sublimation is best for all-over prints, complex logos, gradients, and polyester garments (performance tees, hoodies). Embroidery is best for polos, caps, and corporate-formal looks. We can do both, often in the same order.",
   },
   {
-    q: "Do you ship internationally?",
-    a: "Yes. DDP shipping to 100+ countries. Most international clubs use ocean freight (25-40 days, lowest cost) with air freight available for urgent orders. We handle all customs paperwork so you don't deal with import duties.",
+    q: "Can you produce one design with multiple variants (different colors, different sizes)?",
+    a: "Yes. Sublimation cut & sew supports per-piece color, per-piece size, and per-piece print placement. No extra setup fee. Common for onboarding kits where new hires choose from 3 colorways.",
   },
 ];
 
-export default function ForCommunitiesPage() {
+export default function ForCorporatePage() {
   const breadcrumb = buildBreadcrumbJsonLd([
     { name: "Home", path: "/" },
     {
-      name: "Custom Apparel for Communities & Clubs",
-      path: "/for-communities/",
+      name: "Custom Apparel for Corporate",
+      path: "/corporate-event-apparel/",
     },
   ]);
 
@@ -202,8 +201,8 @@ export default function ForCommunitiesPage() {
       <section className="relative overflow-hidden bg-[#0a0a0a] text-white">
         <div className="absolute inset-0">
           <Image
-            src="/bowling-jersey-striker.webp"
-            alt="Custom club and community apparel — team jerseys and branded group identity"
+            src="/esports-hoodie-circuit.webp"
+            alt="Custom sublimated corporate apparel — branded hoodies, polos, and event uniforms"
             fill
             className="object-cover opacity-30"
             priority
@@ -215,21 +214,23 @@ export default function ForCommunitiesPage() {
         <div className="relative mx-auto max-w-7xl px-6 py-20 md:py-28">
           <div className="max-w-3xl">
             <div className="mb-5 inline-flex items-center gap-2 rounded-sm border border-[#00c2ff]/40 bg-[#00c2ff]/10 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-[#00c2ff]">
-              <Users className="h-3.5 w-3.5" />
-              For clubs, schools, and community groups
+              <Building2 className="h-3.5 w-3.5" />
+              For companies, HR, and brand teams
             </div>
 
             <h1 className="text-4xl font-black leading-[1.05] tracking-tight md:text-6xl">
-              Custom apparel that
+              Corporate apparel that
               <br />
-              <span className="text-[#00c2ff]">your members actually wear.</span>
+              <span className="text-[#00c2ff]">looks like your brand,</span>
+              <br />
+              not like swag.
             </h1>
 
             <p className="mt-6 text-lg leading-relaxed text-white/80 md:text-xl">
-              Branded identity for clubs, schools, faith groups, and amateur
-              teams. <strong className="text-white">Custom designs, not stock
-              templates</strong>, 25-day production, full size run from youth XS
-              to adult 5XL. MOQ 50 pcs.
+              Employee uniforms, wellness programs, trade show apparel, client
+              gifts. <strong className="text-white">Pantone-matched colors</strong>,
+              {" "}flexible 90-day production, MOQ 50 pcs. New hire re-orders
+              ship within 30 days.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -237,15 +238,15 @@ export default function ForCommunitiesPage() {
                 href="/contact"
                 className="inline-flex items-center justify-center gap-2 rounded-sm bg-[#00c2ff] px-7 py-4 text-sm font-black uppercase tracking-wider text-black transition-all hover:-translate-y-0.5 hover:bg-[#33d1ff] hover:shadow-[0_8px_24px_rgba(0,194,255,0.4)]"
               >
-                Get a quote for your group
+                Get a quote for your team
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
-                href="/products"
+                href="/us-size-guide"
                 className="inline-flex items-center justify-center gap-2 rounded-sm border-2 border-white/30 bg-white/5 px-7 py-4 text-sm font-bold uppercase tracking-wider text-white backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-[#00c2ff] hover:bg-[#00c2ff]/10"
               >
-                <Sparkles className="h-4 w-4" />
-                See custom design work
+                <Ruler className="h-4 w-4" />
+                Download size template
               </Link>
             </div>
 
@@ -253,25 +254,25 @@ export default function ForCommunitiesPage() {
               <div>
                 <div className="text-3xl font-black text-[#00c2ff] md:text-4xl">2018</div>
                 <div className="mt-1 text-xs font-bold uppercase tracking-wider text-white/60">
-                  Year founded
+                  Year founded in Yiwu
                 </div>
               </div>
               <div>
-                <div className="text-3xl font-black text-[#00c2ff] md:text-4xl">XS-5XL</div>
+                <div className="text-3xl font-black text-[#00c2ff] md:text-4xl">Pantone</div>
                 <div className="mt-1 text-xs font-bold uppercase tracking-wider text-white/60">
-                  Full size run, no surcharge
+                  Color-matched standard
                 </div>
               </div>
               <div>
-                <div className="text-3xl font-black text-[#00c2ff] md:text-4xl">25d</div>
+                <div className="text-3xl font-black text-[#00c2ff] md:text-4xl">30 pcs</div>
                 <div className="mt-1 text-xs font-bold uppercase tracking-wider text-white/60">
-                  Standard production
+                  Re-order minimum
                 </div>
               </div>
               <div>
-                <div className="text-3xl font-black text-[#00c2ff] md:text-4xl">DDP</div>
+                <div className="text-3xl font-black text-[#00c2ff] md:text-4xl">100+</div>
                 <div className="mt-1 text-xs font-bold uppercase tracking-wider text-white/60">
-                  100+ countries
+                  Countries DDP shipped
                 </div>
               </div>
             </div>
@@ -279,7 +280,7 @@ export default function ForCommunitiesPage() {
         </div>
       </section>
 
-      {/* COMMUNITY SEGMENTS */}
+      {/* USE CASES */}
       <section className="border-b border-black/10 bg-white py-20">
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-12 max-w-2xl">
@@ -287,31 +288,31 @@ export default function ForCommunitiesPage() {
               What we make
             </div>
             <h2 className="text-3xl font-black tracking-tight md:text-4xl">
-              Custom apparel for every kind of group.
+              Custom apparel for every corporate use case.
             </h2>
             <p className="mt-3 text-base text-black/70">
-              From a 12-person climbing club to a 500-person Greek organization.
-              Same factory, same craft.
+              From a 50-person office to a 5,000-person enterprise. Same
+              factory, same quality, same production line.
             </p>
           </div>
 
           <div className="grid gap-px bg-black/10 md:grid-cols-2 lg:grid-cols-3">
-            {communitySegments.map((s) => (
+            {useCases.map((u) => (
               <div
-                key={s.title}
+                key={u.title}
                 className="group bg-white p-6 transition-all hover:bg-[#0a0a0a] hover:text-white"
               >
-                <s.icon className="h-8 w-8 text-[#00c2ff] transition-transform group-hover:scale-110" />
-                <h3 className="mt-4 text-lg font-black">{s.title}</h3>
+                <u.icon className="h-8 w-8 text-[#00c2ff] transition-transform group-hover:scale-110" />
+                <h3 className="mt-4 text-lg font-black">{u.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-black/70 group-hover:text-white/80">
-                  {s.desc}
+                  {u.desc}
                 </p>
               </div>
             ))}
           </div>
 
           <div className="mt-12 rounded-sm border-2 border-black/10 bg-[#faf9f6] p-8">
-            <h3 className="text-xl font-black">What we make for your group</h3>
+            <h3 className="text-xl font-black">What we make for your team</h3>
             <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {whatWeMake.map((w) => (
                 <div key={w.label} className="flex items-start gap-3">
@@ -336,13 +337,14 @@ export default function ForCommunitiesPage() {
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-12 max-w-2xl">
             <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#00c2ff]">
-              The 4 problems every club organizer hits
+              The 4 problems every corporate buyer hits
             </div>
             <h2 className="text-3xl font-black tracking-tight md:text-4xl">
               And exactly how we solve them.
             </h2>
             <p className="mt-3 text-base text-black/70">
-              Other vendors give you a template. We give you identity.
+              Other vendors say &ldquo;we can do it.&rdquo; We give you the
+              specific tool for each problem.
             </p>
           </div>
 
@@ -390,33 +392,33 @@ export default function ForCommunitiesPage() {
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <div>
               <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#00c2ff]">
-                90-Day Club Apparel Program
+                The 90-Day Corporate Apparel Program
               </div>
               <h2 className="text-3xl font-black tracking-tight md:text-4xl">
-                Plan your season, re-order as you grow.
+                Reserve capacity, lock late, re-order fast.
               </h2>
               <p className="mt-3 text-base text-white/70">
-                Your roster changes. Your apparel supplier shouldn&apos;t have
-                to.
+                Procurement teams love predictable production. HR teams love
+                fast re-orders. The 90-Day Program gives both.
               </p>
 
               <ol className="mt-8 space-y-4">
                 {[
                   {
                     t: "T-90: Reserve",
-                    d: "Submit your estimated roster. We hold production capacity. Design direction locked in early.",
+                    d: "Submit your quarterly estimate. We hold production capacity, source fabric, and pre-print Pantone swatches.",
                   },
                   {
-                    t: "T-60: Sponsor + sample",
-                    d: "Send sponsor logo files. We mock them into your kit as design elements. Physical sample for sign-off.",
+                    t: "T-60: Sample + lock",
+                    d: "Physical samples on your exact fabric and Pantone. Sign-off is the contract.",
                   },
                   {
-                    t: "T-30: Final roster",
-                    d: "Your membership list is set. We adjust production within 5% of your estimate. New members added via re-order.",
+                    t: "T-30: Final count",
+                    d: "Your new-hire numbers are real. We adjust production to your real count — no penalty, no panic.",
                   },
                   {
-                    t: "T-0: Season opener",
-                    d: "Shipped to your clubhouse, gym, or office. Sorted by member if needed. Name labels available.",
+                    t: "T-0 onward: Re-orders",
+                    d: "Monthly re-orders of 30+ pcs slot into the next run. Same factory, same color profile.",
                   },
                 ].map((s) => (
                   <li key={s.t} className="flex items-start gap-4">
@@ -435,15 +437,15 @@ export default function ForCommunitiesPage() {
                 href="/90-day-program"
                 className="mt-8 inline-flex items-center gap-2 rounded-sm bg-[#00c2ff] px-6 py-3 text-sm font-black uppercase tracking-wider text-black transition-all hover:-translate-y-0.5 hover:bg-[#33d1ff]"
               >
-                Full 90-Day Program
+                Full 90-Day Program details
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
 
             <div className="relative aspect-[4/5] overflow-hidden rounded-sm border-2 border-[#00c2ff]/30">
               <Image
-                src="/bowling-raglan-retro.webp"
-                alt="Custom club jerseys with sponsor logos and team identity"
+                src="/esports-travel-hoodie.webp"
+                alt="Custom branded corporate hoodies and team apparel manufactured in Yiwu"
                 fill
                 className="object-cover"
                 sizes="(min-width: 1024px) 50vw, 100vw"
@@ -458,10 +460,10 @@ export default function ForCommunitiesPage() {
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-12 max-w-2xl">
             <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#00c2ff]">
-              Why clubs choose us
+              Why corporate buyers choose us
             </div>
             <h2 className="text-3xl font-black tracking-tight md:text-4xl">
-              Built for community identity.
+              Built for the procurement nightmare.
             </h2>
           </div>
 
@@ -490,7 +492,7 @@ export default function ForCommunitiesPage() {
         <div className="mx-auto max-w-4xl px-6">
           <div className="mb-12 text-center">
             <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#00c2ff]">
-              Common questions from clubs and groups
+              Common questions from corporate buyers
             </div>
             <h2 className="text-3xl font-black tracking-tight md:text-4xl">
               Quick answers.

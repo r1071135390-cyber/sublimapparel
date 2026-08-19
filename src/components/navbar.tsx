@@ -5,29 +5,44 @@ import { User, ChevronDown, Mail, Briefcase, Wrench } from "lucide-react";
 
 const solutions = [
   {
-    href: "/for-events/",
-    label: "For Events & Races",
-    desc: "Marathon, 5K, charity, festival",
+    href: "/event-apparel/",
+    label: "Event Apparel",
+    desc: "Conferences, festivals, expos, trade shows",
   },
   {
-    href: "/for-corporate/",
-    label: "For Corporate",
+    href: "/custom-event-t-shirts/",
+    label: "Custom Event T-Shirts",
+    desc: "T-shirt programs for any event",
+  },
+  {
+    href: "/race-shirts/",
+    label: "Race Shirts",
+    desc: "5K, 10K, charity runs, finish-line",
+  },
+  {
+    href: "/marathon-shirts/",
+    label: "Marathon Shirts",
+    desc: "Marathon, half, ultra, distance gear",
+  },
+  {
+    href: "/corporate-event-apparel/",
+    label: "Corporate Apparel",
     desc: "Wellness, events, employee apparel",
   },
   {
-    href: "/for-camp/",
-    label: "For Summer Camps",
-    desc: "Counselors, staff, campers",
+    href: "/summer-camp-shirts/",
+    label: "Summer Camp Shirts",
+    desc: "Counselors, staff, campers, sessions",
   },
   {
-    href: "/for-communities/",
-    label: "For Communities",
-    desc: "Clubs, schools, organizations",
+    href: "/organization-apparel/",
+    label: "Organization Apparel",
+    desc: "Clubs, schools, churches, nonprofits",
   },
   {
-    href: "/for-brands/",
-    label: "For Growing Brands",
-    desc: "Private label, OEM, scale-up",
+    href: "/private-label-sportswear/",
+    label: "Private Label Sportswear",
+    desc: "OEM, your brand, scale-up",
   },
 ];
 

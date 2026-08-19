@@ -3,19 +3,23 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
-  Calendar,
+  Award,
+  Box,
   CheckCircle2,
   Clock,
+  Globe,
   Heart,
   Layers,
-  MapPin,
   Package,
+  Palette,
   Ruler,
   Shirt,
   Shield,
   Sparkles,
-  Sun,
+  Star,
+  Tag,
   Timer,
+  TrendingUp,
   Users,
 } from "lucide-react";
 import { Contact } from "@/components/contact";
@@ -25,158 +29,168 @@ import { forEventsFaqJsonLd } from "@/lib/json-ld-data";
 
 export const metadata: Metadata = {
   title:
-    "Custom Summer Camp Apparel | Counselor, Camper, Staff Shirts | MOQ 50",
+    "Private Label & OEM Apparel Manufacturing | Custom Brand, Low MOQ | Since 2018",
   description:
-    "Custom summer camp apparel for camps of all sizes. Counselor shirts, camper tees, staff uniforms, color team apparel. Multiple designs per camp, year-over-year re-orders, MOQ 50 pcs, fast US shipping from Fontana CA.",
+    "Private label and OEM apparel manufacturing for growing brands. Custom labels, hang tags, poly bags, retail packaging, drop-ship fulfillment. MOQ 50 pcs (sublimation), 30 pcs (re-orders). FOB and DDP available.",
   keywords: [
-    "custom summer camp shirts",
-    "camp counselor shirts",
-    "camper apparel",
-    "summer camp uniforms",
-    "color team shirts",
-    "camp staff apparel",
-    "youth camp clothing",
-    "camp merchandise",
-    "overnight camp shirts",
-    "day camp apparel",
+    "private label apparel",
+    "OEM clothing manufacturer",
+    "custom brand apparel",
+    "apparel dropship supplier",
+    "white label t-shirts",
+    "retail ready clothing",
+    "private label factory",
+    "DTC apparel manufacturer",
+    "small batch apparel",
+    "brand apparel production",
   ],
   alternates: {
-    canonical: "https://sublimapparel.com/for-camp/",
+    canonical: "https://sublimapparel.com/private-label-sportswear/",
   },
   openGraph: {
-    title: "Custom Summer Camp Apparel Manufacturer | SublimApparel",
+    title: "Private Label & OEM Apparel Manufacturing | SublimApparel",
     description:
-      "Counselor, camper, staff, and color team apparel. Multiple designs, year-over-year re-orders, MOQ 50.",
-    url: "https://sublimapparel.com/for-camp/",
-    images: ["/esports-jersey-prodigy.webp"],
+      "Custom labels, retail packaging, drop-ship fulfillment for growing brands. MOQ 50 pcs, full private label service.",
+    url: "https://sublimapparel.com/private-label-sportswear/",
+    images: ["/esports-travel-hoodie.webp"],
   },
 };
 
-const campSegments = [
+const brandSegments = [
   {
-    icon: Sun,
-    title: "Overnight / Sleepaway Camps",
-    desc: "Multi-week programs. Camper shirts, counselor uniforms, color team apparel, name labels. Re-orders for next summer's session.",
+    icon: TrendingUp,
+    title: "Direct-to-Consumer (DTC) Brands",
+    desc: "New apparel brands selling direct. You handle the design, the website, the marketing. We handle the manufacturing.",
   },
   {
     icon: Sparkles,
-    title: "Day Camps",
-    desc: "Single-day or weekly programs. Lightweight tees, all-cotton for hot weather. Branded with the camp's identity.",
+    title: "Influencer & Creator Brands",
+    desc: "Influencer-led apparel lines. Limited drops, fast turnarounds, premium feel without premium minimums.",
   },
   {
-    icon: Heart,
-    title: "Sports & Adventure Camps",
-    desc: "Soccer camps, basketball camps, surf camps, rock-climbing camps. Performance fabrics, color team graphics.",
+    icon: Globe,
+    title: "International Resellers & Distributors",
+    desc: "Regional apparel distributors building private-label lines. We manufacture to your specs, you own the brand.",
   },
   {
-    icon: Users,
-    title: "Specialty & Theme Camps",
-    desc: "STEM, art, music, drama camps. Sublimated designs, custom artwork, no minimum for re-orders.",
+    icon: Tag,
+    title: "Print-on-Demand Platforms",
+    desc: "POD platforms needing reliable bulk capacity. White-label fulfillment, custom packaging, retailer-ready products.",
+  },
+  {
+    icon: Box,
+    title: "Subscription Box & Corporate Gifts",
+    desc: "Quarterly subscription apparel. Custom-branded merchandise for ongoing client programs.",
+  },
+  {
+    icon: Star,
+    title: "Boutique & Niche Brands",
+    desc: "Surf brands, yoga brands, niche athletic brands. Small runs that look like big brand quality.",
   },
 ];
 
 const whatWeMake = [
   {
-    label: "Camper Tees",
-    examples: "All-cotton, lightweight, screen-friendly graphics",
-    icon: Shirt,
+    label: "Custom-Label Apparel",
+    examples: "Woven labels, neck labels, size tags, brand packaging",
+    icon: Tag,
   },
   {
-    label: "Counselor Uniforms",
-    examples: "Performance polos, branded caps, identifier colors",
-    icon: Users,
+    label: "Retail-Ready Packaging",
+    examples: "Poly bags, hang tags, stickers, inserts, fold + poly",
+    icon: Package,
   },
   {
-    label: "Color Team / Tribe Shirts",
-    examples: "Multiple designs, distinct colorways, easy to identify",
-    icon: Layers,
+    label: "Drop-Ship Fulfillment",
+    examples: "Blank stock + custom imprint per order, blind shipping",
+    icon: Box,
   },
   {
-    label: "Staff & Director Apparel",
-    examples: "Polo shirts, performance tees, branded outerwear",
-    icon: Shield,
+    label: "Hangtag + Inserts Design",
+    examples: "Print-ready templates, custom designs on demand",
+    icon: Award,
   },
 ];
 
 const painPoints = [
   {
-    icon: Timer,
-    title: "Camper numbers change weekly.",
-    pain: "You order 500 shirts for 500 campers. Then 50 more register. Or 30 cancel. You're stuck with extras or short on day one.",
-    fix: "Our 90-Day Program with a 30-day final-count lock. We adjust production to your real headcount, within 5% above or below your estimate.",
-    link: { label: "See 90-Day Program", href: "/90-day-program" },
+    icon: Ruler,
+    title: "&ldquo;We need 50 pieces to test a design.&rdquo;",
+    pain: "Most factories demand 500+ pieces per SKU. You can't test 10 designs at that minimum. Your runway disappears before you find a winner.",
+    fix: "MOQ 50 pcs per design for sublimation cut & sew. 30 pcs for re-orders. Test multiple designs, find the winner, scale up.",
+    link: { label: "See MOQ policy", href: "/quality-control" },
   },
   {
-    icon: Ruler,
-    title: "Sizing kids + teens + adults is chaos.",
-    pain: "Camp shirts go from youth XS to adult XXL. A youth M and an adult S could be the same chest measurement on different size charts.",
-    fix: "US-spec measurement charts from youth XS to adult 5XL. Free size sample sets. Excel template for your registration system to collect sizes automatically.",
-    link: { label: "Get US Size Guide", href: "/us-size-guide" },
+    icon: Tag,
+    title: "&ldquo;We need our own labels, not a factory tag.&rdquo;",
+    pain: "If your neck label says 'SublimApparel,' customers buy from us, not you. Most factories either refuse custom labels or charge a fortune.",
+    fix: "Custom woven labels, neck labels, size tags, hang tags — all included. We don't put our name on your product. Ever.",
+    link: { label: "Private label service", href: "/how-to-source" },
   },
   {
     icon: Sparkles,
-    title: "We need 6 different color team designs.",
-    pain: "Six color teams, six designs, one deadline. Most factories charge per design setup and the cost blows up.",
-    fix: "Sublimation cut & sew is built for multiple designs. No setup fees. Same price per piece whether you have 1 design or 10.",
-    link: { label: "How we print", href: "/technique" },
+    title: "&ldquo;We want drop-ship fulfillment, not bulk orders.&rdquo;",
+    pain: "You sold 3,000 units via Shopify, but they're sitting in your garage. You need 50 units shipped to 60 different customers this week.",
+    fix: "US warehouse drop-ship service. We pick, pack, label, and ship from Fontana, CA. Blind shipping (no SublimApparel on the box).",
+    link: { label: "Drop-ship service", href: "/shipping/us-warehouse" },
   },
   {
-    icon: Calendar,
-    title: "We need this before session starts in 6 weeks.",
-    pain: "You forgot. Or registrations were slower than expected. Now you're 6 weeks out and most suppliers need 10-12 weeks.",
-    fix: "Rush production available. 30-day emergency orders via air freight. US warehouse in Fontana, CA for same-day domestic emergency orders.",
-    link: { label: "Check your timeline", href: "/event-timeline" },
+    icon: Shield,
+    title: "&ldquo;Our customers expect retail-quality.&rdquo;",
+    pain: "You're selling a $45 t-shirt. If it arrives with loose threads, a misprinted graphic, or a cheap poly bag, you get a 1-star review and a chargeback.",
+    fix: "4-stage inspection with AQL 2.5 standard. Retail-grade poly bags. Hang tag and sticker options. Compliance with FTC and CPSIA (kids) labeling.",
+    link: { label: "Our QC process", href: "/quality-control" },
   },
 ];
 
 const whyUs = [
   {
-    title: "Multi-design, no setup fees",
-    desc: "6 color teams, 10 different staff shirts, 1 design per cabin — all on one PO. Sublimation is built for this.",
+    title: "We don't compete with our customers",
+    desc: "We manufacture apparel. We don't sell apparel under our own name. Your brand is your brand, and we keep our hands off it.",
   },
   {
-    title: "Re-order year-over-year, easy",
-    desc: "We archive your designs, Pantones, sizing charts, and even the exact fabric. Next summer's reorder is a 1-week process.",
+    title: "Full private label, not a sticker",
+    desc: "Custom neck labels, woven labels, size tags, hang tags, poly bags, inserts, stickers. We handle the full package, not just a printed logo.",
   },
   {
-    title: "All-cotton for hot weather",
-    desc: "Camper tees default to 100% cotton (DTG-printed) for comfort and screen-friendliness. Counselor uniforms default to performance polyester for durability.",
+    title: "Drop-ship ready",
+    desc: "US warehouse with pick & pack, blind shipping, and Shopify/Amazon integration. Sell 1,000 units, ship 1,000 units to 1,000 different customers.",
   },
   {
-    title: "Stuff you'll need that you forgot",
-    desc: "Lanyards, name labels, water bottles, drawstring bags. We can add these to the same shipment so you don't chase 5 vendors.",
+    title: "Compliance without the legal team",
+    desc: "FTC labeling, CPSIA for kids' apparel, OEKO-TEX fabric sourcing, country-of-origin tags. We know the rules, so you don't get a customs hold or a recall.",
   },
 ];
 
 const faqs = [
   {
-    q: "How do you handle last-minute camper registrations?",
-    a: "Our 90-Day Program reserves production capacity based on your estimate. Final counts lock 30 days before your session starts. After that, we run smaller re-orders at the same per-piece price (MOQ 30 for re-orders) for any new registrations.",
+    q: "Do you put SublimApparel's name on our products?",
+    a: "Never. We don't sell apparel under our own name. Every garment ships with your custom neck label, woven label, size tag, and any retail packaging you specify. We are invisible to your customer.",
   },
   {
-    q: "Can you print different designs for each color team?",
-    a: "Yes. Sublimation cut & sew supports any number of designs on a single PO. No setup fees. We just need the artwork for each design — same deadline for all of them.",
+    q: "What's the minimum order quantity (MOQ) for new brands?",
+    a: "50 pieces per design for sublimation cut & sew. For testing, we can run as few as 30 pieces per design. Re-orders start at 30 pieces. This lets you test 5-10 designs in your first run without committing to bulk.",
   },
   {
-    q: "What's the typical lead time for camp apparel?",
-    a: "Standard: 25-30 days from artwork approval. Rush: 15-20 days via air freight. We recommend starting 60-90 days before your session to get the best pricing. Use the Event Timeline Calculator to see your specific dates.",
+    q: "Do you offer drop-ship fulfillment?",
+    a: "Yes. Our US warehouse in Fontana, CA offers pick & pack, blind shipping, and Shopify/Amazon integration. You can also ship bulk to our warehouse and we fulfill per order. Pricing depends on order volume — typically $3-5 per unit including pick, pack, and shipping label.",
   },
   {
-    q: "Do you have a US warehouse for emergencies?",
-    a: "Yes. Our Fontana, CA warehouse stocks basics (white tees, black tees, blank polos) for last-minute needs. Same-day shipping for orders under 100 pcs. Great for forgotten staff members, lost luggage replacement, or new-camper emergencies.",
+    q: "Can you handle retail packaging (hang tags, poly bags, stickers)?",
+    a: "Yes. We source hang tags, stickers, poly bags, tissue paper, and inserts. Custom designs are print-ready from your files. We assemble retail-ready units in our packaging line, so your customer receives a product that looks store-bought, not factory-direct.",
   },
   {
-    q: "Can you handle large sleepaway camps (1,000+ campers)?",
-    a: "Yes. We've shipped orders of 5,000+ pcs to large camps. Multi-session camps can split their order across production runs (e.g. 500 pcs/session for 8 sessions) at no extra cost. We also offer name labels and individual packaging for session-by-session delivery.",
+    q: "Do you help with design and tech packs?",
+    a: "Yes. Our in-house design team converts sketches, references, and bullet-point briefs into print-ready artwork and tech packs. Free mockup, no commitment, no IP claim. We sign NDAs for proprietary designs.",
   },
 ];
 
-export default function ForCampPage() {
+export default function ForBrandsPage() {
   const breadcrumb = buildBreadcrumbJsonLd([
     { name: "Home", path: "/" },
     {
-      name: "Custom Apparel for Summer Camps",
-      path: "/for-camp/",
+      name: "Private Label & OEM Apparel Manufacturing",
+      path: "/private-label-sportswear/",
     },
   ]);
 
@@ -189,8 +203,8 @@ export default function ForCampPage() {
       <section className="relative overflow-hidden bg-[#0a0a0a] text-white">
         <div className="absolute inset-0">
           <Image
-            src="/esports-jersey-prodigy.webp"
-            alt="Custom summer camp apparel — counselor, camper, and color team shirts"
+            src="/esports-travel-hoodie.webp"
+            alt="Private label apparel manufacturing — custom labels, retail packaging, drop-ship ready"
             fill
             className="object-cover opacity-30"
             priority
@@ -202,21 +216,21 @@ export default function ForCampPage() {
         <div className="relative mx-auto max-w-7xl px-6 py-20 md:py-28">
           <div className="max-w-3xl">
             <div className="mb-5 inline-flex items-center gap-2 rounded-sm border border-[#ff4d00]/40 bg-[#ff4d00]/10 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-[#ff4d00]">
-              <Sun className="h-3.5 w-3.5" />
-              For summer camps
+              <Sparkles className="h-3.5 w-3.5" />
+              For DTC, private label, and growing brands
             </div>
 
             <h1 className="text-4xl font-black leading-[1.05] tracking-tight md:text-6xl">
-              Custom camp apparel
+              Private label apparel
               <br />
-              <span className="text-[#ff4d00]">ready before opening day.</span>
+              <span className="text-[#ff4d00]">that looks like you made it.</span>
             </h1>
 
             <p className="mt-6 text-lg leading-relaxed text-white/80 md:text-xl">
-              Counselor shirts, camper tees, color team apparel, staff
-              uniforms. <strong className="text-white">Multi-design on one
-              PO</strong>, 25-30 day production, year-over-year re-orders made
-              easy. MOQ 50 pcs.
+              Custom neck labels, hang tags, retail packaging, drop-ship
+              fulfillment. <strong className="text-white">MOQ 50 pcs</strong>,
+              {" "}we don&apos;t compete with your brand, full private label
+              service. Since 2018.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -224,15 +238,15 @@ export default function ForCampPage() {
                 href="/contact"
                 className="inline-flex items-center justify-center gap-2 rounded-sm bg-[#ff4d00] px-7 py-4 text-sm font-black uppercase tracking-wider text-black transition-all hover:-translate-y-0.5 hover:bg-[#ff6633] hover:shadow-[0_8px_24px_rgba(255,77,0,0.4)]"
               >
-                Get a quote for your camp
+                Start your private label
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
-                href="/us-size-guide"
+                href="/how-to-source"
                 className="inline-flex items-center justify-center gap-2 rounded-sm border-2 border-white/30 bg-white/5 px-7 py-4 text-sm font-bold uppercase tracking-wider text-white backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-[#ff4d00] hover:bg-[#ff4d00]/10"
               >
-                <Ruler className="h-4 w-4" />
-                Download camper size template
+                <Tag className="h-4 w-4" />
+                Private label process
               </Link>
             </div>
 
@@ -244,21 +258,21 @@ export default function ForCampPage() {
                 </div>
               </div>
               <div>
-                <div className="text-3xl font-black text-[#ff4d00] md:text-4xl">10+</div>
+                <div className="text-3xl font-black text-[#ff4d00] md:text-4xl">50</div>
                 <div className="mt-1 text-xs font-bold uppercase tracking-wider text-white/60">
-                  Designs on 1 PO, no setup
+                  Pc MOQ for testing
                 </div>
               </div>
               <div>
-                <div className="text-3xl font-black text-[#ff4d00] md:text-4xl">25d</div>
+                <div className="text-3xl font-black text-[#ff4d00] md:text-4xl">100%</div>
                 <div className="mt-1 text-xs font-bold uppercase tracking-wider text-white/60">
-                  Standard production
+                  Private label
                 </div>
               </div>
               <div>
                 <div className="text-3xl font-black text-[#ff4d00] md:text-4xl">US</div>
                 <div className="mt-1 text-xs font-bold uppercase tracking-wider text-white/60">
-                  Fontana CA warehouse
+                  Drop-ship ready
                 </div>
               </div>
             </div>
@@ -266,7 +280,7 @@ export default function ForCampPage() {
         </div>
       </section>
 
-      {/* CAMP SEGMENTS */}
+      {/* BRAND SEGMENTS */}
       <section className="border-b border-black/10 bg-white py-20">
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-12 max-w-2xl">
@@ -274,16 +288,16 @@ export default function ForCampPage() {
               What we make
             </div>
             <h2 className="text-3xl font-black tracking-tight md:text-4xl">
-              Custom apparel for every type of camp.
+              Custom apparel for every kind of brand.
             </h2>
             <p className="mt-3 text-base text-black/70">
-              From a 50-camper day camp to a 2,000-camper sleepaway. Same
-              factory, same quality.
+              From a 50-piece first run to a 50,000-piece retail production
+              cycle. Same factory, same craft.
             </p>
           </div>
 
-          <div className="grid gap-px bg-black/10 md:grid-cols-2 lg:grid-cols-4">
-            {campSegments.map((s) => (
+          <div className="grid gap-px bg-black/10 md:grid-cols-2 lg:grid-cols-3">
+            {brandSegments.map((s) => (
               <div
                 key={s.title}
                 className="group bg-white p-6 transition-all hover:bg-[#0a0a0a] hover:text-white"
@@ -298,7 +312,7 @@ export default function ForCampPage() {
           </div>
 
           <div className="mt-12 rounded-sm border-2 border-black/10 bg-[#faf9f6] p-8">
-            <h3 className="text-xl font-black">What we make for your camp</h3>
+            <h3 className="text-xl font-black">What we make for your brand</h3>
             <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {whatWeMake.map((w) => (
                 <div key={w.label} className="flex items-start gap-3">
@@ -323,14 +337,14 @@ export default function ForCampPage() {
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-12 max-w-2xl">
             <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
-              The 4 problems every camp director hits
+              The 4 problems every brand founder hits
             </div>
             <h2 className="text-3xl font-black tracking-tight md:text-4xl">
               And exactly how we solve them.
             </h2>
             <p className="mt-3 text-base text-black/70">
-              You don&apos;t need a sales pitch. You need a vendor who has done
-              this for hundreds of camps.
+              Other factories are middlemen with markup. We are the actual
+              production line.
             </p>
           </div>
 
@@ -345,10 +359,13 @@ export default function ForCampPage() {
                     <p.icon className="h-6 w-6" strokeWidth={2.5} />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-lg font-black">{p.title}</h3>
+                    <h3
+                      className="text-lg font-black"
+                      dangerouslySetInnerHTML={{ __html: p.title }}
+                    />
                     <p className="mt-2 text-sm leading-relaxed text-black/70">
                       <span className="font-bold text-black">The pain:</span>{" "}
-                      {p.pain}
+                      <span dangerouslySetInnerHTML={{ __html: p.pain }} />
                     </p>
                     <p className="mt-3 text-sm leading-relaxed text-black/70">
                       <span className="font-bold text-[#ff4d00]">Our fix:</span>{" "}
@@ -375,33 +392,33 @@ export default function ForCampPage() {
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <div className="order-2 lg:order-1">
               <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
-                90-Day Camp Apparel Program
+                90-Day Brand Apparel Program
               </div>
               <h2 className="text-3xl font-black tracking-tight md:text-4xl">
-                From &ldquo;we need shirts&rdquo; to shirts at the bus drop-off.
+                Test fast, scale smart, never sit on inventory.
               </h2>
               <p className="mt-3 text-base text-white/70">
-                Camps don&apos;t run on corporate schedules. Your registration
-                is open 4-6 months. We plan around that.
+                We don&apos;t believe in 5,000-piece minimums for first runs.
+                We believe in proving the design, then scaling.
               </p>
 
               <ol className="mt-8 space-y-4">
                 {[
                   {
-                    t: "T-90: Reserve",
-                    d: "Submit your camp headcount estimate, color teams, and design count. We hold production capacity.",
+                    t: "T-90: Test run",
+                    d: "Submit your top 3-5 designs. We manufacture 50-100 pcs of each. Total order: 250-500 pcs. Same per-piece price as bulk.",
                   },
                   {
-                    t: "T-60: Designs + samples",
-                    d: "Free digital mockups for every design (color teams, counselors, staff). Pay for one physical sample set, refunded on bulk.",
+                    t: "T-60: Sample + sign-off",
+                    d: "Physical samples on your exact fabric. Private label woven labels, hang tags, packaging designed.",
                   },
                   {
-                    t: "T-30: Lock final count",
-                    d: "Your registrations are locked. We adjust production within 5% of your estimate. Late registrations are added via re-order.",
+                    t: "T-30: Sell-through data",
+                    d: "You sold 80% of design A, 30% of design B. We re-allocate: 200 more of A, 50 of B. No leftover inventory.",
                   },
                   {
-                    t: "T-0: Open day",
-                    d: "Shipped to your camp address. Sorted by cabin / session if needed. Ready for the first bus.",
+                    t: "T-0 onward: Scale",
+                    d: "Re-orders at 30 pc MOQ. Drop-ship from US warehouse if you sell through Shopify/Amazon. Inventory stays with us.",
                   },
                 ].map((s) => (
                   <li key={s.t} className="flex items-start gap-4">
@@ -428,8 +445,8 @@ export default function ForCampPage() {
             <div className="order-1 lg:order-2">
               <div className="relative aspect-[4/5] overflow-hidden rounded-sm border-2 border-[#ff4d00]/30">
                 <Image
-                  src="/esports-jersey-prodigy.webp"
-                  alt="Color team and counselor apparel for summer camps"
+                  src="/esports-hoodie-circuit.webp"
+                  alt="Private label apparel with custom packaging, hang tags, and retail-ready products"
                   fill
                   className="object-cover"
                   sizes="(min-width: 1024px) 50vw, 100vw"
@@ -445,10 +462,10 @@ export default function ForCampPage() {
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-12 max-w-2xl">
             <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
-              Why camps choose us
+              Why brands choose us
             </div>
             <h2 className="text-3xl font-black tracking-tight md:text-4xl">
-              Built for the camp industry.
+              Built for the brand, not the factory.
             </h2>
           </div>
 
@@ -477,7 +494,7 @@ export default function ForCampPage() {
         <div className="mx-auto max-w-4xl px-6">
           <div className="mb-12 text-center">
             <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
-              Common questions from camp directors
+              Common questions from brand founders
             </div>
             <h2 className="text-3xl font-black tracking-tight md:text-4xl">
               Quick answers.
