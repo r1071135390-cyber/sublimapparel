@@ -2,7 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Shirt, Layers, Wrench, Truck, NotebookPen } from "lucide-react";
+import {
+  Home,
+  Shirt,
+  Compass,
+  Wrench,
+  FileText,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type Tab = {
@@ -31,28 +37,32 @@ const tabs: Tab[] = [
       p.startsWith("/about/"),
   },
   {
-    href: "/fabric",
-    label: "Fabrics",
-    icon: Layers,
-    match: (p) => p === "/fabric" || p.startsWith("/fabric/"),
+    href: "/for-events",
+    label: "Solutions",
+    icon: Compass,
+    match: (p) =>
+      p === "/for-events" ||
+      p === "/for-corporate" ||
+      p === "/for-camp" ||
+      p === "/for-communities" ||
+      p === "/for-brands",
   },
   {
-    href: "/technique/sublimation",
-    label: "Technique",
+    href: "/event-timeline",
+    label: "Tools",
     icon: Wrench,
-    match: (p) => p === "/technique" || p.startsWith("/technique/"),
+    match: (p) =>
+      p === "/event-timeline" ||
+      p === "/us-size-guide" ||
+      p === "/quality-control" ||
+      p === "/90-day-program" ||
+      p === "/how-to-source",
   },
   {
-    href: "/shipping/ddp",
-    label: "Shipping",
-    icon: Truck,
-    match: (p) => p === "/shipping" || p.startsWith("/shipping/"),
-  },
-  {
-    href: "/blog",
-    label: "Blog",
-    icon: NotebookPen,
-    match: (p) => p === "/blog" || p.startsWith("/blog/"),
+    href: "/contact",
+    label: "Quote",
+    icon: FileText,
+    match: (p) => p === "/contact",
   },
 ];
 
@@ -62,32 +72,70 @@ export function MobileBottomNav() {
   return (
     <nav
       aria-label="Mobile primary"
-      className="fixed inset-x-0 bottom-0 z-40 border-t border-neutral-200 bg-white/95 backdrop-blur-md md:hidden"
-      style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+      className="fixed inset-x-0 bottom-0 z-40 px-2 pb-2 md:hidden"
+      style={{ paddingBottom: "max(0.5rem, env(safe-area-inset-bottom))" }}
     >
-      <ul className="mx-auto flex h-16 max-w-screen-sm items-stretch justify-around">
+      <div
+        className="relative mx-auto flex h-[68px] max-w-screen-sm items-stretch justify-around rounded-[28px] border border-white/50 bg-white/55 shadow-[0_-8px_32px_-8px_rgba(0,0,0,0.22),0_-2px_8px_-2px_rgba(0,0,0,0.08)] ring-1 ring-black/[0.04] backdrop-blur-2xl backdrop-saturate-150"
+        style={{
+          WebkitBackdropFilter: "blur(24px) saturate(180%)",
+          backdropFilter: "blur(24px) saturate(180%)",
+        }}
+      >
+        {/* Subtle top highlight line for that "glass" look */}
+        <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white/80 to-transparent" />
+
         {tabs.map((tab) => {
           const active = tab.match(pathname);
           const Icon = tab.icon;
           return (
-            <li key={tab.href} className="flex-1">
-              <Link
-                href={tab.href}
+            <Link
+              key={tab.href}
+              href={tab.href}
+              className="group relative flex flex-1 flex-col items-center justify-center gap-0.5"
+              aria-current={active ? "page" : undefined}
+            >
+              {/* Active background pill */}
+              <span
                 className={cn(
-                  "flex h-full w-full flex-col items-center justify-center gap-0.5 text-[10px] font-medium transition-colors",
+                  "absolute inset-x-2 inset-y-2 rounded-2xl transition-all duration-300 ease-out",
                   active
-                    ? "text-[#cc3d00]"
-                    : "text-neutral-500 hover:text-black"
+                    ? "bg-gradient-to-b from-[#ff4d00]/12 to-[#ff4d00]/6 ring-1 ring-[#ff4d00]/25"
+                    : "bg-transparent group-hover:bg-black/[0.04]"
                 )}
-                aria-current={active ? "page" : undefined}
+              />
+
+              {/* Top dot indicator (active state) */}
+              <span
+                className={cn(
+                  "absolute top-1 h-1 rounded-full transition-all duration-300",
+                  active
+                    ? "w-6 bg-[#ff4d00] shadow-[0_0_8px_rgba(255,77,0,0.5)]"
+                    : "w-0 bg-transparent"
+                )}
+              />
+
+              <Icon
+                className={cn(
+                  "relative h-[22px] w-[22px] transition-all duration-200",
+                  active
+                    ? "scale-110 text-[#ff4d00]"
+                    : "text-neutral-600 group-hover:text-black"
+                )}
+                strokeWidth={active ? 2.4 : 1.8}
+              />
+              <span
+                className={cn(
+                  "relative text-[10px] font-semibold leading-none tracking-tight transition-colors duration-200",
+                  active ? "text-[#ff4d00]" : "text-neutral-600 group-hover:text-black"
+                )}
               >
-                <Icon className="h-5 w-5" strokeWidth={active ? 2.4 : 2} />
-                <span className="leading-none">{tab.label}</span>
-              </Link>
-            </li>
+                {tab.label}
+              </span>
+            </Link>
           );
         })}
-      </ul>
+      </div>
     </nav>
   );
 }

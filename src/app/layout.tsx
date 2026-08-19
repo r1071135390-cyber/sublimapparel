@@ -90,7 +90,7 @@ export default function RootLayout({
         <UtilityBar />
         <Navbar />
         <RequestQuoteProvider>
-          <main className="pb-16 md:pb-0">{children}</main>
+          <main className="pb-28 md:pb-0">{children}</main>
           <Footer />
           <MobileBottomNav />
           <FloatingChat />
