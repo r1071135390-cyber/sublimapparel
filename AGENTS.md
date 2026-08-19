@@ -5,7 +5,8 @@
 - **节省时间**: 这样避免每次小改动都等待 Cloudflare 1-2 分钟部署
 - **生产现状（截至最后确认）**:
   - Header logo: `/sublimapparel-logo.webp` (PNG backup at `/sublimapparel-logo.png`)
-  - Favicon: `/icon.png`
+  - Favicon: `/icon.png`（Next.js metadata icons）
+  - **重要**：`favicon.ico` 放在 `public/favicon.ico`，**不要**放 `src/app/favicon.ico`（Next.js static export 会把它错误生成为 `/favicon.ico/route` 目录，导致 Cloudflare 拿不到真 .ico 文件，回退成 HTML 404）
 
 # 项目上下文
 
