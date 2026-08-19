@@ -108,14 +108,11 @@ export function Hero() {
           </span>
         </div>
 
-        {/* Headline — 3 lines, flat / full width */}
-        <h1 className="mb-4 max-w-4xl whitespace-nowrap text-2xl font-black leading-[1.22] tracking-tight md:mb-5 md:text-4xl lg:text-5xl xl:text-6xl">
-          <span className="block pb-2 text-white md:pb-2.5">Yiwu custom sublimate apparel factory</span>
+        {/* Headline — 2 lines: factory→manufacturer; tagline becomes solution partner positioning */}
+        <h1 className="mb-4 max-w-4xl text-2xl font-black leading-[1.22] tracking-tight md:mb-5 md:text-4xl lg:text-5xl xl:text-6xl">
+          <span className="block pb-2 text-white md:pb-2.5">Yiwu custom sublimate apparel manufacturer</span>
           <span className="block pb-2 text-[#cc3d00] md:pb-2.5">
-            <Link href="/fabric/polyester" className="hover:underline hover:underline-offset-4">polyester sublimation</Link> &amp;
-          </span>
-          <span className="block pb-2 text-[#cc3d00] md:pb-2.5">
-            <Link href="/fabric/cotton" className="hover:underline hover:underline-offset-4">allover digital print cotton</Link>.
+            Your trusted partner for custom apparel solutions for events, teams, organizations and promotional needs.
           </span>
         </h1>
 
