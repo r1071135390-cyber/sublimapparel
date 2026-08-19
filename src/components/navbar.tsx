@@ -1,17 +1,65 @@
+"use client";
+
 import Link from "next/link";
-import { User, ChevronDown, Mail } from "lucide-react";
+import { User, ChevronDown, Mail, Briefcase, Wrench } from "lucide-react";
+
+const solutions = [
+  {
+    href: "/for-events/",
+    label: "For Events & Races",
+    desc: "Marathon, 5K, charity, festival",
+  },
+  {
+    href: "/for-corporate/",
+    label: "For Corporate",
+    desc: "Wellness, events, employee apparel",
+  },
+  {
+    href: "/for-camp/",
+    label: "For Summer Camps",
+    desc: "Counselors, staff, campers",
+  },
+  {
+    href: "/for-communities/",
+    label: "For Communities",
+    desc: "Clubs, schools, organizations",
+  },
+  {
+    href: "/for-brands/",
+    label: "For Growing Brands",
+    desc: "Private label, OEM, scale-up",
+  },
+];
+
+const resources = [
+  {
+    href: "/event-timeline/",
+    label: "Event Timeline Calculator",
+    desc: "Plan backward from your event date",
+  },
+  {
+    href: "/us-size-guide/",
+    label: "US Size Guide",
+    desc: "Charts + free Excel template",
+  },
+  {
+    href: "/quality-control/",
+    label: "Quality Control Process",
+    desc: "4-step inspection with AQL 2.5",
+  },
+  {
+    href: "/90-day-program/",
+    label: "90-Day Production Program",
+    desc: "2-Phase model: reserve, lock",
+  },
+  {
+    href: "/how-to-source/",
+    label: "How to Source",
+    desc: "5-step process from inquiry to delivery",
+  },
+];
 
 export function Navbar() {
-  const links = [
-    { href: "/", label: "Home" },
-    { href: "/products", label: "Products" },
-    { href: "/fabric", label: "Fabric" },
-    { href: "/technique", label: "Technique" },
-    { href: "/shipping", label: "Shipping" },
-    { href: "/about", label: "About" },
-    { href: "/blog", label: "Blog" },
-  ];
-
   return (
     <nav className="sticky top-0 z-50 border-b-2 border-black bg-[#faf9f6]">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-1.5">
@@ -24,15 +72,107 @@ export function Navbar() {
         </Link>
 
         <div className="hidden items-center gap-7 md:flex">
-          {links.map((link) => (
-            <Link
-              key={link.href + link.label}
-              href={link.href}
-              className="text-sm font-bold uppercase tracking-wider text-black transition-colors hover:text-[#cc3d00]"
+          <Link
+            href="/"
+            className="text-sm font-bold uppercase tracking-wider text-black transition-colors hover:text-[#cc3d00]"
+          >
+            Home
+          </Link>
+          <Link
+            href="/products"
+            className="text-sm font-bold uppercase tracking-wider text-black transition-colors hover:text-[#cc3d00]"
+          >
+            Products
+          </Link>
+
+          {/* Solutions dropdown */}
+          <div className="group relative">
+            <button
+              type="button"
+              className="inline-flex items-center gap-1 text-sm font-bold uppercase tracking-wider text-black transition-colors hover:text-[#cc3d00]"
             >
-              {link.label}
-            </Link>
-          ))}
+              Solutions
+              <ChevronDown
+                className="h-3.5 w-3.5 transition-transform group-hover:rotate-180"
+                strokeWidth={3}
+              />
+            </button>
+            <div className="invisible absolute left-1/2 top-full z-20 w-72 -translate-x-1/2 border-2 border-black bg-white opacity-0 shadow-[6px_6px_0_0_rgba(10,10,10,1)] transition-all group-hover:visible group-hover:opacity-100">
+              <div className="border-b-2 border-black bg-[#ff4d00] px-4 py-2.5 text-[10px] font-black uppercase tracking-widest text-black">
+                <Briefcase className="mr-1 inline h-3 w-3" />
+                By Customer
+              </div>
+              {solutions.map((s) => (
+                <Link
+                  key={s.href}
+                  href={s.href}
+                  className="block border-b border-black/10 px-4 py-2.5 transition-colors last:border-0 hover:bg-[#0a0a0a] hover:text-white"
+                >
+                  <div className="text-sm font-black">{s.label}</div>
+                  <div className="mt-0.5 text-[11px] text-black/60 group-hover:text-white/70">
+                    {s.desc}
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Resources dropdown */}
+          <div className="group relative">
+            <button
+              type="button"
+              className="inline-flex items-center gap-1 text-sm font-bold uppercase tracking-wider text-black transition-colors hover:text-[#cc3d00]"
+            >
+              Tools
+              <ChevronDown
+                className="h-3.5 w-3.5 transition-transform group-hover:rotate-180"
+                strokeWidth={3}
+              />
+            </button>
+            <div className="invisible absolute left-1/2 top-full z-20 w-72 -translate-x-1/2 border-2 border-black bg-white opacity-0 shadow-[6px_6px_0_0_rgba(10,10,10,1)] transition-all group-hover:visible group-hover:opacity-100">
+              <div className="border-b-2 border-black bg-[#00c2ff] px-4 py-2.5 text-[10px] font-black uppercase tracking-widest text-black">
+                <Wrench className="mr-1 inline h-3 w-3" />
+                Free Resources
+              </div>
+              {resources.map((r) => (
+                <Link
+                  key={r.href}
+                  href={r.href}
+                  className="block border-b border-black/10 px-4 py-2.5 transition-colors last:border-0 hover:bg-[#0a0a0a] hover:text-white"
+                >
+                  <div className="text-sm font-black">{r.label}</div>
+                  <div className="mt-0.5 text-[11px] text-black/60 group-hover:text-white/70">
+                    {r.desc}
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <Link
+            href="/fabric"
+            className="text-sm font-bold uppercase tracking-wider text-black transition-colors hover:text-[#cc3d00]"
+          >
+            Fabric
+          </Link>
+          <Link
+            href="/shipping"
+            className="text-sm font-bold uppercase tracking-wider text-black transition-colors hover:text-[#cc3d00]"
+          >
+            Shipping
+          </Link>
+          <Link
+            href="/about"
+            className="text-sm font-bold uppercase tracking-wider text-black transition-colors hover:text-[#cc3d00]"
+          >
+            About
+          </Link>
+          <Link
+            href="/blog"
+            className="text-sm font-bold uppercase tracking-wider text-black transition-colors hover:text-[#cc3d00]"
+          >
+            Blog
+          </Link>
         </div>
 
         <div className="flex items-center gap-1">

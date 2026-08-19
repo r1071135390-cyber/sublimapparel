@@ -218,3 +218,45 @@ export const aboutArticleJsonLd = {
   },
   mainEntityOfPage: { "@type": "WebPage", "@id": `${SITE_URL}/about/` },
 };
+
+// === For Events: Service + FAQ (used on /for-events page) ===
+export function forEventsServiceJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${SITE_URL}/for-events/#service`,
+    name: "Custom Event Apparel Manufacturing",
+    serviceType: "Custom apparel production for races, marathons, charity runs, and festivals",
+    provider: { "@id": `${SITE_URL}/#organization` },
+    areaServed: [
+      { "@type": "Country", name: "United States" },
+      { "@type": "Country", name: "Canada" },
+      { "@type": "Country", name: "United Kingdom" },
+      { "@type": "Country", name: "Australia" },
+    ],
+    description:
+      "Custom race shirts, marathon apparel, 5K tees, charity run uniforms, volunteer apparel, and sponsor-branded gear. Sublimation cut & sew with flexible 90-day production planning. MOQ 50 pcs, DDP to 100+ countries.",
+    offers: {
+      "@type": "Offer",
+      priceCurrency: "USD",
+      priceRange: "$$",
+      availability: "https://schema.org/InStock",
+    },
+    url: `${SITE_URL}/for-events/`,
+  };
+}
+
+export function forEventsFaqJsonLd(
+  faqs: Array<{ q: string; a: string }>,
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": `${SITE_URL}/for-events/#faq`,
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
+}

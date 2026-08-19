@@ -47,17 +47,27 @@ const linkGroups = [
     viewAll: { href: "/cases", label: "View all case studies" },
   },
   {
+    title: "Solutions",
+    items: [
+      { label: "For Events & Races", href: "/for-events" },
+      { label: "For Corporate", href: "/for-corporate" },
+      { label: "For Summer Camps", href: "/for-camp" },
+      { label: "For Communities", href: "/for-communities" },
+      { label: "For Growing Brands", href: "/for-brands" },
+    ],
+  },
+  {
     title: "Resources",
     items: [
+      { label: "Event Timeline Calculator", href: "/event-timeline" },
+      { label: "US Size Guide & Excel Template", href: "/us-size-guide" },
+      { label: "Quality Control Process", href: "/quality-control" },
+      { label: "90-Day Production Program", href: "/90-day-program" },
+      { label: "How to Source Custom Apparel", href: "/how-to-source" },
       { label: "Case studies", href: "/cases" },
-      { label: "Artwork & file setup guide", href: "/get-a-quote" },
       { label: "Fabric library", href: "/about" },
-      { label: "Size charts", href: "/about" },
       { label: "Sublimation vs screen print vs DTG", href: "/about" },
       { label: "Ordering FAQ", href: "/about" },
-      { label: "Guides", href: "/about" },
-      { label: "Lead times", href: "/about" },
-      { label: "Sampling process", href: "/get-a-quote" },
     ],
   },
   {
@@ -80,7 +90,7 @@ export function Footer() {
     <footer className="border-t-2 border-black bg-white text-black">
       {/* Mega link directory */}
       <div className="mx-auto max-w-7xl px-6 pt-16 pb-12">
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-5">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
           {linkGroups.map((group) => (
             <div key={group.title}>
               <h3 className="mb-5 text-xs font-black uppercase tracking-[0.18em] text-[#cc3d00]">
