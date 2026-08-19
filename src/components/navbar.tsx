@@ -5,44 +5,34 @@ import { User, ChevronDown, Mail, Briefcase, Wrench } from "lucide-react";
 
 const solutions = [
   {
+    href: "/race-shirts/",
+    label: "Teams & Sports Apparel",
+    desc: "Race, marathon, league and club kits",
+  },
+  {
     href: "/event-apparel/",
-    label: "Event Apparel",
+    label: "Events, Festivals & Conferences",
     desc: "Conferences, festivals, expos, trade shows",
   },
   {
-    href: "/custom-event-t-shirts/",
-    label: "Custom Event T-Shirts",
-    desc: "T-shirt programs for any event",
-  },
-  {
-    href: "/race-shirts/",
-    label: "Race Shirts",
-    desc: "5K, 10K, charity runs, finish-line",
-  },
-  {
-    href: "/marathon-shirts/",
-    label: "Marathon Shirts",
-    desc: "Marathon, half, ultra, distance gear",
-  },
-  {
     href: "/corporate-event-apparel/",
-    label: "Corporate Apparel",
-    desc: "Wellness, events, employee apparel",
+    label: "Corporate & Organization Apparel",
+    desc: "Companies, clubs, schools, nonprofits",
   },
   {
-    href: "/summer-camp-shirts/",
-    label: "Summer Camp Shirts",
-    desc: "Counselors, staff, campers, sessions",
-  },
-  {
-    href: "/organization-apparel/",
-    label: "Organization Apparel",
-    desc: "Clubs, schools, churches, nonprofits",
+    href: "/custom-event-t-shirts/",
+    label: "Promotional & Marketing Apparel",
+    desc: "Brand merch, giveaways, marketing campaigns",
   },
   {
     href: "/private-label-sportswear/",
-    label: "Private Label Sportswear",
-    desc: "OEM, your brand, scale-up",
+    label: "Apparel Brands & Agencies",
+    desc: "Private label, OEM, white-label production",
+  },
+  {
+    href: "/organization-apparel/",
+    label: "E-commerce & Fulfillment",
+    desc: "Bulk production, drop-ship, online sellers",
   },
 ];
 

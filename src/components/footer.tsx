@@ -49,14 +49,12 @@ const linkGroups = [
   {
     title: "Solutions",
     items: [
-      { label: "Event Apparel", href: "/event-apparel" },
-      { label: "Custom Event T-Shirts", href: "/custom-event-t-shirts" },
-      { label: "Race Shirts", href: "/race-shirts" },
-      { label: "Marathon Shirts", href: "/marathon-shirts" },
-      { label: "Corporate Apparel", href: "/corporate-event-apparel" },
-      { label: "Summer Camp Shirts", href: "/summer-camp-shirts" },
-      { label: "Organization Apparel", href: "/organization-apparel" },
-      { label: "Private Label Sportswear", href: "/private-label-sportswear" },
+      { label: "Teams & Sports Apparel", href: "/race-shirts" },
+      { label: "Events, Festivals & Conferences", href: "/event-apparel" },
+      { label: "Corporate & Organization Apparel", href: "/corporate-event-apparel" },
+      { label: "Promotional & Marketing Apparel", href: "/custom-event-t-shirts" },
+      { label: "Apparel Brands & Agencies", href: "/private-label-sportswear" },
+      { label: "E-commerce & Fulfillment", href: "/organization-apparel" },
     ],
   },
   {
