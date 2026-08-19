@@ -1,68 +1,195 @@
-# robots.txt for sublimapparel.com
-# Last updated: 2026-01
+# robots.txt for SublimApparel (sublimapparel.com)
+# Yiwu custom sublimated apparel factory — B2B wholesale
+#
+# ⚠️ Cloudflare Pages auto-injects "Managed Content" rules (Disallow: /) for
+# ClaudeBot, GPTBot, Google-Extended, Applebot-Extended, CCBot, meta-externalagent
+# at the TOP of this file when the Content-Signal directive is detected.
+# Because the most-specific user-agent group with the lowest line number wins,
+# the FIRST occurrence of each bot's User-agent: directive decides.
+# Our Allow rules below only work if the Cloudflare WAF "Block AI Bots" feature
+# is disabled in: Cloudflare Dashboard → Security → Bots → AI Bots.
+# Set AI Bots to "Allow" or "Monitor" to unblock GPTBot, ClaudeBot, etc.
 
-User-agent: *
-Allow: /
-
-# === AI Search Crawlers (HIGH PRIORITY - allow) ===
-# OpenAI ChatGPT search crawler
-User-agent: OAI-SearchBot
-Allow: /
-
-# OpenAI ChatGPT user-triggered fetcher
-User-agent: ChatGPT-User
-Allow: /
-
-# OpenAI training crawler (optional - allow if you want training)
+# ===========================================================================
+# AI TRAINING & SEARCH CRAWLERS — ALL EXPLICITLY ALLOWED
+# ===========================================================================
 User-agent: GPTBot
 Allow: /
 
-# Anthropic Claude crawler
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
 User-agent: ClaudeBot
 Allow: /
 
-# Anthropic Claude user-triggered fetcher
 User-agent: Claude-Web
 Allow: /
 
-# Google AI (Gemini, etc.)
-User-agent: Google-Extended
+User-agent: Claude-User
 Allow: /
 
-# Perplexity AI
+User-agent: anthropic-ai
+Allow: /
+
 User-agent: PerplexityBot
 Allow: /
 
-# Apple Intelligence
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
 User-agent: Applebot-Extended
 Allow: /
 
-# Microsoft Bing (powers ChatGPT search)
+User-agent: CCBot
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: meta-externalfetcher
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: cohere-training-data-crawler
+Allow: /
+
+User-agent: DeepSeekBot
+Allow: /
+
+User-agent: MistralAI-User
+Allow: /
+
+User-agent: GoogleOther
+Allow: /
+
+# ===========================================================================
+# TRADITIONAL SEARCH ENGINES
+# ===========================================================================
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Googlebot-News
+Allow: /
+
+User-agent: Googlebot-Video
+Allow: /
+
+User-agent: Mediapartners-Google
+Allow: /
+
+User-agent: AdsBot-Google
+Allow: /
+
 User-agent: Bingbot
 Allow: /
+
+User-agent: BingPreview
+Allow: /
+
 User-agent: MSNBot-Media
 Allow: /
 
-# === Search Engine Crawlers ===
-User-agent: Googlebot
-Allow: /
-User-agent: Slurp
-Allow: /
-User-agent: DuckDuckBot
-Allow: /
 User-agent: Baiduspider
 Allow: /
 
-# === Block bad bots ===
-User-agent: AhrefsBot
-Disallow: /
+User-agent: YandexBot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+# ===========================================================================
+# SOCIAL MEDIA / MESSAGING
+# ===========================================================================
+User-agent: Twitterbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: Slackbot
+Allow: /
+
+User-agent: WhatsApp
+Allow: /
+
+User-agent: TelegramBot
+Allow: /
+
+User-agent: Discordbot
+Allow: /
+
+User-agent: PetalBot
+Allow: /
+
+# ===========================================================================
+# BLOCK: SEO SPAM CRAWLERS
+# ===========================================================================
 User-agent: SemrushBot
 Disallow: /
-User-agent: MJ12bot
+
+User-agent: SemrushBot-SA
 Disallow: /
+
+User-agent: SemrushBot-SI
+Disallow: /
+
+User-agent: SemrushBot-CT
+Disallow: /
+
+User-agent: SemrushBot-BM
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: AhrefsSiteAudit
+Disallow: /
+
 User-agent: DotBot
 Disallow: /
 
-# Sitemaps
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: Rogerbot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+# ===========================================================================
+# CATCH-ALL (Content-Signal) — explicit content signal for compliant crawlers
+# ===========================================================================
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+Content-Signal: search=yes, ai-input=yes, ai-train=yes, prefer-text=FREE-FORM, max-input-tokens=100000
+
+# ===========================================================================
+# SITEMAPS & LLMS
+# ===========================================================================
 Sitemap: https://sublimapparel.com/sitemap.xml
 Sitemap: https://sublimapparel.com/llms.txt

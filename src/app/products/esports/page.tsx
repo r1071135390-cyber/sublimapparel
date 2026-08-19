@@ -7,7 +7,7 @@ import { ArrowRight, Users, Palette, Ruler, Sparkles, Shirt, Gamepad2, Crown, La
 export const metadata: Metadata = {
   title: "Custom Esports Apparel | Sublimated Jerseys & Team Kits",
   description:
-    "Custom sublimated esports jerseys, hoodies, and team kits for gaming teams, tournaments, and streamers. Bold all-over print, poly-spandex stretch, name & gamer tag front and back. MOQ 50 pcs, 15-20 day lead time, DDP shipping.",
+    "Custom sublimated esports jerseys, hoodies, and team kits for gaming teams, tournaments, and streamers. Bold all-over print, poly-spandex stretch, name & gamer tag front and back. MOQ 50 pcs, 15-25 day lead time, DDP shipping.",
   keywords: [
     "esports jersey custom",
     "gaming jersey",

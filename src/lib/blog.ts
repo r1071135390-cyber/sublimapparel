@@ -241,35 +241,35 @@ export const blogPosts: BlogPost[] = [
     ],
     sections: [
       {
-        heading:"Section 1: Fabric Warehouse (500 m²)",
+        heading:"Section 1: Fabric Warehouse (250 m²)",
         paragraphs: [
 "We stock 50+ base fabrics in our on-site warehouse: polyester, polyester-cotton blends, performance moisture-wicking, French terry, fleece, and specialty knits. Most orders ship from stock, eliminating 2-3 week fabric sourcing delays.",
 "Every roll of fabric is inspected on receipt — we check weight (GSM), hand-feel, color consistency, and any weaving defects. Only about 5% of incoming rolls pass our initial inspection on the first check. The rest are returned to the mill for replacement.",
         ],
       },
       {
-        heading:"Section 2: Sublimation Print Hall (2,000 m²)",
+        heading:"Section 2: Sublimation Print Hall (500 m²)",
         paragraphs: [
 "We run four 1.9m wide-format sublimation printers in our dedicated print hall. Each printer runs 24/7 during peak season, producing up to 800 linear meters of printed fabric per day across all four units combined.",
 "All sublimation printing happens in a climate-controlled room (22°C, 50% humidity) to ensure consistent ink transfer. Fabric moves from printer → heat press → cut station in a linear flow, with quality checkpoints between every step.",
         ],
       },
       {
-        heading:"Section 3: Embroidery Hall (1,500 m²)",
+        heading:"Section 3: Embroidery Hall (350 m²)",
         paragraphs: [
 "Our embroidery hall runs 18 multi-head commercial embroidery machines supporting flat stitch, 3D puff, appliqué, and specialty thread effects. We stock 200+ thread colors with Pantone matching within 24 hours.",
 "Cap embroidery, polo embroidery, and jacket embroidery are run on separate machine clusters optimized for each item type. This keeps setup time down and lets us run different items in parallel without cross-contamination.",
         ],
       },
       {
-        heading:"Section 4: Cut and Sew Floor (3,000 m²)",
+        heading:"Section 4: Cut and Sew Floor (600 m²)",
         paragraphs: [
 "Our cut-and-sew floor handles the assembly of every garment we print. We use CNC fabric cutters for precise panel cutting, then 30+ industrial sewing machines for assembly. Each seam, hem, and detail is sewn in-house — no subcontracting.",
 "Line setup is optimized per order: a typical 500-piece sublimation jersey run takes 8-10 days from cut to packed garment, with quality checkpoints at cut, sew-1, sew-2, and final assembly.",
         ],
       },
       {
-        heading:"Section 5: Quality Control and Packing (1,000 m²)",
+        heading:"Section 5: Quality Control and Packing (300 m²)",
         paragraphs: [
 "Every garment goes through 100% final inspection under professional lighting before packing. Our QC team checks: print quality, color match against approved sample, stitching integrity, measurement against spec, and any fabric defects.",
 "After inspection, garments are individually poly-bagged, then packed in export cartons with internal dividers. We can pack by size run, single-size per carton, or retail-ready (folded with size sticker) — whatever your downstream process needs.",

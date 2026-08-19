@@ -40,7 +40,7 @@ const whyUs = [
   {
     icon: Layers,
     title: "Cut & sew in-house",
-    desc: "From raw fabric to finished garment under one roof. We cut, print, sew, QC, and pack — no middlemen. This is how we hit 7-day lead times at MOQ 50.",
+    desc: "From raw fabric to finished garment under one roof. We cut, print, sew, QC, and pack — no middlemen. This is how we hit 15-25 day lead times at MOQ 50.",
   },
   {
     icon: Droplets,
@@ -113,7 +113,7 @@ export default function PolyesterPage() {
             <ul className="space-y-3 text-sm text-black/80">
               {[
                 "Dye sublimation chemistry — print becomes the fabric, not a sticker",
-                "Cut & sew in-house — 7-day lead time at MOQ 50",
+                "Cut & sew in-house — 15-25 day lead time at MOQ 50",
                 "Photorealistic CMYK output — gradients, photos, fine text all sharp",
                 "Pre-shrunk rolls — no first-wash distortion or shrinkage",
                 "Same ink chemistry as European sportswear giants",

@@ -62,6 +62,15 @@ export const metadata: Metadata = {
     shortcut: "/icon.png",
     apple: "/icon.png",
   },
+
+  // Google Search Console verification
+  // To activate: register https://sublimapparel.com in Google Search Console,
+  // choose "HTML tag" verification method, copy the content="..." value,
+  // and replace GOOGLE_VERIFICATION_CODE below.
+  // Get the code at: https://search.google.com/search-console
+  verification: {
+    google: "GOOGLE_VERIFICATION_CODE",
+  },
 };
 
 export default function RootLayout({
@@ -90,3 +99,12 @@ export default function RootLayout({
     </html>
   );
 }
+  // Google Search Console verification
+  // To activate: register https://sublimapparel.com in Google Search Console,
+  // choose "HTML tag" verification method, copy the content="..." value,
+  // and replace GOOGLE_VERIFICATION_CODE below.
+  // Get the code at: https://search.google.com/search-console
+  verification: {
+    google: "GOOGLE_VERIFICATION_CODE",
+  },
+};

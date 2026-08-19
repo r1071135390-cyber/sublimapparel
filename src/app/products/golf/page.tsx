@@ -7,7 +7,7 @@ import { ArrowRight, Flag, Users, Palette, Ruler, Layers, Shirt, Sun, Mountain, 
 export const metadata: Metadata = {
   title: "Custom Golf Apparel | Sublimated Polos & Quarter-Zips",
   description:
-    "Premium custom golf polos, mock necks, and quarter-zips for country clubs, tournaments, and corporate golf days. Sublimated all-over print, moisture-wicking 4-way stretch poly-spandex. MOQ 50 pcs, 15-20 day lead time, DDP shipping.",
+    "Premium custom golf polos, mock necks, and quarter-zips for country clubs, tournaments, and corporate golf days. Sublimated all-over print, moisture-wicking 4-way stretch poly-spandex. MOQ 50 pcs, 15-25 day lead time, DDP shipping.",
   keywords: [
     "golf apparel",
     "golf polo custom",
@@ -95,7 +95,7 @@ const faq = [
   },
   {
     q: "What's the lead time for a tournament?",
-    a: "Standard 15-20 days from art approval. For tighter deadlines (10-14 days) we can expedite the production line for a 15% rush fee. Tell us your tournament date up front — we'll work backwards to your deadline.",
+    a: "Standard 15-25 days from art approval. For tighter deadlines (10-14 days) we can expedite the production line for a 15% rush fee. Tell us your tournament date up front — we'll work backwards to your deadline.",
   },
 ];
 
