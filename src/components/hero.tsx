@@ -9,13 +9,16 @@ const fabrics = [
   { name: "RECYCLED", note: "rPET & organic", href: "/fabric/cotton" },
 ];
 
+// 8 solutions (2026 strategy) — replaces the old 6 product categories
 const categories = [
-  { num: "01", name: "T-shirts", href: "/tag/category/t-shirt/" },
-  { num: "02", name: "Hoodies", href: "/tag/category/hoodie/" },
-  { num: "03", name: "Polos", href: "/tag/category/polo-shirt/" },
-  { num: "04", name: "Sportswear", href: "/tag/category/sportswear/" },
-  { num: "05", name: "Cycling", href: "/tag/sport/cycling/" },
-  { num: "06", name: "Soccer", href: "/tag/sport/soccer/" },
+  { num: "01", name: "Event Apparel", href: "/event-apparel/" },
+  { num: "02", name: "Event T-Shirts", href: "/custom-event-t-shirts/" },
+  { num: "03", name: "Race Shirts", href: "/race-shirts/" },
+  { num: "04", name: "Marathon", href: "/marathon-shirts/" },
+  { num: "05", name: "Corporate", href: "/corporate-event-apparel/" },
+  { num: "06", name: "Summer Camp", href: "/summer-camp-shirts/" },
+  { num: "07", name: "Organization", href: "/organization-apparel/" },
+  { num: "08", name: "Private Label", href: "/private-label-sportswear/" },
 ];
 
 const stats = [
@@ -163,7 +166,7 @@ export function Hero() {
           ))}
         </div>
 
-        {/* 6 apparel category chips */}
+        {/* 8 solutions chips (2026 strategy) */}
         <div className="mb-4 grid grid-cols-2 gap-2 sm:grid-cols-3 md:mb-5 md:flex md:flex-wrap md:gap-3">
           {categories.map((c) => (
             <Link
