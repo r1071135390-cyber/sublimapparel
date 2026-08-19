@@ -118,7 +118,7 @@ export function Hero() {
 
         {/* Subhead */}
         <p className="mb-4 max-w-2xl text-sm text-white/80 md:mb-5 md:text-lg">
-          Helping events, organizations and growing brands create customized apparel — T-shirts, jerseys and sublimation wear — with reliable production, flexible quantities and on-time, duty-paid delivery from our Yiwu, China manufacturing team.
+          From design and production to global delivery, we make custom apparel easier with accurate sizing, flexible quantities, reliable quality, clear communication and on-time delivery.
         </p>
 
         {/* Answer capsule — for AI engines + skim readers (ChatGPT AEO/GEO) */}
