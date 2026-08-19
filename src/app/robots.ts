@@ -1,5 +1,7 @@
 import type { MetadataRoute } from "next";
 
+export const dynamic = "force-static";
+
 /**
  * Cloudflare Pages auto-injects "Managed Content" rules (Disallow: /) for
  * ClaudeBot, GPTBot, Google-Extended, Applebot-Extended, CCBot, meta-externalagent
