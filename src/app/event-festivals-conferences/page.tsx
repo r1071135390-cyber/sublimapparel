@@ -3,13 +3,16 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
+  Briefcase,
   Calendar,
   CheckCircle2,
   Clock,
   Flag,
+  Globe,
   Heart,
   Layers,
   MapPin,
+  Music,
   Package,
   Ruler,
   Shirt,
@@ -56,34 +59,19 @@ export const metadata: Metadata = {
 
 const eventTypes = [
   {
-    icon: Trophy,
-    title: "Marathon & Half-Marathon",
-    desc: "Participant shirts, finisher medals apparel, sponsor visibility. From 5K to full 26.2-mile events.",
+    icon: Music,
+    title: "Festival merchandise",
+    desc: "Concert T-shirts, tour merchandise, hoodies, accessories — designed for high-volume events with bold visuals.",
   },
   {
-    icon: Flag,
-    title: "5K, 10K & Fun Runs",
-    desc: "Small to mid-size races. Quick-turn quotes, group orders, family-friendly sizing.",
+    icon: Briefcase,
+    title: "Conference apparel",
+    desc: "Staff shirts, volunteer shirts, sponsor apparel for conferences, expos, and trade shows.",
   },
   {
     icon: Heart,
-    title: "Charity Walks & Fundraisers",
-    desc: "Branded apparel for participants and teams. Bulk order support, sponsor logo integration.",
-  },
-  {
-    icon: Users,
-    title: "Cycling & Outdoor Events",
-    desc: "Jerseys, moisture-wicking shirts, and casual wear for cycling tours and outdoor gatherings.",
-  },
-  {
-    icon: Sparkles,
-    title: "Festivals & Community Events",
-    desc: "Staff uniforms, volunteer shirts, sponsor apparel. From 100 to 10,000+ pieces.",
-  },
-  {
-    icon: MapPin,
-    title: "Conferences & Trade Shows",
-    desc: "Branded apparel for exhibitors, staff, and attendees. Logo and design placement across multiple SKUs.",
+    title: "Community events",
+    desc: "Charity runs, school events, local celebrations. Branded apparel that brings people together.",
   },
 ];
 
@@ -236,15 +224,19 @@ export default function ForEventsPage() {
             </div>
 
             <h1 className="text-4xl font-black leading-[1.05] tracking-tight md:text-6xl">
-              Custom apparel for events,
+              Custom event apparel manufacturer
               <br />
-              <span className="text-[#ff4d00]">festivals & conferences.</span>
+              <span className="text-[#ff4d00]">for large-scale events.</span>
             </h1>
 
-            <p className="mt-6 text-lg leading-relaxed text-white/80 md:text-xl">
-              Helping organizers deliver branded apparel for events of all sizes, from conferences to festivals and
-              community events. <strong className="text-white">Conference shirts, festival merchandise,
-              volunteer & staff uniforms</strong> — bulk production, deadline guarantee, DDP worldwide.
+            <p className="mt-4 text-xl font-bold leading-snug text-white md:text-2xl">
+              Make your event memorable with custom apparel.
+            </p>
+            <p className="mt-5 text-lg leading-relaxed text-white/80 md:text-xl">
+              From small gatherings to thousands of attendees, we produce event apparel that helps your audience
+              connect with your brand, community, and experience.{" "}
+              <strong className="text-white">Conference shirts, festival merchandise, volunteer & staff uniforms</strong>{" "}
+              — bulk production, deadline guarantee, DDP worldwide.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -349,12 +341,11 @@ export default function ForEventsPage() {
             </p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-6 md:grid-cols-3">
             {[
-              { icon: Package, t: "Bulk production", b: "12 production lines running in parallel. 50 to 30,000+ pieces in one continuous run." },
-              { icon: Timer, t: "Deadline guarantee", b: "Written delivery commitment tied to your event date. We plan backwards and lock the slot." },
-              { icon: Ruler, t: "Size management", b: "US-spec size runs from Youth XS to Adult 5XL. Excel collection templates and pre-pack by size." },
-              { icon: Layers, t: "Individual packaging", b: "Poly-bag, fold, sticker, and kit-pack per attendee. Drop straight into welcome bags at the venue." },
+              { icon: Package, t: "Reliable bulk production", b: "Large orders require consistency. Our manufacturing process ensures every piece matches your approved design." },
+              { icon: Timer, t: "Deadline focused", b: "Events have fixed dates. We support production planning, delivery scheduling, and rush projects." },
+              { icon: Globe, t: "Easy overseas ordering", b: "We handle manufacturing, quality checks, packaging, and shipping support — one partner from PO to door." },
             ].map((a) => (
               <div key={a.t} className="rounded-sm border-2 border-black/10 bg-white p-6">
                 <a.icon className="h-7 w-7 text-[#ff4d00]" strokeWidth={2.5} />

@@ -221,15 +221,21 @@ export default function ForBrandsPage() {
             </div>
 
             <h1 className="text-4xl font-black leading-[1.05] tracking-tight md:text-6xl">
-              Your production partner
+              Your manufacturing partner
               <br />
-              <span className="text-[#ff4d00]">for custom apparel brands.</span>
+              <span className="text-[#ff4d00]">for custom apparel projects.</span>
             </h1>
 
-            <p className="mt-6 text-lg leading-relaxed text-white/80 md:text-xl">
-              From design development to bulk production, we support growing apparel brands and creative agencies.
-              <strong className="text-white"> Custom labels, retail packaging, drop-ship fulfillment</strong> — we
-              don&apos;t compete with your brand. Full private label service.
+            <p className="mt-4 text-xl font-bold leading-snug text-white md:text-2xl">
+              Bring your apparel ideas into production.
+            </p>
+            <p className="mt-5 text-lg leading-relaxed text-white/80 md:text-xl">
+              We help designers, agencies, and growing apparel businesses turn concepts into finished products. From
+              first samples to repeat production, our factory provides practical manufacturing support.{" "}
+              <strong className="text-white">
+                Custom labels, retail packaging, drop-ship fulfillment
+              </strong>{" "}
+              — we don&apos;t compete with your brand. Full private label service.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -494,10 +500,10 @@ export default function ForBrandsPage() {
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-12 max-w-2xl">
             <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
-              Why brands choose us
+              Why work with our factory
             </div>
             <h2 className="text-3xl font-black tracking-tight md:text-4xl">
-              Built for the brand, not the factory.
+              Direct manufacturer advantage for your brand.
             </h2>
           </div>
 
@@ -551,6 +557,32 @@ export default function ForBrandsPage() {
                   View <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-1" />
                 </span>
               </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SUITABLE FOR */}
+      <section className="border-y border-neutral-200 bg-white">
+        <div className="mx-auto max-w-screen-xl px-6 py-16 md:py-20">
+          <div className="mb-10 max-w-2xl">
+            <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-[#ff4d00]">Suitable for</p>
+            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Who we manufacture for</h2>
+            <p className="mt-4 text-base text-neutral-600 md:text-lg">
+              From emerging labels to established apparel businesses, our factory supports brands of every scale.
+            </p>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
+            {[
+              { title: "Apparel startups", body: "Launching a new clothing line with small minimums and big ideas." },
+              { title: "Sports brands", body: "Performance apparel, team kits, and athletic wear for growing sports brands." },
+              { title: "Online sellers", body: "DTC brands and marketplace sellers needing consistent repeat production." },
+              { title: "Design agencies", body: "Creative agencies producing custom apparel for their brand clients." },
+            ].map((item) => (
+              <div key={item.title} className="rounded-xl border border-neutral-200 bg-neutral-50 p-5">
+                <h3 className="text-base font-bold text-neutral-900">{item.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-neutral-600">{item.body}</p>
+              </div>
             ))}
           </div>
         </div>

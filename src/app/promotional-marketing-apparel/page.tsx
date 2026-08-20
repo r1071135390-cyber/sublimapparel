@@ -129,11 +129,15 @@ export default function CustomEventTShirtsPage() {
             <MessageSquare className="h-3.5 w-3.5 text-[#ff4d00]" /> Promotional & Marketing Apparel
           </p>
           <h1 className="max-w-4xl text-4xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">
-            Custom promotional apparel <span className="text-[#ff4d00]">that helps brands get noticed.</span>
+            Promotional apparel made for marketing campaigns.
           </h1>
-          <p className="mt-6 max-w-2xl text-lg text-white/75 md:text-xl">
-            Bulk apparel solutions for campaigns, exhibitions, promotions and marketing activities. Trade shows,
-            marketing campaigns, promotional events, distributor support — one factory, one DDP shipment.
+          <p className="mt-4 max-w-2xl text-xl font-semibold text-white md:text-2xl">
+            Turn your brand message into wearable marketing.
+          </p>
+          <p className="mt-5 max-w-2xl text-lg text-white/75 md:text-xl">
+            Promotional apparel helps companies create stronger connections with customers. We manufacture customized
+            clothing for campaigns, exhibitions, promotions, and brand activities. Trade shows, marketing campaigns,
+            promotional events, distributor support — one factory, one DDP shipment.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
@@ -196,15 +200,13 @@ export default function CustomEventTShirtsPage() {
         <div className="mx-auto max-w-screen-xl px-6 py-16 md:py-20">
           <div className="mb-10 max-w-2xl">
             <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-[#ff4d00]">Why brands choose us</p>
-            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Built for marketing and promotional reality</h2>
+            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Built for marketing deadlines</h2>
           </div>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { t: "Small campaigns accepted", b: "MOQ 50 pieces — perfect for a single trade show, a regional giveaway, or a soft launch." },
-              { t: "Accurate sizing", b: "US-spec size runs from Youth XS to Adult 5XL. Sample sizing sets on request for first-time orders." },
-              { t: "Full customization", b: "All-over print, embroidery, custom labels, retail packaging. Designed to be worn, not just distributed." },
-              { t: "Fast production", b: "25-day standard lead time. 15-day expedited lane for last-minute trade shows and events." },
-              { t: "DDP delivery", b: "Delivered duty-paid to your trade show venue, warehouse, office, or event hotel in 100+ countries." },
+              { t: "Fast project communication", b: "Marketing projects often have strict deadlines. We help coordinate artwork confirmation, production schedule, and shipping timeline." },
+              { t: "Large quantity production", b: "Suitable for national campaigns, corporate promotions, and event giveaways. Bulk orders welcome." },
+              { t: "Global delivery support", b: "We provide shipping solutions for international campaigns — DDP to 100+ countries, duties and customs handled." },
             ].map((w) => (
               <div key={w.t} className="rounded-2xl border border-neutral-200 bg-white p-6">
                 <CheckCircle2 className="mb-3 h-5 w-5 text-[#ff4d00]" />

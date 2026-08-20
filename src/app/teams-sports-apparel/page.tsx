@@ -142,12 +142,15 @@ export default function RaceShirtsPage() {
             <Trophy className="h-3.5 w-3.5 text-[#ff4d00]" /> Teams & Sports Apparel
           </p>
           <h1 className="max-w-4xl text-4xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">
-            Custom team sports apparel <span className="text-[#ff4d00]">built for clubs, leagues & athletes.</span>
+            Custom team sports apparel manufacturer.
           </h1>
-          <p className="mt-6 max-w-2xl text-lg text-white/75 md:text-xl">
-            From local teams to competitive leagues, we manufacture custom sublimation jerseys, uniforms and training
-            apparel with consistent quality and flexible production. Soccer, basketball, cycling, running, training
-            wear — one production line, one DDP delivery.
+          <p className="mt-4 max-w-2xl text-xl font-semibold text-white md:text-2xl">
+            Custom sportswear built for teams that need reliable production.
+          </p>
+          <p className="mt-5 max-w-2xl text-lg text-white/75 md:text-xl">
+            From local clubs to professional leagues, we manufacture custom sports apparel designed around your team's
+            identity. With full sublimation printing, flexible order quantities, accurate sizing, and worldwide delivery,
+            we help teams create uniforms players are proud to wear.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
@@ -271,19 +274,42 @@ export default function RaceShirtsPage() {
         </div>
       </section>
 
-      {/* SCENARIOS */}
+      {/* CUSTOM APPAREL SOLUTIONS */}
       <section className="bg-[#0a0a0a] text-white">
         <div className="mx-auto max-w-screen-xl px-6 py-16 md:py-20">
           <div className="mb-10 max-w-2xl">
-            <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-[#ff4d00]">Which teams we serve</p>
-            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">From club teams to national leagues</h2>
+            <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-[#ff4d00]">Custom apparel solutions</p>
+            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">For every team</h2>
+            <p className="mt-4 text-base text-white/70 md:text-lg">
+              Whether you need uniforms for a season, tournament, training program, or club merchandise, our factory
+              provides complete apparel solutions.
+            </p>
           </div>
-          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-            {scenarios.map((s) => (
-              <div key={s.title} className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
-                <s.icon className="mb-3 h-6 w-6 text-[#00c2ff]" />
-                <h3 className="text-lg font-bold">{s.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-white/70">{s.body}</p>
+          <div className="grid gap-5 md:grid-cols-3">
+            {[
+              {
+                title: "Custom Jerseys",
+                items: ["Soccer jerseys", "Basketball uniforms", "Baseball shirts", "Volleyball jerseys", "Rugby shirts"],
+              },
+              {
+                title: "Performance Wear",
+                items: ["Training tops", "Running shirts", "Compression wear", "Cycling apparel"],
+              },
+              {
+                title: "Team Accessories",
+                items: ["Shorts", "Socks", "Warm-up jackets", "Team bags"],
+              },
+            ].map((cat) => (
+              <div key={cat.title} className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
+                <h3 className="text-lg font-bold text-white">{cat.title}</h3>
+                <ul className="mt-4 space-y-2 text-sm text-white/70">
+                  {cat.items.map((item) => (
+                    <li key={item} className="flex items-start gap-2">
+                      <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#ff4d00]" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             ))}
           </div>
@@ -366,6 +392,34 @@ export default function RaceShirtsPage() {
                 </div>
                 <ArrowRight className="h-5 w-5 flex-shrink-0 text-[#ff4d00] transition group-hover:translate-x-1" />
               </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Perfect For */}
+      <section className="border-t border-neutral-200 bg-white">
+        <div className="mx-auto max-w-screen-xl px-6 py-16 md:py-20">
+          <div className="mb-10 max-w-2xl">
+            <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-[#ff4d00]">Perfect For</p>
+            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Who we make team sportswear for</h2>
+            <p className="mt-4 text-base text-neutral-600 md:text-lg">
+              From local clubs to professional leagues, our factory supports team apparel programs of every scale.
+            </p>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+            {[
+              { title: "Sports clubs", body: "Weekend clubs, amateur sides, training squads, and competitive club teams." },
+              { title: "School teams", body: "High school and university teams across all major sports." },
+              { title: "Amateur leagues", body: "Multi-team league programs with consistent branding across rosters." },
+              { title: "Professional teams", body: "Pro and semi-pro teams that need precision printing and on-time delivery." },
+              { title: "Tournament organizers", body: "One-off tournaments, cups, invitationals and showcase events." },
+              { title: "Fitness communities", body: "Running clubs, cycling groups, CrossFit boxes and gym communities." },
+            ].map((item) => (
+              <div key={item.title} className="rounded-xl border border-neutral-200 bg-neutral-50 p-5">
+                <h3 className="text-base font-bold text-neutral-900">{item.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-neutral-600">{item.body}</p>
+              </div>
             ))}
           </div>
         </div>

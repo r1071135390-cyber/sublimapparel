@@ -156,20 +156,16 @@ const painPoints = [
 
 const whyUs = [
   {
-    title: "Flexible MOQ from 30-50 pieces per design",
-    desc: "Test new SKUs, run limited drops, manage cash flow. We don't lock you into 500-1,000 piece MOQs. Scale up once the product sells.",
+    title: "Direct factory advantage",
+    desc: "Working directly with a manufacturer means better communication, faster feedback, and more production control. No middleman margins, no miscommunication.",
   },
   {
-    title: "White-label packaging & blind shipping",
-    desc: "Your brand, your labels, your tags. We ship to your customers without our name on the box. Dropship-ready, Amazon FBA-ready.",
+    title: "Suitable for growing brands",
+    desc: "Perfect for new online stores, sports apparel brands, niche clothing businesses, and marketplace sellers. Flexible MOQ from 30-50 pieces per design so you can test and scale.",
   },
   {
-    title: "DDP shipping to US, EU, and beyond",
-    desc: "Duties and customs paid upfront. Your customers get the package in 5-7 days with no surprise import fees. Built for cross-border e-commerce.",
-  },
-  {
-    title: "Color & quality consistency across reorders",
-    desc: "Pantone matching, archived dye lots, fabric specs saved. Your 1st run and your 10th run look identical. No customer complaints about drift.",
+    title: "International shipping experience",
+    desc: "We support worldwide customers with export experience, packaging solutions, and shipping coordination. DDP to US, EU, and beyond — duties and customs paid upfront.",
   },
 ];
 
@@ -232,15 +228,22 @@ export default function ForCommunitiesPage() {
             </div>
 
             <h1 className="text-4xl font-black leading-[1.05] tracking-tight md:text-6xl">
-              Custom apparel production
+              Custom apparel manufacturing partner
               <br />
-              <span className="text-[#00c2ff]">&amp; fulfillment worldwide.</span>
+              <span className="text-[#00c2ff]">for e-commerce brands.</span>
             </h1>
 
-            <p className="mt-6 text-lg leading-relaxed text-white/80 md:text-xl">
-              Bulk production, warehouse support, DDP shipping, and inventory management for online apparel brands.
-              <strong className="text-white"> Custom packaging, blind shipping, flexible MOQ</strong> — built for
-              e-commerce, dropship and B2B reseller operations.
+            <p className="mt-4 text-xl font-bold leading-snug text-white md:text-2xl">
+              Build your online apparel business with reliable manufacturing.
+            </p>
+            <p className="mt-5 text-lg leading-relaxed text-white/80 md:text-xl">
+              Running an online apparel business requires more than finding products. You need a manufacturing partner
+              who can provide consistent quality, competitive pricing, reliable production, and flexible supply
+              solutions.{" "}
+              <strong className="text-white">
+                Custom packaging, blind shipping, flexible MOQ
+              </strong>{" "}
+              — built for e-commerce, dropship and B2B reseller operations.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -468,10 +471,10 @@ export default function ForCommunitiesPage() {
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-12 max-w-2xl">
             <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#00c2ff]">
-              Why e-commerce brands choose us
+              Why online brands work with us
             </div>
             <h2 className="text-3xl font-black tracking-tight md:text-4xl">
-              Built for e-commerce scale and speed.
+              Built for online apparel businesses.
             </h2>
           </div>
 
@@ -492,6 +495,32 @@ export default function ForCommunitiesPage() {
               </li>
             ))}
           </ul>
+        </div>
+      </section>
+
+      {/* SUITABLE FOR */}
+      <section className="border-y border-neutral-200 bg-white">
+        <div className="mx-auto max-w-screen-xl px-6 py-16 md:py-20">
+          <div className="mb-10 max-w-2xl">
+            <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-[#00c2ff]">Suitable for</p>
+            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Who we manufacture for</h2>
+            <p className="mt-4 text-base text-neutral-600 md:text-lg">
+              From new online stores to established e-commerce brands, our factory supports apparel businesses of every scale.
+            </p>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
+            {[
+              { title: "New online stores", body: "Launching your first apparel line with low minimums and direct-to-consumer operations." },
+              { title: "Sports apparel brands", body: "Performance wear, team kits, and athletic apparel for growing sports brands." },
+              { title: "Niche clothing businesses", body: "Specialty apparel targeting specific audiences — from streetwear to hobby communities." },
+              { title: "Marketplace sellers", body: "Amazon, eBay, Etsy, Shopify sellers needing consistent production and blind shipping." },
+            ].map((item) => (
+              <div key={item.title} className="rounded-xl border border-neutral-200 bg-neutral-50 p-5">
+                <h3 className="text-base font-bold text-neutral-900">{item.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-neutral-600">{item.body}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

@@ -134,20 +134,20 @@ const painPoints = [
 
 const whyUs = [
   {
-    title: "One vendor, every apparel type",
-    desc: "Polo + tee + hoodie + cap on one purchase order, one invoice, one shipment, one contact. No juggling 4 different printers.",
+    title: "Consistent quality across large orders",
+    desc: "Corporate projects often require hundreds or thousands of identical items. Our production process ensures same colors, same sizing, same finishing across every piece.",
   },
   {
-    title: "Brand book adherence is non-negotiable",
-    desc: "We lock Pantone, sizing chart, and placement before cutting. Your last 5 vendors couldn't say that — we say it in writing.",
+    title: "Accurate sizing support",
+    desc: "Detailed measurement charts, size confirmation before production, and mixed-size production. We solve the inconsistent sizing problem common with overseas apparel ordering.",
   },
   {
-    title: "Scalable from 50 to 50,000",
-    desc: "Same factory, same quality. The team-building tees for 50 people get the same production line as your 5,000-piece trade show order.",
+    title: "Flexible production",
+    desc: "Suitable for small company programs, large employee campaigns, and multi-location orders. Same factory, same quality from 50 to 50,000 pieces.",
   },
   {
-    title: "US warehouse for emergencies",
-    desc: "Forgot someone for a board meeting? Need 20 extra polos by Friday? Fontana, CA warehouse ships same-day domestically.",
+    title: "Reliable communication",
+    desc: "Clear updates throughout design approval, production, quality inspection, and shipping. You always know where your project stands.",
   },
 ];
 
@@ -210,15 +210,22 @@ export default function ForCorporatePage() {
             </div>
 
             <h1 className="text-4xl font-black leading-[1.05] tracking-tight md:text-6xl">
-              Custom apparel for companies
+              Custom corporate apparel manufacturer
               <br />
-              <span className="text-[#00c2ff]">and organizations.</span>
+              <span className="text-[#00c2ff]">for companies &amp; organizations.</span>
             </h1>
 
-            <p className="mt-6 text-lg leading-relaxed text-white/80 md:text-xl">
-              Branded clothing solutions for employee teams, schools, clubs and organizations.
-              <strong className="text-white"> Employee apparel, organization uniforms, company event & team building apparel</strong> —
-              Pantone-matched colors, flexible quantities, DDP worldwide.
+            <p className="mt-4 text-xl font-bold leading-snug text-white md:text-2xl">
+              Branded apparel that represents your organization.
+            </p>
+            <p className="mt-5 text-lg leading-relaxed text-white/80 md:text-xl">
+              From employee uniforms to company events, we help businesses create professional custom apparel that
+              strengthens team identity and brand recognition.{" "}
+              <strong className="text-white">
+                Employee apparel, organization uniforms, company event &amp; team building apparel
+              </strong>{" "}
+              — Pantone-matched colors, flexible quantities, DDP worldwide. Whether you need 50 employee shirts or
+              thousands of pieces for multiple locations, our factory provides flexible manufacturing solutions.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -273,10 +280,10 @@ export default function ForCorporatePage() {
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-12 max-w-2xl">
             <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#00c2ff]">
-              Apparel categories
+              Corporate apparel solutions
             </div>
             <h2 className="text-3xl font-black tracking-tight md:text-4xl">
-              Custom apparel for every corporate & organization need.
+              Apparel for every corporate and organization need.
             </h2>
             <p className="mt-3 text-base text-black/70">
               From a 50-person office to a 5,000-person enterprise. Employee apparel, organization uniforms,
@@ -448,10 +455,10 @@ export default function ForCorporatePage() {
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-12 max-w-2xl">
             <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#00c2ff]">
-              Why corporate buyers choose us
+              Why companies work with us
             </div>
             <h2 className="text-3xl font-black tracking-tight md:text-4xl">
-              Built for the procurement nightmare.
+              Built for companies that need consistent, on-time apparel.
             </h2>
           </div>
 
