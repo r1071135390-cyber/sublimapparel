@@ -148,6 +148,9 @@ export function Hero() {
         </div>
 
         {/* 6 industry/use-case chips (2026 strategy v3) */}
+        <h2 className="mb-3 mt-4 max-w-4xl text-2xl font-black leading-[1.22] tracking-tight text-white md:mb-4 md:mt-5 md:text-4xl lg:text-5xl xl:text-6xl">
+          Our solutions
+        </h2>
         <div className="mb-4 mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3 md:mb-5 md:mt-4 md:flex md:flex-wrap md:gap-3">
           {categories.map((c) => (
             <Link
