@@ -40,7 +40,15 @@ export const metadata: Metadata = {
   },
 };
 
-const categories = [
+type CategoryItem = { name: string; category?: keyof typeof CATEGORY_TAGS };
+
+const categories: Array<{
+  id: string;
+  title: string;
+  desc: string;
+  items: CategoryItem[];
+  note: string;
+}> = [
   {
     id: "apparel",
     title: "Apparel",
@@ -49,15 +57,15 @@ const categories = [
       { name: "T-Shirts", category: "T-Shirt" },
       { name: "Hoodies", category: "Hoodie" },
       { name: "Sweatshirts", category: "Sweatshirt" },
-      { name: "Jerseys" },
-      { name: "Cycling Kits" },
-      { name: "Polo / Golf", category: "Polo Shirt" },
-      { name: "Bowling Shirts", category: "Shirt" },
+      { name: "Jerseys", category: "Jersey" },
+      { name: "Sportswear", category: "Sportswear" },
+      { name: "Polo Shirts", category: "Polo Shirt" },
+      { name: "Jackets", category: "Jacket" },
       { name: "Pants & Shorts", category: "Pants" },
-      { name: "Leggings" },
-      { name: "Tank Tops", category: "Tank Top & Camis" },
-      { name: "Vests", category: "Uniform & Workwear" },
-      { name: "Combat Gear" },
+      { name: "Skirts", category: "Skirt" },
+      { name: "Shirts", category: "Shirt" },
+      { name: "Tank Tops & Camis", category: "Tank Top & Camis" },
+      { name: "Uniform & Workwear", category: "Uniform & Workwear" },
     ],
     note: "Polyester or 100% cotton. Cotton runs on DTG/DTF (A4–A3 per panel); polyester runs on sublimation (true all-over, edge-to-edge). Allover digital print on cotton also available (cut-and-sew, true full-body, MOQ 50 pcs).",
   },

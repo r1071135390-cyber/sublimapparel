@@ -1,5 +1,5 @@
 // ============================================================
-// Tag Archive Data — 13 categories + 42 sports + 25 scenarios
+// Tag Archive Data — 14 categories + 42 sports + 25 scenarios
 // ============================================================
 //
 // Each tag gets a dedicated archive page at /tag/<dim>/<slug>/
@@ -232,6 +232,17 @@ export const CATEGORY_TAGS: Record<string, Omit<TagInfo, "slug" | "dimension">> 
     ],
     process: "Sublimation on Polyester Mesh / Interlock",
     icon: "🏃",
+  },
+  "Tank Top & Camis": {
+    label: "Tank Top & Camis",
+    description: "Custom sublimated tank tops, racerbacks, and camisoles for training, gym wear, summer events, and lifestyle merch. Full-edge print on the body with breathable polyester — your pattern or branding wraps every panel with no center-seam interruption.",
+    benefits: [
+      "Edge-to-edge print on body and back strap",
+      "120–180 GSM lightweight polyester",
+      "Racerback, A-line, and box-cut options",
+    ],
+    process: "Sublimation on Polyester Interlock / Mesh",
+    icon: "👕",
   },
   "Home": {
     label: "Home",
