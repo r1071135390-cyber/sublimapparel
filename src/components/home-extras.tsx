@@ -222,7 +222,7 @@ function VideoShowcase() {
         <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
           <div>
             <div className="text-[10px] md:text-xs uppercase tracking-widest text-[#cc3d00] font-bold mb-3">
-              [ 003 / Watch · 40 seconds ]
+              [ 002 / Watch · 40 seconds ]
             </div>
             <h2 className="text-3xl md:text-5xl font-extrabold leading-[1.1] mb-4">
               <span className="text-white">See our </span>

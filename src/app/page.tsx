@@ -127,7 +127,6 @@ export default function Home() {
     <main>
       <JsonLd data={homeJsonLd} />
       <Hero />
-      <BeyondApparel />
       <FactoryFloor />
       <VideoShowcase />
       <Features />
@@ -141,6 +140,7 @@ export default function Home() {
       <Process />
       <DDP />
       <Industries />
+      <BeyondApparel />
       <HomeExtras />
       <Contact />
       <Newsletter />

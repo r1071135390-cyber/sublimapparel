@@ -9,7 +9,7 @@ export function BeyondApparel() {
       <div className="mx-auto max-w-7xl">
         {/* Section label */}
         <div className="mb-6 text-xs font-bold uppercase tracking-[0.2em] text-[#0a0a0a]/60">
-          [ 001 / Beyond Apparel ]
+          [ 004 / Beyond Apparel ]
         </div>
 
         <div className="grid gap-10 md:grid-cols-2 md:gap-12">

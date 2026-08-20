@@ -66,7 +66,7 @@ export function Features() {
           <div className="md:col-span-8">
             <div className="mb-4 flex items-center gap-2 text-xs font-black uppercase tracking-widest text-black/60">
               <span className="inline-block h-px w-8 bg-black/40" />
-              [ 004 / Why us ]
+              [ 003 / Why us ]
             </div>
             <h2 className="whitespace-nowrap text-4xl font-black leading-[1.05] tracking-tight text-black md:text-5xl lg:text-6xl">
               Why Work With SublimApparel
