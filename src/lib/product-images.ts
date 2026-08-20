@@ -97,17 +97,30 @@ export function pickHeroImages(
 
   const picked: string[] = [];
   const seen = new Set<string>();
-  let h = Math.abs(hash);
+  let h = Math.abs(hash) | 1; // ensure odd to avoid 2-bit periodic stuck states
 
-  while (picked.length < count && seen.size < pool.length) {
+  // Hard iteration limit to guarantee termination even with poor LCG mixing.
+  const maxIters = pool.length * 64 + 16;
+  let iter = 0;
+  while (picked.length < count && seen.size < pool.length && iter < maxIters) {
     const idx = h % pool.length;
     const num = pool[idx];
     if (!seen.has(num)) {
       seen.add(num);
       picked.push(getMainImagePath(num));
     }
-    h = (h * 1103515245 + 12345) >>> 0; // LCG step
+    // Use Math.imul for 32-bit precision and a better-mixing multiplier.
+    h = (Math.imul(h, 2654435761) + 1013904223) >>> 0;
     if (h === 0) h = 1;
+    iter++;
+  }
+  // Fallback: fill remaining slots sequentially if loop exited early.
+  for (const num of pool) {
+    if (picked.length >= count) break;
+    if (!seen.has(num)) {
+      seen.add(num);
+      picked.push(getMainImagePath(num));
+    }
   }
 
   return picked;
@@ -149,17 +162,30 @@ export function pickHeroImagesWithAlts(
 
   const picked: NamedProduct[] = [];
   const seen = new Set<string>();
-  let h = Math.abs(hash);
+  let h = Math.abs(hash) | 1; // ensure odd to avoid 2-bit periodic stuck states
 
-  while (picked.length < count && seen.size < pool.length) {
+  // Hard iteration limit to guarantee termination even with poor LCG mixing.
+  const maxIters = pool.length * 64 + 16;
+  let iter = 0;
+  while (picked.length < count && seen.size < pool.length && iter < maxIters) {
     const idx = h % pool.length;
     const p = pool[idx];
     if (!seen.has(p.id)) {
       seen.add(p.id);
       picked.push(p);
     }
-    h = (h * 1103515245 + 12345) >>> 0;
+    // Use Math.imul for 32-bit precision and a better-mixing multiplier.
+    h = (Math.imul(h, 2654435761) + 1013904223) >>> 0;
     if (h === 0) h = 1;
+    iter++;
+  }
+  // Fallback: if we exited the loop early, fill remaining slots sequentially.
+  for (const p of pool) {
+    if (picked.length >= count) break;
+    if (!seen.has(p.id)) {
+      seen.add(p.id);
+      picked.push(p);
+    }
   }
 
   return picked.map((p) => ({
