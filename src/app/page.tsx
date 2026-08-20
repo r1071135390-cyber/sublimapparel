@@ -128,10 +128,10 @@ export default function Home() {
       <JsonLd data={homeJsonLd} />
       <Hero />
       <BeyondApparel />
-      <InquiryCTA />
       <FactoryFloor />
       <VideoShowcase />
       <Features />
+      <InquiryCTA />
       <FreeDesignService />
       <RecentCaseStudies />
       <LogoWall />
