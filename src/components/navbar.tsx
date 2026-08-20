@@ -220,6 +220,12 @@ export function Navbar() {
             About
           </Link>
           <Link
+            href="/resources"
+            className="text-sm font-bold uppercase tracking-wider text-black transition-colors hover:text-[#cc3d00]"
+          >
+            Resources
+          </Link>
+          <Link
             href="/blog"
             className="text-sm font-bold uppercase tracking-wider text-black transition-colors hover:text-[#cc3d00]"
           >

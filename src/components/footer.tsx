@@ -60,6 +60,7 @@ const linkGroups = [
   {
     title: "Resources",
     items: [
+      { label: "View All Tools & Resources", href: "/resources" },
       { label: "Event Timeline Calculator", href: "/event-timeline" },
       { label: "US Size Guide & Excel Template", href: "/us-size-guide" },
       { label: "Quality Control Process", href: "/quality-control" },

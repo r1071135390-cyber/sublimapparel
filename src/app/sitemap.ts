@@ -104,6 +104,9 @@ const ROUTES: SitemapRoute[] = [
   { path: "/industries/political-campaigns", priority: 0.9, changeFrequency: "weekly" },
   { path: "/industries/e-commerce-fulfillment", priority: 0.9, changeFrequency: "weekly" },
 
+  // ── L2  Tools & Resources hub ─────────────────
+  { path: "/resources", priority: 0.85, changeFrequency: "weekly" },
+
   // ── L2 （ / ）─────────────────
   { path: "/blog", priority: 0.8, changeFrequency: "weekly" },
 

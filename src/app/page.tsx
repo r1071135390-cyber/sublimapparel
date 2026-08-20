@@ -15,7 +15,7 @@ import { Newsletter, VideoShowcase, FreeDesignService, RecentCaseStudies, LogoWa
 import { JsonLd } from "@/components/json-ld";
 
 export const metadata = {
-  title: "Yiwu Custom Sublimate Apparel Factory | Sublimation & Cotton DDP 100+ Countries",
+  title: "Yiwu Custom Sublimate Apparel Manufacturer | Sublimation & Cotton DDP 100+ Countries",
   description:
     "Sublimation on polyester (true all-over, edge-to-edge). DTG and DTF on 100% cotton (A4–A3 per panel, soft hand). Allover digital print on cotton also available (cut-and-sew, true full-body, MOQ 50 pcs). MOQ 50 for DTG/DTF, DDP shipping to 100+ countries, US warehouse in Fontana CA. 12 production lines, since 2018.",
 
