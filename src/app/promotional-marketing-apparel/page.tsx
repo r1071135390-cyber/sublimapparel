@@ -25,26 +25,30 @@ export const dynamic = "force-static";
 const siteUrl = "https://sublimapparel.com";
 
 export const metadata: Metadata = {
-  title: "Custom Event T-Shirts in 25 Days | DDP to Your Door — SublimApparel",
+  title: "Custom Promotional Apparel Manufacturer | Marketing Merchandise Supplier — SublimApparel",
   description:
-    "Custom event t-shirts with all-over sublimation. MOQ 50, 25-day production, DDP shipping to 100+ countries. No setup fee. Trusted by event organizers, festivals, and conferences across the US.",
+    "Custom promotional apparel manufacturer for trade shows, marketing campaigns, giveaways and brand activations. Promotional t-shirts, branded merchandise and marketing apparel with flexible MOQ, fast production and DDP worldwide shipping.",
   keywords: [
+    "promotional apparel",
+    "promotional t shirts",
+    "branded merchandise supplier",
+    "marketing apparel",
+    "trade show shirts",
+    "giveaway shirts",
+    "promotional clothing",
+    "event giveaways",
     "custom event t-shirts",
-    "event t shirts",
-    "custom event shirts",
-    "event tshirts bulk",
-    "festival t shirts",
-    "conference t shirts",
+    "bulk promotional apparel",
   ],
   alternates: { canonical: `${siteUrl}/promotional-marketing-apparel/` },
   openGraph: {
-    title: "Custom Event T-Shirts in 25 Days | DDP to Your Door",
+    title: "Custom Promotional Apparel Manufacturer | Marketing Merchandise Supplier",
     description:
-      "All-over print event t-shirts. 25-day production. MOQ 50. DDP to 100+ countries. No setup fee.",
+      "Promotional t-shirts, branded merchandise and marketing apparel for trade shows, giveaways and brand activations. Flexible MOQ. DDP worldwide.",
     url: `${siteUrl}/promotional-marketing-apparel/`,
     siteName: "SublimApparel",
     type: "website",
-    images: [{ url: "/og-default.jpg", width: 1200, height: 630, alt: "Custom Event T-Shirts — SublimApparel" }],
+    images: [{ url: "/og-default.jpg", width: 1200, height: 630, alt: "Custom Promotional Apparel — SublimApparel" }],
   },
 };
 
@@ -62,10 +66,10 @@ const delivers = [
 ];
 
 const scenarios = [
-  { title: "Music festivals", body: "Limited-edition year designs, sponsor panels, staff + volunteer + VIP tiers — all in one print run.", icon: Globe },
-  { title: "Conferences & expos", body: "Attendee shirts, exhibitor polos, speaker gifts. Different deadlines, one production calendar.", icon: MessageSquare },
-  { title: "Trade shows", body: "Booth team shirts + giveaway shirts. Pre-event delivery to your hotel or convention center.", icon: Zap },
-  { title: "Charity & gala events", body: "Premium-feel poly-cotton sublimation. Donation-grade pricing, no margin gimmicks.", icon: Award },
+  { title: "Trade shows & expos", body: "Booth team shirts + attendee giveaways. Pre-event delivery to your hotel or convention center. Sponsor panels.", icon: Zap },
+  { title: "Marketing campaigns", body: "Product launches, brand activations, influencer kits. All-over print, no setup fee, fast turnaround.", icon: MessageSquare },
+  { title: "Distributor & reseller", body: "Multi-region rollout, white-label packaging, retail-ready kits for promotional product distributors.", icon: Globe },
+  { title: "Pop-up & sampling events", body: "Store openings, product sampling, brand activations. Bulk pricing for high-volume giveaways.", icon: Award },
 ];
 
 const process = [
@@ -122,14 +126,14 @@ export default function CustomEventTShirtsPage() {
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.6),transparent_30%)]" aria-hidden />
         <div className="relative mx-auto max-w-screen-xl px-6 py-20 md:py-28">
           <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium uppercase tracking-wider text-white/80">
-            <Shirt className="h-3.5 w-3.5 text-[#ff4d00]" /> Event Apparel
+            <MessageSquare className="h-3.5 w-3.5 text-[#ff4d00]" /> Promotional & Marketing Apparel
           </p>
           <h1 className="max-w-4xl text-4xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">
-            Custom event t-shirts, <span className="text-[#ff4d00]">delivered 7 days before your doors open.</span>
+            Custom promotional apparel <span className="text-[#ff4d00]">that helps brands get noticed.</span>
           </h1>
           <p className="mt-6 max-w-2xl text-lg text-white/75 md:text-xl">
-            Sublimation-printed all-over event tees for festivals, conferences, and trade shows. MOQ 50, 25-day
-            production, DDP to your venue. No setup fee, no duty headaches, no missed deadlines.
+            Bulk apparel solutions for campaigns, exhibitions, promotions and marketing activities. Trade shows,
+            marketing campaigns, promotional events, distributor support — one factory, one DDP shipment.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
@@ -161,12 +165,63 @@ export default function CustomEventTShirtsPage() {
         </div>
       </section>
 
-      {/* PAINS */}
-      <section className="border-b border-neutral-200 bg-neutral-50">
+      {/* PROMOTIONAL APPAREL CATEGORIES WE PRODUCE */}
+      <section className="bg-white">
         <div className="mx-auto max-w-screen-xl px-6 py-16 md:py-20">
           <div className="mb-10 max-w-2xl">
-            <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-[#ff4d00]">Why event organizers switch to us</p>
-            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Your last event-shirt nightmare (and why it won't happen here)</h2>
+            <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-[#ff4d00]">Promotional Apparel Categories</p>
+            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Custom promotional apparel for every campaign</h2>
+            <p className="mt-3 text-neutral-600">
+              Sublimated and stitched apparel for trade shows, marketing campaigns, giveaways and brand activations.
+            </p>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              { name: "Trade Shows", body: "Booth staff uniforms, attendee giveaways, branded tote shirts. Designed to be worn — and remembered." },
+              { name: "Marketing Campaigns", body: "Limited-run brand activations, product launches, and influencer kits. All-over print, no setup fee." },
+              { name: "Promotional Events", body: "Pop-ups, store openings, sampling events, brand activations. Bulk pricing for high-volume giveaways." },
+              { name: "Distributor Support", body: "Reseller programs, multi-region rollout, retail-ready packaging. White-label friendly." },
+            ].map((s) => (
+              <div key={s.name} className="rounded-2xl border border-neutral-200 bg-white p-6 transition hover:border-[#ff4d00] hover:shadow-sm">
+                <h3 className="text-base font-bold">{s.name}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-neutral-600">{s.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* WHY BRANDS CHOOSE US */}
+      <section className="border-y border-neutral-200 bg-neutral-50">
+        <div className="mx-auto max-w-screen-xl px-6 py-16 md:py-20">
+          <div className="mb-10 max-w-2xl">
+            <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-[#ff4d00]">Why brands choose us</p>
+            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Built for marketing and promotional reality</h2>
+          </div>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+            {[
+              { t: "Small campaigns accepted", b: "MOQ 50 pieces — perfect for a single trade show, a regional giveaway, or a soft launch." },
+              { t: "Accurate sizing", b: "US-spec size runs from Youth XS to Adult 5XL. Sample sizing sets on request for first-time orders." },
+              { t: "Full customization", b: "All-over print, embroidery, custom labels, retail packaging. Designed to be worn, not just distributed." },
+              { t: "Fast production", b: "25-day standard lead time. 15-day expedited lane for last-minute trade shows and events." },
+              { t: "DDP delivery", b: "Delivered duty-paid to your trade show venue, warehouse, office, or event hotel in 100+ countries." },
+            ].map((w) => (
+              <div key={w.t} className="rounded-2xl border border-neutral-200 bg-white p-6">
+                <CheckCircle2 className="mb-3 h-5 w-5 text-[#ff4d00]" />
+                <h3 className="text-base font-bold">{w.t}</h3>
+                <p className="mt-1.5 text-sm leading-relaxed text-neutral-600">{w.b}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* PAINS */}
+      <section className="border-b border-neutral-200 bg-white">
+        <div className="mx-auto max-w-screen-xl px-6 py-16 md:py-20">
+          <div className="mb-10 max-w-2xl">
+            <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-[#ff4d00]">Why brands and marketers switch to us</p>
+            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Your last promo-apparel problem (and why it won't happen here)</h2>
           </div>
           <div className="grid gap-6 md:grid-cols-3">
             {pains.map((p) => (
@@ -187,7 +242,7 @@ export default function CustomEventTShirtsPage() {
         <div className="mx-auto max-w-screen-xl px-6 py-16 md:py-20">
           <div className="mb-10 max-w-2xl">
             <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-[#ff4d00]">What you get</p>
-            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Everything an event shirt program needs</h2>
+            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Everything a promotional apparel program needs</h2>
           </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {delivers.map((d) => (
@@ -206,7 +261,7 @@ export default function CustomEventTShirtsPage() {
         <div className="mx-auto max-w-screen-xl px-6 py-16 md:py-20">
           <div className="mb-10 max-w-2xl">
             <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-[#ff4d00]">Where these shirts show up</p>
-            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Built for the events that have to ship on time</h2>
+            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">From a single trade show to nationwide rollout</h2>
           </div>
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
             {scenarios.map((s) => (
@@ -267,6 +322,35 @@ export default function CustomEventTShirtsPage() {
                 <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-[#ff4d00]">
                   Open tool <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
                 </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CASE STUDIES */}
+      <section className="bg-white">
+        <div className="mx-auto max-w-screen-xl px-6 py-16 md:py-20">
+          <div className="mb-10 max-w-2xl">
+            <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-[#ff4d00]">Case studies</p>
+            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Promotional & marketing apparel we&apos;ve shipped</h2>
+          </div>
+          <div className="grid gap-4 md:grid-cols-3">
+            {[
+              { href: "/event-festivals-conferences/", title: "Events & Conferences", body: "Booth staff uniforms, attendee giveaways, speaker shirts. Tight deadlines, multi-SKU." },
+              { href: "/corporate-organization-apparel/", title: "Corporate & Employee Programs", body: "Branded apparel for trade show booth, employee programs, client gifts and corporate events." },
+              { href: "/apparel-brands-agencies/", title: "Apparel Brands & Agencies", body: "Private label production for growing brands and creative agencies needing promo runs." },
+            ].map((c) => (
+              <Link
+                key={c.title}
+                href={c.href}
+                className="group flex items-start justify-between gap-4 rounded-2xl border border-neutral-200 bg-white p-6 transition hover:border-[#ff4d00] hover:shadow-md"
+              >
+                <div>
+                  <h3 className="text-lg font-bold group-hover:text-[#ff4d00]">{c.title}</h3>
+                  <p className="mt-2 text-sm text-neutral-600">{c.body}</p>
+                </div>
+                <ArrowRight className="h-5 w-5 flex-shrink-0 text-[#ff4d00] transition group-hover:translate-x-1" />
               </Link>
             ))}
           </div>

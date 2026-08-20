@@ -10,6 +10,7 @@ import {
   Heart,
   Layers,
   MapPin,
+  Package,
   Ruler,
   Shirt,
   Shield,
@@ -25,31 +26,29 @@ import { forEventsServiceJsonLd, forEventsFaqJsonLd } from "@/lib/json-ld-data";
 
 export const metadata: Metadata = {
   title:
-    "Custom Race Shirts & Event Apparel | Marathon, 5K, Charity Run | MOQ 50 | DDP USA",
+    "Custom Event Apparel Manufacturer | Festival & Conference Shirts — SublimApparel",
   description:
-    "Custom event apparel for race organizers, charity runs, marathons, and festivals. Participant shirts, volunteer uniforms, and sponsor apparel with flexible 90-day production planning. MOQ 50 pcs, DDP to 100+ countries, US warehouse in Fontana CA. Since 2018.",
+    "Custom event apparel manufacturer for conferences, festivals, charity events, and community gatherings. Conference shirts, festival merchandise, volunteer shirts, and staff uniforms with bulk production, deadline guarantee and DDP worldwide shipping.",
   keywords: [
-    "custom race shirts",
-    "race event apparel",
-    "marathon shirts manufacturer",
-    "5K race shirts",
-    "charity run apparel",
-    "custom event t-shirts",
-    "volunteer uniforms",
-    "sponsor apparel",
-    "race shirt supplier",
-    "event apparel manufacturer",
-    "bulk event shirts",
-    "China race shirt factory",
+    "custom event apparel",
+    "event t shirt printing",
+    "festival merchandise",
+    "conference shirts",
+    "custom event shirts",
+    "charity event shirts",
+    "staff event shirts",
+    "volunteer shirts",
+    "event merchandise supplier",
+    "bulk event apparel",
   ],
   alternates: {
     canonical: "https://sublimapparel.com/event-festivals-conferences/",
   },
   openGraph: {
     title:
-      "Custom Race Shirts & Event Apparel Manufacturer | SublimApparel",
+      "Custom Event Apparel Manufacturer | Festival & Conference Shirts",
     description:
-      "Marathon, 5K, charity run, festival apparel. Participant, volunteer, sponsor. 90-day production planning. MOQ 50. DDP to 100+ countries.",
+      "Conference shirts, festival merchandise, volunteer shirts, staff uniforms. Bulk production, deadline guarantee, DDP worldwide shipping.",
     url: "https://sublimapparel.com/event-festivals-conferences/",
     images: ["/esports-jersey-prodigy.webp"],
   },
@@ -237,16 +236,15 @@ export default function ForEventsPage() {
             </div>
 
             <h1 className="text-4xl font-black leading-[1.05] tracking-tight md:text-6xl">
-              Custom event apparel
+              Custom apparel for events,
               <br />
-              <span className="text-[#ff4d00]">delivered before your start gun.</span>
+              <span className="text-[#ff4d00]">festivals & conferences.</span>
             </h1>
 
             <p className="mt-6 text-lg leading-relaxed text-white/80 md:text-xl">
-              Marathon shirts, 5K tees, charity run apparel, volunteer uniforms,
-              sponsor-branded gear. <strong className="text-white">MOQ 50 pcs</strong>,
-              {" "}15-25 day production, DDP shipping to 100+ countries. Plan
-              90 days out, lock the final count 30 days before your event.
+              Helping organizers deliver branded apparel for events of all sizes, from conferences to festivals and
+              community events. <strong className="text-white">Conference shirts, festival merchandise,
+              volunteer & staff uniforms</strong> — bulk production, deadline guarantee, DDP worldwide.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -283,19 +281,19 @@ export default function ForEventsPage() {
         </div>
       </section>
 
-      {/* EVENT TYPES */}
+      {/* EVENT APPAREL CATEGORIES */}
       <section className="border-b border-black/10 bg-white py-20">
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-12 max-w-2xl">
             <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
-              What we make
+              Event apparel categories
             </div>
             <h2 className="text-3xl font-black tracking-tight md:text-4xl">
               Custom apparel for every event format.
             </h2>
             <p className="mt-3 text-base text-black/70">
-              From a local 5K to a 10,000-person marathon, the production math
-              is the same. The only variable is your deadline and your count.
+              From a local 5K to a 10,000-person marathon, a 500-person conference to a 50,000-person festival — the
+              production math is the same. The only variable is your deadline and your count.
             </p>
           </div>
 
@@ -331,6 +329,39 @@ export default function ForEventsPage() {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* EVENT PRODUCTION ADVANTAGES */}
+      <section className="border-b border-black/10 bg-[#faf9f6] py-20">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="mb-12 max-w-2xl">
+            <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
+              Event production advantages
+            </div>
+            <h2 className="text-3xl font-black tracking-tight md:text-4xl">
+              Built for events that have to ship on time.
+            </h2>
+            <p className="mt-3 text-base text-black/70">
+              Bulk production, deadline guarantee, size management and individual packaging — the four things
+              every event organizer actually cares about.
+            </p>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {[
+              { icon: Package, t: "Bulk production", b: "12 production lines running in parallel. 50 to 30,000+ pieces in one continuous run." },
+              { icon: Timer, t: "Deadline guarantee", b: "Written delivery commitment tied to your event date. We plan backwards and lock the slot." },
+              { icon: Ruler, t: "Size management", b: "US-spec size runs from Youth XS to Adult 5XL. Excel collection templates and pre-pack by size." },
+              { icon: Layers, t: "Individual packaging", b: "Poly-bag, fold, sticker, and kit-pack per attendee. Drop straight into welcome bags at the venue." },
+            ].map((a) => (
+              <div key={a.t} className="rounded-sm border-2 border-black/10 bg-white p-6">
+                <a.icon className="h-7 w-7 text-[#ff4d00]" strokeWidth={2.5} />
+                <h3 className="mt-4 text-lg font-black">{a.t}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-black/70">{a.b}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -503,6 +534,40 @@ export default function ForEventsPage() {
                 sizes="(min-width: 1024px) 50vw, 100vw"
               />
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CASE STUDIES */}
+      <section className="bg-white py-20">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="mb-12 max-w-2xl">
+            <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
+              Case studies
+            </div>
+            <h2 className="text-3xl font-black tracking-tight md:text-4xl">
+              Events, festivals & conferences we&apos;ve shipped.
+            </h2>
+          </div>
+
+          <div className="grid gap-px bg-black/10 md:grid-cols-2 lg:grid-cols-3">
+            {[
+              { href: "/teams-sports-apparel/", title: "Sports Teams & Leagues", body: "Roster-locked production, name and number sublimation, sponsor panels, deadline-locked to season opener." },
+              { href: "/promotional-marketing-apparel/", title: "Trade Shows & Promotional Events", body: "Bulk production for booths, giveaways, and marketing campaigns. Tight deadlines, multi-SKU." },
+              { href: "/corporate-organization-apparel/", title: "Corporate Conferences & Retreats", body: "Branded apparel for company events, employee kick-offs, and client-facing programs." },
+            ].map((c) => (
+              <Link
+                key={c.title}
+                href={c.href}
+                className="group block bg-white p-6 transition-all hover:bg-[#0a0a0a] hover:text-white"
+              >
+                <h3 className="text-lg font-black group-hover:text-[#ff4d00]">{c.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-black/70 group-hover:text-white/80">{c.body}</p>
+                <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-[#ff4d00]">
+                  View case study <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-1" />
+                </span>
+              </Link>
+            ))}
           </div>
         </div>
       </section>

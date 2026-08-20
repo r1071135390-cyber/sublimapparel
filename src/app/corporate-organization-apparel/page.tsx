@@ -27,28 +27,29 @@ import { forEventsFaqJsonLd } from "@/lib/json-ld-data";
 
 export const metadata: Metadata = {
   title:
-    "Custom Corporate Apparel | Employee Uniforms, Wellness, Trade Show | MOQ 50",
+    "Custom Corporate Apparel Manufacturer | Employee Uniform Supplier — SublimApparel",
   description:
-    "Custom corporate apparel for companies, events, and trade shows. Employee uniforms, wellness programs, team-building apparel, and client gifts. Brand-color matching, flexible 90-day production, MOQ 50 pcs, DDP worldwide.",
+    "Custom corporate apparel manufacturer for companies, schools, clubs and organizations. Employee uniforms, branded work shirts, company polo shirts and team clothing with flexible quantities, brand-color matching and DDP worldwide shipping.",
   keywords: [
+    "corporate apparel",
+    "custom company shirts",
+    "employee uniforms",
+    "organization apparel",
+    "branded work shirts",
+    "company polo shirts",
+    "corporate uniforms",
+    "team clothing",
     "custom corporate apparel",
     "company uniforms",
-    "employee apparel",
-    "corporate wellness shirts",
-    "trade show apparel",
-    "team building shirts",
-    "company branded merchandise",
-    "corporate gifts",
-    "office uniforms",
-    "branded swag supplier",
+    "branded merchandise supplier",
   ],
   alternates: {
     canonical: "https://sublimapparel.com/corporate-organization-apparel/",
   },
   openGraph: {
-    title: "Custom Corporate Apparel Manufacturer | SublimApparel",
+    title: "Custom Corporate Apparel Manufacturer | Employee Uniform Supplier",
     description:
-      "Employee uniforms, wellness programs, trade show apparel. Brand-color matching, MOQ 50, DDP worldwide.",
+      "Employee uniforms, branded work shirts, company polo shirts, team clothing. Brand-color matching, flexible quantities, DDP worldwide.",
     url: "https://sublimapparel.com/corporate-organization-apparel/",
     images: ["/esports-hoodie-circuit.webp"],
   },
@@ -57,33 +58,23 @@ export const metadata: Metadata = {
 const useCases = [
   {
     icon: Users,
-    title: "Employee Uniforms & Onboarding Kits",
-    desc: "Polo shirts, performance tees, branded outerwear. Standardize sizing across departments. Roll out new hires monthly without re-sampling.",
-  },
-  {
-    icon: Heart,
-    title: "Wellness & Fitness Programs",
-    desc: "Branded apparel for company gyms, step challenges, 5K team entries, charity walk participation.",
+    title: "Employee Apparel",
+    desc: "Polo shirts, performance tees, branded outerwear for everyday wear. Standardize sizing across departments, new hire kits monthly.",
   },
   {
     icon: Building2,
-    title: "Trade Shows & Conferences",
-    desc: "Booth staff uniforms, attendee giveaways, executive gifts. Color-matched to your brand standards.",
+    title: "Organization Uniforms",
+    desc: "Schools, clubs, faith organizations, non-profits. Branded identity apparel that doesn't look like generic swag.",
   },
   {
     icon: Sparkles,
-    title: "Client Gifts & Holiday Apparel",
-    desc: "Premium-feel sweatshirts, hoodies, and caps. Embroidered logos or all-over prints for VIP clients.",
-  },
-  {
-    icon: Star,
-    title: "Team-Building Events",
-    desc: "Off-site retreats, company Olympics, group volunteer days. Custom designs that don't look like swag.",
+    title: "Company Events",
+    desc: "Conferences, trade shows, company kick-offs, client-facing programs. Color-matched to your brand standards.",
   },
   {
     icon: Award,
-    title: "Sales Team Apparel",
-    desc: "Field reps, dealership staff, customer-facing roles. Brand-consistent, durable, looks polished.",
+    title: "Team Building Apparel",
+    desc: "Off-site retreats, company Olympics, group volunteer days, charity events. Custom designs that build team identity.",
   },
 ];
 
@@ -219,18 +210,15 @@ export default function ForCorporatePage() {
             </div>
 
             <h1 className="text-4xl font-black leading-[1.05] tracking-tight md:text-6xl">
-              Corporate apparel that
+              Custom apparel for companies
               <br />
-              <span className="text-[#00c2ff]">looks like your brand,</span>
-              <br />
-              not like swag.
+              <span className="text-[#00c2ff]">and organizations.</span>
             </h1>
 
             <p className="mt-6 text-lg leading-relaxed text-white/80 md:text-xl">
-              Employee uniforms, wellness programs, trade show apparel, client
-              gifts. <strong className="text-white">Pantone-matched colors</strong>,
-              {" "}flexible 90-day production, MOQ 50 pcs. New hire re-orders
-              ship within 30 days.
+              Branded clothing solutions for employee teams, schools, clubs and organizations.
+              <strong className="text-white"> Employee apparel, organization uniforms, company event & team building apparel</strong> —
+              Pantone-matched colors, flexible quantities, DDP worldwide.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -285,14 +273,14 @@ export default function ForCorporatePage() {
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-12 max-w-2xl">
             <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#00c2ff]">
-              What we make
+              Apparel categories
             </div>
             <h2 className="text-3xl font-black tracking-tight md:text-4xl">
-              Custom apparel for every corporate use case.
+              Custom apparel for every corporate & organization need.
             </h2>
             <p className="mt-3 text-base text-black/70">
-              From a 50-person office to a 5,000-person enterprise. Same
-              factory, same quality, same production line.
+              From a 50-person office to a 5,000-person enterprise. Employee apparel, organization uniforms,
+              company events and team building — same factory, same quality, same production line.
             </p>
           </div>
 
@@ -484,6 +472,41 @@ export default function ForCorporatePage() {
               </li>
             ))}
           </ul>
+        </div>
+      </section>
+
+      {/* CASE STUDIES */}
+      <section className="bg-white py-20">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="mb-12 max-w-2xl">
+            <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#00c2ff]">
+              Case studies
+            </div>
+            <h2 className="text-3xl font-black tracking-tight md:text-4xl">
+              Corporate & organization apparel we&apos;ve shipped.
+            </h2>
+          </div>
+
+          <div className="grid gap-px bg-black/10 md:grid-cols-2 lg:grid-cols-4">
+            {[
+              { href: "/promotional-marketing-apparel/", title: "Trade Shows & Display", body: "Booth staff uniforms, attendee giveaways, brand-color-matched at scale." },
+              { href: "/apparel-brands-agencies/", title: "Apparel Brands & Agencies", body: "Private label production for growing brands and creative agencies." },
+              { href: "/e-commerce-fulfillment/", title: "E-commerce & Fulfillment", body: "Drop-ship, warehousing and inventory for online apparel brands." },
+              { href: "/event-festivals-conferences/", title: "Events & Conferences", body: "Branded apparel for company events, conferences and team retreats." },
+            ].map((c) => (
+              <Link
+                key={c.title}
+                href={c.href}
+                className="group block bg-white p-6 transition-all hover:bg-[#0a0a0a] hover:text-white"
+              >
+                <h3 className="text-lg font-black group-hover:text-[#00c2ff]">{c.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-black/70 group-hover:text-white/80">{c.body}</p>
+                <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-[#00c2ff]">
+                  View <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-1" />
+                </span>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 

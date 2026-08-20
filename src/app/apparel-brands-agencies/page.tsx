@@ -29,28 +29,28 @@ import { forEventsFaqJsonLd } from "@/lib/json-ld-data";
 
 export const metadata: Metadata = {
   title:
-    "Private Label & OEM Apparel Manufacturing | Custom Brand, Low MOQ | Since 2018",
+    "Private Label Apparel Manufacturer | Custom Clothing Production Partner — SublimApparel",
   description:
-    "Private label and OEM apparel manufacturing for growing brands. Custom labels, hang tags, poly bags, retail packaging, drop-ship fulfillment. MOQ 50 pcs (sublimation), 30 pcs (re-orders). FOB and DDP available.",
+    "Private label apparel manufacturer and custom clothing production partner for growing brands and creative agencies. Custom labels, hang tags, retail packaging and drop-ship fulfillment. China-based factory, flexible MOQ, FOB and DDP.",
   keywords: [
+    "private label apparel manufacturer",
+    "custom clothing manufacturer",
+    "apparel production partner",
+    "clothing manufacturer China",
+    "custom garment factory",
+    "apparel sourcing",
     "private label apparel",
     "OEM clothing manufacturer",
-    "custom brand apparel",
-    "apparel dropship supplier",
-    "white label t-shirts",
-    "retail ready clothing",
-    "private label factory",
-    "DTC apparel manufacturer",
-    "small batch apparel",
-    "brand apparel production",
+    "apparel brand supplier",
+    "white label apparel",
   ],
   alternates: {
     canonical: "https://sublimapparel.com/apparel-brands-agencies/",
   },
   openGraph: {
-    title: "Private Label & OEM Apparel Manufacturing | SublimApparel",
+    title: "Private Label Apparel Manufacturer | Custom Clothing Production Partner",
     description:
-      "Custom labels, retail packaging, drop-ship fulfillment for growing brands. MOQ 50 pcs, full private label service.",
+      "Custom labels, hang tags, retail packaging and drop-ship fulfillment for growing brands and creative agencies. China-based factory, flexible MOQ, FOB and DDP.",
     url: "https://sublimapparel.com/apparel-brands-agencies/",
     images: ["/esports-travel-hoodie.webp"],
   },
@@ -221,16 +221,15 @@ export default function ForBrandsPage() {
             </div>
 
             <h1 className="text-4xl font-black leading-[1.05] tracking-tight md:text-6xl">
-              Private label apparel
+              Your production partner
               <br />
-              <span className="text-[#ff4d00]">that looks like you made it.</span>
+              <span className="text-[#ff4d00]">for custom apparel brands.</span>
             </h1>
 
             <p className="mt-6 text-lg leading-relaxed text-white/80 md:text-xl">
-              Custom neck labels, hang tags, retail packaging, drop-ship
-              fulfillment. <strong className="text-white">MOQ 50 pcs</strong>,
-              {" "}we don&apos;t compete with your brand, full private label
-              service. Since 2018.
+              From design development to bulk production, we support growing apparel brands and creative agencies.
+              <strong className="text-white"> Custom labels, retail packaging, drop-ship fulfillment</strong> — we
+              don&apos;t compete with your brand. Full private label service.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -285,7 +284,7 @@ export default function ForBrandsPage() {
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-12 max-w-2xl">
             <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
-              What we make
+              Apparel categories
             </div>
             <h2 className="text-3xl font-black tracking-tight md:text-4xl">
               Custom apparel for every kind of brand.
@@ -328,6 +327,39 @@ export default function ForBrandsPage() {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* WHY BRANDS CHOOSE US */}
+      <section className="border-b border-black/10 bg-[#faf9f6] py-20">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="mb-12 max-w-2xl">
+            <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
+              Why brands choose us
+            </div>
+            <h2 className="text-3xl font-black tracking-tight md:text-4xl">
+              Built for growing apparel brands and creative agencies.
+            </h2>
+            <p className="mt-3 text-base text-black/70">
+              We don&apos;t compete with your brand. We make it look like you did it all yourself.
+            </p>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-5">
+            {[
+              { t: "Small brand runs", b: "MOQ 50 pieces per style. Re-orders from 30. Perfect for limited drops and boutique brands." },
+              { t: "Accurate sizing", b: "US-spec size runs from XS to 5XL. Tech packs, graded specs, and pre-production samples for first orders." },
+              { t: "Full customization", b: "Custom neck labels, woven labels, hang tags, poly bags, retail packaging. Built to look retail-ready." },
+              { t: "Fast production", b: "25-day standard production. Sample in 5 days, bulk in 25, expedited lanes for limited drops." },
+              { t: "FOB & DDP", b: "FOB Yiwu for brands with their own freight, or DDP to your warehouse / 3PL in 100+ countries." },
+            ].map((w) => (
+              <div key={w.t} className="rounded-sm border-2 border-black/10 bg-white p-6">
+                <CheckCircle2 className="h-6 w-6 text-[#ff4d00]" strokeWidth={2.5} />
+                <h3 className="mt-4 text-base font-black">{w.t}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-black/70">{w.b}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -486,6 +518,41 @@ export default function ForBrandsPage() {
               </li>
             ))}
           </ul>
+        </div>
+      </section>
+
+      {/* CASE STUDIES */}
+      <section className="bg-white py-20">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="mb-12 max-w-2xl">
+            <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
+              Case studies
+            </div>
+            <h2 className="text-3xl font-black tracking-tight md:text-4xl">
+              Apparel brands &amp; agencies we&apos;ve supported.
+            </h2>
+          </div>
+
+          <div className="grid gap-px bg-black/10 md:grid-cols-2 lg:grid-cols-4">
+            {[
+              { href: "/e-commerce-fulfillment/", title: "E-commerce & Fulfillment", body: "Drop-ship, warehousing and inventory for online apparel brands." },
+              { href: "/promotional-marketing-apparel/", title: "Promotional & Marketing", body: "Promo runs, brand activation, trade show giveaways at scale." },
+              { href: "/corporate-organization-apparel/", title: "Corporate Apparel", body: "Private label for corporate uniform programs and branded merchandise." },
+              { href: "/teams-sports-apparel/", title: "Team & Sportswear Brands", body: "Custom production for niche athletic, surf, yoga and clubwear brands." },
+            ].map((c) => (
+              <Link
+                key={c.title}
+                href={c.href}
+                className="group block bg-white p-6 transition-all hover:bg-[#0a0a0a] hover:text-white"
+              >
+                <h3 className="text-lg font-black group-hover:text-[#ff4d00]">{c.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-black/70 group-hover:text-white/80">{c.body}</p>
+                <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-[#ff4d00]">
+                  View <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-1" />
+                </span>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 

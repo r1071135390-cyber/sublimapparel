@@ -7,6 +7,7 @@ import {
   Calendar,
   CheckCircle2,
   Clock,
+  Globe,
   Heart,
   Layers,
   MapPin,
@@ -19,6 +20,7 @@ import {
   Star,
   Timer,
   Trophy,
+  Truck,
   Users,
 } from "lucide-react";
 import { Contact } from "@/components/contact";
@@ -28,85 +30,95 @@ import { forEventsFaqJsonLd } from "@/lib/json-ld-data";
 
 export const metadata: Metadata = {
   title:
-    "Custom Club & Community Apparel | Sports Teams, Schools, Groups | MOQ 50",
+    "Custom Apparel Fulfillment Partner | DDP Shipping Manufacturer — SublimApparel",
   description:
-    "Custom apparel for clubs, schools, community groups, faith organizations, and amateur teams. Branded identity that doesn't look like generic sports swag. MOQ 50 pcs, fast 25-day production, US warehouse.",
+    "Custom apparel fulfillment partner for e-commerce brands, dropshippers and resellers. Bulk production, warehouse support, DDP shipping and inventory management. Flexible MOQ, custom packaging, blind shipping worldwide.",
   keywords: [
-    "custom club apparel",
-    "sports team uniforms",
-    "school club shirts",
-    "community group apparel",
-    "amateur team uniforms",
-    "cycling club jerseys",
-    "running club shirts",
-    "church group apparel",
-    "non-profit merchandise",
-    "organization t-shirts",
+    "apparel fulfillment",
+    "custom apparel supplier",
+    "dropship clothing manufacturer",
+    "DDP shipping apparel",
+    "bulk apparel fulfillment",
+    "ecommerce clothing supplier",
+    "apparel dropship supplier",
+    "custom clothing dropshipping",
+    "warehouse fulfillment apparel",
+    "inventory management apparel",
   ],
   alternates: {
     canonical: "https://sublimapparel.com/e-commerce-fulfillment/",
   },
   openGraph: {
-    title: "Custom Club & Community Apparel | SublimApparel",
+    title: "Custom Apparel Fulfillment Partner | DDP Shipping Manufacturer",
     description:
-      "Branded identity for clubs, schools, community groups, faith organizations. Sublimated, durable, designed for your group.",
+      "Bulk production, warehouse support, DDP shipping and inventory management for e-commerce brands and resellers. Flexible MOQ, custom packaging, blind shipping worldwide.",
     url: "https://sublimapparel.com/e-commerce-fulfillment/",
     images: ["/bowling-jersey-striker.webp"],
   },
 };
 
-const communitySegments = [
+const fulfillmentSegments = [
+  {
+    icon: Package,
+    title: "E-commerce Apparel Brands",
+    desc: "DTC apparel brands needing bulk production + on-demand fulfillment. We manufacture to your spec and ship to your customers.",
+  },
+  {
+    icon: Truck,
+    title: "Dropship & Print-on-Demand",
+    desc: "POD platforms and dropshippers needing reliable bulk capacity. White-label fulfillment, custom packaging, blind shipping.",
+  },
+  {
+    icon: Layers,
+    title: "B2B Resellers & Distributors",
+    desc: "Regional apparel distributors building private-label lines. We manufacture to your specs, you own the brand.",
+  },
+  {
+    icon: Globe,
+    title: "International Amazon / Shopify Sellers",
+    desc: "Cross-border e-commerce sellers needing DDP shipping, FBA prep, and inventory management without customs headaches.",
+  },
+  {
+    icon: Bike,
+    title: "Subscription Box & Quarterly Drops",
+    desc: "Quarterly subscription apparel. Custom-branded merchandise for ongoing customer programs and limited drops.",
+  },
   {
     icon: Trophy,
-    title: "Amateur Sports Teams & Clubs",
-    desc: "Cycling clubs, running clubs, climbing gyms, rowing crews, amateur rugby, ultimate frisbee. Performance fabrics, team identity that lasts.",
-  },
-  {
-    icon: Users,
-    title: "School & University Organizations",
-    desc: "Clubs, Greek life, student government, sports clubs, debate teams. Branded apparel that members actually want to wear on campus.",
-  },
-  {
-    icon: Heart,
-    title: "Faith-Based & Church Groups",
-    desc: "Service trips, youth groups, retreats, mission teams. Group identity, family-friendly designs, modest cuts available.",
-  },
-  {
-    icon: Music,
-    title: "Music, Arts & Cultural Groups",
-    desc: "Bands, choirs, theater groups, cultural organizations. Custom artwork, tour merch, performance apparel.",
-  },
-  {
-    icon: Sparkles,
-    title: "Hobby & Local Groups",
-    desc: "Book clubs, gaming groups, hobby communities, local meetups. Branded identity that turns your members into ambassadors.",
-  },
-  {
-    icon: Star,
-    title: "Local Non-Profits & Charities",
-    desc: "Volunteer apparel, fundraiser merchandise, donor gifts. Cost-effective bulk pricing for tight budgets.",
+    title: "Wholesale & Bulk Buyers",
+    desc: "Bulk apparel buyers, importers, and wholesalers. Tiered pricing, container-load capacity, FOB Yiwu available.",
   },
 ];
 
 const whatWeMake = [
   {
-    label: "Team Jerseys",
-    examples: "Sublimated full-kit, sponsor logos, performance fabric",
-    icon: Trophy,
-  },
-  {
-    label: "Club Polos & Tees",
-    examples: "Branded identity, performance cotton blend",
+    label: "DTC Apparel Lines",
+    examples: "Sublimated tees, hoodies, allover-print streetwear for DTC brands",
     icon: Shirt,
   },
   {
-    label: "Hoodies & Crewnecks",
-    examples: "Group identity, members-only merchandise",
+    label: "POD & Dropship Catalog",
+    examples: "On-demand blanks, white-label catalog, custom packaging",
     icon: Package,
   },
   {
-    label: "Event & Trip Shirts",
-    examples: "Service trips, tours, retreats, conferences",
+    label: "B2B Bulk Production",
+    examples: "Container-load capacity, tiered pricing, FOB Yiwu",
+    icon: Layers,
+  },
+  {
+    label: "Amazon FBA Inventory",
+    examples: "FNSKU labeling, polybagging, FBA prep, case packs",
+    icon: Truck,
+  },
+  {
+    label: "Private Label Apparel",
+    examples: "Your brand, your labels, your tags — we just make it",
+    icon: Trophy,
+  },
+  {
+    label: "Subscription Box Apparel",
+    examples: "Quarterly drops, mystery boxes, limited runs",
     icon: MapPin,
   },
 ];
@@ -114,50 +126,50 @@ const whatWeMake = [
 const painPoints = [
   {
     icon: Sparkles,
-    title: "&ldquo;It looks like generic team swag.&rdquo;",
-    pain: "Most club apparel looks the same — big logo, two colors, all-over print of nothing. Your members don't want to wear it outside of game day.",
-    fix: "Sublimation cut & sew gives you edge-to-edge design freedom. All-over prints, gradients, custom artwork, your group's personality — not a stock template.",
-    link: { label: "See our work", href: "/products" },
+    title: "&ldquo;MOQ 500+ is a deal-breaker for testing.&rdquo;",
+    pain: "You're launching a new SKU or testing a colorway. Most factories lock you into 500-1,000 piece minimums that tie up cash flow and warehouse space.",
+    fix: "We start from 50 pieces per design per size for blanks. Sublimated apparel starts from 30 pieces per design. Test your market before you commit to bulk.",
+    link: { label: "See our MOQ terms", href: "/contact" },
   },
   {
     icon: Ruler,
-    title: "&ldquo;Members are 18 to 65, all sizes.&rdquo;",
-    pain: "Your cycling club has 22-year-old riders and 60-year-old enthusiasts. Sizing range is chaos, and the small-size charge breaks budgets.",
-    fix: "Full size run from youth XS to adult 5XL. No size surcharge. Same price per piece whether you're printing a youth small or an adult 3XL.",
-    link: { label: "Get US Size Guide", href: "/us-size-guide" },
+    title: "&ldquo;Consistency across reorders is chaos.&rdquo;",
+    pain: "Your first run looked great. Reorder 3 months later: colors are off, sizing drifts, fabric feels different. Customer returns spike.",
+    fix: "Color management system + archived dye lots. Every reorder pulls from the same color reference. Same Pantone, same fabric, same fit.",
+    link: { label: "Our quality process", href: "/quality-control" },
   },
   {
     icon: Heart,
-    title: "&ldquo;We need this for the season opener.&rdquo;",
-    pain: "Seasons have hard start dates. Late registrations, last-minute design approvals, and a 12-week supplier lead time don't work.",
-    fix: "25-day standard production. Rush available. US warehouse for the last-minute additions that always happen.",
-    link: { label: "Check your timeline", href: "/event-timeline" },
+    title: "&ldquo;Customs, duties, and import paperwork eat margin.&rdquo;",
+    pain: "You sell to US/EU customers. Importing means 3-4 week customs delays, surprise duty bills, and customer service tickets asking where the package is.",
+    fix: "DDP shipping to US and EU addresses. Duties and customs are paid upfront. Your customers get the package in 5-7 days, no surprise fees.",
+    link: { label: "DDP delivery details", href: "/contact" },
   },
   {
     icon: Trophy,
-    title: "&ldquo;Sponsors want their logos visible.&rdquo;",
-    pain: "Local bike shop, pub, gym, business sponsor the team. They want their brand visible. Putting 6 logos on a jersey looks like a NASCAR coat.",
-    fix: "Sponsor logo placement is part of the design. We work with you to place sponsor logos in zones that look intentional, not crowded.",
-    link: { label: "Custom design process", href: "/how-to-source" },
+    title: "&ldquo;Stockouts kill momentum.&rdquo;",
+    pain: "Your product goes viral on TikTok. You scale ads. But the factory is 12 weeks out, and you've missed the entire trend window.",
+    fix: "US warehouse buffer stock for reorders. China production 25 days + sea freight. Reorder turnaround 7-10 days for in-stock items.",
+    link: { label: "90-day production program", href: "/90-day-program" },
   },
 ];
 
 const whyUs = [
   {
-    title: "Branded identity, not stock templates",
-    desc: "Every design starts with your group's personality. Custom artwork, your colors, your vibe. Not a template with your logo dropped in.",
+    title: "Flexible MOQ from 30-50 pieces per design",
+    desc: "Test new SKUs, run limited drops, manage cash flow. We don't lock you into 500-1,000 piece MOQs. Scale up once the product sells.",
   },
   {
-    title: "Sponsors are part of the design",
-    desc: "We work sponsor logos into the layout as design elements, not afterthoughts. Your team looks pro, your sponsors get visibility.",
+    title: "White-label packaging & blind shipping",
+    desc: "Your brand, your labels, your tags. We ship to your customers without our name on the box. Dropship-ready, Amazon FBA-ready.",
   },
   {
-    title: "Members want to wear it off the field",
-    desc: "Sublimated apparel is comfortable, durable, and looks good in coffee shops, not just at practice. Members become walking ambassadors.",
+    title: "DDP shipping to US, EU, and beyond",
+    desc: "Duties and customs paid upfront. Your customers get the package in 5-7 days with no surprise import fees. Built for cross-border e-commerce.",
   },
   {
-    title: "Multi-year archiving",
-    desc: "We archive your designs, Pantones, and even the exact fabric blend. Next season's reorder is a 1-week process, not a new project.",
+    title: "Color & quality consistency across reorders",
+    desc: "Pantone matching, archived dye lots, fabric specs saved. Your 1st run and your 10th run look identical. No customer complaints about drift.",
   },
 ];
 
@@ -203,7 +215,7 @@ export default function ForCommunitiesPage() {
         <div className="absolute inset-0">
           <Image
             src="/bowling-jersey-striker.webp"
-            alt="Custom club and community apparel — team jerseys and branded group identity"
+            alt="E-commerce apparel manufacturing and DDP fulfillment from Yiwu to US and EU customers"
             fill
             className="object-cover opacity-30"
             priority
@@ -215,21 +227,20 @@ export default function ForCommunitiesPage() {
         <div className="relative mx-auto max-w-7xl px-6 py-20 md:py-28">
           <div className="max-w-3xl">
             <div className="mb-5 inline-flex items-center gap-2 rounded-sm border border-[#00c2ff]/40 bg-[#00c2ff]/10 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-[#00c2ff]">
-              <Users className="h-3.5 w-3.5" />
-              For clubs, schools, and community groups
+              <Package className="h-3.5 w-3.5" />
+              For e-commerce brands, dropshippers, and resellers
             </div>
 
             <h1 className="text-4xl font-black leading-[1.05] tracking-tight md:text-6xl">
-              Custom apparel that
+              Custom apparel production
               <br />
-              <span className="text-[#00c2ff]">your members actually wear.</span>
+              <span className="text-[#00c2ff]">&amp; fulfillment worldwide.</span>
             </h1>
 
             <p className="mt-6 text-lg leading-relaxed text-white/80 md:text-xl">
-              Branded identity for clubs, schools, faith groups, and amateur
-              teams. <strong className="text-white">Custom designs, not stock
-              templates</strong>, 25-day production, full size run from youth XS
-              to adult 5XL. MOQ 50 pcs.
+              Bulk production, warehouse support, DDP shipping, and inventory management for online apparel brands.
+              <strong className="text-white"> Custom packaging, blind shipping, flexible MOQ</strong> — built for
+              e-commerce, dropship and B2B reseller operations.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -279,24 +290,23 @@ export default function ForCommunitiesPage() {
         </div>
       </section>
 
-      {/* COMMUNITY SEGMENTS */}
+      {/* E-COMMERCE SEGMENTS */}
       <section className="border-b border-black/10 bg-white py-20">
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-12 max-w-2xl">
             <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#00c2ff]">
-              What we make
+              Segments we serve
             </div>
             <h2 className="text-3xl font-black tracking-tight md:text-4xl">
-              Custom apparel for every kind of group.
+              E-commerce & fulfillment partners.
             </h2>
             <p className="mt-3 text-base text-black/70">
-              From a 12-person climbing club to a 500-person Greek organization.
-              Same factory, same craft.
+              From DTC apparel brands to dropshippers to Amazon FBA sellers — same factory, same craft.
             </p>
           </div>
 
           <div className="grid gap-px bg-black/10 md:grid-cols-2 lg:grid-cols-3">
-            {communitySegments.map((s) => (
+            {fulfillmentSegments.map((s) => (
               <div
                 key={s.title}
                 className="group bg-white p-6 transition-all hover:bg-[#0a0a0a] hover:text-white"
@@ -336,13 +346,13 @@ export default function ForCommunitiesPage() {
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-12 max-w-2xl">
             <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#00c2ff]">
-              The 4 problems every club organizer hits
+              The 4 problems every e-commerce brand hits
             </div>
             <h2 className="text-3xl font-black tracking-tight md:text-4xl">
               And exactly how we solve them.
             </h2>
             <p className="mt-3 text-base text-black/70">
-              Other vendors give you a template. We give you identity.
+              MOQ flexibility, color consistency, DDP shipping, and buffer stock. Built for e-commerce scale.
             </p>
           </div>
 
@@ -458,10 +468,10 @@ export default function ForCommunitiesPage() {
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-12 max-w-2xl">
             <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#00c2ff]">
-              Why clubs choose us
+              Why e-commerce brands choose us
             </div>
             <h2 className="text-3xl font-black tracking-tight md:text-4xl">
-              Built for community identity.
+              Built for e-commerce scale and speed.
             </h2>
           </div>
 
@@ -490,7 +500,7 @@ export default function ForCommunitiesPage() {
         <div className="mx-auto max-w-4xl px-6">
           <div className="mb-12 text-center">
             <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#00c2ff]">
-              Common questions from clubs and groups
+              Common questions from e-commerce & DTC brands
             </div>
             <h2 className="text-3xl font-black tracking-tight md:text-4xl">
               Quick answers.
