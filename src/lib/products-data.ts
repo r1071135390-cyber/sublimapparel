@@ -337,7 +337,7 @@ export const products: Product[] = [
     number: "0008",
     slug: "all-over-print-womens-tank-vest-dress",
     name: "Custom All-Over Print Womens Tank Vest Dress",
-    category: "Sportswear",
+    category: "Tank Top & Camis",
     sports: [
               "Netball",
               "Tennis",
@@ -480,7 +480,7 @@ export const products: Product[] = [
     number: "0014",
     slug: "all-over-print-womens-tank-bodysuit",
     name: "Custom All-Over Print Womens Tank Bodysuit",
-    category: "Sportswear",
+    category: "Tank Top & Camis",
     sports: [
               "Gym",
               "CrossFit",
@@ -1492,7 +1492,7 @@ export const products: Product[] = [
     number: "0061",
     slug: "all-over-print-gym-tank-top",
     name: "Custom All-Over Print Gym Tank Top",
-    category: "Sportswear",
+    category: "Tank Top & Camis",
     sports: [
               "Gym",
               "CrossFit",
@@ -2118,7 +2118,7 @@ export const products: Product[] = [
     number: "0093",
     slug: "all-over-print-studio-gym-tank-top",
     name: "Custom All-Over Print Studio & Gym Tank Top",
-    category: "Sportswear",
+    category: "Tank Top & Camis",
     sports: [
               "Studio",
               "Gym",
