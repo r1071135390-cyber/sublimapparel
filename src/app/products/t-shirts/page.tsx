@@ -154,14 +154,14 @@ export default function TShirtsPage() {
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
-                href="/get-a-quote"
+                href="/get-a-quote/"
                 className="group inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-black"
               >
                 Get a Tee Quote
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
               </Link>
               <Link
-                href="/fabric/cotton"
+                href="/fabric/cotton/"
                 className="inline-flex items-center gap-2 border-2 border-black bg-white px-6 py-3 text-sm font-black uppercase tracking-widest text-black transition-all hover:bg-black hover:text-white"
               >
                 See Cotton Process
@@ -255,7 +255,7 @@ export default function TShirtsPage() {
             ))}
           </div>
           <p className="mt-4 text-sm text-neutral-600">
-            Need a fabric we don't list? <Link href="/get-a-quote" className="font-bold text-black underline">Ask us →</Link> We source from 30+ mills in Guangdong, Zhejiang, and Jiangsu.
+            Need a fabric we don't list? <Link href="/get-a-quote/" className="font-bold text-black underline">Ask us →</Link> We source from 30+ mills in Guangdong, Zhejiang, and Jiangsu.
           </p>
         </div>
       </section>
@@ -337,7 +337,7 @@ export default function TShirtsPage() {
             ))}
           </div>
           <p className="mt-4 text-sm text-neutral-600">
-            All prices FOB China. DDP shipping to your country quoted separately. Setup, design redraw, and woven labels included. <Link href="/get-a-quote" className="font-bold text-black underline">Get your exact quote →</Link>
+            All prices FOB China. DDP shipping to your country quoted separately. Setup, design redraw, and woven labels included. <Link href="/get-a-quote/" className="font-bold text-black underline">Get your exact quote →</Link>
           </p>
         </div>
       </section>
@@ -380,14 +380,14 @@ export default function TShirtsPage() {
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
-              href="/get-a-quote"
+              href="/get-a-quote/"
               className="group inline-flex items-center gap-2 bg-black px-6 py-3 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-white hover:text-[#cc3d00]"
             >
               Get a Tee Quote
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
             </Link>
             <Link
-              href="/products"
+              href="/products/"
               className="inline-flex items-center gap-2 border-2 border-black bg-transparent px-6 py-3 text-sm font-black uppercase tracking-widest text-black transition-all hover:bg-black hover:text-white"
             >
               See All Apparel

@@ -260,3 +260,55 @@ export function forEventsFaqJsonLd(
     })),
   };
 }
+
+// === Generic Service + FAQ JSON-LD helpers (used by solution/industry pages) ===
+
+export interface SolutionOrIndustryInput {
+  slug: string;
+  metaTitle: string;
+  metaDescription: string;
+  serviceType?: string;
+  faqs?: Array<{ q: string; a: string }>;
+}
+
+export function genericServiceJsonLd(input: SolutionOrIndustryInput) {
+  const cleanSlug = input.slug.replace(/\/+$/, "");
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${SITE_URL}${cleanSlug}/#service`,
+    name: input.metaTitle,
+    serviceType: input.serviceType ?? "Custom sublimation apparel manufacturing",
+    provider: { "@id": `${SITE_URL}/#organization` },
+    areaServed: [
+      { "@type": "Country", name: "United States" },
+      { "@type": "Country", name: "Canada" },
+      { "@type": "Country", name: "United Kingdom" },
+      { "@type": "Country", name: "Australia" },
+      { "@type": "Country", name: "Germany" },
+      { "@type": "Country", name: "France" },
+    ],
+    description: input.metaDescription,
+    offers: {
+      "@type": "Offer",
+      priceCurrency: "USD",
+      priceRange: "$$",
+      availability: "https://schema.org/InStock",
+    },
+    url: `${SITE_URL}${cleanSlug}/`,
+  };
+}
+
+export function genericFaqJsonLd(input: SolutionOrIndustryInput) {
+  const cleanSlug = input.slug.replace(/\/+$/, "");
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": `${SITE_URL}${cleanSlug}/#faq`,
+    mainEntity: (input.faqs ?? []).map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
+}

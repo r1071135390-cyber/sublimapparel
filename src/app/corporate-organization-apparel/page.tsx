@@ -23,14 +23,13 @@ import {
 import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
-import { forEventsFaqJsonLd } from "@/lib/json-ld-data";
+import { forEventsFaqJsonLd, genericServiceJsonLd } from "@/lib/json-ld-data";
 import { RelatedProducts } from "@/components/related-products";
 
 export const metadata: Metadata = {
   title:
     "Custom Corporate Apparel Manufacturer | Employee Uniform Supplier — SublimApparel",
-  description:
-    "Custom corporate apparel manufacturer for companies, schools, clubs and organizations. Employee uniforms, branded work shirts, company polo shirts and team clothing with flexible quantities, brand-color matching and DDP worldwide shipping.",
+  description: "Custom corporate apparel manufacturer for companies, schools, clubs and organizations. Employee uniforms, branded work shirts, company polo shirts and team...",
   keywords: [
     "corporate apparel",
     "custom company shirts",
@@ -187,6 +186,11 @@ export default function ForCorporatePage() {
   return (
     <>
       <JsonLd data={breadcrumb} />
+      <JsonLd data={genericServiceJsonLd({
+        slug: "/corporate-organization-apparel/",
+        metaTitle: "Custom Apparel for Corporate", metaDescription: "Made-to-order custom apparel manufacturing from Yiwu, China. DDP shipping to USA, EU, UK, AU, CA. MOQ 50 pcs, full sublimation, all-over print, embroidery and cut-and-sew.",
+        faqs: useCases.map(x => ({ q: x.title, a: x.desc })),
+      })} />
       <JsonLd data={forEventsFaqJsonLd(faqs)} />
 
       {/* HERO */}
@@ -231,14 +235,14 @@ export default function ForCorporatePage() {
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
-                href="/contact"
+                href="/contact/"
                 className="inline-flex items-center justify-center gap-2 rounded-sm bg-[#00c2ff] px-7 py-4 text-sm font-black uppercase tracking-wider text-black transition-all hover:-translate-y-0.5 hover:bg-[#33d1ff] hover:shadow-[0_8px_24px_rgba(0,194,255,0.4)]"
               >
                 Get a quote for your team
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
-                href="/us-size-guide"
+                href="/us-size-guide/"
                 className="inline-flex items-center justify-center gap-2 rounded-sm border-2 border-white/30 bg-white/5 px-7 py-4 text-sm font-bold uppercase tracking-wider text-white backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-[#00c2ff] hover:bg-[#00c2ff]/10"
               >
                 <Ruler className="h-4 w-4" />
@@ -430,7 +434,7 @@ export default function ForCorporatePage() {
               </ol>
 
               <Link
-                href="/90-day-program"
+                href="/90-day-program/"
                 className="mt-8 inline-flex items-center gap-2 rounded-sm bg-[#00c2ff] px-6 py-3 text-sm font-black uppercase tracking-wider text-black transition-all hover:-translate-y-0.5 hover:bg-[#33d1ff]"
               >
                 Full 90-Day Program details

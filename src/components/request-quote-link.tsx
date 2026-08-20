@@ -33,7 +33,7 @@ export function RequestQuoteLink({ label, prefill, className, children }: Props)
   };
 
   return (
-    <a href="/get-a-quote" onClick={handleClick} className={className}>
+    <a href="/get-a-quote/" onClick={handleClick} className={className}>
       {children}
     </a>
   );

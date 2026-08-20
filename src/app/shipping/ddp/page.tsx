@@ -99,7 +99,7 @@ export default function DdpPage() {
             <RequestQuoteLink label="ddp / page / Get a quote" className="group inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-black hover:text-white">Get DDP Quote
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} /></RequestQuoteLink>
             <Link
-              href="/shipping/us-warehouse"
+              href="/shipping/us-warehouse/"
               className="group inline-flex items-center gap-2 border-2 border-white bg-transparent px-6 py-3 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-white hover:text-black"
             >
               US Warehouse

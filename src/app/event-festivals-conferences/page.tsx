@@ -25,14 +25,13 @@ import {
 import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
-import { forEventsServiceJsonLd, forEventsFaqJsonLd } from "@/lib/json-ld-data";
+import { forEventsServiceJsonLd, forEventsFaqJsonLd, genericServiceJsonLd } from "@/lib/json-ld-data";
 import { RelatedProducts } from "@/components/related-products";
 
 export const metadata: Metadata = {
   title:
     "Custom Event Apparel Manufacturer | Festival & Conference Shirts — SublimApparel",
-  description:
-    "Custom event apparel manufacturer for conferences, festivals, charity events, and community gatherings. Conference shirts, festival merchandise, volunteer shirts, and staff uniforms with bulk production, deadline guarantee and DDP worldwide shipping.",
+  description: "Custom event apparel manufacturer for conferences, festivals, charity events, and community gatherings. Conference shirts, festival merchandise, volunteer...",
   keywords: [
     "custom event apparel",
     "event t shirt printing",
@@ -200,7 +199,13 @@ export default function ForEventsPage() {
   return (
     <>
       <JsonLd data={breadcrumb} />
-      <JsonLd data={forEventsServiceJsonLd()} />
+      <JsonLd
+        data={genericServiceJsonLd({
+          slug: "/event-festivals-conferences/",
+          metaTitle: "Yiwu Custom Events, Festivals & Conference Apparel Manufacturing",
+          metaDescription: "Custom event apparel manufacturer for music festivals, conferences, trade shows and corporate events. Full sublimation, all-over print, embroidery and DDP shipping from Yiwu, China. MOQ 50 pcs.",
+        })}
+      />
       <JsonLd data={forEventsFaqJsonLd(faqs)} />
 
       {/* HERO */}
@@ -242,14 +247,14 @@ export default function ForEventsPage() {
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
-                href="/contact"
+                href="/contact/"
                 className="inline-flex items-center justify-center gap-2 rounded-sm bg-[#ff4d00] px-7 py-4 text-sm font-black uppercase tracking-wider text-black transition-all hover:-translate-y-0.5 hover:bg-[#ff6633] hover:shadow-[0_8px_24px_rgba(255,77,0,0.4)]"
               >
                 Get a quote for your event
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
-                href="/event-timeline"
+                href="/event-timeline/"
                 className="inline-flex items-center justify-center gap-2 rounded-sm border-2 border-white/30 bg-white/5 px-7 py-4 text-sm font-bold uppercase tracking-wider text-white backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-[#00c2ff] hover:bg-[#00c2ff]/10"
               >
                 <Calendar className="h-4 w-4" />
@@ -457,7 +462,7 @@ export default function ForEventsPage() {
               under 60 days out, we can still help. Air-freight production
               compresses to 30-35 days.{" "}
               <Link
-                href="/event-timeline"
+                href="/event-timeline/"
                 className="font-bold text-[#ff4d00] underline hover:no-underline"
               >
                 Open the Timeline Calculator

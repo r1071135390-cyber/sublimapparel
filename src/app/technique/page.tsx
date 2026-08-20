@@ -6,7 +6,7 @@ import { JsonLd } from"@/components/json-ld";
 import { techniqueData } from"@/lib/json-ld-data";
 
 export const metadata: Metadata = {
-  title:"Which Print Technique Fits Your Design? — 20 Methods Compared (Sublimation, DTG, DTF, Screen, Embroidery)",
+  title: "Which Print Technique Fits Your Design? — 20 Methods Compared (Sublimation...",
   description:
 "Compare 20 apparel decoration techniques — sublimation, screen printing, DTG, DTF, embroidery, 3D puff & rhinestone. We run all 20 in-house and accept custom techniques too. DDP worldwide.",
   keywords: [
@@ -626,7 +626,7 @@ export default function TechniquePage() {
             <strong> Reviewed by</strong> Lily Chen, Production Manager.
           </p>
           <p className="mt-2">
-            For technique recommendations on your specific project, <Link href="/get-a-quote" className="underline hover:text-[#cc3d00]">submit your design brief</Link> — we reply within 12 working hours.
+            For technique recommendations on your specific project, <Link href="/get-a-quote/" className="underline hover:text-[#cc3d00]">submit your design brief</Link> — we reply within 12 working hours.
           </p>
         </div>
       </section>

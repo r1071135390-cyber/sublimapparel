@@ -50,7 +50,7 @@ const data: CustomerProfileData = {
   solutionsSection: {
     eyebrow: "Solutions",
     title: "Corporate Apparel Solutions",
-    subtitle: "Apparel that works for every employee — from the office to the warehouse to the storefront.",
+    subtitle: "Apparel that works for every employee — from the office to the warehouse to...",
     sections: [
       {
         title: "Office Apparel",

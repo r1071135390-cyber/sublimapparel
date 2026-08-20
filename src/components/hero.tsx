@@ -190,7 +190,7 @@ export function Hero() {
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1 md:h-5 md:w-5" />
           </RequestQuoteLink>
           <Link
-            href="/products"
+            href="/products/"
             className="inline-flex items-center justify-center gap-2 rounded-sm border-2 border-white bg-transparent px-6 py-3.5 text-sm font-black uppercase tracking-wider text-white transition-all hover:bg-white hover:text-[#0a0a0a] md:px-8 md:py-4 md:text-base"
           >
             See all apparel

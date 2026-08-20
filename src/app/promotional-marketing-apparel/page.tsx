@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { JsonLd } from "@/components/json-ld";
 import Link from "next/link";
 import {
   Shirt,
@@ -16,7 +17,7 @@ import {
   PackageCheck,
   Users,
 } from "lucide-react";
-import { forEventsFaqJsonLd } from "@/lib/json-ld-data";
+import { forEventsFaqJsonLd, genericServiceJsonLd } from "@/lib/json-ld-data";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 import { Contact } from "@/components/contact";
 import { RelatedProducts } from "@/components/related-products";
@@ -27,8 +28,7 @@ const siteUrl = "https://sublimapparel.com";
 
 export const metadata: Metadata = {
   title: "Custom Promotional Apparel Manufacturer | Marketing Merchandise Supplier — SublimApparel",
-  description:
-    "Custom promotional apparel manufacturer for trade shows, marketing campaigns, giveaways and brand activations. Promotional t-shirts, branded merchandise and marketing apparel with flexible MOQ, fast production and DDP worldwide shipping.",
+  description: "Custom promotional apparel manufacturer for trade shows, marketing campaigns, giveaways and brand activations. Promotional t-shirts, branded merchandise and...",
   keywords: [
     "promotional apparel",
     "promotional t shirts",
@@ -118,8 +118,13 @@ export default function CustomEventTShirtsPage() {
 
   return (
     <main className="min-h-screen bg-white text-neutral-900">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: breadcrumb }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: faqJsonLd }} />
+            <JsonLd data={breadcrumb} />
+      <JsonLd data={genericServiceJsonLd({
+        slug: "/promotional-marketing-apparel/",
+        metaTitle: "Promotional & Marketing Apparel", metaDescription: "Custom promotional apparel manufacturer for trade shows, marketing campaigns, giveaways and brand activations. Promotional t-shirts, branded merchandise and marketing apparel with flexible MOQ, fast p",
+        faqs: pains.map(p => ({ q: p.title, a: p.body })),
+      })} />
+            <JsonLd data={forEventsFaqJsonLd(pains.map(p => ({ q: p.title, a: p.body })))} />
 
       {/* HERO */}
       <section className="relative overflow-hidden bg-[#0a0a0a] text-white">

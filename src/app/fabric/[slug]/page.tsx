@@ -388,13 +388,13 @@ export default async function FabricDetailPage(
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/contact"
+              href="/contact/"
               className="inline-flex items-center justify-center gap-2 bg-[#ff4d00] text-white px-8 py-4 text-sm font-black uppercase tracking-wider hover:bg-[#e64500] transition-colors"
             >
               Request a quote →
             </Link>
             <Link
-              href="/fabric"
+              href="/fabric/"
               className="inline-flex items-center justify-center gap-2 border-2 border-black text-black px-8 py-4 text-sm font-black uppercase tracking-wider hover:bg-black hover:text-white transition-colors"
             >
               See all fabrics

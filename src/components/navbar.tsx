@@ -84,7 +84,7 @@ export function Navbar() {
             Home
           </Link>
           <Link
-            href="/products"
+            href="/products/"
             className="text-sm font-bold uppercase tracking-wider text-black transition-colors hover:text-[#cc3d00]"
           >
             Products
@@ -125,7 +125,7 @@ export function Navbar() {
           {/* Tools dropdown (main link → /resources/ hub) */}
           <div className="group relative">
             <Link
-              href="/resources"
+              href="/resources/"
               className="inline-flex items-center gap-1 text-sm font-bold uppercase tracking-wider text-black transition-colors hover:text-[#cc3d00]"
             >
               Tools
@@ -140,7 +140,7 @@ export function Navbar() {
                 Free Resources
               </div>
               <Link
-                href="/resources"
+                href="/resources/"
                 className="block border-b-2 border-black bg-[#00c2ff]/20 px-4 py-2.5 transition-colors hover:bg-[#0a0a0a] hover:text-white"
               >
                 <div className="text-sm font-black">View All Resources</div>
@@ -164,25 +164,25 @@ export function Navbar() {
           </div>
 
           <Link
-            href="/fabric"
+            href="/fabric/"
             className="text-sm font-bold uppercase tracking-wider text-black transition-colors hover:text-[#cc3d00]"
           >
             Fabric
           </Link>
           <Link
-            href="/shipping"
+            href="/shipping/"
             className="text-sm font-bold uppercase tracking-wider text-black transition-colors hover:text-[#cc3d00]"
           >
             Shipping
           </Link>
           <Link
-            href="/about"
+            href="/about/"
             className="text-sm font-bold uppercase tracking-wider text-black transition-colors hover:text-[#cc3d00]"
           >
             About
           </Link>
           <Link
-            href="/blog"
+            href="/blog/"
             className="text-sm font-bold uppercase tracking-wider text-black transition-colors hover:text-[#cc3d00]"
           >
             Blog
@@ -192,7 +192,7 @@ export function Navbar() {
         <div className="flex items-center gap-1">
           {/* Contact — sits next to account, always visible (desktop + mobile) */}
           <Link
-            href="/contact"
+            href="/contact/"
             aria-label="Contact"
             className="inline-flex items-center gap-1.5 rounded-sm px-2.5 py-2 text-sm font-bold uppercase tracking-wider text-black transition-colors hover:bg-[#ff4d00] hover:text-white"
           >

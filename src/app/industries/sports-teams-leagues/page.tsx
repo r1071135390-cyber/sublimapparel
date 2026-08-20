@@ -46,7 +46,7 @@ const data: CustomerProfileData = {
   solutionsSection: {
     eyebrow: "Solutions",
     title: "Custom Apparel Solutions for Sports Teams",
-    subtitle: "We produce sublimated jerseys, uniforms and training wear for clubs, leagues and athletes of every level.",
+    subtitle: "We produce sublimated jerseys, uniforms and training wear for clubs, leagues...",
     sections: [
       {
         title: "Team Jerseys",

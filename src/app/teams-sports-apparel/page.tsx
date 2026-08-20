@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { JsonLd } from "@/components/json-ld";
 import Link from "next/link";
 import {
   Flag,
@@ -18,7 +19,7 @@ import {
   Timer,
   Trophy,
 } from "lucide-react";
-import { forEventsFaqJsonLd } from "@/lib/json-ld-data";
+import { forEventsFaqJsonLd, genericServiceJsonLd } from "@/lib/json-ld-data";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 import { Contact } from "@/components/contact";
 import { RelatedProducts } from "@/components/related-products";
@@ -29,8 +30,7 @@ const siteUrl = "https://sublimapparel.com";
 
 export const metadata: Metadata = {
   title: "Custom Team Sports Apparel Manufacturer | Sublimation Jerseys & Uniforms — SublimApparel",
-  description:
-    "Custom team sports apparel manufacturer for clubs, leagues and athletes. We produce sublimated soccer jerseys, basketball uniforms, cycling kits, running shirts and training wear with flexible quantities and global DDP shipping.",
+  description: "Custom team sports apparel manufacturer for clubs, leagues and athletes. We produce sublimated soccer jerseys, basketball uniforms, cycling kits, running...",
   keywords: [
     "custom team apparel",
     "custom sports apparel manufacturer",
@@ -131,8 +131,13 @@ export default function RaceShirtsPage() {
 
   return (
     <main className="min-h-screen bg-white text-neutral-900">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: breadcrumb }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: faqJsonLd }} />
+            <JsonLd data={breadcrumb} />
+      <JsonLd data={genericServiceJsonLd({
+        slug: "/teams-sports-apparel/",
+        metaTitle: "Custom Team Sports Apparel Manufacturing", metaDescription: "Custom team sports apparel manufacturer for clubs, leagues and athletes. We produce sublimated soccer jerseys, basketball uniforms, cycling kits, running...",
+        faqs: pains.map(p => ({ q: p.title, a: p.body })),
+      })} />
+            <JsonLd data={forEventsFaqJsonLd(pains.map(p => ({ q: p.title, a: p.body })))} />
 
       {/* HERO */}
       <section className="relative overflow-hidden bg-[#0a0a0a] text-white">

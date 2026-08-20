@@ -54,6 +54,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${ind.title} Case Studies — SublimApparel`,
     description: ind.blurb,
+    keywords: ["case studies", ind.title.toLowerCase(), "sublimation apparel", "custom clothing"],
+    alternates: { canonical: `/cases/${slug}/` },
+    openGraph: {
+      title: `${ind.title} Case Studies — SublimApparel`,
+      description: ind.blurb,
+      type: "website",
+      url: `/cases/${slug}/`,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${ind.title} Case Studies — SublimApparel`,
+      description: ind.blurb,
+    },
     robots: { index: true, follow: true },
   };
 }
@@ -88,7 +101,7 @@ export default async function CaseCategoryPage({ params }: Props) {
       <section className="border-b-2 border-black bg-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-12 md:py-16">
           <Link
-            href="/cases"
+            href="/cases/"
             className="mb-6 inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-black/70 transition-colors hover:text-[#cc3d00]"
           >
             <ArrowLeft size={14} strokeWidth={3} />
@@ -266,7 +279,7 @@ export default async function CaseCategoryPage({ params }: Props) {
                 <RequestQuoteLink label="[slug] / page / Get a quote" className="inline-flex items-center gap-2 border-2 border-black bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-wider text-white transition-all hover:bg-black hover:shadow-[4px_4px_0_0_#000] hover:-translate-x-1 hover:-translate-y-1">Get a quote
                   <ArrowRight size={16} strokeWidth={3} /></RequestQuoteLink>
                 <Link
-                  href="/cases"
+                  href="/cases/"
                   className="inline-flex items-center gap-2 border-2 border-black bg-white px-6 py-3 text-sm font-black uppercase tracking-wider transition-all hover:bg-black hover:text-white"
                 >
                   Browse other categories

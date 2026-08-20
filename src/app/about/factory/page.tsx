@@ -122,7 +122,7 @@ export default function FactoryPage() {
           </p>
           <div className="mt-10 flex flex-col gap-3 sm:flex-row">
             <Link
-              href="/about/production"
+              href="/about/production/"
               className="inline-flex items-center justify-center gap-2 border-2 border-[#ff4d00] bg-[#ff4d00] px-8 py-4 text-base font-bold uppercase tracking-wide text-white transition-colors hover:bg-[#e64400] hover:border-[#e64400]"
             >
               See our production process →
@@ -320,7 +320,7 @@ export default function FactoryPage() {
               Schedule a visit →
             </Link>
             <Link
-              href="/get-a-quote"
+              href="/get-a-quote/"
               className="inline-flex items-center justify-center gap-2 border-2 border-[#faf9f6] px-8 py-4 text-base font-bold uppercase tracking-wide text-[#faf9f6] transition-colors hover:bg-[#faf9f6] hover:text-[#0a0a0a]"
             >
               Get a quote →

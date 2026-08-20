@@ -26,8 +26,7 @@ import { RequestQuoteLink } from "@/components/request-quote-link";
 
 export const metadata: Metadata = {
   title:"How Do We Ship DDP to 100+ Countries? — Sea, Air, Express, US Warehouse",
-  description:
-    "DDP (Delivered Duty Paid) shipping to 100+ countries. One invoice, no surprise duties. Sea, air, and express options from Yiwu to your door. US warehouse in Fontana CA, EU rep in Rotterdam NL. Includes door-to-door time, MOQ, and DDP coverage tables.",
+  description: "DDP (Delivered Duty Paid) shipping to 100+ countries. One invoice, no surprise duties. Sea, air, and express options from Yiwu to your door. US warehouse in...",
   openGraph: {
     title:"How Do We Ship DDP to 100+ Countries?",
     description:
@@ -892,7 +891,7 @@ export default function ShippingPage() {
             <RequestQuoteLink label="shipping / page / Get a quote" className="inline-flex items-center gap-2 bg-white px-8 py-4 text-sm font-black uppercase tracking-widest text-black transition-all hover:bg-black hover:text-white">Get Quote
               <ArrowRight className="h-4 w-4" strokeWidth={2.5} /></RequestQuoteLink>
             <Link
-              href="/shipping/ddp"
+              href="/shipping/ddp/"
               className="inline-flex items-center gap-2 border-2 border-white px-8 py-4 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-white hover:text-black"
             >
               Read DDP details
@@ -910,7 +909,7 @@ export default function ShippingPage() {
             <strong> Reviewed by</strong> Ramon Wang, Sales Director.
           </p>
           <p className="mt-2">
-            For a DDP quote to your specific country, <Link href="/get-a-quote" className="underline hover:text-[#cc3d00]">submit your inquiry</Link> with target country and quantity — we reply within 12 working hours.
+            For a DDP quote to your specific country, <Link href="/get-a-quote/" className="underline hover:text-[#cc3d00]">submit your inquiry</Link> with target country and quantity — we reply within 12 working hours.
           </p>
         </div>
       </section>

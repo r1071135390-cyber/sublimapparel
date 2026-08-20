@@ -50,7 +50,7 @@ const data: CustomerProfileData = {
   solutionsSection: {
     eyebrow: "Solutions",
     title: "Tour & Festival Merchandise We Produce",
-    subtitle: "From indie artists to festival main stages, we make merch that fans want to wear long after the lights go down.",
+    subtitle: "From indie artists to festival main stages, we make merch that fans want to...",
     sections: [
       {
         title: "Tour T-Shirts",

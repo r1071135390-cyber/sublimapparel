@@ -50,7 +50,7 @@ const data: CustomerProfileData = {
   solutionsSection: {
     eyebrow: "Solutions",
     title: "School & Student Organization Apparel",
-    subtitle: "From elementary schools to university Greek life, we make apparel that students actually want to wear.",
+    subtitle: "From elementary schools to university Greek life, we make apparel that...",
     sections: [
       {
         title: "University Apparel",

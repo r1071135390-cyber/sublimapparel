@@ -97,7 +97,7 @@ const data: CustomerProfileData = {
   whySection: {
     eyebrow: "Why Race Organizers Choose Us",
     title: "Designed Around Event Deadlines",
-    subtitle: "Unlike regular apparel orders, race apparel has a fixed event date. We plan backwards from it.",
+    subtitle: "Unlike regular apparel orders, race apparel has a fixed event date. We plan...",
     features: [
       {
         icon: "Clock",

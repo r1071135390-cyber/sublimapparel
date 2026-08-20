@@ -18,8 +18,7 @@ import {
 export const metadata: Metadata = {
   title:
     "All-Over Print Manufacturer | Edge-to-Edge Sublimation & Cotton | MOQ 50",
-  description:
-    "All-over print clothing manufacturer in Yiwu, China. Edge-to-edge sublimation on polyester, allover digital print on 100% cotton, plus DTF, DTG and cut-and-sew. MOQ 50 pcs, no setup fee, DDP shipping to 100+ countries.",
+  description: "All-over print clothing manufacturer in Yiwu, China. Edge-to-edge sublimation on polyester, allover digital print on 100% cotton, plus DTF, DTG and...",
   keywords: [
     "all-over print",
     "all over print manufacturer",

@@ -6,8 +6,7 @@ import { ArrowRight, Users, Palette, Ruler, Sparkles, Shirt, Gamepad2, Crown, La
 
 export const metadata: Metadata = {
   title: "Custom Esports Apparel | Sublimated Jerseys & Team Kits",
-  description:
-    "Custom sublimated esports jerseys, hoodies, and team kits for gaming teams, tournaments, and streamers. Bold all-over print, poly-spandex stretch, name & gamer tag front and back. MOQ 50 pcs, 15-25 day lead time, DDP shipping.",
+  description: "Custom sublimated esports jerseys, hoodies, and team kits for gaming teams, tournaments, and streamers. Bold all-over print, poly-spandex stretch, name &...",
   keywords: [
     "esports jersey custom",
     "gaming jersey",
@@ -141,11 +140,11 @@ export default function EsportsPage() {
               Sublimated jerseys, hoodies, and team kits for pro teams, college esports, tournament organizers, and streamers. Full all-over print, gamer tag front and back, sponsor-ready. At factory-direct pricing.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/get-a-quote" className="group inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-black">
+              <Link href="/get-a-quote/" className="group inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-black">
                 Get a Quote
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
               </Link>
-              <Link href="/products" className="inline-flex items-center gap-2 border-2 border-black bg-white px-6 py-3 text-sm font-black uppercase tracking-widest text-black transition-all hover:bg-black hover:text-white">
+              <Link href="/products/" className="inline-flex items-center gap-2 border-2 border-black bg-white px-6 py-3 text-sm font-black uppercase tracking-widest text-black transition-all hover:bg-black hover:text-white">
                 See All Apparel
               </Link>
             </div>
@@ -311,10 +310,10 @@ export default function EsportsPage() {
           <div className="mb-3 text-xs font-black uppercase tracking-widest text-white/80">[ 008 / Next step ]</div>
           <h2 className="text-4xl font-black leading-tight md:text-7xl">Got a roster? <br />Get a quote in 1 business day.</h2>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link href="/get-a-quote" className="group inline-flex items-center gap-2 bg-black px-6 py-3 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-white hover:text-[#cc3d00]">
+            <Link href="/get-a-quote/" className="group inline-flex items-center gap-2 bg-black px-6 py-3 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-white hover:text-[#cc3d00]">
               Get an Esports Quote <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
             </Link>
-            <Link href="/products" className="inline-flex items-center gap-2 border-2 border-black bg-transparent px-6 py-3 text-sm font-black uppercase tracking-widest text-black transition-all hover:bg-black hover:text-white">
+            <Link href="/products/" className="inline-flex items-center gap-2 border-2 border-black bg-transparent px-6 py-3 text-sm font-black uppercase tracking-widest text-black transition-all hover:bg-black hover:text-white">
               See All Apparel
             </Link>
           </div>

@@ -6,8 +6,7 @@ import { polyesterFabrics } from "@/lib/fabric-data";
 
 export const metadata: Metadata = {
   title: "All-Over Polyester Printing | Sublimation on 100% Polyester",
-  description:
-    "Custom all-over printing on 100% polyester apparel. Dye sublimation, photorealistic color, zero hand feel, and no setup fee. From sportswear and esports to streetwear and team kits. Free digital mockup, MOQ 50.",
+  description: "Custom all-over printing on 100% polyester apparel. Dye sublimation, photorealistic color, zero hand feel, and no setup fee. From sportswear and esports to...",
   keywords: [
     "all-over polyester printing",
     "100% polyester printing",
@@ -90,14 +89,14 @@ export default function PolyesterPage() {
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
-                href="/get-a-quote"
+                href="/get-a-quote/"
                 className="group inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-black"
               >
                 Get a Polyester Quote
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
               </Link>
               <Link
-                href="/fabric"
+                href="/fabric/"
                 className="group inline-flex items-center gap-2 border-2 border-black bg-white px-6 py-3 text-sm font-black uppercase tracking-widest text-black transition-all hover:bg-black hover:text-white"
               >
                 All Fabrics
@@ -304,7 +303,7 @@ export default function PolyesterPage() {
             We&apos;ll recommend a sublimation spec and send a landed quote.
           </p>
           <Link
-            href="/get-a-quote"
+            href="/get-a-quote/"
             className="mt-8 inline-flex items-center gap-2 bg-white px-8 py-4 text-sm font-black uppercase tracking-widest text-black transition-all hover:bg-black hover:text-white"
           >
             Get a Polyester Quote

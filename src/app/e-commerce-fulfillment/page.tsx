@@ -26,14 +26,13 @@ import {
 import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
-import { forEventsFaqJsonLd } from "@/lib/json-ld-data";
+import { forEventsFaqJsonLd, genericServiceJsonLd } from "@/lib/json-ld-data";
 import { RelatedProducts } from "@/components/related-products";
 
 export const metadata: Metadata = {
   title:
     "Custom Apparel Fulfillment Partner | DDP Shipping Manufacturer — SublimApparel",
-  description:
-    "Custom apparel fulfillment partner for e-commerce brands, dropshippers and resellers. Bulk production, warehouse support, DDP shipping and inventory management. Flexible MOQ, custom packaging, blind shipping worldwide.",
+  description: "Custom apparel fulfillment partner for e-commerce brands, dropshippers and resellers. Bulk production, warehouse support, DDP shipping and inventory...",
   keywords: [
     "apparel fulfillment",
     "custom apparel supplier",
@@ -205,6 +204,11 @@ export default function ForCommunitiesPage() {
   return (
     <>
       <JsonLd data={breadcrumb} />
+      <JsonLd data={genericServiceJsonLd({
+        slug: "/e-commerce-fulfillment/",
+        metaTitle: "Custom Apparel for Communities & Clubs", metaDescription: "Made-to-order custom apparel manufacturing from Yiwu, China. DDP shipping to USA, EU, UK, AU, CA. MOQ 50 pcs, full sublimation, all-over print, embroidery and cut-and-sew.",
+        faqs: fulfillmentSegments.map(x => ({ q: x.title, a: x.desc })),
+      })} />
       <JsonLd data={forEventsFaqJsonLd(faqs)} />
 
       {/* HERO */}
@@ -249,14 +253,14 @@ export default function ForCommunitiesPage() {
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
-                href="/contact"
+                href="/contact/"
                 className="inline-flex items-center justify-center gap-2 rounded-sm bg-[#00c2ff] px-7 py-4 text-sm font-black uppercase tracking-wider text-black transition-all hover:-translate-y-0.5 hover:bg-[#33d1ff] hover:shadow-[0_8px_24px_rgba(0,194,255,0.4)]"
               >
                 Get a quote for your group
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
-                href="/products"
+                href="/products/"
                 className="inline-flex items-center justify-center gap-2 rounded-sm border-2 border-white/30 bg-white/5 px-7 py-4 text-sm font-bold uppercase tracking-wider text-white backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-[#00c2ff] hover:bg-[#00c2ff]/10"
               >
                 <Sparkles className="h-4 w-4" />
@@ -446,7 +450,7 @@ export default function ForCommunitiesPage() {
               </ol>
 
               <Link
-                href="/90-day-program"
+                href="/90-day-program/"
                 className="mt-8 inline-flex items-center gap-2 rounded-sm bg-[#00c2ff] px-6 py-3 text-sm font-black uppercase tracking-wider text-black transition-all hover:-translate-y-0.5 hover:bg-[#33d1ff]"
               >
                 Full 90-Day Program

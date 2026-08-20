@@ -28,8 +28,7 @@ export const metadata: Metadata = {
 
   openGraph: {
     title: "Which Custom Apparel Do You Need? — 119 Products, 13 Categories",
-    description:
-      "119 custom sublimated apparel products for B2B: t-shirts, jerseys, hoodies, cycling kits, golf polos, racing suits, plus 100% cotton allover digital print. No setup fees, MOQ 50 pcs, full color all-over print, sample in 5 days.",
+    description: "119 custom sublimated apparel products for B2B: t-shirts, jerseys, hoodies, cycling kits, golf polos, racing suits, plus 100% cotton allover digital print...",
     images: ["/product-hero-products.webp"],
   },
   authors: [{ name: "Ramon Wang", url: "https://sublimapparel.com/about" }],

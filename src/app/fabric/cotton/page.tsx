@@ -6,8 +6,7 @@ import { cottonFabrics } from "@/lib/fabric-data";
 
 export const metadata: Metadata = {
   title: "Allover Digital Print on Cotton | Full-Body + DTG/DTF",
-  description:
-    "Allover digital print on 100% cotton apparel — true full-body, edge-to-edge printing via our proprietary cotton digital workflow. Also offer DTG and DTF for A4–A3 per panel. Soft hand feel, full color, MOQ 50.",
+  description: "Allover digital print on 100% cotton apparel — true full-body, edge-to-edge printing via our proprietary cotton digital workflow. Also offer DTG and DTF for...",
   keywords: [
     "allover digital print on cotton",
     "100% cotton printing",
@@ -98,14 +97,14 @@ export default function CottonPage() {
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
-                href="/get-a-quote"
+                href="/get-a-quote/"
                 className="group inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-black"
               >
                 Get a Cotton Quote
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
               </Link>
               <Link
-                href="/fabric"
+                href="/fabric/"
                 className="group inline-flex items-center gap-2 border-2 border-black bg-white px-6 py-3 text-sm font-black uppercase tracking-widest text-black transition-all hover:bg-black hover:text-white"
               >
                 All Fabrics
@@ -398,7 +397,7 @@ export default function CottonPage() {
             We&apos;ll recommend DTG vs DTF and send a landed quote.
           </p>
           <Link
-            href="/get-a-quote"
+            href="/get-a-quote/"
             className="mt-8 inline-flex items-center gap-2 bg-white px-8 py-4 text-sm font-black uppercase tracking-widest text-black transition-all hover:bg-black hover:text-white"
           >
             Get a Cotton Quote

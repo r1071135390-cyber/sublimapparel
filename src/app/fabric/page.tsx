@@ -9,8 +9,7 @@ import { fabricTypes } from "@/lib/fabric-data";
 
 export const metadata: Metadata = {
   title: "Which Fabric & Print Process Should You Choose? — 24 Fabrics, 6 Print Methods",
-  description:
-    "Pick the right fabric-process combo for your apparel project. 24 fabrics in stock (polyester, poly-spandex, nylon, cotton, organic, rPET, blends), 6 print processes (sublimation, allover digital on cotton, DTG, DTF, screen, embroidery), with sublimation fit rating per fabric. Send your own fabric — we'll print on it too.",
+  description: "Pick the right fabric-process combo for your apparel project. 24 fabrics in stock (polyester, poly-spandex, nylon, cotton, organic, rPET, blends), 6 print...",
 
   openGraph: {
     images: ["/fabric-hero.webp"],
@@ -201,7 +200,7 @@ export default function FabricPage() {
                 Download CSV
               </a>
               <Link
-                href="/get-a-quote"
+                href="/get-a-quote/"
                 className="inline-flex items-center gap-2 bg-[#ff4d00] px-4 py-3 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-black"
               >
                 Send your spec
@@ -307,7 +306,7 @@ export default function FabricPage() {
             <strong>Send us your design brief and target price.</strong> We will recommend the fabric + process combo that fits your budget, deadline, and aesthetic. Reply within 12 working hours.
           </p>
           <Link
-            href="/get-a-quote"
+            href="/get-a-quote/"
             className="mt-8 inline-flex items-center gap-2 bg-[#ff4d00] px-8 py-4 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-white hover:text-black"
           >
             Get a Recommendation
@@ -326,7 +325,7 @@ export default function FabricPage() {
             <strong> Reviewed by</strong> Lily Chen, Production Manager.
           </p>
           <p className="mt-2">
-            Looking for a fast quote? <Link href="/get-a-quote" className="underline hover:text-[#cc3d00]">Submit your inquiry</Link> with artwork + quantity + delivery country — we reply within 12 working hours.
+            Looking for a fast quote? <Link href="/get-a-quote/" className="underline hover:text-[#cc3d00]">Submit your inquiry</Link> with artwork + quantity + delivery country — we reply within 12 working hours.
           </p>
         </div>
       </section>

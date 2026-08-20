@@ -214,7 +214,7 @@ export function Products() {
               {/* Cotton badge for Apparel card */}
               {cat.label === "Apparel" && (
                 <Link
-                  href="/fabric/cotton"
+                  href="/fabric/cotton/"
                   className="mt-4 inline-flex items-center gap-1.5 border-2 border-black bg-[#00c2ff] px-3 py-1.5 text-[11px] font-black uppercase tracking-wider text-black transition-transform hover:-translate-y-0.5"
                 >
                   100% cotton option

@@ -217,7 +217,7 @@ export default function ShippingPolicyPage() {
           <p className="mt-3 max-w-2xl text-base text-[#0a0a0a]/70">
             Production starts after proof approval and deposit receipt.
             Quoted delivery times are estimates, not guarantees — see{" "}
-            <Link href="/terms" className="font-bold underline">
+            <Link href="/terms/" className="font-bold underline">
               Terms of sale
             </Link>
             .
@@ -274,11 +274,11 @@ export default function ShippingPolicyPage() {
           </p>
           <p className="mt-4 text-base leading-relaxed text-[#0a0a0a]/80">
             For full US-warehouse case study, see{" "}
-            <Link href="/shipping" className="font-bold underline">
+            <Link href="/shipping/" className="font-bold underline">
               Shipping
             </Link>{" "}
             and{" "}
-            <Link href="/shipping/ddp" className="font-bold underline">
+            <Link href="/shipping/ddp/" className="font-bold underline">
               DDP shipping
             </Link>
             .

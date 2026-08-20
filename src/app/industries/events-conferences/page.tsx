@@ -51,7 +51,7 @@ const data: CustomerProfileData = {
   solutionsSection: {
     eyebrow: "Solutions",
     title: "Event Apparel Solutions",
-    subtitle: "From intimate networking events to multi-thousand-attendee conferences, we make apparel that represents the moment.",
+    subtitle: "From intimate networking events to multi-thousand-attendee conferences, we...",
     sections: [
       {
         title: "Conference Shirts",

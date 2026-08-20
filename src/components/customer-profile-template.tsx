@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import { JsonLd } from "@/components/json-ld";
 import Link from "next/link";
 import {
   CheckCircle2,
@@ -42,6 +43,7 @@ import {
   HelpCircle,
 } from "lucide-react";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
+import { genericServiceJsonLd } from "@/lib/json-ld-data";
 import { Contact } from "@/components/contact";
 import type { CustomerProfileData } from "@/lib/customer-profile-data";
 
@@ -99,11 +101,11 @@ export function CustomerProfilePage({ data }: { data: CustomerProfileData }) {
 
   return (
     <main className="bg-white text-black">
-      <script
-        type="application/ld+json"
-        // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
-      />
+      <JsonLd data={[breadcrumb, genericServiceJsonLd({
+        slug: data.slug,
+        metaTitle: data.h1,
+        metaDescription: data.metaDescription,
+      })]} />
 
       {/* HERO */}
       <section className="bg-[#0a0a0a] text-white">
@@ -119,14 +121,14 @@ export function CustomerProfilePage({ data }: { data: CustomerProfileData }) {
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
-              href="/contact"
+              href="/contact/"
               className="inline-flex items-center justify-center rounded-md bg-[#ff4d00] px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-[#ff5e1a] sm:text-base"
             >
               {data.primaryCta}
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
             <Link
-              href="/products"
+              href="/products/"
               className="inline-flex items-center justify-center rounded-md border border-white/30 px-6 py-3 text-sm font-bold text-white transition-colors hover:border-white/60 sm:text-base"
             >
               {data.secondaryCta}
@@ -388,7 +390,7 @@ export function CustomerProfilePage({ data }: { data: CustomerProfileData }) {
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
-              href="/contact"
+              href="/contact/"
               className="inline-flex items-center justify-center rounded-md bg-[#ff4d00] px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-[#ff5e1a] sm:text-base"
             >
               {data.ctaButton}

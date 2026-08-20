@@ -199,7 +199,7 @@ export function TimelineCalculator() {
                     {idx === 0 && (
                       <div className="mt-3 flex flex-wrap gap-2">
                         <Link
-                          href="/contact"
+                          href="/contact/"
                           className="inline-flex items-center gap-1.5 rounded-sm bg-[#ff4d00] px-3 py-2 text-xs font-black uppercase tracking-wider text-black transition-all hover:-translate-y-0.5"
                         >
                           Submit inquiry
@@ -207,7 +207,7 @@ export function TimelineCalculator() {
                         </Link>
                         {computed.urgency !== "ok" && (
                           <Link
-                            href="/90-day-program"
+                            href="/90-day-program/"
                             className="inline-flex items-center gap-1.5 rounded-sm border-2 border-black/20 bg-white px-3 py-2 text-xs font-black uppercase tracking-wider text-black transition-all hover:border-[#ff4d00]"
                           >
                             <Plane className="h-3.5 w-3.5" />

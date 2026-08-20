@@ -82,7 +82,7 @@ export function RequestQuoteButton({
 
 /**
  * A link-styled button (renders as <a> for visual consistency with existing href buttons).
- * Still opens the modal on click. Use this to replace existing <Link href="/get-a-quote">.
+ * Still opens the modal on click. Use this to replace existing <Link href="/get-a-quote/">.
  */
 export function RequestQuoteLink({
   sourceLabel,

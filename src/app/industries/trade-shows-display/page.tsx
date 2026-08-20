@@ -50,7 +50,7 @@ const data: CustomerProfileData = {
   solutionsSection: {
     eyebrow: "Solutions",
     title: "Trade Show Apparel Solutions",
-    subtitle: "From booth staff shirts to giveaway apparel, we make sure your team and your booth are both on-brand.",
+    subtitle: "From booth staff shirts to giveaway apparel, we make sure your team and your...",
     sections: [
       {
         title: "Booth Staff Apparel",

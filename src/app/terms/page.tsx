@@ -136,7 +136,7 @@ const SECTIONS = [
         delivery to the address you provide. For non-DDP orders, you are
         responsible for any import duties, taxes, and clearance fees in your
         country. See our full{" "}
-        <Link href="/shipping-policy" className="font-bold underline">
+        <Link href="/shipping-policy/" className="font-bold underline">
           Shipping Policy
         </Link>{" "}
         for details.

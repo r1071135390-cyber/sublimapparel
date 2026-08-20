@@ -259,22 +259,22 @@ export function Footer() {
           </p>
           <ul className="flex flex-wrap items-center gap-x-5 gap-y-2">
             <li>
-              <Link href="/privacy" className="hover:text-white">
+              <Link href="/privacy/" className="hover:text-white">
                 Privacy policy
               </Link>
             </li>
             <li>
-              <Link href="/terms" className="hover:text-white">
+              <Link href="/terms/" className="hover:text-white">
                 Terms of sale
               </Link>
             </li>
             <li>
-              <Link href="/shipping-policy" className="hover:text-white">
+              <Link href="/shipping-policy/" className="hover:text-white">
                 Shipping policy
               </Link>
             </li>
             <li>
-              <Link href="/sitemap" className="hover:text-white">
+              <Link href="/site-map/" className="hover:text-white">
                 Sitemap
               </Link>
             </li>

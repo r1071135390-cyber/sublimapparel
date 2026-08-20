@@ -328,7 +328,7 @@ function RecentCaseStudies() {
             <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight">Case studies from the line</h2>
             <p className="mt-3 text-white/60 text-base max-w-2xl">Real production runs, real numbers, shipped to real customers across the US, EU, and the UK.</p>
           </div>
-          <Link href="/cases" className="text-sm font-semibold text-white border-b-2 border-[#ff4d00] pb-1 hover:text-[#cc3d00] transition-colors">View all industries →</Link>
+          <Link href="/cases/" className="text-sm font-semibold text-white border-b-2 border-[#ff4d00] pb-1 hover:text-[#cc3d00] transition-colors">View all industries →</Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {featured.map((c) => (

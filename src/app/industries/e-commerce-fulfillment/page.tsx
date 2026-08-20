@@ -50,7 +50,7 @@ const data: CustomerProfileData = {
   solutionsSection: {
     eyebrow: "Solutions",
     title: "Apparel Solutions for E-commerce Sellers",
-    subtitle: "From small batch testing to high-volume replenishment, we support e-commerce brands at every stage.",
+    subtitle: "From small batch testing to high-volume replenishment, we support e-commerce...",
     sections: [
       {
         title: "Custom Apparel for Online Stores",

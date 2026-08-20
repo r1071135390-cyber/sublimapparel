@@ -120,7 +120,7 @@ export function DDP() {
         {/* Learn more CTA */}
         <div className="mt-6 text-center">
           <Link
-            href="/shipping/ddp"
+            href="/shipping/ddp/"
             className="group inline-flex items-center gap-2 border-2 border-black bg-black px-6 py-3 text-sm font-black uppercase tracking-wider text-white transition-colors hover:bg-white hover:text-black"
           >
             See the full DDP guide

@@ -30,7 +30,7 @@ export default function SportswearDecisionsPage() {
             完整交互式决策页在 <code className="text-primary bg-muted px-2 py-1 rounded">/product-review/10-sportswear-decisions/index.html</code>
           </p>
           <a
-            href="/product-review/10-sportswear-decisions/index.html"
+            href="/product-review/10-sportswear-decisions/index.html/"
             target="_blank"
             rel="noopener"
             className="inline-block bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold hover:opacity-90"

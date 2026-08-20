@@ -148,14 +148,14 @@ export default function ResourcesPage() {
               </p>
               <div className="flex flex-col gap-3 sm:flex-row">
                 <Link
-                  href="/get-a-quote"
+                  href="/get-a-quote/"
                   className="inline-flex items-center justify-center gap-2 rounded-full bg-[#ff4d00] px-6 py-3 text-sm font-black text-white transition hover:bg-[#e64500]"
                 >
                   Get a custom quote
                   <ArrowRight className="h-4 w-4" />
                 </Link>
                 <Link
-                  href="/blog"
+                  href="/blog/"
                   className="inline-flex items-center justify-center gap-2 rounded-full border border-white/30 bg-white/5 px-6 py-3 text-sm font-black text-white transition hover:bg-white/10"
                 >
                   Read the blog
@@ -238,7 +238,7 @@ export default function ResourcesPage() {
               </p>
             </div>
             <Link
-              href="/get-a-quote"
+              href="/get-a-quote/"
               className="inline-flex items-center gap-2 rounded-full bg-[#ff4d00] px-5 py-2.5 text-sm font-black text-white transition hover:bg-[#e64500]"
             >
               Start a project
@@ -305,14 +305,14 @@ export default function ResourcesPage() {
               </p>
               <div className="mt-5 flex flex-col gap-3 sm:flex-row">
                 <Link
-                  href="/blog"
+                  href="/blog/"
                   className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0a0a0a] px-5 py-3 text-sm font-black text-white transition hover:bg-[#1a1a1a]"
                 >
                   <FileText className="h-4 w-4" />
                   Open the blog
                 </Link>
                 <Link
-                  href="/contact"
+                  href="/contact/"
                   className="inline-flex items-center justify-center gap-2 rounded-full border border-[#0a0a0a] px-5 py-3 text-sm font-black text-[#0a0a0a] transition hover:bg-[#0a0a0a] hover:text-white"
                 >
                   Talk to a specialist

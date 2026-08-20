@@ -6,9 +6,8 @@ import { MapPin } from"lucide-react";
 import Image from"next/image";
 
 export const metadata = {
-  title:"About SublimApparel — Yiwu Custom Apparel Factory Since 2018 (12 Lines, 70% In-House, DDP 100+ Countries)",
-  description:
-    "SublimApparel is a Yiwu-based apparel factory producing custom sublimated, all-over digital printed, DTG, DTF, and screen-printed apparel for B2B customers worldwide. Founded 2018. 12 production lines. 70% in-house production. DDP to 100+ countries. US warehouse in Fontana CA.",
+  title: "About SublimApparel — Yiwu Custom Apparel Factory Since 2018 (12 Lines, 70%...",
+  description: "SublimApparel is a Yiwu-based apparel factory producing custom sublimated, all-over digital printed, DTG, DTF, and screen-printed apparel for B2B customers...",
 
   openGraph: {
     images: ["/about-hero.webp"],

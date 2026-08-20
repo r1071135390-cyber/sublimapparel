@@ -216,7 +216,7 @@ export default function GlobalShippingPage() {
             <p>
               We do have a Fontana, CA address for occasional overstock buffer storage — but it&apos;s
               a Tier-2 add-on, not a standard service. Read the{" "}
-              <Link href="/shipping/us-warehouse" className="font-bold text-[#cc3d00] underline">
+              <Link href="/shipping/us-warehouse/" className="font-bold text-[#cc3d00] underline">
                 honest note about it
               </Link>
               {" "}before assuming it applies to your order.
@@ -401,7 +401,7 @@ export default function GlobalShippingPage() {
               Quote my route →
             </Link>
             <Link
-              href="/shipping/ddp"
+              href="/shipping/ddp/"
               className="inline-flex items-center justify-center gap-2 border-2 border-[#faf9f6] px-8 py-4 text-base font-bold uppercase tracking-wide text-[#faf9f6] transition-colors hover:bg-[#faf9f6] hover:text-[#0a0a0a]"
             >
               See DDP coverage →

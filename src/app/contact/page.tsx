@@ -6,8 +6,7 @@ import { TeamSection } from "@/components/contact-team";
 
 export const metadata = {
   title: "How to Reach Our Yiwu Factory — WhatsApp, Email, DDP Quote in 12h",
-  description:
-    "How to reach our Yiwu factory: WhatsApp / WeChat +86-137-5793-1042, email sales@sublimapparel.com, US hub in Fontana CA, EU rep in Rotterdam NL. Real production managers — not chatbots. DDP quote in 12 working hours, sample in 5 days, bulk in 21 days.",
+  description: "How to reach our Yiwu factory: WhatsApp / WeChat +86-137-5793-1042, email sales@sublimapparel.com, US hub in Fontana CA, EU rep in Rotterdam NL. Real...",
 
   openGraph: {
     images: ["/contact-hero.webp"],
