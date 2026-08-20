@@ -68,11 +68,13 @@ export function Features() {
               <span className="inline-block h-px w-8 bg-black/40" />
               [ 004 / Why us ]
             </div>
-            <h2 className="text-4xl font-black leading-[1.05] tracking-tight text-black md:text-6xl">
+            <h2 className="whitespace-nowrap text-4xl font-black leading-[1.05] tracking-tight text-black md:text-5xl lg:text-6xl">
               Why Work With SublimApparel
             </h2>
             <p className="mt-4 max-w-2xl text-lg font-medium leading-relaxed text-black/70 md:text-xl">
               More Than A Factory — A Partner Who Helps You Solve Problems
+              <br />
+              Reduce the risks of overseas apparel sourcing
             </p>
           </div>
           <div className="md:col-span-4 md:text-right">
