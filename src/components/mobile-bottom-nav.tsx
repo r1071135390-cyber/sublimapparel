@@ -7,6 +7,7 @@ import {
   Shirt,
   Compass,
   Wrench,
+  BookOpen,
   FileText,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -33,19 +34,19 @@ const tabs: Tab[] = [
       p === "/products" ||
       p.startsWith("/products/") ||
       p.startsWith("/tag/") ||
-      p.startsWith("/cases/") ||
-      p.startsWith("/about/"),
+      p.startsWith("/cases/"),
   },
   {
-    href: "/for-events",
+    href: "/teams-sports-apparel",
     label: "Solutions",
     icon: Compass,
     match: (p) =>
-      p === "/for-events" ||
-      p === "/for-corporate" ||
-      p === "/for-camp" ||
-      p === "/for-communities" ||
-      p === "/for-brands",
+      p === "/teams-sports-apparel" ||
+      p === "/event-festivals-conferences" ||
+      p === "/corporate-organization-apparel" ||
+      p === "/promotional-marketing-apparel" ||
+      p === "/apparel-brands-agencies" ||
+      p === "/e-commerce-fulfillment",
   },
   {
     href: "/event-timeline",
@@ -59,10 +60,16 @@ const tabs: Tab[] = [
       p === "/how-to-source",
   },
   {
-    href: "/contact",
-    label: "Quote",
+    href: "/resources",
+    label: "Resources",
+    icon: BookOpen,
+    match: (p) => p === "/resources",
+  },
+  {
+    href: "/blog",
+    label: "Blog",
     icon: FileText,
-    match: (p) => p === "/contact",
+    match: (p) => p === "/blog" || p.startsWith("/blog/"),
   },
 ];
 

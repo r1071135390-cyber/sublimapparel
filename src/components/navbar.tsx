@@ -1,22 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { User, ChevronDown, Mail, Briefcase, Wrench, Building2 } from "lucide-react";
-
-const industries = [
-  { href: "/industries/sports-teams-leagues/", label: "Sports Teams & Leagues", desc: "Club, league and school teams" },
-  { href: "/industries/endurance-race-events/", label: "Endurance & Race Events", desc: "Marathons, triathlons, cycling events" },
-  { href: "/industries/events-conferences/", label: "Events & Conferences", desc: "Corporate events, summits, expos" },
-  { href: "/industries/music-festival-tour-merchandise/", label: "Music, Festival & Tour Merchandise", desc: "Tours, festivals, fan merch" },
-  { href: "/industries/corporate-employee-programs/", label: "Corporate & Employee Programs", desc: "Office teams, staff uniforms" },
-  { href: "/industries/schools-universities-greek-life/", label: "Schools, Universities & Greek Life", desc: "Campus, dorms, fraternities" },
-  { href: "/industries/breweries-coffee-hospitality/", label: "Breweries, Coffee & Hospitality", desc: "Taproom, café, hotel merch" },
-  { href: "/industries/promotional-marketing-agencies/", label: "Promotional & Marketing Agencies", desc: "Client giveaways, campaigns" },
-  { href: "/industries/trade-shows-display/", label: "Trade Shows & Display", desc: "Booth staff, swag, giveaways" },
-  { href: "/industries/apparel-brands-agencies/", label: "Apparel Brands & Agencies", desc: "Private label, OEM production" },
-  { href: "/industries/political-campaigns/", label: "Political Campaigns", desc: "Election, rally, campaign staff" },
-  { href: "/industries/e-commerce-fulfillment/", label: "E-commerce & Fulfillment", desc: "Dropship, white-label, B2B" },
-];
+import { User, ChevronDown, Mail, Briefcase, Wrench } from "lucide-react";
 
 const solutions = [
   {
@@ -131,38 +116,6 @@ export function Navbar() {
                   <div className="text-sm font-black">{s.label}</div>
                   <div className="mt-0.5 text-[11px] text-black/60 group-hover:text-white/70">
                     {s.desc}
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          {/* Industries dropdown */}
-          <div className="group relative">
-            <button
-              type="button"
-              className="inline-flex items-center gap-1 text-sm font-bold uppercase tracking-wider text-black transition-colors hover:text-[#cc3d00]"
-            >
-              Industries
-              <ChevronDown
-                className="h-3.5 w-3.5 transition-transform group-hover:rotate-180"
-                strokeWidth={3}
-              />
-            </button>
-            <div className="invisible absolute left-1/2 top-full z-20 w-80 -translate-x-1/2 border-2 border-black bg-white opacity-0 shadow-[6px_6px_0_0_rgba(10,10,10,1)] transition-all group-hover:visible group-hover:opacity-100">
-              <div className="border-b-2 border-black bg-[#00c2ff] px-4 py-2.5 text-[10px] font-black uppercase tracking-widest text-black">
-                <Building2 className="mr-1 inline h-3 w-3" />
-                By Industry
-              </div>
-              {industries.map((i) => (
-                <Link
-                  key={i.href}
-                  href={i.href}
-                  className="block border-b border-black/10 px-4 py-2.5 transition-colors last:border-0 hover:bg-[#0a0a0a] hover:text-white"
-                >
-                  <div className="text-sm font-black">{i.label}</div>
-                  <div className="mt-0.5 text-[11px] text-black/60 group-hover:text-white/70">
-                    {i.desc}
                   </div>
                 </Link>
               ))}
