@@ -1,56 +1,116 @@
 // ============================================================
-// All-Over Print Product Catalog — 120 products, 3-dim tags
+// All-Over Print Product Catalog — 119 products, 5-dim tags
 // ============================================================
 //
-// Each product carries three tag dimensions:
-//   - category  (apparel name) — T-Shirt, Hoodie, Jersey, etc.
-//   - sports    (sport types) — AFL, Basketball, Yoga, etc.
-//   - scenarios (use cases) — Team & Club, Corporate, etc.
+// Tag model (see src/lib/taxonomy.ts for the full hierarchy):
 //
-// Cross-filter: within one dimension = OR, across dimensions = AND
+//   Solution (6)   ← top-level page
+//   └─ Industry (12)  ← mid-level page (SEO facet)
+//      └─ Scenario (25)  ← leaf-level tag (product.scenarios[])
+//
+//   + Category (14)   ← primary classification (Hoodie, Jersey, ...)
+//   + Sport (42)      ← cross-cutting tag (Soccer, Yoga, ...)
+//
+// Each product has three direct tag dimensions on the record:
+//   - category   (one of 14 categories)
+//   - sports[]   (subset of 42 sports, [] for non-sport products)
+//   - scenarios[] (subset of 25 scenarios)
+//
+// Solution/Industry are derived at runtime from product.scenarios[]
+// via getSolutionsForProduct() / getIndustriesForProduct() in taxonomy.ts.
 //
 // Image placeholders — to be replaced with real product shots.
 // Sourced from Yoycol product feed (Aug 2026).
+// Recategorized per assets/products-recategorize.xlsx (Aug 2026).
 
 export type ProductCategory =
   | "Hoodie"
   | "T-Shirt"
+  | "Jersey"
+  | "Sportswear"
+  | "Polo Shirt"
+  | "Jacket"
   | "Pants"
   | "Sweatshirt"
-  | "Tank Top & Camis"
-  | "Sportswear"
   | "Shirt"
-  | "Home"
   | "Skirt"
-  | "Polo Shirt"
   | "Cap"
-  | "Jacket"
-  | "Uniform & Workwear";
+  | "Home"
+  | "Uniform & Workwear"
+  | "Tank Top & Camis";
 
 
 
 export type Sport =
-  | "AFL" | "Athletics" | "Badminton" | "Baseball" | "Basketball"
-  | "Beach" | "Bowling" | "Boxing" | "Cheer" | "Cricket"
-  | "CrossFit" | "Cycling" | "Dance" | "Dive" | "Esports"
-  | "Fishing" | "Football" | "Golf" | "Gym" | "Hockey"
-  | "Lacrosse" | "MMA" | "Martial Arts" | "Netball" | "Pilates"
-  | "Rugby" | "Running" | "Skate" | "Skating" | "Ski"
-  | "Snowboard" | "Soccer" | "Softball" | "Surf" | "Swimwear"
-  | "Table Tennis" | "Tennis" | "Triathlon" | "Volleyball" | "Wrestling"
+  | "AFL"
+  | "American Football"
+  | "Athletics"
+  | "Badminton"
+  | "Baseball"
+  | "Basketball"
+  | "Beach"
+  | "Bowling"
+  | "Boxing"
+  | "Cheer"
+  | "Cricket"
+  | "CrossFit"
+  | "Cycling"
+  | "Dance"
+  | "Dive"
+  | "Esports"
+  | "Fishing"
+  | "Football"
+  | "Golf"
+  | "Gym"
+  | "Hockey"
+  | "Lacrosse"
+  | "MMA"
+  | "Marathon"
+  | "Martial Arts"
+  | "Netball"
+  | "Pilates"
+  | "Rugby"
+  | "Running"
+  | "Skate"
+  | "Skating"
+  | "Soccer"
+  | "Softball"
+  | "Studio"
+  | "Surf"
+  | "Swimwear"
+  | "Table Tennis"
+  | "Tennis"
+  | "Triathlon"
+  | "Volleyball"
+  | "Wrestling"
   | "Yoga";
 
 export type Scenario =
-  | "Promotional Swag" | "Event & Festival" | "School & Education"
-  | "Team & Club" | "Sports League" | "Corporate & Branding"
-  | "Uniform & Workwear" | "Retail & Fashion" | "Political Campaign"
-  | "Fundraiser & Charity" | "Music & Merch" | "Wedding & Party"
-  | "Gift & Souvenir" | "Construction & Engineering"
-  | "Express & Logistics" | "Hospitality & F&B" | "Medical & Healthcare"
-  | "Security & Property" | "Retail & Supermarket"
-  | "Education & School" | "Corporate & Promo"
-  | "Transit & Transport" | "Studio & Gym" | "Military"
-  | "Festival & Holiday";
+  | "Beach"
+  | "Construction & Engineering"
+  | "Corporate & Branding"
+  | "Corporate & Promo"
+  | "Event & Festival"
+  | "Express & Logistics"
+  | "Festival & Holiday"
+  | "Fundraiser & Charity"
+  | "Gift & Souvenir"
+  | "Hospitality & F&B"
+  | "Medical & Healthcare"
+  | "Military"
+  | "Music & Merch"
+  | "Political Campaign"
+  | "Promotional Swag"
+  | "Retail & Fashion"
+  | "Retail & Supermarket"
+  | "School & Education"
+  | "Security & Property"
+  | "Sports League"
+  | "Studio & Gym"
+  | "Team & Club"
+  | "Transit & Transport"
+  | "Uniform & Workwear"
+  | "Wedding & Party";
 
 export interface ProductFabric {
   gsm: string;        // e.g. "210GSM" or "—"
@@ -72,34 +132,6 @@ export interface Product {
   description: string;
 }
 
-// All 42 sport tags (used for the cross-cutting products that apply to all sports)
-const ALL_SPORTS: Sport[] = [
-  "AFL", "Athletics", "Badminton", "Baseball", "Basketball",
-  "Beach", "Bowling", "Boxing", "Cheer", "Cricket",
-  "CrossFit", "Cycling", "Dance", "Dive", "Esports",
-  "Fishing", "Football", "Golf", "Gym", "Hockey",
-  "Lacrosse", "MMA", "Martial Arts", "Netball", "Pilates",
-  "Rugby", "Running", "Skate", "Skating", "Ski",
-  "Snowboard", "Soccer", "Softball", "Surf", "Swimwear",
-  "Table Tennis", "Tennis", "Triathlon", "Volleyball", "Wrestling",
-  "Yoga",
-];
-
-// All 13 main scenarios (used for the cross-cutting products that apply to all scenarios)
-const ALL_SCENARIOS: Scenario[] = [
-  "Corporate & Branding", "Team & Club", "Event & Festival",
-  "School & Education", "Fundraiser & Charity", "Retail & Fashion",
-  "Uniform & Workwear", "Music & Merch", "Sports League",
-  "Wedding & Party", "Gift & Souvenir", "Promotional Swag",
-  "Political Campaign",
-];
-
-// Sport-specific scenarios
-const SPORT_SCENARIOS: Scenario[] = [
-  "Team & Club", "Event & Festival", "Sports League",
-  "School & Education", "Promotional Swag",
-];
-
 // ============================================================
 // PRODUCT CATALOG (120 items)
 // ============================================================
@@ -111,8 +143,14 @@ export const products: Product[] = [
     slug: "all-over-print-womens-rectangle-scarf",
     name: "Custom All-Over Print Womens Rectangle Scarf",
     category: "Home",  // Scarf is a home/textile accessory, not apparel
-    sports: ALL_SPORTS,
-    scenarios: ALL_SCENARIOS,
+    sports: [],
+    scenarios: [
+              "Event & Festival",
+              "Festival & Holiday",
+              "Promotional Swag",
+              "Gift & Souvenir",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "310GSM", material: "Cotton", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
       { gsm: "245GSM", material: "Cotton", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
@@ -138,8 +176,16 @@ export const products: Product[] = [
     slug: "childrens-t-shirts-printed-usa-gildan-64000b",
     name: "Custom All-Over Print Childrens T-Shirts",
     category: "T-Shirt",
-    sports: ALL_SPORTS,
-    scenarios: ALL_SCENARIOS,
+    sports: [],
+    scenarios: [
+              "Event & Festival",
+              "Music & Merch",
+              "Wedding & Party",
+              "Festival & Holiday",
+              "Corporate & Branding",
+              "Corporate & Promo",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "230GSM", material: "Polyester", process: "Sublimation" },
       { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
@@ -164,8 +210,12 @@ export const products: Product[] = [
     slug: "all-over-print-womens-high-stretch-tights",
     name: "Custom All-Over Print Womens High-Stretch Tights",
     category: "Pants",
-    sports: ALL_SPORTS,
-    scenarios: ALL_SCENARIOS,
+    sports: [],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Studio & Gym",
+            ],
     fabrics: [
       { gsm: "310GSM", material: "Cotton", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
       { gsm: "290GSM", material: "Polyester", process: "Sublimation" },
@@ -189,8 +239,14 @@ export const products: Product[] = [
     slug: "unisex-durable-pullover-sweatshirt-290gsm",
     name: "Custom All-Over Print Unisex Durable Pullover Sweatshirt 290GSM",
     category: "Sweatshirt",
-    sports: ALL_SPORTS,
-    scenarios: ALL_SCENARIOS,
+    sports: [],
+    scenarios: [
+              "Event & Festival",
+              "Festival & Holiday",
+              "Promotional Swag",
+              "Gift & Souvenir",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "150GSM", material: "Polyester", process: "Sublimation" },
       { gsm: "140GSM", material: "Polyester", process: "Sublimation" },
@@ -213,8 +269,17 @@ export const products: Product[] = [
     slug: "mens-fleece-lined-vintage-wash-zip-hoodie",
     name: "Custom All-Over Print Mens Fleece Hoodie 360GSM",
     category: "Hoodie",
-    sports: ALL_SPORTS,
-    scenarios: ALL_SCENARIOS,
+    sports: [],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Studio & Gym",
+              "Event & Festival",
+              "Festival & Holiday",
+              "Promotional Swag",
+              "Gift & Souvenir",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "310GSM", material: "Cotton", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
       { gsm: "245GSM", material: "Polyester", process: "Sublimation" },
@@ -240,9 +305,22 @@ export const products: Product[] = [
     number: "0007",
     slug: "mens-loose-sleeveless-hoodie-320gsm",
     name: "Custom All-Over Print Mens Loose Sleeveless Hoodie 320GSM",
-    category: "Tank Top & Camis",
-    sports: ALL_SPORTS,
-    scenarios: ALL_SCENARIOS,
+    category: "Sportswear",
+    sports: [
+              "Gym",
+              "CrossFit",
+              "Athletics",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Studio & Gym",
+              "Event & Festival",
+              "Festival & Holiday",
+              "Promotional Swag",
+              "Gift & Souvenir",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "310GSM", material: "Cotton", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
       { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
@@ -260,8 +338,15 @@ export const products: Product[] = [
     slug: "all-over-print-womens-tank-vest-dress",
     name: "Custom All-Over Print Womens Tank Vest Dress",
     category: "Sportswear",
-    sports: ALL_SPORTS,
-    scenarios: ALL_SCENARIOS,
+    sports: [
+              "Netball",
+              "Tennis",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Studio & Gym",
+            ],
     fabrics: [
       { gsm: "140GSM", material: "Cotton/Slub Cotton", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
       { gsm: "—", material: "Velvet", process: "Sublimation", gsmOptions: "240260280300 g" },
@@ -276,8 +361,17 @@ export const products: Product[] = [
     slug: "mens-distressed-vintage-wash-sweatshirt-360gsm",
     name: "Custom All-Over Print Mens Distressed Sweatshirt 360GSM",
     category: "Sweatshirt",
-    sports: ALL_SPORTS,
-    scenarios: ALL_SCENARIOS,
+    sports: [],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Studio & Gym",
+              "Event & Festival",
+              "Festival & Holiday",
+              "Promotional Swag",
+              "Gift & Souvenir",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "310GSM", material: "Cotton", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
       { gsm: "—", material: "Interlock", process: "Sublimation", gsmOptions: "160180200220 g" },
@@ -293,8 +387,16 @@ export const products: Product[] = [
     slug: "plamix-all-over-print-childrens-shirt-with-pocket",
     name: "Custom All-Over Print Childrens Shirt With Pocket 140GSM Slub Cotton",
     category: "Shirt",
-    sports: ALL_SPORTS,
-    scenarios: ALL_SCENARIOS,
+    sports: [],
+    scenarios: [
+              "Event & Festival",
+              "Music & Merch",
+              "Wedding & Party",
+              "Festival & Holiday",
+              "Corporate & Branding",
+              "Corporate & Promo",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "140GSM", material: "Cotton/Slub Cotton", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
       { gsm: "—", material: "Fleece", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
@@ -309,8 +411,17 @@ export const products: Product[] = [
     slug: "mens-vintage-crewneck-knit-sweater-285gsm",
     name: "Custom All-Over Print Mens Vintage Crewneck Knit Sweater",
     category: "Sweatshirt",
-    sports: ALL_SPORTS,
-    scenarios: ALL_SCENARIOS,
+    sports: [],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Studio & Gym",
+              "Event & Festival",
+              "Festival & Holiday",
+              "Promotional Swag",
+              "Gift & Souvenir",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Plain Weave", process: "Sublimation", gsmOptions: "120140160180200 g" },
       { gsm: "—", material: "Fleece", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
@@ -326,8 +437,14 @@ export const products: Product[] = [
     slug: "all-over-print-unisex-thickened-home-jumpsuit",
     name: "Custom All-Over Print Unisex Thickened Home Jumpsuit",
     category: "Home",
-    sports: ALL_SPORTS,
-    scenarios: ALL_SCENARIOS,
+    sports: [],
+    scenarios: [
+              "Event & Festival",
+              "Festival & Holiday",
+              "Promotional Swag",
+              "Gift & Souvenir",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Cotton", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
       { gsm: "—", material: "Satin", process: "Sublimation", gsmOptions: "80100120140160180200 g" },
@@ -342,8 +459,16 @@ export const products: Product[] = [
     slug: "all-over-print-kids-short-sleeve-dress",
     name: "Custom All-Over Print Kids Short-Sleeve Dress",
     category: "Skirt",
-    sports: ALL_SPORTS,
-    scenarios: ALL_SCENARIOS,
+    sports: [],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Corporate & Branding",
+              "Corporate & Promo",
+              "Promotional Swag",
+              "Gift & Souvenir",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "180GSM", material: "Cotton", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
     ],
@@ -356,8 +481,16 @@ export const products: Product[] = [
     slug: "all-over-print-womens-tank-bodysuit",
     name: "Custom All-Over Print Womens Tank Bodysuit",
     category: "Sportswear",
-    sports: ALL_SPORTS,
-    scenarios: ALL_SCENARIOS,
+    sports: [
+              "Gym",
+              "CrossFit",
+              "Athletics",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Studio & Gym",
+            ],
     fabrics: [
       { gsm: "180GSM", material: "Cotton", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
       { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
@@ -371,8 +504,16 @@ export const products: Product[] = [
     slug: "all-over-print-childrens-lapel-polo-shirt",
     name: "Custom All-Over Print Childrens Lapel Polo Shirt",
     category: "Polo Shirt",
-    sports: ALL_SPORTS,
-    scenarios: ALL_SCENARIOS,
+    sports: [],
+    scenarios: [
+              "Event & Festival",
+              "Music & Merch",
+              "Wedding & Party",
+              "Festival & Holiday",
+              "Corporate & Branding",
+              "Corporate & Promo",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "145GSM", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
       { gsm: "—", material: "Plain Weave", process: "Sublimation", gsmOptions: "120140160180200 g" },
@@ -386,8 +527,14 @@ export const products: Product[] = [
     slug: "sports-square-towel",
     name: "Custom All-Over Print Sports Square Towel",
     category: "Home",
-    sports: ALL_SPORTS,
-    scenarios: ALL_SCENARIOS,
+    sports: [],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Promotional Swag",
+              "Gift & Souvenir",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
       { gsm: "—", material: "Plain Weave", process: "Sublimation" },
@@ -401,8 +548,16 @@ export const products: Product[] = [
     slug: "baby-short-sleeve-onesie-usa-190gsm",
     name: "Custom All-Over Print Baby Short-Sleeve Onesie Printed",
     category: "Home",
-    sports: ALL_SPORTS,
-    scenarios: ALL_SCENARIOS,
+    sports: [],
+    scenarios: [
+              "Event & Festival",
+              "Music & Merch",
+              "Wedding & Party",
+              "Festival & Holiday",
+              "Corporate & Branding",
+              "Corporate & Promo",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "180GSM", material: "Cotton", process: "All-Over Digital Print on Cotton" },
       { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
@@ -415,9 +570,20 @@ export const products: Product[] = [
     number: "0018",
     slug: "all-over-print-kids-baseball-jersey",
     name: "Custom All-Over Print Kids Baseball Jersey",
-    category: "Sportswear",
-    sports: ALL_SPORTS,
-    scenarios: ALL_SCENARIOS,
+    category: "Jersey",
+    sports: [
+              "Baseball",
+              "Softball",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Corporate & Branding",
+              "Corporate & Promo",
+              "Promotional Swag",
+              "Gift & Souvenir",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Plain Weave", process: "Sublimation" },
     ],
@@ -430,8 +596,17 @@ export const products: Product[] = [
     slug: "all-over-print-mens-half-zip-pullover",
     name: "Custom All-Over Print Mens Half-Zip Pullover",
     category: "Hoodie",
-    sports: ALL_SPORTS,
-    scenarios: ALL_SCENARIOS,
+    sports: [],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Studio & Gym",
+              "Event & Festival",
+              "Festival & Holiday",
+              "Promotional Swag",
+              "Gift & Souvenir",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Interlock", process: "Sublimation" },
       { gsm: "—", material: "Plain Weave", process: "Sublimation" },
@@ -444,9 +619,18 @@ export const products: Product[] = [
     number: "0020",
     slug: "all-over-print-mens-long-sleeve-t-shirt-dropped-shoulders",
     name: "Custom All-Over Print Mens Long-Sleeve T-Shirt With Dropped Shoulders",
-    category: "Sportswear",
-    sports: ALL_SPORTS,
-    scenarios: ALL_SCENARIOS,
+    category: "T-Shirt",
+    sports: [],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Studio & Gym",
+              "Event & Festival",
+              "Festival & Holiday",
+              "Promotional Swag",
+              "Gift & Souvenir",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Interlock", process: "Sublimation" },
     ],
@@ -459,8 +643,18 @@ export const products: Product[] = [
     slug: "all-over-print-apron",
     name: "Custom All-Over Print Apron",
     category: "Home",
-    sports: ALL_SPORTS,
-    scenarios: ALL_SCENARIOS,
+    sports: [],
+    scenarios: [
+              "Event & Festival",
+              "Music & Merch",
+              "Wedding & Party",
+              "Festival & Holiday",
+              "Corporate & Branding",
+              "Corporate & Promo",
+              "Promotional Swag",
+              "Gift & Souvenir",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "—", process: "Sublimation" },
     ],
@@ -473,8 +667,14 @@ export const products: Product[] = [
     slug: "all-over-print-bucket-hat",
     name: "Custom All-Over Print Bucket Hat",
     category: "Cap",
-    sports: ALL_SPORTS,
-    scenarios: ALL_SCENARIOS,
+    sports: [],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Corporate & Branding",
+              "Corporate & Promo",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "—", process: "Sublimation" },
     ],
@@ -487,8 +687,14 @@ export const products: Product[] = [
     slug: "all-over-print-baseball-cap",
     name: "Custom All-Over Print Baseball Cap",
     category: "Cap",
-    sports: ALL_SPORTS,
-    scenarios: ALL_SCENARIOS,
+    sports: [],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Corporate & Branding",
+              "Corporate & Promo",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Sandwich 6 Panels", process: "Sublimation" },
       { gsm: "—", material: "Denim", process: "Sublimation" },
@@ -502,9 +708,16 @@ export const products: Product[] = [
     number: "0024",
     slug: "all-over-print-soccer-jersey-kit",
     name: "Custom All-Over Print Soccer Jersey Kit (Shirt + Shorts)",
-    category: "Sportswear",
-    sports: ["Soccer"],
-    scenarios: SPORT_SCENARIOS,
+    category: "Jersey",
+    sports: [
+              "Soccer",
+              "Football",
+              "American Football",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+            ],
     fabrics: [
       { gsm: "210GSM", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
       { gsm: "180GSM", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
@@ -520,9 +733,17 @@ export const products: Product[] = [
     number: "0025",
     slug: "all-over-print-basketball-jersey-kit",
     name: "Custom All-Over Print Basketball Jersey Kit (Reversible option)",
-    category: "Sportswear",
-    sports: ["Basketball"],
-    scenarios: SPORT_SCENARIOS,
+    category: "Jersey",
+    sports: [
+              "Basketball",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Corporate & Branding",
+              "Corporate & Promo",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "210GSM", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
       { gsm: "—", material: "Mesh", process: "Sublimation", gsmOptions: "100120140160180200 g" },
@@ -536,9 +757,19 @@ export const products: Product[] = [
     number: "0026",
     slug: "all-over-print-badminton-outfit",
     name: "Custom All-Over Print Badminton Outfit",
-    category: "Sportswear",
-    sports: ["Badminton"],
-    scenarios: SPORT_SCENARIOS,
+    category: "Jersey",
+    sports: [
+              "Badminton",
+            ],
+    scenarios: [
+              "Event & Festival",
+              "Music & Merch",
+              "Wedding & Party",
+              "Festival & Holiday",
+              "Corporate & Branding",
+              "Corporate & Promo",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
       { gsm: "—", material: "Mesh", process: "Sublimation", gsmOptions: "100120140160180200 g" },
@@ -551,9 +782,19 @@ export const products: Product[] = [
     number: "0027",
     slug: "all-over-print-hockey-jersey",
     name: "Custom All-Over Print Hockey Jersey",
-    category: "Sportswear",
-    sports: ["Hockey"],
-    scenarios: SPORT_SCENARIOS,
+    category: "Jersey",
+    sports: [
+              "Hockey",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "School & Education",
+              "Promotional Swag",
+              "Corporate & Promo",
+              "Gift & Souvenir",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
       { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
@@ -566,9 +807,22 @@ export const products: Product[] = [
     number: "0028",
     slug: "all-over-print-running-wear-kit",
     name: "Custom All-Over Print Running Wear (Shirt + Shorts)",
-    category: "Sportswear",
-    sports: ["Running", "Athletics"],
-    scenarios: SPORT_SCENARIOS,
+    category: "Jersey",
+    sports: [
+              "Running",
+              "Athletics",
+              "Marathon",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Event & Festival",
+              "School & Education",
+              "Promotional Swag",
+              "Corporate & Promo",
+              "Gift & Souvenir",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
       { gsm: "—", material: "Mesh", process: "Sublimation", gsmOptions: "100120140160180200 g" },
@@ -581,9 +835,17 @@ export const products: Product[] = [
     number: "0029",
     slug: "all-over-print-cycling-wear-kit",
     name: "Custom All-Over Print Cycling Wear Kit (Jersey + Bib Shorts)",
-    category: "Sportswear",
-    sports: ["Cycling"],
-    scenarios: SPORT_SCENARIOS,
+    category: "Jersey",
+    sports: [
+              "Cycling",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Corporate & Branding",
+              "Corporate & Promo",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
       { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
@@ -597,8 +859,15 @@ export const products: Product[] = [
     slug: "all-over-print-yoga-wear-set",
     name: "Custom All-Over Print Yoga Wear Set (Top + Leggings)",
     category: "Sportswear",
-    sports: ["Yoga", "Pilates"],
-    scenarios: SPORT_SCENARIOS,
+    sports: [
+              "Yoga",
+              "Pilates",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Studio & Gym",
+            ],
     fabrics: [
       { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
       { gsm: "—", material: "Interlock", process: "Sublimation", gsmOptions: "160180200220 g" },
@@ -612,8 +881,17 @@ export const products: Product[] = [
     slug: "all-over-print-swimwear-one-piece",
     name: "Custom All-Over Print Swimwear (One-Piece / Bikini / Trunks)",
     category: "Sportswear",
-    sports: ["Swimwear", "Surf", "Beach", "Dive"],
-    scenarios: SPORT_SCENARIOS,
+    sports: [
+              "Swimwear",
+              "Surf",
+              "Beach",
+              "Dive",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
     ],
@@ -625,9 +903,18 @@ export const products: Product[] = [
     number: "0032",
     slug: "all-over-print-golf-polo-shirt",
     name: "Custom All-Over Print Golf Polo Shirt",
-    category: "Polo Shirt",
-    sports: ["Golf"],
-    scenarios: SPORT_SCENARIOS,
+    category: "Sportswear",
+    sports: [
+              "Golf",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Corporate & Branding",
+              "Uniform & Workwear",
+              "Corporate & Promo",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
       { gsm: "—", material: "Pique", process: "Sublimation", gsmOptions: "160180200220240 g" },
@@ -640,9 +927,18 @@ export const products: Product[] = [
     number: "0033",
     slug: "all-over-print-baseball-jersey-kit",
     name: "Custom All-Over Print Baseball Jersey Kit (Shirt + Pants)",
-    category: "Sportswear",
-    sports: ["Baseball", "Softball"],
-    scenarios: SPORT_SCENARIOS,
+    category: "Jersey",
+    sports: [
+              "Baseball",
+              "Softball",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Corporate & Branding",
+              "Corporate & Promo",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
       { gsm: "—", material: "Plain Weave", process: "Sublimation", gsmOptions: "120140160180200 g" },
@@ -655,9 +951,21 @@ export const products: Product[] = [
     number: "0034",
     slug: "all-over-print-american-football-jersey",
     name: "Custom All-Over Print American Football Jersey",
-    category: "Sportswear",
-    sports: ["Football"],
-    scenarios: SPORT_SCENARIOS,
+    category: "Jersey",
+    sports: [
+              "Soccer",
+              "Football",
+              "American Football",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Event & Festival",
+              "Fundraiser & Charity",
+              "Corporate & Branding",
+              "Corporate & Promo",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
       { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
@@ -670,9 +978,20 @@ export const products: Product[] = [
     number: "0035",
     slug: "all-over-print-rugby-jersey",
     name: "Custom All-Over Print Rugby Jersey",
-    category: "Sportswear",
-    sports: ["Rugby"],
-    scenarios: SPORT_SCENARIOS,
+    category: "Jersey",
+    sports: [
+              "Rugby",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Event & Festival",
+              "School & Education",
+              "Promotional Swag",
+              "Corporate & Promo",
+              "Gift & Souvenir",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
       { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
@@ -685,9 +1004,14 @@ export const products: Product[] = [
     number: "0036",
     slug: "all-over-print-volleyball-jersey-kit",
     name: "Custom All-Over Print Volleyball Jersey Kit",
-    category: "Sportswear",
-    sports: ["Volleyball"],
-    scenarios: SPORT_SCENARIOS,
+    category: "Jersey",
+    sports: [
+              "Volleyball",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+            ],
     fabrics: [
       { gsm: "—", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
       { gsm: "—", material: "Mesh", process: "Sublimation", gsmOptions: "100120140160180200 g" },
@@ -701,8 +1025,14 @@ export const products: Product[] = [
     slug: "all-over-print-tennis-outfit",
     name: "Custom All-Over Print Tennis Outfit (Shirt + Skirt/Shorts)",
     category: "Sportswear",
-    sports: ["Tennis"],
-    scenarios: SPORT_SCENARIOS,
+    sports: [
+              "Tennis",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
       { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
@@ -715,9 +1045,15 @@ export const products: Product[] = [
     number: "0038",
     slug: "all-over-print-table-tennis-outfit",
     name: "Custom All-Over Print Table Tennis Outfit",
-    category: "Sportswear",
-    sports: ["Table Tennis"],
-    scenarios: SPORT_SCENARIOS,
+    category: "Jersey",
+    sports: [
+              "Table Tennis",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
     ],
@@ -729,9 +1065,17 @@ export const products: Product[] = [
     number: "0039",
     slug: "all-over-print-cricket-jersey",
     name: "Custom All-Over Print Cricket Jersey",
-    category: "Sportswear",
-    sports: ["Cricket"],
-    scenarios: SPORT_SCENARIOS,
+    category: "Jersey",
+    sports: [
+              "Cricket",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Corporate & Branding",
+              "Corporate & Promo",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
       { gsm: "—", material: "Plain Weave", process: "Sublimation", gsmOptions: "120140160180200 g" },
@@ -744,9 +1088,16 @@ export const products: Product[] = [
     number: "0040",
     slug: "all-over-print-lacrosse-jersey",
     name: "Custom All-Over Print Lacrosse Jersey",
-    category: "Sportswear",
-    sports: ["Lacrosse"],
-    scenarios: SPORT_SCENARIOS,
+    category: "Jersey",
+    sports: [
+              "Lacrosse",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Studio & Gym",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
     ],
@@ -758,9 +1109,16 @@ export const products: Product[] = [
     number: "0041",
     slug: "all-over-print-softball-jersey",
     name: "Custom All-Over Print Softball Jersey",
-    category: "Sportswear",
-    sports: ["Softball"],
-    scenarios: SPORT_SCENARIOS,
+    category: "Jersey",
+    sports: [
+              "Baseball",
+              "Softball",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
     ],
@@ -773,8 +1131,16 @@ export const products: Product[] = [
     slug: "all-over-print-surf-lycra-top",
     name: "Custom All-Over Print Surf Lycra Top (Rash Guard)",
     category: "Sportswear",
-    sports: ["Surf", "Swimwear", "Beach"],
-    scenarios: SPORT_SCENARIOS,
+    sports: [
+              "Surf",
+              "Swimwear",
+              "Beach",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
     ],
@@ -786,9 +1152,16 @@ export const products: Product[] = [
     number: "0045",
     slug: "all-over-print-skate-t-shirt",
     name: "Custom All-Over Print Skate T-Shirt",
-    category: "T-Shirt",
-    sports: ["Skate", "Skating"],
-    scenarios: SPORT_SCENARIOS,
+    category: "Sportswear",
+    sports: [
+              "Skate",
+              "Skating",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Cotton", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
       { gsm: "—", material: "Interlock", process: "Sublimation", gsmOptions: "160180200220 g" },
@@ -802,8 +1175,18 @@ export const products: Product[] = [
     slug: "all-over-print-boxing-shorts",
     name: "Custom All-Over Print Boxing Shorts",
     category: "Sportswear",
-    sports: ["Boxing", "MMA", "Martial Arts"],
-    scenarios: SPORT_SCENARIOS,
+    sports: [
+              "Boxing",
+              "MMA",
+              "Martial Arts",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Studio & Gym",
+              "Corporate & Branding",
+              "Corporate & Promo",
+            ],
     fabrics: [
       { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
       { gsm: "—", material: "Polyester", process: "Sublimation", gsmOptions: "100120140160180200 g" },
@@ -817,8 +1200,14 @@ export const products: Product[] = [
     slug: "all-over-print-wrestling-singlet",
     name: "Custom All-Over Print Wrestling Singlet",
     category: "Sportswear",
-    sports: ["Wrestling", "MMA"],
-    scenarios: SPORT_SCENARIOS,
+    sports: [
+              "Wrestling",
+              "MMA",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+            ],
     fabrics: [
       { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
     ],
@@ -831,8 +1220,16 @@ export const products: Product[] = [
     slug: "all-over-print-mma-fight-shorts",
     name: "Custom All-Over Print MMA Fight Shorts",
     category: "Sportswear",
-    sports: ["MMA", "Boxing", "Martial Arts"],
-    scenarios: SPORT_SCENARIOS,
+    sports: [
+              "MMA",
+              "Boxing",
+              "Martial Arts",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Studio & Gym",
+            ],
     fabrics: [
       { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
     ],
@@ -845,8 +1242,15 @@ export const products: Product[] = [
     slug: "all-over-print-martial-arts-gi",
     name: "Custom All-Over Print Martial Arts Gi",
     category: "Sportswear",
-    sports: ["Martial Arts"],
-    scenarios: SPORT_SCENARIOS,
+    sports: [
+              "Martial Arts",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Studio & Gym",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Cotton", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
     ],
@@ -859,8 +1263,15 @@ export const products: Product[] = [
     slug: "all-over-print-pilates-top-leggings",
     name: "Custom All-Over Print Pilates Set (Top + Leggings)",
     category: "Sportswear",
-    sports: ["Pilates", "Yoga"],
-    scenarios: SPORT_SCENARIOS,
+    sports: [
+              "Pilates",
+              "Yoga",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Studio & Gym",
+            ],
     fabrics: [
       { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
     ],
@@ -873,8 +1284,18 @@ export const products: Product[] = [
     slug: "all-over-print-dance-leotard",
     name: "Custom All-Over Print Dance Leotard",
     category: "Sportswear",
-    sports: ["Dance", "Cheer", "Gym"],
-    scenarios: SPORT_SCENARIOS,
+    sports: [
+              "Dance",
+              "Cheer",
+              "Gym",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Corporate & Branding",
+              "Corporate & Promo",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
     ],
@@ -887,8 +1308,17 @@ export const products: Product[] = [
     slug: "all-over-print-cheer-uniform",
     name: "Custom All-Over Print Cheer Uniform (Top + Skirt)",
     category: "Sportswear",
-    sports: ["Cheer", "Dance"],
-    scenarios: SPORT_SCENARIOS,
+    sports: [
+              "Cheer",
+              "Dance",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Corporate & Branding",
+              "Corporate & Promo",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
     ],
@@ -901,8 +1331,16 @@ export const products: Product[] = [
     slug: "all-over-print-bowling-shirt",
     name: "Custom All-Over Print Bowling Shirt",
     category: "Polo Shirt",
-    sports: ["Bowling"],
-    scenarios: SPORT_SCENARIOS,
+    sports: [
+              "Bowling",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Studio & Gym",
+              "Corporate & Branding",
+              "Corporate & Promo",
+            ],
     fabrics: [
       { gsm: "—", material: "Polyester", process: "Sublimation", gsmOptions: "100120140160180200 g" },
     ],
@@ -914,9 +1352,17 @@ export const products: Product[] = [
     number: "0055",
     slug: "all-over-print-esports-jersey",
     name: "Custom All-Over Print Esports Jersey",
-    category: "Sportswear",
-    sports: ["Esports"],
-    scenarios: SPORT_SCENARIOS,
+    category: "Jersey",
+    sports: [
+              "Esports",
+            ],
+    scenarios: [
+              "Corporate & Branding",
+              "Uniform & Workwear",
+              "Corporate & Promo",
+              "Express & Logistics",
+              "Transit & Transport",
+            ],
     fabrics: [
       { gsm: "—", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
       { gsm: "—", material: "Mesh", process: "Sublimation", gsmOptions: "100120140160180200 g" },
@@ -930,8 +1376,15 @@ export const products: Product[] = [
     slug: "all-over-print-triathlon-suit",
     name: "Custom All-Over Print Triathlon Suit (One-Piece)",
     category: "Sportswear",
-    sports: ["Triathlon", "Cycling", "Running"],
-    scenarios: SPORT_SCENARIOS,
+    sports: [
+              "Triathlon",
+              "Cycling",
+              "Running",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+            ],
     fabrics: [
       { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
     ],
@@ -943,9 +1396,17 @@ export const products: Product[] = [
     number: "0057",
     slug: "all-over-print-australian-rules-jersey",
     name: "Custom All-Over Print Australian Rules (AFL) Jersey",
-    category: "Sportswear",
-    sports: ["AFL"],
-    scenarios: SPORT_SCENARIOS,
+    category: "Jersey",
+    sports: [
+              "AFL",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Corporate & Branding",
+              "Corporate & Promo",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
     ],
@@ -958,8 +1419,15 @@ export const products: Product[] = [
     slug: "all-over-print-netball-dress",
     name: "Custom All-Over Print Netball Dress (Bib Style)",
     category: "Sportswear",
-    sports: ["Netball"],
-    scenarios: SPORT_SCENARIOS,
+    sports: [
+              "Netball",
+              "Tennis",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
     ],
@@ -971,9 +1439,21 @@ export const products: Product[] = [
     number: "0059",
     slug: "all-over-print-athletics-singlet",
     name: "Custom All-Over Print Athletics Singlet (Track & Field)",
-    category: "Sportswear",
-    sports: ["Athletics", "Running"],
-    scenarios: SPORT_SCENARIOS,
+    category: "Jersey",
+    sports: [
+              "Athletics",
+              "Running",
+              "Marathon",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Event & Festival",
+              "Fundraiser & Charity",
+              "Corporate & Branding",
+              "Corporate & Promo",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Mesh", process: "Sublimation", gsmOptions: "100120140160180200 g" },
       { gsm: "—", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
@@ -986,9 +1466,21 @@ export const products: Product[] = [
     number: "0060",
     slug: "all-over-print-fishing-shirt-upf50",
     name: "Custom All-Over Print Fishing Shirt (UPF 50+)",
-    category: "Sportswear",
-    sports: ["Fishing"],
-    scenarios: SPORT_SCENARIOS,
+    category: "Jersey",
+    sports: [
+              "Fishing",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Corporate & Branding",
+              "Event & Festival",
+              "Festival & Holiday",
+              "Promotional Swag",
+              "Gift & Souvenir",
+              "Corporate & Promo",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Polyester", process: "Sublimation", gsmOptions: "100120140160180200 g" },
     ],
@@ -1000,9 +1492,20 @@ export const products: Product[] = [
     number: "0061",
     slug: "all-over-print-gym-tank-top",
     name: "Custom All-Over Print Gym Tank Top",
-    category: "Tank Top & Camis",
-    sports: ["Gym", "CrossFit", "Athletics"],
-    scenarios: SPORT_SCENARIOS,
+    category: "Sportswear",
+    sports: [
+              "Gym",
+              "CrossFit",
+              "Athletics",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Studio & Gym",
+              "Corporate & Branding",
+              "Corporate & Promo",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Cotton", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
       { gsm: "—", material: "Interlock", process: "Sublimation", gsmOptions: "160180200220 g" },
@@ -1016,8 +1519,18 @@ export const products: Product[] = [
     slug: "all-over-print-dive-lycra-suit",
     name: "Custom All-Over Print Dive Lycra Suit",
     category: "Sportswear",
-    sports: ["Dive", "Surf", "Swimwear"],
-    scenarios: SPORT_SCENARIOS,
+    sports: [
+              "Dive",
+              "Surf",
+              "Swimwear",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Corporate & Branding",
+              "Corporate & Promo",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
     ],
@@ -1030,8 +1543,14 @@ export const products: Product[] = [
     slug: "all-over-print-skating-dress",
     name: "Custom All-Over Print Skating Dress (Figure / Roller)",
     category: "Sportswear",
-    sports: ["Skating"],
-    scenarios: SPORT_SCENARIOS,
+    sports: [
+              "Skating",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
     ],
@@ -1043,9 +1562,20 @@ export const products: Product[] = [
     number: "0064",
     slug: "all-over-print-beach-sports-jersey",
     name: "Custom All-Over Print Beach Sports Jersey (Volleyball / Soccer / Rugby)",
-    category: "Sportswear",
-    sports: ["Beach", "Volleyball", "Soccer", "Rugby"],
-    scenarios: SPORT_SCENARIOS,
+    category: "Jersey",
+    sports: [
+              "Beach",
+              "Volleyball",
+              "Soccer",
+              "Rugby",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Beach",
+              "Corporate & Branding",
+              "Corporate & Promo",
+            ],
     fabrics: [
       { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
       { gsm: "—", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
@@ -1060,7 +1590,13 @@ export const products: Product[] = [
     name: "Custom All-Over Print Express & Logistics Polo Shirt",
     category: "Polo Shirt",
     sports: [],
-    scenarios: ["Uniform & Workwear", "Corporate & Branding", "Construction & Engineering", "Express & Logistics"],
+    scenarios: [
+              "Corporate & Branding",
+              "Uniform & Workwear",
+              "Corporate & Promo",
+              "Express & Logistics",
+              "Transit & Transport",
+            ],
     fabrics: [
       { gsm: "—", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
       { gsm: "—", material: "Pique", process: "Sublimation", gsmOptions: "160180200220240 g" },
@@ -1075,7 +1611,13 @@ export const products: Product[] = [
     name: "Custom All-Over Print Express & Logistics T-Shirt",
     category: "T-Shirt",
     sports: [],
-    scenarios: ["Uniform & Workwear", "Express & Logistics", "Corporate & Branding"],
+    scenarios: [
+              "Corporate & Branding",
+              "Uniform & Workwear",
+              "Corporate & Promo",
+              "Express & Logistics",
+              "Transit & Transport",
+            ],
     fabrics: [
       { gsm: "—", material: "Cotton", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
       { gsm: "—", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
@@ -1090,7 +1632,13 @@ export const products: Product[] = [
     name: "Custom All-Over Print Express & Logistics Hoodie",
     category: "Hoodie",
     sports: [],
-    scenarios: ["Uniform & Workwear", "Express & Logistics", "Corporate & Branding"],
+    scenarios: [
+              "Corporate & Branding",
+              "Uniform & Workwear",
+              "Corporate & Promo",
+              "Express & Logistics",
+              "Transit & Transport",
+            ],
     fabrics: [
       { gsm: "—", material: "Fleece", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
       { gsm: "—", material: "Cotton", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
@@ -1103,9 +1651,14 @@ export const products: Product[] = [
     number: "0068",
     slug: "all-over-print-construction-hoodie",
     name: "Custom All-Over Print Construction Hoodie (Hi-Vis Option)",
-    category: "Hoodie",
+    category: "Uniform & Workwear",
     sports: [],
-    scenarios: ["Construction & Engineering", "Uniform & Workwear", "Construction & Engineering"],
+    scenarios: [
+              "Corporate & Branding",
+              "Uniform & Workwear",
+              "Corporate & Promo",
+              "Construction & Engineering",
+            ],
     fabrics: [
       { gsm: "—", material: "Fleece", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
       { gsm: "—", material: "Cotton", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
@@ -1120,7 +1673,12 @@ export const products: Product[] = [
     name: "Custom All-Over Print Construction Jacket (Insulated)",
     category: "Jacket",
     sports: [],
-    scenarios: ["Construction & Engineering", "Uniform & Workwear"],
+    scenarios: [
+              "Corporate & Branding",
+              "Uniform & Workwear",
+              "Corporate & Promo",
+              "Construction & Engineering",
+            ],
     fabrics: [
       { gsm: "—", material: "Polyester", process: "Sublimation", gsmOptions: "100120140160180200 g" },
       { gsm: "—", material: "Fleece/Canvas", process: "Sublimation", gsmOptions: "300 g" },
@@ -1135,7 +1693,12 @@ export const products: Product[] = [
     name: "Custom All-Over Print Construction Pants (Cargo)",
     category: "Pants",
     sports: [],
-    scenarios: ["Construction & Engineering", "Uniform & Workwear"],
+    scenarios: [
+              "Corporate & Branding",
+              "Uniform & Workwear",
+              "Corporate & Promo",
+              "Construction & Engineering",
+            ],
     fabrics: [
       { gsm: "—", material: "Cotton/Twill", process: "All-Over Digital Print on Cotton", gsmOptions: "120140160180200220240260280300 g" },
     ],
@@ -1147,9 +1710,14 @@ export const products: Product[] = [
     number: "0071",
     slug: "all-over-print-construction-t-shirt",
     name: "Custom All-Over Print Construction T-Shirt (Hi-Vis Option)",
-    category: "T-Shirt",
+    category: "Uniform & Workwear",
     sports: [],
-    scenarios: ["Construction & Engineering", "Uniform & Workwear"],
+    scenarios: [
+              "Corporate & Branding",
+              "Uniform & Workwear",
+              "Corporate & Promo",
+              "Construction & Engineering",
+            ],
     fabrics: [
       { gsm: "—", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
       { gsm: "—", material: "Cotton", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
@@ -1164,7 +1732,12 @@ export const products: Product[] = [
     name: "Custom All-Over Print Hospitality & F&B Polo Shirt",
     category: "Polo Shirt",
     sports: [],
-    scenarios: ["Hospitality & F&B", "Uniform & Workwear", "Corporate & Branding"],
+    scenarios: [
+              "Corporate & Branding",
+              "Uniform & Workwear",
+              "Corporate & Promo",
+              "Hospitality & F&B",
+            ],
     fabrics: [
       { gsm: "—", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
       { gsm: "—", material: "Pique", process: "Sublimation", gsmOptions: "160180200220240 g" },
@@ -1179,7 +1752,12 @@ export const products: Product[] = [
     name: "Custom All-Over Print Hospitality & F&B T-Shirt",
     category: "T-Shirt",
     sports: [],
-    scenarios: ["Hospitality & F&B", "Uniform & Workwear"],
+    scenarios: [
+              "Corporate & Branding",
+              "Uniform & Workwear",
+              "Corporate & Promo",
+              "Hospitality & F&B",
+            ],
     fabrics: [
       { gsm: "—", material: "Cotton", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
     ],
@@ -1193,7 +1771,12 @@ export const products: Product[] = [
     name: "Custom All-Over Print Hospitality & F&B Sweatshirt",
     category: "Sweatshirt",
     sports: [],
-    scenarios: ["Hospitality & F&B", "Uniform & Workwear"],
+    scenarios: [
+              "Corporate & Branding",
+              "Uniform & Workwear",
+              "Corporate & Promo",
+              "Hospitality & F&B",
+            ],
     fabrics: [
       { gsm: "—", material: "Fleece", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
     ],
@@ -1207,7 +1790,12 @@ export const products: Product[] = [
     name: "Custom All-Over Print Medical & Healthcare Scrubs T-Shirt",
     category: "T-Shirt",
     sports: [],
-    scenarios: ["Medical & Healthcare", "Uniform & Workwear"],
+    scenarios: [
+              "Corporate & Branding",
+              "Uniform & Workwear",
+              "Corporate & Promo",
+              "Medical & Healthcare",
+            ],
     fabrics: [
       { gsm: "—", material: "Cotton", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
       { gsm: "—", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
@@ -1222,7 +1810,12 @@ export const products: Product[] = [
     name: "Custom All-Over Print Medical & Healthcare Polo Shirt",
     category: "Polo Shirt",
     sports: [],
-    scenarios: ["Medical & Healthcare", "Uniform & Workwear"],
+    scenarios: [
+              "Corporate & Branding",
+              "Uniform & Workwear",
+              "Corporate & Promo",
+              "Medical & Healthcare",
+            ],
     fabrics: [
       { gsm: "—", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
     ],
@@ -1236,7 +1829,12 @@ export const products: Product[] = [
     name: "Custom All-Over Print Security & Property Polo Shirt",
     category: "Polo Shirt",
     sports: [],
-    scenarios: ["Security & Property", "Uniform & Workwear", "Construction & Engineering"],
+    scenarios: [
+              "Corporate & Branding",
+              "Uniform & Workwear",
+              "Corporate & Promo",
+              "Security & Property",
+            ],
     fabrics: [
       { gsm: "—", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
       { gsm: "—", material: "Pique", process: "Sublimation", gsmOptions: "160180200220240 g" },
@@ -1251,7 +1849,12 @@ export const products: Product[] = [
     name: "Custom All-Over Print Security & Property Hoodie",
     category: "Hoodie",
     sports: [],
-    scenarios: ["Security & Property", "Uniform & Workwear"],
+    scenarios: [
+              "Corporate & Branding",
+              "Uniform & Workwear",
+              "Corporate & Promo",
+              "Security & Property",
+            ],
     fabrics: [
       { gsm: "—", material: "Fleece", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
     ],
@@ -1265,7 +1868,12 @@ export const products: Product[] = [
     name: "Custom All-Over Print Security & Property Jacket",
     category: "Jacket",
     sports: [],
-    scenarios: ["Security & Property", "Uniform & Workwear"],
+    scenarios: [
+              "Corporate & Branding",
+              "Uniform & Workwear",
+              "Corporate & Promo",
+              "Security & Property",
+            ],
     fabrics: [
       { gsm: "—", material: "Polyester", process: "Sublimation", gsmOptions: "100120140160180200 g" },
     ],
@@ -1279,7 +1887,11 @@ export const products: Product[] = [
     name: "Custom All-Over Print Retail & Supermarket Polo Shirt",
     category: "Polo Shirt",
     sports: [],
-    scenarios: ["Retail & Supermarket", "Uniform & Workwear", "Retail & Fashion"],
+    scenarios: [
+              "Uniform & Workwear",
+              "Corporate & Promo",
+              "Retail & Supermarket",
+            ],
     fabrics: [
       { gsm: "—", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
     ],
@@ -1293,7 +1905,11 @@ export const products: Product[] = [
     name: "Custom All-Over Print Retail & Supermarket T-Shirt",
     category: "T-Shirt",
     sports: [],
-    scenarios: ["Retail & Supermarket", "Uniform & Workwear", "Retail & Fashion"],
+    scenarios: [
+              "Uniform & Workwear",
+              "Corporate & Promo",
+              "Retail & Supermarket",
+            ],
     fabrics: [
       { gsm: "—", material: "Cotton", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
     ],
@@ -1307,7 +1923,11 @@ export const products: Product[] = [
     name: "Custom All-Over Print Retail & Supermarket Hoodie",
     category: "Hoodie",
     sports: [],
-    scenarios: ["Retail & Supermarket", "Uniform & Workwear"],
+    scenarios: [
+              "Uniform & Workwear",
+              "Corporate & Promo",
+              "Retail & Supermarket",
+            ],
     fabrics: [
       { gsm: "—", material: "Fleece", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
     ],
@@ -1321,7 +1941,10 @@ export const products: Product[] = [
     name: "Custom All-Over Print School & Education T-Shirt",
     category: "T-Shirt",
     sports: [],
-    scenarios: ["Education & School", "School & Education", "Uniform & Workwear"],
+    scenarios: [
+              "School & Education",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Cotton", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
       { gsm: "—", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
@@ -1336,7 +1959,10 @@ export const products: Product[] = [
     name: "Custom All-Over Print School & Education Polo Shirt",
     category: "Polo Shirt",
     sports: [],
-    scenarios: ["Education & School", "School & Education", "Uniform & Workwear"],
+    scenarios: [
+              "School & Education",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
       { gsm: "—", material: "Pique", process: "Sublimation", gsmOptions: "160180200220240 g" },
@@ -1351,7 +1977,10 @@ export const products: Product[] = [
     name: "Custom All-Over Print School & Education Hoodie",
     category: "Hoodie",
     sports: [],
-    scenarios: ["Education & School", "School & Education", "Uniform & Workwear"],
+    scenarios: [
+              "School & Education",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Polyester", process: "Sublimation", gsmOptions: "100120140160180200 g" },
     ],
@@ -1365,7 +1994,15 @@ export const products: Product[] = [
     name: "Custom All-Over Print Corporate & Promo Polo Shirt",
     category: "Polo Shirt",
     sports: [],
-    scenarios: ["Corporate & Promo", "Corporate & Branding", "Uniform & Workwear", "Promotional Swag"],
+    scenarios: [
+              "Event & Festival",
+              "Music & Merch",
+              "Wedding & Party",
+              "Festival & Holiday",
+              "Corporate & Branding",
+              "Corporate & Promo",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
       { gsm: "—", material: "Pique", process: "Sublimation", gsmOptions: "160180200220240 g" },
@@ -1380,7 +2017,15 @@ export const products: Product[] = [
     name: "Custom All-Over Print Corporate & Promo T-Shirt",
     category: "T-Shirt",
     sports: [],
-    scenarios: ["Corporate & Promo", "Corporate & Branding", "Promotional Swag"],
+    scenarios: [
+              "Event & Festival",
+              "Music & Merch",
+              "Wedding & Party",
+              "Festival & Holiday",
+              "Corporate & Branding",
+              "Corporate & Promo",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Cotton", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
       { gsm: "—", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
@@ -1395,7 +2040,15 @@ export const products: Product[] = [
     name: "Custom All-Over Print Corporate & Promo Hoodie",
     category: "Hoodie",
     sports: [],
-    scenarios: ["Corporate & Promo", "Corporate & Branding", "Promotional Swag"],
+    scenarios: [
+              "Event & Festival",
+              "Music & Merch",
+              "Wedding & Party",
+              "Festival & Holiday",
+              "Corporate & Branding",
+              "Corporate & Promo",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Fleece", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
       { gsm: "—", material: "Cotton", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
@@ -1410,7 +2063,12 @@ export const products: Product[] = [
     name: "Custom All-Over Print Transit & Transport Polo Shirt",
     category: "Polo Shirt",
     sports: [],
-    scenarios: ["Transit & Transport", "Uniform & Workwear", "Express & Logistics"],
+    scenarios: [
+              "Corporate & Branding",
+              "Uniform & Workwear",
+              "Corporate & Promo",
+              "Transit & Transport",
+            ],
     fabrics: [
       { gsm: "—", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
     ],
@@ -1424,7 +2082,12 @@ export const products: Product[] = [
     name: "Custom All-Over Print Transit & Transport Jacket",
     category: "Jacket",
     sports: [],
-    scenarios: ["Transit & Transport", "Uniform & Workwear"],
+    scenarios: [
+              "Corporate & Branding",
+              "Uniform & Workwear",
+              "Corporate & Promo",
+              "Transit & Transport",
+            ],
     fabrics: [
       { gsm: "—", material: "Polyester", process: "Sublimation", gsmOptions: "100120140160180200 g" },
     ],
@@ -1438,7 +2101,12 @@ export const products: Product[] = [
     name: "Custom All-Over Print Transit & Transport Hoodie",
     category: "Hoodie",
     sports: [],
-    scenarios: ["Transit & Transport", "Uniform & Workwear"],
+    scenarios: [
+              "Corporate & Branding",
+              "Uniform & Workwear",
+              "Corporate & Promo",
+              "Transit & Transport",
+            ],
     fabrics: [
       { gsm: "—", material: "Fleece", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
     ],
@@ -1450,9 +2118,19 @@ export const products: Product[] = [
     number: "0093",
     slug: "all-over-print-studio-gym-tank-top",
     name: "Custom All-Over Print Studio & Gym Tank Top",
-    category: "Tank Top & Camis",
-    sports: [],
-    scenarios: ["Studio & Gym", "Uniform & Workwear"],
+    category: "Sportswear",
+    sports: [
+              "Studio",
+              "Gym",
+              "CrossFit",
+              "Athletics",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Studio & Gym",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Cotton", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
       { gsm: "—", material: "Interlock", process: "Sublimation", gsmOptions: "160180200220 g" },
@@ -1467,7 +2145,12 @@ export const products: Product[] = [
     name: "Custom All-Over Print Studio & Gym T-Shirt",
     category: "T-Shirt",
     sports: [],
-    scenarios: ["Studio & Gym", "Uniform & Workwear"],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Studio & Gym",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Cotton", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
     ],
@@ -1481,7 +2164,12 @@ export const products: Product[] = [
     name: "Custom All-Over Print Studio & Gym Leggings",
     category: "Pants",
     sports: [],
-    scenarios: ["Studio & Gym", "Uniform & Workwear"],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Studio & Gym",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "—", material: "Lycra", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
     ],
@@ -1495,7 +2183,16 @@ export const products: Product[] = [
     name: "Custom All-Over Print Festival & Holiday T-Shirt",
     category: "T-Shirt",
     sports: [],
-    scenarios: ["Festival & Holiday", "Event & Festival", "Music & Merch", "Promotional Swag"],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Corporate & Branding",
+              "Event & Festival",
+              "Festival & Holiday",
+              "Promotional Swag",
+              "Gift & Souvenir",
+              "Corporate & Promo",
+            ],
     fabrics: [
       { gsm: "—", material: "Cotton", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
       { gsm: "—", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
@@ -1510,7 +2207,16 @@ export const products: Product[] = [
     name: "Custom All-Over Print Festival & Holiday Hoodie",
     category: "Hoodie",
     sports: [],
-    scenarios: ["Festival & Holiday", "Event & Festival", "Music & Merch"],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Corporate & Branding",
+              "Event & Festival",
+              "Festival & Holiday",
+              "Promotional Swag",
+              "Gift & Souvenir",
+              "Corporate & Promo",
+            ],
     fabrics: [
       { gsm: "—", material: "Fleece", process: "Sublimation", gsmOptions: "180200220240260280300 g" },
       { gsm: "—", material: "Cotton", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
@@ -1525,7 +2231,10 @@ export const products: Product[] = [
     name: "Custom All-Over Print Military Wear Training T-Shirt",
     category: "T-Shirt",
     sports: [],
-    scenarios: ["Military", "Uniform & Workwear", "Construction & Engineering"],
+    scenarios: [
+              "Uniform & Workwear",
+              "Military",
+            ],
     fabrics: [
       { gsm: "—", material: "Cotton", process: "All-Over Digital Print on Cotton", gsmOptions: "160180200220240 g" },
       { gsm: "—", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
@@ -1540,7 +2249,10 @@ export const products: Product[] = [
     name: "Custom All-Over Print Military Wear Casual Polo",
     category: "Polo Shirt",
     sports: [],
-    scenarios: ["Military", "Uniform & Workwear"],
+    scenarios: [
+              "Uniform & Workwear",
+              "Military",
+            ],
     fabrics: [
       { gsm: "—", material: "Birdseye", process: "Sublimation", gsmOptions: "120140160180200220240 g" },
     ],
@@ -1552,9 +2264,19 @@ export const products: Product[] = [
     number: "0100",
     slug: "all-over-print-beach-sarong",
     name: "Custom All-Over Print Beach Sarong (180×110cm)",
-    category: "Home",
-    sports: ["Beach", "Swimwear", "Surf"],
-    scenarios: ["Event & Festival", "Retail & Fashion", "Promotional Swag"],
+    category: "Sportswear",
+    sports: [
+              "Beach",
+              "Swimwear",
+              "Surf",
+            ],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Beach",
+              "Corporate & Branding",
+              "Corporate & Promo",
+            ],
     fabrics: [
       { gsm: "—", material: "Polyester", process: "Sublimation", gsmOptions: "100120140160180200 g" },
       { gsm: "—", material: "Chiffon", process: "Sublimation", gsmOptions: "80100120140160180200 g" },
@@ -1569,7 +2291,12 @@ export const products: Product[] = [
     name: "Custom All-Over Print Construction Vest (Hi-Vis Option)",
     category: "Uniform & Workwear",
     sports: [],
-    scenarios: ["Construction & Engineering", "Uniform & Workwear"],
+    scenarios: [
+              "Corporate & Branding",
+              "Uniform & Workwear",
+              "Corporate & Promo",
+              "Construction & Engineering",
+            ],
     fabrics: [
       { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
       { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
@@ -1590,9 +2317,14 @@ export const products: Product[] = [
     number: "0102",
     slug: "all-over-print-construction-polo-shirt-hi-vis-option",
     name: "Custom All-Over Print Construction Polo shirt (Hi-Vis Option)",
-    category: "Polo Shirt",
-    sports: ALL_SPORTS,
-    scenarios: ["Construction & Engineering", "Uniform & Workwear"],
+    category: "Uniform & Workwear",
+    sports: [],
+    scenarios: [
+              "Corporate & Branding",
+              "Uniform & Workwear",
+              "Corporate & Promo",
+              "Construction & Engineering",
+            ],
     fabrics: [
       { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
       { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
@@ -1614,8 +2346,13 @@ export const products: Product[] = [
     slug: "all-over-print-hospitality-fb-uniform",
     name: "Custom All-Over Print Hospitality & F&B Uniform",
     category: "Jacket",
-    sports: ALL_SPORTS,
-    scenarios: ["Hospitality & F&B", "Uniform & Workwear"],
+    sports: [],
+    scenarios: [
+              "Corporate & Branding",
+              "Uniform & Workwear",
+              "Corporate & Promo",
+              "Hospitality & F&B",
+            ],
     fabrics: [
       { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
       { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
@@ -1638,7 +2375,12 @@ export const products: Product[] = [
     name: "Custom All-Over Print Hospitality & F&B Hoodie",
     category: "Hoodie",
     sports: [],
-    scenarios: ["Hospitality & F&B"],
+    scenarios: [
+              "Corporate & Branding",
+              "Uniform & Workwear",
+              "Corporate & Promo",
+              "Hospitality & F&B",
+            ],
     fabrics: [
       { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
       { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
@@ -1661,7 +2403,12 @@ export const products: Product[] = [
     name: "Custom All-Over Print Security & Property T-shirt",
     category: "T-Shirt",
     sports: [],
-    scenarios: ["Security & Property"],
+    scenarios: [
+              "Corporate & Branding",
+              "Uniform & Workwear",
+              "Corporate & Promo",
+              "Security & Property",
+            ],
     fabrics: [
       { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
       { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
@@ -1684,7 +2431,11 @@ export const products: Product[] = [
     name: "Custom All-Over Print Retail & Supermarket Jacket",
     category: "Jacket",
     sports: [],
-    scenarios: ["Retail & Supermarket"],
+    scenarios: [
+              "Uniform & Workwear",
+              "Corporate & Promo",
+              "Retail & Supermarket",
+            ],
     fabrics: [
       { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
       { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
@@ -1707,7 +2458,16 @@ export const products: Product[] = [
     name: "Custom All-Over Print Festival & Holiday Shirt",
     category: "Shirt",
     sports: [],
-    scenarios: ["Event & Festival"],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Corporate & Branding",
+              "Event & Festival",
+              "Festival & Holiday",
+              "Promotional Swag",
+              "Gift & Souvenir",
+              "Corporate & Promo",
+            ],
     fabrics: [
       { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
       { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
@@ -1730,7 +2490,12 @@ export const products: Product[] = [
     name: "Custom All-Over Print Music Tour & Festival Merch Shirt",
     category: "Shirt",
     sports: [],
-    scenarios: ["Music & Merch", "Event & Festival"],
+    scenarios: [
+              "Event & Festival",
+              "Festival & Holiday",
+              "Promotional Swag",
+              "Gift & Souvenir",
+            ],
     fabrics: [
       { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
       { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
@@ -1753,7 +2518,12 @@ export const products: Product[] = [
     name: "Custom All-Over Print Music Tour & Festival Merch T-shirt",
     category: "T-Shirt",
     sports: [],
-    scenarios: ["Music & Merch", "Event & Festival"],
+    scenarios: [
+              "Event & Festival",
+              "Festival & Holiday",
+              "Promotional Swag",
+              "Gift & Souvenir",
+            ],
     fabrics: [
       { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
       { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
@@ -1776,7 +2546,12 @@ export const products: Product[] = [
     name: "Custom All-Over Print Music Tour & Festival Merch Hoodie",
     category: "Hoodie",
     sports: [],
-    scenarios: ["Music & Merch", "Event & Festival"],
+    scenarios: [
+              "Event & Festival",
+              "Festival & Holiday",
+              "Promotional Swag",
+              "Gift & Souvenir",
+            ],
     fabrics: [
       { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
       { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
@@ -1799,7 +2574,10 @@ export const products: Product[] = [
     name: "Custom All-Over Print Military Wear Cap",
     category: "Cap",
     sports: [],
-    scenarios: ["Military"],
+    scenarios: [
+              "Uniform & Workwear",
+              "Military",
+            ],
     fabrics: [
       { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
       { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
@@ -1822,7 +2600,10 @@ export const products: Product[] = [
     name: "Custom All-Over Print Military Wear Hoodie",
     category: "Hoodie",
     sports: [],
-    scenarios: ["Military"],
+    scenarios: [
+              "Uniform & Workwear",
+              "Military",
+            ],
     fabrics: [
       { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
       { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
@@ -1845,7 +2626,12 @@ export const products: Product[] = [
     name: "Custom All-Over Print Trade Show & Display T-shirt",
     category: "T-Shirt",
     sports: [],
-    scenarios: ["Event & Festival", "Corporate & Branding"],
+    scenarios: [
+              "Event & Festival",
+              "Festival & Holiday",
+              "Promotional Swag",
+              "Gift & Souvenir",
+            ],
     fabrics: [
       { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
       { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
@@ -1867,8 +2653,13 @@ export const products: Product[] = [
     slug: "all-over-print-trade-show-display-polo-shirt",
     name: "Custom All-Over Print Trade Show & Display Polo shirt",
     category: "Polo Shirt",
-    sports: ALL_SPORTS,
-    scenarios: ["Event & Festival", "Corporate & Branding"],
+    sports: [],
+    scenarios: [
+              "Event & Festival",
+              "Festival & Holiday",
+              "Promotional Swag",
+              "Gift & Souvenir",
+            ],
     fabrics: [
       { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
       { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
@@ -1891,7 +2682,12 @@ export const products: Product[] = [
     name: "Custom All-Over Print Trade Show & Display Hoodie",
     category: "Hoodie",
     sports: [],
-    scenarios: ["Event & Festival", "Corporate & Branding"],
+    scenarios: [
+              "Event & Festival",
+              "Festival & Holiday",
+              "Promotional Swag",
+              "Gift & Souvenir",
+            ],
     fabrics: [
       { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
       { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
@@ -1914,7 +2710,12 @@ export const products: Product[] = [
     name: "Custom All-Over Print Trade Show & Display Cap",
     category: "Cap",
     sports: [],
-    scenarios: ["Event & Festival", "Corporate & Branding"],
+    scenarios: [
+              "Event & Festival",
+              "Festival & Holiday",
+              "Promotional Swag",
+              "Gift & Souvenir",
+            ],
     fabrics: [
       { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
       { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
@@ -1937,7 +2738,14 @@ export const products: Product[] = [
     name: "Custom All-Over Print Political Campaigns T-shirt",
     category: "T-Shirt",
     sports: [],
-    scenarios: ["Political Campaign"],
+    scenarios: [
+              "Event & Festival",
+              "Political Campaign",
+              "Fundraiser & Charity",
+              "Corporate & Promo",
+              "Promotional Swag",
+              "Gift & Souvenir",
+            ],
     fabrics: [
       { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
       { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
@@ -1959,8 +2767,15 @@ export const products: Product[] = [
     slug: "all-over-print-political-campaigns-polo-shirt",
     name: "Custom All-Over Print Political Campaigns Polo shirt",
     category: "Polo Shirt",
-    sports: ALL_SPORTS,
-    scenarios: ["Political Campaign"],
+    sports: [],
+    scenarios: [
+              "Event & Festival",
+              "Political Campaign",
+              "Fundraiser & Charity",
+              "Corporate & Promo",
+              "Promotional Swag",
+              "Gift & Souvenir",
+            ],
     fabrics: [
       { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
       { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
@@ -1983,7 +2798,14 @@ export const products: Product[] = [
     name: "Custom All-Over Print Political Campaigns Hoodie",
     category: "Hoodie",
     sports: [],
-    scenarios: ["Political Campaign"],
+    scenarios: [
+              "Event & Festival",
+              "Political Campaign",
+              "Fundraiser & Charity",
+              "Corporate & Promo",
+              "Promotional Swag",
+              "Gift & Souvenir",
+            ],
     fabrics: [
       { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
       { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
@@ -2006,7 +2828,14 @@ export const products: Product[] = [
     name: "Custom All-Over Print Political Campaigns Cap",
     category: "Cap",
     sports: [],
-    scenarios: ["Political Campaign"],
+    scenarios: [
+              "Event & Festival",
+              "Political Campaign",
+              "Fundraiser & Charity",
+              "Corporate & Promo",
+              "Promotional Swag",
+              "Gift & Souvenir",
+            ],
     fabrics: [
       { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
       { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
@@ -2028,8 +2857,13 @@ export const products: Product[] = [
     slug: "all-over-print-medical-healthcare-nurse-skirt",
     name: "Custom All-Over Print Medical & Healthcare Nurse Skirt",
     category: "Skirt",
-    sports: ALL_SPORTS,
-    scenarios: ["Medical & Healthcare"],
+    sports: [],
+    scenarios: [
+              "Corporate & Branding",
+              "Uniform & Workwear",
+              "Corporate & Promo",
+              "Medical & Healthcare",
+            ],
     fabrics: [
       { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
       { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
@@ -2052,7 +2886,12 @@ export const products: Product[] = [
     name: "Custom All-Over Print Medical & Healthcare Jacket",
     category: "Jacket",
     sports: [],
-    scenarios: ["Medical & Healthcare"],
+    scenarios: [
+              "Corporate & Branding",
+              "Uniform & Workwear",
+              "Corporate & Promo",
+              "Medical & Healthcare",
+            ],
     fabrics: [
       { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
       { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
@@ -2074,8 +2913,13 @@ export const products: Product[] = [
     slug: "all-over-print-transit-transport-t-shirt",
     name: "Custom All-Over Print Transit & Transport T-shirt",
     category: "T-Shirt",
-    sports: ALL_SPORTS,
-    scenarios: ["Transit & Transport", "Sports League"],
+    sports: [],
+    scenarios: [
+              "Corporate & Branding",
+              "Uniform & Workwear",
+              "Corporate & Promo",
+              "Transit & Transport",
+            ],
     fabrics: [
       { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
       { gsm: "210GSM", material: "Polyester", process: "Sublimation" },
@@ -2097,8 +2941,13 @@ export const products: Product[] = [
     slug: "all-over-print-studio-gym-hoodie",
     name: "Custom All-Over Print Studio & Gym Hoodie",
     category: "Hoodie",
-    sports: ALL_SPORTS,
-    scenarios: ["Studio & Gym"],
+    sports: [],
+    scenarios: [
+              "Team & Club",
+              "Sports League",
+              "Studio & Gym",
+              "Retail & Fashion",
+            ],
     fabrics: [
       { gsm: "220GSM", material: "Polyester", process: "Sublimation" },
       { gsm: "210GSM", material: "Polyester", process: "Sublimation" },

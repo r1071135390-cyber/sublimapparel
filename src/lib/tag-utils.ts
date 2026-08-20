@@ -28,10 +28,14 @@ export type TagFilterInput =
   | { sports: string[] }
   | { scenario: string }
   | { scenarios: string[] }
+  | { solution: string }
+  | { industry: string }
   | {
       categories?: string[];
       sports?: string[];
       scenarios?: string[];
+      solution?: string;
+      industry?: string;
     };
 
 const BASE = "/products/all/";
@@ -40,6 +44,8 @@ export function tagLink(input: TagFilterInput): string {
   let categories: string[] = [];
   let sports: string[] = [];
   let scenarios: string[] = [];
+  let solution = "";
+  let industry = "";
 
   if ("category" in input) {
     categories = [input.category];
@@ -53,10 +59,16 @@ export function tagLink(input: TagFilterInput): string {
     scenarios = [input.scenario];
   } else if ("scenarios" in input) {
     scenarios = input.scenarios ?? [];
+  } else if ("solution" in input) {
+    if (input.solution) solution = input.solution;
+  } else if ("industry" in input) {
+    if (input.industry) industry = input.industry;
   } else {
     if (input.categories) categories = input.categories;
     if (input.sports) sports = input.sports;
     if (input.scenarios) scenarios = input.scenarios;
+    if (input.solution) solution = input.solution;
+    if (input.industry) industry = input.industry;
   }
 
   // URLSearchParams encodes spaces as '+' and '&' as '%26', but
@@ -66,7 +78,31 @@ export function tagLink(input: TagFilterInput): string {
   if (categories.length) params.set("cat", categories.join(","));
   if (sports.length) params.set("sport", sports.join(","));
   if (scenarios.length) params.set("use", scenarios.join(","));
+  if (solution) params.set("sol", solution);
+  if (industry) params.set("ind", industry);
   return `${BASE}#${params.toString()}`;
+}
+
+// ============================================================
+// Static-page link helpers for Solution / Industry taxonomy
+// ============================================================
+
+import { SOLUTIONS, INDUSTRIES } from "@/lib/taxonomy";
+
+export function solutionLink(slug: string): string {
+  return `/${slug}/`;
+}
+
+export function industryLink(slug: string): string {
+  return `/industries/${slug}/`;
+}
+
+export function solutionPath(slug: string): string | null {
+  return SOLUTIONS.find((s) => s.slug === slug) ? `/${slug}/` : null;
+}
+
+export function industryPath(slug: string): string | null {
+  return INDUSTRIES.find((i) => i.slug === slug) ? `/industries/${slug}/` : null;
 }
 
 // ============================================================

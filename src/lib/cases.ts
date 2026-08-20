@@ -144,7 +144,7 @@ export const industries: IndustryCase[] = [
       "Rush shirts, bid day tees, game-day apparel, alumni gear and dorm goods. Campus orders are cotton orders, and they are always urgent.",
     pitch:
       "Campus orders are cotton orders, and they are always urgent. We cover both.",
-    relatedScenario: "Education & School",
+    relatedScenario: "School & Education",
     relatedCategory: "T-Shirt",
     cases: [],
   },

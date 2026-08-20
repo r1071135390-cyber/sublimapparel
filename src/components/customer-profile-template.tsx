@@ -45,6 +45,7 @@ import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 import { Contact } from "@/components/contact";
 import type { CustomerProfileData } from "@/lib/customer-profile-data";
 
+import { RelatedProducts } from "@/components/related-products";
 const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
   ShoppingCart,
   Shirt,
@@ -339,6 +340,9 @@ export function CustomerProfilePage({ data }: { data: CustomerProfileData }) {
           </section>
         );
       })()}
+
+      {/* RELATED PRODUCTS (tag-driven) */}
+      <RelatedProducts industrySlug={data.slug.replace(/^\/industries\/|\/$/g, "")} />
 
       {/* FAQ */}
       <section className="bg-[#f5f5f5]">

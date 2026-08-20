@@ -477,8 +477,14 @@ export function buildSeoContent(product: Product): SeoContent {
 // any T-Shirt with at least one sport as a "jersey" and surface that word
 // throughout the SEO content, H1, title, and a dedicated tag page.
 
+// isJersey: A product is a "jersey" if its category is T-Shirt or Jersey AND it has at least one sport.
+// Per the 2026 recategorization, "Jersey" is now its own category (not just a sub-type of T-Shirt).
+// We treat both T-Shirt-with-sport and category="Jersey" as the jersey family — they share the
+// same SEO keywords, the same customizer options, and the same sport-style mockup.
 export function isJersey(product: Product): boolean {
-  return product.category === "T-Shirt" && product.sports.length > 0;
+  if (product.category === "Jersey") return true;
+  if (product.category === "T-Shirt" && product.sports.length > 0) return true;
+  return false;
 }
 
 export function getJerseyTitle(product: Product): string | null {

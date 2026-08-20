@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { ArrowLeft, CheckCircle2, Sparkles, ArrowRight, Truck, Ruler } from "lucide-react";
+import { ArrowLeft, CheckCircle2, Sparkles, ArrowRight, Truck, Ruler, Compass, Building2, Tag as TagIcon } from "lucide-react";
 import { JsonLd } from "@/components/json-ld";
 import { tagArchiveLink } from "@/lib/tag-utils";
 import { RequestQuoteLink } from "@/components/request-quote-link";
@@ -15,11 +15,18 @@ import {
   type Sport,
   type Scenario,
 } from "@/lib/products-data";
+import {
+  SOLUTIONS,
+  INDUSTRIES,
+  getSolutionsForProduct,
+  getIndustriesForProduct,
+} from "@/lib/taxonomy";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 import { ProductGallery } from "@/components/product-gallery";
 import { KeywordCloud } from "@/components/keyword-cloud";
 import { getProductImages } from "@/lib/product-images";
 import { buildSeoContent, buildProductFaqLd, isJersey } from "@/lib/product-content";
+import { solutionLink, industryLink } from "@/lib/tag-utils";
 
 export function generateStaticParams() {
   return products.map((p) => ({ slug: p.slug }));
@@ -109,6 +116,9 @@ export default async function ProductDetailPage({
   const emoji = getCategoryEmoji(product.category);
   const seo = buildSeoContent(product);
 
+  const productSolutions = getSolutionsForProduct(product);
+  const productIndustries = getIndustriesForProduct(product);
+
   const breadcrumbLd = buildBreadcrumbJsonLd([
     { name: "Home", path: "/" },
     { name: "Products", path: "/products/" },
@@ -180,6 +190,99 @@ export default async function ProductDetailPage({
           <h1 className="mb-3 max-w-4xl text-3xl font-black uppercase leading-[0.95] tracking-tight md:mb-4 md:text-5xl lg:text-6xl">
             {product.name}
           </h1>
+
+          {/* Meta info — all 5 dimensions (category, sports, solutions, industries, scenarios) */}
+          <div className="mb-5 flex flex-col gap-2 md:mb-6 md:gap-2.5">
+            {/* Row 1: Category + Sports */}
+            <div className="flex flex-wrap items-center gap-x-1.5 gap-y-1.5">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-white/55 md:text-[11px]">
+                Category
+              </span>
+              <Link
+                href={tagArchiveLink("category", product.category)}
+                className="inline-flex items-center gap-1 rounded-sm border-2 border-[#ff4d00] bg-[#ff4d00] px-2 py-0.5 text-[10px] font-black uppercase tracking-wide text-white transition-colors hover:bg-[#e64500] md:text-[11px]"
+              >
+                <TagIcon className="h-3 w-3" />
+                {product.category}
+              </Link>
+              <span className="mx-1 text-white/30">·</span>
+              <span className="text-[10px] font-bold uppercase tracking-widest text-white/55 md:text-[11px]">
+                {product.sports.length > 0 ? "Sports" : "Sports (general)"}
+              </span>
+              {product.sports.length === 0 ? (
+                <span className="inline-flex items-center rounded-sm border-2 border-white/20 bg-white/5 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white/60 md:text-[11px]">
+                  No specific sport
+                </span>
+              ) : (
+                product.sports.map((s) => (
+                  <Link
+                    key={s}
+                    href={tagArchiveLink("sport", s)}
+                    className="inline-flex items-center rounded-sm border-2 border-white/20 bg-white/5 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white transition-colors hover:border-[#ff4d00] hover:bg-[#ff4d00] md:text-[11px]"
+                  >
+                    {s}
+                  </Link>
+                ))
+              )}
+            </div>
+
+            {/* Row 2: Solution(s) */}
+            {productSolutions.length > 0 && (
+              <div className="flex flex-wrap items-center gap-x-1.5 gap-y-1.5">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-white/55 md:text-[11px]">
+                  {productSolutions.length === 1 ? "Solution" : "Solutions"}
+                </span>
+                {productSolutions.map((s) => (
+                  <Link
+                    key={s.slug}
+                    href={solutionLink(s.slug)}
+                    className="inline-flex items-center rounded-sm border-2 border-[#00c2ff] bg-[#00c2ff]/15 px-2 py-0.5 text-[10px] font-black uppercase tracking-wide text-[#7adbff] transition-colors hover:bg-[#00c2ff] hover:text-white md:text-[11px]"
+                  >
+                    <Compass className="mr-1 h-3 w-3" />
+                    {s.name}
+                  </Link>
+                ))}
+              </div>
+            )}
+
+            {/* Row 3: Industry/Industries */}
+            {productIndustries.length > 0 && (
+              <div className="flex flex-wrap items-center gap-x-1.5 gap-y-1.5">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-white/55 md:text-[11px]">
+                  {productIndustries.length === 1 ? "Industry" : "Industries"}
+                </span>
+                {productIndustries.map((i) => (
+                  <Link
+                    key={i.slug}
+                    href={industryLink(i.slug)}
+                    className="inline-flex items-center rounded-sm border-2 border-[#00c2ff]/40 bg-[#00c2ff]/5 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-[#7adbff] transition-colors hover:border-[#00c2ff] hover:bg-[#00c2ff] hover:text-white md:text-[11px]"
+                  >
+                    <Building2 className="mr-1 h-3 w-3" />
+                    {i.name}
+                  </Link>
+                ))}
+              </div>
+            )}
+
+            {/* Row 4: Scenarios */}
+            {product.scenarios.length > 0 && (
+              <div className="flex flex-wrap items-center gap-x-1.5 gap-y-1.5">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-white/55 md:text-[11px]">
+                  Scenarios ({product.scenarios.length})
+                </span>
+                {product.scenarios.map((s) => (
+                  <Link
+                    key={s}
+                    href={tagArchiveLink("scenario", s)}
+                    className="inline-flex items-center rounded-sm border-2 border-white/20 bg-white/5 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white/90 transition-colors hover:border-[#00c2ff] hover:bg-[#00c2ff] hover:text-white md:text-[11px]"
+                  >
+                    {s}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+
           <p className="max-w-2xl text-sm leading-relaxed text-white/85 md:text-base">
             {product.description}
           </p>
@@ -328,7 +431,7 @@ export default async function ProductDetailPage({
             Where this fits
           </h2>
 
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 md:gap-6 lg:grid-cols-5">
             <div>
               <h3 className="mb-3 text-[10px] font-bold uppercase tracking-widest text-white/60 md:text-xs">
                 Sports ({product.sports.length})
@@ -365,6 +468,50 @@ export default async function ProductDetailPage({
                   </Link>
                 ))}
               </div>
+            </div>
+
+            <div>
+              <h3 className="mb-3 text-[10px] font-bold uppercase tracking-widest text-white/60 md:text-xs">
+                {productSolutions.length === 1 ? "Solution" : `Solutions (${productSolutions.length})`}
+              </h3>
+              {productSolutions.length === 0 ? (
+                <p className="text-sm text-white/50">— none —</p>
+              ) : (
+                <div className="flex flex-wrap gap-1.5">
+                  {productSolutions.map((s) => (
+                    <Link
+                      key={s.slug}
+                      href={solutionLink(s.slug)}
+                      className="inline-flex items-center gap-1 rounded-sm border-2 border-[#00c2ff] bg-[#00c2ff]/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-[#7adbff] transition-colors hover:bg-[#00c2ff] hover:text-white md:text-xs"
+                    >
+                      <Compass className="h-3 w-3" />
+                      {s.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div>
+              <h3 className="mb-3 text-[10px] font-bold uppercase tracking-widest text-white/60 md:text-xs">
+                {productIndustries.length === 1 ? "Industry" : `Industries (${productIndustries.length})`}
+              </h3>
+              {productIndustries.length === 0 ? (
+                <p className="text-sm text-white/50">— none —</p>
+              ) : (
+                <div className="flex flex-wrap gap-1.5">
+                  {productIndustries.map((i) => (
+                    <Link
+                      key={i.slug}
+                      href={industryLink(i.slug)}
+                      className="inline-flex items-center gap-1 rounded-sm border-2 border-[#00c2ff]/40 bg-[#00c2ff]/5 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-[#7adbff] transition-colors hover:border-[#00c2ff] hover:bg-[#00c2ff] hover:text-white md:text-xs"
+                    >
+                      <Building2 className="h-3 w-3" />
+                      {i.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div>

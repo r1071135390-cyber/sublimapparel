@@ -24,6 +24,7 @@ import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 import { forEventsFaqJsonLd } from "@/lib/json-ld-data";
+import { RelatedProducts } from "@/components/related-products";
 
 export const metadata: Metadata = {
   title:
@@ -516,6 +517,10 @@ export default function ForCorporatePage() {
           </div>
         </div>
       </section>
+      {/* RELATED PRODUCTS (tag-driven) */}
+      <RelatedProducts solutionSlug="corporate-organization-apparel" />
+
+      
 
       {/* FAQ */}
       <section className="bg-[#faf9f6] py-20">

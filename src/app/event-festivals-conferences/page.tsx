@@ -26,6 +26,7 @@ import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 import { forEventsServiceJsonLd, forEventsFaqJsonLd } from "@/lib/json-ld-data";
+import { RelatedProducts } from "@/components/related-products";
 
 export const metadata: Metadata = {
   title:
@@ -562,6 +563,10 @@ export default function ForEventsPage() {
           </div>
         </div>
       </section>
+      {/* RELATED PRODUCTS (tag-driven) */}
+      <RelatedProducts solutionSlug="event-festivals-conferences" />
+
+      
 
       {/* FAQ */}
       <section className="bg-[#faf9f6] py-20">

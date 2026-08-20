@@ -14,6 +14,7 @@ import {
   type Sport,
   type Scenario,
 } from "@/lib/products-data";
+import { SOLUTIONS, INDUSTRIES } from "@/lib/taxonomy";
 import { getProductMainSrc } from "@/lib/product-image-helpers";
 
 const PLACEHOLDER_GRADIENTS = [
@@ -56,17 +57,21 @@ interface FilterState {
   categories: ProductCategory[];
   sports: Sport[];
   scenarios: Scenario[];
+  industries: string[];
+  solutions: string[];
 }
 
 function readFromHash(): FilterState {
-  if (typeof window === "undefined") return { categories: [], sports: [], scenarios: [] };
+  if (typeof window === "undefined") return { categories: [], sports: [], scenarios: [], industries: [], solutions: [] };
   const hash = window.location.hash.replace(/^#/, "");
-  if (!hash) return { categories: [], sports: [], scenarios: [] };
+  if (!hash) return { categories: [], sports: [], scenarios: [], industries: [], solutions: [] };
   const params = new URLSearchParams(hash);
   return {
     categories: (params.get("cat")?.split(",").filter(Boolean) as ProductCategory[]) ?? [],
     sports: (params.get("sport")?.split(",").filter(Boolean) as Sport[]) ?? [],
     scenarios: (params.get("use")?.split(",").filter(Boolean) as Scenario[]) ?? [],
+    industries: params.get("ind")?.split(",").filter(Boolean) ?? [],
+    solutions: params.get("sol")?.split(",").filter(Boolean) ?? [],
   };
 }
 
@@ -76,6 +81,8 @@ function writeToHash(filter: FilterState) {
   if (filter.categories.length) params.set("cat", filter.categories.join(","));
   if (filter.sports.length) params.set("sport", filter.sports.join(","));
   if (filter.scenarios.length) params.set("use", filter.scenarios.join(","));
+  if (filter.industries.length) params.set("ind", filter.industries.join(","));
+  if (filter.solutions.length) params.set("sol", filter.solutions.join(","));
   const newHash = params.toString();
   const newUrl = `${window.location.pathname}${newHash ? `#${newHash}` : ""}`;
   window.history.replaceState(null, "", newUrl);
@@ -90,6 +97,25 @@ function matchesFilter(p: Product, filter: FilterState): boolean {
   if (filter.scenarios.length) {
     const intersect = p.scenarios.filter((s) => filter.scenarios.includes(s));
     if (intersect.length === 0) return false;
+  }
+  if (filter.solutions.length) {
+    const allowedScenarios = new Set<string>();
+    for (const s of filter.solutions) {
+      const sol = SOLUTIONS.find((x) => x.slug === s);
+      if (sol) sol.scenarios.forEach((sc) => allowedScenarios.add(sc));
+    }
+    if (allowedScenarios.size && !p.scenarios.some((sc) => allowedScenarios.has(sc))) return false;
+  }
+  if (filter.industries.length) {
+    const allowedScenarios = new Set<string>();
+    for (const ind of filter.industries) {
+      const i = INDUSTRIES.find((x) => x.slug === ind);
+      if (i) {
+        const sol = SOLUTIONS.find((s) => s.slug === i.solution);
+        if (sol) sol.scenarios.forEach((sc) => allowedScenarios.add(sc));
+      }
+    }
+    if (allowedScenarios.size && !p.scenarios.some((sc) => allowedScenarios.has(sc))) return false;
   }
   return true;
 }
@@ -123,6 +149,8 @@ export function ProductCatalog() {
     categories: [],
     sports: [],
     scenarios: [],
+    industries: [],
+    solutions: [],
   });
   const [hydrated, setHydrated] = useState(false);
 
@@ -145,9 +173,15 @@ export function ProductCatalog() {
     });
   };
 
-  const clearAll = () => setFilter({ categories: [], sports: [], scenarios: [] });
+  const clearAll = () =>
+    setFilter({ categories: [], sports: [], scenarios: [], industries: [], solutions: [] });
 
-  const activeCount = filter.categories.length + filter.sports.length + filter.scenarios.length;
+  const activeCount =
+    filter.categories.length +
+    filter.sports.length +
+    filter.scenarios.length +
+    filter.industries.length +
+    filter.solutions.length;
 
   return (
     <div>
@@ -157,7 +191,7 @@ export function ProductCatalog() {
           <div className="mb-4 flex items-end justify-between md:mb-6">
             <div>
               <p className="mb-1 text-[10px] font-bold uppercase tracking-widest text-[#cc3d00] md:text-xs">
-                Cross-filter 3 dimensions
+                Cross-filter 5 dimensions
               </p>
               <h2 className="text-xl font-black uppercase leading-tight tracking-tight text-black md:text-3xl">
                 Find your product
@@ -212,7 +246,7 @@ export function ProductCatalog() {
           </div>
 
           {/* SCENARIO */}
-          <div>
+          <div className="mb-4 md:mb-6">
             <h3 className="mb-2 text-[10px] font-bold uppercase tracking-widest text-[#6b6b6b] md:text-xs">
               Scenario · {filter.scenarios.length || "all"}
             </h3>
@@ -224,6 +258,42 @@ export function ProductCatalog() {
                   onClick={() => toggle("scenarios", sc)}
                 >
                   {sc}
+                </FilterChip>
+              ))}
+            </div>
+          </div>
+
+          {/* SOLUTION */}
+          <div className="mb-4 md:mb-6">
+            <h3 className="mb-2 text-[10px] font-bold uppercase tracking-widest text-[#6b6b6b] md:text-xs">
+              Solution · {filter.solutions.length || "all"}
+            </h3>
+            <div className="flex flex-wrap gap-1.5 md:gap-2">
+              {SOLUTIONS.map((s) => (
+                <FilterChip
+                  key={s.slug}
+                  active={filter.solutions.includes(s.slug)}
+                  onClick={() => toggle("solutions", s.slug)}
+                >
+                  {s.name}
+                </FilterChip>
+              ))}
+            </div>
+          </div>
+
+          {/* INDUSTRY */}
+          <div>
+            <h3 className="mb-2 text-[10px] font-bold uppercase tracking-widest text-[#6b6b6b] md:text-xs">
+              Industry · {filter.industries.length || "all"}
+            </h3>
+            <div className="flex flex-wrap gap-1.5 md:gap-2">
+              {INDUSTRIES.map((i) => (
+                <FilterChip
+                  key={i.slug}
+                  active={filter.industries.includes(i.slug)}
+                  onClick={() => toggle("industries", i.slug)}
+                >
+                  {i.name}
                 </FilterChip>
               ))}
             </div>

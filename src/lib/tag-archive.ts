@@ -121,6 +121,18 @@ export const CATEGORY_TAGS: Record<string, Omit<TagInfo, "slug" | "dimension">> 
     process: "Sublimation (polyester) or All-Over Digital Print on Cotton",
     icon: "👕",
   },
+  Jersey: {
+    label: "Jersey",
+    description: "Custom sublimated jerseys built for team kits, league play, and tournament drops. We print the full front, back, and both sleeves — numbers, names, and sponsor logos stay crisp without breaking the pattern.",
+    benefits: [
+      "Edge-to-edge print across body and sleeves",
+      "Polyester 160–200 GSM interlock or eyelet mesh",
+      "Custom numbers, names, and sponsor patches",
+      "MOQ 50 pcs per design, 7–10 day sample",
+    ],
+    process: "Sublimation on Polyester Interlock / Mesh",
+    icon: "👕",
+  },
   "Hoodie": {
     label: "Hoodie",
     description: "Heavyweight sublimation hoodies built for streetwear drops, team crests, and cold-weather merch. Cut-and-sewn from panel pieces so the print wraps cleanly across the hood, sleeves, and kangaroo pocket.",

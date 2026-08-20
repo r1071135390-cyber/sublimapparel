@@ -19,6 +19,7 @@ import {
 import { forEventsFaqJsonLd } from "@/lib/json-ld-data";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 import { Contact } from "@/components/contact";
+import { RelatedProducts } from "@/components/related-products";
 
 export const dynamic = "force-static";
 
@@ -358,6 +359,10 @@ export default function CustomEventTShirtsPage() {
           </div>
         </div>
       </section>
+      {/* RELATED PRODUCTS (tag-driven) */}
+      <RelatedProducts solutionSlug="promotional-marketing-apparel" />
+
+      
 
       {/* FAQ */}
       <section className="border-t border-neutral-200 bg-neutral-50">
