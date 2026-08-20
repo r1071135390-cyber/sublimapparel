@@ -148,7 +148,7 @@ export function Hero() {
         </div>
 
         {/* 6 industry/use-case chips (2026 strategy v3) */}
-        <div className="mb-4 grid grid-cols-2 gap-2 sm:grid-cols-3 md:mb-5 md:flex md:flex-wrap md:gap-3">
+        <div className="mb-4 mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3 md:mb-5 md:mt-4 md:flex md:flex-wrap md:gap-3">
           {categories.map((c) => (
             <Link
               key={c.num}
