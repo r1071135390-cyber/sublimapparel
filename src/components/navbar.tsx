@@ -122,10 +122,10 @@ export function Navbar() {
             </div>
           </div>
 
-          {/* Resources dropdown */}
+          {/* Tools dropdown (main link → /resources/ hub) */}
           <div className="group relative">
-            <button
-              type="button"
+            <Link
+              href="/resources"
               className="inline-flex items-center gap-1 text-sm font-bold uppercase tracking-wider text-black transition-colors hover:text-[#cc3d00]"
             >
               Tools
@@ -133,12 +133,21 @@ export function Navbar() {
                 className="h-3.5 w-3.5 transition-transform group-hover:rotate-180"
                 strokeWidth={3}
               />
-            </button>
+            </Link>
             <div className="invisible absolute left-1/2 top-full z-20 w-72 -translate-x-1/2 border-2 border-black bg-white opacity-0 shadow-[6px_6px_0_0_rgba(10,10,10,1)] transition-all group-hover:visible group-hover:opacity-100">
               <div className="border-b-2 border-black bg-[#00c2ff] px-4 py-2.5 text-[10px] font-black uppercase tracking-widest text-black">
                 <Wrench className="mr-1 inline h-3 w-3" />
                 Free Resources
               </div>
+              <Link
+                href="/resources"
+                className="block border-b-2 border-black bg-[#00c2ff]/20 px-4 py-2.5 transition-colors hover:bg-[#0a0a0a] hover:text-white"
+              >
+                <div className="text-sm font-black">View All Resources</div>
+                <div className="mt-0.5 text-[11px] text-black/60 group-hover:text-white/70">
+                  All tools, calculators & guides in one place
+                </div>
+              </Link>
               {resources.map((r) => (
                 <Link
                   key={r.href}
@@ -171,12 +180,6 @@ export function Navbar() {
             className="text-sm font-bold uppercase tracking-wider text-black transition-colors hover:text-[#cc3d00]"
           >
             About
-          </Link>
-          <Link
-            href="/resources"
-            className="text-sm font-bold uppercase tracking-wider text-black transition-colors hover:text-[#cc3d00]"
-          >
-            Resources
           </Link>
           <Link
             href="/blog"

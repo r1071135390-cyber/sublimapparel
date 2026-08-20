@@ -6,8 +6,9 @@ import {
   Home,
   Shirt,
   Compass,
+  Layers,
   Wrench,
-  BookOpen,
+  Truck,
   FileText,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -49,10 +50,17 @@ const tabs: Tab[] = [
       p === "/e-commerce-fulfillment",
   },
   {
-    href: "/event-timeline",
+    href: "/fabric",
+    label: "Fabrics",
+    icon: Layers,
+    match: (p) => p === "/fabric" || p.startsWith("/fabric/"),
+  },
+  {
+    href: "/resources",
     label: "Tools",
     icon: Wrench,
     match: (p) =>
+      p === "/resources" ||
       p === "/event-timeline" ||
       p === "/us-size-guide" ||
       p === "/quality-control" ||
@@ -60,10 +68,13 @@ const tabs: Tab[] = [
       p === "/how-to-source",
   },
   {
-    href: "/resources",
-    label: "Resources",
-    icon: BookOpen,
-    match: (p) => p === "/resources",
+    href: "/shipping",
+    label: "Shipping",
+    icon: Truck,
+    match: (p) =>
+      p === "/shipping" ||
+      p === "/shipping-policy" ||
+      p === "/ddp",
   },
   {
     href: "/blog",
