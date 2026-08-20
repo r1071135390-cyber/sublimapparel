@@ -38,6 +38,8 @@ const ROUTES: SitemapRoute[] = [
   { path: "/products/t-shirts", priority: 0.85, changeFrequency: "monthly" },
   { path: "/products/hoodies", priority: 0.85, changeFrequency: "monthly" },
   { path: "/products/jerseys", priority: 0.85, changeFrequency: "monthly" },
+  { path: "/products/running-shirts", priority: 0.85, changeFrequency: "monthly" },
+  { path: "/products/training-apparel", priority: 0.85, changeFrequency: "monthly" },
   { path: "/products/racing", priority: 0.85, changeFrequency: "monthly" },
   { path: "/products/cycling", priority: 0.85, changeFrequency: "monthly" },
   { path: "/products/golf", priority: 0.85, changeFrequency: "monthly" },

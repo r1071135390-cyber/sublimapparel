@@ -125,6 +125,9 @@ export interface Product {
   slug: string;                // URL slug derived from id
   name: string;                // display name
   category: ProductCategory;
+  /** Secondary category to preserve dual-value semantics from the master
+   *  product spreadsheet (e.g. "Sportswear, T-Shirt"). Optional. */
+  subcategory?: ProductCategory;
   sports: Sport[];             // empty array = "no specific sport"
   scenarios: Scenario[];
   fabrics: ProductFabric[];    // available fabric options
@@ -2962,6 +2965,66 @@ export const products: Product[] = [
     ],
     moq: 50,
     description: "All-Over Print Studio & Gym Hoodie. All-over print sublimation or allover digital print on cotton, MOQ 50 pcs, DDP shipping to 50+ countries.",
+  },
+  // ───────────────────────────────────────────
+  // 0128 — Custom All-Over Print Running Shirts
+  // ───────────────────────────────────────────
+  {
+    id: "NEWAOP0025",
+    number: "0128",
+    slug: "all-over-print-running-shirts",
+    name: "Custom All-Over Print Running Shirts",
+    category: "T-Shirt",
+    subcategory: "Sportswear",
+    sports: ["Running", "Marathon", "Athletics", "Gym"],
+    scenarios: [
+      "Team & Club",
+      "Sports League",
+      "Event & Festival",
+      "Fundraiser & Charity",
+      "Corporate & Branding",
+      "Corporate & Promo",
+      "Retail & Fashion",
+      "School & Education",
+    ],
+    fabrics: [
+      { gsm: "135GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "145GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "160GSM", material: "Polyester", process: "Sublimation" },
+    ],
+    moq: 50,
+    description:
+      "Custom all-over print running shirts — 135–160 GSM polyester interlock, 4-way stretch, moisture-wicking. Edge-to-edge sublimation, MOQ 50 pcs, DDP shipping to 50+ countries. Perfect for marathons, club runs, charity races, and school athletics.",
+  },
+  // ───────────────────────────────────────────
+  // 0129 — Custom All-Over Print Training Apparel
+  // ───────────────────────────────────────────
+  {
+    id: "NEWAOP0026",
+    number: "0129",
+    slug: "all-over-print-training-apparel",
+    name: "Custom All-Over Print Training Apparel",
+    category: "T-Shirt",
+    subcategory: "Sportswear",
+    sports: ["Gym", "CrossFit", "Athletics", "Running", "Studio"],
+    scenarios: [
+      "Team & Club",
+      "Sports League",
+      "Studio & Gym",
+      "Corporate & Branding",
+      "Corporate & Promo",
+      "Retail & Fashion",
+      "Fundraiser & Charity",
+      "School & Education",
+    ],
+    fabrics: [
+      { gsm: "140GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "160GSM", material: "Polyester", process: "Sublimation" },
+      { gsm: "180GSM", material: "Polyester", process: "Sublimation" },
+    ],
+    moq: 50,
+    description:
+      "Custom all-over print training apparel — 140–180 GSM polyester interlock, 4-way stretch, sweat-wicking, reinforced seams. Edge-to-edge sublimation, MOQ 50 pcs, DDP shipping. Built for gym, CrossFit, athletics, and team training.",
   },
 ];
 
