@@ -20,7 +20,7 @@ export const dynamic = "force-static";
 
 const data: CustomerProfileData = {
   slug: "/industries/corporate-employee-programs/",
-  metaTitle: "Corporate Uniform Manufacturer | Employee Apparel & Branded Workwear",
+  metaTitle: "Corporate Uniform & Employee Apparel Manufacturer",
   metaDescription:
     "Corporate uniform manufacturer for employee apparel and branded workwear. Custom polo shirts, office apparel, and company uniforms with reliable production and global delivery.",
   keywords: [
@@ -35,6 +35,7 @@ const data: CustomerProfileData = {
     "staff uniforms",
   ],
   badge: "For Corporate & Employee Programs",
+  hero: "/quote-hero-showroom.webp",
   h1: "Corporate Uniforms & Employee Apparel for Growing Companies",
   heroTitle: "Employee Apparel That Makes Your Team Look Professional",
   heroBody:

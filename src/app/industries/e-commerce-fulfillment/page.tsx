@@ -20,7 +20,7 @@ export const dynamic = "force-static";
 
 const data: CustomerProfileData = {
   slug: "/industries/e-commerce-fulfillment/",
-  metaTitle: "Apparel Manufacturing for E-commerce & Dropshipping | B2B Fulfillment",
+  metaTitle: "E-commerce & Dropshipping Apparel Manufacturer",
   metaDescription:
     "Apparel manufacturing for e-commerce brands, dropshippers and B2B sellers. Custom production, white label, private label and dropship fulfillment with global shipping.",
   keywords: [
@@ -35,6 +35,7 @@ const data: CustomerProfileData = {
     "print on demand alternative",
   ],
   badge: "For E-commerce & Fulfillment",
+  hero: "/pack-warehouse.webp",
   h1: "Apparel Manufacturing for E-commerce, Dropship & B2B Sellers",
   heroTitle: "Manufacturing Support for E-commerce Apparel Brands",
   heroBody:

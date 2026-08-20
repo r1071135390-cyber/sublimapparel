@@ -22,6 +22,7 @@ export interface CustomerProfileData {
   metaTitle: string;
   metaDescription: string;
   keywords: string[];
+  hero: string;
   badge: string;
   h1: string;
   heroTitle: string;
@@ -68,7 +69,7 @@ export function buildMetadata(data: CustomerProfileData): Metadata {
       siteName: "SublimApparel",
       images: [
         {
-          url: "/og-default.jpg",
+          url: data.hero,
           width: 1200,
           height: 630,
           alt: data.metaTitle,
@@ -79,7 +80,7 @@ export function buildMetadata(data: CustomerProfileData): Metadata {
       card: "summary_large_image",
       title: data.metaTitle,
       description: data.metaDescription,
-      images: ["/og-default.jpg"],
+      images: [data.hero],
     },
   };
 }

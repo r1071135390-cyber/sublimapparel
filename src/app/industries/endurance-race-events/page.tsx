@@ -34,7 +34,7 @@ export const dynamic = "force-static";
 
 const data: CustomerProfileData = {
   slug: "/industries/endurance-race-events/",
-  metaTitle: "Custom Race Shirts Manufacturer | Marathon & Running Event Apparel",
+  metaTitle: "Marathon & Running Race Shirts Manufacturer",
   metaDescription:
     "Custom race shirts manufacturer for marathons, running events and endurance competitions. Bulk sublimation apparel with accurate sizing and reliable delivery.",
   keywords: [
@@ -48,6 +48,7 @@ const data: CustomerProfileData = {
     "triathlon apparel",
   ],
   badge: "For Endurance & Race Events",
+  hero: "/hero-jersey.webp",
   h1: "Custom Race Shirts & Marathon Apparel Manufacturer",
   heroTitle: "Apparel Solutions for Races, Marathons & Endurance Events",
   heroBody:

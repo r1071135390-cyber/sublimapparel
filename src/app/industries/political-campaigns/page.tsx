@@ -20,7 +20,7 @@ export const dynamic = "force-static";
 
 const data: CustomerProfileData = {
   slug: "/industries/political-campaigns/",
-  metaTitle: "Political Campaign Apparel Manufacturer | Custom Campaign Merchandise",
+  metaTitle: "Political Campaign Apparel & Merchandise",
   metaDescription:
     "Political campaign apparel manufacturer for campaigns, parties and political action committees. Custom yard signs, campaign shirts, hats and rally merchandise with fast production.",
   keywords: [
@@ -35,6 +35,7 @@ const data: CustomerProfileData = {
     "election apparel",
   ],
   badge: "For Political Campaigns",
+  hero: "/logo-main.webp",
   h1: "Political Campaign Apparel Manufacturer for Campaigns, Parties & PACs",
   heroTitle: "Campaign Apparel That Helps You Get Out the Vote",
   heroBody:

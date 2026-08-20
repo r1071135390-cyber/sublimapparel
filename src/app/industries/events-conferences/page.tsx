@@ -21,7 +21,7 @@ export const dynamic = "force-static";
 
 const data: CustomerProfileData = {
   slug: "/industries/events-conferences/",
-  metaTitle: "Custom Event Apparel Manufacturer | Conference Shirts & Staff Clothing",
+  metaTitle: "Event Apparel & Conference Shirts Manufacturer",
   metaDescription:
     "Custom event apparel manufacturer for conferences, corporate events and community activities. Bulk T-shirts, staff uniforms and branded clothing with reliable production.",
   keywords: [
@@ -36,6 +36,7 @@ const data: CustomerProfileData = {
     "corporate event clothing",
   ],
   badge: "For Events & Conferences",
+  hero: "/esports-jersey-prodigy.webp",
   h1: "Custom Event Apparel for Conferences, Activities & Special Events",
   heroTitle: "Make Every Event More Memorable With Custom Apparel",
   heroBody:

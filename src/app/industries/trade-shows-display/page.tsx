@@ -20,7 +20,7 @@ export const dynamic = "force-static";
 
 const data: CustomerProfileData = {
   slug: "/industries/trade-shows-display/",
-  metaTitle: "Trade Show Apparel Manufacturer | Booth Staff Shirts & Display Apparel",
+  metaTitle: "Trade Show Apparel & Booth Staff Shirts",
   metaDescription:
     "Trade show apparel manufacturer for booth staff, exhibitors and event displays. Custom branded shirts, giveaways and team uniforms with reliable production and global delivery.",
   keywords: [
@@ -35,6 +35,7 @@ const data: CustomerProfileData = {
     "trade show merchandise",
   ],
   badge: "For Trade Shows & Display",
+  hero: "/fabric-hero.webp",
   h1: "Custom Apparel for Trade Shows, Exhibitions & Display Booths",
   heroTitle: "Apparel That Makes Your Booth Stand Out",
   heroBody:

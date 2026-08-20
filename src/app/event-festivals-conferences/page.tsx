@@ -202,7 +202,7 @@ export default function ForEventsPage() {
       <JsonLd
         data={genericServiceJsonLd({
           slug: "/event-festivals-conferences/",
-          metaTitle: "Yiwu Custom Events, Festivals & Conference Apparel Manufacturing",
+          metaTitle: "Yiwu Custom Events & Conference Apparel",
           metaDescription: "Custom event apparel manufacturer for music festivals, conferences, trade shows and corporate events. Full sublimation, all-over print, embroidery and DDP shipping from Yiwu, China. MOQ 50 pcs.",
         })}
       />

@@ -20,7 +20,7 @@ export const dynamic = "force-static";
 
 const data: CustomerProfileData = {
   slug: "/industries/music-festival-tour-merchandise/",
-  metaTitle: "Tour Merch Manufacturer | Band Tees, Festival Apparel & Tour Merchandise",
+  metaTitle: "Tour Merch & Band Tee Manufacturer",
   metaDescription:
     "Custom tour merchandise manufacturer for musicians, festivals and entertainment brands. Band T-shirts, festival apparel and event merchandise with flexible quantities.",
   keywords: [
@@ -35,6 +35,7 @@ const data: CustomerProfileData = {
     "concert merchandise",
   ],
   badge: "For Music, Festival & Tour Merchandise",
+  hero: "/esports-hoodie-circuit.webp",
   h1: "Custom Tour Merchandise for Musicians, Festivals & Entertainment Brands",
   heroTitle: "Tour Merchandise That Fans Actually Want to Wear",
   heroBody:

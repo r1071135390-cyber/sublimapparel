@@ -20,7 +20,7 @@ export const dynamic = "force-static";
 
 const data: CustomerProfileData = {
   slug: "/industries/apparel-brands-agencies/",
-  metaTitle: "Apparel Manufacturing Partner for Brands & Agencies | Private Label",
+  metaTitle: "Apparel Manufacturing Partner for Brands & Agencies",
   metaDescription:
     "Apparel manufacturing partner for apparel brands, agencies and designers. Private label production, ODM services and custom apparel manufacturing with flexible MOQ.",
   keywords: [
@@ -35,6 +35,7 @@ const data: CustomerProfileData = {
     "apparel OEM",
   ],
   badge: "For Apparel Brands & Agencies",
+  hero: "/product-lineup.webp",
   h1: "Apparel Manufacturing Partner for Brands, Agencies & Designers",
   heroTitle: "Reliable Manufacturing for Apparel Brands & Agencies",
   heroBody:

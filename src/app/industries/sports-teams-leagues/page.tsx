@@ -31,6 +31,7 @@ const data: CustomerProfileData = {
     "custom sublimation jerseys",
   ],
   badge: "For Sports Teams & Leagues",
+  hero: "/bowling-jersey-striker.webp",
   h1: "Custom Sports Team Apparel Manufacturer for Clubs & Leagues",
   heroTitle: "Create Team Apparel That Represents Your Identity",
   heroBody:

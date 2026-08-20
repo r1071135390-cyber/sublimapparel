@@ -20,7 +20,7 @@ export const dynamic = "force-static";
 
 const data: CustomerProfileData = {
   slug: "/industries/promotional-marketing-agencies/",
-  metaTitle: "Promotional Apparel Manufacturer for Marketing Agencies | Branded Merch",
+  metaTitle: "Promotional Apparel Manufacturer for Agencies",
   metaDescription:
     "Promotional apparel manufacturer for marketing and promotional agencies. Branded merchandise, campaign apparel and client gifts with flexible quantities and reliable delivery.",
   keywords: [
@@ -35,6 +35,7 @@ const data: CustomerProfileData = {
     "company swag",
   ],
   badge: "For Promotional & Marketing Agencies",
+  hero: "/design-workspace.webp",
   h1: "Promotional Apparel Manufacturer for Marketing & Promotional Agencies",
   heroTitle: "Branded Apparel That Gets Your Clients Noticed",
   heroBody:

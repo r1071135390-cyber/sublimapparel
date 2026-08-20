@@ -20,7 +20,7 @@ export const dynamic = "force-static";
 
 const data: CustomerProfileData = {
   slug: "/industries/breweries-coffee-hospitality/",
-  metaTitle: "Custom Hospitality Apparel | Brewery, Coffee Shop & Bar Uniforms",
+  metaTitle: "Brewery, Coffee Shop & Bar Apparel Manufacturer",
   metaDescription:
     "Custom hospitality apparel manufacturer for breweries, coffee shops, bars and restaurants. Staff uniforms, branded merchandise and venue apparel with flexible quantities.",
   keywords: [
@@ -35,6 +35,7 @@ const data: CustomerProfileData = {
     "restaurant uniforms",
   ],
   badge: "For Breweries, Coffee & Hospitality",
+  hero: "/product-hero-products.webp",
   h1: "Custom Apparel for Breweries, Coffee Shops & Hospitality Venues",
   heroTitle: "Hospitality Apparel That Builds Your Brand",
   heroBody:

@@ -20,7 +20,7 @@ export const dynamic = "force-static";
 
 const data: CustomerProfileData = {
   slug: "/industries/schools-universities-greek-life/",
-  metaTitle: "Custom School Apparel Manufacturer | University & Greek Life Merchandise",
+  metaTitle: "School Apparel & Greek Life Merchandise",
   metaDescription:
     "Custom school apparel manufacturer for universities, schools, Greek life and student organizations. Bulk T-shirts, hoodies and student merchandise with reliable delivery.",
   keywords: [
@@ -35,6 +35,7 @@ const data: CustomerProfileData = {
     "custom student merchandise",
   ],
   badge: "For Schools, Universities & Greek Life",
+  hero: "/hero-products.webp",
   h1: "Custom School Apparel for Universities, Greek Life & Student Organizations",
   heroTitle: "Apparel That Represents Your School, Team or Organization",
   heroBody:
