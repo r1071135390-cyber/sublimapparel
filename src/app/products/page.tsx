@@ -8,7 +8,7 @@ import { CATEGORY_TAGS } from "@/lib/tag-archive";
 import { KeywordCloud } from "@/components/keyword-cloud";
 
 export const metadata: Metadata = {
-  title: "Which Custom Apparel Do You Need? — 119 Products, 13 Categories, MOQ 50",
+  title: "Which Custom Apparel Do You Need? — 123 Products, 14 Categories, MOQ 50",
   description:
     "Custom sublimated apparel for B2B: t-shirts, jerseys, hoodies, cycling kits, golf polos, racing suits. No setup fees, MOQ 50 pcs, full color all-over print, sample in 5 days.",
   keywords: [
@@ -27,8 +27,8 @@ export const metadata: Metadata = {
   ],
 
   openGraph: {
-    title: "Which Custom Apparel Do You Need? — 119 Products, 13 Categories",
-    description: "119 custom sublimated apparel products for B2B: t-shirts, jerseys, hoodies, cycling kits, golf polos, racing suits, plus 100% cotton allover digital print...",
+    title: "Which Custom Apparel Do You Need? — 123 Products, 14 Categories",
+    description: "123 custom sublimated apparel products for B2B: t-shirts, jerseys, hoodies, cycling kits, golf polos, racing suits, plus 100% cotton allover digital print...",
     images: ["/product-hero-products.webp"],
   },
   authors: [{ name: "Ramon Wang", url: "https://sublimapparel.com/about" }],
@@ -51,7 +51,7 @@ const categories: Array<{
   {
     id: "apparel",
     title: "Apparel",
-    desc: "T-shirts, hoodies, jerseys, racing, cycling, golf, bowling, esports, singlets, leggings. Cut and sewn in our Yiwu factory.",
+    desc: "14 garment types: t-shirts, hoodies, jerseys, sportswear, polos, jackets, pants, skirts, shirts, tanks, uniforms, caps, home wear — all sublimation-ready.",
     items: [
       { name: "T-Shirts", category: "T-Shirt" },
       { name: "Hoodies", category: "Hoodie" },
@@ -65,6 +65,8 @@ const categories: Array<{
       { name: "Shirts", category: "Shirt" },
       { name: "Tank Tops & Camis", category: "Tank Top & Camis" },
       { name: "Uniform & Workwear", category: "Uniform & Workwear" },
+      { name: "Caps & Hats", category: "Cap" },
+      { name: "Home Wear", category: "Home" },
     ],
     note: "Polyester or 100% cotton. Cotton runs on DTG/DTF (A4–A3 per panel); polyester runs on sublimation (true all-over, edge-to-edge). Allover digital print on cotton also available (cut-and-sew, true full-body, MOQ 50 pcs).",
   },
@@ -234,7 +236,7 @@ export default function ProductsPage() {
         </div>
       </section>
 
-      {/* Browse by category — 13 apparel categories */}
+      {/* Browse by category — 14 apparel categories */}
       <section className="border-b-2 border-black bg-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-4 py-8 md:px-6 md:py-12">
           <div className="mb-5 text-center md:mb-7">
@@ -242,7 +244,7 @@ export default function ProductsPage() {
               Browse by category
             </p>
             <h2 className="mt-2 text-2xl font-black uppercase leading-tight tracking-tight text-black md:text-3xl">
-              13 apparel categories, ready to print
+              14 apparel categories, ready to print
             </h2>
           </div>
           <div className="flex flex-wrap justify-center gap-2 md:gap-3">
@@ -275,7 +277,7 @@ export default function ProductsPage() {
                 Browse our all-over print products
               </h2>
               <p className="max-w-2xl text-sm leading-relaxed text-white/80 md:text-base">
-                Cross-filter by garment (29 types), sport (42), and scenario (27). Polyester sublimation + all-over digital print on cotton. MOQ 50 pcs, DDP to door.
+                Cross-filter by garment (14 types), sport (42), and scenario (25). Polyester sublimation + all-over digital print on cotton. MOQ 50 pcs, DDP to door.
               </p>
             </div>
             <div className="flex flex-col gap-2 md:col-span-4 md:items-end">

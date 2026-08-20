@@ -2,23 +2,27 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { tagArchiveLink, resolveArchiveLink } from "@/lib/tag-utils";
 import { CATEGORY_TAGS } from "@/lib/tag-archive";
+import { products } from "@/lib/products-data";
 
 export function Products() {
+  // Derive live counts per apparel category from the actual product data
+  const apparelCounts = products.reduce<Record<string, number>>((acc, p) => {
+    acc[p.category] = (acc[p.category] || 0) + 1;
+    return acc;
+  }, {});
+  // Build the 14 apparel categories from CATEGORY_TAGS keys (preserves the canonical order)
+  const apparelCategories = Object.keys(CATEGORY_TAGS).map((key) => ({
+    name: key.replace(/&/g, "and").replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()),
+    tag: `category:${key}`,
+    count: apparelCounts[key] || 0,
+  }));
+
   const categories = [
     {
       label: "Apparel",
       headline: "From tees to team kits.",
-      desc: "T-shirts, hoodies, jerseys, racing, cycling, golf, bowling, esports, singlets, leggings, baby onesies — full sublimation on cotton or polyester.",
-      items: [
-        { name: "T-shirts", tag: "T-Shirt" },
-        { name: "Hoodies", tag: "Hoodie" },
-        { name: "Jerseys", tag: "" },
-        { name: "Racing kits", tag: "sport:Running" },
-        { name: "Cycling kits", tag: "sport:Cycling" },
-        { name: "Golf", tag: "sport:Golf" },
-        { name: "Bowling", tag: "sport:Bowling" },
-        { name: "Esports", tag: "sport:Esports" },
-      ],
+      desc: `All-over sublimation on ${apparelCategories.length} apparel types — cotton, polyester, blends. MOQ 50 pcs, full-color print from collar to hem.`,
+      items: apparelCategories,
       color: "bg-[#ff4d00]",
       href: "/products/all/",
     },
@@ -103,7 +107,7 @@ export function Products() {
             </h2>
           </div>
           <div className="hidden text-right text-xs font-bold uppercase tracking-widest text-black/60 md:block">
-            6 categories.<br />Endless customization.
+            {apparelCategories.length} apparel types.<br />Endless customization.
           </div>
         </div>
 
@@ -194,18 +198,28 @@ export function Products() {
                       <Link
                         key={itemName}
                         href={itemHref}
-                        className={`${baseCls} bg-[#faf9f6] text-black transition-colors hover:bg-[#ff4d00] hover:text-white`}
+                        className={`${baseCls} group flex items-center gap-1.5 bg-[#faf9f6] text-black transition-colors hover:bg-[#ff4d00] hover:text-white`}
                       >
                         {itemName}
+                        {"count" in item && item.count > 0 && (
+                          <span className="ml-0.5 inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-black px-1 text-[9px] font-black text-white group-hover:bg-white group-hover:text-black">
+                            {item.count}
+                          </span>
+                        )}
                       </Link>
                     );
                   }
                   return (
                     <span
                       key={itemName}
-                      className={`${baseCls} bg-[#faf9f6] text-black`}
+                      className={`${baseCls} flex items-center gap-1.5 bg-[#faf9f6] text-black`}
                     >
                       {itemName}
+                      {"count" in item && item.count > 0 && (
+                        <span className="ml-0.5 inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-black px-1 text-[9px] font-black text-white">
+                          {item.count}
+                        </span>
+                      )}
                     </span>
                   );
                 })}
