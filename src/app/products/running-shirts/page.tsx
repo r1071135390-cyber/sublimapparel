@@ -34,9 +34,19 @@ export const metadata: Metadata = {
     "club running kit",
   ],
   openGraph: {
-    images: ["/product-hero-products.webp"],
+    images: ["/products/0128/0.webp"],
   },
 };
+
+// Hero / showcase gallery sourced from public/products/0128/ (0.webp = cover, 1-5.webp = gallery)
+const heroGallery = [
+  { src: "/products/0128/0.webp", alt: "Custom all-over print running shirts — hero view" },
+  { src: "/products/0128/1.webp", alt: "Custom sublimation marathon shirts — front detail" },
+  { src: "/products/0128/2.webp", alt: "Sublimated 5K race shirts — back view" },
+  { src: "/products/0128/3.webp", alt: "Charity run shirts all-over print — side profile" },
+  { src: "/products/0128/4.webp", alt: "Club running kit sublimation — close-up fabric" },
+  { src: "/products/0128/5.webp", alt: "Lightweight running tee — full print color range" },
+];
 
 const stats = [
   { value: "50", label: "MOQ (PCS)", note: "true low-MOQ", color: "orange" },
@@ -126,7 +136,7 @@ export default function RunningShirtsPage() {
         "@context": "https://schema.org",
         "@type": "Product",
         "name": "Custom All-Over Print Running Shirts",
-        "image": `${process.env.NEXT_PUBLIC_SITE_URL || "https://sublimapparel.com"}/products/0128/hero.webp`,
+        "image": `${process.env.NEXT_PUBLIC_SITE_URL || "https://sublimapparel.com"}/products/0128/0.webp`,
         "description": "Custom sublimation running shirts, all-over print, low MOQ 50 pcs, DDP shipping worldwide. Poly interlock or mesh, 4-way stretch, anti-odor finish.",
         "brand": { "@type": "Brand", "name": "SublimApparel" },
         "manufacturer": { "@type": "Organization", "name": "SublimApparel" },
@@ -174,16 +184,61 @@ export default function RunningShirtsPage() {
               </Link>
             </div>
           </div>
-          <div className="md:col-span-5 border-t-2 border-black md:border-l-2 md:border-t-0 bg-[#faf9f6] flex items-center justify-center p-10">
-            <div className="text-center">
-              <Zap className="mx-auto h-24 w-24 text-[#cc3d00] md:h-32 md:w-32" strokeWidth={1.5} />
-              <p className="mt-4 text-xs font-bold uppercase tracking-widest text-neutral-600">
+          <div className="md:col-span-5 border-t-2 border-black md:border-l-2 md:border-t-0 bg-[#faf9f6] flex items-center justify-center p-6 md:p-10">
+            <div className="w-full">
+              <div className="aspect-[4/5] w-full overflow-hidden bg-white border-2 border-black">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={heroGallery[0].src}
+                  alt={heroGallery[0].alt}
+                  className="h-full w-full object-cover"
+                  loading="eager"
+                />
+              </div>
+              <p className="mt-4 text-center text-xs font-bold uppercase tracking-widest text-neutral-600">
                 Men's · Women's · Unisex · Kids
               </p>
-              <p className="mt-1 text-xs font-bold uppercase tracking-widest text-neutral-600">
+              <p className="mt-1 text-center text-xs font-bold uppercase tracking-widest text-neutral-600">
                 Interlock · Mesh · Poly-Spandex · Recycled
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* PRODUCT GALLERY */}
+      <section className="border-b-2 border-black bg-[#faf9f6]">
+        <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
+          <div className="mb-8 flex items-end justify-between gap-4">
+            <div>
+              <div className="text-xs font-black uppercase tracking-widest text-[#cc3d00]">
+                02 / Gallery
+              </div>
+              <h2 className="mt-2 text-3xl font-black leading-tight tracking-tight md:text-5xl">
+                See the print quality up close.
+              </h2>
+            </div>
+            <p className="hidden max-w-sm text-sm text-neutral-600 md:block">
+              Edge-to-edge sublimation on lightweight performance fabrics. Real production samples, not renders.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4">
+            {heroGallery.map((img, i) => (
+              <div
+                key={img.src}
+                className={`overflow-hidden border-2 border-black bg-white ${
+                  i === 0 ? "col-span-2 row-span-2 aspect-[4/5] md:col-span-2 md:row-span-2" : "aspect-square"
+                }`}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                  loading={i < 3 ? "eager" : "lazy"}
+                />
+              </div>
+            ))}
           </div>
         </div>
       </section>
