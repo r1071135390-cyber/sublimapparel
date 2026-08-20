@@ -24,15 +24,9 @@ const data: CustomerProfileData = {
   metaDescription:
     "Custom hospitality apparel manufacturer for breweries, coffee shops, bars and restaurants. Staff uniforms, branded merchandise and venue apparel with flexible quantities.",
   keywords: [
-    "brewery shirts supplier",
-    "restaurant apparel supplier",
-    "hospitality apparel manufacturer",
-    "coffee shop shirts supplier",
-    "brewery merchandise",
-    "coffee shop apparel",
+    "brewery shirts",
     "restaurant staff shirts",
-    "bar uniforms",
-    "hospitality uniforms",
+    "coffee shop apparel",
   ],
   badge: "For Breweries, Coffee & Hospitality",
   hero: "/product-hero-products.webp",

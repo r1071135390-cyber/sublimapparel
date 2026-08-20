@@ -13,6 +13,11 @@ export const metadata: Metadata = {
   description:
     "Custom sublimation team jerseys for soccer, baseball, basketball, volleyball. Full dye-sublimation, no setup fee, MOQ 50 pcs, 10–15 day production. Numbers, names, logos all printed — not stitched.",
   keywords: [
+    // Primary — owned by this product page
+    "custom sublimation jerseys",
+    "custom jerseys manufacturer",
+    "sports jerseys supplier",
+    // Secondary
     "custom team jerseys",
     "sublimation jerseys",
     "soccer jersey custom",

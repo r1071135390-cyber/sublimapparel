@@ -19,6 +19,11 @@ export const metadata: Metadata = {
   description:
     "Custom sublimation t-shirts — all-over print, no setup fee, MOQ 50 pcs. Polyester and 100% cotton. Men's, women's, unisex, kids' sizes. Ships in 7–15 days. DDP to 100+ countries.",
   keywords: [
+    // Primary — owned by this product page
+    "custom t shirts manufacturer",
+    "custom sublimation t shirts",
+    "bulk custom t shirts",
+    // Secondary
     "custom sublimation t-shirts",
     "sublimation tee shirts",
     "all over print t-shirt",

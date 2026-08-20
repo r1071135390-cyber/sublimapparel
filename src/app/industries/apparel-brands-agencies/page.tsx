@@ -24,14 +24,8 @@ const data: CustomerProfileData = {
   metaDescription:
     "Apparel manufacturing partner for apparel brands, agencies and designers. Private label production, ODM services and custom apparel manufacturing with flexible MOQ.",
   keywords: [
-    "custom apparel manufacturer",
+    "apparel manufacturer for brands",
     "clothing production partner",
-    "private label apparel manufacturer",
-    "custom clothing supplier",
-    "startup clothing manufacturer",
-    "apparel production company",
-    "clothing factory",
-    "small brand manufacturer",
   ],
   badge: "For Apparel Brands & Agencies",
   hero: "/product-lineup.webp",

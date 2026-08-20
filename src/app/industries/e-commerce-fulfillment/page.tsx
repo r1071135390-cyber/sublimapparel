@@ -24,14 +24,8 @@ const data: CustomerProfileData = {
   metaDescription:
     "Apparel manufacturing for e-commerce brands, dropshippers and B2B sellers. Custom production, white label, private label and dropship fulfillment with global shipping.",
   keywords: [
-    "ecommerce apparel supplier",
+    "ecommerce clothing supplier",
     "online clothing manufacturer",
-    "custom clothing supplier",
-    "apparel production partner",
-    "Shopify clothing supplier",
-    "online brand manufacturer",
-    "clothing fulfillment supplier",
-    "apparel sourcing partner",
   ],
   badge: "For E-commerce & Fulfillment",
   hero: "/pack-warehouse.webp",

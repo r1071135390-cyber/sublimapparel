@@ -24,15 +24,9 @@ const data: CustomerProfileData = {
   metaDescription:
     "Corporate uniform manufacturer for employee apparel and branded workwear. Custom polo shirts, office apparel, and company uniforms with reliable production and global delivery.",
   keywords: [
-    "corporate apparel supplier",
-    "company shirts manufacturer",
-    "employee apparel supplier",
-    "custom corporate shirts",
-    "branded company shirts",
-    "employee uniforms",
-    "corporate merchandise",
+    "employee shirts",
     "company event shirts",
-    "employee appreciation shirts",
+    "corporate merchandise",
   ],
   badge: "For Corporate & Employee Programs",
   hero: "/quote-hero-showroom.webp",
