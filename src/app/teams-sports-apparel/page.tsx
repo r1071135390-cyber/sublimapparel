@@ -38,12 +38,12 @@ export const metadata: Metadata = {
     "charity run shirts",
     "fun run t shirts",
   ],
-  alternates: { canonical: `${siteUrl}/race-shirts/` },
+  alternates: { canonical: `${siteUrl}/teams-sports-apparel/` },
   openGraph: {
     title: "Custom Race Shirts for 5K, 10K & Charity Runs",
     description:
       "All-over sublimation race shirts. Bib-ready sizing, sponsor panels, finisher graphics. DDP in 25 days.",
-    url: `${siteUrl}/race-shirts/`,
+    url: `${siteUrl}/teams-sports-apparel/`,
     siteName: "SublimApparel",
     type: "website",
     images: [{ url: "/og-default.jpg", width: 1200, height: 630, alt: "Custom Race Shirts — SublimApparel" }],
@@ -109,8 +109,8 @@ const faqs = [
 export default function RaceShirtsPage() {
   const breadcrumb = buildBreadcrumbJsonLd([
     { name: "Home", path: "/" },
-    { name: "Event Apparel", path: "/event-apparel/" },
-    { name: "Race Shirts", path: "/race-shirts/" },
+    { name: "Event Apparel", path: "/event-festivals-conferences/" },
+    { name: "Race Shirts", path: "/teams-sports-apparel/" },
   ]);
   const faqJsonLd = forEventsFaqJsonLd(faqs);
 

@@ -45,13 +45,13 @@ export const metadata: Metadata = {
     "brand apparel production",
   ],
   alternates: {
-    canonical: "https://sublimapparel.com/private-label-sportswear/",
+    canonical: "https://sublimapparel.com/apparel-brands-agencies/",
   },
   openGraph: {
     title: "Private Label & OEM Apparel Manufacturing | SublimApparel",
     description:
       "Custom labels, retail packaging, drop-ship fulfillment for growing brands. MOQ 50 pcs, full private label service.",
-    url: "https://sublimapparel.com/private-label-sportswear/",
+    url: "https://sublimapparel.com/apparel-brands-agencies/",
     images: ["/esports-travel-hoodie.webp"],
   },
 };
@@ -190,7 +190,7 @@ export default function ForBrandsPage() {
     { name: "Home", path: "/" },
     {
       name: "Private Label & OEM Apparel Manufacturing",
-      path: "/private-label-sportswear/",
+      path: "/apparel-brands-agencies/",
     },
   ]);
 

@@ -5,32 +5,32 @@ import { User, ChevronDown, Mail, Briefcase, Wrench } from "lucide-react";
 
 const solutions = [
   {
-    href: "/race-shirts/",
+    href: "/teams-sports-apparel/",
     label: "Teams & Sports Apparel",
     desc: "Race, marathon, league and club kits",
   },
   {
-    href: "/event-apparel/",
-    label: "Events, Festivals & Conferences",
+    href: "/event-festivals-conferences/",
+    label: "Event Festivals & Conferences",
     desc: "Conferences, festivals, expos, trade shows",
   },
   {
-    href: "/corporate-event-apparel/",
+    href: "/corporate-organization-apparel/",
     label: "Corporate & Organization Apparel",
     desc: "Companies, clubs, schools, nonprofits",
   },
   {
-    href: "/custom-event-t-shirts/",
+    href: "/promotional-marketing-apparel/",
     label: "Promotional & Marketing Apparel",
     desc: "Brand merch, giveaways, marketing campaigns",
   },
   {
-    href: "/private-label-sportswear/",
+    href: "/apparel-brands-agencies/",
     label: "Apparel Brands & Agencies",
     desc: "Private label, OEM, white-label production",
   },
   {
-    href: "/organization-apparel/",
+    href: "/e-commerce-fulfillment/",
     label: "E-commerce & Fulfillment",
     desc: "Bulk production, drop-ship, online sellers",
   },

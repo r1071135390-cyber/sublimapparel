@@ -9,15 +9,14 @@ const fabrics = [
   { name: "RECYCLED", note: "rPET & organic", href: "/fabric/cotton" },
 ];
 
-// 6 industry/use-case buckets (2026 strategy v3)
-// Marathon & camp pages still exist but aren't promoted in main nav
+// 6 industry/use-case buckets (2026 strategy v3) — URL slugs match the page directory
 const categories = [
-  { num: "01", name: "Teams & Sports Apparel", href: "/race-shirts/" },
-  { num: "02", name: "Event Festivals & Conferences", href: "/event-apparel/" },
-  { num: "03", name: "Corporate & Organization Apparel", href: "/corporate-event-apparel/" },
-  { num: "04", name: "Promotional & Marketing Apparel", href: "/custom-event-t-shirts/" },
-  { num: "05", name: "Apparel Brands & Agencies", href: "/private-label-sportswear/" },
-  { num: "06", name: "E-commerce & Fulfillment", href: "/organization-apparel/" },
+  { num: "01", name: "Teams & Sports Apparel", href: "/teams-sports-apparel/" },
+  { num: "02", name: "Event Festivals & Conferences", href: "/event-festivals-conferences/" },
+  { num: "03", name: "Corporate & Organization Apparel", href: "/corporate-organization-apparel/" },
+  { num: "04", name: "Promotional & Marketing Apparel", href: "/promotional-marketing-apparel/" },
+  { num: "05", name: "Apparel Brands & Agencies", href: "/apparel-brands-agencies/" },
+  { num: "06", name: "E-commerce & Fulfillment", href: "/e-commerce-fulfillment/" },
 ];
 
 const stats = [

@@ -5,20 +5,21 @@ const nextConfig: NextConfig = {
   output: 'export',
   // The /api/inquiry route is excluded from static export via dynamic = 'force-static' below
   trailingSlash: true,
-  // SEO: 301-redirect deprecated /for-* slugs to the strategic /solutions/* URLs.
+  // SEO: 301-redirect deprecated /for-* slugs to the 6-solution IA URLs.
   // Both /<old> and /<old>/ forms are covered; trailingSlash: true keeps the canonical with slash.
   async redirects() {
     return [
-      { source: '/for-events', destination: '/event-apparel', permanent: true },
-      { source: '/for-events/', destination: '/event-apparel/', permanent: true },
-      { source: '/for-corporate', destination: '/corporate-event-apparel', permanent: true },
-      { source: '/for-corporate/', destination: '/corporate-event-apparel/', permanent: true },
-      { source: '/for-camp', destination: '/summer-camp-shirts', permanent: true },
-      { source: '/for-camp/', destination: '/summer-camp-shirts/', permanent: true },
-      { source: '/for-communities', destination: '/organization-apparel', permanent: true },
-      { source: '/for-communities/', destination: '/organization-apparel/', permanent: true },
-      { source: '/for-brands', destination: '/private-label-sportswear', permanent: true },
-      { source: '/for-brands/', destination: '/private-label-sportswear/', permanent: true },
+      { source: '/for-events', destination: '/event-festivals-conferences', permanent: true },
+      { source: '/for-events/', destination: '/event-festivals-conferences/', permanent: true },
+      { source: '/for-corporate', destination: '/corporate-organization-apparel', permanent: true },
+      { source: '/for-corporate/', destination: '/corporate-organization-apparel/', permanent: true },
+      // /for-camp/ — original /summer-camp-shirts/ is deleted; fall back to Events.
+      { source: '/for-camp', destination: '/event-festivals-conferences', permanent: true },
+      { source: '/for-camp/', destination: '/event-festivals-conferences/', permanent: true },
+      { source: '/for-communities', destination: '/e-commerce-fulfillment', permanent: true },
+      { source: '/for-communities/', destination: '/e-commerce-fulfillment/', permanent: true },
+      { source: '/for-brands', destination: '/apparel-brands-agencies', permanent: true },
+      { source: '/for-brands/', destination: '/apparel-brands-agencies/', permanent: true },
     ];
   },
   images: {
