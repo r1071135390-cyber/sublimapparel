@@ -214,15 +214,12 @@ export default function ProductsPage() {
               <div className="mt-6 flex flex-wrap gap-2">
                 {[
                   { name: "All products", href: "/products/all/" },
-                  { name: "Sportswear", href: tagArchiveLink("category", "Sportswear") },
-                  { name: "T-Shirts", href: tagArchiveLink("category", "T-Shirt") },
-                  { name: "Hoodies", href: tagArchiveLink("category", "Hoodie") },
-                  { name: "Polo Shirts", href: tagArchiveLink("category", "Polo Shirt") },
-                  { name: "Soccer", href: tagArchiveLink("sport", "Soccer") },
-                  { name: "Cycling", href: tagArchiveLink("sport", "Cycling") },
-                  { name: "Basketball", href: tagArchiveLink("sport", "Basketball") },
-                  { name: "Events", href: tagArchiveLink("scenario", "Event & Festival") },
-                  { name: "Teams", href: tagArchiveLink("scenario", "Team & Club") },
+                  { name: "Teams & Sports", href: "/teams-sports-apparel/" },
+                  { name: "Events & Conferences", href: "/event-festivals-conferences/" },
+                  { name: "Corporate Apparel", href: "/corporate-organization-apparel/" },
+                  { name: "Promotional & Marketing", href: "/promotional-marketing-apparel/" },
+                  { name: "Apparel Brands & Agencies", href: "/apparel-brands-agencies/" },
+                  { name: "E-commerce & Fulfillment", href: "/e-commerce-fulfillment/" },
                 ].map((q) => (
                   <Link
                     key={q.name}

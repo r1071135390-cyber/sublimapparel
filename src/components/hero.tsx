@@ -11,6 +11,7 @@ const fabrics = [
 
 // 6 industry/use-case buckets (2026 strategy v3) — URL slugs match the page directory
 const categories = [
+  { num: "★", name: "All Products", href: "/products/all/" },
   { num: "01", name: "Teams & Sports Apparel", href: "/teams-sports-apparel/" },
   { num: "02", name: "Event Festivals & Conferences", href: "/event-festivals-conferences/" },
   { num: "03", name: "Corporate & Organization Apparel", href: "/corporate-organization-apparel/" },
