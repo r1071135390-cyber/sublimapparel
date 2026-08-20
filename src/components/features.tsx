@@ -4,12 +4,12 @@ import { ArrowRight, Shirt } from "lucide-react";
 const features = [
   {
     number: "01",
-    title: "Any sublimatable product",
-    headline: "Print on anything.",
-    desc: "Apparel is our bread and butter — but we print on anything sublimation can handle. T-shirts, hoodies, racing, cycling, golf, bowling, esports, flags, banners, mousepads, mugs, phone cases, puzzles, cushions, throws, scarves, bags, hats… If it takes sublimation ink, we make it.",
+    title: "Sublimation, end to end",
+    headline: "One partner. Design to doorstep.",
+    desc: "Send the brief and the file. We handle pre-press, fabric, sampling, production, QC, and DDP shipping to 100+ countries. One account manager, one quote, one delivery. No coordination tax. No \"who handles customs.\" No chasing three vendors. Your design file becomes the finished product — without the operational drag.",
     color: "bg-[#ff4d00]",
-    tags: ["Apparel", "Home textile", "Hard goods", "Flags & banners"],
-    href: "/products",
+    tags: ["End-to-end", "One account manager", "Pre-press + sampling", "DDP worldwide"],
+    href: "/services",
   },
   {
     number: "02",
