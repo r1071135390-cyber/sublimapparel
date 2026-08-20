@@ -14,6 +14,7 @@ import {
   Coffee,
   Bike,
   ShoppingBag,
+  ShoppingCart,
   ArrowRight,
 } from "lucide-react";
 import { tagArchiveLink } from "@/lib/tag-utils";
@@ -29,7 +30,7 @@ export function Industries() {
       pitch: "Your date does not move. Our Fontana warehouse stock absorbs the headcount that changes in the final fortnight.",
     },
     {
-      slug: "promotional-products",
+      slug: "promotional-marketing-agencies",
       scenario: "Promotional Swag",
       title: "Promotional Products Distributors",
       icon: Megaphone,
@@ -37,7 +38,7 @@ export function Industries() {
       pitch: "Landed duty-paid pricing protects your margin; blind drop-ship from LA protects your client relationship.",
     },
     {
-      slug: "sports-teams",
+      slug: "sports-teams-leagues",
       scenario: "Sports League",
       title: "Sports Teams & Leagues",
       icon: Trophy,
@@ -45,7 +46,7 @@ export function Industries() {
       pitch: "Cut-and-sew patterns that fit, named and numbered per unit, delivered before the season opens.",
     },
     {
-      slug: "music-tour-festival",
+      slug: "music-festival-tour-merchandise",
       scenario: "Music & Merch",
       title: "Music, Tour & Festival Merch",
       icon: Music2,
@@ -53,7 +54,7 @@ export function Industries() {
       pitch: "Full-bleed printing on 100% cotton — merch your fans will actually want to wear.",
     },
     {
-      slug: "trade-show-display",
+      slug: "trade-shows-display",
       scenario: "Event & Festival",
       title: "Trade Show & Display",
       icon: Presentation,
@@ -61,7 +62,7 @@ export function Industries() {
       pitch: "Silicone edge is a sewing operation. We sew, so we can make it — and DDP handles the bulky freight.",
     },
     {
-      slug: "corporate-programs",
+      slug: "corporate-employee-programs",
       scenario: "Corporate & Branding",
       title: "Corporate & Employee Programs",
       icon: Briefcase,
@@ -69,7 +70,7 @@ export function Industries() {
       pitch: "Finance gets a fixed landed cost; multi-site restocks pull from our LA warehouse.",
     },
     {
-      slug: "apparel-brands",
+      slug: "apparel-brands-agencies",
       scenario: "Retail & Fashion",
       title: "Apparel Brands & Agencies",
       icon: Shirt,
@@ -77,7 +78,7 @@ export function Industries() {
       pitch: "Your pattern, your labels, your packaging. Cotton included.",
     },
     {
-      slug: "schools-greek-life",
+      slug: "schools-universities-greek-life",
       scenario: "Education & School",
       title: "Schools, Universities & Greek Life",
       icon: GraduationCap,
@@ -93,7 +94,7 @@ export function Industries() {
       pitch: "Our LA warehouse turns a five-day requirement into a domestic shipment.",
     },
     {
-      slug: "breweries-hospitality",
+      slug: "breweries-coffee-hospitality",
       scenario: "Hospitality & F&B",
       title: "Breweries, Coffee & Hospitality",
       icon: Coffee,
@@ -109,12 +110,12 @@ export function Industries() {
       pitch: "Final numbers land two weeks out. LA stock absorbs the difference.",
     },
     {
-      slug: "ecommerce-fulfillment",
-      scenario: "Retail & Fashion",
+      slug: "e-commerce-fulfillment",
+      scenario: "E-commerce & POD",
       title: "E-commerce & Fulfillment",
-      icon: ShoppingBag,
-      products: "Blankets, pillow covers, towels, tapestries, pet goods, aprons, tote bags",
-      pitch: "DDP removes the import problem; LA warehouse covers domestic replenishment.",
+      icon: ShoppingCart,
+      products: "Ready-to-ship blanks, custom production, blind drop-ship, FBA prep, retail packaging",
+      pitch: "Predictable landed cost + blind drop-ship to your end customers in 50+ countries.",
     },
   ];
 
@@ -151,7 +152,7 @@ export function Industries() {
                   </div>
                   <h3 className="text-lg font-black uppercase leading-tight tracking-tight">
                     <Link
-                      href={`/cases/${ind.slug}`}
+                      href={`/industries/${ind.slug}/`}
                       className="transition-colors hover:text-[#cc3d00]"
                     >
                       {ind.title}
@@ -183,7 +184,7 @@ export function Industries() {
                     />
                   </Link>
                   <Link
-                    href={`/cases/${ind.slug}`}
+                    href={`/industries/${ind.slug}/`}
                     className="text-[10px] font-bold uppercase tracking-wider text-black/50 transition-colors hover:text-black"
                   >
                     Industry page →

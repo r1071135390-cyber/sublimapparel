@@ -81,6 +81,29 @@ const ROUTES: SitemapRoute[] = [
   { path: "/cases/music-tour-festival/harbor-sound-festival-2025", priority: 0.65, changeFrequency: "yearly" },
   { path: "/cases/sports-teams/nova-racing-academy-2025", priority: 0.65, changeFrequency: "yearly" },
 
+
+  // ── L2  Solution pages (6) — Phase 1 SEO focus ────────────────
+  { path: "/teams-sports-apparel", priority: 0.95, changeFrequency: "weekly" },
+  { path: "/event-festivals-conferences", priority: 0.95, changeFrequency: "weekly" },
+  { path: "/corporate-organization-apparel", priority: 0.95, changeFrequency: "weekly" },
+  { path: "/promotional-marketing-apparel", priority: 0.95, changeFrequency: "weekly" },
+  { path: "/apparel-brands-agencies", priority: 0.95, changeFrequency: "weekly" },
+  { path: "/e-commerce-fulfillment", priority: 0.95, changeFrequency: "weekly" },
+
+  // ── L2  Industry profile pages (12) — Phase 1 SEO focus ────────
+  { path: "/industries/sports-teams-leagues", priority: 0.9, changeFrequency: "weekly" },
+  { path: "/industries/endurance-race-events", priority: 0.9, changeFrequency: "weekly" },
+  { path: "/industries/events-conferences", priority: 0.9, changeFrequency: "weekly" },
+  { path: "/industries/music-festival-tour-merchandise", priority: 0.9, changeFrequency: "weekly" },
+  { path: "/industries/corporate-employee-programs", priority: 0.9, changeFrequency: "weekly" },
+  { path: "/industries/schools-universities-greek-life", priority: 0.9, changeFrequency: "weekly" },
+  { path: "/industries/breweries-coffee-hospitality", priority: 0.9, changeFrequency: "weekly" },
+  { path: "/industries/promotional-marketing-agencies", priority: 0.9, changeFrequency: "weekly" },
+  { path: "/industries/trade-shows-display", priority: 0.9, changeFrequency: "weekly" },
+  { path: "/industries/apparel-brands-agencies", priority: 0.9, changeFrequency: "weekly" },
+  { path: "/industries/political-campaigns", priority: 0.9, changeFrequency: "weekly" },
+  { path: "/industries/e-commerce-fulfillment", priority: 0.9, changeFrequency: "weekly" },
+
   // ── L2 （ / ）─────────────────
   { path: "/blog", priority: 0.8, changeFrequency: "weekly" },
 
