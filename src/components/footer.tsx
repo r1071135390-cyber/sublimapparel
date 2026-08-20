@@ -131,7 +131,7 @@ export function Footer() {
               Browse our full catalog by apparel type, sport, and use case
             </h2>
             <p className="mt-1 text-sm text-black/60">
-              {`13 apparel categories · 41 sports · 29 use-case scenarios. Every link below leads to a curated page with custom-printed garments ready to ship DDP to your door.`}
+              {`13 apparel categories · 42 sports · 25 use-case scenarios. Every link below leads to a curated page with custom-printed garments ready to ship DDP to your door.`}
             </p>
           </div>
           <FullKeywordCloud />

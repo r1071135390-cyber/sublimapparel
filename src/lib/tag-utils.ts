@@ -306,7 +306,7 @@ function archiveSlugify(s: string): string {
 
 /**
  * Build the URL to the dedicated archive page for a given tag.
- * Each of the 29 categories, 42 sports, and 27 scenarios has its
+ * Each of the 13 categories, 42 sports, and 25 scenarios has its
  * own page at /tag/<dimension>/<slug>/.
  */
 export function tagArchiveLink(

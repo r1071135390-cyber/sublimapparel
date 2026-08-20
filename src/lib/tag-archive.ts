@@ -1,5 +1,5 @@
 // ============================================================
-// Tag Archive Data — 29 categories + 42 sports + 27 scenarios
+// Tag Archive Data — 13 categories + 42 sports + 25 scenarios
 // ============================================================
 //
 // Each tag gets a dedicated archive page at /tag/<dim>/<slug>/
@@ -121,6 +121,7 @@ export const CATEGORY_TAGS: Record<string, Omit<TagInfo, "slug" | "dimension">> 
     process: "Sublimation (polyester) or All-Over Digital Print on Cotton",
     icon: "👕",
   },
+
   Jersey: {
     label: "Jersey",
     description: "Custom sublimated jerseys built for team kits, league play, and tournament drops. We print the full front, back, and both sleeves — numbers, names, and sponsor logos stay crisp without breaking the pattern.",
@@ -176,17 +177,6 @@ export const CATEGORY_TAGS: Record<string, Omit<TagInfo, "slug" | "dimension">> 
     ],
     process: "Sublimation (polyester) or All-Over Digital Print on Cotton",
     icon: "👔",
-  },
-  "Tank Top & Camis": {
-    label: "Tank Top & Camis",
-    description: "Lightweight sublimated tank tops for gym, yoga, beach, and summer merch. Full print across body and shoulder straps with bound edges that don't chafe.",
-    benefits: [
-      "140–160 GSM polyester eyelet",
-      "Bound neck and armhole edges",
-      "MOQ 50 pcs per design",
-    ],
-    process: "Sublimation on Polyester Eyelet",
-    icon: "👙",
   },
   "Uniform & Workwear": {
     label: "Uniform & Workwear",
@@ -283,6 +273,19 @@ export const SPORT_TAGS: Record<string, Omit<TagInfo, "slug" | "dimension">> = {
     process: "Sublimation on Polyester Eyelet",
     icon: "🏉",
   },
+  "American Football": {
+    label: "American Football",
+    description: "Sublimated American football jerseys, pants, and full kits for high school, college, and adult leagues. Heavy-duty interlock for shoulder hits, full front/back/sleeve print of numbers, names, and sponsor logos.",
+    benefits: [
+      "Jersey + pant match set",
+      "220–260 GSM heavy interlock",
+      "Reinforced shoulder panels available",
+      "Tournament-grade turnaround",
+    ],
+    process: "Sublimation on Polyester Interlock",
+    icon: "🏈",
+  },
+
   "Athletics": {
     label: "Athletics",
     description: "Track & field kits for clubs, schools, and meets — singlets, running tops, and shorts in full-coverage sublimation. Lightweight eyelet with flat-lock seams doesn't chafe during sprint, jump, or distance events.",
@@ -525,6 +528,19 @@ export const SPORT_TAGS: Record<string, Omit<TagInfo, "slug" | "dimension">> = {
     process: "Sublimation on Polyester",
     icon: "🥋",
   },
+  "Marathon": {
+    label: "Marathon",
+    description: "Sublimated marathon singlets, tees, and split shorts for race events, training groups, and finish-line merch. Ultra-lightweight eyelet with anti-chafe flat-lock seams — full coverage print of sponsor logos and finisher graphics stays vivid through 26 miles.",
+    benefits: [
+      "Singlet, crop, tee, split shorts",
+      "120–140 GSM ultra-light eyelet",
+      "Sponsor + finisher graphic compatible",
+      "Race-week turnaround available",
+    ],
+    process: "Sublimation on Polyester Eyelet",
+    icon: "🏃",
+  },
+
   "Netball": {
     label: "Netball",
     description: "Sublimated netball dresses, bibs, and match kits for clubs, schools, and tournaments. Full print of club crest, sponsor, and player name — dress and bib set in one design file.",
@@ -591,28 +607,6 @@ export const SPORT_TAGS: Record<string, Omit<TagInfo, "slug" | "dimension">> = {
     process: "Sublimation on Polyester Spandex",
     icon: "⛸️",
   },
-  "Ski": {
-    label: "Ski",
-    description: "Sublimated ski jackets, pants, and base layers for ski schools, race teams, and resort uniforms. Full print of team logo and sponsor — waterproof shells don't break the pattern.",
-    benefits: [
-      "Jacket, pant, base layer set",
-      "Waterproof and insulated options",
-      "Custom race and team branding",
-    ],
-    process: "Sublimation on Polyester Softshell",
-    icon: "⛷️",
-  },
-  "Snowboard": {
-    label: "Snowboard",
-    description: "Sublimated snowboard jackets, pants, and base layers for instructors, teams, and resort brands. Full print of mountain and resort branding — waterproof shells and stretch panels keep the pattern clean.",
-    benefits: [
-      "Jacket, pant, base layer set",
-      "Waterproof and stretch options",
-      "Resort and instructor branding",
-    ],
-    process: "Sublimation on Polyester Softshell",
-    icon: "🏂",
-  },
   "Soccer": {
     label: "Soccer",
     description: "Sublimated soccer jerseys, shorts, and socks for clubs, schools, and tournament teams. Full print of club crest, sponsor, and player name/number — mesh polyester breathes under the kit.",
@@ -635,6 +629,19 @@ export const SPORT_TAGS: Record<string, Omit<TagInfo, "slug" | "dimension">> = {
     process: "Sublimation on Polyester",
     icon: "🥎",
   },
+  "Studio": {
+    label: "Studio",
+    description: "Sublimated studio wear for dance, yoga, pilates, and barre studios — crops, leggings, tanks, and warm-ups. Soft hand-feel interlock with four-way stretch — full coverage print of studio branding and class series graphics.",
+    benefits: [
+      "Crop, legging, tank, warm-up",
+      "180–220 GSM 4-way stretch interlock",
+      "Studio + class series branding",
+      "Recurring order friendly MOQ",
+    ],
+    process: "Sublimation on Polyester Spandex",
+    icon: "🧘",
+  },
+
   "Surf": {
     label: "Surf",
     description: "Sublimated surf rash guards, board shorts, and tanks for surf brands, schools, and competitions. UV-stable inks and quick-dry poly-spandex — full print stands up to salt, sun, and wax.",
@@ -939,17 +946,6 @@ export const SCENARIO_TAGS: Record<string, Omit<TagInfo, "slug" | "dimension">> 
     process: "Sublimation on Polyester",
     icon: "🛒",
   },
-  "Education & School": {
-    label: "Education & School",
-    description: "Sublimated uniforms and merch for schools, preschools, and education programs — PE kits, sports teams, class trips, and graduation gear. Full print of school crest, year, and class colors.",
-    benefits: [
-      "PE kit, sports team, class trip, graduation",
-      "Full print of school crest and year",
-      "Class color variants in one order",
-    ],
-    process: "Sublimation on Polyester",
-    icon: "📚",
-  },
   "Corporate & Promo": {
     label: "Corporate & Promo",
     description: "Sublimated corporate promo merch for trade shows, conferences, and customer giveaways. Full print of company branding, event date, and conference logo across tees, polos, jackets, and accessories.",
@@ -1015,39 +1011,6 @@ export const SCENARIO_TAGS: Record<string, Omit<TagInfo, "slug" | "dimension">> 
     ],
     process: "Sublimation on Polyester Spandex",
     icon: "🏖️",
-  },
-  "Lycra": {
-    label: "Lycra",
-    description: "Sublimated lycra and stretch apparel for dance, gymnastics, fitness, and stage performance — unitards, leggings, and bodysuits. Four-way stretch with full print that holds shape through every movement.",
-    benefits: [
-      "Unitard, legging, bodysuit set",
-      "200–240 GSM 4-way stretch",
-      "Full print holds through movement",
-    ],
-    process: "Sublimation on Polyester Spandex",
-    icon: "🩱",
-  },
-  "Sublimation": {
-    label: "Sublimation",
-    description: "Heat-press sublimation printing — dye turns to gas and bonds with polyester fibers, so the print becomes part of the fabric. Won't crack, peel, or fade. Works on any polyester or poly-blend garment.",
-    benefits: [
-      "Print becomes part of the fabric",
-      "No crack, peel, or fade",
-      "Photographic detail and full color",
-    ],
-    process: "Heat-Press Sublimation on Polyester",
-    icon: "🔥",
-  },
-  "Polyester": {
-    label: "Polyester",
-    description: "Polyester is the workhorse of sublimation — it bonds with sublimation dyes at the molecular level, so prints sit inside the fabric rather than on top. Lightweight, moisture-wicking, and durable.",
-    benefits: [
-      "Bonds with sublimation dyes",
-      "Lightweight and moisture-wicking",
-      "Durable through heavy wear",
-    ],
-    process: "Heat-Press Sublimation on Polyester",
-    icon: "🧪",
   },
 };
 

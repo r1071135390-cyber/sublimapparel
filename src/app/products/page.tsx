@@ -355,7 +355,7 @@ export default function ProductsPage() {
               Jump to your custom apparel by keyword
             </h2>
             <p className="mt-3 text-sm text-black/70 md:text-base">
-              {`Pick a sport, a use case, or an apparel type below — every link routes to a curated tag page with sublimation-printed garments ready for DDP shipping to your door. ${Object.keys(CATEGORY_TAGS).length} apparel types · 41 sports · 29 use cases.`}
+              {`Pick a sport, a use case, or an apparel type below — every link routes to a curated tag page with sublimation-printed garments ready for DDP shipping to your door. ${Object.keys(CATEGORY_TAGS).length} apparel types · 42 sports · 25 use cases.`}
             </p>
           </div>
           <div className="grid gap-8 md:grid-cols-3">
