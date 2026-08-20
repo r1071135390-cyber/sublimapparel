@@ -72,9 +72,7 @@ export function Features() {
               Why Work With SublimApparel
             </h2>
             <p className="mt-4 max-w-2xl text-lg font-medium leading-relaxed text-black/70 md:text-xl">
-              More Than A Factory — A Partner Who Helps You Solve Problems
-              <br />
-              Reduce the risks of overseas apparel sourcing
+              More Than A Factory — A Partner Who Helps You Solve Problems and Reduce the Risks of Overseas Apparel Sourcing
             </p>
           </div>
           <div className="md:col-span-4 md:text-right">
