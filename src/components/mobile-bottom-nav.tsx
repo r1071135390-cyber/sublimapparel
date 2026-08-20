@@ -9,7 +9,7 @@ import {
   Layers,
   Wrench,
   Truck,
-  FileText,
+  Sparkles,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -56,6 +56,12 @@ const tabs: Tab[] = [
     match: (p) => p === "/fabric" || p.startsWith("/fabric/"),
   },
   {
+    href: "/technique",
+    label: "Techniques",
+    icon: Sparkles,
+    match: (p) => p === "/technique" || p.startsWith("/technique/"),
+  },
+  {
     href: "/resources",
     label: "Tools",
     icon: Wrench,
@@ -75,12 +81,6 @@ const tabs: Tab[] = [
       p === "/shipping" ||
       p === "/shipping-policy" ||
       p === "/ddp",
-  },
-  {
-    href: "/blog",
-    label: "Blog",
-    icon: FileText,
-    match: (p) => p === "/blog" || p.startsWith("/blog/"),
   },
 ];
 
