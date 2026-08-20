@@ -131,6 +131,7 @@ export default function Home() {
       <VideoShowcase />
       <Features />
       <InquiryCTA />
+      <BeyondApparel />
       <FreeDesignService />
       <RecentCaseStudies />
       <LogoWall />
@@ -140,7 +141,6 @@ export default function Home() {
       <Process />
       <DDP />
       <Industries />
-      <BeyondApparel />
       <HomeExtras />
       <Contact />
       <Newsletter />
