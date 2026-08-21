@@ -173,6 +173,13 @@ export function Navbar() {
           </div>
 
           <Link
+            href="/technique/"
+            className="text-sm font-bold uppercase tracking-wider text-black transition-colors hover:text-[#cc3d00]"
+          >
+            Technique
+          </Link>
+
+          <Link
             href="/fabric/"
             className="text-sm font-bold uppercase tracking-wider text-black transition-colors hover:text-[#cc3d00]"
           >
