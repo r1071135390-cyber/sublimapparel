@@ -47,7 +47,9 @@ export function buildPageMetadata(input: Input = {}): Metadata {
   const twitterDescription = input.twitterDescription || ogDescription;
 
   const meta: Metadata = {
-    title: truncated(title, 60),
+    // Use { absolute: ... } to skip root title template ("%s | SublimApparel")
+    // This way <title> is exactly the truncated string (≤60 chars), meeting Google's SERP limit.
+    title: { absolute: truncated(title, 60) },
     description: truncated(description, 160),
     keywords: input.keywords || ROOT.keywords,
     openGraph: {
