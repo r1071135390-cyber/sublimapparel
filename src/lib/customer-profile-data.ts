@@ -62,8 +62,12 @@ export interface CustomerProfileData {
 
 export function buildMetadata(data: CustomerProfileData): Metadata {
   const ogImage = data.ogImage ?? data.hero;
+  // Truncate title to 60 chars to fit Google SERP limit (no template suffix)
+  const truncatedTitle = (data.metaTitle || "").length > 60
+    ? (data.metaTitle || "").slice(0, 59) + "…"
+    : data.metaTitle;
   return {
-    title: data.metaTitle,
+    title: { absolute: truncatedTitle },
     description: data.metaDescription,
     keywords: data.keywords,
     alternates: { canonical: data.slug },
