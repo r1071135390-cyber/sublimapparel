@@ -278,6 +278,28 @@ export default function ProductsPage() {
         </div>
       </section>
 
+      {/* BROWSE BY KEYWORD — SEO */}
+      <section className="border-b-2 border-black bg-[#faf9f6]">
+        <div className="mx-auto max-w-7xl px-6 py-16">
+          <div className="mb-8 max-w-3xl">
+            <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-[#cc3d00] md:text-xs">
+              Cross-link every page
+            </p>
+            <h2 className="text-3xl font-black uppercase leading-tight tracking-tight md:text-5xl">
+              Jump to your custom apparel by keyword
+            </h2>
+            <p className="mt-3 text-sm text-black/70 md:text-base">
+              {`Pick a sport, a use case, or an apparel type below — every link routes to a curated tag page with sublimation-printed garments ready for DDP shipping to your door. ${Object.keys(CATEGORY_TAGS).length} apparel types · 42 sports · 25 use cases.`}
+            </p>
+          </div>
+          <div className="grid gap-8 md:grid-cols-3">
+            <KeywordCloud dimension="category" title="By apparel type" />
+            <KeywordCloud dimension="sport" title="By sport" />
+            <KeywordCloud dimension="scenario" title="By use case" />
+          </div>
+        </div>
+      </section>
+
       {/* Categories */}
       <section className="border-b-2 border-black bg-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-20">
@@ -328,28 +350,6 @@ export default function ProductsPage() {
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* BROWSE BY KEYWORD — SEO */}
-      <section className="border-b-2 border-black bg-[#faf9f6]">
-        <div className="mx-auto max-w-7xl px-6 py-16">
-          <div className="mb-8 max-w-3xl">
-            <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-[#cc3d00] md:text-xs">
-              Cross-link every page
-            </p>
-            <h2 className="text-3xl font-black uppercase leading-tight tracking-tight md:text-5xl">
-              Jump to your custom apparel by keyword
-            </h2>
-            <p className="mt-3 text-sm text-black/70 md:text-base">
-              {`Pick a sport, a use case, or an apparel type below — every link routes to a curated tag page with sublimation-printed garments ready for DDP shipping to your door. ${Object.keys(CATEGORY_TAGS).length} apparel types · 42 sports · 25 use cases.`}
-            </p>
-          </div>
-          <div className="grid gap-8 md:grid-cols-3">
-            <KeywordCloud dimension="category" title="By apparel type" />
-            <KeywordCloud dimension="sport" title="By sport" />
-            <KeywordCloud dimension="scenario" title="By use case" />
           </div>
         </div>
       </section>
