@@ -38,10 +38,11 @@ const tabs: Tab[] = [
       p.startsWith("/cases/"),
   },
   {
-    href: "/teams-sports-apparel",
+    href: "/solutions",
     label: "Solutions",
     icon: Compass,
     match: (p) =>
+      p === "/solutions" ||
       p === "/teams-sports-apparel" ||
       p === "/event-festivals-conferences" ||
       p === "/corporate-organization-apparel" ||

@@ -107,6 +107,15 @@ export function Navbar() {
                 <Briefcase className="mr-1 inline h-3 w-3" />
                 By Customer
               </div>
+              <Link
+                href="/solutions/"
+                className="block border-b-2 border-black bg-[#faf9f6] px-4 py-2.5 transition-colors hover:bg-[#0a0a0a] hover:text-white"
+              >
+                <div className="text-sm font-black">All Solutions Overview</div>
+                <div className="mt-0.5 text-[11px] text-black/60 group-hover:text-white/70">
+                  See all 6 buyer profiles in one place
+                </div>
+              </Link>
               {solutions.map((s) => (
                 <Link
                   key={s.href}
