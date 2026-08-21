@@ -5,6 +5,8 @@ export const metadata = {
   title: "Privacy Policy ",
   description:
     "How SublimApparel collects, uses, and protects your personal data across our website, inquiry form, and order workflow.",
+  keywords:
+    "SublimApparel privacy policy, data protection, GDPR, personal data, cookies, business information security, inquiry form data",
 };
 
 const SECTIONS = [

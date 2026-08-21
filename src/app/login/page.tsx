@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "Sign In | SublimApparel Account",
   description:
     "Sign in to your SublimApparel account to view order history, request reprints, and manage shipping addresses.",
+  keywords: "SublimApparel login, sign in, client portal, account access, B2B account, custom apparel account",
   robots: { index: false },
   alternates: { canonical: "./" },
 };

@@ -29,6 +29,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${c.title} | SublimApparel Case Study`,
     description: c.summary.slice(0, 160),
+    keywords: [
+      "case study",
+      "sublimation case study",
+      "custom apparel case",
+      "B2B sublimation project",
+      "full-coverage print",
+      "DDP shipping case",
+      ind?.title.toLowerCase(),
+      ...c.products.map((p) => p.toLowerCase()),
+    ].filter((k): k is string => typeof k === "string" && k.length > 0),
     robots: { index: true, follow: true },
   };
 }

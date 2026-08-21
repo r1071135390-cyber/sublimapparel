@@ -9,6 +9,18 @@ export const metadata = {
   title: "About SublimApparel — Yiwu Custom Apparel Factory Since 2018 (12 Lines, 70%...",
   description: "SublimApparel is a Yiwu-based apparel factory producing custom sublimated, all-over digital printed, DTG, DTF, and screen-printed apparel for B2B customers...",
 
+  keywords: [
+    "about SublimApparel",
+    "Yiwu sublimation factory",
+    "custom apparel manufacturer",
+    "8 years experience",
+    "50+ countries served",
+    "US warehouse Fontana",
+    "B2B manufacturer",
+    "6000+ designs",
+    "in-house design team",
+    "OEM apparel",
+  ],
   openGraph: {
     images: ["/about-hero.webp"],
   },

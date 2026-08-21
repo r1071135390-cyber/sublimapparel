@@ -7,6 +7,16 @@ export const metadata: Metadata = {
   title: "US Buffer-Storage Address · Honest Note",
   description:
     "An honest note about our US warehouse address in Fontana, CA. It's a placeholder service for occasional overstock buffer storage — not a standard feature. Most orders don't use it.",
+  keywords: [
+    "US warehouse",
+    "Fontana CA warehouse",
+    "US buffer storage",
+    "US fulfillment",
+    "occasional overstock storage",
+    "US shipping address",
+    "pre-positioned inventory",
+    "American warehouse",
+  ],
   alternates: {
     canonical: "https://sublimapparel.com/shipping/us-warehouse/",
   },

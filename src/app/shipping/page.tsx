@@ -27,6 +27,16 @@ import { RequestQuoteLink } from "@/components/request-quote-link";
 export const metadata: Metadata = {
   title:"How Do We Ship DDP to 100+ Countries? — Sea, Air, Express, US Warehouse",
   description: "DDP (Delivered Duty Paid) shipping to 100+ countries. One invoice, no surprise duties. Sea, air, and express options from Yiwu to your door. US warehouse in...",
+  keywords: [
+    "DDP shipping",
+    "global apparel delivery",
+    "DDP delivery worldwide",
+    "customs cleared",
+    "landed cost shipping",
+    "international clothing delivery",
+    "Yiwu factory direct shipping",
+    "no customs duties",
+  ],
   openGraph: {
     title:"How Do We Ship DDP to 100+ Countries?",
     description:

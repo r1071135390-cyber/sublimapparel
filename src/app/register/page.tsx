@@ -5,6 +5,8 @@ export const metadata: Metadata = {
   title: "Create Account",
   description:
     "Create your SublimApparel account to manage orders, request reprints, and access saved shipping addresses.",
+  keywords:
+    "SublimApparel account, create account, B2B client registration, sample kit request, order tracking",
   robots: { index: false },
   alternates: { canonical: "./" },
 };

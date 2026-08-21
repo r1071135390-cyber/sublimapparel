@@ -5,6 +5,8 @@ export const metadata = {
   title: "Shipping Policy ",
   description:
     "How we ship, the difference between FOB / CIF / DDP, US warehouse fulfillment from Fontana CA, production lead times, tracking, and what to do if a shipment is lost or damaged.",
+  keywords:
+    "SublimApparel shipping policy, FOB CIF DDP explained, US warehouse Fontana CA, production lead times, lost shipment policy",
 };
 
 const INCOTERMS = [

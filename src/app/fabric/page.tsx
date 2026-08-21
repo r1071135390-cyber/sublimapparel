@@ -10,6 +10,18 @@ import { fabricTypes } from "@/lib/fabric-data";
 export const metadata: Metadata = {
   title: "Which Fabric & Print Process Should You Choose? — 24 Fabrics, 6 Print Methods",
   description: "Pick the right fabric-process combo for your apparel project. 24 fabrics in stock (polyester, poly-spandex, nylon, cotton, organic, rPET, blends), 6 print...",
+  keywords: [
+    "sublimation fabric",
+    "polyester jersey",
+    "poly-cotton blend",
+    "bird-eye mesh",
+    "poly-spandex stretch",
+    "performance fabric",
+    "activewear fabric",
+    "custom apparel fabric",
+    "fabric for sublimation printing",
+    "wholesale fabric China",
+  ],
 
   openGraph: {
     images: ["/fabric-hero.webp"],

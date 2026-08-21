@@ -23,6 +23,18 @@ export const metadata: Metadata = {
   title: "Case Studies ",
   description:
     "Browse sublimation printing case studies by industry. See real examples of custom apparel, DDP shipping and full-bleed cotton prints we've produced for events, sports, brands, campaigns and more.",
+  keywords: [
+    "sublimation case studies",
+    "custom apparel portfolio",
+    "sports team apparel",
+    "event merchandise",
+    "music festival merch",
+    "promotional apparel",
+    "brand campaigns",
+    "custom uniform projects",
+    "B2B sublimation success stories",
+    "sublimated apparel projects",
+  ],
 };
 
 const iconMap: Record<string, typeof CalendarDays> = {

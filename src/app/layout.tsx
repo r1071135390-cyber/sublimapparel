@@ -17,6 +17,18 @@ export const metadata: Metadata = {
   },
   description:
     "Sublimation on polyester, All-over digital print 100% cotton. MOQ 50, DDP to your door in 100+ countries, US warehouse in Fontana CA. Yiwu factory est. 2018.",
+  keywords: [
+    "custom sublimation apparel",
+    "sublimation printing factory",
+    "Yiwu apparel manufacturer",
+    "all-over print clothing",
+    "DDP shipping worldwide",
+    "B2B custom apparel",
+    "polyester sublimation",
+    "100% cotton sublimation",
+    "bulk custom clothing",
+    "private label apparel manufacturer",
+  ],
   alternates: {
     canonical: "./",
     languages: {
