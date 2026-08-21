@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -26,29 +27,17 @@ import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 import { forEventsFaqJsonLd, genericServiceJsonLd } from "@/lib/json-ld-data";
 import { RelatedProducts } from "@/components/related-products";
 
-export const metadata: Metadata = {
-  title:
-    "Custom Corporate Apparel Manufacturer | Employee Uniform Supplier — SublimApparel",
-  description: "Custom corporate apparel manufacturer for companies, schools, clubs and organizations. Employee uniforms, branded work shirts, company polo shirts and team...",
-  keywords: [
-    "corporate apparel manufacturer",
-    "corporate apparel supplier",
-    "company shirts supplier",
-    "employee apparel",
-    "company uniforms",
-    "branded company shirts",
-  ],
-  alternates: {
+export const metadata = buildPageMetadata({
+    title: "Custom Corporate Apparel Manufacturer | Employee Uniform Supplier — SublimApparel",
+    description: "Custom corporate apparel manufacturer for companies, schools, clubs and organizations. Employee uniforms, branded work shirts, company polo shirts and team...",
+    keywords: ["corporate apparel manufacturer", "corporate apparel supplier", "company shirts supplier", "employee apparel", "company uniforms", "branded company shirts"],
+    alternates: {
     canonical: "https://sublimapparel.com/corporate-organization-apparel/",
   },
-  openGraph: {
-    title: "Custom Corporate Apparel Manufacturer | Employee Uniform Supplier",
-    description:
-      "Employee uniforms, branded work shirts, company polo shirts, team clothing. Brand-color matching, flexible quantities, DDP worldwide.",
-    url: "https://sublimapparel.com/corporate-organization-apparel/",
-    images: ["/esports-hoodie-circuit.webp"],
-  },
-};
+    ogTitle: "Custom Corporate Apparel Manufacturer | Employee Uniform Supplier",
+    ogDescription: "Employee uniforms, branded work shirts, company polo shirts, team clothing. Brand-color matching, flexible quantities, DDP w…",
+    ogImage: "https://sublimapparel.com/corporate-organization-apparel/",
+  });;
 
 const useCases = [
   {

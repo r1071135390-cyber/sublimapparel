@@ -1,35 +1,20 @@
 import Image from "next/image";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import { JsonLd } from "@/components/json-ld";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 import { Contact } from "@/components/contact";
 import { TeamSection } from "@/components/contact-team";
 
-export const metadata = {
-  title: "How to Reach Our Yiwu Factory — WhatsApp, Email, DDP Quote in 12h",
-  description: "How to reach our Yiwu factory: WhatsApp / WeChat +86-137-5793-1042, email sales@sublimapparel.com, US hub in Fontana CA, EU rep in Rotterdam NL. Real...",
-  keywords: [
-    "contact sublimapparel",
-    "Yiwu factory contact",
-    "custom apparel inquiry",
-    "B2B sales contact",
-    "WhatsApp factory China",
-    "sublimation quote request",
-    "DDP shipping inquiry",
-    "Fontana CA warehouse",
-    "Rotterdam EU representative",
-    "bulk order contact",
-  ],
-
-  openGraph: {
-    images: ["/og/contact.webp"],
-  },
-  authors: [{ name: "Ramon Wang", url: "https://sublimapparel.com/about" }],
-  other: {
+export const metadata = buildPageMetadata({
+    title: "How to Reach Our Yiwu Factory — WhatsApp, Email, DDP Quote in 12h",
+    description: "How to reach our Yiwu factory: WhatsApp / WeChat +86-137-5793-1042, email sales@sublimapparel.com, US hub in Fontana CA, EU rep in Rotterdam NL. Real...",
+    keywords: ["contact sublimapparel", "Yiwu factory contact", "custom apparel inquiry", "B2B sales contact", "WhatsApp factory China", "sublimation quote request", "DDP shipping inquiry", "Fontana CA warehouse", "Rotterdam EU representative", "bulk order contact"],
+    other: {
     "article:author": "Ramon Wang, Sales Director, SublimApparel",
     "article:published_time": "2024-01-01T00:00:00.000Z",
     "article:modified_time": "2025-08-18T00:00:00.000Z",
   },
-};
+  });;
 
 export default function ContactPage() {
   return (

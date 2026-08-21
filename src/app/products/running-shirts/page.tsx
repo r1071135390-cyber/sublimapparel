@@ -1,4 +1,5 @@
 import { JsonLd } from "@/components/json-ld";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -14,29 +15,11 @@ import {
   Wind,
 } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "Custom Running Shirts | All-Over Print, Sublimation, MOQ 50",
-  description:
-    "Custom running shirts — all-over print sublimation on light, fast-dry polyester. MOQ 50 pcs, 4-way stretch, moisture-wicking, anti-odor finish. Built for marathons, club runs, charity races, school athletics. DDP shipping worldwide.",
-  keywords: [
-    // Primary
-    "custom running shirts",
-    "custom marathon shirts manufacturer",
-    "running event shirts bulk",
-    // Secondary
-    "sublimation running shirts",
-    "all over print running tee",
-    "lightweight race shirts",
-    "moisture wicking running apparel",
-    "marathon shirts wholesale",
-    "5k race shirts custom",
-    "charity run shirts",
-    "club running kit",
-  ],
-  openGraph: {
-    images: ["/products/0128/0.webp"],
-  },
-};
+export const metadata = buildPageMetadata({
+    title: "Custom Running Shirts | All-Over Print, Sublimation, MOQ 50",
+    description: "Custom running shirts — all-over print sublimation on light, fast-dry polyester. MOQ 50 pcs, 4-way stretch, moisture-wicking, anti-odor finish. Built for marat…",
+    keywords: ["custom running shirts", "custom marathon shirts manufacturer", "running event shirts bulk", "sublimation running shirts", "all over print running tee", "lightweight race shirts", "moisture wicking running apparel", "marathon shirts wholesale", "5k race shirts custom", "charity run shirts", "club running kit"],
+  });;
 
 // Hero / showcase gallery sourced from public/products/0128/ (0.webp = cover, 1-5.webp = gallery)
 const heroGallery = [

@@ -1,31 +1,15 @@
 import { JsonLd } from "@/components/json-ld";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Flag, Users, Palette, Ruler, Layers, Shirt, Sun, Mountain, Trophy } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "Custom Golf Apparel | Sublimated Polos & Quarter-Zips",
-  description: "Premium custom golf polos, mock necks, and quarter-zips for country clubs, tournaments, and corporate golf days. Sublimated all-over print, moisture-wicking...",
-  keywords: [
-    "golf apparel",
-    "golf polo custom",
-    "sublimated golf shirts",
-    "custom golf polos",
-    "country club uniforms",
-    "corporate golf day apparel",
-    "tournament golf shirts",
-    "all over print polo",
-    "mock neck golf",
-    "quarter zip golf",
-    "moisture wicking polo",
-    "DDP golf apparel",
-  ],
-
-  openGraph: {
-    images: ["/product-lineup.webp"],
-  },
-};
+export const metadata = buildPageMetadata({
+    title: "Custom Golf Apparel | Sublimated Polos & Quarter-Zips",
+    description: "Premium custom golf polos, mock necks, and quarter-zips for country clubs, tournaments, and corporate golf days. Sublimated all-over print, moisture-wicking...",
+    keywords: ["golf apparel", "golf polo custom", "sublimated golf shirts", "custom golf polos", "country club uniforms", "corporate golf day apparel", "tournament golf shirts", "all over print polo", "mock neck golf", "quarter zip golf", "moisture wicking polo", "DDP golf apparel"],
+  });;
 
 const stats = [
   { value: "50", label: "MOQ (PCS)", note: "tournament / club", color: "orange" },

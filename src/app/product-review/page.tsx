@@ -1,12 +1,13 @@
 import fs from "node:fs";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import path from "node:path";
 import Link from "next/link";
 
-export const metadata = {
-  title: "Product Review | SublimApparel",
-  description: "Internal product / blank / tag review dashboards.",
-  robots: { index: false, follow: false },
-};
+export const metadata = buildPageMetadata({
+    title: "Product Review",
+    description: "Internal product / blank / tag review dashboards.",
+    robots: { index: false, follow: false },
+  });;
 
 const tsvFiles = [
   { file: "01-products.tsv", title: "Products (120 SKUs)", desc: "Full product catalog with category, sports, scenarios." },

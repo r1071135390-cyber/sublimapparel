@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import Link from "next/link";
 import { RequestQuoteLink } from "@/components/request-quote-link";
 import {
@@ -19,26 +20,11 @@ import {
 } from "lucide-react";
 import { industries } from "@/lib/cases";
 
-export const metadata: Metadata = {
-  title: "Case Studies ",
-  description:
-    "Browse sublimation printing case studies by industry. See real examples of custom apparel, DDP shipping and full-bleed cotton prints we've produced for events, sports, brands, campaigns and more.",
-  keywords: [
-    "sublimation case studies",
-    "custom apparel portfolio",
-    "sports team apparel",
-    "event merchandise",
-    "music festival merch",
-    "promotional apparel",
-    "brand campaigns",
-    "custom uniform projects",
-    "B2B sublimation success stories",
-    "sublimated apparel projects",
-  ],
-  openGraph: {
-    images: ["/og/og-cases.webp"],
-  },
-};
+export const metadata = buildPageMetadata({
+    title: "Case Studies ",
+    description: "Browse sublimation printing case studies by industry. See real examples of custom apparel, DDP shipping and full-bleed cotton prints we",
+    keywords: ["sublimation case studies", "custom apparel portfolio", "sports team apparel", "event merchandise", "music festival merch", "promotional apparel", "brand campaigns", "custom uniform projects", "B2B sublimation success stories", "sublimated apparel projects"],
+  });;
 
 const iconMap: Record<string, typeof CalendarDays> = {
   CalendarDays,

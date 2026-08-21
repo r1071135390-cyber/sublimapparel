@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import { Contact } from "@/components/contact";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,37 +8,18 @@ import { tagArchiveLink, resolveArchiveLink } from "@/lib/tag-utils";
 import { CATEGORY_TAGS } from "@/lib/tag-archive";
 import { KeywordCloud } from "@/components/keyword-cloud";
 
-export const metadata: Metadata = {
-  title: "Which Custom Apparel Do You Need? — 123 Products, 14 Categories, MOQ 50",
-  description:
-    "Custom sublimated apparel for B2B: t-shirts, jerseys, hoodies, cycling kits, golf polos, racing suits. No setup fees, MOQ 50 pcs, full color all-over print, sample in 5 days.",
-  keywords: [
-    "custom sublimation apparel",
-    "all-over print manufacturer",
-    "sublimated t-shirts",
-    "custom jerseys",
-    "sublimation hoodies",
-    "cycling kits custom",
-    "golf polos custom",
-    "racing suits sublimation",
-    "B2B apparel manufacturer",
-    "MOQ 50 custom apparel",
-    "all over print t-shirts",
-    "sublimation factory China",
-  ],
-
-  openGraph: {
-    title: "Which Custom Apparel Do You Need? — 123 Products, 14 Categories",
-    description: "123 custom sublimated apparel products for B2B: t-shirts, jerseys, hoodies, cycling kits, golf polos, racing suits, plus 100% cotton allover digital print...",
-    images: ["/og/og-products.webp"],
-  },
-  authors: [{ name: "Ramon Wang", url: "https://sublimapparel.com/about" }],
-  other: {
+export const metadata = buildPageMetadata({
+    title: "Which Custom Apparel Do You Need? — 123 Products, 14 Categories, MOQ 50",
+    description: "Custom sublimated apparel for B2B: t-shirts, jerseys, hoodies, cycling kits, golf polos, racing suits. No setup fees, MOQ 50 pcs, full color all-over print, sa…",
+    keywords: ["custom sublimation apparel", "all-over print manufacturer", "sublimated t-shirts", "custom jerseys", "sublimation hoodies", "cycling kits custom", "golf polos custom", "racing suits sublimation", "B2B apparel manufacturer", "MOQ 50 custom apparel", "all over print t-shirts", "sublimation factory China"],
+    other: {
     "article:author": "Ramon Wang, Sales Director, SublimApparel",
     "article:published_time": "2024-01-01T00:00:00.000Z",
     "article:modified_time": "2025-08-18T00:00:00.000Z",
   },
-};
+    ogTitle: "Which Custom Apparel Do You Need? — 123 Products, 14 Categories",
+    ogDescription: "123 custom sublimated apparel products for B2B: t-shirts, jerseys, hoodies, cycling kits, golf polos, racing suits, plus 100…",
+  });;
 
 type CategoryItem = { name: string; category?: keyof typeof CATEGORY_TAGS };
 

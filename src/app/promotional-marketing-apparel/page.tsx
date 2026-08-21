@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import { JsonLd } from "@/components/json-ld";
 import Link from "next/link";
 import {
@@ -26,28 +27,15 @@ export const dynamic = "force-static";
 
 const siteUrl = "https://sublimapparel.com";
 
-export const metadata: Metadata = {
-  title: "Custom Promotional Apparel Manufacturer | Marketing Merchandise Supplier — SublimApparel",
-  description: "Custom promotional apparel manufacturer for trade shows, marketing campaigns, giveaways and brand activations. Promotional t-shirts, branded merchandise and...",
-  keywords: [
-    "promotional apparel supplier",
-    "promotional t shirt manufacturer",
-    "bulk promotional shirts",
-    "giveaway shirts",
-    "branded merchandise",
-    "marketing apparel",
-  ],
-  alternates: { canonical: `${siteUrl}/promotional-marketing-apparel/` },
-  openGraph: {
-    title: "Custom Promotional Apparel Manufacturer | Marketing Merchandise Supplier",
-    description:
-      "Promotional t-shirts, branded merchandise and marketing apparel for trade shows, giveaways and brand activations. Flexible MOQ. DDP worldwide.",
-    url: `${siteUrl}/promotional-marketing-apparel/`,
-    siteName: "SublimApparel",
-    type: "website",
-    images: [{ url: "/og-default.jpg", width: 1200, height: 630, alt: "Custom Promotional Apparel — SublimApparel" }],
-  },
-};
+export const metadata = buildPageMetadata({
+    title: "Custom Promotional Apparel Manufacturer | Marketing Merchandise Supplier — SublimApparel",
+    description: "Custom promotional apparel manufacturer for trade shows, marketing campaigns, giveaways and brand activations. Promotional t-shirts, branded merchandise and...",
+    keywords: ["promotional apparel supplier", "promotional t shirt manufacturer", "bulk promotional shirts", "giveaway shirts", "branded merchandise", "marketing apparel"],
+    alternates: { canonical: `${siteUrl}/promotional-marketing-apparel/` },
+    ogTitle: "Custom Promotional Apparel Manufacturer | Marketing Merchandise Supplier",
+    ogDescription: "Promotional t-shirts, branded merchandise and marketing apparel for trade shows, giveaways and brand activations. Flexible M…",
+    ogImage: "/og-default.jpg",
+  });;
 
 const pains = [
   { icon: Clock, title: "Deadline pressure", body: "Event shirts must arrive 7–14 days before the event. Miss it, and your brand is the one attendees remember — for the wrong reason." },

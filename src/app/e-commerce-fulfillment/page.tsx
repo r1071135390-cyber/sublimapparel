@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -29,28 +30,17 @@ import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 import { forEventsFaqJsonLd, genericServiceJsonLd } from "@/lib/json-ld-data";
 import { RelatedProducts } from "@/components/related-products";
 
-export const metadata: Metadata = {
-  title:
-    "Custom Apparel Fulfillment Partner | DDP Shipping Manufacturer — SublimApparel",
-  description: "Custom apparel fulfillment partner for e-commerce brands, dropshippers and resellers. Bulk production, warehouse support, DDP shipping and inventory...",
-  keywords: [
-    "ecommerce apparel supplier",
-    "online clothing manufacturer",
-    "apparel production partner",
-    "Shopify clothing supplier",
-    "online apparel production",
-  ],
-  alternates: {
+export const metadata = buildPageMetadata({
+    title: "Custom Apparel Fulfillment Partner | DDP Shipping Manufacturer — SublimApparel",
+    description: "Custom apparel fulfillment partner for e-commerce brands, dropshippers and resellers. Bulk production, warehouse support, DDP shipping and inventory...",
+    keywords: ["ecommerce apparel supplier", "online clothing manufacturer", "apparel production partner", "Shopify clothing supplier", "online apparel production"],
+    alternates: {
     canonical: "https://sublimapparel.com/e-commerce-fulfillment/",
   },
-  openGraph: {
-    title: "Custom Apparel Fulfillment Partner | DDP Shipping Manufacturer",
-    description:
-      "Bulk production, warehouse support, DDP shipping and inventory management for e-commerce brands and resellers. Flexible MOQ, custom packaging, blind shipping worldwide.",
-    url: "https://sublimapparel.com/e-commerce-fulfillment/",
-    images: ["/bowling-jersey-striker.webp"],
-  },
-};
+    ogTitle: "Custom Apparel Fulfillment Partner | DDP Shipping Manufacturer",
+    ogDescription: "Bulk production, warehouse support, DDP shipping and inventory management for e-commerce brands and resellers. Flexible MOQ,…",
+    ogImage: "https://sublimapparel.com/e-commerce-fulfillment/",
+  });;
 
 const fulfillmentSegments = [
   {

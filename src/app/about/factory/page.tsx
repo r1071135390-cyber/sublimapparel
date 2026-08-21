@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import Link from "next/link";
 import {
   Factory,
@@ -16,21 +17,11 @@ import {
   Award,
 } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "Inside Our Yiwu Factory | 2,000 sqm Sublimation Apparel Plant",
-  description:
-    "2,000 sqm Yiwu sublimation apparel factory. 12 production lines, 50+ staff, 24/7 capacity. 6 inline printing machines, full cutting-sewing-printing-packaging vertical integration.",
-  keywords: [
-    "yiwu factory",
-    "sublimation factory",
-    "apparel factory china",
-    "sublimation printing factory",
-    "factory tour",
-    "factory capacity",
-    "vertical integration",
-    "oem apparel factory",
-  ],
-};
+export const metadata = buildPageMetadata({
+    title: "Inside Our Yiwu Factory | 2,000 sqm Sublimation Apparel Plant",
+    description: "2,000 sqm Yiwu sublimation apparel factory. 12 production lines, 50+ staff, 24/7 capacity. 6 inline printing machines, full cutting-sewing-printing-packaging v…",
+    keywords: ["yiwu factory", "sublimation factory", "apparel factory china", "sublimation printing factory", "factory tour", "factory capacity", "vertical integration", "oem apparel factory"],
+  });;
 
 const stats = [
   { value: "2,000", unit: "SQM", label: "Floor space" },

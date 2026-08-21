@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -28,28 +29,17 @@ import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 import { forEventsFaqJsonLd, genericServiceJsonLd } from "@/lib/json-ld-data";
 import { RelatedProducts } from "@/components/related-products";
 
-export const metadata: Metadata = {
-  title:
-    "Private Label Apparel Manufacturer | Custom Clothing Production Partner — SublimApparel",
-  description: "Private label apparel manufacturer and custom clothing production partner for growing brands and creative agencies. Custom labels, hang tags, retail...",
-  keywords: [
-    "custom apparel manufacturer",
-    "private label apparel manufacturer",
-    "clothing production partner",
-    "small brand manufacturer",
-    "apparel sourcing partner",
-  ],
-  alternates: {
+export const metadata = buildPageMetadata({
+    title: "Private Label Apparel Manufacturer | Custom Clothing Production Partner — SublimApparel",
+    description: "Private label apparel manufacturer and custom clothing production partner for growing brands and creative agencies. Custom labels, hang tags, retail...",
+    keywords: ["custom apparel manufacturer", "private label apparel manufacturer", "clothing production partner", "small brand manufacturer", "apparel sourcing partner"],
+    alternates: {
     canonical: "https://sublimapparel.com/apparel-brands-agencies/",
   },
-  openGraph: {
-    title: "Private Label Apparel Manufacturer | Custom Clothing Production Partner",
-    description:
-      "Custom labels, hang tags, retail packaging and drop-ship fulfillment for growing brands and creative agencies. China-based factory, flexible MOQ, FOB and DDP.",
-    url: "https://sublimapparel.com/apparel-brands-agencies/",
-    images: ["/esports-travel-hoodie.webp"],
-  },
-};
+    ogTitle: "Private Label Apparel Manufacturer | Custom Clothing Production Partner",
+    ogDescription: "Custom labels, hang tags, retail packaging and drop-ship fulfillment for growing brands and creative agencies. China-based f…",
+    ogImage: "https://sublimapparel.com/apparel-brands-agencies/",
+  });;
 
 const brandSegments = [
   {

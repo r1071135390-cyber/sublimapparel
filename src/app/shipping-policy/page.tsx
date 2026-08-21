@@ -1,13 +1,11 @@
 import { ArrowLeft, Mail, Truck, Warehouse, Globe, Package } from "lucide-react";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import Link from "next/link";
 
-export const metadata = {
-  title: "Shipping Policy ",
-  description:
-    "How we ship, the difference between FOB / CIF / DDP, US warehouse fulfillment from Fontana CA, production lead times, tracking, and what to do if a shipment is lost or damaged.",
-  keywords:
-    "SublimApparel shipping policy, FOB CIF DDP explained, US warehouse Fontana CA, production lead times, lost shipment policy",
-};
+export const metadata = buildPageMetadata({
+    title: "Shipping Policy ",
+    description: "How we ship, the difference between FOB / CIF / DDP, US warehouse fulfillment from Fontana CA, production lead times, tracking, and what to do if a shipment is…",
+  });;
 
 const INCOTERMS = [
   {

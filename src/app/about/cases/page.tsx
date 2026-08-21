@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import Link from "next/link";
 import { RequestQuoteLink } from "@/components/request-quote-link";
 import {
@@ -19,25 +20,11 @@ import {
   Award,
 } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "Industries We Serve · 12 Verticals, 1,000+ B2B Clients",
-  description:
-    "12 industries we serve: race events, sports clubs, schools, ecommerce brands, political campaigns, trade shows, esports, churches, fitness, cycling, gaming, hospitality. Sublimation apparel B2B.",
-  keywords: [
-    "industries we serve",
-    "sublimation apparel clients",
-    "race team apparel",
-    "school uniforms sublimation",
-    "political campaign merch",
-    "esports jersey",
-    "yoga wear manufacturer",
-    "cycling jersey factory",
-  ],
-
-  openGraph: {
-    images: ["/about-hero.webp"],
-  },
-};
+export const metadata = buildPageMetadata({
+    title: "Industries We Serve · 12 Verticals, 1,000+ B2B Clients",
+    description: "12 industries we serve: race events, sports clubs, schools, ecommerce brands, political campaigns, trade shows, esports, churches, fitness, cycling, gaming, ho…",
+    keywords: ["industries we serve", "sublimation apparel clients", "race team apparel", "school uniforms sublimation", "political campaign merch", "esports jersey", "yoga wear manufacturer", "cycling jersey factory"],
+  });;
 
 const stats = [
   { value: "12", unit: "VERTICALS", label: "Industries served" },

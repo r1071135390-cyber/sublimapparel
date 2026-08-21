@@ -1,29 +1,15 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Check, Droplets, Shirt, Sparkles, Layers, Zap } from "lucide-react";
 import { polyesterFabrics } from "@/lib/fabric-data";
 
-export const metadata: Metadata = {
-  title: "All-Over Polyester Printing | Sublimation on 100% Polyester",
-  description: "Custom all-over printing on 100% polyester apparel. Dye sublimation, photorealistic color, zero hand feel, and no setup fee. From sportswear and esports to...",
-  keywords: [
-    "all-over polyester printing",
-    "100% polyester printing",
-    "polyester jersey",
-    "dye sublimation",
-    "sublimation printing",
-    "sportswear printing",
-    "esports jerseys",
-    "cycling jerseys",
-    "all-over print polyester",
-    "full coverage polyester print",
-  ],
-
-  openGraph: {
-    images: ["/fabric-hero.webp"],
-  },
-};
+export const metadata = buildPageMetadata({
+    title: "All-Over Polyester Printing | Sublimation on 100% Polyester",
+    description: "Custom all-over printing on 100% polyester apparel. Dye sublimation, photorealistic color, zero hand feel, and no setup fee. From sportswear and esports to...",
+    keywords: ["all-over polyester printing", "100% polyester printing", "polyester jersey", "dye sublimation", "sublimation printing", "sportswear printing", "esports jerseys", "cycling jerseys", "all-over print polyester", "full coverage polyester print"],
+  });;
 
 const whyUs = [
   {

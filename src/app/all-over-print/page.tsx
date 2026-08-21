@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -15,37 +16,17 @@ import {
   FlaskConical,
 } from "lucide-react";
 
-export const metadata: Metadata = {
-  title:
-    "All-Over Print Manufacturer | Edge-to-Edge Sublimation & Cotton | MOQ 50",
-  description: "All-over print clothing manufacturer in Yiwu, China. Edge-to-edge sublimation on polyester, allover digital print on 100% cotton, plus DTF, DTG and...",
-  keywords: [
-    "all-over print",
-    "all over print manufacturer",
-    "all over print clothing",
-    "sublimation all over print",
-    "all over print t-shirt",
-    "all over print hoodie",
-    "all over print factory",
-    "edge to edge printing",
-    "full body sublimation",
-    "cut and sew sublimation",
-    "allover digital print cotton",
-    "sublimation China factory",
-    "DDP sublimation printing",
-  ],
-  alternates: {
+export const metadata = buildPageMetadata({
+    title: "All-Over Print Manufacturer | Edge-to-Edge Sublimation & Cotton | MOQ 50",
+    description: "All-over print clothing manufacturer in Yiwu, China. Edge-to-edge sublimation on polyester, allover digital print on 100% cotton, plus DTF, DTG and...",
+    keywords: ["all-over print", "all over print manufacturer", "all over print clothing", "sublimation all over print", "all over print t-shirt", "all over print hoodie", "all over print factory", "edge to edge printing", "full body sublimation", "cut and sew sublimation", "allover digital print cotton", "sublimation China factory", "DDP sublimation printing"],
+    alternates: {
     canonical: "https://sublimapparel.com/all-over-print/",
   },
-  openGraph: {
-    title:
-      "All-Over Print Manufacturer | Edge-to-Edge Sublimation & Cotton | SublimApparel",
-    description:
-      "Yiwu factory. Polyester sublimation, allover cotton print, DTG, DTF, cut-and-sew. MOQ 50 pcs, no setup fee, DDP worldwide.",
-    url: "https://sublimapparel.com/all-over-print/",
-    images: ["/factory-floor.webp"],
-  },
-};
+    ogTitle: "All-Over Print Manufacturer | Edge-to-Edge Sublimation & Cotton",
+    ogDescription: "Yiwu factory. Polyester sublimation, allover cotton print, DTG, DTF, cut-and-sew. MOQ 50 pcs, no setup fee, DDP worldwide.",
+    ogImage: "https://sublimapparel.com/all-over-print/",
+  });;
 
 const processes = [
   {

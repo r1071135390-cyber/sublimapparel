@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import Link from "next/link";
 import { RequestQuoteLink } from "@/components/request-quote-link";
 import {
@@ -17,25 +18,11 @@ import {
   MessageSquareQuote,
 } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "Production Process · 7 Steps from Inquiry to Delivery",
-  description:
-    "Our 7-step production process: inquiry, quote, mockup, sample, bulk production, QC, shipping. 21-day average lead time from PO to delivery. Sublimation apparel B2B.",
-  keywords: [
-    "production process",
-    "sublimation production",
-    "apparel manufacturing process",
-    "lead time",
-    "oem process",
-    "factory workflow",
-    "production timeline",
-    "21 day production",
-  ],
-
-  openGraph: {
-    images: ["/factory-floor.webp"],
-  },
-};
+export const metadata = buildPageMetadata({
+    title: "Production Process · 7 Steps from Inquiry to Delivery",
+    description: "Our 7-step production process: inquiry, quote, mockup, sample, bulk production, QC, shipping. 21-day average lead time from PO to delivery. Sublimation apparel…",
+    keywords: ["production process", "sublimation production", "apparel manufacturing process", "lead time", "oem process", "factory workflow", "production timeline", "21 day production"],
+  });;
 
 const stats = [
   { value: "7", unit: "STEPS", label: "End-to-end process" },

@@ -1,34 +1,22 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import { ArrowRight, AlertTriangle, Calendar, CheckCircle2, Clock, Plane } from "lucide-react";
 import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 import { TimelineCalculator } from "./timeline-calculator";
 
-export const metadata: Metadata = {
-  title:
-    "Event Apparel Timeline Calculator | When to Order Custom Shirts | SublimApparel",
-  description:
-    "Free event apparel timeline calculator. Enter your event date, get exact dates for when to order, lock designs, and lock final counts. For race organizers, camps, corporate events, and clubs.",
-  keywords: [
-    "event timeline calculator",
-    "when to order custom shirts",
-    "race shirt lead time",
-    "custom apparel production timeline",
-    "event apparel schedule",
-  ],
-  alternates: {
+export const metadata = buildPageMetadata({
+    title: "Event Apparel Timeline Calculator | When to Order Custom Shirts",
+    description: "Free event apparel timeline calculator. Enter your event date, get exact dates for when to order, lock designs, and lock final counts. For race organizers, cam…",
+    keywords: ["event timeline calculator", "when to order custom shirts", "race shirt lead time", "custom apparel production timeline", "event apparel schedule"],
+    alternates: {
     canonical: "https://sublimapparel.com/event-timeline/",
   },
-  openGraph: {
-    title: "Event Apparel Timeline Calculator | SublimApparel",
-    description:
-      "Enter your event date. Get the exact order date, design lock date, and final count lock date.",
-    url: "https://sublimapparel.com/event-timeline/",
-    images: ["/og/og-home.webp"],
-  },
-
-};
+    ogTitle: "Event Apparel Timeline Calculator",
+    ogDescription: "Enter your event date. Get the exact order date, design lock date, and final count lock date.",
+    ogImage: "https://sublimapparel.com/event-timeline/",
+  });;
 
 const breadcrumb = buildBreadcrumbJsonLd([
   { name: "Home", path: "/" },

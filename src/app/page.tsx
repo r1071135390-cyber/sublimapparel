@@ -1,4 +1,5 @@
 import { Hero } from "@/components/hero";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import { InquiryCTA } from "@/components/inquiry-cta";
 import { ArtworkCTA } from "@/components/artwork-cta";
 import { BeyondApparel } from "@/components/beyond-apparel";
@@ -14,20 +15,15 @@ import { HomeExtras } from "@/components/home-extras";
 import { Newsletter, VideoShowcase, FreeDesignService, RecentCaseStudies, LogoWall } from "@/components/home-extras";
 import { JsonLd } from "@/components/json-ld";
 
-export const metadata = {
-  title: "Yiwu Custom Sublimate Apparel Manufacturer | Sublimation & Cotton DDP 100+ Countries",
-  description: "Sublimation on polyester (true all-over, edge-to-edge). DTG and DTF on 100% cotton (A4–A3 per panel, soft hand). Allover digital print on cotton also...",
-
-  openGraph: {
-    images: ["/og/og-home.webp"],
-  },
-  authors: [{ name: "Ramon Wang", url: "https://sublimapparel.com/about" }],
-  other: {
+export const metadata = buildPageMetadata({
+    title: "Yiwu Custom Sublimate Apparel Manufacturer | Sublimation & Cotton DDP 100+ Countries",
+    description: "Sublimation on polyester (true all-over, edge-to-edge). DTG and DTF on 100% cotton (A4–A3 per panel, soft hand). Allover digital print on cotton also...",
+    other: {
     "article:author": "Ramon Wang, Sales Director, SublimApparel",
     "article:published_time": "2024-01-01T00:00:00.000Z",
     "article:modified_time": "2025-08-18T00:00:00.000Z",
   },
-};
+  });;
 
 const homeJsonLd = [
   {

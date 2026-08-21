@@ -1,31 +1,18 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import Link from "next/link";
 import { ArrowRight, MapPin } from "lucide-react";
 import { JsonLd } from "@/components/json-ld";
 
-export const metadata: Metadata = {
-  title: "US Buffer-Storage Address · Honest Note",
-  description:
-    "An honest note about our US warehouse address in Fontana, CA. It's a placeholder service for occasional overstock buffer storage — not a standard feature. Most orders don't use it.",
-  keywords: [
-    "US warehouse",
-    "Fontana CA warehouse",
-    "US buffer storage",
-    "US fulfillment",
-    "occasional overstock storage",
-    "US shipping address",
-    "pre-positioned inventory",
-    "American warehouse",
-  ],
-  alternates: {
+export const metadata = buildPageMetadata({
+    title: "US Buffer-Storage Address · Honest Note",
+    description: "An honest note about our US warehouse address in Fontana, CA. It",
+    keywords: ["US warehouse", "Fontana CA warehouse", "US buffer storage", "US fulfillment", "occasional overstock storage", "US shipping address", "pre-positioned inventory", "American warehouse"],
+    alternates: {
     canonical: "https://sublimapparel.com/shipping/us-warehouse/",
   },
-  robots: { index: true, follow: true },
-
-  openGraph: {
-    images: ["/shipping-hero.webp"],
-  },
-};
+    robots: { index: true, follow: true },
+  });;
 
 const usWarehouseData = {
   "@context": "https://schema.org",

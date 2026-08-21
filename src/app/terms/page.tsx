@@ -1,13 +1,11 @@
 import { ArrowLeft, Mail } from "lucide-react";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import Link from "next/link";
 
-export const metadata = {
-  title: "Terms of Sale ",
-  description:
-    "Terms and conditions governing quotes, orders, payment, production, shipping, returns, and liability for custom sublimation apparel from SublimApparel.",
-  keywords:
-    "SublimApparel terms of sale, B2B apparel terms, quote and order terms, payment and shipping terms, returns and liability",
-};
+export const metadata = buildPageMetadata({
+    title: "Terms of Sale ",
+    description: "Terms and conditions governing quotes, orders, payment, production, shipping, returns, and liability for custom sublimation apparel from SublimApparel.",
+  });;
 
 const SECTIONS = [
   {

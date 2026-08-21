@@ -1,30 +1,15 @@
 import { JsonLd } from "@/components/json-ld";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Users, Palette, Ruler, Sparkles, Shirt, Trophy, Layers, Star } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "Custom Bowling Jerseys | Sublimated League & Tournament Shirts",
-  description:
-    "Custom sublimated bowling jerseys for leagues, tournaments, and retro-style nights. Loose fit, contrasting side panels, name & number front and back. MOQ 50 pcs, 15-25 day lead time, DDP shipping.",
-  keywords: [
-    "custom bowling jersey",
-    "bowling shirt",
-    "sublimated bowling jersey",
-    "bowling league shirts",
-    "bowling tournament apparel",
-    "retro bowling shirt",
-    "name number bowling",
-    "all over print bowling",
-    "boutique bowling apparel",
-    "DDP bowling jerseys",
-  ],
-
-  openGraph: {
-    images: ["/product-lineup.webp"],
-  },
-};
+export const metadata = buildPageMetadata({
+    title: "Custom Bowling Jerseys | Sublimated League & Tournament Shirts",
+    description: "Custom sublimated bowling jerseys for leagues, tournaments, and retro-style nights. Loose fit, contrasting side panels, name & number front and back. MOQ 50 pc…",
+    keywords: ["custom bowling jersey", "bowling shirt", "sublimated bowling jersey", "bowling league shirts", "bowling tournament apparel", "retro bowling shirt", "name number bowling", "all over print bowling", "boutique bowling apparel", "DDP bowling jerseys"],
+  });;
 
 const stats = [
   { value: "50", label: "MOQ (PCS)", note: "league / centre", color: "orange" },

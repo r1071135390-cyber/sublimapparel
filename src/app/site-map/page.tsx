@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import { industries } from "@/lib/cases";
 import {
   Home,
@@ -21,11 +22,11 @@ import {
 // Not indexed by search engines (noindex via metadata below).
 // Visit /site-map to see the architecture; SEO sitemap lives at /sitemap.xml.
 
-export const metadata = {
-  title: "Site Map · SublimApparel",
-  description: "Internal site architecture overview.",
-  robots: { index: false, follow: false },
-};
+export const metadata = buildPageMetadata({
+    title: "Site Map · SublimApparel",
+    description: "Internal site architecture overview.",
+    robots: { index: false, follow: false },
+  });;
 
 type SitemapNode = {
   path: string;

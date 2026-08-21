@@ -1,30 +1,15 @@
 import { JsonLd } from "@/components/json-ld";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Cloud, Layers, Palette, Ruler, Sparkles, Users, Wind } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "Custom Sublimation Hoodies | All-Over Print, Low MOQ",
-  description:
-    "Custom sublimation hoodies — pullover, zip-up, cropped, heavyweight. 320–400 GSM fleece. All-over print, no setup fee, MOQ 50 pcs. DDP to 100+ countries.",
-  keywords: [
-    "custom hoodies",
-    "sublimation hoodies",
-    "all over print hoodie",
-    "custom printed hoodies",
-    "pull over hoodies",
-    "zip up hoodies",
-    "heavyweight hoodies",
-    "streetwear hoodies",
-    "team hoodies",
-    "low MOQ hoodies",
-  ],
-
-  openGraph: {
-    images: ["/product-lineup.webp"],
-  },
-};
+export const metadata = buildPageMetadata({
+    title: "Custom Sublimation Hoodies | All-Over Print, Low MOQ",
+    description: "Custom sublimation hoodies — pullover, zip-up, cropped, heavyweight. 320–400 GSM fleece. All-over print, no setup fee, MOQ 50 pcs. DDP to 100+ countries.",
+    keywords: ["custom hoodies", "sublimation hoodies", "all over print hoodie", "custom printed hoodies", "pull over hoodies", "zip up hoodies", "heavyweight hoodies", "streetwear hoodies", "team hoodies", "low MOQ hoodies"],
+  });;
 
 const stats = [
   { value: "50", label: "MOQ (PCS)", note: "true low-MOQ", color: "orange" },

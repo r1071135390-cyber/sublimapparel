@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import Link from "next/link";
 import { Sparkles, ArrowRight, Truck, BadgeCheck } from "lucide-react";
 import { JsonLd } from "@/components/json-ld";
@@ -8,30 +9,15 @@ import { products, allSports, allScenarios } from "@/lib/products-data";
 import { pickHeroImagesWithAlts } from "@/lib/product-images";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 
-export const metadata: Metadata = {
-  title: "100 All-Over Print Products | Apparel by Garment, Sport",
-  description:
-    "100 all-over print apparel products, cross-filtered by garment type (29), sport (42) and scenario (27). From polyester sublimation to all-over digital print on cotton, MOQ 50 pcs, DDP to door.",
-  keywords: [
-    "all-over print catalog",
-    "sublimation apparel wholesale",
-    "all-over digital print on cotton",
-    "custom jerseys China",
-    "DDP apparel factory",
-    "Yiwu apparel factory",
-    "custom workwear China",
-    "promotional apparel bulk",
-  ],
-  alternates: { canonical: "./" },
-  openGraph: {
+export const metadata = buildPageMetadata({
     title: "100 All-Over Print Products | Apparel by Garment, Sport",
-    description:
-      "100 all-over print apparel products, cross-filtered by garment, sport and scenario. Polyester sublimation + all-over digital print on cotton. MOQ 50 pcs, DDP worldwide.",
-    url: "/products/all/",
-    type: "website",
-    images: ["/product-hero-products.webp"],
-  },
-};
+    description: "100 all-over print apparel products, cross-filtered by garment type (29), sport (42) and scenario (27). From polyester sublimation to all-over digital print on…",
+    keywords: ["all-over print catalog", "sublimation apparel wholesale", "all-over digital print on cotton", "custom jerseys China", "DDP apparel factory", "Yiwu apparel factory", "custom workwear China", "promotional apparel bulk"],
+    alternates: { canonical: "./" },
+    ogTitle: "100 All-Over Print Products | Apparel by Garment, Sport",
+    ogDescription: "100 all-over print apparel products, cross-filtered by garment, sport and scenario. Polyester sublimation + all-over digital…",
+    ogImage: "/products/all/",
+  });;
 
 const breadcrumbLd = buildBreadcrumbJsonLd([
   { name: "Home", path: "/" },

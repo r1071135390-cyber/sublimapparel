@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -19,31 +20,17 @@ import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 
-export const metadata: Metadata = {
-  title:
-    "90-Day Custom Apparel Production Program | 2-Phase Model | SublimApparel",
-  description:
-    "Our 90-day custom apparel production program in detail. 2-Phase model: reserve early, lock late. Designed for events, corporate, and brand apparel with deadline-driven production.",
-  keywords: [
-    "90 day production program",
-    "custom apparel lead time",
-    "2 phase production model",
-    "apparel manufacturing timeline",
-    "deadline driven production",
-    "apparel production planning",
-  ],
-  alternates: {
+export const metadata = buildPageMetadata({
+    title: "90-Day Custom Apparel Production Program | 2-Phase Model",
+    description: "Our 90-day custom apparel production program in detail. 2-Phase model: reserve early, lock late. Designed for events, corporate, and brand apparel with deadlin…",
+    keywords: ["90 day production program", "custom apparel lead time", "2 phase production model", "apparel manufacturing timeline", "deadline driven production", "apparel production planning"],
+    alternates: {
     canonical: "https://sublimapparel.com/90-day-program/",
   },
-  openGraph: {
-    title: "90-Day Custom Apparel Production Program | SublimApparel",
-    description:
-      "Reserve early, lock late. 2-Phase Production Model designed for events, corporate, and brand apparel.",
-    url: "https://sublimapparel.com/90-day-program/",
-    images: ["/og/og-home.webp"],
-  },
-
-};
+    ogTitle: "90-Day Custom Apparel Production Program",
+    ogDescription: "Reserve early, lock late. 2-Phase Production Model designed for events, corporate, and brand apparel.",
+    ogImage: "https://sublimapparel.com/90-day-program/",
+  });;
 
 const breadcrumb = buildBreadcrumbJsonLd([
   { name: "Home", path: "/" },

@@ -1,27 +1,13 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import Link from "next/link";
 import { Globe, Plane, Ship, Truck, Package, Shield, Clock, DollarSign } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "Worldwide Shipping · DDP to 100+ Countries from Yiwu Factory",
-  description:
-    "Sea, air, and express shipping from Yiwu to 100+ countries. DDP delivered duty paid to US, UK, EU, AU, CA. Incoterms FOB, CIF, DDP, EXW. Track every shipment end-to-end.",
-  keywords: [
-    "worldwide shipping",
-    "global shipping",
-    "ddp shipping",
-    "international shipping",
-    "yiwu worldwide",
-    "factory direct shipping",
-    "incoterms ddp fob cif",
-    "sea air express",
-    "global fulfillment",
-  ],
-
-  openGraph: {
-    images: ["/shipping-hero.webp"],
-  },
-};
+export const metadata = buildPageMetadata({
+    title: "Worldwide Shipping · DDP to 100+ Countries from Yiwu Factory",
+    description: "Sea, air, and express shipping from Yiwu to 100+ countries. DDP delivered duty paid to US, UK, EU, AU, CA. Incoterms FOB, CIF, DDP, EXW. Track every shipment e…",
+    keywords: ["worldwide shipping", "global shipping", "ddp shipping", "international shipping", "yiwu worldwide", "factory direct shipping", "incoterms ddp fob cif", "sea air express", "global fulfillment"],
+  });;
 
 const stats = [
   { value: "100+", unit: "COUNTRIES", label: "Delivered to" },

@@ -1,31 +1,15 @@
 import { JsonLd } from "@/components/json-ld";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Users, Palette, Ruler, Sparkles, Shirt, Gamepad2, Crown, Layers, Zap } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "Custom Esports Apparel | Sublimated Jerseys & Team Kits",
-  description: "Custom sublimated esports jerseys, hoodies, and team kits for gaming teams, tournaments, and streamers. Bold all-over print, poly-spandex stretch, name &...",
-  keywords: [
-    "esports jersey custom",
-    "gaming jersey",
-    "custom esports apparel",
-    "gaming team jerseys",
-    "esports tournament shirts",
-    "sublimated gaming jersey",
-    "gamer tag jersey",
-    "esports hoodie custom",
-    "all over print esports",
-    "gaming team kit",
-    "college esports apparel",
-    "twitch streamer merch",
-  ],
-
-  openGraph: {
-    images: ["/hero-jersey.webp"],
-  },
-};
+export const metadata = buildPageMetadata({
+    title: "Custom Esports Apparel | Sublimated Jerseys & Team Kits",
+    description: "Custom sublimated esports jerseys, hoodies, and team kits for gaming teams, tournaments, and streamers. Bold all-over print, poly-spandex stretch, name &...",
+    keywords: ["esports jersey custom", "gaming jersey", "custom esports apparel", "gaming team jerseys", "esports tournament shirts", "sublimated gaming jersey", "gamer tag jersey", "esports hoodie custom", "all over print esports", "gaming team kit", "college esports apparel", "twitch streamer merch"],
+  });;
 
 const stats = [
   { value: "50", label: "MOQ (PCS)", note: "team / event", color: "orange" },

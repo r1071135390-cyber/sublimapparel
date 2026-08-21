@@ -1,13 +1,11 @@
 import Link from 'next/link'
+import { buildPageMetadata } from "@/lib/page-metadata";
 
-export const metadata = {
-  title: 'Sportswear Decisions',
-  description:
-    'Decisions on adding Sportswear to the product line. Internal product review notes for the SublimApparel team.',
-  keywords:
-    'SublimApparel sportswear decisions, sportswear product line, custom sportswear manufacturing, internal product review',
-  robots: { index: false, follow: false },
-}
+export const metadata = buildPageMetadata({
+    title: "Sportswear Decisions",
+    description: "Decisions on adding Sportswear to the product line. Internal product review notes for the SublimApparel team.",
+    robots: { index: false, follow: false },
+  });
 
 export default function SportswearDecisionsPage() {
   return (

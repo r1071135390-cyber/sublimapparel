@@ -1,12 +1,11 @@
 import Link from "next/link";
+import { buildPageMetadata } from "@/lib/page-metadata";
 
-export const metadata = {
-  title: "All-Products Recategorize · VividPrint Product Review",
-  description: "119 products · 13 categories · 25 scenarios · bulk recategorize",
-  keywords:
-    "SublimApparel product recategorize, product taxonomy review, category mapping, internal product catalog",
-  robots: { index: false, follow: false },
-};
+export const metadata = buildPageMetadata({
+    title: "All-Products Recategorize · VividPrint Product Review",
+    description: "119 products · 13 categories · 25 scenarios · bulk recategorize",
+    robots: { index: false, follow: false },
+  });;
 
 const SCENARIO_POOL = [
   "Promotional Swag", "Political Campaign", "Event & Festival",

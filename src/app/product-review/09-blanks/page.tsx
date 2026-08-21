@@ -1,13 +1,13 @@
 import fs from "node:fs";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import path from "node:path";
 import Link from "next/link";
 
-export const metadata = {
-  title: "Ready-to-Decorate Blanks & Craft Services | SublimApparel",
-  description:
-    "25 blank apparel styles + 4 decoration crafts (sublimation, embroidery, heat transfer, screen print). Mix-and-match fabric + craft. MOQ 50-100 pcs. DDP worldwide.",
-  robots: { index: false, follow: false },
-};
+export const metadata = buildPageMetadata({
+    title: "Ready-to-Decorate Blanks & Craft Services",
+    description: "25 blank apparel styles + 4 decoration crafts (sublimation, embroidery, heat transfer, screen print). Mix-and-match fabric + craft. MOQ 50-100 pcs. DDP worldwi…",
+    robots: { index: false, follow: false },
+  });;
 
 function parseTsv(text: string): Record<string, string>[] {
   const lines = text.trim().split(/\r?\n/);

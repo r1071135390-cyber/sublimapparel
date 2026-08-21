@@ -1,30 +1,15 @@
 import { JsonLd } from "@/components/json-ld";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Flag, Users, Palette, Ruler, Layers, Award } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "Custom Racing Apparel | Sublimation Motorsport & Track Day",
-  description:
-    "Custom sublimation racing apparel for motorsport teams, auto clubs, track days, and racing series. Full all-over print, no setup fee, MOQ 50 pcs. Crew tees, polos, mechanic shirts, fan wear.",
-  keywords: [
-    "custom racing shirts",
-    "motorsport apparel",
-    "sublimation racing",
-    "auto club shirts",
-    "track day apparel",
-    "racing team uniforms",
-    "motorsport fan wear",
-    "driving team shirts",
-    "all over print racing",
-    "race day uniform",
-  ],
-
-  openGraph: {
-    images: ["/product-lineup.webp"],
-  },
-};
+export const metadata = buildPageMetadata({
+    title: "Custom Racing Apparel | Sublimation Motorsport & Track Day",
+    description: "Custom sublimation racing apparel for motorsport teams, auto clubs, track days, and racing series. Full all-over print, no setup fee, MOQ 50 pcs. Crew tees, po…",
+    keywords: ["custom racing shirts", "motorsport apparel", "sublimation racing", "auto club shirts", "track day apparel", "racing team uniforms", "motorsport fan wear", "driving team shirts", "all over print racing", "race day uniform"],
+  });;
 
 const stats = [
   { value: "50", label: "MOQ (PCS)", note: "true low-MOQ", color: "orange" },

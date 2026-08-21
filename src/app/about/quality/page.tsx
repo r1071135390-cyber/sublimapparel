@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import Link from "next/link";
 import { RequestQuoteLink } from "@/components/request-quote-link";
 import {
@@ -17,25 +18,11 @@ import {
   Wrench,
 } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "Quality Control · 4-Stage QC, 50+ Checkpoints, AQL 2.5",
-  description:
-    "4-stage quality control: incoming fabric, in-line, pre-final, and pre-shipment. 50+ checkpoints, AQL 2.5 sampling, 99.2% first-pass rate. Sublimation apparel B2B.",
-  keywords: [
-    "quality control",
-    "apparel quality",
-    "aql 2.5",
-    "qc process",
-    "fabric inspection",
-    "sublimation quality",
-    "factory audit",
-    "defect rate",
-  ],
-
-  openGraph: {
-    images: ["/about-hero.webp"],
-  },
-};
+export const metadata = buildPageMetadata({
+    title: "Quality Control · 4-Stage QC, 50+ Checkpoints, AQL 2.5",
+    description: "4-stage quality control: incoming fabric, in-line, pre-final, and pre-shipment. 50+ checkpoints, AQL 2.5 sampling, 99.2% first-pass rate. Sublimation apparel B…",
+    keywords: ["quality control", "apparel quality", "aql 2.5", "qc process", "fabric inspection", "sublimation quality", "factory audit", "defect rate"],
+  });;
 
 const stats = [
   { value: "4", unit: "STAGES", label: "Inline → final QC" },

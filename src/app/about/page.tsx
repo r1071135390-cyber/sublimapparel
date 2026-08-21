@@ -1,36 +1,21 @@
 import { Contact } from"@/components/contact";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import { JsonLd } from "@/components/json-ld";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 import Link from"next/link";
 import { MapPin } from"lucide-react";
 import Image from"next/image";
 
-export const metadata = {
-  title: "About SublimApparel — Yiwu Custom Apparel Factory Since 2018 (12 Lines, 70%...",
-  description: "SublimApparel is a Yiwu-based apparel factory producing custom sublimated, all-over digital printed, DTG, DTF, and screen-printed apparel for B2B customers...",
-
-  keywords: [
-    "about SublimApparel",
-    "Yiwu sublimation factory",
-    "custom apparel manufacturer",
-    "8 years experience",
-    "50+ countries served",
-    "US warehouse Fontana",
-    "B2B manufacturer",
-    "6000+ designs",
-    "in-house design team",
-    "OEM apparel",
-  ],
-  openGraph: {
-    images: ["/og/about.webp"],
-  },
-  authors: [{ name: "Ramon Wang", url: "https://sublimapparel.com/about" }],
-  other: {
+export const metadata = buildPageMetadata({
+    title: "About SublimApparel — Yiwu Custom Apparel Factory Since 2018 (12 Lines, 70%...",
+    description: "SublimApparel is a Yiwu-based apparel factory producing custom sublimated, all-over digital printed, DTG, DTF, and screen-printed apparel for B2B customers...",
+    keywords: ["about SublimApparel", "Yiwu sublimation factory", "custom apparel manufacturer", "8 years experience", "50+ countries served", "US warehouse Fontana", "B2B manufacturer", "6000+ designs", "in-house design team", "OEM apparel"],
+    other: {
     "article:author": "Ramon Wang, Sales Director, SublimApparel",
     "article:published_time": "2018-01-01T00:00:00.000Z",
     "article:modified_time": "2025-08-18T00:00:00.000Z",
   },
-};
+  });;
 
 const capabilities = [
   { title:"Sublimation & DTG printing", desc:"Large-format printers, full CMYK color, polyester and 100% cotton." },

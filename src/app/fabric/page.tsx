@@ -1,4 +1,5 @@
 import { FabricCatalogGrid } from "@/components/fabric-catalog-grid";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
@@ -7,32 +8,16 @@ import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Download, Droplets, Leaf } from "lucide-react";
 import { fabricTypes } from "@/lib/fabric-data";
 
-export const metadata: Metadata = {
-  title: "Which Fabric & Print Process Should You Choose? — 24 Fabrics, 6 Print Methods",
-  description: "Pick the right fabric-process combo for your apparel project. 24 fabrics in stock (polyester, poly-spandex, nylon, cotton, organic, rPET, blends), 6 print...",
-  keywords: [
-    "sublimation fabric",
-    "polyester jersey",
-    "poly-cotton blend",
-    "bird-eye mesh",
-    "poly-spandex stretch",
-    "performance fabric",
-    "activewear fabric",
-    "custom apparel fabric",
-    "fabric for sublimation printing",
-    "wholesale fabric China",
-  ],
-
-  openGraph: {
-    images: ["/fabric-hero.webp"],
-  },
-  authors: [{ name: "Ramon Wang", url: "https://sublimapparel.com/about" }],
-  other: {
+export const metadata = buildPageMetadata({
+    title: "Which Fabric & Print Process Should You Choose? — 24 Fabrics, 6 Print Methods",
+    description: "Pick the right fabric-process combo for your apparel project. 24 fabrics in stock (polyester, poly-spandex, nylon, cotton, organic, rPET, blends), 6 print...",
+    keywords: ["sublimation fabric", "polyester jersey", "poly-cotton blend", "bird-eye mesh", "poly-spandex stretch", "performance fabric", "activewear fabric", "custom apparel fabric", "fabric for sublimation printing", "wholesale fabric China"],
+    other: {
     "article:author": "Ramon Wang, Sales Director, SublimApparel",
     "article:published_time": "2024-01-15T00:00:00.000Z",
     "article:modified_time": "2025-08-18T00:00:00.000Z",
   },
-};
+  });;
 
 const fabrics = [
   {

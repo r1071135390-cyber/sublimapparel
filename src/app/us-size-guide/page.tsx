@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -12,33 +13,17 @@ import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 
-export const metadata: Metadata = {
-  title:
-    "US Size Guide for Custom Apparel | Specs, Charts & Excel Template | SublimApparel",
-  description:
-    "US-spec size charts for custom apparel: men&apos;s, women&apos;s, youth, hoodies. Free Excel template for collecting sizes from your registration system. Sublimation cut & sew sizing since 2018.",
-  keywords: [
-    "US size guide",
-    "custom apparel size chart",
-    "sublimation sizing",
-    "men's t-shirt size chart",
-    "women's t-shirt size chart",
-    "youth apparel sizes",
-    "hoodie size chart",
-    "size collection template",
-  ],
-  alternates: {
+export const metadata = buildPageMetadata({
+    title: "US Size Guide for Custom Apparel | Specs, Charts & Excel Template",
+    description: "US-spec size charts for custom apparel: men&apos;s, women&apos;s, youth, hoodies. Free Excel template for collecting sizes from your registration system. Subli…",
+    keywords: ["US size guide", "custom apparel size chart", "sublimation sizing", "men", ",\n    ", "s t-shirt size chart", "youth apparel sizes", "hoodie size chart", "size collection template"],
+    alternates: {
     canonical: "https://sublimapparel.com/us-size-guide/",
   },
-  openGraph: {
-    title: "US Size Guide for Custom Apparel | SublimApparel",
-    description:
-      "Men&apos;s, women&apos;s, youth, hoodie size charts. Free Excel template for collecting sizes from your registration system.",
-    url: "https://sublimapparel.com/us-size-guide/",
-    images: ["/og/og-home.webp"],
-  },
-
-};
+    ogTitle: "US Size Guide for Custom Apparel",
+    ogDescription: "Men&apos;s, women&apos;s, youth, hoodie size charts. Free Excel template for collecting sizes from your registration system.",
+    ogImage: "https://sublimapparel.com/us-size-guide/",
+  });;
 
 const breadcrumb = buildBreadcrumbJsonLd([
   { name: "Home", path: "/" },

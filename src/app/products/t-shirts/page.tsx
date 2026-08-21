@@ -1,4 +1,5 @@
 import { JsonLd } from "@/components/json-ld";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -14,32 +15,11 @@ import {
   Users,
 } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "Custom Sublimation T-Shirts | All-Over Print, Low MOQ",
-  description:
-    "Custom sublimation t-shirts — all-over print, no setup fee, MOQ 50 pcs. Polyester and 100% cotton. Men's, women's, unisex, kids' sizes. Ships in 7–15 days. DDP to 100+ countries.",
-  keywords: [
-    // Primary — owned by this product page
-    "custom t shirts manufacturer",
-    "custom sublimation t shirts",
-    "bulk custom t shirts",
-    // Secondary
-    "custom sublimation t-shirts",
-    "sublimation tee shirts",
-    "all over print t-shirt",
-    "custom printed t-shirts",
-    "low MOQ t-shirts",
-    "polyester t-shirt printing",
-    "cotton t-shirt printing",
-    "team t-shirts",
-    "event t-shirts",
-    "promo t-shirts",
-  ],
-
-  openGraph: {
-    images: ["/product-hero-products.webp"],
-  },
-};
+export const metadata = buildPageMetadata({
+    title: "Custom Sublimation T-Shirts | All-Over Print, Low MOQ",
+    description: "Custom sublimation t-shirts — all-over print, no setup fee, MOQ 50 pcs. Polyester and 100% cotton. Men",
+    keywords: ["custom t shirts manufacturer", "custom sublimation t shirts", "bulk custom t shirts", "custom sublimation t-shirts", "sublimation tee shirts", "all over print t-shirt", "custom printed t-shirts", "low MOQ t-shirts", "polyester t-shirt printing", "cotton t-shirt printing", "team t-shirts", "event t-shirts", "promo t-shirts"],
+  });;
 
 const stats = [
   { value: "50", label: "MOQ (PCS)", note: "true low-MOQ", color: "orange" },

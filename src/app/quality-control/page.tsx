@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -15,30 +16,17 @@ import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 
-export const metadata: Metadata = {
-  title:
-    "4-Step Quality Control Process | AQL 2.5 Inspection | Custom Apparel",
-  description:
-    "Our 4-step quality control process for custom apparel: pre-production sample, in-line inspection, AQL 2.5 final inspection, pre-shipment photo evidence. We catch defects before you do.",
-  keywords: [
-    "apparel quality control",
-    "AQL 2.5 inspection",
-    "custom apparel inspection",
-    "pre-shipment inspection",
-    "sublimation quality control",
-    "garment inspection process",
-  ],
-  alternates: {
+export const metadata = buildPageMetadata({
+    title: "4-Step Quality Control Process | AQL 2.5 Inspection | Custom Apparel",
+    description: "Our 4-step quality control process for custom apparel: pre-production sample, in-line inspection, AQL 2.5 final inspection, pre-shipment photo evidence. We cat…",
+    keywords: ["apparel quality control", "AQL 2.5 inspection", "custom apparel inspection", "pre-shipment inspection", "sublimation quality control", "garment inspection process"],
+    alternates: {
     canonical: "https://sublimapparel.com/quality-control/",
   },
-  openGraph: {
-    title: "4-Step Quality Control Process | SublimApparel",
-    description:
-      "Pre-production sample, in-line inspection, AQL 2.5 final inspection, pre-shipment photo evidence. We catch defects before you do.",
-    url: "https://sublimapparel.com/quality-control/",
-    images: ["/about-process-qc.webp"],
-  },
-};
+    ogTitle: "4-Step Quality Control Process",
+    ogDescription: "Pre-production sample, in-line inspection, AQL 2.5 final inspection, pre-shipment photo evidence. We catch defects before yo…",
+    ogImage: "https://sublimapparel.com/quality-control/",
+  });;
 
 const breadcrumb = buildBreadcrumbJsonLd([
   { name: "Home", path: "/" },

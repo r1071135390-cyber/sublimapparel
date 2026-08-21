@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/page-metadata";
 
-export const metadata: Metadata = {
-  title: "Golf Apparel ",
-  description: "Page moved. Custom golf polos, mock necks, and quarter-zips.",
-  robots: { index: false, follow: false },
-};
+export const metadata = buildPageMetadata({
+    title: "Golf Apparel ",
+    description: "Page moved. Custom golf polos, mock necks, and quarter-zips.",
+    robots: { index: false, follow: false },
+  });;
 
 export default function GolfBowlingMoved() {
   return (

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -17,31 +18,17 @@ import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 
-export const metadata: Metadata = {
-  title:
-    "How to Source Custom Apparel from China | 5-Step Process | SublimApparel",
-  description:
-    "How to source custom apparel from China: 5-step process from inquiry to delivery. Learn about quoting, sample, production, QC, and shipping for event, corporate, and brand apparel.",
-  keywords: [
-    "how to source custom apparel",
-    "import apparel from China",
-    "China apparel sourcing guide",
-    "custom clothing manufacturing process",
-    "apparel sourcing step by step",
-    "sublimation apparel sourcing",
-  ],
-  alternates: {
+export const metadata = buildPageMetadata({
+    title: "How to Source Custom Apparel from China | 5-Step Process",
+    description: "How to source custom apparel from China: 5-step process from inquiry to delivery. Learn about quoting, sample, production, QC, and shipping for event, corporat…",
+    keywords: ["how to source custom apparel", "import apparel from China", "China apparel sourcing guide", "custom clothing manufacturing process", "apparel sourcing step by step", "sublimation apparel sourcing"],
+    alternates: {
     canonical: "https://sublimapparel.com/how-to-source/",
   },
-  openGraph: {
-    title: "How to Source Custom Apparel from China | 5-Step Process",
-    description:
-      "5-step process from inquiry to delivery. Quoting, sample, production, QC, and shipping.",
-    url: "https://sublimapparel.com/how-to-source/",
-    images: ["/og/og-home.webp"],
-  },
-
-};
+    ogTitle: "How to Source Custom Apparel from China | 5-Step Process",
+    ogDescription: "5-step process from inquiry to delivery. Quoting, sample, production, QC, and shipping.",
+    ogImage: "https://sublimapparel.com/how-to-source/",
+  });;
 
 const breadcrumb = buildBreadcrumbJsonLd([
   { name: "Home", path: "/" },

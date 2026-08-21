@@ -1,13 +1,11 @@
 import { ArrowLeft, Mail } from "lucide-react";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import Link from "next/link";
 
-export const metadata = {
-  title: "Privacy Policy ",
-  description:
-    "How SublimApparel collects, uses, and protects your personal data across our website, inquiry form, and order workflow.",
-  keywords:
-    "SublimApparel privacy policy, data protection, GDPR, personal data, cookies, business information security, inquiry form data",
-};
+export const metadata = buildPageMetadata({
+    title: "Privacy Policy ",
+    description: "How SublimApparel collects, uses, and protects your personal data across our website, inquiry form, and order workflow.",
+  });;
 
 const SECTIONS = [
   {

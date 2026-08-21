@@ -1,4 +1,5 @@
 import { JsonLd } from "@/components/json-ld";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -8,32 +9,11 @@ import { products } from "@/lib/products-data";
 import { getProductImages } from "@/lib/product-images";
 import { isJersey } from "@/lib/product-content";
 
-export const metadata: Metadata = {
-  title: "Custom Team Jerseys | Soccer, Baseball, Basketball",
-  description:
-    "Custom sublimation team jerseys for soccer, baseball, basketball, volleyball. Full dye-sublimation, no setup fee, MOQ 50 pcs, 10–15 day production. Numbers, names, logos all printed — not stitched.",
-  keywords: [
-    // Primary — owned by this product page
-    "custom sublimation jerseys",
-    "custom jerseys manufacturer",
-    "sports jerseys supplier",
-    // Secondary
-    "custom team jerseys",
-    "sublimation jerseys",
-    "soccer jersey custom",
-    "baseball jersey sublimation",
-    "basketball jersey printing",
-    "volleyball team jerseys",
-    "reversible jerseys",
-    "all over print jersey",
-    "sublimated jerseys",
-    "low MOQ jerseys",
-  ],
-
-  openGraph: {
-    images: ["/hero-jersey.webp"],
-  },
-};
+export const metadata = buildPageMetadata({
+    title: "Custom Team Jerseys | Soccer, Baseball, Basketball",
+    description: "Custom sublimation team jerseys for soccer, baseball, basketball, volleyball. Full dye-sublimation, no setup fee, MOQ 50 pcs, 10–15 day production. Numbers, na…",
+    keywords: ["custom sublimation jerseys", "custom jerseys manufacturer", "sports jerseys supplier", "custom team jerseys", "sublimation jerseys", "soccer jersey custom", "baseball jersey sublimation", "basketball jersey printing", "volleyball team jerseys", "reversible jerseys", "all over print jersey", "sublimated jerseys", "low MOQ jerseys"],
+  });;
 
 const stats = [
   { value: "50", label: "MOQ (PCS)", note: "true low-MOQ", color: "orange" },

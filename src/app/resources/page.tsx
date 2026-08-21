@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import {
   ArrowRight,
   Calendar,
@@ -17,32 +18,17 @@ import Link from "next/link";
 import { Contact } from "@/components/contact";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 
-export const metadata: Metadata = {
-  title: "Tools & Resources for Custom Apparel Buyers | Sublimapparel",
-  description:
-    "Free tools, calculators, and guides for sourcing custom apparel: event timeline planner, US size chart, quality control checklist, 90-day new program roadmap, and step-by-step sourcing playbook.",
-  keywords: [
-    "custom apparel tools",
-    "apparel sourcing guide",
-    "event apparel timeline",
-    "us size guide sublimation",
-    "apparel quality control checklist",
-    "how to source from china",
-    "90 day apparel program",
-  ],
-  alternates: {
+export const metadata = buildPageMetadata({
+    title: "Tools & Resources for Custom Apparel Buyers | Sublimapparel",
+    description: "Free tools, calculators, and guides for sourcing custom apparel: event timeline planner, US size chart, quality control checklist, 90-day new program roadmap,…",
+    keywords: ["custom apparel tools", "apparel sourcing guide", "event apparel timeline", "us size guide sublimation", "apparel quality control checklist", "how to source from china", "90 day apparel program"],
+    alternates: {
     canonical: "/resources",
   },
-  openGraph: {
-    title: "Tools & Resources for Custom Apparel Buyers",
-    description:
-      "Plan, size, qualify and ship — every tool a custom apparel buyer needs, free from Sublimapparel.",
-    type: "website",
-    url: "/resources",
-    images: ["/og/og-home.webp"],
-  },
-
-};
+    ogTitle: "Tools & Resources for Custom Apparel Buyers",
+    ogDescription: "Plan, size, qualify and ship — every tool a custom apparel buyer needs, free from Sublimapparel.",
+    ogImage: "/resources",
+  });;
 
 const tools = [
   {

@@ -1,15 +1,13 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import Link from "next/link";
 
-export const metadata: Metadata = {
-  title: "Create Account",
-  description:
-    "Create your SublimApparel account to manage orders, request reprints, and access saved shipping addresses.",
-  keywords:
-    "SublimApparel account, create account, B2B client registration, sample kit request, order tracking",
-  robots: { index: false },
-  alternates: { canonical: "./" },
-};
+export const metadata = buildPageMetadata({
+    title: "Create Account",
+    description: "Create your SublimApparel account to manage orders, request reprints, and access saved shipping addresses.",
+    alternates: { canonical: "./" },
+    robots: { index: false },
+  });;
 
 export default function RegisterPage() {
   return (

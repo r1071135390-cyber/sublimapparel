@@ -1,40 +1,25 @@
 import { Metadata } from"next";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import Link from"next/link";
 import Image from"next/image";
 import { CheckCircle2, Sparkles, Plus } from"lucide-react";
 import { JsonLd } from"@/components/json-ld";
 import { techniqueData } from"@/lib/json-ld-data";
 
-export const metadata: Metadata = {
-  title: "Which Print Technique Fits Your Design? — 20 Methods Compared (Sublimation...",
-  description:
-"Compare 20 apparel decoration techniques — sublimation, screen printing, DTG, DTF, embroidery, 3D puff & rhinestone. We run all 20 in-house and accept custom techniques too. DDP worldwide.",
-  keywords: [
-"sublimation printing",
-"screen printing techniques",
-"DTG vs DTF",
-"custom embroidery",
-"all-over printing",
-"3D puff printing",
-"rhinestone apparel",
-"Chinese apparel factory",
-  ],
-  alternates: { canonical:"./" },
-  openGraph: {
-    title:"Which Print Technique Fits Your Design? — 20 Methods Compared",
-    description:
-"20 decoration techniques, compared. Sublimation, screen print, DTG, DTF, embroidery, 3D puff, rhinestone and more — costs, durability, best uses.",
-    url:"/technique/",
-    type:"article",
-    images: ["/technique-hero.webp"],
-  },
-  authors: [{ name: "Ramon Wang", url: "https://sublimapparel.com/about" }],
-  other: {
+export const metadata = buildPageMetadata({
+    title: "Which Print Technique Fits Your Design? — 20 Methods Compared (Sublimation...",
+    description: "Compare 20 apparel decoration techniques — sublimation, screen printing, DTG, DTF, embroidery, 3D puff & rhinestone. We run all 20 in-house and accept custom t…",
+    keywords: ["sublimation printing", "screen printing techniques", "DTG vs DTF", "custom embroidery", "all-over printing", "3D puff printing", "rhinestone apparel", "Chinese apparel factory"],
+    alternates: { canonical:"./" },
+    other: {
     "article:author": "Ramon Wang, Sales Director, SublimApparel",
     "article:published_time": "2024-01-15T00:00:00.000Z",
     "article:modified_time": "2025-08-18T00:00:00.000Z",
   },
-};
+    ogTitle: "Which Print Technique Fits Your Design? — 20 Methods Compared",
+    ogDescription: "20 decoration techniques, compared. Sublimation, screen print, DTG, DTF, embroidery, 3D puff, rhinestone and more — costs, d…",
+    ogImage: "/technique/",
+  });;
 
 // Speed up static generation by skipping unnecessary work
 export const revalidate = false;

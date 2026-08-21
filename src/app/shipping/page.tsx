@@ -1,4 +1,5 @@
 import type { Metadata } from"next";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import Link from"next/link";
 import Image from"next/image";
 import {
@@ -24,32 +25,18 @@ import {
 } from"lucide-react";
 import { RequestQuoteLink } from "@/components/request-quote-link";
 
-export const metadata: Metadata = {
-  title:"How Do We Ship DDP to 100+ Countries? — Sea, Air, Express, US Warehouse",
-  description: "DDP (Delivered Duty Paid) shipping to 100+ countries. One invoice, no surprise duties. Sea, air, and express options from Yiwu to your door. US warehouse in...",
-  keywords: [
-    "DDP shipping",
-    "global apparel delivery",
-    "DDP delivery worldwide",
-    "customs cleared",
-    "landed cost shipping",
-    "international clothing delivery",
-    "Yiwu factory direct shipping",
-    "no customs duties",
-  ],
-  openGraph: {
-    title:"How Do We Ship DDP to 100+ Countries?",
-    description:
-"DDP to 100+ countries, US warehouse in 2-5 days, or your own freight forwarder. One quote, no surprise duties.",
-    images: ["/shipping-hero.webp"],
-  },
-  authors: [{ name: "Ramon Wang", url: "https://sublimapparel.com/about" }],
-  other: {
+export const metadata = buildPageMetadata({
+    title: "How Do We Ship DDP to 100+ Countries? — Sea, Air, Express, US Warehouse",
+    description: "DDP (Delivered Duty Paid) shipping to 100+ countries. One invoice, no surprise duties. Sea, air, and express options from Yiwu to your door. US warehouse in...",
+    keywords: ["DDP shipping", "global apparel delivery", "DDP delivery worldwide", "customs cleared", "landed cost shipping", "international clothing delivery", "Yiwu factory direct shipping", "no customs duties"],
+    other: {
     "article:author": "Ramon Wang, Sales Director, SublimApparel",
     "article:published_time": "2024-02-01T00:00:00.000Z",
     "article:modified_time": "2025-08-18T00:00:00.000Z",
   },
-};
+    ogTitle: "How Do We Ship DDP to 100+ Countries?",
+    ogDescription: "DDP to 100+ countries, US warehouse in 2-5 days, or your own freight forwarder. One quote, no surprise duties.",
+  });;
 
 const options = [
   {

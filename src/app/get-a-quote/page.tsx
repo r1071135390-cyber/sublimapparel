@@ -1,29 +1,16 @@
 import Link from "next/link";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import Image from "next/image";
 import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 import { Check, Clock, FileText, MessageCircle, ArrowRight } from "lucide-react";
 
-export const metadata = {
-  title: "Get a Quote | Custom Sublimation & Cotton Apparel Manufacturer",
-  description:
-    "Request a landed-cost quote in under 12 hours. Free digital mockup, free sample round on first order. Sublimation on polyester, DTG / DTF on 100% cotton, DDP shipping to 100+ countries.",
-  keywords: [
-    "get a quote",
-    "sublimation quote",
-    "custom apparel quote",
-    "bulk order inquiry",
-    "B2B apparel sourcing",
-    "sublimation factory quote",
-    "DDP quote",
-    "apparel manufacturer China",
-  ],
-
-  openGraph: {
-    images: ["/og/og-quote.webp"],
-  },
-};
+export const metadata = buildPageMetadata({
+    title: "Get a Quote | Custom Sublimation & Cotton Apparel Manufacturer",
+    description: "Request a landed-cost quote in under 12 hours. Free digital mockup, free sample round on first order. Sublimation on polyester, DTG / DTF on 100% cotton, DDP s…",
+    keywords: ["get a quote", "sublimation quote", "custom apparel quote", "bulk order inquiry", "B2B apparel sourcing", "sublimation factory quote", "DDP quote", "apparel manufacturer China"],
+  });;
 
 const whatHappens = [
   {

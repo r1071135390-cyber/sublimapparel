@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import Link from "next/link";
 import { RequestQuoteLink } from "@/components/request-quote-link";
 import {
@@ -12,24 +13,11 @@ import {
   ChevronDown,
 } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "FAQ · 30 B2B Sublimation Questions Answered",
-  description:
-    "30 frequently asked B2B questions about sublimation apparel: pricing, MOQ, fabric, lead time, shipping, customs, payment, samples, file prep. Yiwu factory direct.",
-  keywords: [
-    "sublimation faq",
-    "b2b apparel faq",
-    "moq sublimation",
-    "lead time sublimation",
-    "ddp shipping faq",
-    "sublimation pricing",
-    "yiwu factory faq",
-  ],
-
-  openGraph: {
-    images: ["/about-hero.webp"],
-  },
-};
+export const metadata = buildPageMetadata({
+    title: "FAQ · 30 B2B Sublimation Questions Answered",
+    description: "30 frequently asked B2B questions about sublimation apparel: pricing, MOQ, fabric, lead time, shipping, customs, payment, samples, file prep. Yiwu factory dire…",
+    keywords: ["sublimation faq", "b2b apparel faq", "moq sublimation", "lead time sublimation", "ddp shipping faq", "sublimation pricing", "yiwu factory faq"],
+  });;
 
 const stats = [
   { value: "30", unit: "Q&A", label: "B2B questions" },

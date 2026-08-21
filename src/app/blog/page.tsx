@@ -1,4 +1,5 @@
 import type { Metadata } from"next";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import { JsonLd } from "@/components/json-ld";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 import Link from"next/link";
@@ -6,29 +7,15 @@ import Image from"next/image";
 import { ArrowRight, Clock, Calendar } from"lucide-react";
 import { blogPosts, getFeaturedPost, getAllCategories } from"@/lib/blog";
 
-export const metadata: Metadata = {
-  title:"Blog | Sublimation Apparel Insights & Factory Stories",
-  description:
-"Industry guides, factory stories, and B2B apparel manufacturing insights from a 2,000 m² Yiwu sublimation factory. Sublimation vs DTG, DDP shipping, fabric guides, and more.",
-  keywords: [
-"sublimation printing blog",
-"apparel manufacturing insights",
-"Yiwu factory",
-"B2B apparel guide",
-"DTG vs DTF",
-"DDP shipping guide",
-"esports jersey fabric",
-  ],
-  alternates: { canonical:"./" },
-  openGraph: {
-    title:"SublimApparel Blog — Apparel Manufacturing Insights",
-    description:
-"Industry guides, factory stories, and B2B apparel insights. Written by the team behind our 2,000 m² Yiwu sublimation factory.",
-    url:"/blog/",
-    type:"website",
-    images: ["/product-lineup.webp"],
-  },
-};
+export const metadata = buildPageMetadata({
+    title: "Blog | Sublimation Apparel Insights & Factory Stories",
+    description: "Industry guides, factory stories, and B2B apparel manufacturing insights from a 2,000 m² Yiwu sublimation factory. Sublimation vs DTG, DDP shipping, fabric gui…",
+    keywords: ["sublimation printing blog", "apparel manufacturing insights", "Yiwu factory", "B2B apparel guide", "DTG vs DTF", "DDP shipping guide", "esports jersey fabric"],
+    alternates: { canonical:"./" },
+    ogTitle: "SublimApparel Blog — Apparel Manufacturing Insights",
+    ogDescription: "Industry guides, factory stories, and B2B apparel insights. Written by the team behind our 2,000 m² Yiwu sublimation factory.",
+    ogImage: "/blog/",
+  });;
 
 export default function BlogIndexPage() {
   const featured = getFeaturedPost()!;

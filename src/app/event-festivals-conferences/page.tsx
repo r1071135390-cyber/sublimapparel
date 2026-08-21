@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -28,30 +29,17 @@ import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 import { forEventsServiceJsonLd, forEventsFaqJsonLd, genericServiceJsonLd } from "@/lib/json-ld-data";
 import { RelatedProducts } from "@/components/related-products";
 
-export const metadata: Metadata = {
-  title:
-    "Custom Event Apparel Manufacturer | Festival & Conference Shirts — SublimApparel",
-  description: "Custom event apparel manufacturer for conferences, festivals, charity events, and community gatherings. Conference shirts, festival merchandise, volunteer...",
-  keywords: [
-    "custom event apparel",
-    "event apparel manufacturer",
-    "event shirts supplier",
-    "festival apparel",
-    "event merchandise",
-    "volunteer shirts",
-  ],
-  alternates: {
+export const metadata = buildPageMetadata({
+    title: "Custom Event Apparel Manufacturer | Festival & Conference Shirts — SublimApparel",
+    description: "Custom event apparel manufacturer for conferences, festivals, charity events, and community gatherings. Conference shirts, festival merchandise, volunteer...",
+    keywords: ["custom event apparel", "event apparel manufacturer", "event shirts supplier", "festival apparel", "event merchandise", "volunteer shirts"],
+    alternates: {
     canonical: "https://sublimapparel.com/event-festivals-conferences/",
   },
-  openGraph: {
-    title:
-      "Custom Event Apparel Manufacturer | Festival & Conference Shirts",
-    description:
-      "Conference shirts, festival merchandise, volunteer shirts, staff uniforms. Bulk production, deadline guarantee, DDP worldwide shipping.",
-    url: "https://sublimapparel.com/event-festivals-conferences/",
-    images: ["/esports-jersey-prodigy.webp"],
-  },
-};
+    ogTitle: "Custom Event Apparel Manufacturer | Festival & Conference Shirts",
+    ogDescription: "Conference shirts, festival merchandise, volunteer shirts, staff uniforms. Bulk production, deadline guarantee, DDP worldwid…",
+    ogImage: "https://sublimapparel.com/event-festivals-conferences/",
+  });;
 
 const eventTypes = [
   {

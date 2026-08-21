@@ -1,27 +1,14 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import Link from "next/link";
 import { RequestQuoteLink } from "@/components/request-quote-link";
 import { ArrowRight, Globe, ShieldCheck, Truck, Warehouse, MapPin, Package } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "DDP Shipping — Duties Paid, Delivered to Your Door",
-  description:
-    "DDP (Delivered Duty Paid) shipping from Yiwu to 100+ countries. We handle customs, duties, and last-mile delivery — one invoice, no surprise fees. Domestic US shipping from Fontana, CA in 2–5 days.",
-  keywords: [
-    "DDP shipping",
-    "duties paid shipping",
-    "DDP from China",
-    "Yiwu shipping",
-    "overseas warehouse",
-    "limited US buffer-storage (overstock only)",
-    "global shipping apparel",
-    "delivered duty paid",
-  ],
-
-  openGraph: {
-    images: ["/shipping-hero.webp"],
-  },
-};
+export const metadata = buildPageMetadata({
+    title: "DDP Shipping — Duties Paid, Delivered to Your Door",
+    description: "DDP (Delivered Duty Paid) shipping from Yiwu to 100+ countries. We handle customs, duties, and last-mile delivery — one invoice, no surprise fees. Domestic US…",
+    keywords: ["DDP shipping", "duties paid shipping", "DDP from China", "Yiwu shipping", "overseas warehouse", "limited US buffer-storage (overstock only)", "global shipping apparel", "delivered duty paid"],
+  });;
 
 const whatDdp = [
   { tag: "DDP", label: "Delivered Duty Paid" },

@@ -1,30 +1,15 @@
 import { JsonLd } from "@/components/json-ld";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Bike, Users, Palette, Ruler, Layers, Wind } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "Custom Cycling Jerseys | Sublimation Apparel for Teams & Clubs",
-  description:
-    "Premium custom cycling jerseys, shorts, and kits via sublimation. Italian-performance fabric, full hidden zip, race-cut or club-cut, padded shorts. MOQ 50 pcs. Free design redraw.",
-  keywords: [
-    "custom cycling jerseys",
-    "sublimation cycling kit",
-    "cycling team apparel",
-    "cycling uniform",
-    "bike jersey custom",
-    "road cycling kit",
-    "triathlon suit",
-    "cycling club uniform",
-    "all over print cycling",
-    "racing cycling jersey",
-  ],
-
-  openGraph: {
-    images: ["/product-lineup.webp"],
-  },
-};
+export const metadata = buildPageMetadata({
+    title: "Custom Cycling Jerseys | Sublimation Apparel for Teams & Clubs",
+    description: "Premium custom cycling jerseys, shorts, and kits via sublimation. Italian-performance fabric, full hidden zip, race-cut or club-cut, padded shorts. MOQ 50 pcs.…",
+    keywords: ["custom cycling jerseys", "sublimation cycling kit", "cycling team apparel", "cycling uniform", "bike jersey custom", "road cycling kit", "triathlon suit", "cycling club uniform", "all over print cycling", "racing cycling jersey"],
+  });;
 
 const stats = [
   { value: "50", label: "MOQ (PCS)", note: "team kit MOQ", color: "orange" },

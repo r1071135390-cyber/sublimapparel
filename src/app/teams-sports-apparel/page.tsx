@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import { JsonLd } from "@/components/json-ld";
 import Link from "next/link";
 import {
@@ -28,28 +29,15 @@ export const dynamic = "force-static";
 
 const siteUrl = "https://sublimapparel.com";
 
-export const metadata: Metadata = {
-  title: "Custom Team Sports Apparel Manufacturer | Sublimation Jerseys & Uniforms — SublimApparel",
-  description: "Custom team sports apparel manufacturer for clubs, leagues and athletes. We produce sublimated soccer jerseys, basketball uniforms, cycling kits, running...",
-  keywords: [
-    "custom team apparel",
-    "custom sports apparel manufacturer",
-    "team apparel manufacturer",
-    "custom sportswear",
-    "team uniforms supplier",
-    "sports clothing manufacturer",
-  ],
-  alternates: { canonical: `${siteUrl}/teams-sports-apparel/` },
-  openGraph: {
-    title: "Custom Team Sports Apparel Manufacturer | Sublimation Jerseys & Uniforms",
-    description:
-      "Custom sublimated soccer jerseys, basketball uniforms, cycling kits, running shirts and training wear. Built for clubs, leagues and athletes. Flexible MOQ. DDP worldwide.",
-    url: `${siteUrl}/teams-sports-apparel/`,
-    siteName: "SublimApparel",
-    type: "website",
-    images: [{ url: "/og-default.jpg", width: 1200, height: 630, alt: "Custom Team Sports Apparel — SublimApparel" }],
-  },
-};
+export const metadata = buildPageMetadata({
+    title: "Custom Team Sports Apparel Manufacturer | Sublimation Jerseys & Uniforms — SublimApparel",
+    description: "Custom team sports apparel manufacturer for clubs, leagues and athletes. We produce sublimated soccer jerseys, basketball uniforms, cycling kits, running...",
+    keywords: ["custom team apparel", "custom sports apparel manufacturer", "team apparel manufacturer", "custom sportswear", "team uniforms supplier", "sports clothing manufacturer"],
+    alternates: { canonical: `${siteUrl}/teams-sports-apparel/` },
+    ogTitle: "Custom Team Sports Apparel Manufacturer | Sublimation Jerseys & Uniforms",
+    ogDescription: "Custom sublimated soccer jerseys, basketball uniforms, cycling kits, running shirts and training wear. Built for clubs, leag…",
+    ogImage: "/og-default.jpg",
+  });;
 
 const pains = [
   { icon: Timer, title: "Season opener deadlines don't slip", body: "You can't move kickoff, tip-off, or race day. We plan backwards from your first fixture and lock the production window 60 days out." },

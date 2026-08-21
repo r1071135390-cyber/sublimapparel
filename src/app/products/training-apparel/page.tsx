@@ -1,4 +1,5 @@
 import { JsonLd } from "@/components/json-ld";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -14,29 +15,11 @@ import {
   Wind,
 } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "Custom Training Apparel | All-Over Print, Sublimation, MOQ 50",
-  description:
-    "Custom training apparel — all-over print sublimation on 4-way stretch poly-spandex. MOQ 50 pcs, durable for high-intensity training, sweat-wicking, anti-odor finish. Built for CrossFit, gym studios, team training kits, coaching staff. DDP shipping worldwide.",
-  keywords: [
-    // Primary
-    "custom training apparel",
-    "workout apparel manufacturer",
-    "training clothing supplier",
-    // Secondary
-    "sublimation training shirts",
-    "all over print gym tee",
-    "4-way stretch training kit",
-    "CrossFit team apparel",
-    "studio gym uniform",
-    "coaching staff uniform",
-    "personal trainer apparel",
-    "athletic training shirt",
-  ],
-  openGraph: {
-    images: ["/products/0129/0.webp"],
-  },
-};
+export const metadata = buildPageMetadata({
+    title: "Custom Training Apparel | All-Over Print, Sublimation, MOQ 50",
+    description: "Custom training apparel — all-over print sublimation on 4-way stretch poly-spandex. MOQ 50 pcs, durable for high-intensity training, sweat-wicking, anti-odor f…",
+    keywords: ["custom training apparel", "workout apparel manufacturer", "training clothing supplier", "sublimation training shirts", "all over print gym tee", "4-way stretch training kit", "CrossFit team apparel", "studio gym uniform", "coaching staff uniform", "personal trainer apparel", "athletic training shirt"],
+  });;
 
 // Hero / showcase gallery sourced from public/products/0129/ (0.webp = cover, 1-8.webp = gallery)
 const heroGallery = [

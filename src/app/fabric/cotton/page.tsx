@@ -1,29 +1,15 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/page-metadata";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Check, Leaf, Droplets, Shirt, Sparkles, Layers, Recycle, ScanLine, Scissors, Palette, Ruler } from "lucide-react";
 import { cottonFabrics } from "@/lib/fabric-data";
 
-export const metadata: Metadata = {
-  title: "Allover Digital Print on Cotton | Full-Body + DTG/DTF",
-  description: "Allover digital print on 100% cotton apparel — true full-body, edge-to-edge printing via our proprietary cotton digital workflow. Also offer DTG and DTF for...",
-  keywords: [
-    "allover digital print on cotton",
-    "100% cotton printing",
-    "cotton jersey",
-    "cotton t-shirt printing",
-    "DTG printing",
-    "direct to garment",
-    "organic cotton apparel",
-    "DTF heat transfer",
-    "allover digital print cotton",
-    "full body cotton print", "cotton sublimation", "cut and sew cotton",
-  ],
-
-  openGraph: {
-    images: ["/fabric-hero.webp"],
-  },
-};
+export const metadata = buildPageMetadata({
+    title: "Allover Digital Print on Cotton | Full-Body + DTG/DTF",
+    description: "Allover digital print on 100% cotton apparel — true full-body, edge-to-edge printing via our proprietary cotton digital workflow. Also offer DTG and DTF for...",
+    keywords: ["allover digital print on cotton", "100% cotton printing", "cotton jersey", "cotton t-shirt printing", "DTG printing", "direct to garment", "organic cotton apparel", "DTF heat transfer", "allover digital print cotton", "full body cotton print", "cotton sublimation", "cut and sew cotton"],
+  });;
 
 const whyUs = [
   { icon: Droplets, title: "Reactive dye chemistry", desc: "Cotton needs reactive dyes (not disperse), proper pre-treatment, and steam fixation. We run the full chemistry chain — most sublimation shops simply skip cotton because they don't have the equipment." },
