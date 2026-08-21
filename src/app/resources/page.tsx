@@ -39,7 +39,9 @@ export const metadata: Metadata = {
       "Plan, size, qualify and ship — every tool a custom apparel buyer needs, free from Sublimapparel.",
     type: "website",
     url: "/resources",
+    images: ["/og/og-home.webp"],
   },
+
 };
 
 const tools = [

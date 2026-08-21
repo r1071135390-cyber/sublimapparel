@@ -151,6 +151,7 @@ const data: CustomerProfileData = {
   ctaBody:
     "Send your show date, booth staff size, and giveaway quantity. We will reply with a quote, sample plan, and a production timeline that hits your show date.",
   ctaButton: "Plan Your Trade Show Apparel",
+  ogImage: "/og/og-industry.webp",
 };
 
 export const metadata: Metadata = buildMetadata(data);

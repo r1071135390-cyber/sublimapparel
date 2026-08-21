@@ -151,6 +151,7 @@ const data: CustomerProfileData = {
   ctaBody:
     "Send your design and tour dates. We will reply with a production plan, a clear quote, and options to fit your merch budget.",
   ctaButton: "Start Your Merch Project",
+  ogImage: "/og/og-industry.webp",
 };
 
 export const metadata: Metadata = buildMetadata(data);

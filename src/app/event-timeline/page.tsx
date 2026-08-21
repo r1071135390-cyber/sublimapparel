@@ -25,7 +25,9 @@ export const metadata: Metadata = {
     description:
       "Enter your event date. Get the exact order date, design lock date, and final count lock date.",
     url: "https://sublimapparel.com/event-timeline/",
+    images: ["/og/og-home.webp"],
   },
+
 };
 
 const breadcrumb = buildBreadcrumbJsonLd([

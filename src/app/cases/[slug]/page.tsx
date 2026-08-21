@@ -61,6 +61,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: ind.blurb,
       type: "website",
       url: `/cases/${slug}/`,
+      images: ["/og/og-home.webp"],
     },
     twitter: {
       card: "summary_large_image",

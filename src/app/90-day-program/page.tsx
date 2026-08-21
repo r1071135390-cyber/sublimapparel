@@ -40,7 +40,9 @@ export const metadata: Metadata = {
     description:
       "Reserve early, lock late. 2-Phase Production Model designed for events, corporate, and brand apparel.",
     url: "https://sublimapparel.com/90-day-program/",
+    images: ["/og/og-home.webp"],
   },
+
 };
 
 const breadcrumb = buildBreadcrumbJsonLd([

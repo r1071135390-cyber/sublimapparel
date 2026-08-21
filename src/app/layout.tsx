@@ -45,7 +45,7 @@ export const metadata: Metadata = {
       "Sublimation on polyester, All-over digital print 100% cotton. MOQ 50, DDP worldwide, US warehouse in Fontana CA.",
     images: [
       {
-        url: "/og-default.jpg",
+        url: "/og/og-home.webp",
         width: 1200,
         height: 630,
         alt: "SublimApparel — Yiwu sublimation & cotton printing factory",
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     title: "SublimApparel — Yiwu Sublimation & All-Over Cotton Printing Factory, DDP to 100+ Countries",
     description:
       "Sublimation on polyester, All-over digital print 100% cotton. MOQ 50, DDP worldwide, US warehouse in Fontana CA.",
-    images: ["/og-default.jpg"],
+    images: ["/og/og-home.webp"],
   },
   robots: {
     index: true,

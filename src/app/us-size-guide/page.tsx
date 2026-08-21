@@ -35,7 +35,9 @@ export const metadata: Metadata = {
     description:
       "Men&apos;s, women&apos;s, youth, hoodie size charts. Free Excel template for collecting sizes from your registration system.",
     url: "https://sublimapparel.com/us-size-guide/",
+    images: ["/og/og-home.webp"],
   },
+
 };
 
 const breadcrumb = buildBreadcrumbJsonLd([

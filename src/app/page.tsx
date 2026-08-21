@@ -19,7 +19,7 @@ export const metadata = {
   description: "Sublimation on polyester (true all-over, edge-to-edge). DTG and DTF on 100% cotton (A4–A3 per panel, soft hand). Allover digital print on cotton also...",
 
   openGraph: {
-    images: ["/product-hero-products.webp"],
+    images: ["/og/og-home.webp"],
   },
   authors: [{ name: "Ramon Wang", url: "https://sublimapparel.com/about" }],
   other: {

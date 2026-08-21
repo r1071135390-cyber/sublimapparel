@@ -151,6 +151,7 @@ const data: CustomerProfileData = {
   ctaBody:
     "Send your campaign details, client brand info, and rough quantity. We will reply with a quote, sample plan and production timeline.",
   ctaButton: "Plan Your Campaign",
+  ogImage: "/og/og-industry.webp",
 };
 
 export const metadata: Metadata = buildMetadata(data);

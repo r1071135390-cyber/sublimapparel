@@ -53,9 +53,15 @@ export interface CustomerProfileData {
   ctaTitle: string;
   ctaBody: string;
   ctaButton: string;
+  /**
+   * Optional social-share OG image (1200x630). If omitted, falls back to `hero`.
+   * The OG image is what LinkedIn/Twitter/FB/Slack show when the URL is shared.
+   */
+  ogImage?: string;
 }
 
 export function buildMetadata(data: CustomerProfileData): Metadata {
+  const ogImage = data.ogImage ?? data.hero;
   return {
     title: data.metaTitle,
     description: data.metaDescription,
@@ -69,7 +75,7 @@ export function buildMetadata(data: CustomerProfileData): Metadata {
       siteName: "SublimApparel",
       images: [
         {
-          url: data.hero,
+          url: ogImage,
           width: 1200,
           height: 630,
           alt: data.metaTitle,
@@ -80,7 +86,7 @@ export function buildMetadata(data: CustomerProfileData): Metadata {
       card: "summary_large_image",
       title: data.metaTitle,
       description: data.metaDescription,
-      images: [data.hero],
+      images: [ogImage],
     },
   };
 }

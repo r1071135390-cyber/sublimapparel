@@ -151,6 +151,7 @@ const data: CustomerProfileData = {
   ctaBody:
     "Send your campaign details, apparel needs, and timeline. We will reply with a quote, sample plan, and a production timeline that hits your election window.",
   ctaButton: "Plan Your Campaign Apparel",
+  ogImage: "/og/og-industry.webp",
 };
 
 export const metadata: Metadata = buildMetadata(data);

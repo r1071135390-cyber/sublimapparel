@@ -147,6 +147,7 @@ const data: CustomerProfileData = {
   ctaBody:
     "Send your team design and a rough size count. We will reply with a production plan, lead time and a clear quote.",
   ctaButton: "Start Your Team Project",
+  ogImage: "/og/og-industry.webp",
 };
 
 export const metadata: Metadata = buildMetadata(data);

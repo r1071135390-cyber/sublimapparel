@@ -151,6 +151,7 @@ const data: CustomerProfileData = {
   ctaBody:
     "Send your venue name, your apparel needs, and a rough quantity. We will reply with a quote, sample plan and production timeline.",
   ctaButton: "Get a Quote",
+  ogImage: "/og/og-industry.webp",
 };
 
 export const metadata: Metadata = buildMetadata(data);

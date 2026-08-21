@@ -36,7 +36,8 @@ export async function generateMetadata(
     openGraph: {
       title: fabric.h1,
       description: fabric.metaDescription,
-      type: "article",
+      type: "article",    images: ["/og/og-home.webp"],
+  
     },
   };
 }

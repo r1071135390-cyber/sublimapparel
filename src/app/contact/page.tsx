@@ -21,7 +21,7 @@ export const metadata = {
   ],
 
   openGraph: {
-    images: ["/contact-hero.webp"],
+    images: ["/og/contact.webp"],
   },
   authors: [{ name: "Ramon Wang", url: "https://sublimapparel.com/about" }],
   other: {

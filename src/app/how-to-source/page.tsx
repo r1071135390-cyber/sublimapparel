@@ -38,7 +38,9 @@ export const metadata: Metadata = {
     description:
       "5-step process from inquiry to delivery. Quoting, sample, production, QC, and shipping.",
     url: "https://sublimapparel.com/how-to-source/",
+    images: ["/og/og-home.webp"],
   },
+
 };
 
 const breadcrumb = buildBreadcrumbJsonLd([

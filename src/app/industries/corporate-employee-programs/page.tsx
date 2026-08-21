@@ -151,6 +151,7 @@ const data: CustomerProfileData = {
   ctaBody:
     "Share your company details and rough order quantity. We will reply with a quote, a sample plan, and a clear production timeline.",
   ctaButton: "Get a Custom Quote",
+  ogImage: "/og/og-industry.webp",
 };
 
 export const metadata: Metadata = buildMetadata(data);

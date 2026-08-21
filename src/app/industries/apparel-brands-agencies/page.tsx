@@ -150,6 +150,7 @@ const data: CustomerProfileData = {
   ctaBody:
     "Send your brand details, product type, and rough order volume. We will reply with a sample plan, a production timeline, and a clear quote.",
   ctaButton: "Discuss Your Brand Project",
+  ogImage: "/og/og-industry.webp",
 };
 
 export const metadata: Metadata = buildMetadata(data);

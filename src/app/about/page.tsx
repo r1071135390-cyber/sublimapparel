@@ -22,7 +22,7 @@ export const metadata = {
     "OEM apparel",
   ],
   openGraph: {
-    images: ["/about-hero.webp"],
+    images: ["/og/about.webp"],
   },
   authors: [{ name: "Ramon Wang", url: "https://sublimapparel.com/about" }],
   other: {

@@ -21,7 +21,7 @@ export const metadata = {
   ],
 
   openGraph: {
-    images: ["/quote-hero-showroom.webp"],
+    images: ["/og/og-quote.webp"],
   },
 };
 

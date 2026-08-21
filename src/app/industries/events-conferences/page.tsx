@@ -152,6 +152,7 @@ const data: CustomerProfileData = {
   ctaBody:
     "Share your event date and quantity. We will help create a production plan and a clear quote for your event apparel.",
   ctaButton: "Start Your Event Project",
+  ogImage: "/og/og-industry.webp",
 };
 
 export const metadata: Metadata = buildMetadata(data);

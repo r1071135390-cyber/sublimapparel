@@ -35,6 +35,9 @@ export const metadata: Metadata = {
     "B2B sublimation success stories",
     "sublimated apparel projects",
   ],
+  openGraph: {
+    images: ["/og/og-cases.webp"],
+  },
 };
 
 const iconMap: Record<string, typeof CalendarDays> = {

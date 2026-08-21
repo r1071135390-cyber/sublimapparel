@@ -40,6 +40,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ...c.products.map((p) => p.toLowerCase()),
     ].filter((k): k is string => typeof k === "string" && k.length > 0),
     robots: { index: true, follow: true },
+    openGraph: {
+      images: ["/og/og-case-detail.webp"],
+    },
   };
 }
 
