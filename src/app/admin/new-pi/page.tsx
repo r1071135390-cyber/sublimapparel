@@ -16,7 +16,7 @@ function todayPiNumber() {
   const yyyy = d.getFullYear();
   const mm = String(d.getMonth() + 1).padStart(2, "0");
   const dd = String(d.getDate()).padStart(2, "0");
-  return `SA${yyyy}${mm}${dd}`;
+  return `SA${yyyy}${mm}${dd}0001`;
 }
 
 export default function NewPIPage() {
@@ -106,15 +106,15 @@ export default function NewPIPage() {
           validUntilDays,
         }),
       });
-      const data = await res.json();
+      const data = await res.json() as { success: boolean; error?: string; pi?: { pi_number: string }; shareUrl: string; clientSecret: string; amountDueCents: number };
       if (!res.ok || !data.success) {
         throw new Error(data.error || `Server error: ${res.status}`);
       }
       setResult({
-        piNumber: data.pi.pi_number,
-        shareUrl: data.shareUrl,
-        clientSecret: data.clientSecret,
-        amountDueCents: data.amountDueCents,
+        piNumber: data.pi!.pi_number,
+        shareUrl: data.shareUrl!,
+        clientSecret: data.clientSecret!,
+        amountDueCents: data.amountDueCents!,
       });
     } catch (e) {
       setError(e instanceof Error ? e.message : "Unknown error");

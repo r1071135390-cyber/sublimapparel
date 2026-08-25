@@ -336,7 +336,51 @@ bank_notes text,
 created_at, updated_at, sent_at, paid_at, canceled_at timestamptz
 ```
 
-## Next steps (future enhancements)
+## PI (Proforma Invoice) system
+
+A second payment flow, built for B2B orders where sales staff draft a Proforma Invoice and the customer pays (card or bank wire) against that specific PI.
+
+### PI number format
+
+`SA{YYYYMMDD}{NNNN}` — 4-digit daily sequence.
+
+Examples:
+- First PI of the day: `SA202608250001`
+- 50th PI of the day: `SA202608250050`
+
+**`SA`** = SublimApparel (site prefix). The number is generated automatically by `/api/pi/next-number` (which scans the DB for the highest 4-digit suffix of the current date and returns `+1`).
+
+### Sales portal — creating a PI
+
+Two entry points for the sales team:
+
+1. **Manual form** (recommended for first-time use): `/admin/new-pi/` — fill in customer, items, totals; the form auto-fills the next available PI number.
+2. **AI upload** (faster after the first time): `/admin/upload-pi/` — paste PI text **or** upload a screenshot; AI (doubao-seed-1-8) extracts customer info, items, totals, and pre-fills the form on the next page.
+
+Both flows end at `/admin/new-pi/?from=upload&data=...` (when using AI) or directly to `/pay/?pi=SAxxxxxxxx` (when saving).
+
+The "/admin" entry is added in the footer as a low-key "Sales portal" link, so customers don't accidentally find it.
+
+### Customer payment page
+
+URL pattern: `https://sublimapparel.com/pay/?pi=SA202608250001`
+
+Two payment options side-by-side:
+- **Pay by Card** (Stripe Payment Element, full PI total or down payment %)
+- **Pay by Bank Wire (T/T)** — customer clicks "I have sent the wire" and enters SWIFT reference. Sets status to `pending_bank` so factory knows to watch the bank account.
+
+### Endpoints
+
+| Endpoint | Method | Purpose |
+|---|---|---|
+| `/api/pi/create` | POST | Create new PI + Stripe PaymentIntent |
+| `/api/pi/get?pi=SA202608250001` | GET | Fetch PI data for customer page |
+| `/api/pi/confirm-bank` | POST | Customer confirms T/T sent (sets `pending_bank`) |
+| `/api/pi/parse` | POST | AI extraction from PI text or screenshot (uses coze-coding-dev-sdk LLM) |
+| `/api/pi/next-number` | GET | Returns next available 4-digit PI number for today |
+| `/api/stripe/webhook` | POST | Stripe webhook (already exists, updated to handle `pi_id` in metadata) |
+
+### Database table
 
 - [ ] **Email notifications**: Send confirmation email after payment (Resend / Postmark)
 - [ ] **Customer dashboard**: Let customers see their order history

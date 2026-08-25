@@ -82,13 +82,13 @@ export default function ShopClient() {
         }),
       });
 
-      const data = await res.json();
+      const data = (await res.json()) as { ok: boolean; url?: string; error?: string };
       if (!res.ok || !data.ok) {
         throw new Error(data?.error || `Checkout failed (${res.status})`);
       }
 
       // Redirect to Stripe Checkout
-      window.location.href = data.url;
+      window.location.href = data.url!;
     } catch (err: any) {
       console.error("[shop] checkout error:", err);
       setError(err?.message || "Something went wrong. Please try again.");

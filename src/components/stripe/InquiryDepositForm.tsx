@@ -48,7 +48,7 @@ export function InquiryDepositForm(props: InquiryDepositFormProps) {
         }),
       });
 
-      const createData = await createRes.json();
+      const createData = (await createRes.json()) as { ok: boolean; error?: string; clientSecret?: string; paymentIntentId?: string };
       if (!createData.ok) {
         setError(createData.error || "Failed to initialize payment");
         return;
@@ -57,9 +57,9 @@ export function InquiryDepositForm(props: InquiryDepositFormProps) {
       // 2. Confirm payment with Payment Element
       const { error: stripeError, paymentIntent } = await stripe.confirmPayment({
         elements,
-        clientSecret: createData.clientSecret,
+        clientSecret: createData.clientSecret!,
         confirmParams: {
-          return_url: `${window.location.origin}/order/success/?scenario=inquiry_deposit&piid=${createData.paymentIntentId}`,
+          return_url: `${window.location.origin}/order/success/?scenario=inquiry_deposit&piid=${createData.paymentIntentId!}`,
         },
         redirect: "if_required",
       });

@@ -49,7 +49,7 @@ export function BulkDepositForm(props: BulkDepositFormProps) {
         }),
       });
 
-      const createData = await createRes.json();
+      const createData = (await createRes.json()) as { ok: boolean; error?: string; clientSecret?: string; paymentIntentId?: string };
       if (!createData.ok) {
         setError(createData.error || "Failed to initialize payment");
         return;
@@ -58,9 +58,9 @@ export function BulkDepositForm(props: BulkDepositFormProps) {
       // 2. Confirm payment with Payment Element
       const { error: stripeError, paymentIntent } = await stripe.confirmPayment({
         elements,
-        clientSecret: createData.clientSecret,
+        clientSecret: createData.clientSecret!,
         confirmParams: {
-          return_url: `${window.location.origin}/order/success/?scenario=bulk_deposit&piid=${createData.paymentIntentId}&quote_id=${encodeURIComponent(props.quoteId)}`,
+          return_url: `${window.location.origin}/order/success/?scenario=bulk_deposit&piid=${createData.paymentIntentId!}&quote_id=${encodeURIComponent(props.quoteId)}`,
         },
         redirect: "if_required",
       });

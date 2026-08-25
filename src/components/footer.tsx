@@ -287,6 +287,15 @@ export function Footer() {
                 Sitemap
               </Link>
             </li>
+            <li>
+              <Link
+                href="/admin/"
+                className="hover:text-white"
+                title="Sales team: create & upload Proforma Invoices"
+              >
+                Sales portal
+              </Link>
+            </li>
           </ul>
         </div>
         <div className="mx-auto max-w-7xl px-6 pb-6 text-[11px] leading-relaxed text-white/40">

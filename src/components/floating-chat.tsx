@@ -106,7 +106,7 @@ export function FloatingChat() {
           pageUrl: typeof window !== "undefined" ? window.location.href : "",
         }),
       });
-      const data = await res.json();
+      const data = (await res.json()) as { ok: boolean; reply?: string; error?: string };
       if (!res.ok || !data.ok) {
         setState("error");
         setErrorText(data?.error ?? "Failed to send. Please try again.");
