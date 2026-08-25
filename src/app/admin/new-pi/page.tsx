@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
-import { Trash2, Plus, Copy, ExternalLink, Check } from "lucide-react";
+import { Trash2, Plus, Copy, ExternalLink, Check, RefreshCw } from "lucide-react";
 
 type LineItem = {
   description: string;
@@ -19,8 +19,30 @@ function todayPiNumber() {
   return `SA${yyyy}${mm}${dd}0001`;
 }
 
+// Shape passed from /admin/upload-pi/ via ?data=base64
+type PrefillPayload = {
+  pi_number?: string;
+  customer_name?: string;
+  customer_email?: string;
+  customer_phone?: string;
+  customer_company?: string;
+  customer_address?: string;
+  items?: Array<{
+    description?: string;
+    fabric?: string;
+    qty?: number;
+    unit_price_cents?: number;
+  }>;
+  shipping_cents?: number;
+  payment_terms?: string;
+  lead_time_days?: number;
+  notes?: string;
+};
+
 export default function NewPIPage() {
   const [piNumber, setPiNumber] = useState(todayPiNumber());
+  const [piNumberLocked, setPiNumberLocked] = useState(false); // true if from upload-pi
+  const [piSource, setPiSource] = useState<"auto" | "uploaded" | "manual">("auto");
   const [customerName, setCustomerName] = useState("");
   const [customerEmail, setCustomerEmail] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
@@ -36,6 +58,94 @@ export default function NewPIPage() {
   const [paymentPercentage, setPaymentPercentage] = useState(100);
   const [leadTimeDays, setLeadTimeDays] = useState(30);
   const [validUntilDays, setValidUntilDays] = useState(7);
+
+  // Fetch next available PI number on mount, and prefill from ?data= if from upload
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    // 1) Prefill from upload-pi if ?data= present
+    const params = new URLSearchParams(window.location.search);
+    const from = params.get("from");
+    const encoded = params.get("data");
+    if (from === "upload" && encoded) {
+      try {
+        const json = decodeURIComponent(escape(atob(decodeURIComponent(encoded))));
+        const payload = JSON.parse(json) as PrefillPayload;
+
+        if (payload.pi_number) {
+          setPiNumber(payload.pi_number);
+          setPiNumberLocked(true);
+          setPiSource("uploaded");
+        }
+        if (payload.customer_name) setCustomerName(payload.customer_name);
+        if (payload.customer_email) setCustomerEmail(payload.customer_email);
+        if (payload.customer_phone) setCustomerPhone(payload.customer_phone);
+        if (payload.customer_company) setCustomerCompany(payload.customer_company);
+        if (payload.customer_address) setCustomerAddress(payload.customer_address);
+        if (Array.isArray(payload.items) && payload.items.length > 0) {
+          setItems(
+            payload.items.map((it) => ({
+              description: it.description || "",
+              fabric: it.fabric || "",
+              qty: it.qty || 1,
+              unitPriceCents: it.unit_price_cents || 0,
+            })),
+          );
+        }
+        if (typeof payload.shipping_cents === "number") {
+          setShippingCents(payload.shipping_cents);
+        }
+        if (payload.payment_terms) setPaymentTerms(payload.payment_terms);
+        if (typeof payload.lead_time_days === "number") {
+          setLeadTimeDays(payload.lead_time_days);
+        }
+        // Clean URL so refresh doesn't re-prefill
+        const cleanUrl = window.location.pathname;
+        window.history.replaceState({}, "", cleanUrl);
+        return; // Don't fetch next number if we have an uploaded one
+      } catch (err) {
+        console.warn("Failed to decode prefill data:", err);
+        // fall through to next-number fetch
+      }
+    }
+
+    // 2) Otherwise, fetch the next available PI number from DB.
+    // NOTE: /api/pi/next-number is a Cloudflare Function (production only).
+    // In dev it returns 404, so we gracefully fall back to the local value.
+    void (async () => {
+      try {
+        const res = await fetch("/api/pi/next-number", { cache: "no-store" });
+        if (!res.ok) return;
+        const data = (await res.json()) as { ok: boolean; piNumber?: string; next?: string; error?: string };
+        const next = data.piNumber || data.next;
+        if (data.ok && next) {
+          setPiNumber(next);
+          setPiSource("auto");
+        }
+      } catch {
+        // ignore — keep local fallback
+      }
+    })();
+  }, []);
+
+  async function fetchNextNumber() {
+    try {
+      const res = await fetch("/api/pi/next-number", { cache: "no-store" });
+      if (!res.ok) {
+        // In dev, the cloudflare function isn't available — keep the current value
+        return;
+      }
+      const data = (await res.json()) as { ok: boolean; piNumber?: string; next?: string; error?: string };
+      const next = data.piNumber || data.next;
+      if (data.ok && next) {
+        setPiNumber(next);
+        setPiNumberLocked(false);
+        setPiSource("manual");
+      }
+    } catch {
+      // ignore
+    }
+  }
 
   const [submitting, setSubmitting] = useState(false);
   const [result, setResult] = useState<{
@@ -200,7 +310,25 @@ export default function NewPIPage() {
               type="button"
               onClick={() => {
                 setResult(null);
-                setPiNumber(todayPiNumber());
+                // Reset to next available PI number (from DB if available, else local fallback)
+                void (async () => {
+                  try {
+                    const r = await fetch("/api/pi/next-number", { cache: "no-store" });
+                    const d = (await r.json()) as { ok: boolean; piNumber?: string; next?: string };
+                    const next = d.piNumber || d.next;
+                    if (r.ok && d.ok && next) {
+                      setPiNumber(next);
+                      setPiNumberLocked(false);
+                      setPiSource("auto");
+                    } else {
+                      setPiNumber(todayPiNumber());
+                      setPiSource("manual");
+                    }
+                  } catch {
+                    setPiNumber(todayPiNumber());
+                    setPiSource("manual");
+                  }
+                })();
                 setCustomerName("");
                 setCustomerEmail("");
                 setCustomerPhone("");
@@ -245,19 +373,66 @@ export default function NewPIPage() {
       >
         {/* PI Number */}
         <section>
-          <h2 className="mb-3 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
-            PI Number
-          </h2>
-          <input
-            type="text"
-            value={piNumber}
-            onChange={(e) => setPiNumber(e.target.value.toUpperCase())}
-            placeholder="SA20260825001"
-            className="w-full border-2 border-black bg-white px-4 py-2 font-mono text-base focus:bg-[#faf9f6] focus:outline-none"
-            required
-          />
+          <div className="mb-3 flex items-center justify-between">
+            <h2 className="text-xs font-black uppercase tracking-widest text-[#ff4d00]">
+              PI Number
+            </h2>
+            <span
+              className={`inline-flex items-center gap-1 border-2 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider ${
+                piSource === "uploaded"
+                  ? "border-[#00c2ff] bg-[#00c2ff]/10 text-[#008db3]"
+                  : piSource === "auto"
+                    ? "border-black/30 bg-black/5 text-black/60"
+                    : "border-[#ff4d00] bg-[#ff4d00]/10 text-[#cc3d00]"
+              }`}
+              title={
+                piSource === "uploaded"
+                  ? "Extracted from the PI you uploaded"
+                  : piSource === "auto"
+                    ? "Next available PI number for today"
+                    : "You set this manually"
+              }
+            >
+              {piSource === "uploaded"
+                ? "← from upload"
+                : piSource === "auto"
+                  ? "auto-suggested"
+                  : "manual"}
+            </span>
+          </div>
+          <div className="flex items-stretch gap-2">
+            <input
+              type="text"
+              value={piNumber}
+              onChange={(e) => {
+                setPiNumber(e.target.value.toUpperCase());
+                setPiSource("manual");
+                setPiNumberLocked(false);
+              }}
+              placeholder="SA20260825001"
+              className="flex-1 border-2 border-black bg-white px-4 py-2 font-mono text-base focus:bg-[#faf9f6] focus:outline-none"
+              required
+            />
+            <button
+              type="button"
+              onClick={fetchNextNumber}
+              title="Fetch next available PI number from DB"
+              className="flex items-center gap-2 border-2 border-black bg-white px-3 py-2 text-xs font-black uppercase tracking-wider text-black transition-colors hover:bg-black hover:text-white"
+            >
+              <RefreshCw className="h-4 w-4" />
+              Next
+            </button>
+          </div>
           <p className="mt-1 text-xs text-[#6b6b6b]">
-            Auto-suggested: today&apos;s date. Override if needed.
+            Format: <code className="font-mono">SA&#123;YYYYMMDD&#125;&#123;NNNN&#125;</code>{" "}
+            (4-digit daily sequence).{" "}
+            {piSource === "uploaded" ? (
+              <>You can still edit it if you want to override the extracted number.</>
+            ) : piSource === "auto" ? (
+              <>Click <b>Next</b> to refresh, or just type your own.</>
+            ) : (
+              <>Click <b>Next</b> to use the next available auto-allocated number.</>
+            )}
           </p>
         </section>
 
