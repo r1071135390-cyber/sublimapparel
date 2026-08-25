@@ -169,3 +169,6 @@ Desktop.ini
 # Misc
 .coze-logs
 .codegraph/
+
+# Cloudflare Wrangler
+.wrangler/
