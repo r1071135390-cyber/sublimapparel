@@ -23,8 +23,8 @@
  * { ok: false, error: string }
  */
 
-import Stripe from "stripe";
 import type { EventContext } from "@cloudflare/workers-types";
+import { createPaymentIntent } from "../../lib/stripe";
 
 interface Env {
   STRIPE_SECRET_KEY: string;
@@ -83,23 +83,18 @@ export const onRequestPost = async (
     amount_cents = FIXED_PRICES[body.scenario];
   }
 
-  // 3. Create Stripe PaymentIntent
-  let paymentIntent: Stripe.PaymentIntent;
+  // 3. Create Stripe PaymentIntent (via REST API, no SDK)
+  let paymentIntent: { id: string; client_secret: string; amount: number; currency: string };
   try {
-    const stripe = new Stripe(context.env.STRIPE_SECRET_KEY, {
-      apiVersion: "2025-09-30.clover" as Stripe.LatestApiVersion,
-      typescript: true,
-    });
-
     const descParts: string[] = [];
     if (body.customer_company) descParts.push(body.customer_company);
     if (body.customer_name) descParts.push(body.customer_name);
     descParts.push(`— ${body.scenario.replace("_", " ")}`);
 
-    paymentIntent = await stripe.paymentIntents.create({
+    paymentIntent = await createPaymentIntent(context.env.STRIPE_SECRET_KEY, {
       amount: amount_cents,
       currency: "usd",
-      automatic_payment_methods: { enabled: true },
+      automatic_payment_methods: true,
       receipt_email: body.customer_email,
       description: descParts.join(" "),
       metadata: {

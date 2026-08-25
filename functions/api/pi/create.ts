@@ -26,7 +26,7 @@
  */
 
 import type { EventContext } from "@cloudflare/workers-types";
-import Stripe from "stripe";
+import { createPaymentIntent, cancelPaymentIntent } from "../../lib/stripe";
 
 interface Env {
   STRIPE_SECRET_KEY: string;
@@ -126,16 +126,13 @@ export const onRequestPost = async (context: EventContext<Env, "", unknown>) => 
     }
     const currency = (body.currency || "usd").toLowerCase();
 
-    // ── Create Stripe PaymentIntent ───────────────────────────
-    const stripe = new Stripe(env.STRIPE_SECRET_KEY, {
-      apiVersion: "2025-09-30.clover" as Stripe.LatestApiVersion,
-      typescript: true,
-    });
-
-    const paymentIntent = await stripe.paymentIntents.create({
+    // ── Create Stripe PaymentIntent (via REST API, no SDK) ──────
+    const paymentIntent = await createPaymentIntent(env.STRIPE_SECRET_KEY, {
       amount: payCents,
       currency,
-      automatic_payment_methods: { enabled: true },
+      automatic_payment_methods: true,
+      receipt_email: body.customer_email,
+      description: `PI ${body.pi_number} for ${body.customer_name} (${paymentPct}%)`,
       metadata: {
         scenario: "pi_payment",
         payment_percentage: String(paymentPct),
@@ -143,8 +140,6 @@ export const onRequestPost = async (context: EventContext<Env, "", unknown>) => 
         customer_email: body.customer_email || "",
         pi_number: body.pi_number,
       },
-      description: `PI ${body.pi_number} for ${body.customer_name} (${paymentPct}%)`,
-      receipt_email: body.customer_email || undefined,
     });
 
     // ── Valid until ───────────────────────────────────────────
@@ -201,7 +196,7 @@ export const onRequestPost = async (context: EventContext<Env, "", unknown>) => 
       const text = await insertRes.text();
       console.error("PI insert error:", insertRes.status, text);
       // Rollback Stripe PI
-      await stripe.paymentIntents.cancel(paymentIntent.id);
+      await cancelPaymentIntent(env.STRIPE_SECRET_KEY, paymentIntent.id);
       return new Response(
         JSON.stringify({ error: "Failed to create PI", detail: text }),
         { status: 500, headers: corsHeaders },

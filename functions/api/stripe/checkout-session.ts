@@ -19,7 +19,7 @@
  * { ok: false, error: string }
  */
 
-import Stripe from "stripe";
+import { createCheckoutSession } from "../../lib/stripe";
 import type { EventContext } from "@cloudflare/workers-types";
 
 interface Env {
@@ -80,14 +80,9 @@ export const onRequestPost = async (
   const amount_cents = body.items.reduce((sum, it) => sum + it.amount_cents * it.quantity, 0);
 
   // 3. Create Stripe Checkout Session
-  let session: Stripe.Checkout.Session;
+  let session: { id: string; url: string | null };
   try {
-    const stripe = new Stripe(context.env.STRIPE_SECRET_KEY, {
-      apiVersion: "2025-09-30.clover" as Stripe.LatestApiVersion,
-      typescript: true,
-    });
-
-    session = await stripe.checkout.sessions.create({
+    session = await createCheckoutSession(context.env.STRIPE_SECRET_KEY, {
       mode: "payment",
       payment_method_types: ["card"],
       customer_email: body.customer_email,

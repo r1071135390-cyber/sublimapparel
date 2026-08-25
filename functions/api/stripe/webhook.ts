@@ -15,7 +15,7 @@
  *           charge.refunded, checkout.session.completed
  */
 
-import Stripe from "stripe";
+import { constructWebhookEvent, type StripePaymentIntent, type StripeCheckoutSession, type StripeCharge } from "../../lib/stripe";
 import type { EventContext } from "@cloudflare/workers-types";
 
 interface Env {
@@ -33,18 +33,13 @@ export const onRequestPost = async (
     return new Response("Missing stripe-signature header", { status: 400 });
   }
 
-  const stripe = new Stripe(context.env.STRIPE_SECRET_KEY, {
-    apiVersion: "2025-09-30.clover" as Stripe.LatestApiVersion,
-    typescript: true,
-  });
-
   // 1. Read raw body (required for signature verification)
   const rawBody = await context.request.text();
 
   // 2. Verify signature
-  let event: Stripe.Event;
+  let event: { type: string; data: { object: any } };
   try {
-    event = stripe.webhooks.constructEvent(
+    event = constructWebhookEvent(
       rawBody,
       sig,
       context.env.STRIPE_WEBHOOK_SECRET,
@@ -58,16 +53,16 @@ export const onRequestPost = async (
   try {
     switch (event.type) {
       case "payment_intent.succeeded":
-        await handlePaymentSucceeded(context.env, event.data.object as Stripe.PaymentIntent);
+        await handlePaymentSucceeded(context.env, event.data.object as StripePaymentIntent);
         break;
       case "payment_intent.payment_failed":
-        await handlePaymentFailed(context.env, event.data.object as Stripe.PaymentIntent);
+        await handlePaymentFailed(context.env, event.data.object as StripePaymentIntent);
         break;
       case "charge.refunded":
-        await handleRefund(context.env, event.data.object as Stripe.Charge);
+        await handleRefund(context.env, event.data.object as StripeCharge);
         break;
       case "checkout.session.completed":
-        await handleCheckoutCompleted(context.env, event.data.object as Stripe.Checkout.Session);
+        await handleCheckoutCompleted(context.env, event.data.object as StripeCheckoutSession);
         break;
       default:
         console.log(`[webhook] Unhandled event type: ${event.type}`);
@@ -82,7 +77,7 @@ export const onRequestPost = async (
   return new Response("ok", { status: 200 });
 };
 
-async function handlePaymentSucceeded(env: Env, intent: Stripe.PaymentIntent) {
+async function handlePaymentSucceeded(env: Env, intent: StripePaymentIntent) {
   console.log(`[webhook] payment_intent.succeeded: ${intent.id} amount=${intent.amount}`);
 
   const piId = intent.metadata?.pi_id ?? null;
@@ -127,7 +122,7 @@ async function handlePaymentSucceeded(env: Env, intent: Stripe.PaymentIntent) {
   // await sendPaymentNotificationEmail(env, intent, "succeeded");
 }
 
-async function handlePaymentFailed(env: Env, intent: Stripe.PaymentIntent) {
+async function handlePaymentFailed(env: Env, intent: StripePaymentIntent) {
   console.log(`[webhook] payment_intent.payment_failed: ${intent.id} reason=${intent.last_payment_error?.code}`);
 
   const { error } = await supabasePatch(env, "payments", {
@@ -144,7 +139,7 @@ async function handlePaymentFailed(env: Env, intent: Stripe.PaymentIntent) {
   // Note: PI status stays as 'sent' — customer can retry payment with same PI link
 }
 
-async function handleRefund(env: Env, charge: Stripe.Charge) {
+async function handleRefund(env: Env, charge: StripeCharge) {
   console.log(`[webhook] charge.refunded: ${charge.id} amount_refunded=${charge.amount_refunded}`);
 
   const paymentIntentId = typeof charge.payment_intent === "string" ? charge.payment_intent : null;
@@ -165,7 +160,7 @@ async function handleRefund(env: Env, charge: Stripe.Charge) {
   }
 }
 
-async function handleCheckoutCompleted(env: Env, session: Stripe.Checkout.Session) {
+async function handleCheckoutCompleted(env: Env, session: StripeCheckoutSession) {
   console.log(`[webhook] checkout.session.completed: ${session.id} payment_intent=${session.payment_intent}`);
 
   // For Stripe Checkout, the webhook event is checkout.session.completed
