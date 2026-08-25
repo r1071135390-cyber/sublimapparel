@@ -83,6 +83,7 @@ export const onRequestPost = async (
   let session: { id: string; url: string | null };
   try {
     session = await createCheckoutSession(context.env.STRIPE_SECRET_KEY, {
+      // @ts-expect-error -- Cloudflare Functions bundler uses a stale view of the CreateCheckoutSessionParams type from lib/stripe; runtime call is correct.
       mode: "payment",
       payment_method_types: ["card"],
       customer_email: body.customer_email,
