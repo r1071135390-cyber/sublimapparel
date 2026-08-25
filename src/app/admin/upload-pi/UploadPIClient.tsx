@@ -107,6 +107,65 @@ export default function UploadPIClient() {
     [],
   );
 
+  // ── Client-side parsers ──
+  // PDF: extract text using pdfjs-dist
+  async function extractPdfText(file: File): Promise<string> {
+    const pdfjs = await import("pdfjs-dist");
+    // Use a data-URL fake worker to avoid network fetch in browser
+    const buffer = await file.arrayBuffer();
+    const doc = await pdfjs.getDocument({ data: buffer, useSystemFonts: true, disableFontFace: true }).promise;
+    let text = "";
+    for (let i = 1; i <= doc.numPages; i++) {
+      const page = await doc.getPage(i);
+      const content = await page.getTextContent();
+      text += content.items.map((it) => ("str" in it ? it.str : "")).join(" ") + "\n";
+    }
+    return text;
+  }
+
+  // Excel: extract cells with color info, mark red/blue/black
+  async function extractExcelText(file: File): Promise<string> {
+    const XLSX = await import("xlsx");
+    const buffer = await file.arrayBuffer();
+    const wb = XLSX.read(buffer, { type: "array", cellStyles: true });
+    let out = "";
+    for (const sheetName of wb.SheetNames) {
+      const sheet = wb.Sheets[sheetName];
+      if (!sheet) continue;
+      out += `[Sheet: ${sheetName}]\n`;
+      const range = XLSX.utils.decode_range(sheet["!ref"] || "A1");
+      for (let r = range.s.r; r <= range.e.r; r++) {
+        for (let c = range.s.c; c <= range.e.c; c++) {
+          const addr = XLSX.utils.encode_cell({ r, c });
+          const cell = sheet[addr];
+          if (cell && cell.v != null) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const font = (cell as any).s?.font;
+            const color = font?.color?.rgb || "";
+            let marker = "";
+            if (color && typeof color === "string") {
+              if (color.toUpperCase().includes("FF0000") || color.toUpperCase().includes("FFFF0000")) marker = " [RED-SALES-INPUT]";
+              else if (color.toUpperCase().includes("0000FF") || color.toUpperCase().includes("FF0000FF")) marker = " [BLUE-BANK]";
+            }
+            out += `${addr}=${String(cell.v).replace(/\n/g, " ")}${marker}\n`;
+          }
+        }
+      }
+      out += "\n";
+    }
+    return out;
+  }
+
+  // Image: convert to base64 data URL
+  function fileToDataUrl(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const r = new FileReader();
+      r.onload = () => resolve(String(r.result || ""));
+      r.onerror = () => reject(new Error("Failed to read file"));
+      r.readAsDataURL(file);
+    });
+  }
+
   const handleExtract = useCallback(async () => {
     setError(null);
     setResult(null);
@@ -120,7 +179,7 @@ export default function UploadPIClient() {
       return;
     }
     if (mode === "file" && !fileData) {
-      setError("Please upload a PDF or Excel file first");
+      setError("Please upload a PDF, Excel, or image first");
       return;
     }
 
@@ -128,12 +187,24 @@ export default function UploadPIClient() {
     try {
       let response: Response;
       if (mode === "file") {
-        // Send file to /api/pi/parse-file (handles PDF, Excel, image)
-        const fd = new FormData();
-        fd.append("file", fileData!);
-        response = await fetch("/api/pi/parse-file", {
+        // Client-side parsing → send text/image to /api/pi/parse
+        const name = fileData!.name.toLowerCase();
+        let payload: { text?: string; imageData?: string; imageName?: string };
+        if (name.endsWith(".pdf")) {
+          const extracted = await extractPdfText(fileData!);
+          payload = { text: extracted };
+        } else if (name.endsWith(".xlsx") || name.endsWith(".xls")) {
+          const extracted = await extractExcelText(fileData!);
+          payload = { text: extracted };
+        } else {
+          // image
+          const dataUrl = await fileToDataUrl(fileData!);
+          payload = { imageData: dataUrl, imageName: fileData!.name };
+        }
+        response = await fetch("/api/pi/parse", {
           method: "POST",
-          body: fd,
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
         });
       } else {
         // Text or image → /api/pi/parse
