@@ -1,48 +1,58 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   Upload,
   FileText,
   Image as ImageIcon,
+  FileSpreadsheet,
+  File as FileIcon,
   Loader2,
   CheckCircle2,
   AlertCircle,
   ArrowRight,
   Sparkles,
+  X,
 } from "lucide-react";
 
 type ExtractResult = {
-  pi_number?: string;
-  customer_name?: string;
-  customer_email?: string;
-  customer_phone?: string;
-  customer_company?: string;
-  customer_address?: string;
+  pi_number?: string | null;
+  issue_date?: string | null;
+  lead_time_text?: string | null;
+  payment_terms_text?: string | null;
+  customer?: {
+    name?: string | null;
+    phone?: string | null;
+    address?: string | null;
+  };
   items?: Array<{
     description?: string;
-    fabric?: string;
+    fabric?: string | null;
     qty?: number;
-    unit_price_usd?: number;
+    unit_price_cents?: number;
   }>;
-  shipping_usd?: number;
-  total_usd?: number;
-  payment_terms?: string;
-  lead_time_days?: number;
-  notes?: string;
+  shipping_label?: string | null;
+  shipping_method?: string | null;
+  shipping_cents?: number;
+  currency?: string;
+  notes?: string | null;
 };
+
+type Mode = "text" | "image" | "file";
 
 export default function UploadPIClient() {
   const router = useRouter();
-  const [mode, setMode] = useState<"text" | "image">("text");
+  const [mode, setMode] = useState<Mode>("text");
   const [text, setText] = useState("");
   const [imageData, setImageData] = useState<string | null>(null);
   const [imageName, setImageName] = useState<string | null>(null);
+  const [fileData, setFileData] = useState<File | null>(null);
   const [extracting, setExtracting] = useState(false);
   const [result, setResult] = useState<ExtractResult | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleImageUpload = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -74,6 +84,29 @@ export default function UploadPIClient() {
     [],
   );
 
+  const handleFileUpload = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      const name = file.name.toLowerCase();
+      const ok =
+        name.endsWith(".pdf") ||
+        name.endsWith(".xlsx") ||
+        name.endsWith(".xls");
+      if (!ok) {
+        setError("Please upload a PDF or Excel file (.pdf, .xlsx, .xls)");
+        return;
+      }
+      if (file.size > 12 * 1024 * 1024) {
+        setError("File must be under 12MB");
+        return;
+      }
+      setError(null);
+      setFileData(file);
+    },
+    [],
+  );
+
   const handleExtract = useCallback(async () => {
     setError(null);
     setResult(null);
@@ -86,21 +119,37 @@ export default function UploadPIClient() {
       setError("Please upload an image first");
       return;
     }
+    if (mode === "file" && !fileData) {
+      setError("Please upload a PDF or Excel file first");
+      return;
+    }
 
     setExtracting(true);
     try {
-      const response = await fetch("/api/pi/parse", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(
-          mode === "text" ? { text } : { imageData, imageName },
-        ),
-      });
+      let response: Response;
+      if (mode === "file") {
+        // Send file to /api/pi/parse-file (handles PDF, Excel, image)
+        const fd = new FormData();
+        fd.append("file", fileData!);
+        response = await fetch("/api/pi/parse-file", {
+          method: "POST",
+          body: fd,
+        });
+      } else {
+        // Text or image → /api/pi/parse
+        response = await fetch("/api/pi/parse", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(
+            mode === "text" ? { text } : { imageData, imageName },
+          ),
+        });
+      }
 
-      const data: { ok?: boolean; data?: ExtractResult; error?: string } =
+      const data: { success?: boolean; ok?: boolean; data?: ExtractResult; error?: string } =
         await response.json();
 
-      if (!response.ok || !data.ok) {
+      if (!response.ok || !(data.success || data.ok)) {
         throw new Error(data.error || `Server error: ${response.status}`);
       }
 
@@ -111,12 +160,30 @@ export default function UploadPIClient() {
     } finally {
       setExtracting(false);
     }
-  }, [mode, text, imageData, imageName]);
+  }, [mode, text, imageData, imageName, fileData]);
 
   const handleContinue = useCallback(() => {
     if (!result) return;
-    // Encode extracted data as base64 URL param, then go to new-pi
-    const json = JSON.stringify(result);
+    // Convert ExtractResult → PrefillPayload (shape new-pi expects)
+    const prefill = {
+      pi_number: result.pi_number || undefined,
+      issue_date: result.issue_date || undefined,
+      lead_time_text: result.lead_time_text || undefined,
+      customer_name: result.customer?.name || undefined,
+      customer_phone: result.customer?.phone || undefined,
+      customer_address: result.customer?.address || undefined,
+      items: (result.items || []).map((it) => ({
+        description: it.description,
+        fabric: it.fabric || "",
+        qty: it.qty || 1,
+        unit_price_cents: it.unit_price_cents || 0,
+      })),
+      shipping_label: result.shipping_label || "Shipping Cost",
+      shipping_method: result.shipping_method || "DDP by AIR",
+      shipping_cents: result.shipping_cents || 0,
+      payment_terms_text: result.payment_terms_text || undefined,
+    };
+    const json = JSON.stringify(prefill);
     const encoded = btoa(unescape(encodeURIComponent(json)));
     router.push(`/admin/new-pi/?from=upload&data=${encodeURIComponent(encoded)}`);
   }, [result, router]);
@@ -125,13 +192,20 @@ export default function UploadPIClient() {
     setText("");
     setImageData(null);
     setImageName(null);
+    setFileData(null);
     setResult(null);
     setError(null);
   }, []);
 
+  const switchMode = (m: Mode) => {
+    setMode(m);
+    setError(null);
+  };
+
   const hasInput =
     (mode === "text" && text.trim().length > 0) ||
-    (mode === "image" && imageData !== null);
+    (mode === "image" && imageData !== null) ||
+    (mode === "file" && fileData !== null);
 
   return (
     <main className="min-h-screen bg-[#faf9f6]">
@@ -162,12 +236,12 @@ export default function UploadPIClient() {
             <Sparkles className="h-3 w-3" /> AI-powered
           </div>
           <h2 className="mb-3 text-3xl font-black leading-tight tracking-tight text-[#0a0a0a] sm:text-4xl">
-            Paste or upload a PI.
+            Upload your PI file.
             <br />
             Get a payment link in 30 seconds.
           </h2>
           <p className="max-w-2xl text-base text-black/70">
-            Drop a screenshot of your Proforma Invoice or paste the text.
+            Drop a PDF or Excel file, or paste a screenshot or text.
             AI extracts the customer info, items, and total — you review
             and confirm, then send the link to your customer.
           </p>
@@ -175,35 +249,22 @@ export default function UploadPIClient() {
 
         {/* Mode tabs */}
         <section className="mb-6">
-          <div className="inline-flex border-2 border-black bg-white p-1">
-            <button
-              type="button"
-              onClick={() => setMode("text")}
-              className={`flex items-center gap-2 px-4 py-2 text-xs font-black uppercase tracking-wider transition-colors ${
-                mode === "text"
-                  ? "bg-[#0a0a0a] text-white"
-                  : "text-black/60 hover:text-black"
-              }`}
-            >
+          <div className="inline-flex flex-wrap border-2 border-black bg-white p-1">
+            <ModeTab active={mode === "text"} onClick={() => switchMode("text")}>
               <FileText className="h-4 w-4" /> Paste text
-            </button>
-            <button
-              type="button"
-              onClick={() => setMode("image")}
-              className={`flex items-center gap-2 px-4 py-2 text-xs font-black uppercase tracking-wider transition-colors ${
-                mode === "image"
-                  ? "bg-[#0a0a0a] text-white"
-                  : "text-black/60 hover:text-black"
-              }`}
-            >
-              <ImageIcon className="h-4 w-4" /> Upload screenshot
-            </button>
+            </ModeTab>
+            <ModeTab active={mode === "image"} onClick={() => switchMode("image")}>
+              <ImageIcon className="h-4 w-4" /> Image
+            </ModeTab>
+            <ModeTab active={mode === "file"} onClick={() => switchMode("file")}>
+              <FileSpreadsheet className="h-4 w-4" /> PDF / Excel
+            </ModeTab>
           </div>
         </section>
 
         {/* Input area */}
         <section className="mb-6">
-          {mode === "text" ? (
+          {mode === "text" && (
             <div>
               <label
                 htmlFor="pi-text"
@@ -220,12 +281,10 @@ export default function UploadPIClient() {
                 className="w-full border-2 border-black bg-white p-4 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-[#ff4d00]"
                 disabled={extracting}
               />
-              <p className="mt-2 text-xs text-black/50">
-                Copy from Word / Excel / PDF / email. Include customer info,
-                items, prices, and total.
-              </p>
             </div>
-          ) : (
+          )}
+
+          {mode === "image" && (
             <div>
               <label
                 htmlFor="pi-image"
@@ -235,9 +294,7 @@ export default function UploadPIClient() {
               </label>
               <div
                 className="flex min-h-[200px] cursor-pointer flex-col items-center justify-center border-2 border-dashed border-black bg-white p-6 transition-colors hover:bg-[#faf9f6]"
-                onClick={() =>
-                  document.getElementById("pi-image")?.click()
-                }
+                onClick={() => document.getElementById("pi-image")?.click()}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" || e.key === " ") {
                     document.getElementById("pi-image")?.click();
@@ -277,10 +334,73 @@ export default function UploadPIClient() {
                 className="hidden"
                 disabled={extracting}
               />
-              <p className="mt-2 text-xs text-black/50">
-                Screenshot the PI from your email / Word / PDF reader. For
-                PDFs, take a screenshot of the rendered page.
-              </p>
+            </div>
+          )}
+
+          {mode === "file" && (
+            <div>
+              <label className="mb-2 block text-xs font-black uppercase tracking-wider text-black">
+                Upload PI as PDF or Excel
+              </label>
+              <div
+                className="flex min-h-[200px] cursor-pointer flex-col items-center justify-center border-2 border-dashed border-black bg-white p-6 transition-colors hover:bg-[#faf9f6]"
+                onClick={() => fileInputRef.current?.click()}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    fileInputRef.current?.click();
+                  }
+                }}
+                role="button"
+                tabIndex={0}
+              >
+                {fileData ? (
+                  <div className="flex items-center gap-3">
+                    {fileData.name.toLowerCase().endsWith(".pdf") ? (
+                      <FileIcon className="h-10 w-10 text-[#ff4d00]" />
+                    ) : (
+                      <FileSpreadsheet className="h-10 w-10 text-[#00c2ff]" />
+                    )}
+                    <div className="text-left">
+                      <p className="font-bold text-black">{fileData.name}</p>
+                      <p className="text-xs text-black/60">
+                        {(fileData.size / 1024).toFixed(1)} KB · click to change
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setFileData(null);
+                      }}
+                      className="ml-3 text-black/40 hover:text-black"
+                    >
+                      <X className="h-5 w-5" />
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                    <Upload className="mb-3 h-8 w-8 text-black/40" />
+                    <p className="text-sm font-bold text-black">
+                      Click to upload or drag and drop
+                    </p>
+                    <p className="mt-1 text-xs text-black/50">
+                      PDF or Excel (.pdf, .xlsx, .xls) up to 12MB
+                    </p>
+                    <p className="mt-3 text-[10px] text-black/40">
+                      Excel parsing preserves the red / blue / black colors so the
+                      AI knows which cells are customer-fillable.
+                    </p>
+                  </>
+                )}
+              </div>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept=".pdf,.xlsx,.xls,application/pdf,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
+                onChange={handleFileUpload}
+                className="hidden"
+                disabled={extracting}
+              />
             </div>
           )}
         </section>
@@ -334,47 +454,54 @@ export default function UploadPIClient() {
               </h3>
             </div>
 
-            <div className="grid gap-4 text-sm sm:grid-cols-2">
+            <div className="grid gap-3 text-sm sm:grid-cols-2">
               <Field label="PI Number" value={result.pi_number} mono />
               <Field
-                label="Customer"
-                value={result.customer_name}
-                sub={result.customer_company}
+                label="Issue Date"
+                value={result.issue_date}
               />
-              <Field label="Email" value={result.customer_email} />
-              <Field label="Phone" value={result.customer_phone} />
+              <Field label="Lead Time" value={result.lead_time_text} className="sm:col-span-2" />
+              <Field
+                label="Customer"
+                value={result.customer?.name}
+              />
+              <Field label="Phone" value={result.customer?.phone} />
               <Field
                 label="Address"
-                value={result.customer_address}
+                value={result.customer?.address}
                 className="sm:col-span-2"
+              />
+              <Field
+                label="Shipping"
+                value={
+                  result.shipping_cents !== undefined
+                    ? `${result.shipping_method || "—"} (${(result.shipping_cents / 100).toFixed(2)} USD)`
+                    : undefined
+                }
               />
               <Field
                 label="Total (USD)"
                 value={
-                  result.total_usd !== undefined
-                    ? `$${result.total_usd.toFixed(2)}`
+                  result.items && result.shipping_cents !== undefined
+                    ? `$${(
+                        (result.items.reduce(
+                          (s, it) => s + (it.qty || 0) * (it.unit_price_cents || 0),
+                          0,
+                        ) +
+                          (result.shipping_cents || 0)) /
+                        100
+                      ).toFixed(2)}`
                     : undefined
                 }
                 mono
               />
-              <Field
-                label="Shipping (USD)"
-                value={
-                  result.shipping_usd !== undefined
-                    ? `$${result.shipping_usd.toFixed(2)}`
-                    : undefined
-                }
-                mono
-              />
-              <Field
-                label="Lead Time (days)"
-                value={result.lead_time_days?.toString()}
-              />
-              <Field
-                label="Payment Terms"
-                value={result.payment_terms}
-                className="sm:col-span-2"
-              />
+              {result.payment_terms_text && (
+                <Field
+                  label="Payment Terms"
+                  value={result.payment_terms_text}
+                  className="sm:col-span-2"
+                />
+              )}
             </div>
 
             {result.items && result.items.length > 0 && (
@@ -398,8 +525,8 @@ export default function UploadPIClient() {
                       </div>
                       <div className="text-right font-mono text-black">
                         {it.qty ?? "?"} × $
-                        {it.unit_price_usd !== undefined
-                          ? it.unit_price_usd.toFixed(2)
+                        {it.unit_price_cents !== undefined
+                          ? (it.unit_price_cents / 100).toFixed(2)
                           : "?"}
                       </div>
                     </div>
@@ -444,17 +571,41 @@ export default function UploadPIClient() {
   );
 }
 
+function ModeTab({
+  active,
+  onClick,
+  children,
+}: {
+  active: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`flex items-center gap-2 px-4 py-2 text-xs font-black uppercase tracking-wider transition-colors ${
+        active
+          ? "bg-[#0a0a0a] text-white"
+          : "text-black/60 hover:text-black"
+      }`}
+    >
+      {children}
+    </button>
+  );
+}
+
 function Field({
   label,
   value,
-  sub,
   mono,
+  sub,
   className = "",
 }: {
   label: string;
-  value?: string;
-  sub?: string;
+  value?: string | null;
   mono?: boolean;
+  sub?: string | null;
   className?: string;
 }) {
   return (
@@ -463,17 +614,13 @@ function Field({
         {label}
       </p>
       {value ? (
-        <p
-          className={`text-sm font-bold text-black ${
-            mono ? "font-mono" : ""
-          }`}
-        >
-          {value}
-        </p>
+        <>
+          <p className={`text-black ${mono ? "font-mono" : ""}`}>{value}</p>
+          {sub && <p className="text-xs text-black/60">{sub}</p>}
+        </>
       ) : (
-        <p className="text-sm italic text-black/30">not detected</p>
+        <p className="text-xs italic text-black/40">(not detected)</p>
       )}
-      {sub && <p className="text-xs text-black/60">{sub}</p>}
     </div>
   );
 }

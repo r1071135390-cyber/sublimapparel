@@ -20,6 +20,7 @@ import { Suspense } from "react";
 import { loadStripe, type Stripe as StripeJs } from "@stripe/stripe-js";
 import { Elements, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import jsPDF from "jspdf";
+import { PIDisplay, type PIDisplayData } from "@/components/pi/PIDisplay";
 import { Truck, CheckCircle2, Loader2, Download, Building2, CreditCard, AlertCircle } from "lucide-react";
 
 // ---------- Types ----------
@@ -61,6 +62,13 @@ interface PIData {
   stripe_client_secret?: string;
   amount_due_cents: number; // what the customer needs to pay right now
   amount_paid_cents: number;
+
+  // New Excel-style metadata (from /api/pi/parse or manual form)
+  lead_time_text?: string;
+  payment_terms_text?: string;
+  shipping_label?: string;
+  shipping_method?: string;
+  image_url?: string;
 }
 
 // ---------- Helpers ----------
@@ -323,122 +331,33 @@ export default function PayClient() {
 
         {/* PI Document */}
         <article className="border-2 border-black bg-white p-6 shadow-[6px_6px_0_0_rgba(10,10,10,1)] sm:p-10 print:border-0 print:shadow-none">
-          {/* Header */}
-          <header className="mb-8 flex flex-col gap-4 border-b-2 border-black pb-6 sm:flex-row sm:items-start sm:justify-between">
-            <div>
-              <h1 className="text-2xl font-black uppercase tracking-tight sm:text-3xl">Proforma Invoice</h1>
-              <p className="mt-1 text-xs font-bold uppercase tracking-[0.18em] text-[#ff4d00]">From sublimapparel.com</p>
-            </div>
-            <div className="text-sm sm:text-right">
-              <div className="text-xs font-bold uppercase tracking-wider text-black/60">PI Number</div>
-              <div className="font-mono text-lg font-black">{pi.pi_number}</div>
-              <div className="mt-2 text-xs font-bold uppercase tracking-wider text-black/60">Issue Date</div>
-              <div className="font-bold">{fmtDate(pi.issue_date)}</div>
-              {pi.valid_until && (
-                <>
-                  <div className="mt-2 text-xs font-bold uppercase tracking-wider text-black/60">Valid Until</div>
-                  <div className="font-bold">{fmtDate(pi.valid_until)}</div>
-                </>
-              )}
-            </div>
-          </header>
 
-          {/* From / To */}
-          <div className="mb-8 grid gap-6 sm:grid-cols-2">
-            <div>
-              <div className="mb-2 text-xs font-black uppercase tracking-[0.18em] text-[#ff4d00]">From</div>
-              <div className="text-sm font-bold">YIWU HOMEDORM COMMODITY MFG CO., LTD</div>
-              <div className="mt-1 text-sm text-black/70">
-                2nd Floor, No.11 Anshang Road
-                <br />
-                Yiwu City, Zhejiang, China
-              </div>
-              <div className="mt-2 text-sm text-black/70">
-                Miss Chris Ma
-                <br />
-                chris@sublimapparel.com
-                <br />
-                +86 19817930190
-              </div>
-            </div>
-            <div>
-              <div className="mb-2 text-xs font-black uppercase tracking-[0.18em] text-[#ff4d00]">To</div>
-              <div className="text-sm font-bold">{pi.customer_name}</div>
-              {pi.customer_company && <div className="text-sm text-black/70">{pi.customer_company}</div>}
-              {pi.customer_address && (
-                <div className="mt-1 whitespace-pre-line text-sm text-black/70">{pi.customer_address}</div>
-              )}
-              {pi.customer_email && <div className="mt-2 text-sm text-black/70">{pi.customer_email}</div>}
-              {pi.customer_phone && <div className="text-sm text-black/70">{pi.customer_phone}</div>}
-            </div>
-          </div>
-
-          {/* Items table */}
-          <div className="mb-6 overflow-x-auto">
-            <table className="w-full min-w-[600px] text-left text-sm">
-              <thead>
-                <tr className="border-b-2 border-black text-xs font-black uppercase tracking-wider">
-                  <th className="py-2 pr-4">Description</th>
-                  <th className="py-2 pr-4 text-right">Qty</th>
-                  <th className="py-2 pr-4 text-right">Unit</th>
-                  <th className="py-2 text-right">Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                {pi.items.map((item, idx) => (
-                  <tr key={idx} className="border-b border-black/10 align-top">
-                    <td className="py-3 pr-4">
-                      <div className="font-bold">{item.description}</div>
-                      {item.fabric && (
-                        <div className="mt-1 text-xs text-black/60">Fabric: {item.fabric}</div>
-                      )}
-                    </td>
-                    <td className="py-3 pr-4 text-right font-bold tabular-nums">{item.qty}</td>
-                    <td className="py-3 pr-4 text-right tabular-nums">{fmtMoney(item.unit_price_cents, pi.currency)}</td>
-                    <td className="py-3 text-right font-bold tabular-nums">{fmtMoney(item.total_cents, pi.currency)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          {/* Totals */}
-          <div className="mb-8 flex flex-col items-end gap-1 text-sm">
-            <div className="flex w-full max-w-xs justify-between border-t-2 border-black pt-3">
-              <span className="font-bold">Subtotal</span>
-              <span className="font-bold tabular-nums">{fmtMoney(pi.subtotal_cents, pi.currency)}</span>
-            </div>
-            <div className="flex w-full max-w-xs justify-between">
-              <span>Shipping (DDP)</span>
-              <span className="tabular-nums">{fmtMoney(pi.shipping_cents, pi.currency)}</span>
-            </div>
-            <div className="flex w-full max-w-xs justify-between border-t-2 border-black pt-2">
-              <span className="text-base font-black uppercase tracking-wider">Total</span>
-              <span className="text-base font-black tabular-nums">{fmtMoney(pi.total_cents, pi.currency)}</span>
-            </div>
-            {pi.payment_percentage < 100 && (
-              <div className="mt-2 flex w-full max-w-xs justify-between text-[#ff4d00]">
-                <span className="font-bold">Amount Due Now ({pi.payment_percentage}%)</span>
-                <span className="font-black tabular-nums">{fmtMoney(pi.amount_due_cents, pi.currency)}</span>
-              </div>
-            )}
-          </div>
-
-          {/* Terms */}
-          <div className="mb-2 border-t-2 border-black pt-4 text-xs text-black/70">
-            <div className="mb-1">
-              <span className="font-bold uppercase tracking-wider text-black">Payment Terms: </span>
-              {pi.payment_terms}
-            </div>
-            <div className="mb-1">
-              <span className="font-bold uppercase tracking-wider text-black">Lead Time: </span>
-              {pi.lead_time_days} days
-            </div>
-            <div>
-              <span className="font-bold uppercase tracking-wider text-black">Production Time: </span>
-              {pi.production_time_days} days after payment received and PP sample approval
-            </div>
-          </div>
+          <PIDisplay
+            pi={{
+              pi_number: pi.pi_number,
+              issue_date: pi.issue_date,
+              valid_until: pi.valid_until,
+              lead_time_text: pi.lead_time_text,
+              payment_terms_text: pi.payment_terms_text,
+              customer_name: pi.customer_name,
+              customer_phone: pi.customer_phone,
+              customer_address: pi.customer_address,
+              items: pi.items.map((it) => ({
+                description: it.description,
+                fabric: it.fabric,
+                qty: it.qty,
+                unit_price_cents: it.unit_price_cents,
+                total_cents: it.total_cents,
+                image_url: it.image_url,
+              })),
+              shipping_label: pi.shipping_label,
+              shipping_method: pi.shipping_method,
+              shipping_cents: pi.shipping_cents,
+              total_cents: pi.total_cents,
+              subtotal_cents: pi.subtotal_cents,
+              currency: pi.currency,
+            } as PIDisplayData}
+          />
         </article>
 
         {/* Payment section */}

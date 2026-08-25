@@ -1,47 +1,32 @@
 /**
  * POST /api/pi/create
  *
- * Creates a new Proforma Invoice + Stripe PaymentIntent.
- * Called by sales rep from /admin/new-pi form.
+ * Create a new Proforma Invoice + Stripe PaymentIntent.
  *
- * Request body:
+ * Body shape (new schema — matches the Excel PI layout):
  * {
+ *   pi_number: string,           // e.g. "SA202608250001"
  *   customer_name: string,
- *   customer_email?: string,
  *   customer_phone?: string,
- *   customer_company?: string,
  *   customer_address?: string,
- *   items: [{description, fabric?, qty, unit_price_cents, total_cents, image_url?}, ...],
- *   shipping_cents?: number,
- *   currency?: "usd" | "eur" | ...,
- *   payment_terms?: string,
- *   payment_percentage?: number, // 100 = full upfront, 30 = 30% deposit
- *   lead_time_days?: number,
- *   production_time_days?: number,
- *   valid_days?: number,
- *   metadata?: { ... }
+ *   issue_date: string,          // "YYYY-MM-DD"
+ *   lead_time_text: string,      // e.g. "Within 30 days after deposit"
+ *   items: [{ description, fabric, qty, unit_price_cents, total_cents, image_url? }],
+ *   shipping_label: string,      // e.g. "Shipping Cost"
+ *   shipping_method: string,     // e.g. "DDP by AIR"
+ *   shipping_cents: number,
+ *   payment_terms_text: string,  // full terms text from the PI
+ *   total_cents: number,         // grand total (items + shipping)
+ *   payment_percentage?: number, // defaults to 100
+ *   valid_days?: number,         // defaults to 7
+ *   metadata?: object
  * }
  *
- * Response:
- * {
- *   success: true,
- *   pi: { ... },                    // full PI record
- *   client_secret: "pi_xxx_secret_xxx",
- *   payment_url: "/pay/SA20260825001"
- * }
+ * Returns: { success, pi, client_secret, payment_url }
  */
 
-import Stripe from "stripe";
 import type { EventContext } from "@cloudflare/workers-types";
-
-interface PIItem {
-  description: string;
-  fabric?: string;
-  qty: number;
-  unit_price_cents: number;
-  total_cents: number;
-  image_url?: string;
-}
+import Stripe from "stripe";
 
 interface Env {
   STRIPE_SECRET_KEY: string;
@@ -50,73 +35,93 @@ interface Env {
   PUBLIC_URL: string;
 }
 
-function generatePINumber(): string {
-  // Format: SA + YYYYMMDD + 3-digit sequence based on current timestamp
-  // For simplicity, we use the last 3 digits of Date.now() modulo 1000.
-  // In production, you'd query the DB for the next sequence number.
-  const now = new Date();
-  const yyyy = now.getUTCFullYear();
-  const mm = String(now.getUTCMonth() + 1).padStart(2, "0");
-  const dd = String(now.getUTCDate()).padStart(2, "0");
-  const seq = String(Date.now() % 1000).padStart(3, "0");
-  return `SA${yyyy}${mm}${dd}${seq}`;
+interface PIItemInput {
+  description: string;
+  fabric?: string;
+  qty: number;
+  unit_price_cents: number;
+  total_cents?: number;
+  image_url?: string;
+}
+
+interface CreateBody {
+  pi_number?: string;
+  customer_name: string;
+  customer_phone?: string;
+  customer_address?: string;
+  customer_email?: string;
+  issue_date?: string;
+  lead_time_text?: string;
+  items: PIItemInput[];
+  shipping_label?: string;
+  shipping_method?: string;
+  shipping_cents?: number;
+  payment_terms_text?: string;
+  total_cents?: number;
+  payment_percentage?: number;
+  valid_days?: number;
+  currency?: string;
+  metadata?: Record<string, unknown>;
 }
 
 export const onRequestPost = async (context: EventContext<Env, "", unknown>) => {
   const { request, env } = context;
+  const corsHeaders = {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+  };
 
   try {
     if (!env.STRIPE_SECRET_KEY) {
       return new Response(
         JSON.stringify({ error: "STRIPE_SECRET_KEY not configured" }),
-        { status: 500, headers: { "Content-Type": "application/json" } },
+        { status: 500, headers: corsHeaders },
       );
     }
 
-    const body = (await request.json()) as {
-      customer_name?: string;
-      customer_email?: string;
-      customer_phone?: string;
-      customer_company?: string;
-      customer_address?: string;
-      items?: PIItem[];
-      shipping_cents?: number;
-      currency?: string;
-      payment_terms?: string;
-      payment_percentage?: number;
-      lead_time_days?: number;
-      production_time_days?: number;
-      valid_days?: number;
-      metadata?: Record<string, unknown>;
-    };
+    const body = (await request.json()) as CreateBody;
 
     // ── Validation ─────────────────────────────────────────────
     if (!body.customer_name || !body.items || body.items.length === 0) {
       return new Response(
         JSON.stringify({ error: "customer_name and items are required" }),
-        { status: 400, headers: { "Content-Type": "application/json" } },
+        { status: 400, headers: corsHeaders },
+      );
+    }
+
+    if (!body.pi_number) {
+      return new Response(
+        JSON.stringify({ error: "pi_number is required" }),
+        { status: 400, headers: corsHeaders },
       );
     }
 
     // ── Compute totals ─────────────────────────────────────────
-    const subtotalCents = body.items.reduce(
-      (sum, it) => sum + (it.total_cents || it.qty * it.unit_price_cents),
-      0,
-    );
+    const items = body.items.map((it) => ({
+      description: it.description,
+      fabric: it.fabric || null,
+      qty: it.qty,
+      unit_price_cents: it.unit_price_cents,
+      total_cents: it.total_cents ?? it.qty * it.unit_price_cents,
+      image_url: it.image_url || null,
+    }));
+    const subtotalCents = items.reduce((s, it) => s + it.total_cents, 0);
     const shippingCents = body.shipping_cents || 0;
-    const totalCents = subtotalCents + shippingCents;
+    const totalCents = body.total_cents ?? subtotalCents + shippingCents;
     const paymentPct = body.payment_percentage || 100;
     if (paymentPct < 1 || paymentPct > 100) {
       return new Response(
         JSON.stringify({ error: "payment_percentage must be 1-100" }),
-        { status: 400, headers: { "Content-Type": "application/json" } },
+        { status: 400, headers: corsHeaders },
       );
     }
     const payCents = Math.round((totalCents * paymentPct) / 100);
     if (payCents < 50) {
       return new Response(
         JSON.stringify({ error: "Amount too small. Stripe minimum is $0.50 USD." }),
-        { status: 400, headers: { "Content-Type": "application/json" } },
+        { status: 400, headers: corsHeaders },
       );
     }
     const currency = (body.currency || "usd").toLowerCase();
@@ -136,39 +141,51 @@ export const onRequestPost = async (context: EventContext<Env, "", unknown>) => 
         payment_percentage: String(paymentPct),
         total_cents: String(totalCents),
         customer_email: body.customer_email || "",
+        pi_number: body.pi_number,
       },
-      description: `PI for ${body.customer_name} (${paymentPct}%)`,
+      description: `PI ${body.pi_number} for ${body.customer_name} (${paymentPct}%)`,
       receipt_email: body.customer_email || undefined,
     });
 
-    // ── Generate PI number ────────────────────────────────────
-    const piNumber = generatePINumber();
+    // ── Valid until ───────────────────────────────────────────
     const validUntil = new Date();
     validUntil.setDate(validUntil.getDate() + (body.valid_days || 7));
 
-    // ── Insert PI record into Supabase ─────────────────────────
+    // ── Build PI record ───────────────────────────────────────
+    // New Excel-style fields are stored in `metadata` JSONB to avoid DB migration.
     const piRecord = {
-      pi_number: piNumber,
-      status: "draft",
+      pi_number: body.pi_number,
+      status: "sent",
       customer_name: body.customer_name,
       customer_email: body.customer_email || null,
       customer_phone: body.customer_phone || null,
-      customer_company: body.customer_company || null,
+      customer_company: null,
       customer_address: body.customer_address || null,
-      items: body.items,
+      items,
       subtotal_cents: subtotalCents,
       shipping_cents: shippingCents,
       total_cents: totalCents,
       currency,
-      payment_terms: body.payment_terms || `${paymentPct}% upfront`,
+      payment_terms:
+        body.payment_terms_text || `${paymentPct}% upfront of total`,
       payment_percentage: paymentPct,
       stripe_payment_intent_id: paymentIntent.id,
-      lead_time_days: body.lead_time_days || 30,
-      production_time_days: body.production_time_days || 45,
+      lead_time_days: 30, // legacy column; new value lives in metadata.lead_time_text
+      production_time_days: 45, // legacy
+      issue_date: body.issue_date || new Date().toISOString().split("T")[0],
       valid_until: validUntil.toISOString().split("T")[0],
-      metadata: body.metadata || {},
+      metadata: {
+        ...(body.metadata || {}),
+        // New schema fields (Excel layout)
+        issue_date: body.issue_date || new Date().toISOString().split("T")[0],
+        lead_time_text: body.lead_time_text || "Within 30 days after deposit",
+        payment_terms_text: body.payment_terms_text || "",
+        shipping_label: body.shipping_label || "Shipping Cost",
+        shipping_method: body.shipping_method || "DDP by AIR",
+      },
     };
 
+    // ── Insert into Supabase ──────────────────────────────────
     const insertRes = await fetch(`${env.COZE_SUPABASE_URL}/rest/v1/proforma_invoices`, {
       method: "POST",
       headers: {
@@ -187,7 +204,7 @@ export const onRequestPost = async (context: EventContext<Env, "", unknown>) => 
       await stripe.paymentIntents.cancel(paymentIntent.id);
       return new Response(
         JSON.stringify({ error: "Failed to create PI", detail: text }),
-        { status: 500, headers: { "Content-Type": "application/json" } },
+        { status: 500, headers: corsHeaders },
       );
     }
 
@@ -198,9 +215,9 @@ export const onRequestPost = async (context: EventContext<Env, "", unknown>) => 
         success: true,
         pi: { ...pi, id: pi.id },
         client_secret: paymentIntent.client_secret,
-        payment_url: `/pay/${piNumber}`,
+        payment_url: `/pay/?pi=${body.pi_number}`,
       }),
-      { status: 200, headers: { "Content-Type": "application/json" } },
+      { status: 200, headers: corsHeaders },
     );
   } catch (err) {
     console.error("PI create error:", err);

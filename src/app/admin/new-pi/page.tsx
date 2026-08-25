@@ -1,15 +1,41 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import Link from "next/link";
-import { Trash2, Plus, Copy, ExternalLink, Check, RefreshCw } from "lucide-react";
+import { ArrowLeft, Plus, Trash2, Save, ExternalLink, RefreshCw, Upload, X, Check, Copy } from "lucide-react";
 
+// ─── Types ────────────────────────────────────────────────────────────────
 type LineItem = {
   description: string;
   fabric: string;
   qty: number;
   unitPriceCents: number;
+  imageUrl: string;
 };
+
+type PrefillPayload = {
+  pi_number?: string;
+  issue_date?: string;
+  lead_time_text?: string;
+  customer_name?: string;
+  customer_phone?: string;
+  customer_address?: string;
+  items?: Array<{
+    description?: string;
+    fabric?: string;
+    qty?: number;
+    unit_price_cents?: number;
+    image_url?: string;
+  }>;
+  shipping_label?: string;
+  shipping_method?: string;
+  shipping_cents?: number;
+  payment_terms_text?: string;
+  total_cents?: number;
+};
+
+const DEFAULT_TERMS_PAYMENT =
+  "The buyer should pay 100% of payment amount 3 days after confirmation of the PI. The seller should arrange production after receiving the payment and approval of PP samples.";
 
 function todayPiNumber() {
   const d = new Date();
@@ -19,51 +45,64 @@ function todayPiNumber() {
   return `SA${yyyy}${mm}${dd}0001`;
 }
 
-// Shape passed from /admin/upload-pi/ via ?data=base64
-type PrefillPayload = {
-  pi_number?: string;
-  customer_name?: string;
-  customer_email?: string;
-  customer_phone?: string;
-  customer_company?: string;
-  customer_address?: string;
-  items?: Array<{
-    description?: string;
-    fabric?: string;
-    qty?: number;
-    unit_price_cents?: number;
-  }>;
-  shipping_cents?: number;
-  payment_terms?: string;
-  lead_time_days?: number;
-  notes?: string;
+function todayIsoDate() {
+  const d = new Date();
+  return d.toISOString().slice(0, 10);
+}
+
+const fmt = (cents: number) => `$${(cents / 100).toFixed(2)}`;
+
+// ─── Fixed bank info (in real PIs these are blue, pre-filled) ──────────────
+const BANK_INFO = {
+  beneficiary: "YIWU HOMEDORM COMMODITY MANUFACTURING CO.,LTD",
+  companyAddress: "2nd Floor, No.11 Anshang Road, Yiwu City, China",
+  bankName: "Agricultural Bank of China, Zhejiang Branch",
+  bankAccount: "19648014040108531",
+  bankSwift: "ABOCCNBJ110",
+  bankAddress: "No. 181 Binwang Road, Yiwu City, Jinhua, Zhejiang Province, China",
 };
 
+// ─── Page ─────────────────────────────────────────────────────────────────
 export default function NewPIPage() {
+  // Header / metadata
   const [piNumber, setPiNumber] = useState(todayPiNumber());
-  const [piNumberLocked, setPiNumberLocked] = useState(false); // true if from upload-pi
+  const [piNumberLocked, setPiNumberLocked] = useState(false);
   const [piSource, setPiSource] = useState<"auto" | "uploaded" | "manual">("auto");
+  const [issueDate, setIssueDate] = useState(todayIsoDate());
+  const [leadTimeText, setLeadTimeText] = useState("Within 30 days");
+
+  // TO: block
   const [customerName, setCustomerName] = useState("");
-  const [customerEmail, setCustomerEmail] = useState("");
-  const [customerPhone, setCustomerPhone] = useState("");
-  const [customerCompany, setCustomerCompany] = useState("");
   const [customerAddress, setCustomerAddress] = useState("");
+  const [customerPhone, setCustomerPhone] = useState("");
 
+  // Items
   const [items, setItems] = useState<LineItem[]>([
-    { description: "", fabric: "", qty: 1, unitPriceCents: 0 },
+    { description: "", fabric: "", qty: 1, unitPriceCents: 0, imageUrl: "" },
   ]);
+  // Shipping row (always present, like in the Excel)
+  const [shippingLabel, setShippingLabel] = useState("Shipping Cost");
+  const [shippingMethod, setShippingMethod] = useState("DDP by AIR");
+  const [shippingQty, setShippingQty] = useState(1);
+  const [shippingCents, setShippingCents] = useState(11800);
 
-  const [shippingCents, setShippingCents] = useState(0);
-  const [paymentTerms, setPaymentTerms] = useState("100% upfront");
-  const [paymentPercentage, setPaymentPercentage] = useState(100);
-  const [leadTimeDays, setLeadTimeDays] = useState(30);
-  const [validUntilDays, setValidUntilDays] = useState(7);
+  // Terms (only the (4) Terms of Payment text is editable)
+  const [termsPaymentText, setTermsPaymentText] = useState(DEFAULT_TERMS_PAYMENT);
 
-  // Fetch next available PI number on mount, and prefill from ?data= if from upload
+  // Saving
+  const [saving, setSaving] = useState(false);
+  const [savedLink, setSavedLink] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+
+  // Item picture upload (per-row)
+  const fileInputRefs = useRef<Array<HTMLInputElement | null>>([]);
+
+  // ── Mount: fetch next PI number + handle prefill from upload ────────────
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    // 1) Prefill from upload-pi if ?data= present
+    // 1) Prefill from upload-pi
     const params = new URLSearchParams(window.location.search);
     const from = params.get("from");
     const encoded = params.get("data");
@@ -71,606 +110,782 @@ export default function NewPIPage() {
       try {
         const json = decodeURIComponent(escape(atob(decodeURIComponent(encoded))));
         const payload = JSON.parse(json) as PrefillPayload;
-
-        if (payload.pi_number) {
-          setPiNumber(payload.pi_number);
-          setPiNumberLocked(true);
-          setPiSource("uploaded");
-        }
-        if (payload.customer_name) setCustomerName(payload.customer_name);
-        if (payload.customer_email) setCustomerEmail(payload.customer_email);
-        if (payload.customer_phone) setCustomerPhone(payload.customer_phone);
-        if (payload.customer_company) setCustomerCompany(payload.customer_company);
-        if (payload.customer_address) setCustomerAddress(payload.customer_address);
-        if (Array.isArray(payload.items) && payload.items.length > 0) {
-          setItems(
-            payload.items.map((it) => ({
-              description: it.description || "",
-              fabric: it.fabric || "",
-              qty: it.qty || 1,
-              unitPriceCents: it.unit_price_cents || 0,
-            })),
-          );
-        }
-        if (typeof payload.shipping_cents === "number") {
-          setShippingCents(payload.shipping_cents);
-        }
-        if (payload.payment_terms) setPaymentTerms(payload.payment_terms);
-        if (typeof payload.lead_time_days === "number") {
-          setLeadTimeDays(payload.lead_time_days);
-        }
-        // Clean URL so refresh doesn't re-prefill
-        const cleanUrl = window.location.pathname;
-        window.history.replaceState({}, "", cleanUrl);
-        return; // Don't fetch next number if we have an uploaded one
-      } catch (err) {
-        console.warn("Failed to decode prefill data:", err);
-        // fall through to next-number fetch
+        applyPrefill(payload);
+        // Clean URL
+        window.history.replaceState({}, "", "/admin/new-pi/");
+      } catch (e) {
+        console.error("Prefill parse failed:", e);
       }
+      return;
     }
 
-    // 2) Otherwise, fetch the next available PI number from DB.
-    // NOTE: /api/pi/next-number is a Cloudflare Function (production only).
-    // In dev it returns 404, so we gracefully fall back to the local value.
-    void (async () => {
-      try {
-        const res = await fetch("/api/pi/next-number", { cache: "no-store" });
-        if (!res.ok) return;
-        const data = (await res.json()) as { ok: boolean; piNumber?: string; next?: string; error?: string };
-        const next = data.piNumber || data.next;
-        if (data.ok && next) {
-          setPiNumber(next);
-          setPiSource("auto");
-        }
-      } catch {
-        // ignore — keep local fallback
-      }
-    })();
+    // 2) Auto-fetch next PI number (works in production with cloudflare function)
+    void fetchNextPiNumber();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  async function fetchNextNumber() {
+  function applyPrefill(p: PrefillPayload) {
+    if (p.pi_number) {
+      setPiNumber(p.pi_number);
+      setPiNumberLocked(true);
+      setPiSource("uploaded");
+    }
+    if (p.issue_date) setIssueDate(p.issue_date);
+    if (p.lead_time_text) setLeadTimeText(p.lead_time_text);
+    if (p.customer_name) setCustomerName(p.customer_name);
+    if (p.customer_address) setCustomerAddress(p.customer_address);
+    if (p.customer_phone) setCustomerPhone(p.customer_phone);
+    if (Array.isArray(p.items) && p.items.length > 0) {
+      setItems(
+        p.items.map((it) => ({
+          description: it.description || "",
+          fabric: it.fabric || "",
+          qty: it.qty || 1,
+          unitPriceCents: it.unit_price_cents || 0,
+          imageUrl: it.image_url || "",
+        })),
+      );
+    }
+    if (p.shipping_label) setShippingLabel(p.shipping_label);
+    if (p.shipping_method) setShippingMethod(p.shipping_method);
+    if (typeof p.shipping_cents === "number") setShippingCents(p.shipping_cents);
+    if (p.payment_terms_text) setTermsPaymentText(p.payment_terms_text);
+  }
+
+  async function fetchNextPiNumber() {
     try {
-      const res = await fetch("/api/pi/next-number", { cache: "no-store" });
-      if (!res.ok) {
-        // In dev, the cloudflare function isn't available — keep the current value
-        return;
-      }
-      const data = (await res.json()) as { ok: boolean; piNumber?: string; next?: string; error?: string };
-      const next = data.piNumber || data.next;
-      if (data.ok && next) {
-        setPiNumber(next);
-        setPiNumberLocked(false);
-        setPiSource("manual");
+      const res = await fetch("/api/pi/next-number/", { method: "GET" });
+      if (!res.ok) return;
+      const data = (await res.json()) as { ok?: boolean; pi_number?: string };
+      if (data.ok && data.pi_number && piSource === "auto") {
+        setPiNumber(data.pi_number);
       }
     } catch {
-      // ignore
+      // dev environment — Cloudflare Functions not running. Local fallback is fine.
     }
   }
 
-  const [submitting, setSubmitting] = useState(false);
-  const [result, setResult] = useState<{
-    piNumber: string;
-    shareUrl: string;
-    clientSecret: string;
-    amountDueCents: number;
-  } | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [copied, setCopied] = useState(false);
-
-  const subtotalCents = useMemo(
+  // ── Derived totals ──────────────────────────────────────────────────────
+  const itemsSubtotalCents = useMemo(
     () => items.reduce((sum, it) => sum + it.qty * it.unitPriceCents, 0),
     [items],
   );
-  const totalCents = subtotalCents + shippingCents;
-  const amountDueCents = Math.round((totalCents * paymentPercentage) / 100);
+  const grandTotalCents = itemsSubtotalCents + shippingCents;
 
-  const fmt = (cents: number) =>
-    `$${(cents / 100).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  // ── Handlers ────────────────────────────────────────────────────────────
+  function onPiNumberChange(v: string) {
+    setPiNumber(v);
+    setPiSource("manual");
+    setPiNumberLocked(false);
+  }
 
   function addItem() {
-    setItems([...items, { description: "", fabric: "", qty: 1, unitPriceCents: 0 }]);
-  }
-  function removeItem(i: number) {
-    setItems(items.filter((_, idx) => idx !== i));
-  }
-  function updateItem(i: number, field: keyof LineItem, value: string | number) {
-    const copy = [...items];
-    const item = { ...copy[i] };
-    if (field === "qty" || field === "unitPriceCents") {
-      item[field] = Number(value) || 0;
-    } else {
-      item[field] = String(value);
-    }
-    copy[i] = item;
-    setItems(copy);
+    setItems([
+      ...items,
+      { description: "", fabric: "", qty: 1, unitPriceCents: 0, imageUrl: "" },
+    ]);
   }
 
-  async function handleSubmit() {
-    setError(null);
-    setSubmitting(true);
-    try {
-      const validItems = items.filter(
-        (it) => it.description.trim() && it.qty > 0 && it.unitPriceCents > 0,
-      );
-      if (validItems.length === 0) {
-        throw new Error("At least one line item with description, qty, and price is required");
+  function removeItem(idx: number) {
+    if (items.length === 1) return;
+    setItems(items.filter((_, i) => i !== idx));
+  }
+
+  function updateItem(idx: number, patch: Partial<LineItem>) {
+    setItems(items.map((it, i) => (i === idx ? { ...it, ...patch } : it)));
+  }
+
+  function onItemImageFile(idx: number, file: File) {
+    // In production this would upload to Supabase storage / S3.
+    // For now, generate a data URL so the preview works.
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const url = e.target?.result;
+      if (typeof url === "string") {
+        updateItem(idx, { imageUrl: url });
       }
-      if (!customerName.trim()) throw new Error("Customer name is required");
+    };
+    reader.readAsDataURL(file);
+  }
 
-      const res = await fetch("/api/pi/create", {
+  async function onSave() {
+    setError(null);
+    setSavedLink(null);
+
+    if (!customerName.trim()) {
+      setError("Customer name is required");
+      return;
+    }
+    if (!piNumber.trim()) {
+      setError("PI number is required");
+      return;
+    }
+    if (items.length === 0 || items.every((it) => !it.description.trim())) {
+      setError("At least one item with a description is required");
+      return;
+    }
+
+    setSaving(true);
+    try {
+      const res = await fetch("/api/pi/create/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          piNumber: piNumber.trim(),
-          customerName: customerName.trim(),
-          customerEmail: customerEmail.trim() || null,
-          customerPhone: customerPhone.trim() || null,
-          customerCompany: customerCompany.trim() || null,
-          customerAddress: customerAddress.trim() || null,
-          items: validItems,
-          shippingCents,
-          currency: "usd",
-          paymentTerms,
-          paymentPercentage,
-          leadTimeDays,
-          validUntilDays,
+          pi_number: piNumber,
+          customer_name: customerName,
+          customer_phone: customerPhone,
+          customer_address: customerAddress,
+          issue_date: issueDate,
+          lead_time_text: leadTimeText,
+          items: items
+            .filter((it) => it.description.trim())
+            .map((it) => ({
+              description: it.description,
+              fabric: it.fabric,
+              qty: it.qty,
+              unit_price_cents: it.unitPriceCents,
+              total_cents: it.qty * it.unitPriceCents,
+              image_url: it.imageUrl,
+            })),
+          shipping_label: shippingLabel,
+          shipping_method: shippingMethod,
+          shipping_cents: shippingCents,
+          payment_terms_text: termsPaymentText,
+          total_cents: grandTotalCents,
         }),
       });
-      const data = await res.json() as { success: boolean; error?: string; pi?: { pi_number: string }; shareUrl: string; clientSecret: string; amountDueCents: number };
-      if (!res.ok || !data.success) {
-        throw new Error(data.error || `Server error: ${res.status}`);
+
+      if (!res.ok) {
+        const txt = await res.text();
+        setError(`Save failed (${res.status}): ${txt}`);
+        return;
       }
-      setResult({
-        piNumber: data.pi!.pi_number,
-        shareUrl: data.shareUrl!,
-        clientSecret: data.clientSecret!,
-        amountDueCents: data.amountDueCents!,
-      });
+
+      const data = (await res.json()) as {
+        ok?: boolean;
+        payment_url?: string;
+        error?: string;
+      };
+
+      if (!data.ok) {
+        setError(data.error || "Save failed");
+        return;
+      }
+
+      setSavedLink(data.payment_url || `/pay/?pi=${piNumber}`);
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Unknown error");
+      setError(`Network error: ${e instanceof Error ? e.message : "unknown"}`);
     } finally {
-      setSubmitting(false);
+      setSaving(false);
     }
   }
 
-  async function copyLink() {
-    if (!result) return;
-    try {
-      await navigator.clipboard.writeText(result.shareUrl);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      // ignore
-    }
+  function copyLink() {
+    if (!savedLink) return;
+    const full = `${window.location.origin}${savedLink}`;
+    void navigator.clipboard.writeText(full);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   }
 
-  // Success state
-  if (result) {
-    return (
-      <main className="mx-auto max-w-2xl px-6 py-12">
-        <div className="border-2 border-black bg-white p-8 shadow-[8px_8px_0_0_rgba(10,10,10,1)]">
-          <div className="mb-6 flex items-center gap-3 border-b-2 border-black pb-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#ff4d00] text-white">
-              <Check className="h-7 w-7" strokeWidth={3} />
-            </div>
-            <div>
-              <h1 className="text-2xl font-black uppercase">PI Created</h1>
-              <p className="text-sm text-[#6b6b6b]">{result.piNumber}</p>
-            </div>
-          </div>
+  // ── Render helpers ──────────────────────────────────────────────────────
+  // Black fixed text style
+  const BlackCell = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
+    <div className={`text-black dark:text-neutral-100 font-medium ${className}`}>{children}</div>
+  );
 
-          <div className="mb-6 space-y-3">
-            <div className="flex justify-between text-sm">
-              <span className="text-[#6b6b6b]">Customer owes</span>
-              <span className="text-2xl font-black text-[#ff4d00]">
-                {fmt(result.amountDueCents)}
-              </span>
-            </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-[#6b6b6b]">Total PI value</span>
-              <span className="font-bold">{fmt(totalCents)}</span>
-            </div>
-          </div>
+  // Red-bordered editable input
+  const RedInput = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
+    <input
+      {...props}
+      className={`w-full bg-white dark:bg-neutral-900 border-2 border-[#ff4d00] dark:border-[#ff4d00] rounded px-2 py-1 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#ff4d00]/30 ${props.className || ""}`}
+    />
+  );
 
-          <div className="mb-6">
-            <label className="mb-2 block text-xs font-black uppercase tracking-widest text-[#6b6b6b]">
-              Share this link with your customer
-            </label>
-            <div className="flex items-stretch gap-2">
-              <input
-                type="text"
-                readOnly
-                value={result.shareUrl}
-                className="flex-1 border-2 border-black bg-[#faf9f6] px-3 py-2 text-sm font-mono"
-              />
-              <button
-                type="button"
-                onClick={copyLink}
-                className="flex items-center gap-2 border-2 border-black bg-black px-4 py-2 text-sm font-black uppercase text-white transition-colors hover:bg-[#ff4d00]"
-              >
-                {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-                {copied ? "Copied" : "Copy"}
-              </button>
-            </div>
-            <p className="mt-2 text-xs text-[#6b6b6b]">
-              Customer opens this link → sees the full PI → can pay by card or T/T.
-            </p>
-          </div>
+  // Blue read-only text (pre-filled bank info)
+  const BlueText = ({ children }: { children: React.ReactNode }) => (
+    <span className="text-[#0070C0] dark:text-[#4d9fe6] font-medium">{children}</span>
+  );
 
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <Link
-              href={result.shareUrl}
-              target="_blank"
-              className="flex flex-1 items-center justify-center gap-2 border-2 border-black bg-[#ff4d00] px-5 py-3 text-sm font-black uppercase tracking-wider text-white shadow-[4px_4px_0_0_rgba(10,10,10,1)] transition-all hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[6px_6px_0_0_rgba(10,10,10,1)]"
-            >
-              <ExternalLink className="h-4 w-4" />
-              Preview as customer
-            </Link>
-            <button
-              type="button"
-              onClick={() => {
-                setResult(null);
-                // Reset to next available PI number (from DB if available, else local fallback)
-                void (async () => {
-                  try {
-                    const r = await fetch("/api/pi/next-number", { cache: "no-store" });
-                    const d = (await r.json()) as { ok: boolean; piNumber?: string; next?: string };
-                    const next = d.piNumber || d.next;
-                    if (r.ok && d.ok && next) {
-                      setPiNumber(next);
-                      setPiNumberLocked(false);
-                      setPiSource("auto");
-                    } else {
-                      setPiNumber(todayPiNumber());
-                      setPiSource("manual");
-                    }
-                  } catch {
-                    setPiNumber(todayPiNumber());
-                    setPiSource("manual");
-                  }
-                })();
-                setCustomerName("");
-                setCustomerEmail("");
-                setCustomerPhone("");
-                setCustomerCompany("");
-                setCustomerAddress("");
-                setItems([{ description: "", fabric: "", qty: 1, unitPriceCents: 0 }]);
-                setShippingCents(0);
-              }}
-              className="flex-1 border-2 border-black bg-white px-5 py-3 text-sm font-black uppercase tracking-wider text-black transition-colors hover:bg-[#0a0a0a] hover:text-white"
-            >
-              Create another PI
-            </button>
-          </div>
-
-          <p className="mt-6 border-t-2 border-dashed border-[#e5e5e5] pt-4 text-xs text-[#6b6b6b]">
-            💡 Email this link or send via WeChat. Customer opens it and pays. You get a Supabase
-            notification when paid.
-          </p>
-        </div>
-      </main>
-    );
-  }
+  // Red reminder text (KEEP red on output, for customer)
+  const RedReminder = ({ children }: { children: React.ReactNode }) => (
+    <div className="text-[#ff0000] dark:text-[#ff6666] text-sm italic">{children}</div>
+  );
 
   return (
-    <main className="mx-auto max-w-4xl px-6 py-12">
-      <div className="mb-8">
-        <h1 className="mb-2 text-3xl font-black uppercase tracking-tight text-[#0a0a0a] md:text-4xl">
-          New Proforma Invoice
-        </h1>
-        <p className="text-sm text-[#6b6b6b]">
-          Create a PI for your customer. We&apos;ll generate a shareable payment link that lets them
-          pay by card or T/T.
-        </p>
+    <div className="min-h-screen bg-neutral-100 dark:bg-neutral-950 py-8 px-4">
+      <div className="max-w-5xl mx-auto">
+        {/* Top bar */}
+        <div className="flex items-center justify-between mb-6">
+          <Link
+            href="/admin/"
+            className="inline-flex items-center gap-2 text-sm text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to admin
+          </Link>
+          <div className="text-sm text-neutral-500">
+            New PI — manual entry (matches Excel layout)
+          </div>
+        </div>
+
+        {savedLink ? (
+          <SuccessPanel
+            link={savedLink}
+            copied={copied}
+            onCopy={copyLink}
+            onNew={() => window.location.reload()}
+          />
+        ) : (
+          <PIPreview
+            piNumber={piNumber}
+            piSource={piSource}
+            piNumberLocked={piNumberLocked}
+            onPiNumberChange={onPiNumberChange}
+            onRefreshPi={fetchNextPiNumber}
+            issueDate={issueDate}
+            onIssueDateChange={setIssueDate}
+            leadTimeText={leadTimeText}
+            onLeadTimeChange={setLeadTimeText}
+            customerName={customerName}
+            onCustomerNameChange={setCustomerName}
+            customerAddress={customerAddress}
+            onCustomerAddressChange={setCustomerAddress}
+            customerPhone={customerPhone}
+            onCustomerPhoneChange={setCustomerPhone}
+            items={items}
+            onAddItem={addItem}
+            onRemoveItem={removeItem}
+            onUpdateItem={updateItem}
+            onItemImageFile={onItemImageFile}
+            fileInputRefs={fileInputRefs}
+            shippingLabel={shippingLabel}
+            onShippingLabelChange={setShippingLabel}
+            shippingMethod={shippingMethod}
+            onShippingMethodChange={setShippingMethod}
+            shippingQty={shippingQty}
+            onShippingQtyChange={setShippingQty}
+            shippingCents={shippingCents}
+            onShippingCentsChange={setShippingCents}
+            itemsSubtotalCents={itemsSubtotalCents}
+            grandTotalCents={grandTotalCents}
+            termsPaymentText={termsPaymentText}
+            onTermsPaymentTextChange={setTermsPaymentText}
+            BlackCell={BlackCell}
+            RedInput={RedInput}
+            BlueText={BlueText}
+            RedReminder={RedReminder}
+          />
+        )}
+
+        {/* Save bar */}
+        {error && (
+          <div className="mt-4 p-3 bg-red-50 dark:bg-red-950/30 border border-red-300 dark:border-red-800 rounded text-red-700 dark:text-red-300 text-sm">
+            {error}
+          </div>
+        )}
+
+        {!savedLink && (
+          <div className="mt-6 flex items-center justify-end gap-3 sticky bottom-4 bg-white dark:bg-neutral-900 p-4 rounded-lg shadow-lg border border-neutral-200 dark:border-neutral-800">
+            <Link
+              href="/admin/upload-pi/"
+              className="px-4 py-2 text-sm border border-neutral-300 dark:border-neutral-700 rounded hover:bg-neutral-50 dark:hover:bg-neutral-800"
+            >
+              Upload PI instead
+            </Link>
+            <button
+              onClick={onSave}
+              disabled={saving}
+              className="inline-flex items-center gap-2 px-6 py-2 bg-[#ff4d00] hover:bg-[#e64500] disabled:opacity-50 text-white rounded font-semibold"
+            >
+              <Save className="w-4 h-4" />
+              {saving ? "Saving…" : "Save PI & get payment link"}
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ─── PI Preview (matches the Excel layout) ─────────────────────────────────
+function PIPreview(props: {
+  piNumber: string;
+  piSource: "auto" | "uploaded" | "manual";
+  piNumberLocked: boolean;
+  onPiNumberChange: (v: string) => void;
+  onRefreshPi: () => void;
+  issueDate: string;
+  onIssueDateChange: (v: string) => void;
+  leadTimeText: string;
+  onLeadTimeChange: (v: string) => void;
+  customerName: string;
+  onCustomerNameChange: (v: string) => void;
+  customerAddress: string;
+  onCustomerAddressChange: (v: string) => void;
+  customerPhone: string;
+  onCustomerPhoneChange: (v: string) => void;
+  items: LineItem[];
+  onAddItem: () => void;
+  onRemoveItem: (idx: number) => void;
+  onUpdateItem: (idx: number, patch: Partial<LineItem>) => void;
+  onItemImageFile: (idx: number, file: File) => void;
+  fileInputRefs: React.MutableRefObject<Array<HTMLInputElement | null>>;
+  shippingLabel: string;
+  onShippingLabelChange: (v: string) => void;
+  shippingMethod: string;
+  onShippingMethodChange: (v: string) => void;
+  shippingQty: number;
+  onShippingQtyChange: (v: number) => void;
+  shippingCents: number;
+  onShippingCentsChange: (v: number) => void;
+  itemsSubtotalCents: number;
+  grandTotalCents: number;
+  termsPaymentText: string;
+  onTermsPaymentTextChange: (v: string) => void;
+  BlackCell: React.FC<{ children: React.ReactNode; className?: string }>;
+  RedInput: React.FC<React.InputHTMLAttributes<HTMLInputElement>>;
+  BlueText: React.FC<{ children: React.ReactNode }>;
+  RedReminder: React.FC<{ children: React.ReactNode }>;
+}) {
+  const {
+    piNumber, piSource, piNumberLocked, onPiNumberChange, onRefreshPi,
+    issueDate, onIssueDateChange, leadTimeText, onLeadTimeChange,
+    customerName, onCustomerNameChange, customerAddress, onCustomerAddressChange, customerPhone, onCustomerPhoneChange,
+    items, onAddItem, onRemoveItem, onUpdateItem, onItemImageFile, fileInputRefs,
+    shippingLabel, onShippingLabelChange, shippingMethod, onShippingMethodChange,
+    shippingQty, onShippingQtyChange, shippingCents, onShippingCentsChange,
+    itemsSubtotalCents, grandTotalCents,
+    termsPaymentText, onTermsPaymentTextChange,
+    BlackCell, RedInput, BlueText, RedReminder,
+  } = props;
+
+  return (
+    <div className="bg-white dark:bg-neutral-900 shadow-lg rounded-lg overflow-hidden border border-neutral-200 dark:border-neutral-800">
+      {/* ── HEADER (rows 1-3) ── */}
+      <div className="p-6 text-center border-b-2 border-black dark:border-white">
+        <div className="text-lg font-bold tracking-wide">
+          YIWU HOMEDORM COMMODITY MANUFACTURING CO.,LTD
+        </div>
+        <div className="text-sm text-neutral-700 dark:text-neutral-300 mt-1">
+          ADD: 2nd Floor, No.11 Anshang Road, Yiwu City, China
+        </div>
+        <div className="text-3xl font-extrabold tracking-widest mt-4">
+          PROFORMA INVOICE
+        </div>
       </div>
 
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleSubmit();
-        }}
-        className="space-y-8"
-      >
-        {/* PI Number */}
-        <section>
-          <div className="mb-3 flex items-center justify-between">
-            <h2 className="text-xs font-black uppercase tracking-widest text-[#ff4d00]">
-              PI Number
-            </h2>
-            <span
-              className={`inline-flex items-center gap-1 border-2 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider ${
-                piSource === "uploaded"
-                  ? "border-[#00c2ff] bg-[#00c2ff]/10 text-[#008db3]"
-                  : piSource === "auto"
-                    ? "border-black/30 bg-black/5 text-black/60"
-                    : "border-[#ff4d00] bg-[#ff4d00]/10 text-[#cc3d00]"
-              }`}
-              title={
-                piSource === "uploaded"
-                  ? "Extracted from the PI you uploaded"
-                  : piSource === "auto"
-                    ? "Next available PI number for today"
-                    : "You set this manually"
-              }
-            >
-              {piSource === "uploaded"
-                ? "← from upload"
-                : piSource === "auto"
-                  ? "auto-suggested"
-                  : "manual"}
-            </span>
+      {/* ── FM + INVOICE INFO (rows 5-8) ── */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2 p-6 border-b border-neutral-200 dark:border-neutral-800">
+        <div className="space-y-1">
+          <div className="flex gap-2">
+            <BlackCell>FM:</BlackCell>
+            <BlackCell>SUBLIMAPPAREL.com</BlackCell>
           </div>
-          <div className="flex items-stretch gap-2">
-            <input
-              type="text"
-              value={piNumber}
-              onChange={(e) => {
-                setPiNumber(e.target.value.toUpperCase());
-                setPiSource("manual");
-                setPiNumberLocked(false);
-              }}
-              placeholder="SA20260825001"
-              className="flex-1 border-2 border-black bg-white px-4 py-2 font-mono text-base focus:bg-[#faf9f6] focus:outline-none"
-              required
-            />
-            <button
-              type="button"
-              onClick={fetchNextNumber}
-              title="Fetch next available PI number from DB"
-              className="flex items-center gap-2 border-2 border-black bg-white px-3 py-2 text-xs font-black uppercase tracking-wider text-black transition-colors hover:bg-black hover:text-white"
-            >
-              <RefreshCw className="h-4 w-4" />
-              Next
-            </button>
-          </div>
-          <p className="mt-1 text-xs text-[#6b6b6b]">
-            Format: <code className="font-mono">SA&#123;YYYYMMDD&#125;&#123;NNNN&#125;</code>{" "}
-            (4-digit daily sequence).{" "}
-            {piSource === "uploaded" ? (
-              <>You can still edit it if you want to override the extracted number.</>
-            ) : piSource === "auto" ? (
-              <>Click <b>Next</b> to refresh, or just type your own.</>
-            ) : (
-              <>Click <b>Next</b> to use the next available auto-allocated number.</>
-            )}
-          </p>
-        </section>
-
-        {/* Customer Info */}
-        <section>
-          <h2 className="mb-3 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
-            Customer
-          </h2>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <input
-              type="text"
-              placeholder="Name *"
-              value={customerName}
-              onChange={(e) => setCustomerName(e.target.value)}
-              className="border-2 border-black bg-white px-4 py-2 focus:bg-[#faf9f6] focus:outline-none"
-              required
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              value={customerEmail}
-              onChange={(e) => setCustomerEmail(e.target.value)}
-              className="border-2 border-black bg-white px-4 py-2 focus:bg-[#faf9f6] focus:outline-none"
-            />
-            <input
-              type="tel"
-              placeholder="Phone"
-              value={customerPhone}
-              onChange={(e) => setCustomerPhone(e.target.value)}
-              className="border-2 border-black bg-white px-4 py-2 focus:bg-[#faf9f6] focus:outline-none"
-            />
-            <input
-              type="text"
-              placeholder="Company"
-              value={customerCompany}
-              onChange={(e) => setCustomerCompany(e.target.value)}
-              className="border-2 border-black bg-white px-4 py-2 focus:bg-[#faf9f6] focus:outline-none"
-            />
-            <textarea
-              placeholder="Address (optional)"
-              value={customerAddress}
-              onChange={(e) => setCustomerAddress(e.target.value)}
-              rows={2}
-              className="border-2 border-black bg-white px-4 py-2 sm:col-span-2 focus:bg-[#faf9f6] focus:outline-none"
-            />
-          </div>
-        </section>
-
-        {/* Items */}
-        <section>
-          <div className="mb-3 flex items-center justify-between">
-            <h2 className="text-xs font-black uppercase tracking-widest text-[#ff4d00]">
-              Line Items
-            </h2>
-            <button
-              type="button"
-              onClick={addItem}
-              className="flex items-center gap-1 border-2 border-black bg-white px-3 py-1 text-xs font-black uppercase transition-colors hover:bg-black hover:text-white"
-            >
-              <Plus className="h-3 w-3" /> Add
-            </button>
-          </div>
-
-          <div className="space-y-3">
-            {items.map((item, i) => (
-              <div
-                key={i}
-                className="grid gap-2 border-2 border-[#e5e5e5] bg-[#faf9f6] p-3 sm:grid-cols-12"
+          <BlackCell>YIWU HOMEDORM COMMODITY MANUFACTURING CO.,LTD</BlackCell>
+          <BlackCell>2ND FLOOR, NO.11 ANSHANG ROAD, YIWU, CHINA</BlackCell>
+          <BlackCell>Annt.: Miss Chris Ma / +86 19817930190 / chris@sublimapparel.com</BlackCell>
+        </div>
+        <div className="space-y-2">
+          <div className="flex items-center gap-2">
+            <BlackCell className="w-32 shrink-0">INVOICE NO.:</BlackCell>
+            <div className="flex-1 flex items-center gap-2">
+              <RedInput
+                value={piNumber}
+                onChange={(e) => onPiNumberChange(e.target.value)}
+                placeholder="SA202608250001"
+                disabled={piNumberLocked}
+                className={piNumberLocked ? "opacity-70 cursor-not-allowed" : ""}
+              />
+              <button
+                onClick={onRefreshPi}
+                title="Get next available PI number"
+                className="p-1.5 text-neutral-500 hover:text-[#ff4d00] border border-neutral-300 dark:border-neutral-700 rounded"
               >
-                <input
-                  type="text"
-                  placeholder="Description (e.g., men tank tops + drawstring shorts)"
-                  value={item.description}
-                  onChange={(e) => updateItem(i, "description", e.target.value)}
-                  className="border-2 border-black bg-white px-3 py-1.5 text-sm sm:col-span-5 focus:outline-none"
-                />
-                <input
-                  type="text"
-                  placeholder="Fabric"
-                  value={item.fabric}
-                  onChange={(e) => updateItem(i, "fabric", e.target.value)}
-                  className="border-2 border-black bg-white px-3 py-1.5 text-sm sm:col-span-3 focus:outline-none"
-                />
-                <input
-                  type="number"
-                  placeholder="Qty"
-                  min="1"
-                  value={item.qty || ""}
-                  onChange={(e) => updateItem(i, "qty", e.target.value)}
-                  className="border-2 border-black bg-white px-3 py-1.5 text-sm sm:col-span-1 focus:outline-none"
-                />
-                <div className="relative sm:col-span-2">
-                  <span className="pointer-events-none absolute left-2 top-1/2 -translate-y-1/2 text-sm text-[#6b6b6b]">
-                    $
-                  </span>
+                <RefreshCw className="w-4 h-4" />
+              </button>
+              <PISourceBadge source={piSource} />
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <BlackCell className="w-32 shrink-0">ISSUE DATE:</BlackCell>
+            <RedInput
+              type="date"
+              value={issueDate}
+              onChange={(e) => onIssueDateChange(e.target.value)}
+            />
+          </div>
+          <div className="flex items-center gap-2">
+            <BlackCell className="w-32 shrink-0">LEAD TIME:</BlackCell>
+            <RedInput
+              value={leadTimeText}
+              onChange={(e) => onLeadTimeChange(e.target.value)}
+              placeholder="Within 30 days"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* ── TO: block (rows 10-12) ── */}
+      <div className="p-6 border-b border-neutral-200 dark:border-neutral-800">
+        <div className="flex gap-2 items-start">
+          <BlackCell className="w-16 shrink-0 pt-1">TO:</BlackCell>
+          <div className="flex-1 space-y-1.5">
+            <RedInput
+              value={customerName}
+              onChange={(e) => onCustomerNameChange(e.target.value)}
+              placeholder="Customer name (e.g. Xavier Raymore)"
+            />
+            <RedInput
+              value={customerAddress}
+              onChange={(e) => onCustomerAddressChange(e.target.value)}
+              placeholder="Address (e.g. 91 E 208th Street, Apt 3A, Bronx, NY 10467, USA)"
+            />
+            <RedInput
+              value={customerPhone}
+              onChange={(e) => onCustomerPhoneChange(e.target.value)}
+              placeholder="Phone (e.g. +1 318 243 7247)"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* ── Items table (rows 14-17) ── */}
+      <div className="p-6 border-b border-neutral-200 dark:border-neutral-800">
+        <div className="overflow-x-auto">
+          <table className="w-full border-2 border-black dark:border-white text-sm">
+            <thead>
+              <tr className="bg-neutral-100 dark:bg-neutral-800">
+                <th className="border border-black dark:border-white p-2 w-32 text-left">PRODUCT PICTURE</th>
+                <th className="border border-black dark:border-white p-2 text-left">DESCRIPTION</th>
+                <th className="border border-black dark:border-white p-2 text-left">FABRIC CONTENT</th>
+                <th className="border border-black dark:border-white p-2 w-20 text-left">QTY SETS</th>
+                <th className="border border-black dark:border-white p-2 w-24 text-left">PRICE</th>
+                <th className="border border-black dark:border-white p-2 w-28 text-left">TOTAL USD</th>
+                <th className="border border-black dark:border-white p-2 w-8"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {items.map((it, idx) => (
+                <tr key={idx}>
+                  <td className="border border-black dark:border-white p-1.5 align-top">
+                    <div className="w-24 h-24 border border-dashed border-neutral-300 dark:border-neutral-700 flex items-center justify-center bg-neutral-50 dark:bg-neutral-800 relative overflow-hidden">
+                      {it.imageUrl ? (
+                        <>
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={it.imageUrl} alt="" className="object-cover w-full h-full" />
+                          <button
+                            onClick={() => onUpdateItem(idx, { imageUrl: "" })}
+                            className="absolute top-0.5 right-0.5 p-0.5 bg-black/60 text-white rounded"
+                          >
+                            <X className="w-3 h-3" />
+                          </button>
+                        </>
+                      ) : (
+                        <button
+                          onClick={() => fileInputRefs.current[idx]?.click()}
+                          className="text-xs text-neutral-500 hover:text-[#ff4d00] flex flex-col items-center gap-1"
+                        >
+                          <Upload className="w-5 h-5" />
+                          upload
+                        </button>
+                      )}
+                      <input
+                        ref={(el) => { fileInputRefs.current[idx] = el; }}
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) onItemImageFile(idx, file);
+                          e.target.value = "";
+                        }}
+                      />
+                    </div>
+                  </td>
+                  <td className="border border-black dark:border-white p-1.5 align-top">
+                    <textarea
+                      value={it.description}
+                      onChange={(e) => onUpdateItem(idx, { description: e.target.value })}
+                      placeholder="e.g. men tank tops + drawstring shorts w/ pockets (6” inseam) + matching bandanna + socks"
+                      rows={4}
+                      className="w-full bg-white dark:bg-neutral-900 border border-[#ff4d00] rounded px-1.5 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-[#ff4d00]/40"
+                    />
+                  </td>
+                  <td className="border border-black dark:border-white p-1.5 align-top">
+                    <textarea
+                      value={it.fabric}
+                      onChange={(e) => onUpdateItem(idx, { fabric: e.target.value })}
+                      placeholder="e.g. 145gsm polyester jersey with sublimation print"
+                      rows={4}
+                      className="w-full bg-white dark:bg-neutral-900 border border-[#ff4d00] rounded px-1.5 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-[#ff4d00]/40"
+                    />
+                  </td>
+                  <td className="border border-black dark:border-white p-1.5 align-top">
+                    <input
+                      type="number"
+                      min={1}
+                      value={it.qty}
+                      onChange={(e) => onUpdateItem(idx, { qty: parseInt(e.target.value) || 0 })}
+                      className="w-full bg-white dark:bg-neutral-900 border border-[#ff4d00] rounded px-1.5 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-[#ff4d00]/40"
+                    />
+                  </td>
+                  <td className="border border-black dark:border-white p-1.5 align-top">
+                    <div className="flex items-center">
+                      <span className="text-sm mr-0.5">$</span>
+                      <input
+                        type="number"
+                        step="0.01"
+                        min={0}
+                        value={(it.unitPriceCents / 100).toFixed(2)}
+                        onChange={(e) => onUpdateItem(idx, { unitPriceCents: Math.round(parseFloat(e.target.value || "0") * 100) })}
+                        className="w-full bg-white dark:bg-neutral-900 border border-[#ff4d00] rounded px-1.5 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-[#ff4d00]/40"
+                      />
+                    </div>
+                  </td>
+                  <td className="border border-black dark:border-white p-1.5 align-top text-sm font-semibold">
+                    {fmt(it.qty * it.unitPriceCents)}
+                  </td>
+                  <td className="border border-black dark:border-white p-1.5 align-top text-center">
+                    {items.length > 1 && (
+                      <button
+                        onClick={() => onRemoveItem(idx)}
+                        className="text-neutral-400 hover:text-red-500"
+                        title="Remove item"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
+
+              {/* Shipping row */}
+              <tr>
+                <td className="border border-black dark:border-white p-1.5 align-top text-center text-xs text-neutral-500">
+                  —
+                </td>
+                <td className="border border-black dark:border-white p-1.5 align-top">
+                  <input
+                    value={shippingLabel}
+                    onChange={(e) => onShippingLabelChange(e.target.value)}
+                    placeholder="Shipping Cost"
+                    className="w-full bg-white dark:bg-neutral-900 border border-[#ff4d00] rounded px-1.5 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-[#ff4d00]/40"
+                  />
+                </td>
+                <td className="border border-black dark:border-white p-1.5 align-top">
+                  <input
+                    value={shippingMethod}
+                    onChange={(e) => onShippingMethodChange(e.target.value)}
+                    placeholder="DDP by AIR"
+                    className="w-full bg-white dark:bg-neutral-900 border border-[#ff4d00] rounded px-1.5 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-[#ff4d00]/40"
+                  />
+                </td>
+                <td className="border border-black dark:border-white p-1.5 align-top">
                   <input
                     type="number"
-                    step="0.01"
-                    placeholder="Unit"
-                    min="0"
-                    value={(item.unitPriceCents / 100).toString() || ""}
-                    onChange={(e) =>
-                      updateItem(i, "unitPriceCents", Math.round(Number(e.target.value) * 100))
-                    }
-                    className="w-full border-2 border-black bg-white px-3 py-1.5 pl-5 text-sm focus:outline-none"
+                    min={1}
+                    value={shippingQty}
+                    onChange={(e) => onShippingQtyChange(parseInt(e.target.value) || 1)}
+                    className="w-full bg-white dark:bg-neutral-900 border border-[#ff4d00] rounded px-1.5 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-[#ff4d00]/40"
                   />
-                </div>
-                <button
-                  type="button"
-                  onClick={() => removeItem(i)}
-                  disabled={items.length === 1}
-                  className="flex items-center justify-center border-2 border-black bg-white px-2 py-1.5 text-sm transition-colors hover:bg-[#ff4d00] hover:text-white disabled:cursor-not-allowed disabled:opacity-30 sm:col-span-1"
-                >
-                  <Trash2 className="h-4 w-4" />
-                </button>
-              </div>
-            ))}
-          </div>
-        </section>
+                </td>
+                <td className="border border-black dark:border-white p-1.5 align-top">
+                  <div className="flex items-center">
+                    <span className="text-sm mr-0.5">$</span>
+                    <input
+                      type="number"
+                      step="0.01"
+                      min={0}
+                      value={(shippingCents / 100).toFixed(2)}
+                      onChange={(e) => onShippingCentsChange(Math.round(parseFloat(e.target.value || "0") * 100))}
+                      className="w-full bg-white dark:bg-neutral-900 border border-[#ff4d00] rounded px-1.5 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-[#ff4d00]/40"
+                    />
+                  </div>
+                </td>
+                <td className="border border-black dark:border-white p-1.5 align-top text-sm font-semibold">
+                  {fmt(shippingQty * shippingCents)}
+                </td>
+                <td className="border border-black dark:border-white p-1.5 align-top"></td>
+              </tr>
 
-        {/* Shipping */}
-        <section>
-          <h2 className="mb-3 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
-            Shipping (USD)
-          </h2>
-          <div className="relative max-w-xs">
-            <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm text-[#6b6b6b]">
-              $
-            </span>
-            <input
-              type="number"
-              step="0.01"
-              min="0"
-              value={(shippingCents / 100).toString() || ""}
-              onChange={(e) => setShippingCents(Math.round(Number(e.target.value) * 100))}
-              placeholder="0.00"
-              className="w-full border-2 border-black bg-white px-3 py-2 pl-6 focus:bg-[#faf9f6] focus:outline-none"
-            />
-          </div>
-          <p className="mt-1 text-xs text-[#6b6b6b]">e.g., $118.00 for DDP by AIR</p>
-        </section>
+              {/* TOTAL row */}
+              <tr className="bg-neutral-100 dark:bg-neutral-800 font-bold">
+                <td colSpan={5} className="border border-black dark:border-white p-2 text-right">TOTAL:</td>
+                <td className="border border-black dark:border-white p-2 text-base">{fmt(grandTotalCents)}</td>
+                <td className="border border-black dark:border-white p-2"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-        {/* Payment Terms */}
-        <section>
-          <h2 className="mb-3 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
-            Payment Terms
-          </h2>
-          <div className="grid gap-3 sm:grid-cols-2">
-            <input
-              type="text"
-              value={paymentTerms}
-              onChange={(e) => setPaymentTerms(e.target.value)}
-              placeholder="e.g., 100% upfront, 30% deposit, 70% before shipping"
-              className="border-2 border-black bg-white px-4 py-2 focus:bg-[#faf9f6] focus:outline-none"
-            />
-            <div>
-              <label className="mb-1 block text-xs text-[#6b6b6b]">
-                What % is this link collecting?
-              </label>
-              <select
-                value={paymentPercentage}
-                onChange={(e) => setPaymentPercentage(Number(e.target.value))}
-                className="w-full border-2 border-black bg-white px-4 py-2 focus:bg-[#faf9f6] focus:outline-none"
-              >
-                <option value="100">100% (full payment)</option>
-                <option value="50">50% (deposit)</option>
-                <option value="30">30% (deposit)</option>
-              </select>
-            </div>
-          </div>
-        </section>
-
-        {/* Lead time / validity */}
-        <section className="grid gap-4 sm:grid-cols-2">
-          <div>
-            <h2 className="mb-3 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
-              Lead Time (days)
-            </h2>
-            <input
-              type="number"
-              min="1"
-              value={leadTimeDays}
-              onChange={(e) => setLeadTimeDays(Number(e.target.value) || 30)}
-              className="w-full border-2 border-black bg-white px-4 py-2 focus:bg-[#faf9f6] focus:outline-none"
-            />
-          </div>
-          <div>
-            <h2 className="mb-3 text-xs font-black uppercase tracking-widest text-[#ff4d00]">
-              Valid For (days)
-            </h2>
-            <input
-              type="number"
-              min="1"
-              value={validUntilDays}
-              onChange={(e) => setValidUntilDays(Number(e.target.value) || 7)}
-              className="w-full border-2 border-black bg-white px-4 py-2 focus:bg-[#faf9f6] focus:outline-none"
-            />
-          </div>
-        </section>
-
-        {/* Summary */}
-        <section className="border-t-2 border-dashed border-[#e5e5e5] pt-6">
-          <div className="mb-6 space-y-2 text-sm">
-            <div className="flex justify-between">
-              <span className="text-[#6b6b6b]">Subtotal</span>
-              <span className="font-bold">{fmt(subtotalCents)}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-[#6b6b6b]">Shipping</span>
-              <span className="font-bold">{fmt(shippingCents)}</span>
-            </div>
-            <div className="flex justify-between border-t-2 border-black pt-2 text-lg">
-              <span className="font-black uppercase">Total</span>
-              <span className="font-black">{fmt(totalCents)}</span>
-            </div>
-            <div className="flex justify-between bg-[#ff4d00]/10 px-3 py-2">
-              <span className="text-sm font-black uppercase">Customer pays via this link</span>
-              <span className="text-2xl font-black text-[#ff4d00]">
-                {fmt(amountDueCents)}
-              </span>
-            </div>
-          </div>
-
-          {error && (
-            <div className="mb-4 border-2 border-[#ff4d00] bg-[#ff4d00]/10 px-4 py-2 text-sm text-[#cc3d00]">
-              {error}
-            </div>
-          )}
-
+        <div className="mt-3 flex justify-between items-center text-sm">
           <button
-            type="submit"
-            disabled={submitting}
-            className="w-full border-2 border-black bg-[#ff4d00] px-6 py-4 text-base font-black uppercase tracking-wider text-white shadow-[6px_6px_0_0_rgba(10,10,10,1)] transition-all hover:translate-x-[-1px] hover:translate-y-[-1px] hover:bg-[#cc3d00] hover:shadow-[8px_8px_0_0_rgba(10,10,10,1)] disabled:cursor-not-allowed disabled:opacity-50"
+            onClick={onAddItem}
+            className="inline-flex items-center gap-1 text-[#ff4d00] hover:text-[#e64500] font-semibold"
           >
-            {submitting ? "Creating PI..." : `Create PI & Generate Payment Link →`}
+            <Plus className="w-4 h-4" />
+            Add item
           </button>
-        </section>
-      </form>
-    </main>
+          <div className="text-neutral-500 text-xs">
+            Subtotal: {fmt(itemsSubtotalCents)} + Shipping: {fmt(shippingCents)} = <strong className="text-black dark:text-white">{fmt(grandTotalCents)}</strong>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Terms (rows 19-24) ── */}
+      <div className="p-6 space-y-1 border-b border-neutral-200 dark:border-neutral-800 text-sm">
+        <div><strong>(1) Port of Loading:</strong> Yiwu / Ningbo / Shanghai or any designated Chinese ports</div>
+        <div><strong>(2) Port of Destination:</strong> As Buyer address above</div>
+        <div><strong>(3) Shipping Term:</strong> DDP</div>
+        <div className="pt-2">
+          <strong>(4) Terms of Payment:</strong>
+          <textarea
+            value={termsPaymentText}
+            onChange={(e) => onTermsPaymentTextChange(e.target.value)}
+            rows={2}
+            className="w-full mt-1 bg-white dark:bg-neutral-900 border-2 border-[#ff4d00] rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-[#ff4d00]/30"
+          />
+        </div>
+      </div>
+
+      {/* ── Bank Info (rows 25-33) ── */}
+      <div className="p-6 space-y-2 border-b border-neutral-200 dark:border-neutral-800 text-sm">
+        <div className="font-bold">BANK INFO:</div>
+        <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-1 items-start">
+          <BlackCell>BENEFICIARY (COMPANY NAME):</BlackCell>
+          <div>
+            <BlueText>{BANK_INFO.beneficiary}</BlueText>
+            <RedReminder>
+              The company name must be written in full. If it does not fit in the designated space, the full name should be written on the next line.
+            </RedReminder>
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-1 items-start">
+          <BlackCell>COMPANY ADDRESS:</BlackCell>
+          <BlueText>{BANK_INFO.companyAddress}</BlueText>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-1">
+          <BlackCell>BANK NAME:</BlackCell>
+          <BlackCell>{BANK_INFO.bankName}</BlackCell>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-1">
+          <BlackCell>BANK ACCOUNT:</BlackCell>
+          <BlackCell>{BANK_INFO.bankAccount}</BlackCell>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-1">
+          <BlackCell>BANK SWIFT CODE:</BlackCell>
+          <BlackCell>{BANK_INFO.bankSwift}</BlackCell>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-1">
+          <BlackCell>BANK ADDRESS:</BlackCell>
+          <BlackCell>{BANK_INFO.bankAddress}</BlackCell>
+        </div>
+      </div>
+
+      {/* ── Clauses (5)-(7) — fixed black text ── */}
+      <div className="p-6 space-y-2 border-b border-neutral-200 dark:border-neutral-800 text-sm leading-relaxed">
+        <div>
+          <strong>(5) Production Time:</strong> Normally about 45 days after order payment received and approval of PP samples. Seller will not take any responsibility for any delivery delay caused by force majeure or unexpected events.
+        </div>
+        <div className="pt-2">
+          <strong>(6) Tolerance:</strong>
+          <div className="pl-4 space-y-0.5">
+            <div>Knitted Fabric GSM tolerance of +10gram and Size Measurement of +1.5 inch can be allowed and accepted.</div>
+            <div>Quantity Tolerance: +5% can be accepted, seller should make up if the quantity less is more than 5%.</div>
+            <div>2% - 3% of the defective products can be allowed and accepted.</div>
+          </div>
+        </div>
+        <div className="pt-2">
+          <strong>(7) Additional Clause:</strong>
+          <div className="pl-4 space-y-0.5">
+            <div>(a). Buyer confirm to have the commercial rights to reproduce the design. If for any reason the legal owner of the design contacts fulfillment house, they will be directed to the buyer and buyer should bear all the losses of the seller.</div>
+            <div>(b). Any loss caused by buyer's change in connection with the agreed contract will be on buyer's account.</div>
+            <div>(c). The Seller should inform buyer to arrange the balance ONE week before the goods ready for shipment. The buyers should arrange the balance payment within 5 business days after seller's notice, of any loss occurred hereof will be on Buyer's account.</div>
+            <div>(d). The contract effective date will be started since the seller receives the deposit from the buyer. The contract will be invalid if the payment is delayed by 5 working days after the contract date.</div>
+            <div>(e). Force Majeure: In case of Force Majeure the Sellers shall not be responsible for delay in delivery or non-delivery of the goods but shall notify immediately the Buyers and deliver to the Buyers by registered mail a certificate issued by government authorities.</div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Footer contract note + signatures ── */}
+      <div className="p-6 space-y-4 text-sm">
+        <div>
+          This contract is made out in two original copies, one copy to be held by each party in witness thereof.
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
+          <div>
+            <div className="font-bold">Seller Stamp / Signature:</div>
+            <div className="mt-8 border-b border-black dark:border-white w-3/4" />
+            <div className="mt-1 text-sm">YIWU HOMEDORM COMMODITY MANUFACTURING CO.,LTD</div>
+          </div>
+          <div>
+            <div className="font-bold">Buyer Stamp / Signature:</div>
+            <div className="mt-8 border-b border-black dark:border-white w-3/4" />
+            <div className="mt-1 text-sm">{customerName || "(customer name)"}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PISourceBadge({ source }: { source: "auto" | "uploaded" | "manual" }) {
+  const map = {
+    auto: { label: "auto-suggested", cls: "bg-neutral-200 text-neutral-700" },
+    uploaded: { label: "← from upload", cls: "bg-blue-100 text-blue-700" },
+    manual: { label: "manual", cls: "bg-orange-100 text-orange-700" },
+  } as const;
+  const m = map[source];
+  return <span className={`text-[10px] px-1.5 py-0.5 rounded font-semibold ${m.cls}`}>{m.label}</span>;
+}
+
+function SuccessPanel({
+  link, copied, onCopy, onNew,
+}: {
+  link: string;
+  copied: boolean;
+  onCopy: () => void;
+  onNew: () => void;
+}) {
+  return (
+    <div className="bg-white dark:bg-neutral-900 shadow-lg rounded-lg p-8 border border-neutral-200 dark:border-neutral-800 text-center">
+      <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 dark:bg-green-900/30 mb-4">
+        <Check className="w-8 h-8 text-green-600" />
+      </div>
+      <h2 className="text-2xl font-bold mb-2">PI saved successfully</h2>
+      <p className="text-neutral-600 dark:text-neutral-400 mb-6">Share this link with your customer to receive payment:</p>
+      <div className="flex items-center gap-2 max-w-2xl mx-auto mb-6">
+        <input
+          readOnly
+          value={typeof window !== "undefined" ? `${window.location.origin}${link}` : link}
+          className="flex-1 px-3 py-2 border border-neutral-300 dark:border-neutral-700 rounded bg-neutral-50 dark:bg-neutral-800 text-sm"
+        />
+        <button
+          onClick={onCopy}
+          className="inline-flex items-center gap-1 px-4 py-2 bg-[#ff4d00] hover:bg-[#e64500] text-white rounded text-sm font-semibold"
+        >
+          {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+          {copied ? "Copied!" : "Copy"}
+        </button>
+      </div>
+      <div className="flex justify-center gap-3">
+        <a
+          href={link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1 px-4 py-2 border border-neutral-300 dark:border-neutral-700 rounded text-sm hover:bg-neutral-50 dark:hover:bg-neutral-800"
+        >
+          <ExternalLink className="w-4 h-4" />
+          Open payment page
+        </a>
+        <button
+          onClick={onNew}
+          className="px-4 py-2 border border-neutral-300 dark:border-neutral-700 rounded text-sm hover:bg-neutral-50 dark:hover:bg-neutral-800"
+        >
+          Create another PI
+        </button>
+      </div>
+    </div>
   );
 }

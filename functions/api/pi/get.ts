@@ -36,8 +36,8 @@ export const onRequestGet = async (
     return json({ error: "pi_number query param is required" }, 400);
   }
 
-  // Validate PI number format (SA + 8 digits + 3 digits)
-  if (!/^SA\d{11}$/.test(piNumber)) {
+  // Validate PI number format (SA + 8 digits + 4 digits)
+  if (!/^SA\d{12}$/.test(piNumber)) {
     return json({ error: "Invalid PI number format" }, 400);
   }
 
@@ -110,11 +110,14 @@ export const onRequestGet = async (
         amount_due_cents: Math.round(((pi.total_cents as number) * (pi.payment_percentage as number)) / 100),
         lead_time_days: pi.lead_time_days,
         production_time_days: pi.production_time_days,
+        issue_date: pi.issue_date,
         valid_until: pi.valid_until,
         bank_confirmed_at: pi.bank_confirmed_at,
         bank_reference: pi.bank_reference,
         paid_at: pi.paid_at,
         created_at: pi.created_at,
+        // New Excel-style fields (stored in metadata JSONB)
+        ...((pi.metadata as Record<string, unknown>) || {}),
       },
       client_secret: clientSecret,
     });
