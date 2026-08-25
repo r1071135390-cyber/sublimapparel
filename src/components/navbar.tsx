@@ -90,6 +90,14 @@ export function Navbar() {
             Products
           </Link>
 
+          <Link
+            href="/shop/"
+            className="inline-flex items-center gap-1.5 text-sm font-bold uppercase tracking-wider text-[#ff4d00] transition-colors hover:text-[#cc3d00]"
+          >
+            <span className="h-1.5 w-1.5 rounded-full bg-[#ff4d00]" />
+            Shop
+          </Link>
+
           {/* Solutions dropdown */}
           <div className="group relative">
             <Link

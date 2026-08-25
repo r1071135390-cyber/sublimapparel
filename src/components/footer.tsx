@@ -58,6 +58,15 @@ const linkGroups = [
     ],
   },
   {
+    title: "Quick order",
+    items: [
+      { label: "Shop stock & small orders", href: "/shop" },
+      { label: "Order a custom sample", href: "/samples" },
+      { label: "Express quote (30 min)", href: "/get-a-quote-express" },
+      { label: "Pay bulk order deposit", href: "/bulk-deposit" },
+    ],
+  },
+  {
     title: "Resources",
     items: [
       { label: "View All Tools & Resources", href: "/resources" },

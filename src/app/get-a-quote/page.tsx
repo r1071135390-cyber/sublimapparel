@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
-import { Check, Clock, FileText, MessageCircle, ArrowRight } from "lucide-react";
+import { Check, Clock, FileText, MessageCircle, ArrowRight, Zap } from "lucide-react";
 
 export const metadata = buildPageMetadata({
     title: "Get a Quote | Custom Sublimation & Cotton Apparel Manufacturer",
@@ -183,6 +183,36 @@ export default function GetAQuotePage() {
               Browse 120+ products
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* EXPRESS CTA — skip the queue with $99 deposit */}
+      <section className="border-b-2 border-black bg-white">
+        <div className="mx-auto max-w-7xl px-6 py-10">
+          <Link
+            href="/get-a-quote-express/"
+            className="group block border-2 border-[#0a0a0a] bg-gradient-to-r from-[#ff4d00] to-[#cc3d00] p-6 text-white shadow-[6px_6px_0_0_#0a0a0a] transition-all hover:shadow-[3px_3px_0_0_#0a0a0a] sm:p-8"
+          >
+            <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <div className="mb-2 inline-flex items-center gap-2 border border-white/40 bg-white/20 px-3 py-1 text-xs font-bold uppercase tracking-wider backdrop-blur">
+                  <Zap className="h-3.5 w-3.5" strokeWidth={3} />
+                  Skip the queue
+                </div>
+                <h3 className="mb-2 text-2xl font-black uppercase leading-tight tracking-tight sm:text-3xl">
+                  Need a quote in 30 min? Pay $99 express deposit
+                </h3>
+                <p className="text-sm text-white/90 sm:text-base">
+                  Refundable if we can&apos;t match your requirements. Free
+                  mockup + dedicated rep included.
+                </p>
+              </div>
+              <div className="flex items-center gap-2 border-2 border-white bg-[#0a0a0a] px-6 py-3 text-sm font-bold uppercase tracking-wider transition-colors group-hover:bg-white group-hover:text-[#0a0a0a]">
+                Use express
+                <ArrowRight className="h-4 w-4" strokeWidth={3} />
+              </div>
+            </div>
+          </Link>
         </div>
       </section>
 
