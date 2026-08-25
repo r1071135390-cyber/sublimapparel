@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "include": [
+    "/api/*"
+  ],
+  "exclude": [
+    "/admin/*",
+    "/_next/*",
+    "/*.css",
+    "/*.js",
+    "/*.svg",
+    "/*.png",
+    "/*.jpg",
+    "/*.jpeg",
+    "/*.webp",
+    "/*.ico"
+  ]
+}
