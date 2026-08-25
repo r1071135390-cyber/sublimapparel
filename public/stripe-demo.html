@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Stripe Payment Flows — SublimApparel Demo</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root { --orange: #ff4d00; --orange-dark: #cc3d00; --black: #0a0a0a; --gray: #6b6b6b; }
+  body { font-family: ui-sans-serif, system-ui, sans-serif; background: #faf9f6; }
+  .btn-primary { background: var(--orange); color: white; padding: 14px 28px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; border: 2px solid var(--black); box-shadow: 4px 4px 0 var(--black); transition: all 0.15s; cursor: pointer; }
+  .btn-primary:hover { background: var(--orange-dark); transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--black); }
+  .btn-primary:active { transform: translate(0, 0); box-shadow: 2px 2px 0 var(--black); }
+  .card { background: white; border: 2px solid var(--black); box-shadow: 6px 6px 0 var(--black); padding: 24px; }
+  .tab-btn { padding: 12px 20px; font-weight: 800; text-transform: uppercase; font-size: 13px; letter-spacing: 0.05em; border: 2px solid var(--black); cursor: pointer; transition: all 0.15s; }
+  .tab-btn.active { background: var(--black); color: white; }
+  .tab-btn:not(.active) { background: white; color: var(--black); }
+  .tab-btn:not(.active):hover { background: #f5f5f5; }
+  .stripe-element { background: white; border: 2px solid #d1d5db; border-radius: 4px; padding: 12px; font-family: ui-monospace, monospace; }
+  .step-num { width: 32px; height: 32px; background: var(--black); color: white; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; }
+  .flow-arrow { color: var(--orange); font-size: 24px; font-weight: 800; }
+  .data-row { display: grid; grid-template-columns: 180px 1fr; gap: 8px; padding: 6px 0; border-bottom: 1px solid #e5e5e5; font-size: 13px; }
+  .data-row .key { color: var(--gray); font-weight: 600; }
+  .data-row .val { color: var(--black); font-family: ui-monospace, monospace; word-break: break-all; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+</style>
+</head>
+<body class="p-4 md:p-8">
+
+<div class="max-w-6xl mx-auto">
+  <!-- Header -->
+  <div class="mb-6 border-4 border-black bg-black p-6 text-white shadow-[8px_8px_0_#ff4d00]">
+    <div class="text-xs font-bold uppercase tracking-widest text-[#ff4d00]">Stripe Payment Integration</div>
+    <h1 class="mt-2 text-3xl font-black md:text-4xl">SublimApparel — 4 Payment Scenarios</h1>
+    <p class="mt-2 text-sm text-white/70">Interactive preview of all 4 flows. Click tabs to switch scenarios.</p>
+  </div>
+
+  <!-- Tabs -->
+  <div class="mb-6 flex flex-wrap gap-2">
+    <button class="tab-btn active" data-tab="D">🛒 D · Shop (Direct Buy)</button>
+    <button class="tab-btn" data-tab="B">🧪 B · Sample Fee ($50)</button>
+    <button class="tab-btn" data-tab="A">⚡ A · Inquiry Deposit ($99)</button>
+    <button class="tab-btn" data-tab="C">🏭 C · Bulk Deposit (30%)</button>
+  </div>
+
+  <!-- ============ Scenario D: Shop ============ -->
+  <div class="tab-content active" data-content="D">
+    <div class="card mb-4">
+      <div class="text-xs font-bold uppercase tracking-widest text-[#ff4d00]">Scenario D · Small Order Direct Buy</div>
+      <h2 class="mt-1 text-2xl font-black">/shop/ — Stripe Checkout (Hosted Page)</h2>
+      <p class="mt-2 text-sm text-gray-600">用户浏览现货产品 → 点 Buy → 跳转到 Stripe 托管的支付页 → 付完跳回 success 页</p>
+    </div>
+
+    <div class="grid gap-4 md:grid-cols-2">
+      <!-- Step 1: User browses shop -->
+      <div>
+        <div class="mb-2 flex items-center gap-2"><div class="step-num">1</div><div class="font-black uppercase text-sm">User browses /shop/</div></div>
+        <div class="card">
+          <div class="text-xs font-bold uppercase tracking-widest mb-3">Stock & Sample Items</div>
+          <div class="space-y-2 text-sm">
+            <div class="flex justify-between border-2 border-black p-3">
+              <div><div class="font-black">Fabric Swatch Pack</div><div class="text-xs text-gray-600">In stock · Ships in 24h</div></div>
+              <div class="text-right"><div class="font-black text-[#ff4d00]">$19.00</div><div class="mt-1 text-xs">qty [- 1 +]</div></div>
+            </div>
+            <div class="flex justify-between border-2 border-black p-3">
+              <div><div class="font-black">Stock Sublimated T-shirt</div><div class="text-xs text-gray-600">Mock-up design · M-2XL</div></div>
+              <div class="text-right"><div class="font-black text-[#ff4d00]">$24.00</div><div class="mt-1 text-xs">qty [- 2 +]</div></div>
+            </div>
+            <div class="flex justify-between border-2 border-black p-3">
+              <div><div class="font-black">Pre-Designed Jersey (Crest)</div><div class="text-xs text-gray-600">Hockey / lacrosse / soccer</div></div>
+              <div class="text-right"><div class="font-black text-[#ff4d00]">$45.00</div><div class="mt-1 text-xs">qty [- 1 +]</div></div>
+            </div>
+            <div class="flex justify-between border-2 border-black p-3">
+              <div><div class="font-black">Color Match Sample Fee</div><div class="text-xs text-gray-600">First swatch free, then $5/each</div></div>
+              <div class="text-right"><div class="font-black text-[#ff4d00]">$5.00</div><div class="mt-1 text-xs">qty [- 3 +]</div></div>
+            </div>
+          </div>
+          <div class="mt-4 border-t-2 border-black pt-3 text-sm">
+            <div class="flex justify-between"><span>Subtotal</span><span class="font-black">$117.00</span></div>
+            <div class="flex justify-between text-xs text-gray-600"><span>Shipping</span><span>Calculated next</span></div>
+          </div>
+          <button class="btn-primary mt-4 w-full">→ Buy with Stripe</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Stripe hosted page -->
+      <div>
+        <div class="mb-2 flex items-center gap-2"><div class="step-num">2</div><div class="font-black uppercase text-sm">Stripe hosted checkout</div></div>
+        <div class="card bg-gradient-to-br from-blue-50 to-indigo-50">
+          <div class="text-xs text-gray-600">⬆ User redirected to checkout.stripe.com</div>
+          <div class="mt-3 border-2 border-gray-300 bg-white p-4 shadow-sm">
+            <div class="text-xs text-gray-500">Pay SublimApparel</div>
+            <div class="text-2xl font-black">$117.00 USD</div>
+            <div class="mt-3 space-y-2 text-xs">
+              <div class="text-gray-500">Email</div>
+              <div class="stripe-element">buyer@acme.com</div>
+              <div class="text-gray-500">Card information</div>
+              <div class="stripe-element">4242 4242 4242 4242 &nbsp; 12/34 &nbsp; 123</div>
+              <div class="text-gray-500">Cardholder name</div>
+              <div class="stripe-element">John Smith</div>
+              <div class="text-gray-500">Country / ZIP</div>
+              <div class="stripe-element">United States / 10001</div>
+            </div>
+            <button class="mt-4 w-full bg-[#635bff] py-3 text-sm font-bold text-white">Pay $117.00</button>
+            <div class="mt-2 text-center text-xs text-gray-500">🔒 Powered by Stripe</div>
+          </div>
+          <div class="mt-3 text-xs text-gray-600 italic">↑ 这个页面是 stripe.com 提供的，不在我们服务器上</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3 + DB -->
+    <div class="mt-4 grid gap-4 md:grid-cols-2">
+      <div>
+        <div class="mb-2 flex items-center gap-2"><div class="step-num">3</div><div class="font-black uppercase text-sm">Back to /order/success/</div></div>
+        <div class="card text-center">
+          <div class="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-green-500 text-3xl text-white">✓</div>
+          <div class="text-2xl font-black">Payment received!</div>
+          <div class="mt-2 text-sm text-gray-600">Order #SA-2024-1234</div>
+          <div class="mt-1 text-xs text-gray-500">$117.00 paid · Receipt sent to buyer@acme.com</div>
+          <div class="mt-4 space-y-1 text-xs">
+            <div>📦 Estimated ship: 2-3 business days</div>
+            <div>📧 Tracking number will be emailed</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="mb-2 flex items-center gap-2"><div class="step-num">📊</div><div class="font-black uppercase text-sm">What gets written to Supabase</div></div>
+        <div class="card">
+          <div class="mb-2 text-xs font-black text-[#ff4d00]">payments table</div>
+          <div class="data-row"><div class="key">stripe_checkout_session_id</div><div class="val">cs_test_a1b2c3...</div></div>
+          <div class="data-row"><div class="key">stripe_payment_intent_id</div><div class="val">pi_3Nxxxxxx</div></div>
+          <div class="data-row"><div class="key">scenario</div><div class="val">"shop_order"</div></div>
+          <div class="data-row"><div class="key">status</div><div class="val text-green-600">"succeeded"</div></div>
+          <div class="data-row"><div class="key">amount_cents</div><div class="val">11700</div></div>
+          <div class="data-row"><div class="key">currency</div><div class="val">"usd"</div></div>
+          <div class="data-row"><div class="key">customer_email</div><div class="val">"buyer@acme.com"</div></div>
+          <div class="data-row"><div class="key">order_items</div><div class="val">[{sku:"swatch", qty:1, cents:1900}, ...]</div></div>
+          <div class="data-row"><div class="key">paid_at</div><div class="val">2024-XX-XX 10:23:45</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ Scenario B: Sample ============ -->
+  <div class="tab-content" data-content="B">
+    <div class="card mb-4">
+      <div class="text-xs font-bold uppercase tracking-widest text-[#ff4d00]">Scenario B · Sample Fee</div>
+      <h2 class="mt-1 text-2xl font-black">/samples/ — Stripe Payment Element (Embedded)</h2>
+      <p class="mt-2 text-sm text-gray-600">客户填表+选样品 → 嵌入我们网站的 Stripe 支付 → 付完跳 success</p>
+    </div>
+
+    <div class="grid gap-4 md:grid-cols-2">
+      <div>
+        <div class="mb-2 flex items-center gap-2"><div class="step-num">1</div><div class="font-black uppercase text-sm">User fills form on /samples/</div></div>
+        <div class="card">
+          <h3 class="mb-3 text-xl font-black">Order a custom sample — $50</h3>
+          <div class="space-y-2 text-sm">
+            <div><div class="text-xs font-bold text-gray-500">Name</div><div class="stripe-element">Sarah Johnson</div></div>
+            <div><div class="text-xs font-bold text-gray-500">Email</div><div class="stripe-element">sarah@brandco.com</div></div>
+            <div><div class="text-xs font-bold text-gray-500">Company</div><div class="stripe-element">BrandCo Marketing</div></div>
+            <div><div class="text-xs font-bold text-gray-500">Garment type</div><div class="stripe-element">Men's crew neck tee</div></div>
+            <div><div class="text-xs font-bold text-gray-500">Design notes</div><div class="stripe-element">All-over print, full color, brand logo on chest</div></div>
+            <div><div class="text-xs font-bold text-gray-500">Sample fee</div><div class="flex justify-between border-t-2 border-black pt-2 font-black text-lg"><span>$50.00 (non-refundable)</span><span class="text-[#ff4d00]">$50.00</span></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="mb-2 flex items-center gap-2"><div class="step-num">2</div><div class="font-black uppercase text-sm">Stripe Payment Element (embedded)</div></div>
+        <div class="card">
+          <div class="text-xs text-gray-500">🔒 Secured by Stripe — stays on sublimapparel.com</div>
+          <div class="mt-3 text-xs font-bold text-gray-500">Card information</div>
+          <div class="stripe-element">4242 4242 4242 4242 &nbsp; 12/34 &nbsp; 123</div>
+          <div class="mt-2 text-xs font-bold text-gray-500">Billing address</div>
+          <div class="stripe-element">United States · 10001</div>
+          <button class="btn-primary mt-4 w-full">Pay $50.00</button>
+          <div class="mt-2 text-center text-xs text-gray-500">🔒 Powered by Stripe · Cards, Apple Pay, Google Pay</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4 grid gap-4 md:grid-cols-2">
+      <div>
+        <div class="mb-2 flex items-center gap-2"><div class="step-num">3</div><div class="font-black uppercase text-sm">After payment → /order/success/</div></div>
+        <div class="card text-center">
+          <div class="text-3xl">🧪</div>
+          <div class="mt-2 text-2xl font-black">Sample order confirmed</div>
+          <div class="mt-2 text-sm text-gray-600">Sample ID: SMP-2024-456</div>
+          <div class="mt-3 text-left text-xs space-y-1">
+            <div>✓ $50.00 sample fee paid</div>
+            <div>✓ Your design is now in our production queue</div>
+            <div>📦 Physical sample ships in 3-5 business days</div>
+            <div>📸 We'll email you a pre-ship photo first</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="mb-2 flex items-center gap-2"><div class="step-num">📊</div><div class="font-black uppercase text-sm">Supabase payments row</div></div>
+        <div class="card">
+          <div class="data-row"><div class="key">stripe_payment_intent_id</div><div class="val">pi_3Nyyyyy</div></div>
+          <div class="data-row"><div class="key">scenario</div><div class="val">"sample_fee"</div></div>
+          <div class="data-row"><div class="key">status</div><div class="val text-green-600">"succeeded"</div></div>
+          <div class="data-row"><div class="key">amount_cents</div><div class="val">5000</div></div>
+          <div class="data-row"><div class="key">customer_name</div><div class="val">"Sarah Johnson"</div></div>
+          <div class="data-row"><div class="key">customer_email</div><div class="val">"sarah@brandco.com"</div></div>
+          <div class="data-row"><div class="key">customer_company</div><div class="val">"BrandCo Marketing"</div></div>
+          <div class="data-row"><div class="key">sample_request_id</div><div class="val">"SMP-2024-456"</div></div>
+          <div class="data-row"><div class="key">paid_at</div><div class="val">2024-XX-XX 10:30:12</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ Scenario A: Inquiry Deposit ============ -->
+  <div class="tab-content" data-content="A">
+    <div class="card mb-4">
+      <div class="text-xs font-bold uppercase tracking-widest text-[#ff4d00]">Scenario A · Express Inquiry Deposit</div>
+      <h2 class="mt-1 text-2xl font-black">/get-a-quote-express/ — Skip the queue with $99</h2>
+      <p class="mt-2 text-sm text-gray-600">用户付 $99 跳过普通询盘排队，30 分钟内拿到报价。普通询盘仍免费但要等 1-2 天</p>
+    </div>
+
+    <!-- Top of /get-a-quote/ page shows this CTA -->
+    <div class="card mb-4 border-[#ff4d00] border-4">
+      <div class="text-xs font-black uppercase text-[#ff4d00]">On /get-a-quote/ — Banner shown at top</div>
+      <div class="mt-2 flex items-center justify-between gap-3 bg-gradient-to-r from-[#ff4d00] to-[#cc3d00] p-4 text-white">
+        <div>
+          <div class="text-lg font-black">⚡ Need a quote in 30 minutes?</div>
+          <div class="text-sm">Pay $99 to skip the queue. Regular inquiries are free but take 1-2 days.</div>
+        </div>
+        <button class="bg-white px-4 py-2 text-sm font-black text-black hover:bg-black hover:text-white">→ Express Quote</button>
+      </div>
+    </div>
+
+    <div class="grid gap-4 md:grid-cols-2">
+      <div>
+        <div class="mb-2 flex items-center gap-2"><div class="step-num">1</div><div class="font-black uppercase text-sm">/get-a-quote-express/ form</div></div>
+        <div class="card">
+          <h3 class="mb-1 text-2xl font-black uppercase">Skip the queue — quote in 30 min</h3>
+          <p class="text-xs text-gray-600">Express: $99 (refundable if we don't deliver quote in 30 min)</p>
+          <div class="mt-3 space-y-2 text-sm">
+            <div><div class="text-xs font-bold text-gray-500">Name</div><div class="stripe-element">Mike Chen</div></div>
+            <div><div class="text-xs font-bold text-gray-500">Email</div><div class="stripe-element">mike@teamsports.com</div></div>
+            <div><div class="text-xs font-bold text-gray-500">Company</div><div class="stripe-element">Team Sports League</div></div>
+            <div><div class="text-xs font-bold text-gray-500">Product</div><div class="stripe-element">Custom sublimated jersey</div></div>
+            <div><div class="text-xs font-bold text-gray-500">Quantity</div><div class="stripe-element">500 pcs</div></div>
+            <div><div class="text-xs font-bold text-gray-500">Project details</div><div class="stripe-element">Lacrosse league, 4 colors, all-over print, need by March 15</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="mb-2 flex items-center gap-2"><div class="step-num">2</div><div class="font-black uppercase text-sm">$99 deposit · Stripe Payment Element</div></div>
+        <div class="card">
+          <div class="text-xs font-black uppercase text-[#cc3d00]">Express fee</div>
+          <div class="text-3xl font-black">$99.00</div>
+          <div class="text-xs text-gray-600">Refundable if quote not delivered in 30 min</div>
+          <div class="mt-3 border-t-2 border-black pt-3 text-xs font-bold text-gray-500">Card information</div>
+          <div class="stripe-element">4242 4242 4242 4242 &nbsp; 12/34 &nbsp; 123</div>
+          <button class="btn-primary mt-4 w-full">Pay $99 & Get Quote in 30 min</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4 grid gap-4 md:grid-cols-2">
+      <div>
+        <div class="mb-2 flex items-center gap-2"><div class="step-num">3</div><div class="font-black uppercase text-sm">/order/success/?scenario=inquiry_deposit</div></div>
+        <div class="card text-center">
+          <div class="text-3xl">⚡</div>
+          <div class="mt-2 text-2xl font-black">Express inquiry received</div>
+          <div class="mt-2 text-sm text-gray-600">Inquiry #INQ-EX-1234</div>
+          <div class="mt-3 text-left text-xs space-y-1">
+            <div>✓ $99 express fee paid</div>
+            <div>⏰ Your inquiry is now in our PRIORITY queue</div>
+            <div>📞 Expect a quote within 30 minutes during business hours</div>
+            <div>💬 Or call/WhatsApp us directly: +86-...</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="mb-2 flex items-center gap-2"><div class="step-num">📊</div><div class="font-black uppercase text-sm">Supabase row</div></div>
+        <div class="card">
+          <div class="data-row"><div class="key">scenario</div><div class="val">"inquiry_deposit"</div></div>
+          <div class="data-row"><div class="key">status</div><div class="val text-green-600">"succeeded"</div></div>
+          <div class="data-row"><div class="key">amount_cents</div><div class="val">9900</div></div>
+          <div class="data-row"><div class="key">inquiry_id</div><div class="val">"INQ-EX-1234"</div></div>
+          <div class="data-row"><div class="key">metadata</div><div class="val">{priority:"express", sla:"30min", quantity:500}</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ Scenario C: Bulk Deposit ============ -->
+  <div class="tab-content" data-content="C">
+    <div class="card mb-4">
+      <div class="text-xs font-bold uppercase tracking-widest text-[#ff4d00]">Scenario C · Bulk Order 30% Deposit</div>
+      <h2 class="mt-1 text-2xl font-black">/bulk-deposit/ — Pay 30% to start production</h2>
+      <p class="mt-2 text-sm text-gray-600">销售给客户发专属链接（含 quote_id 和总价）→ 客户付 30% → 工厂开始生产</p>
+    </div>
+
+    <div class="card mb-4 bg-gray-50">
+      <div class="text-xs font-black uppercase text-gray-500">Sales rep workflow · 销售发送专属链接</div>
+      <div class="mt-2 font-mono text-xs bg-white border-2 border-gray-300 p-3">
+        https://sublimapparel.com/bulk-deposit/?quote_id=Q-2024-001&total=8500&name=Acme%20Sports&email=buyer@acme.com&currency=usd
+      </div>
+      <div class="mt-2 text-xs text-gray-600">↑ URL 参数自动预填表单（quote id、总额、币种、客户名/邮箱）</div>
+    </div>
+
+    <div class="grid gap-4 md:grid-cols-2">
+      <div>
+        <div class="mb-2 flex items-center gap-2"><div class="step-num">1</div><div class="font-black uppercase text-sm">Pre-filled form on /bulk-deposit/</div></div>
+        <div class="card">
+          <h3 class="mb-1 text-2xl font-black uppercase">Pay production deposit</h3>
+          <div class="text-xs text-gray-600">Quote: Q-2024-001</div>
+          <div class="mt-3 space-y-2 text-sm">
+            <div><div class="text-xs font-bold text-gray-500">Quote ID</div><div class="stripe-element">Q-2024-001</div></div>
+            <div><div class="text-xs font-bold text-gray-500">Name</div><div class="stripe-element">Acme Sports</div></div>
+            <div><div class="text-xs font-bold text-gray-500">Email</div><div class="stripe-element">buyer@acme.com</div></div>
+            <div class="border-2 border-black p-3 bg-yellow-50">
+              <div class="text-xs font-bold text-gray-500">Total order amount</div>
+              <div class="text-2xl font-black">$8,500.00 USD</div>
+              <div class="mt-2 text-xs font-bold text-gray-500">Deposit required (30%)</div>
+              <div class="text-3xl font-black text-[#ff4d00]">$2,550.00 USD</div>
+              <div class="mt-1 text-xs text-gray-600">Remaining $5,950.00 due before shipping</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="mb-2 flex items-center gap-2"><div class="step-num">2</div><div class="font-black uppercase text-sm">Stripe Payment Element</div></div>
+        <div class="card">
+          <div class="text-xs text-gray-500">🔒 Secured by Stripe</div>
+          <div class="mt-3 text-xs font-bold text-gray-500">Card information</div>
+          <div class="stripe-element">4242 4242 4242 4242 &nbsp; 12/34 &nbsp; 123</div>
+          <div class="mt-2 text-xs font-bold text-gray-500">Billing address</div>
+          <div class="stripe-element">United States · 10001</div>
+          <button class="btn-primary mt-4 w-full">Pay $2,550.00 Deposit</button>
+          <div class="mt-2 text-center text-xs text-gray-500">🔒 Wire transfer / ACH / Cards</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4 grid gap-4 md:grid-cols-2">
+      <div>
+        <div class="mb-2 flex items-center gap-2"><div class="step-num">3</div><div class="font-black uppercase text-sm">/order/success/?scenario=bulk_deposit</div></div>
+        <div class="card text-center">
+          <div class="text-3xl">🏭</div>
+          <div class="mt-2 text-2xl font-black">Deposit received</div>
+          <div class="mt-2 text-sm text-gray-600">Quote Q-2024-001 · Order #ORD-5678</div>
+          <div class="mt-3 text-left text-xs space-y-1">
+            <div>✓ $2,550.00 deposit paid (30%)</div>
+            <div>✓ Production starts in 24-48h</div>
+            <div>📋 Order sheet sent to factory floor</div>
+            <div>💰 Remaining $5,950.00 due before shipping</div>
+            <div>📧 Pro-forma invoice with payment link sent</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="mb-2 flex items-center gap-2"><div class="step-num">📊</div><div class="font-black uppercase text-sm">Supabase row</div></div>
+        <div class="card">
+          <div class="data-row"><div class="key">scenario</div><div class="val">"bulk_deposit"</div></div>
+          <div class="data-row"><div class="key">status</div><div class="val text-green-600">"succeeded"</div></div>
+          <div class="data-row"><div class="key">amount_cents</div><div class="val">255000 (= $2,550)</div></div>
+          <div class="data-row"><div class="key">currency</div><div class="val">"usd"</div></div>
+          <div class="data-row"><div class="key">quote_id</div><div class="val">"Q-2024-001"</div></div>
+          <div class="data-row"><div class="key">customer_email</div><div class="val">"buyer@acme.com"</div></div>
+          <div class="data-row"><div class="key">metadata</div><div class="val">{total_cents:850000, deposit_pct:30, remaining_cents:595000}</div></div>
+          <div class="data-row"><div class="key">paid_at</div><div class="val">2024-XX-XX 11:15:30</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Comparison table -->
+  <div class="mt-8 card">
+    <h2 class="text-xl font-black mb-3">📊 4 个场景对比</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="bg-black text-white">
+          <tr><th class="p-2 text-left">场景</th><th class="p-2 text-left">入口</th><th class="p-2 text-left">Stripe 产品</th><th class="p-2 text-right">价格</th><th class="p-2 text-left">触发动作</th></tr>
+        </thead>
+        <tbody>
+          <tr class="border-b-2 border-gray-200"><td class="p-2 font-black">A</td><td class="p-2">/get-a-quote-express/</td><td class="p-2">Payment Element</td><td class="p-2 text-right font-black">$99</td><td class="p-2">询盘进 priority 队列 → 30min 内报价</td></tr>
+          <tr class="border-b-2 border-gray-200 bg-gray-50"><td class="p-2 font-black">B</td><td class="p-2">/samples/</td><td class="p-2">Payment Element</td><td class="p-2 text-right font-black">$50</td><td class="p-2">样品生产 → 3-5 天寄出 + 预发照片</td></tr>
+          <tr class="border-b-2 border-gray-200"><td class="p-2 font-black">C</td><td class="p-2">/bulk-deposit/?quote_id=...</td><td class="p-2">Payment Element</td><td class="p-2 text-right font-black">报价 × 30%</td><td class="p-2">生产开工 → 70% 尾款装运前付清</td></tr>
+          <tr class="bg-gray-50"><td class="p-2 font-black">D</td><td class="p-2">/shop/</td><td class="p-2">Checkout (hosted)</td><td class="p-2 text-right font-black">产品定价</td><td class="p-2">订单确认 → 2-3 天发货</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tab = btn.dataset.tab;
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b === btn));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.toggle('active', c.dataset.content === tab));
+    });
+  });
+</script>
+</body>
+</html>
