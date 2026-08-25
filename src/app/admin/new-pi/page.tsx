@@ -9,6 +9,7 @@ type LineItem = {
   description: string;
   fabric: string;
   qty: number;
+  unit: string;       // editable, e.g. "set" / "pcs" / "pair" / "dozen"
   unitPriceCents: number;
   imageUrl: string;
 };
@@ -20,13 +21,14 @@ type PrefillPayload = {
   customer_name?: string;
   customer_phone?: string;
   customer_address?: string;
-  items?: Array<{
-    description?: string;
-    fabric?: string;
-    qty?: number;
-    unit_price_cents?: number;
-    image_url?: string;
-  }>;
+      items?: Array<{
+      description?: string;
+      fabric?: string;
+      qty?: number;
+      unit?: string;
+      unit_price_cents?: number;
+      image_url?: string;
+    }>;
   shipping_label?: string;
   shipping_method?: string;
   shipping_cents?: number;
@@ -78,7 +80,7 @@ export default function NewPIPage() {
 
   // Items
   const [items, setItems] = useState<LineItem[]>([
-    { description: "", fabric: "", qty: 1, unitPriceCents: 0, imageUrl: "" },
+    { description: "", fabric: "", qty: 1, unit: "set", unitPriceCents: 0, imageUrl: "" },
   ]);
   // Shipping row (always present, like in the Excel)
   const [shippingLabel, setShippingLabel] = useState("Shipping Cost");
@@ -141,6 +143,7 @@ export default function NewPIPage() {
           description: it.description || "",
           fabric: it.fabric || "",
           qty: it.qty || 1,
+          unit: it.unit || "set",
           unitPriceCents: it.unit_price_cents || 0,
           imageUrl: it.image_url || "",
         })),
@@ -182,7 +185,7 @@ export default function NewPIPage() {
   function addItem() {
     setItems([
       ...items,
-      { description: "", fabric: "", qty: 1, unitPriceCents: 0, imageUrl: "" },
+      { description: "", fabric: "", qty: 1, unit: "set", unitPriceCents: 0, imageUrl: "" },
     ]);
   }
 
@@ -315,15 +318,25 @@ export default function NewPIPage() {
   return (
     <div className="min-h-screen bg-neutral-100 dark:bg-neutral-950 py-8 px-4">
       <div className="max-w-5xl mx-auto">
-        {/* Top bar */}
+        {/* Top bar — logo + back link */}
         <div className="flex items-center justify-between mb-6">
-          <Link
-            href="/admin/"
-            className="inline-flex items-center gap-2 text-sm text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to admin
-          </Link>
+          <div className="flex items-center gap-4">
+            <Link href="/admin/">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/sublimapparel-logo.webp"
+                alt="SublimApparel"
+                className="h-10 w-auto"
+              />
+            </Link>
+            <Link
+              href="/admin/"
+              className="inline-flex items-center gap-2 text-sm text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Back to admin
+            </Link>
+          </div>
           <div className="text-sm text-neutral-500">
             New PI — manual entry (matches Excel layout)
           </div>
@@ -462,8 +475,8 @@ function PIPreview(props: {
 
   return (
     <div className="bg-white dark:bg-neutral-900 shadow-lg rounded-lg overflow-hidden border border-neutral-200 dark:border-neutral-800">
-      {/* ── HEADER (rows 1-3) ── */}
-      <div className="p-6 text-center border-b-2 border-black dark:border-white">
+      {/* ── HEADER (rows 1-3) ── indented to align with the "Miss" column (column C in Excel) */}
+      <div className="px-6 pl-[28%] py-6 text-left border-b-2 border-black dark:border-white">
         <div className="text-lg font-bold tracking-wide">
           YIWU HOMEDORM COMMODITY MANUFACTURING CO.,LTD
         </div>
@@ -534,17 +547,17 @@ function PIPreview(props: {
             <RedInput
               value={customerName}
               onChange={(e) => onCustomerNameChange(e.target.value)}
-              placeholder="Customer name (e.g. Xavier Raymore)"
+              placeholder="Customer name"
             />
             <RedInput
               value={customerAddress}
               onChange={(e) => onCustomerAddressChange(e.target.value)}
-              placeholder="Address (e.g. 91 E 208th Street, Apt 3A, Bronx, NY 10467, USA)"
+              placeholder="Address"
             />
             <RedInput
               value={customerPhone}
               onChange={(e) => onCustomerPhoneChange(e.target.value)}
-              placeholder="Phone (e.g. +1 318 243 7247)"
+              placeholder="Phone"
             />
           </div>
         </div>
@@ -559,7 +572,7 @@ function PIPreview(props: {
                 <th className="border border-black dark:border-white p-2 w-32 text-left">PRODUCT PICTURE</th>
                 <th className="border border-black dark:border-white p-2 text-left">DESCRIPTION</th>
                 <th className="border border-black dark:border-white p-2 text-left">FABRIC CONTENT</th>
-                <th className="border border-black dark:border-white p-2 w-20 text-left">QTY SETS</th>
+                <th className="border border-black dark:border-white p-2 w-28 text-left">QTY / UNIT</th>
                 <th className="border border-black dark:border-white p-2 w-24 text-left">PRICE</th>
                 <th className="border border-black dark:border-white p-2 w-28 text-left">TOTAL USD</th>
                 <th className="border border-black dark:border-white p-2 w-8"></th>
@@ -607,7 +620,7 @@ function PIPreview(props: {
                     <textarea
                       value={it.description}
                       onChange={(e) => onUpdateItem(idx, { description: e.target.value })}
-                      placeholder="e.g. men tank tops + drawstring shorts w/ pockets (6” inseam) + matching bandanna + socks"
+                      placeholder=""
                       rows={4}
                       className="w-full bg-white dark:bg-neutral-900 border border-[#ff4d00] rounded px-1.5 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-[#ff4d00]/40"
                     />
@@ -616,19 +629,28 @@ function PIPreview(props: {
                     <textarea
                       value={it.fabric}
                       onChange={(e) => onUpdateItem(idx, { fabric: e.target.value })}
-                      placeholder="e.g. 145gsm polyester jersey with sublimation print"
+                      placeholder=""
                       rows={4}
                       className="w-full bg-white dark:bg-neutral-900 border border-[#ff4d00] rounded px-1.5 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-[#ff4d00]/40"
                     />
                   </td>
                   <td className="border border-black dark:border-white p-1.5 align-top">
-                    <input
-                      type="number"
-                      min={1}
-                      value={it.qty}
-                      onChange={(e) => onUpdateItem(idx, { qty: parseInt(e.target.value) || 0 })}
-                      className="w-full bg-white dark:bg-neutral-900 border border-[#ff4d00] rounded px-1.5 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-[#ff4d00]/40"
-                    />
+                    <div className="flex items-center gap-1">
+                      <input
+                        type="number"
+                        min={1}
+                        value={it.qty}
+                        onChange={(e) => onUpdateItem(idx, { qty: parseInt(e.target.value) || 0 })}
+                        className="w-12 bg-white dark:bg-neutral-900 border border-[#ff4d00] rounded px-1.5 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-[#ff4d00]/40"
+                      />
+                      <input
+                        type="text"
+                        value={it.unit}
+                        onChange={(e) => onUpdateItem(idx, { unit: e.target.value })}
+                        placeholder="set"
+                        className="w-16 bg-white dark:bg-neutral-900 border border-[#ff4d00] rounded px-1.5 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-[#ff4d00]/40"
+                      />
+                    </div>
                   </td>
                   <td className="border border-black dark:border-white p-1.5 align-top">
                     <div className="flex items-center">

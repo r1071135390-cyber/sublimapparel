@@ -276,7 +276,7 @@ export default function UploadPIClient() {
                 id="pi-text"
                 value={text}
                 onChange={(e) => setText(e.target.value)}
-                placeholder="INVOICE NO.: SA20260825001&#10;TO: John Smith, Acme Sports, 123 Main St NY&#10;ISSUE DATE: 25/Aug/2026&#10;LEAD TIME: Within 30 days&#10;&#10;men tank tops + shorts (15 sets) - $19.90 each - $298.50&#10;Shipping DDP by air - $118.00&#10;TOTAL: $416.50"
+                placeholder="Paste your PI content here. Example fields it may include:&#10;  INVOICE NO. / ISSUE DATE / LEAD TIME / TO (name + address + phone)&#10;  Item rows: description, fabric, qty + unit, price&#10;  Shipping line, total amount, payment terms"
                 rows={14}
                 className="w-full border-2 border-black bg-white p-4 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-[#ff4d00]"
                 disabled={extracting}

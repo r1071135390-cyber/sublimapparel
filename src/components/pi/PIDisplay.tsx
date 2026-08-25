@@ -14,6 +14,7 @@ export interface PIItemRow {
   description: string;
   fabric?: string | null;
   qty: number;
+  unit?: string | null;
   unit_price_cents: number;
   total_cents: number;
   image_url?: string | null;
@@ -138,8 +139,8 @@ export function PIDisplay({ pi }: { pi: PIDisplayData }) {
             <th className="w-[18%] border-r border-black p-2 text-left text-[10px] font-black uppercase">
               Fabric Content
             </th>
-            <th className="w-[8%] border-r border-black p-2 text-right text-[10px] font-black uppercase">
-              Qty (Sets)
+            <th className="w-[10%] border-r border-black p-2 text-right text-[10px] font-black uppercase">
+              Qty
             </th>
             <th className="w-[12%] border-r border-black p-2 text-right text-[10px] font-black uppercase">
               Price (USD)
@@ -179,7 +180,7 @@ export function PIDisplay({ pi }: { pi: PIDisplayData }) {
                 className="border-r border-black/30 p-2 text-right"
                 style={{ color: RED }}
               >
-                {it.qty}
+                {it.qty} {it.unit || "set"}
               </td>
               <td
                 className="border-r border-black/30 p-2 text-right"
