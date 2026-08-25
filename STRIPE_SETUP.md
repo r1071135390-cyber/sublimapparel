@@ -234,6 +234,108 @@ To change a price, edit the source file and push.
 
 ---
 
+
+---
+
+## Scenario E — Proforma Invoice (PI) with dual payment options
+
+For small orders (e.g., $400–$2,000), customers may want to:
+1. **Pay by card** directly on the website (via Stripe) — instant confirmation
+2. **Pay by bank wire (T/T)** — the traditional Chinese-factory flow, but customer self-declares on the website so the factory knows
+
+This is implemented in two new pages.
+
+### Sales flow — create a PI
+
+1. Sales goes to `https://sublimapparel.com/admin/new-pi/`
+2. Fills in:
+   - **PI number** (auto-suggested: `SA{YYYYMMDD}{NNN}`, e.g. `SA20260825001`)
+   - **Customer info**: name, email, phone, company, address
+   - **Line items**: add/remove rows, each with description, fabric, qty, unit price
+   - **Shipping cost** (DDP by air / sea / etc.)
+   - **Payment terms**: choose 100% upfront, 30% deposit, or custom %
+   - **Lead time** (default 30 days)
+   - **Valid until** date
+3. Click **"Generate PI"**
+4. Backend:
+   - Saves PI to Supabase `proforma_invoices` table with `status: 'sent'`
+   - Creates a Stripe `PaymentIntent` for the payment amount (100% or 30%)
+5. Sales gets a shareable link: `https://sublimapparel.com/pay/?pi=SA20260825001`
+6. Sales copies the link and emails/WhatsApps it to the customer
+
+### Customer flow — pay the PI
+
+Customer opens `https://sublimapparel.com/pay/?pi=SA20260825001` and sees:
+
+**1. Full PI document** (formatted like a real proforma invoice)
+- Factory header (Yiwu Homedorm info)
+- PI number, issue date, valid until
+- Customer block
+- Items table (description, fabric, qty, unit price, total)
+- Subtotal / shipping / total
+- Terms & conditions
+- **Bank details** (Agricultural Bank of China, account, SWIFT) — for T/T option
+
+**2. Two payment options at the bottom** (clearly separated):
+
+| Option A: 💳 **Pay by Card** | Option B: 🏦 **Pay by Bank Wire (T/T)** |
+|---|---|
+| Stripe Payment Element inline | Bank details (account name, number, SWIFT, address) |
+| Customer fills card → instant payment | Reference number = PI number |
+| Webhook updates PI to `paid` | Customer checks "I have sent the wire" box + enters SWIFT MT103 ref |
+| Factory starts production immediately | PI status becomes `pending_bank` (awaiting factory manual verification) |
+| | Factory sees money in bank → marks `paid` in Supabase |
+
+### Verifying bank payments (factory side)
+
+For now, manually in Supabase Dashboard:
+1. Open `proforma_invoices` table
+2. Find PI with `status = 'pending_bank'`
+3. Check your bank account
+4. Once wire is received, set `status = 'paid'` and `paid_at = now()`
+
+**Future enhancement**: build a small `/admin/pi-dashboard` page with a list of pending bank PIs and one-click "Confirm received" buttons. (Not in MVP.)
+
+### API endpoints (Cloudflare Pages Functions)
+
+| Endpoint | Method | Purpose |
+|---|---|---|
+| `/api/pi/create` | POST | Create new PI + Stripe PaymentIntent |
+| `/api/pi/get?pi=SA20260825001` | GET | Fetch PI data for customer page |
+| `/api/pi/confirm-bank` | POST | Customer confirms T/T sent (sets `pending_bank`) |
+| `/api/stripe/webhook` | POST | Stripe webhook (already exists, updated to handle `pi_id` in metadata) |
+
+### Database table
+
+`proforma_invoices` (Supabase):
+
+```sql
+id uuid PRIMARY KEY,
+pi_number text UNIQUE NOT NULL,  -- e.g. SA20260825001
+status text CHECK (status IN ('draft','sent','paid','pending_bank','canceled','expired')),
+customer_name text,
+customer_email text,
+customer_phone text,
+customer_company text,
+customer_address text,
+items jsonb,  -- [{description, fabric, qty, unit_price_cents, total_cents}, ...]
+subtotal_cents integer,
+shipping_cents integer,
+total_cents integer,
+currency text DEFAULT 'usd',
+payment_terms text,  -- e.g. "100% upfront"
+payment_percentage integer,  -- 100 or 30 etc.
+stripe_payment_intent_id text UNIQUE,
+stripe_customer_id text,
+lead_time_days integer DEFAULT 30,
+production_time_days integer DEFAULT 45,
+valid_until date,
+bank_confirmed_at timestamptz,  -- when customer clicked "I have sent the wire"
+bank_reference text,  -- SWIFT MT103 number entered by customer
+bank_notes text,
+created_at, updated_at, sent_at, paid_at, canceled_at timestamptz
+```
+
 ## Next steps (future enhancements)
 
 - [ ] **Email notifications**: Send confirmation email after payment (Resend / Postmark)

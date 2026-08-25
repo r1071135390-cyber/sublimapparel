@@ -85,11 +85,16 @@ export const onRequestPost = async (
 async function handlePaymentSucceeded(env: Env, intent: Stripe.PaymentIntent) {
   console.log(`[webhook] payment_intent.succeeded: ${intent.id} amount=${intent.amount}`);
 
+  const piId = intent.metadata?.pi_id ?? null;
+  const isPiPayment = !!piId;
+
+  // 1. Update payments table
   const { error } = await supabasePatch(env, "payments", {
     stripe_payment_intent_id: `eq.${intent.id}`,
   }, {
     status: "succeeded",
     paid_at: new Date().toISOString(),
+    pi_id: piId,
     stripe_customer_id: typeof intent.customer === "string" ? intent.customer : null,
     metadata: {
       ...(intent.metadata ?? {}),
@@ -100,6 +105,22 @@ async function handlePaymentSucceeded(env: Env, intent: Stripe.PaymentIntent) {
 
   if (error) {
     throw new Error(`Supabase update failed: ${error}`);
+  }
+
+  // 2. If this is a PI payment, also mark the PI as paid
+  if (isPiPayment) {
+    console.log(`[webhook] PI ${piId} marked as paid via payment_intent ${intent.id}`);
+    const { error: piError } = await supabasePatch(env, "proforma_invoices", {
+      id: `eq.${piId}`,
+    }, {
+      status: "paid",
+      paid_at: new Date().toISOString(),
+      stripe_payment_intent_id: intent.id,
+    });
+
+    if (piError) {
+      throw new Error(`Supabase PI update failed: ${piError}`);
+    }
   }
 
   // TODO: send notification email for successful payment
@@ -119,6 +140,8 @@ async function handlePaymentFailed(env: Env, intent: Stripe.PaymentIntent) {
   if (error) {
     throw new Error(`Supabase update failed: ${error}`);
   }
+
+  // Note: PI status stays as 'sent' — customer can retry payment with same PI link
 }
 
 async function handleRefund(env: Env, charge: Stripe.Charge) {
