@@ -91,7 +91,7 @@ export const onRequestPost = async (
     if (body.customer_name) descParts.push(body.customer_name);
     descParts.push(`— ${body.scenario.replace("_", " ")}`);
 
-    paymentIntent = await createPaymentIntent(context.env.STRIPE_SECRET_KEY, {
+    const pi = await createPaymentIntent(context.env.STRIPE_SECRET_KEY, {
       amount: amount_cents,
       currency: "usd",
       automatic_payment_methods: true,
@@ -104,6 +104,12 @@ export const onRequestPost = async (
         ...(body.metadata ?? {}),
       },
     });
+    paymentIntent = {
+      id: pi.id,
+      client_secret: pi.client_secret ?? "",
+      amount: pi.amount,
+      currency: pi.currency,
+    };
   } catch (err: any) {
     console.error("[create-payment-intent] Stripe error:", err);
     return jsonResponse(

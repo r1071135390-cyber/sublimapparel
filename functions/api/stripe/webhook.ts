@@ -15,7 +15,7 @@
  *           charge.refunded, checkout.session.completed
  */
 
-import { constructWebhookEvent, type StripePaymentIntent, type StripeCheckoutSession, type StripeCharge } from "../../lib/stripe";
+import { constructWebhookEvent, type StripePaymentIntent, type StripeCheckoutSession, type StripeCharge, type StripeEvent } from "../../lib/stripe";
 import type { EventContext } from "@cloudflare/workers-types";
 
 interface Env {
@@ -37,9 +37,9 @@ export const onRequestPost = async (
   const rawBody = await context.request.text();
 
   // 2. Verify signature
-  let event: { type: string; data: { object: any } };
+  let event: StripeEvent;
   try {
-    event = constructWebhookEvent(
+    event = await constructWebhookEvent(
       rawBody,
       sig,
       context.env.STRIPE_WEBHOOK_SECRET,

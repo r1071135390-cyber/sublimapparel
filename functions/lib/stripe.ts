@@ -26,8 +26,6 @@ async function stripeFetch(
   const url = `${STRIPE_API_BASE}${path}`;
   const headers = new Headers(init.headers || {});
   headers.set("Authorization", `Bearer ${secretKey}`);
-  // Don't set Content-Type for GET; for POST with form body, let the
-  // helper set it explicitly via the caller.
   const res = await fetch(url, { ...init, headers });
   if (!res.ok) {
     const text = await res.text();
@@ -56,6 +54,57 @@ function formBody(
   return usp.toString();
 }
 
+// ── Webhook event types (minimal subset we actually handle) ───────
+export interface StripePaymentIntent {
+  id: string;
+  object?: string;
+  amount: number;
+  amount_received?: number;
+  amount_capturable?: number;
+  currency: string;
+  status: string;
+  client_secret?: string;
+  customer?: string;
+  description?: string;
+  receipt_email?: string;
+  metadata?: Record<string, string>;
+  charges?: { data: StripeCharge[] };
+  payment_method_types?: string[];
+  next_action?: Record<string, any>;
+  latest_charge?: string;
+  last_payment_error?: { code?: string; message?: string; type?: string };
+}
+export interface StripeCheckoutSession {
+  id: string;
+  url: string | null;
+  amount_total?: number;
+  currency?: string;
+  payment_status: string;
+  status?: string;
+  customer?: string;
+  customer_email?: string;
+  customer_details?: { email?: string; name?: string; phone?: string };
+  metadata?: Record<string, string>;
+  payment_intent?: string | StripePaymentIntent;
+}
+export interface StripeCharge {
+  id: string;
+  amount: number;
+  amount_captured?: number;
+  amount_refunded?: number;
+  paid: boolean;
+  status: string;
+  receipt_url?: string;
+  payment_intent?: string;
+  metadata?: Record<string, string>;
+}
+export interface StripeEvent {
+  id: string;
+  type: string;
+  created: number;
+  data: { object: StripePaymentIntent | StripeCheckoutSession | StripeCharge | Record<string, any> };
+}
+
 // ── Payment Intents ───────────────────────────────────────────────
 export interface CreatePaymentIntentParams {
   amount: number; // in cents
@@ -69,7 +118,7 @@ export interface CreatePaymentIntentParams {
 export async function createPaymentIntent(
   secretKey: string,
   params: CreatePaymentIntentParams,
-): Promise<{ id: string; client_secret: string; status: string }> {
+): Promise<StripePaymentIntent> {
   const body = formBody({
     amount: params.amount,
     currency: params.currency,
@@ -95,37 +144,76 @@ export async function cancelPaymentIntent(
 }
 
 // ── Checkout Sessions ─────────────────────────────────────────────
+export interface CheckoutSessionLineItem {
+  quantity: number;
+  price_data: {
+    currency: string;
+    unit_amount: number;
+    product_data: {
+      name: string;
+      description?: string;
+      images?: string[];
+    };
+  };
+}
 export interface CreateCheckoutSessionParams {
-  amount: number;
-  currency: string;
+  mode?: "payment" | "setup" | "subscription";
+  payment_method_types?: string[];
+  customer_email?: string;
+  // Either provide line_items OR (amount + currency + description)
+  line_items?: CheckoutSessionLineItem[];
+  amount?: number;
+  currency?: string;
+  description?: string;
   success_url: string;
   cancel_url: string;
-  customer_email?: string;
-  description?: string;
   metadata?: Record<string, string>;
-  payment_method_types?: string[];
 }
 
 export async function createCheckoutSession(
   secretKey: string,
   params: CreateCheckoutSessionParams,
-): Promise<{ id: string; url: string }> {
-  const body = formBody({
-    "payment_method_types[]": params.payment_method_types ?? ["card"],
-    "line_items[0][price_data][currency]": params.currency,
-    "line_items[0][price_data][unit_amount]": params.amount,
-    "line_items[0][price_data][product_data][name]": params.description ?? "Order",
-    "line_items[0][quantity]": 1,
-    mode: "payment",
-    success_url: params.success_url,
-    cancel_url: params.cancel_url,
-    customer_email: params.customer_email,
-    ...flattenMetadata(params.metadata),
-  });
+): Promise<StripeCheckoutSession> {
+  const body = new URLSearchParams();
+  body.append("mode", params.mode ?? "payment");
+  for (const pm of params.payment_method_types ?? ["card"]) {
+    body.append("payment_method_types[]", pm);
+  }
+  if (params.customer_email) {
+    body.append("customer_email", params.customer_email);
+  }
+  if (params.line_items && params.line_items.length > 0) {
+    params.line_items.forEach((item, idx) => {
+      body.append(`line_items[${idx}][quantity]`, String(item.quantity));
+      body.append(`line_items[${idx}][price_data][currency]`, item.price_data.currency);
+      body.append(`line_items[${idx}][price_data][unit_amount]`, String(item.price_data.unit_amount));
+      body.append(`line_items[${idx}][price_data][product_data][name]`, item.price_data.product_data.name);
+      if (item.price_data.product_data.description) {
+        body.append(`line_items[${idx}][price_data][product_data][description]`, item.price_data.product_data.description);
+      }
+      if (item.price_data.product_data.images) {
+        item.price_data.product_data.images.forEach((img, j) => {
+          body.append(`line_items[${idx}][price_data][product_data][images][${j}]`, img);
+        });
+      }
+    });
+  } else if (params.amount && params.currency) {
+    body.append("line_items[0][quantity]", "1");
+    body.append("line_items[0][price_data][currency]", params.currency);
+    body.append("line_items[0][price_data][unit_amount]", String(params.amount));
+    body.append("line_items[0][price_data][product_data][name]", params.description ?? "Order");
+  } else {
+    throw new Error("createCheckoutSession requires either line_items or (amount + currency)");
+  }
+  body.append("success_url", params.success_url);
+  body.append("cancel_url", params.cancel_url);
+  for (const [k, v] of Object.entries(flattenMetadata(params.metadata))) {
+    body.append(k, v);
+  }
   return stripeFetch("/checkout/sessions", secretKey, {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body,
+    body: body.toString(),
   });
 }
 
@@ -137,11 +225,10 @@ export async function constructWebhookEvent(
   signatureHeader: string,
   webhookSecret: string,
   toleranceSeconds = 300,
-): Promise<any> {
+): Promise<StripeEvent> {
   if (!signatureHeader) {
     throw new Error("Missing Stripe-Signature header");
   }
-  // Parse header
   const parts = signatureHeader.split(",").reduce<Record<string, string>>(
     (acc, kv) => {
       const [k, v] = kv.split("=");
@@ -155,12 +242,10 @@ export async function constructWebhookEvent(
   if (!t || !v1) {
     throw new Error("Malformed Stripe-Signature header");
   }
-  // Tolerance check
   const age = Math.abs(Math.floor(Date.now() / 1000) - parseInt(t, 10));
   if (age > toleranceSeconds) {
     throw new Error(`Webhook timestamp outside tolerance window (${age}s)`);
   }
-  // Compute expected signature
   const signedPayload = `${t}.${payload}`;
   const enc = new TextEncoder();
   const keyData = enc.encode(webhookSecret);
@@ -178,7 +263,7 @@ export async function constructWebhookEvent(
   if (expected !== v1) {
     throw new Error("Webhook signature verification failed");
   }
-  return JSON.parse(payload);
+  return JSON.parse(payload) as StripeEvent;
 }
 
 // ── Util ──────────────────────────────────────────────────────────
