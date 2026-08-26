@@ -82,7 +82,8 @@ function todayIsoDate() {
   return d.toISOString().slice(0, 10);
 }
 
-const fmt = (cents: number) => `$${(cents / 100).toFixed(2)}`;
+const fmt = (dollars: number) =>
+  `$${dollars.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
 // ─── Fixed bank info (in real PIs these are blue, pre-filled) ──────────────
 const BANK_INFO = {
