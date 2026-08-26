@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo, useRef } from "react";
 import Link from "next/link";
-import { ArrowLeft, Plus, Trash2, Save, ExternalLink, RefreshCw, Upload, X, Check, Copy } from "lucide-react";
+import { Plus, Trash2, Save, ExternalLink, RefreshCw, Upload, X, Check, Copy } from "lucide-react";
 
 // ─── Types ────────────────────────────────────────────────────────────────
 type LineItem = {
@@ -331,30 +331,6 @@ export default function NewPIPage() {
   return (
     <div className="min-h-screen bg-neutral-100 dark:bg-neutral-950 py-8 px-4">
       <div className="max-w-5xl mx-auto">
-        {/* Top bar — logo + back link */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-4">
-            <Link href="/admin/">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/sublimapparel-logo.webp"
-                alt="SublimApparel"
-                className="h-10 w-auto"
-              />
-            </Link>
-            <Link
-              href="/admin/"
-              className="inline-flex items-center gap-2 text-sm text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Back to admin
-            </Link>
-          </div>
-          <div className="text-sm text-neutral-500">
-            New PI — manual entry (matches Excel layout)
-          </div>
-        </div>
-
         {savedLink ? (
           <SuccessPanel
             link={savedLink}
@@ -493,16 +469,26 @@ function PIPreview(props: {
 
   return (
     <div className="bg-white dark:bg-neutral-900 shadow-lg rounded-lg overflow-hidden border border-neutral-200 dark:border-neutral-800">
-      {/* ── HEADER (rows 1-3) ── indented to align with the "Miss" column (column C in Excel) */}
-      <div className="px-6 pl-[28%] py-6 text-left border-b-2 border-black dark:border-white">
-        <div className="text-lg font-bold tracking-wide">
-          YIWU HOMEDORM COMMODITY MANUFACTURING CO.,LTD
-        </div>
-        <div className="text-sm text-neutral-700 dark:text-neutral-300 mt-1">
-          ADD: 2nd Floor, No.11 Anshang Road, Yiwu City, China
-        </div>
-        <div className="text-3xl font-extrabold tracking-widest mt-4">
-          PROFORMA INVOICE
+      {/* ── HEADER (rows 1-3) ── logo on left, company info indented to align with the "Miss" column (column C in Excel) */}
+      <div className="px-6 py-6 border-b-2 border-black dark:border-white">
+        <div className="flex items-start gap-6">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/sublimapparel-logo.webp"
+            alt="SublimApparel"
+            className="h-14 w-auto shrink-0"
+          />
+          <div className="flex-1 pl-[20%]">
+            <div className="text-lg font-bold tracking-wide">
+              YIWU HOMEDORM COMMODITY MANUFACTURING CO.,LTD
+            </div>
+            <div className="text-sm text-neutral-700 dark:text-neutral-300 mt-1">
+              ADD: 2nd Floor, No.11 Anshang Road, Yiwu City, China
+            </div>
+            <div className="text-3xl font-extrabold tracking-widest mt-4">
+              PROFORMA INVOICE
+            </div>
+          </div>
         </div>
       </div>
 
