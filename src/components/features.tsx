@@ -139,13 +139,13 @@ export function Features() {
                 ))}
               </div>
 
-              {/* Learn more link */}
               {f.href && (
                 <Link
                   href={f.href}
+                  aria-label={`Learn more about ${f.title}`}
                   className="mt-6 inline-flex items-center gap-1.5 text-sm font-black uppercase tracking-wider text-[#cc3d00] transition-colors hover:text-black"
                 >
-                  Learn more
+                  Learn more about {f.title}
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               )}
