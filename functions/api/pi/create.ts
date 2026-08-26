@@ -6,6 +6,7 @@
 // back when we figure out bundling), or just deep-link to a Stripe Checkout
 // session created on demand.
 
+import { normalizeSupabaseUrl } from "../_utils";
 interface Env {
   COZE_SUPABASE_URL: string;
   COZE_SUPABASE_SERVICE_ROLE_KEY: string;
@@ -150,7 +151,7 @@ export async function onRequestPost(context: {
     insertPayload.metadata = { notes: body.notes };
   }
 
-  const supabaseUrl = env.COZE_SUPABASE_URL.replace(/\/$/, "");
+  const supabaseUrl = normalizeSupabaseUrl(env.COZE_SUPABASE_URL);
   let insertRes: Response;
   try {
     insertRes = await fetch(`${supabaseUrl}/rest/v1/proforma_invoices`, {

@@ -4,6 +4,7 @@
 // issue with the Stripe SDK on Cloudflare Functions). clientSecret will
 // always be null until Stripe is re-integrated.
 
+import { normalizeSupabaseUrl } from "../_utils";
 interface Env {
   COZE_SUPABASE_URL: string;
   COZE_SUPABASE_SERVICE_ROLE_KEY: string;
@@ -54,7 +55,7 @@ export async function onRequestGet(context: {
     ? `id=eq.${encodeURIComponent(id)}`
     : `pi_number=eq.${encodeURIComponent(piNumber!)}`;
 
-  const supabaseUrl = env.COZE_SUPABASE_URL.replace(/\/$/, "");
+  const supabaseUrl = normalizeSupabaseUrl(env.COZE_SUPABASE_URL);
   const res = await fetch(
     `${supabaseUrl}/rest/v1/proforma_invoices?${filter}&limit=1`,
     {

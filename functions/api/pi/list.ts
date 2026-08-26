@@ -3,6 +3,7 @@
 // Includes the most recent 100 PIs (sorted by created_at desc) and
 // aggregate counts / values for all-time and this-month.
 
+import { normalizeSupabaseUrl } from "../_utils";
 interface Env {
   COZE_SUPABASE_URL: string;
   COZE_SUPABASE_SERVICE_ROLE_KEY: string;
@@ -64,7 +65,7 @@ export async function onRequestGet(context: {
     );
   }
 
-  const supabaseUrl = env.COZE_SUPABASE_URL.replace(/\/$/, "");
+  const supabaseUrl = normalizeSupabaseUrl(env.COZE_SUPABASE_URL);
   const headers = {
     apikey: env.COZE_SUPABASE_SERVICE_ROLE_KEY,
     Authorization: `Bearer ${env.COZE_SUPABASE_SERVICE_ROLE_KEY}`,
