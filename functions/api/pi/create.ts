@@ -21,7 +21,8 @@ interface CreatePiBody {
   piNumber: string;
   customer: {
     name: string;
-    email: string;
+    phone: string;
+    email?: string;
     company?: string;
     address?: string;
   };
@@ -68,9 +69,9 @@ export async function onRequestPost(context: {
   }
 
   // Validate required fields
-  if (!body.piNumber || !body.customer?.name || !body.customer?.email) {
+  if (!body.piNumber || !body.customer?.name || !body.customer?.phone) {
     return jsonResponse(
-      { error: "Missing required fields: piNumber, customer.name, customer.email" },
+      { error: "Missing required fields: piNumber, customer.name, customer.phone" },
       400
     );
   }
@@ -90,7 +91,8 @@ export async function onRequestPost(context: {
   const insertPayload = {
     pi_number: body.piNumber,
     customer_name: body.customer.name,
-    customer_email: body.customer.email,
+    customer_email: body.customer.email ?? null,
+    customer_phone: body.customer.phone,
     customer_company: body.customer.company ?? null,
     customer_address: body.customer.address ?? null,
     items: body.items,

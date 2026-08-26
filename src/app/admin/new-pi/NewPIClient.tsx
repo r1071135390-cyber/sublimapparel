@@ -259,11 +259,11 @@ export default function NewPIPage() {
     setSavedPiNumber(null);
 
     if (!customerName.trim()) {
-      setError("Customer name is required");
+      setError("Contact name is required");
       return;
     }
-    if (!customerEmail.trim()) {
-      setError("Customer email is required");
+    if (!customerPhone.trim()) {
+      setError("Customer phone is required");
       return;
     }
     if (!piNumber.trim()) {
@@ -284,10 +284,10 @@ export default function NewPIPage() {
           piNumber: piNumber.trim(),
           customer: {
             name: customerName.trim(),
-            email: customerEmail.trim(),
+            phone: customerPhone.trim(),
+            email: customerEmail.trim() || undefined,
             company: customerCompany.trim() || undefined,
             address: customerAddress.trim() || undefined,
-            phone: customerPhone.trim() || undefined,
           },
           items: items
             .filter((it) => it.description.trim())
@@ -571,37 +571,59 @@ function PIPreview(props: {
         </div>
       </div>
 
-      {/* ── TO: block (rows 10-12) ── */}
+      {/* ── TO: block (3 rows: contact/company, address, phone/email) ── */}
       <div className="p-6 border-b border-neutral-200 dark:border-neutral-800">
         <div className="flex gap-2 items-start">
           <BlackCell className="w-16 shrink-0 pt-1">TO:</BlackCell>
           <div className="flex-1 space-y-1.5">
-            <RedInput
-              value={customerName}
-              onChange={(e) => onCustomerNameChange(e.target.value)}
-              placeholder="Customer name *"
-            />
-            <RedInput
-              value={customerCompany}
-              onChange={(e) => onCustomerCompanyChange(e.target.value)}
-              placeholder="Company (optional)"
-            />
-            <RedInput
-              type="email"
-              value={customerEmail}
-              onChange={(e) => onCustomerEmailChange(e.target.value)}
-              placeholder="Email * (required for payment link)"
-            />
-            <RedInput
-              value={customerAddress}
-              onChange={(e) => onCustomerAddressChange(e.target.value)}
-              placeholder="Address"
-            />
-            <RedInput
-              value={customerPhone}
-              onChange={(e) => onCustomerPhoneChange(e.target.value)}
-              placeholder="Phone"
-            />
+            {/* Row 1: Contact Name | Company */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <div>
+                <div className="text-[10px] uppercase tracking-wider text-neutral-500 mb-0.5">Contact Name <span className="text-red-500">*</span></div>
+                <RedInput
+                  value={customerName}
+                  onChange={(e) => onCustomerNameChange(e.target.value)}
+                  placeholder="Contact name"
+                />
+              </div>
+              <div>
+                <div className="text-[10px] uppercase tracking-wider text-neutral-500 mb-0.5">Company <span className="text-neutral-400">(optional)</span></div>
+                <RedInput
+                  value={customerCompany}
+                  onChange={(e) => onCustomerCompanyChange(e.target.value)}
+                  placeholder="Company name"
+                />
+              </div>
+            </div>
+            {/* Row 2: Address (full width) */}
+            <div>
+              <div className="text-[10px] uppercase tracking-wider text-neutral-500 mb-0.5">Address</div>
+              <RedInput
+                value={customerAddress}
+                onChange={(e) => onCustomerAddressChange(e.target.value)}
+                placeholder="Shipping address"
+              />
+            </div>
+            {/* Row 3: Phone | Email */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <div>
+                <div className="text-[10px] uppercase tracking-wider text-neutral-500 mb-0.5">Phone <span className="text-red-500">*</span></div>
+                <RedInput
+                  value={customerPhone}
+                  onChange={(e) => onCustomerPhoneChange(e.target.value)}
+                  placeholder="Phone number"
+                />
+              </div>
+              <div>
+                <div className="text-[10px] uppercase tracking-wider text-neutral-500 mb-0.5">Email <span className="text-neutral-400">(optional)</span></div>
+                <RedInput
+                  type="email"
+                  value={customerEmail}
+                  onChange={(e) => onCustomerEmailChange(e.target.value)}
+                  placeholder="Email"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
