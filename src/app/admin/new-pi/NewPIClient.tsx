@@ -721,11 +721,17 @@ function PIPreview(props: {
                     <div className="flex items-center">
                       <span className="text-sm mr-0.5">$</span>
                       <input
-                        type="number"
-                        step="0.001"
-                        min={0}
-                        value={it.unitPrice.toFixed(3)}
-                        onChange={(e) => onUpdateItem(idx, { unitPrice: parseFloat(e.target.value || "0") })}
+                        type="text"
+                        inputMode="decimal"
+                        defaultValue={it.unitPrice > 0 ? it.unitPrice.toString() : ""}
+                        key={`price-${idx}-${items.length}-${items[idx]?.description ?? ""}`}
+                        onBlur={(e) => {
+                          const v = parseFloat(e.target.value || "0");
+                          if (!isNaN(v) && v !== it.unitPrice) {
+                            onUpdateItem(idx, { unitPrice: v });
+                          }
+                        }}
+                        placeholder="0.000"
                         className="w-full bg-white dark:bg-neutral-900 border border-[#ff4d00] rounded px-1.5 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-[#ff4d00]/40"
                       />
                     </div>
