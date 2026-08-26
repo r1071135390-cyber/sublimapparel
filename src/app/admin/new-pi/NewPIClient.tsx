@@ -528,7 +528,6 @@ function PIPreview(props: {
             <BlackCell className="w-32 shrink-0">ISSUE DATE:</BlackCell>
             <RedInput
               type="date"
-              lang="en-US"
               value={issueDate}
               onChange={(e) => onIssueDateChange(e.target.value)}
             />
