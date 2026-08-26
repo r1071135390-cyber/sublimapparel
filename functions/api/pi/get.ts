@@ -6,7 +6,7 @@
 
 interface Env {
   COZE_SUPABASE_URL: string;
-  COZE_SUPABASE_SERVICE_KEY: string;
+  COZE_SUPABASE_SERVICE_ROLE_KEY: string;
 }
 
 const corsHeaders = {
@@ -32,7 +32,7 @@ export async function onRequestGet(context: {
 }): Promise<Response> {
   const { request, env } = context;
 
-  if (!env.COZE_SUPABASE_URL || !env.COZE_SUPABASE_SERVICE_KEY) {
+  if (!env.COZE_SUPABASE_URL || !env.COZE_SUPABASE_SERVICE_ROLE_KEY) {
     return jsonResponse(
       { error: "Supabase credentials not configured" },
       500
@@ -59,8 +59,8 @@ export async function onRequestGet(context: {
     `${supabaseUrl}/rest/v1/proforma_invoices?${filter}&limit=1`,
     {
       headers: {
-        apikey: env.COZE_SUPABASE_SERVICE_KEY,
-        Authorization: `Bearer ${env.COZE_SUPABASE_SERVICE_KEY}`,
+        apikey: env.COZE_SUPABASE_SERVICE_ROLE_KEY,
+        Authorization: `Bearer ${env.COZE_SUPABASE_SERVICE_ROLE_KEY}`,
       },
     }
   );
