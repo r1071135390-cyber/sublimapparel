@@ -83,7 +83,7 @@ export const onRequestPost = async (
   let session: { id: string; url: string | null };
   try {
     session = await createCheckoutSession(context.env.STRIPE_SECRET_KEY, {
-      // @ts-ignore -- Cloudflare Functions bundler uses a stale view of the CreateCheckoutSessionParams type; runtime call is correct.
+      // Cloudflare Functions bundler uses a stale view of the CreateCheckoutSessionParams type; runtime call is correct.
       mode: "payment",
       payment_method_types: ["card"],
       customer_email: body.customer_email,

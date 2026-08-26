@@ -47,6 +47,35 @@ function todayPiNumber() {
   return `SA${yyyy}${mm}${dd}0001`;
 }
 
+// ---------------------------------------------------------------------------
+// Module-level UI helpers. Defining them OUTSIDE NewPIPage is critical:
+// each render of NewPIPage otherwise re-creates these function identities,
+// and React treats them as different component types — which unmounts and
+// remounts the underlying <input>, stealing focus after every keystroke.
+// ---------------------------------------------------------------------------
+function BlackCell({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return <div className={`px-2 py-1 text-sm ${className}`}>{children}</div>;
+}
+
+const RedInput = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
+  <input
+    {...props}
+    className={`w-full bg-white dark:bg-neutral-900 border-2 border-[#ff4d00] dark:border-[#ff4d00] rounded px-2 py-1 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#ff4d00]/30 ${props.className || ""}`}
+  />
+);
+
+function BlueText({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return <span className={`text-[#0a6cff] font-medium ${className}`}>{children}</span>;
+}
+
+function RedReminder({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return (
+    <div className={`mt-1 text-xs italic text-[#ff4d00] ${className}`}>
+      {children}
+    </div>
+  );
+}
+
 function todayIsoDate() {
   const d = new Date();
   return d.toISOString().slice(0, 10);
@@ -99,6 +128,13 @@ export default function NewPIPage() {
 
   // Item picture upload (per-row)
   const fileInputRefs = useRef<Array<HTMLInputElement | null>>([]);
+
+  // Tracks whether the user has typed in the PI number field. Once true,
+  // the initial auto-fetch must NOT clobber the user's keystrokes.
+  const hasEditedPiRef = useRef(false);
+
+  // (3) Shipping Term (Incoterm). Editable; defaults to DDP.
+  const [shippingTerm, setShippingTerm] = useState("DDP");
 
   // ── Mount: fetch next PI number + handle prefill from upload ────────────
   useEffect(() => {
@@ -160,7 +196,7 @@ export default function NewPIPage() {
       const res = await fetch("/api/pi/next-number/", { method: "GET" });
       if (!res.ok) return;
       const data = (await res.json()) as { ok?: boolean; pi_number?: string };
-      if (data.ok && data.pi_number && piSource === "auto") {
+      if (data.ok && data.pi_number && !hasEditedPiRef.current) {
         setPiNumber(data.pi_number);
       }
     } catch {
@@ -177,6 +213,7 @@ export default function NewPIPage() {
 
   // ── Handlers ────────────────────────────────────────────────────────────
   function onPiNumberChange(v: string) {
+    hasEditedPiRef.current = true;
     setPiNumber(v);
     setPiSource("manual");
     setPiNumberLocked(false);
@@ -291,30 +328,6 @@ export default function NewPIPage() {
     setTimeout(() => setCopied(false), 2000);
   }
 
-  // ── Render helpers ──────────────────────────────────────────────────────
-  // Black fixed text style
-  const BlackCell = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
-    <div className={`text-black dark:text-neutral-100 font-medium ${className}`}>{children}</div>
-  );
-
-  // Red-bordered editable input
-  const RedInput = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
-    <input
-      {...props}
-      className={`w-full bg-white dark:bg-neutral-900 border-2 border-[#ff4d00] dark:border-[#ff4d00] rounded px-2 py-1 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#ff4d00]/30 ${props.className || ""}`}
-    />
-  );
-
-  // Blue read-only text (pre-filled bank info)
-  const BlueText = ({ children }: { children: React.ReactNode }) => (
-    <span className="text-[#0070C0] dark:text-[#4d9fe6] font-medium">{children}</span>
-  );
-
-  // Red reminder text (KEEP red on output, for customer)
-  const RedReminder = ({ children }: { children: React.ReactNode }) => (
-    <div className="text-[#ff0000] dark:text-[#ff6666] text-sm italic">{children}</div>
-  );
-
   return (
     <div className="min-h-screen bg-neutral-100 dark:bg-neutral-950 py-8 px-4">
       <div className="max-w-5xl mx-auto">
@@ -384,6 +397,8 @@ export default function NewPIPage() {
             grandTotalCents={grandTotalCents}
             termsPaymentText={termsPaymentText}
             onTermsPaymentTextChange={setTermsPaymentText}
+            shippingTerm={shippingTerm}
+            onShippingTermChange={setShippingTerm}
             BlackCell={BlackCell}
             RedInput={RedInput}
             BlueText={BlueText}
@@ -456,6 +471,8 @@ function PIPreview(props: {
   grandTotalCents: number;
   termsPaymentText: string;
   onTermsPaymentTextChange: (v: string) => void;
+  shippingTerm: string;
+  onShippingTermChange: (v: string) => void;
   BlackCell: React.FC<{ children: React.ReactNode; className?: string }>;
   RedInput: React.FC<React.InputHTMLAttributes<HTMLInputElement>>;
   BlueText: React.FC<{ children: React.ReactNode }>;
@@ -470,6 +487,7 @@ function PIPreview(props: {
     shippingQty, onShippingQtyChange, shippingCents, onShippingCentsChange,
     itemsSubtotalCents, grandTotalCents,
     termsPaymentText, onTermsPaymentTextChange,
+    shippingTerm, onShippingTermChange,
     BlackCell, RedInput, BlueText, RedReminder,
   } = props;
 
@@ -641,7 +659,7 @@ function PIPreview(props: {
                         min={1}
                         value={it.qty}
                         onChange={(e) => onUpdateItem(idx, { qty: parseInt(e.target.value) || 0 })}
-                        className="w-12 bg-white dark:bg-neutral-900 border border-[#ff4d00] rounded px-1.5 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-[#ff4d00]/40"
+                        className="w-24 bg-white dark:bg-neutral-900 border border-[#ff4d00] rounded px-1.5 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-[#ff4d00]/40"
                       />
                       <input
                         type="text"
@@ -759,7 +777,24 @@ function PIPreview(props: {
       <div className="p-6 space-y-1 border-b border-neutral-200 dark:border-neutral-800 text-sm">
         <div><strong>(1) Port of Loading:</strong> Yiwu / Ningbo / Shanghai or any designated Chinese ports</div>
         <div><strong>(2) Port of Destination:</strong> As Buyer address above</div>
-        <div><strong>(3) Shipping Term:</strong> DDP</div>
+        <div><strong>(3) Shipping Term:</strong>{" "}
+        <select
+          value={shippingTerm}
+          onChange={(e) => onShippingTermChange(e.target.value)}
+          className="ml-1 bg-white dark:bg-neutral-900 border-2 border-[#00c2ff] rounded px-2 py-0.5 text-sm text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#00c2ff]/30"
+        >
+          <option value="DDP">DDP</option>
+          <option value="FOB">FOB</option>
+          <option value="EXW">EXW</option>
+          <option value="CIF">CIF</option>
+          <option value="DAP">DAP</option>
+          <option value="DDU">DDU</option>
+          <option value="CFR">CFR</option>
+          <option value="CPT">CPT</option>
+          <option value="CIP">CIP</option>
+          <option value="DPU">DPU</option>
+        </select>
+      </div>
         <div className="pt-2">
           <strong>(4) Terms of Payment:</strong>
           <textarea
