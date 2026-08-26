@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo, useRef } from "react";
 import Link from "next/link";
-import { Plus, Trash2, Save, ExternalLink, RefreshCw, Upload, X, Check, Copy } from "lucide-react";
+import { Plus, Trash2, Save, ExternalLink, RefreshCw, Upload, X, Check, Copy, Eye } from "lucide-react";
 
 // ─── Types ────────────────────────────────────────────────────────────────
 type LineItem = {
@@ -10,7 +10,7 @@ type LineItem = {
   fabric: string;
   qty: number;
   unit: string;       // editable, e.g. "set" / "pcs" / "pair" / "dozen"
-  unitPriceCents: number;
+  unitPrice: number;  // USD, supports up to 3 decimal places
   imageUrl: string;
 };
 
@@ -19,21 +19,22 @@ type PrefillPayload = {
   issue_date?: string;
   lead_time_text?: string;
   customer_name?: string;
+  customer_email?: string;
   customer_phone?: string;
   customer_address?: string;
-      items?: Array<{
-      description?: string;
-      fabric?: string;
-      qty?: number;
-      unit?: string;
-      unit_price_cents?: number;
-      image_url?: string;
-    }>;
+    items?: Array<{
+    description?: string;
+    fabric?: string;
+    qty?: number;
+    unit?: string;
+    unit_price?: number;
+    image_url?: string;
+  }>;
   shipping_label?: string;
   shipping_method?: string;
-  shipping_cents?: number;
+  shipping_cost?: number;
   payment_terms_text?: string;
-  total_cents?: number;
+  total?: number;
 };
 
 const DEFAULT_TERMS_PAYMENT =
@@ -104,18 +105,20 @@ export default function NewPIPage() {
 
   // TO: block
   const [customerName, setCustomerName] = useState("");
+  const [customerEmail, setCustomerEmail] = useState("");
+  const [customerCompany, setCustomerCompany] = useState("");
   const [customerAddress, setCustomerAddress] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
 
   // Items
   const [items, setItems] = useState<LineItem[]>([
-    { description: "", fabric: "", qty: 1, unit: "set", unitPriceCents: 0, imageUrl: "" },
+    { description: "", fabric: "", qty: 1, unit: "set", unitPrice: 0, imageUrl: "" },
   ]);
   // Shipping row (always present, like in the Excel)
   const [shippingLabel, setShippingLabel] = useState("Shipping Cost");
   const [shippingMethod, setShippingMethod] = useState("DDP by AIR");
   const [shippingQty, setShippingQty] = useState(1);
-  const [shippingCents, setShippingCents] = useState(11800);
+  const [shippingCost, setShippingCost] = useState(118);
 
   // Terms (only the (4) Terms of Payment text is editable)
   const [termsPaymentText, setTermsPaymentText] = useState(DEFAULT_TERMS_PAYMENT);
@@ -123,6 +126,7 @@ export default function NewPIPage() {
   // Saving
   const [saving, setSaving] = useState(false);
   const [savedLink, setSavedLink] = useState<string | null>(null);
+  const [savedPiNumber, setSavedPiNumber] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
 
@@ -171,6 +175,7 @@ export default function NewPIPage() {
     if (p.issue_date) setIssueDate(p.issue_date);
     if (p.lead_time_text) setLeadTimeText(p.lead_time_text);
     if (p.customer_name) setCustomerName(p.customer_name);
+    if (p.customer_email) setCustomerEmail(p.customer_email);
     if (p.customer_address) setCustomerAddress(p.customer_address);
     if (p.customer_phone) setCustomerPhone(p.customer_phone);
     if (Array.isArray(p.items) && p.items.length > 0) {
@@ -180,14 +185,14 @@ export default function NewPIPage() {
           fabric: it.fabric || "",
           qty: it.qty || 1,
           unit: it.unit || "set",
-          unitPriceCents: it.unit_price_cents || 0,
+          unitPrice: it.unit_price ?? 0,
           imageUrl: it.image_url || "",
         })),
       );
     }
     if (p.shipping_label) setShippingLabel(p.shipping_label);
     if (p.shipping_method) setShippingMethod(p.shipping_method);
-    if (typeof p.shipping_cents === "number") setShippingCents(p.shipping_cents);
+    if (typeof p.shipping_cost === "number") setShippingCost(p.shipping_cost);
     if (p.payment_terms_text) setTermsPaymentText(p.payment_terms_text);
   }
 
@@ -205,11 +210,11 @@ export default function NewPIPage() {
   }
 
   // ── Derived totals ──────────────────────────────────────────────────────
-  const itemsSubtotalCents = useMemo(
-    () => items.reduce((sum, it) => sum + it.qty * it.unitPriceCents, 0),
+  const itemsSubtotal = useMemo(
+    () => items.reduce((sum, it) => sum + it.qty * it.unitPrice, 0),
     [items],
   );
-  const grandTotalCents = itemsSubtotalCents + shippingCents;
+  const grandTotal = itemsSubtotal + shippingCost;
 
   // ── Handlers ────────────────────────────────────────────────────────────
   function onPiNumberChange(v: string) {
@@ -222,7 +227,7 @@ export default function NewPIPage() {
   function addItem() {
     setItems([
       ...items,
-      { description: "", fabric: "", qty: 1, unit: "set", unitPriceCents: 0, imageUrl: "" },
+      { description: "", fabric: "", qty: 1, unit: "set", unitPrice: 0, imageUrl: "" },
     ]);
   }
 
@@ -251,9 +256,14 @@ export default function NewPIPage() {
   async function onSave() {
     setError(null);
     setSavedLink(null);
+    setSavedPiNumber(null);
 
     if (!customerName.trim()) {
       setError("Customer name is required");
+      return;
+    }
+    if (!customerEmail.trim()) {
+      setError("Customer email is required");
       return;
     }
     if (!piNumber.trim()) {
@@ -271,27 +281,23 @@ export default function NewPIPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          pi_number: piNumber,
-          customer_name: customerName,
-          customer_phone: customerPhone,
-          customer_address: customerAddress,
-          issue_date: issueDate,
-          lead_time_text: leadTimeText,
+          piNumber: piNumber.trim(),
+          customer: {
+            name: customerName.trim(),
+            email: customerEmail.trim(),
+            company: customerCompany.trim() || undefined,
+            address: customerAddress.trim() || undefined,
+            phone: customerPhone.trim() || undefined,
+          },
           items: items
             .filter((it) => it.description.trim())
             .map((it) => ({
-              description: it.description,
-              fabric: it.fabric,
-              qty: it.qty,
-              unit_price_cents: it.unitPriceCents,
-              total_cents: it.qty * it.unitPriceCents,
-              image_url: it.imageUrl,
+              description: it.description.trim(),
+              quantity: Number(it.qty) || 0,
+              unitPrice: Number(it.unitPrice) || 0,
             })),
-          shipping_label: shippingLabel,
-          shipping_method: shippingMethod,
-          shipping_cents: shippingCents,
-          payment_terms_text: termsPaymentText,
-          total_cents: grandTotalCents,
+          notes: termsPaymentText || undefined,
+          currency: "USD",
         }),
       });
 
@@ -302,17 +308,26 @@ export default function NewPIPage() {
       }
 
       const data = (await res.json()) as {
-        ok?: boolean;
-        payment_url?: string;
+        success?: boolean;
         error?: string;
+        id?: number;
+        piNumber?: string;
+        total?: number;
+        currency?: string;
+        clientSecret?: string | null;
+        paymentIntentId?: string | null;
+        paymentUrl?: string | null;
       };
 
-      if (!data.ok) {
+      if (!data.success) {
         setError(data.error || "Save failed");
         return;
       }
 
-      setSavedLink(data.payment_url || `/pay/?pi=${piNumber}`);
+      // Build the canonical public PI link (works whether or not payment is wired up)
+      const publicPiLink = data.paymentUrl || `/pay/?pi=${encodeURIComponent(piNumber.trim())}`;
+      setSavedLink(publicPiLink);
+      setSavedPiNumber(data.piNumber || piNumber.trim());
     } catch (e) {
       setError(`Network error: ${e instanceof Error ? e.message : "unknown"}`);
     } finally {
@@ -334,6 +349,11 @@ export default function NewPIPage() {
         {savedLink ? (
           <SuccessPanel
             link={savedLink}
+            piNumber={savedPiNumber ?? piNumber}
+            customerName={customerName}
+            total={grandTotal}
+            itemCount={items.length}
+            currency="USD"
             copied={copied}
             onCopy={copyLink}
             onNew={() => window.location.reload()}
@@ -351,6 +371,10 @@ export default function NewPIPage() {
             onLeadTimeChange={setLeadTimeText}
             customerName={customerName}
             onCustomerNameChange={setCustomerName}
+            customerEmail={customerEmail}
+            onCustomerEmailChange={setCustomerEmail}
+            customerCompany={customerCompany}
+            onCustomerCompanyChange={setCustomerCompany}
             customerAddress={customerAddress}
             onCustomerAddressChange={setCustomerAddress}
             customerPhone={customerPhone}
@@ -367,10 +391,10 @@ export default function NewPIPage() {
             onShippingMethodChange={setShippingMethod}
             shippingQty={shippingQty}
             onShippingQtyChange={setShippingQty}
-            shippingCents={shippingCents}
-            onShippingCentsChange={setShippingCents}
-            itemsSubtotalCents={itemsSubtotalCents}
-            grandTotalCents={grandTotalCents}
+            shippingCost={shippingCost}
+            onShippingCostChange={setShippingCost}
+            itemsSubtotal={itemsSubtotal}
+            grandTotal={grandTotal}
             termsPaymentText={termsPaymentText}
             onTermsPaymentTextChange={setTermsPaymentText}
             shippingTerm={shippingTerm}
@@ -425,6 +449,10 @@ function PIPreview(props: {
   onLeadTimeChange: (v: string) => void;
   customerName: string;
   onCustomerNameChange: (v: string) => void;
+  customerEmail: string;
+  onCustomerEmailChange: (v: string) => void;
+  customerCompany: string;
+  onCustomerCompanyChange: (v: string) => void;
   customerAddress: string;
   onCustomerAddressChange: (v: string) => void;
   customerPhone: string;
@@ -441,10 +469,10 @@ function PIPreview(props: {
   onShippingMethodChange: (v: string) => void;
   shippingQty: number;
   onShippingQtyChange: (v: number) => void;
-  shippingCents: number;
-  onShippingCentsChange: (v: number) => void;
-  itemsSubtotalCents: number;
-  grandTotalCents: number;
+  shippingCost: number;
+  onShippingCostChange: (v: number) => void;
+  itemsSubtotal: number;
+  grandTotal: number;
   termsPaymentText: string;
   onTermsPaymentTextChange: (v: string) => void;
   shippingTerm: string;
@@ -457,11 +485,11 @@ function PIPreview(props: {
   const {
     piNumber, piSource, piNumberLocked, onPiNumberChange, onRefreshPi,
     issueDate, onIssueDateChange, leadTimeText, onLeadTimeChange,
-    customerName, onCustomerNameChange, customerAddress, onCustomerAddressChange, customerPhone, onCustomerPhoneChange,
+    customerName, onCustomerNameChange, customerEmail, onCustomerEmailChange, customerCompany, onCustomerCompanyChange, customerAddress, onCustomerAddressChange, customerPhone, onCustomerPhoneChange,
     items, onAddItem, onRemoveItem, onUpdateItem, onItemImageFile, fileInputRefs,
     shippingLabel, onShippingLabelChange, shippingMethod, onShippingMethodChange,
-    shippingQty, onShippingQtyChange, shippingCents, onShippingCentsChange,
-    itemsSubtotalCents, grandTotalCents,
+    shippingQty, onShippingQtyChange, shippingCost, onShippingCostChange,
+    itemsSubtotal, grandTotal,
     termsPaymentText, onTermsPaymentTextChange,
     shippingTerm, onShippingTermChange,
     BlackCell, RedInput, BlueText, RedReminder,
@@ -551,7 +579,18 @@ function PIPreview(props: {
             <RedInput
               value={customerName}
               onChange={(e) => onCustomerNameChange(e.target.value)}
-              placeholder="Customer name"
+              placeholder="Customer name *"
+            />
+            <RedInput
+              value={customerCompany}
+              onChange={(e) => onCustomerCompanyChange(e.target.value)}
+              placeholder="Company (optional)"
+            />
+            <RedInput
+              type="email"
+              value={customerEmail}
+              onChange={(e) => onCustomerEmailChange(e.target.value)}
+              placeholder="Email * (required for payment link)"
             />
             <RedInput
               value={customerAddress}
@@ -661,16 +700,16 @@ function PIPreview(props: {
                       <span className="text-sm mr-0.5">$</span>
                       <input
                         type="number"
-                        step="0.01"
+                        step="0.001"
                         min={0}
-                        value={(it.unitPriceCents / 100).toFixed(2)}
-                        onChange={(e) => onUpdateItem(idx, { unitPriceCents: Math.round(parseFloat(e.target.value || "0") * 100) })}
+                        value={it.unitPrice.toFixed(3)}
+                        onChange={(e) => onUpdateItem(idx, { unitPrice: parseFloat(e.target.value || "0") })}
                         className="w-full bg-white dark:bg-neutral-900 border border-[#ff4d00] rounded px-1.5 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-[#ff4d00]/40"
                       />
                     </div>
                   </td>
                   <td className="border border-black dark:border-white p-1.5 align-top text-sm font-semibold">
-                    {fmt(it.qty * it.unitPriceCents)}
+                    {fmt(it.qty * it.unitPrice)}
                   </td>
                   <td className="border border-black dark:border-white p-1.5 align-top text-center">
                     {items.length > 1 && (
@@ -723,14 +762,14 @@ function PIPreview(props: {
                       type="number"
                       step="0.01"
                       min={0}
-                      value={(shippingCents / 100).toFixed(2)}
-                      onChange={(e) => onShippingCentsChange(Math.round(parseFloat(e.target.value || "0") * 100))}
+                      value={shippingCost.toFixed(2)}
+                      onChange={(e) => onShippingCostChange(parseFloat(e.target.value || "0"))}
                       className="w-full bg-white dark:bg-neutral-900 border border-[#ff4d00] rounded px-1.5 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-[#ff4d00]/40"
                     />
                   </div>
                 </td>
                 <td className="border border-black dark:border-white p-1.5 align-top text-sm font-semibold">
-                  {fmt(shippingQty * shippingCents)}
+                  {fmt(shippingQty * shippingCost)}
                 </td>
                 <td className="border border-black dark:border-white p-1.5 align-top"></td>
               </tr>
@@ -738,7 +777,7 @@ function PIPreview(props: {
               {/* TOTAL row */}
               <tr className="bg-neutral-100 dark:bg-neutral-800 font-bold">
                 <td colSpan={5} className="border border-black dark:border-white p-2 text-right">TOTAL:</td>
-                <td className="border border-black dark:border-white p-2 text-base">{fmt(grandTotalCents)}</td>
+                <td className="border border-black dark:border-white p-2 text-base">{fmt(grandTotal)}</td>
                 <td className="border border-black dark:border-white p-2"></td>
               </tr>
             </tbody>
@@ -754,7 +793,7 @@ function PIPreview(props: {
             Add item
           </button>
           <div className="text-neutral-500 text-xs">
-            Subtotal: {fmt(itemsSubtotalCents)} + Shipping: {fmt(shippingCents)} = <strong className="text-black dark:text-white">{fmt(grandTotalCents)}</strong>
+            Subtotal: {fmt(itemsSubtotal)} + Shipping: {fmt(shippingCost)} = <strong className="text-black dark:text-white">{fmt(grandTotal)}</strong>
           </div>
         </div>
       </div>
@@ -884,50 +923,98 @@ function PISourceBadge({ source }: { source: "auto" | "uploaded" | "manual" }) {
 }
 
 function SuccessPanel({
-  link, copied, onCopy, onNew,
+  link, piNumber, customerName, total, itemCount, currency, copied, onCopy, onNew,
 }: {
   link: string;
+  piNumber: string;
+  customerName: string;
+  total: number;
+  itemCount: number;
+  currency: string;
   copied: boolean;
   onCopy: () => void;
   onNew: () => void;
 }) {
+  const previewUrl = typeof window !== "undefined" ? `${window.location.origin}${link}` : link;
   return (
-    <div className="bg-white dark:bg-neutral-900 shadow-lg rounded-lg p-8 border border-neutral-200 dark:border-neutral-800 text-center">
-      <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 dark:bg-green-900/30 mb-4">
-        <Check className="w-8 h-8 text-green-600" />
+    <div className="bg-white dark:bg-neutral-900 shadow-lg rounded-lg overflow-hidden border border-neutral-200 dark:border-neutral-800">
+      {/* Success banner */}
+      <div className="bg-green-50 dark:bg-green-900/20 border-b border-green-200 dark:border-green-800 px-6 py-4 flex items-center gap-3">
+        <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-green-500 text-white shrink-0">
+          <Check className="w-5 h-5" strokeWidth={3} />
+        </div>
+        <div>
+          <h2 className="text-lg font-bold text-green-900 dark:text-green-100">PI {piNumber} saved successfully</h2>
+          <p className="text-sm text-green-700 dark:text-green-300">Stored in Supabase — share the link below to receive payment</p>
+        </div>
       </div>
-      <h2 className="text-2xl font-bold mb-2">PI saved successfully</h2>
-      <p className="text-neutral-600 dark:text-neutral-400 mb-6">Share this link with your customer to receive payment:</p>
-      <div className="flex items-center gap-2 max-w-2xl mx-auto mb-6">
-        <input
-          readOnly
-          value={typeof window !== "undefined" ? `${window.location.origin}${link}` : link}
-          className="flex-1 px-3 py-2 border border-neutral-300 dark:border-neutral-700 rounded bg-neutral-50 dark:bg-neutral-800 text-sm"
-        />
-        <button
-          onClick={onCopy}
-          className="inline-flex items-center gap-1 px-4 py-2 bg-[#ff4d00] hover:bg-[#e64500] text-white rounded text-sm font-semibold"
-        >
-          {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-          {copied ? "Copied!" : "Copy"}
-        </button>
-      </div>
-      <div className="flex justify-center gap-3">
-        <a
-          href={link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1 px-4 py-2 border border-neutral-300 dark:border-neutral-700 rounded text-sm hover:bg-neutral-50 dark:hover:bg-neutral-800"
-        >
-          <ExternalLink className="w-4 h-4" />
-          Open payment page
-        </a>
-        <button
-          onClick={onNew}
-          className="px-4 py-2 border border-neutral-300 dark:border-neutral-700 rounded text-sm hover:bg-neutral-50 dark:hover:bg-neutral-800"
-        >
-          Create another PI
-        </button>
+
+      <div className="p-8 text-center">
+        {/* Quick summary */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto mb-6 text-left">
+          <div>
+            <div className="text-xs uppercase text-neutral-500 tracking-wide">PI Number</div>
+            <div className="font-mono font-bold text-base mt-0.5">{piNumber}</div>
+          </div>
+          <div>
+            <div className="text-xs uppercase text-neutral-500 tracking-wide">Customer</div>
+            <div className="font-semibold mt-0.5 truncate">{customerName || "—"}</div>
+          </div>
+          <div>
+            <div className="text-xs uppercase text-neutral-500 tracking-wide">Items</div>
+            <div className="font-semibold mt-0.5">{itemCount}</div>
+          </div>
+          <div>
+            <div className="text-xs uppercase text-neutral-500 tracking-wide">Total</div>
+            <div className="font-bold text-[#ff4d00] text-base mt-0.5">
+              {currency} {total.toFixed(2)}
+            </div>
+          </div>
+        </div>
+
+        {/* Link */}
+        <div className="flex items-center gap-2 max-w-2xl mx-auto mb-6">
+          <input
+            readOnly
+            value={previewUrl}
+            className="flex-1 px-3 py-2 border border-neutral-300 dark:border-neutral-700 rounded bg-neutral-50 dark:bg-neutral-800 text-sm"
+          />
+          <button
+            onClick={onCopy}
+            className="inline-flex items-center gap-1 px-4 py-2 bg-[#ff4d00] hover:bg-[#e64500] text-white rounded text-sm font-semibold"
+          >
+            {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+            {copied ? "Copied!" : "Copy"}
+          </button>
+        </div>
+
+        {/* Actions */}
+        <div className="flex justify-center flex-wrap gap-3">
+          <a
+            href={link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 px-4 py-2 bg-[#0a0a0a] hover:bg-[#1a1a1a] text-white rounded text-sm font-semibold"
+          >
+            <Eye className="w-4 h-4" />
+            Preview PI
+          </a>
+          <a
+            href={link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 px-4 py-2 border border-neutral-300 dark:border-neutral-700 rounded text-sm hover:bg-neutral-50 dark:hover:bg-neutral-800"
+          >
+            <ExternalLink className="w-4 h-4" />
+            Open in new tab
+          </a>
+          <button
+            onClick={onNew}
+            className="px-4 py-2 border border-neutral-300 dark:border-neutral-700 rounded text-sm hover:bg-neutral-50 dark:hover:bg-neutral-800"
+          >
+            Create another PI
+          </button>
+        </div>
       </div>
     </div>
   );
