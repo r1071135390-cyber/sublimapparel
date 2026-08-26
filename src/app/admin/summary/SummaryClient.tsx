@@ -19,7 +19,7 @@ import {
 // We do NOT rely on this for real security; the assumption is that no one
 // outside the owner knows this page exists. The password just keeps a
 // curious teammate from casually opening /admin/summary/.
-const OWNER_PASSWORD = "vividprint-owner-2026";
+const OWNER_PASSWORD = "HOMEdorm521$$$";
 const SESSION_KEY = "pi_summary_unlocked";
 
 interface PiListItem {
