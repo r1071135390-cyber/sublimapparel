@@ -59,10 +59,11 @@ output.log
 *.log.*
 logs/
 
-# 视频文件
-*.mp4
+# 视频文件（仅忽略其他格式；mp4 现在入仓用于自托管 demo 视频）
 *.avi
 *.mov
+# 太大的视频 > 20MB 仍走外部存储；这里临时把工厂演示视频纳入
+!public/videos/
 *.wmv
 *.flv
 *.mkv
