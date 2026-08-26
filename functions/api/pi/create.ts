@@ -151,21 +151,38 @@ export async function onRequestPost(context: {
   }
 
   const supabaseUrl = env.COZE_SUPABASE_URL.replace(/\/$/, "");
-  const insertRes = await fetch(`${supabaseUrl}/rest/v1/proforma_invoices`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      apikey: env.COZE_SUPABASE_SERVICE_ROLE_KEY,
-      Authorization: `Bearer ${env.COZE_SUPABASE_SERVICE_ROLE_KEY}`,
-      Prefer: "return=representation",
-    },
-    body: JSON.stringify(insertPayload),
-  });
+  let insertRes: Response;
+  try {
+    insertRes = await fetch(`${supabaseUrl}/rest/v1/proforma_invoices`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        apikey: env.COZE_SUPABASE_SERVICE_ROLE_KEY,
+        Authorization: `Bearer ${env.COZE_SUPABASE_SERVICE_ROLE_KEY}`,
+        Prefer: "return=representation",
+      },
+      body: JSON.stringify(insertPayload),
+    });
+  } catch (fetchErr) {
+    const msg = fetchErr instanceof Error ? fetchErr.message : String(fetchErr);
+    const name = fetchErr instanceof Error ? fetchErr.name : "UnknownError";
+    return jsonResponse(
+      {
+        error: "Network error reaching Supabase",
+        detail: `name=${name}; message=${msg}; url=${supabaseUrl}`,
+      },
+      500
+    );
+  }
 
   if (!insertRes.ok) {
     const text = await insertRes.text();
     return jsonResponse(
-      { error: "Failed to create PI in Supabase", detail: text },
+      {
+        error: "Failed to create PI in Supabase",
+        detail: `status=${insertRes.status}; body=${text}`,
+        supabaseUrl,
+      },
       500
     );
   }
