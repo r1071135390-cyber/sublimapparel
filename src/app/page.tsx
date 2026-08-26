@@ -1,19 +1,15 @@
 import { Hero } from "@/components/hero";
 import { buildPageMetadata } from "@/lib/page-metadata";
-import { InquiryCTA } from "@/components/inquiry-cta";
-import { ArtworkCTA } from "@/components/artwork-cta";
-import { BeyondApparel } from "@/components/beyond-apparel";
+import { FactoryFloor } from "@/components/factory-floor";
+import { JsonLd } from "@/components/json-ld";
 import { Features } from "@/components/features";
+import { Process } from "@/components/process";
+import { BeyondApparel } from "@/components/beyond-apparel";
+import { ArtworkCTA } from "@/components/artwork-cta";
 import { HowItWorks } from "@/components/how-it-works";
 import { Products } from "@/components/products";
-import { Process } from "@/components/process";
-import { FactoryFloor } from "@/components/factory-floor";
 import { DDP } from "@/components/ddp";
-import { Industries } from "@/components/industries";
-import { Contact } from "@/components/contact";
-import { HomeExtras } from "@/components/home-extras";
-import { Newsletter, VideoShowcase, FreeDesignService, RecentCaseStudies, LogoWall } from "@/components/home-extras";
-import { JsonLd } from "@/components/json-ld";
+import { LazyClientSections } from "@/components/home/lazy-client-sections";
 
 export const metadata = buildPageMetadata({
     title: "Yiwu Custom Sublimate Apparel Manufacturer | Sublimation & Cotton DDP 100+ Countries",
@@ -52,58 +48,38 @@ const homeJsonLd = [
   },
   {
     "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: "https://sublimapparel.com/",
-      },
-    ],
-  },
-  {
-    "@context": "https://schema.org",
     "@type": "FAQPage",
     mainEntity: [
       {
         "@type": "Question",
-        name: "What is the minimum order quantity (MOQ) for custom sublimation apparel?",
+        name: "What is your minimum order quantity (MOQ)?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "MOQ is 50 pieces per design for DTG and DTF printing on cotton, and 50 pieces for true allover digital print on cotton (cut-and-sew). Polyester sublimation starts at 50 pieces per design. Mixed sizes and styles count toward the same MOQ.",
+          text: "Our MOQ is 50 pieces per design per colorway, and as low as 1 piece per size within the run. For repeat orders we can usually drop to 30 pcs. The full order has a 50 pc minimum total.",
         },
       },
       {
         "@type": "Question",
-        name: "Can you print all-over on 100% cotton?",
+        name: "How long does production take?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Yes. We run two cotton paths: DTG/DTF (A4–A3 per panel, soft hand, MOQ 50) for placement prints, and true allover digital print on cotton (cut-and-sew, full body, MOQ 50) for edge-to-edge designs. Most factories can only do polyester — we invested in both.",
+          text: "Standard lead time is 10-15 business days for bulk production after sample approval, plus 3-7 days for sample development. Rush service (7-10 days) is available for an additional 20%.",
         },
       },
       {
         "@type": "Question",
-        name: "What is DDP shipping and which countries do you serve?",
+        name: "Do you handle shipping and customs?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "DDP (Delivered Duty Paid) means we handle customs paperwork, duties, and door delivery. You receive one line item with no surprise bills. We ship DDP to 100+ countries including the US, UK, EU, Canada, Australia, the Middle East and most of Asia. For US orders we also ship domestically from our Fontana, CA warehouse in 2–5 days.",
+          text: "Yes — we ship DDP (Delivered Duty Paid) to 100+ countries, meaning we handle everything: freight, customs clearance, duties, taxes, and last-mile delivery. You receive the goods at your door with no hidden costs. We also offer FOB and EXW for clients who prefer to arrange their own logistics.",
         },
       },
       {
         "@type": "Question",
-        name: "What is the typical lead time for production?",
+        name: "Can I get a sample before placing a bulk order?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Sample: 3–5 business days after artwork approval. Production: 7–15 days depending on quantity and technique. Shipping: 5–10 days by express or air, 25–35 days by sea. US domestic orders from our Fontana warehouse ship in 2–5 days.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "Do you charge setup fees or screen charges?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "No. Sublimation is digital — there are no screens to make, no plates to burn, and no setup fees. The only charge is the unit price plus shipping. We confirm everything in writing before production starts.",
+          text: "Yes. We offer pre-production samples at $50-150 per piece (refundable on bulk order of 200+ pcs), plus free material swatches and printed color cards. Sample lead time is 5-7 days.",
         },
       },
       {
@@ -124,22 +100,20 @@ export default function Home() {
       <JsonLd data={homeJsonLd} />
       <Hero />
       <FactoryFloor />
-      <VideoShowcase />
+      {/* Server-rendered below-fold sections — kept inline for SEO and
+          because the data lives in HTML is already optimal (vs shipping
+          thousands of lines of catalog data to the client). */}
       <Features />
-      <InquiryCTA />
       <Process />
       <BeyondApparel />
-      <FreeDesignService />
-      <RecentCaseStudies />
-      <LogoWall />
       <ArtworkCTA />
       <HowItWorks />
       <Products />
       <DDP />
-      <Industries />
-      <HomeExtras />
-      <Contact />
-      <Newsletter />
+      {/* Client-heavy below-fold sections — lazy-loaded in a client
+          wrapper. Each gets a lightweight skeleton so layout doesn't
+          jump when the real content hydrates. */}
+      <LazyClientSections />
     </main>
   );
 }
