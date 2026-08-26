@@ -32,6 +32,7 @@ interface PIItem {
   unit_price_cents: number;
   total_cents: number;
   image_url?: string;
+  sizes?: { label: string; qty: number }[] | null;
 }
 
 interface PIData {
@@ -195,6 +196,16 @@ export default function PayClient() {
         y += 12 * fabricLines.length;
         doc.setFontSize(9).setTextColor(0);
       }
+      if (Array.isArray(item.sizes) && item.sizes.length > 0) {
+        const sizeText = item.sizes
+          .map((s) => `${s.label}×${s.qty}`)
+          .join("  ·  ");
+        doc.setFontSize(8).setTextColor(180, 0, 0);
+        const sizeLines = doc.splitTextToSize(`Sizes: ${sizeText}`, 480);
+        doc.text(sizeLines, margin, y);
+        y += 12 * sizeLines.length;
+        doc.setFontSize(9).setTextColor(0);
+      }
     }
 
     // Totals
@@ -349,6 +360,7 @@ export default function PayClient() {
                 unit_price_cents: it.unit_price_cents,
                 total_cents: it.total_cents,
                 image_url: it.image_url,
+                sizes: it.sizes,
               })),
               shipping_label: pi.shipping_label,
               shipping_method: pi.shipping_method,

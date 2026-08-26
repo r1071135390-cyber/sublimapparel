@@ -11,10 +11,19 @@ interface Env {
   COZE_SUPABASE_SERVICE_ROLE_KEY: string;
 }
 
+interface SizeBreakdown {
+  label: string;
+  qty: number;
+}
+
 interface LineItem {
   description: string;
   quantity: number;
   unitPrice: number; // USD
+  fabric?: string;
+  unit?: string;
+  imageUrl?: string;
+  sizes?: SizeBreakdown[]; // optional per-size breakdown
 }
 
 interface CreatePiBody {
@@ -28,6 +37,7 @@ interface CreatePiBody {
   };
   items: LineItem[];
   notes?: string;
+  shippingCost?: number; // USD dollars
   currency?: string; // defaults to USD
 }
 
@@ -79,34 +89,66 @@ export async function onRequestPost(context: {
     return jsonResponse({ error: "items must be a non-empty array" }, 400);
   }
 
-  // Compute totals
-  const subtotal = body.items.reduce(
-    (sum, it) => sum + it.quantity * it.unitPrice,
+  const currency = body.currency || "USD";
+  const shippingCostDollars = Number(body.shippingCost) || 0;
+
+  // Convert form's items (dollars, quantity, unitPrice) to the storage format
+  // (qty + unit_price_cents + total_cents) so the customer-facing pay page keeps
+  // working. sizes are stored verbatim.
+  const storedItems = body.items.map((it) => {
+    const qty = Number(it.quantity) || 0;
+    const unitPriceDollars = Number(it.unitPrice) || 0;
+    const unitPriceCents = Math.round(unitPriceDollars * 100);
+    const totalCents = unitPriceCents * qty;
+    const row: Record<string, unknown> = {
+      description: String(it.description || "").trim(),
+      fabric: it.fabric ?? null,
+      qty,
+      unit: it.unit ?? "pcs",
+      unit_price_cents: unitPriceCents,
+      total_cents: totalCents,
+      image_url: it.imageUrl ?? null,
+    };
+    if (Array.isArray(it.sizes) && it.sizes.length > 0) {
+      row.sizes = it.sizes.map((s) => ({
+        label: String(s.label || "").trim(),
+        qty: Number(s.qty) || 0,
+      }));
+    }
+    return row;
+  });
+
+  // Compute totals in cents
+  const subtotalCents = storedItems.reduce(
+    (sum, row) => sum + (row.total_cents as number),
     0
   );
-  const total = Math.round(subtotal * 100) / 100;
-  const currency = body.currency || "USD";
+  const shippingCents = Math.round(shippingCostDollars * 100);
+  const totalCents = subtotalCents + shippingCents;
 
-  // Insert into Supabase table "proforma_invoices"
-  const insertPayload = {
+  // Insert into Supabase table "proforma_invoices" — schema is cents-based.
+  // `payment_terms` and `payment_percentage` are NOT NULL in the table, so we
+  // supply sensible defaults. Free-form notes (if any) go into metadata.
+  const insertPayload: Record<string, unknown> = {
     pi_number: body.piNumber,
     customer_name: body.customer.name,
     customer_email: body.customer.email ?? null,
     customer_phone: body.customer.phone,
     customer_company: body.customer.company ?? null,
     customer_address: body.customer.address ?? null,
-    items: body.items,
-    notes: body.notes ?? null,
-    subtotal,
-    total,
+    items: storedItems,
+    subtotal_cents: subtotalCents,
+    shipping_cents: shippingCents,
+    total_cents: totalCents,
     currency,
     status: "draft",
-    created_at: new Date().toISOString(),
-    // Stripe-related fields are intentionally null for now.
-    payment_intent_id: null,
-    client_secret: null,
-    payment_url: null,
+    payment_terms: body.notes ?? "30% deposit, 70% before shipment",
+    payment_percentage: 30,
   };
+
+  if (body.notes) {
+    insertPayload.metadata = { notes: body.notes };
+  }
 
   const supabaseUrl = env.COZE_SUPABASE_URL.replace(/\/$/, "");
   const insertRes = await fetch(`${supabaseUrl}/rest/v1/proforma_invoices`, {
@@ -135,12 +177,9 @@ export async function onRequestPost(context: {
     success: true,
     id,
     piNumber: body.piNumber,
-    total,
+    totalCents,
+    subtotalCents,
+    shippingCents,
     currency,
-    // No Stripe fields yet — they will be populated when the user
-    // opens the "Pay" link and we lazily create a Checkout Session.
-    clientSecret: null,
-    paymentIntentId: null,
-    paymentUrl: null,
   });
 }

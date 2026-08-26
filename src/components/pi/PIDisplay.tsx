@@ -18,6 +18,7 @@ export interface PIItemRow {
   unit_price_cents: number;
   total_cents: number;
   image_url?: string | null;
+  sizes?: { label: string; qty: number }[] | null;
 }
 
 export interface PIDisplayData {
@@ -62,6 +63,85 @@ const fmtDate = (iso: string) => {
     return iso;
   }
 };
+
+function ItemWithSizesRow({
+  it,
+  currency,
+}: {
+  it: PIItemRow;
+  currency: string;
+}) {
+  const hasSizes = Array.isArray(it.sizes) && it.sizes.length > 0;
+  return (
+    <>
+      <tr className="border-b border-black/30 align-top">
+        <td
+          className="border-r border-black/30 p-2 text-center"
+          style={{ minHeight: 70 }}
+        >
+          {it.image_url ? (
+            <img
+              src={it.image_url}
+              alt={it.description}
+              className="mx-auto h-16 w-16 border border-black/20 object-cover"
+            />
+          ) : (
+            <div className="mx-auto h-16 w-16 border border-dashed border-black/30" />
+          )}
+        </td>
+        <td className="border-r border-black/30 p-2 font-bold">
+          {it.description}
+        </td>
+        <td
+          className="border-r border-black/30 p-2"
+          style={{ color: RED }}
+        >
+          {it.fabric || ""}
+        </td>
+        <td
+          className="border-r border-black/30 p-2 text-right"
+          style={{ color: RED }}
+        >
+          {it.qty} {it.unit || "set"}
+        </td>
+        <td
+          className="border-r border-black/30 p-2 text-right"
+          style={{ color: RED }}
+        >
+          {fmtMoney(it.unit_price_cents, currency)}
+        </td>
+        <td className="p-2 text-right font-bold">
+          {fmtMoney(it.total_cents, currency)}
+        </td>
+      </tr>
+      {hasSizes && (
+        <tr className="border-b border-black/30 bg-[#fafafa]">
+          <td className="border-r border-black/30 p-2" />
+          <td colSpan={5} className="p-2">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[10px]">
+              <span
+                className="font-black uppercase tracking-wide"
+                style={{ color: RED }}
+              >
+                Size Breakdown:
+              </span>
+              {it.sizes!.map((s, i) => (
+                <span
+                  key={`${s.label}-${i}`}
+                  className="inline-flex items-center gap-1"
+                  style={{ color: RED }}
+                >
+                  <span className="font-bold">{s.label}</span>
+                  <span>×{s.qty}</span>
+                </span>
+              ))}
+            </div>
+          </td>
+        </tr>
+      )}
+    </>
+  );
+}
 
 export function PIDisplay({ pi }: { pi: PIDisplayData }) {
   const itemsSubtotal = pi.items.reduce((s, it) => s + it.total_cents, 0);
@@ -152,46 +232,7 @@ export function PIDisplay({ pi }: { pi: PIDisplayData }) {
         </thead>
         <tbody>
           {pi.items.map((it, idx) => (
-            <tr key={idx} className="border-b border-black/30 align-top">
-              <td
-                className="border-r border-black/30 p-2 text-center"
-                style={{ minHeight: 70 }}
-              >
-                {it.image_url ? (
-                  <img
-                    src={it.image_url}
-                    alt={it.description}
-                    className="mx-auto h-16 w-16 border border-black/20 object-cover"
-                  />
-                ) : (
-                  <div className="mx-auto h-16 w-16 border border-dashed border-black/30" />
-                )}
-              </td>
-              <td className="border-r border-black/30 p-2 font-bold">
-                {it.description}
-              </td>
-              <td
-                className="border-r border-black/30 p-2"
-                style={{ color: RED }}
-              >
-                {it.fabric || ""}
-              </td>
-              <td
-                className="border-r border-black/30 p-2 text-right"
-                style={{ color: RED }}
-              >
-                {it.qty} {it.unit || "set"}
-              </td>
-              <td
-                className="border-r border-black/30 p-2 text-right"
-                style={{ color: RED }}
-              >
-                {fmtMoney(it.unit_price_cents, pi.currency)}
-              </td>
-              <td className="p-2 text-right font-bold">
-                {fmtMoney(it.total_cents, pi.currency)}
-              </td>
-            </tr>
+            <ItemWithSizesRow key={idx} it={it} currency={pi.currency} />
           ))}
           {/* Shipping row */}
           <tr className="border-b border-black/30 align-top">

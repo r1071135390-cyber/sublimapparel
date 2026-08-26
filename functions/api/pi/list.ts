@@ -30,7 +30,7 @@ interface PiRow {
   pi_number: string;
   customer_name: string | null;
   customer_company: string | null;
-  total: number | null;
+  total_cents: number | null;
   currency: string | null;
   status: string | null;
   created_at: string;
@@ -41,12 +41,11 @@ function startOfMonthIso(): string {
   return new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1)).toISOString();
 }
 
-function formatMoney(amount: number | null, currency: string | null): string {
-  if (amount == null) return "—";
+function formatMoney(amountCents: number | null, currency: string | null): string {
+  if (amountCents == null) return "—";
   const c = currency || "USD";
-  // Store total as numeric (e.g. 1234.56). If it's already in cents, the
-  // create.ts path stores dollars. We just display it as a fixed-2 number.
-  return `${c} ${amount.toLocaleString("en-US", {
+  const dollars = amountCents / 100;
+  return `${c} ${dollars.toLocaleString("en-US", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   })}`;
@@ -73,7 +72,7 @@ export async function onRequestGet(context: {
 
   // Fetch the most recent 100 PIs.
   const listRes = await fetch(
-    `${supabaseUrl}/rest/v1/proforma_invoices?select=id,pi_number,customer_name,customer_company,total,currency,status,created_at&order=created_at.desc&limit=100`,
+    `${supabaseUrl}/rest/v1/proforma_invoices?select=id,pi_number,customer_name,customer_company,total_cents,currency,status,created_at&order=created_at.desc&limit=100`,
     { headers }
   );
 
@@ -88,8 +87,8 @@ export async function onRequestGet(context: {
   // and the dataset is small (admin-internal page, capped at 100 in the list).
   let totalCount = 0;
   let monthCount = 0;
-  let totalValueUsd = 0;
-  let monthValueUsd = 0;
+  let totalValueCents = 0;
+  let monthValueCents = 0;
   const monthStart = new Date(startOfMonthIso()).getTime();
 
   for (const r of rows) {
@@ -99,9 +98,9 @@ export async function onRequestGet(context: {
     if (isThisMonth) monthCount++;
     // Treat all totals as USD-equivalent for the summary.
     // (If we add multi-currency conversion later, do it here.)
-    const amt = typeof r.total === "number" ? r.total : 0;
-    totalValueUsd += amt;
-    if (isThisMonth) monthValueUsd += amt;
+    const amt = typeof r.total_cents === "number" ? r.total_cents : 0;
+    totalValueCents += amt;
+    if (isThisMonth) monthValueCents += amt;
   }
 
   // If the table has more than 100 PIs, the counts above are only for the
@@ -127,9 +126,9 @@ export async function onRequestGet(context: {
     piNumber: r.pi_number,
     customerName: r.customer_name,
     customerCompany: r.customer_company,
-    total: r.total,
+    totalCents: r.total_cents,
     currency: r.currency,
-    totalDisplay: formatMoney(r.total, r.currency),
+    totalDisplay: formatMoney(r.total_cents, r.currency),
     status: r.status,
     createdAt: r.created_at,
   }));
@@ -139,8 +138,10 @@ export async function onRequestGet(context: {
       totalCount: realTotalCount,
       shownCount: enriched.length,
       monthCount,
-      totalValueUsd: Math.round(totalValueUsd * 100) / 100,
-      monthValueUsd: Math.round(monthValueUsd * 100) / 100,
+      totalValueCents,
+      monthValueCents,
+      totalValueDisplay: formatMoney(totalValueCents, "USD"),
+      monthValueDisplay: formatMoney(monthValueCents, "USD"),
     },
     pis: enriched,
   });

@@ -2,9 +2,11 @@
 
 import { useState, useEffect, useMemo, useRef } from "react";
 import Link from "next/link";
-import { Plus, Trash2, Save, ExternalLink, RefreshCw, Upload, X, Check, Copy, Eye } from "lucide-react";
+import { Plus, Trash2, Save, ExternalLink, RefreshCw, Upload, X, Check, Copy, Eye, Ruler } from "lucide-react";
 
 // ─── Types ────────────────────────────────────────────────────────────────
+type SizeRow = { label: string; qty: number };
+
 type LineItem = {
   description: string;
   fabric: string;
@@ -12,6 +14,36 @@ type LineItem = {
   unit: string;       // editable, e.g. "set" / "pcs" / "pair" / "dozen"
   unitPrice: number;  // USD, supports up to 3 decimal places
   imageUrl: string;
+  hasSizeBreakdown: boolean;
+  sizes: SizeRow[];
+};
+
+const SIZE_PRESETS: Record<string, SizeRow[]> = {
+  "Adult Standard": [
+    { label: "S", qty: 0 },
+    { label: "M", qty: 0 },
+    { label: "L", qty: 0 },
+    { label: "XL", qty: 0 },
+    { label: "2XL", qty: 0 },
+  ],
+  "Adult Plus": [
+    { label: "2XL", qty: 0 },
+    { label: "3XL", qty: 0 },
+    { label: "4XL", qty: 0 },
+    { label: "5XL", qty: 0 },
+  ],
+  "Kids Standard": [
+    { label: "2T", qty: 0 },
+    { label: "3T", qty: 0 },
+    { label: "4T", qty: 0 },
+    { label: "5", qty: 0 },
+    { label: "6", qty: 0 },
+    { label: "7", qty: 0 },
+    { label: "8", qty: 0 },
+    { label: "10", qty: 0 },
+    { label: "12", qty: 0 },
+  ],
+  Custom: [],
 };
 
 type PrefillPayload = {
@@ -29,6 +61,7 @@ type PrefillPayload = {
     unit?: string;
     unit_price?: number;
     image_url?: string;
+    sizes?: { label: string; qty: number }[];
   }>;
   shipping_label?: string;
   shipping_method?: string;
@@ -96,6 +129,113 @@ const BANK_INFO = {
 };
 
 // ─── Page ─────────────────────────────────────────────────────────────────
+function getItemQty(it: LineItem): number {
+  if (!it.hasSizeBreakdown) return it.qty;
+  return it.sizes.reduce((sum, s) => sum + (Number(s.qty) || 0), 0);
+}
+
+function SizeBreakdownEditor({
+  it,
+  idx,
+  onUpdateItem,
+}: {
+  it: LineItem;
+  idx: number;
+  onUpdateItem: (idx: number, patch: Partial<LineItem>) => void;
+}) {
+  return (
+    <div className="space-y-2">
+      <div className="flex flex-wrap items-center gap-3 text-xs">
+        <span className="inline-flex items-center gap-1 font-bold text-[#ff4d00]">
+          <Ruler className="w-3.5 h-3.5" />
+          SIZE BREAKDOWN
+        </span>
+        <span className="text-neutral-500">
+          QTY is auto-summed ({getItemQty(it).toLocaleString()} pcs)
+        </span>
+        <button
+          type="button"
+          onClick={() =>
+            onUpdateItem(idx, { hasSizeBreakdown: false, sizes: [] })
+          }
+          className="ml-auto text-neutral-500 hover:text-[#ff4d00] underline"
+        >
+          Turn off
+        </button>
+      </div>
+      <div className="flex flex-wrap items-center gap-2 text-xs">
+        <span className="text-neutral-500">Preset:</span>
+        {Object.keys(SIZE_PRESETS).map((name) => (
+          <button
+            key={name}
+            type="button"
+            onClick={() => onUpdateItem(idx, { sizes: SIZE_PRESETS[name].map((s) => ({ ...s })) })}
+            className="px-2 py-1 rounded border border-[#ff4d00] text-[#ff4d00] hover:bg-[#ff4d00] hover:text-white transition-colors"
+          >
+            {name}
+          </button>
+        ))}
+      </div>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
+        {it.sizes.map((s, i) => (
+          <div
+            key={`${s.label}-${i}`}
+            className="flex items-center gap-1 bg-white dark:bg-neutral-900 border border-[#ff4d00] rounded px-2 py-1"
+          >
+            <input
+              type="text"
+              value={s.label}
+              onChange={(e) => {
+                const next = [...it.sizes];
+                next[i] = { ...next[i], label: e.target.value };
+                onUpdateItem(idx, { sizes: next });
+              }}
+              className="w-14 bg-transparent text-center font-bold focus:outline-none"
+              placeholder="Size"
+            />
+            <span className="text-neutral-400">×</span>
+            <input
+              type="number"
+              min={0}
+              value={s.qty}
+              onChange={(e) => {
+                const next = [...it.sizes];
+                next[i] = { ...next[i], qty: parseInt(e.target.value) || 0 };
+                onUpdateItem(idx, { sizes: next });
+              }}
+              className="w-16 bg-transparent text-center focus:outline-none"
+              placeholder="0"
+            />
+            <button
+              type="button"
+              onClick={() => {
+                const next = it.sizes.filter((_, j) => j !== i);
+                onUpdateItem(idx, { sizes: next });
+              }}
+              className="text-neutral-400 hover:text-red-500"
+              title="Remove size"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={() =>
+            onUpdateItem(idx, {
+              sizes: [...it.sizes, { label: "", qty: 0 }],
+            })
+          }
+          className="inline-flex items-center justify-center gap-1 px-2 py-1 rounded border border-dashed border-neutral-400 text-neutral-500 hover:border-[#ff4d00] hover:text-[#ff4d00]"
+        >
+          <Plus className="w-3.5 h-3.5" />
+          Add size
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export default function NewPIPage() {
   // Header / metadata
   const [piNumber, setPiNumber] = useState(todayPiNumber());
@@ -113,7 +253,7 @@ export default function NewPIPage() {
 
   // Items
   const [items, setItems] = useState<LineItem[]>([
-    { description: "", fabric: "", qty: 1, unit: "set", unitPrice: 0, imageUrl: "" },
+    { description: "", fabric: "", qty: 1, unit: "set", unitPrice: 0, imageUrl: "", hasSizeBreakdown: false, sizes: [] },
   ]);
   // Shipping row (always present, like in the Excel)
   const [shippingLabel, setShippingLabel] = useState("Shipping Cost");
@@ -188,6 +328,10 @@ export default function NewPIPage() {
           unit: it.unit || "set",
           unitPrice: it.unit_price ?? 0,
           imageUrl: it.image_url || "",
+          hasSizeBreakdown: Array.isArray(it.sizes) && it.sizes.length > 0,
+          sizes: Array.isArray(it.sizes)
+            ? it.sizes.map((s: any) => ({ label: String(s.label ?? ""), qty: Number(s.qty ?? 0) }))
+            : [],
         })),
       );
     }
@@ -212,7 +356,7 @@ export default function NewPIPage() {
 
   // ── Derived totals ──────────────────────────────────────────────────────
   const itemsSubtotal = useMemo(
-    () => items.reduce((sum, it) => sum + it.qty * it.unitPrice, 0),
+    () => items.reduce((sum, it) => sum + getItemQty(it) * it.unitPrice, 0),
     [items],
   );
   const grandTotal = itemsSubtotal + shippingCost;
@@ -228,7 +372,7 @@ export default function NewPIPage() {
   function addItem() {
     setItems([
       ...items,
-      { description: "", fabric: "", qty: 1, unit: "set", unitPrice: 0, imageUrl: "" },
+      { description: "", fabric: "", qty: 1, unit: "set", unitPrice: 0, imageUrl: "", hasSizeBreakdown: false, sizes: [] },
     ]);
   }
 
@@ -292,12 +436,22 @@ export default function NewPIPage() {
           },
           items: items
             .filter((it) => it.description.trim())
-            .map((it) => ({
-              description: it.description.trim(),
-              quantity: Number(it.qty) || 0,
-              unitPrice: Number(it.unitPrice) || 0,
-            })),
+            .map((it) => {
+              const item: Record<string, unknown> = {
+                description: it.description.trim(),
+                quantity: getItemQty(it),
+                unitPrice: Number(it.unitPrice) || 0,
+              };
+              if (it.hasSizeBreakdown && it.sizes.length > 0) {
+                item.sizes = it.sizes.map((s) => ({
+                  label: s.label,
+                  qty: Number(s.qty) || 0,
+                }));
+              }
+              return item;
+            }),
           notes: termsPaymentText || undefined,
+          shippingCost: Number(shippingCost) || 0,
           currency: "USD",
         }),
       });
@@ -702,13 +856,22 @@ function PIPreview(props: {
                   </td>
                   <td className="border border-black dark:border-white p-1.5 align-top">
                     <div className="flex items-center gap-1">
-                      <input
-                        type="number"
-                        min={1}
-                        value={it.qty}
-                        onChange={(e) => onUpdateItem(idx, { qty: parseInt(e.target.value) || 0 })}
-                        className="w-24 bg-white dark:bg-neutral-900 border border-[#ff4d00] rounded px-1.5 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-[#ff4d00]/40"
-                      />
+                      {it.hasSizeBreakdown ? (
+                        <div
+                          className="w-24 bg-neutral-100 dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-700 rounded px-1.5 py-1 text-sm font-semibold text-center text-neutral-700 dark:text-neutral-200"
+                          title="Auto-summed from size breakdown below"
+                        >
+                          {getItemQty(it).toLocaleString()}
+                        </div>
+                      ) : (
+                        <input
+                          type="number"
+                          min={1}
+                          value={it.qty}
+                          onChange={(e) => onUpdateItem(idx, { qty: parseInt(e.target.value) || 0 })}
+                          className="w-24 bg-white dark:bg-neutral-900 border border-[#ff4d00] rounded px-1.5 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-[#ff4d00]/40"
+                        />
+                      )}
                       <input
                         type="text"
                         value={it.unit}
@@ -716,6 +879,21 @@ function PIPreview(props: {
                         placeholder="set"
                         className="w-16 bg-white dark:bg-neutral-900 border border-[#ff4d00] rounded px-1.5 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-[#ff4d00]/40"
                       />
+                      {!it.hasSizeBreakdown && (
+                        <button
+                          type="button"
+                          onClick={() =>
+                            onUpdateItem(idx, {
+                              hasSizeBreakdown: true,
+                              sizes: SIZE_PRESETS["Adult Standard"].map((s) => ({ ...s })),
+                            })
+                          }
+                          className="text-neutral-400 hover:text-[#ff4d00]"
+                          title="Enable size breakdown"
+                        >
+                          <Ruler className="w-4 h-4" />
+                        </button>
+                      )}
                     </div>
                   </td>
                   <td className="border border-black dark:border-white p-1.5 align-top">
@@ -738,7 +916,7 @@ function PIPreview(props: {
                     </div>
                   </td>
                   <td className="border border-black dark:border-white p-1.5 align-top text-sm font-semibold">
-                    {fmt(it.qty * it.unitPrice)}
+                    {fmt(getItemQty(it) * it.unitPrice)}
                   </td>
                   <td className="border border-black dark:border-white p-1.5 align-top text-center">
                     {items.length > 1 && (
@@ -753,6 +931,21 @@ function PIPreview(props: {
                   </td>
                 </tr>
               ))}
+
+              {/* Size breakdown sub-rows (one per item that has hasSizeBreakdown) */}
+              {items.map((it, idx) =>
+                it.hasSizeBreakdown ? (
+                  <tr key={`sizes-${idx}`} className="bg-[#fff7f0] dark:bg-[#2a1a0e]">
+                    <td colSpan={7} className="border border-black dark:border-white p-3 align-top">
+                      <SizeBreakdownEditor
+                        it={it}
+                        idx={idx}
+                        onUpdateItem={onUpdateItem}
+                      />
+                    </td>
+                  </tr>
+                ) : null
+              )}
 
               {/* Shipping row */}
               <tr>

@@ -27,7 +27,7 @@ interface PiListItem {
   piNumber: string;
   customerName: string | null;
   customerCompany: string | null;
-  total: number | null;
+  totalCents: number | null;
   currency: string | null;
   totalDisplay: string;
   status: string | null;
@@ -38,8 +38,10 @@ interface SummaryStats {
   totalCount: number;
   shownCount: number;
   monthCount: number;
-  totalValueUsd: number;
-  monthValueUsd: number;
+  totalValueCents: number;
+  monthValueCents: number;
+  totalValueDisplay: string;
+  monthValueDisplay: string;
 }
 
 function statusColor(status: string | null): {
@@ -90,13 +92,6 @@ function formatDate(iso: string): string {
   const m = String(d.getUTCMonth() + 1).padStart(2, "0");
   const day = String(d.getUTCDate()).padStart(2, "0");
   return `${y}-${m}-${day}`;
-}
-
-function formatUsd(amount: number): string {
-  return `USD ${amount.toLocaleString("en-US", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  })}`;
 }
 
 export default function SummaryClient() {
@@ -307,14 +302,14 @@ export default function SummaryClient() {
           <StatCard
             icon={<DollarSign className="h-6 w-6" strokeWidth={2.5} />}
             label="Total Value"
-            value={stats ? formatUsd(stats.totalValueUsd) : "—"}
+            value={stats ? stats.totalValueDisplay : "—"}
             sub="All time, USD-eq."
             accent="#ff4d00"
           />
           <StatCard
             icon={<TrendingUp className="h-6 w-6" strokeWidth={2.5} />}
             label="This Month Value"
-            value={stats ? formatUsd(stats.monthValueUsd) : "—"}
+            value={stats ? stats.monthValueDisplay : "—"}
             sub="USD-equivalent"
             accent="#ff4d00"
           />
