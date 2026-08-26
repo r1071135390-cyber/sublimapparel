@@ -479,7 +479,7 @@ function PIPreview(props: {
             className="h-24 w-auto shrink-0 hover:scale-[1.01] transition-transform"
           />
           <div className="flex-1 pl-[20%]">
-            <div className="text-lg font-bold tracking-wide">
+            <div className="text-lg font-bold tracking-wide whitespace-nowrap">
               YIWU HOMEDORM COMMODITY MANUFACTURING CO.,LTD
             </div>
             <div className="text-sm text-neutral-700 dark:text-neutral-300 mt-1">
