@@ -476,7 +476,7 @@ function PIPreview(props: {
           <img
             src="/sublimapparel-logo.webp"
             alt="SublimApparel"
-            className="h-32 w-auto shrink-0 hover:scale-[1.01] transition-transform"
+            className="h-48 w-auto shrink-0 hover:scale-[1.01] transition-transform"
           />
           <div className="flex-1 pl-[20%]">
             <div className="text-lg font-bold tracking-wide">
