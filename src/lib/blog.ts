@@ -606,6 +606,180 @@ export const blogPosts: BlogPost[] = [
 "Download our free AI/PDF artwork template to speed up approval",
     ],
   },
+  {
+    slug: "what-is-sublimation-fabric",
+    title: "What Is Sublimation Fabric? A Factory Guide to How It Works",
+    excerpt:
+"Sublimation fabric is a polyester (or polyester-blend) textile that has been engineered to bond with dye-sublimation ink at the molecular level. This guide explains what it is, why polyester is required, and how to choose the right one for your project.",
+    category: "Industry Guide",
+    date: "2026-09-04",
+    readTime: "7 min read",
+    author: "SublimApparel Team",
+    coverImage: "/blog/sublimation-printer-factory.jpeg",
+    coverAlt: "Industrial wide-format sublimation printer applying heat transfer to white polyester fabric on a Yiwu factory production line, CMYK ink cartridges visible",
+    tags: ["sublimation fabric", "polyester", "dye sublimation", "fabric guide", "all-over print"],
+    metaTitle: "What Is Sublimation Fabric? 2025 Factory Guide (Polyester, Blends, Knits)",
+    metaDescription:
+"Sublimation fabric is polyester that bonds with dye-sublimation ink at the molecular level. Learn why polyester is required, what blends work, and how to pick the right knit for all-over print apparel.",
+    intro: [
+"If you have ever opened a sublimation catalog or landed on a factory's fabric page, you have seen the term sublimation fabric used a lot. It sounds like a specific textile — but it is actually a behavior that certain fabrics have, not a single material.",
+"In plain English: sublimation fabric is any fabric that bonds with dye-sublimation ink under heat and pressure. In practice, that means polyester and polyester-rich blends. Cotton does not qualify. This guide explains what sublimation fabric actually is, why polyester is non-negotiable, and how to pick the right knit, weight, and stretch for your project.",
+    ],
+    sections: [
+      {
+        heading: "What Makes a Fabric 'Sublimation Fabric'?",
+        paragraphs: [
+"Three things have to be true for a fabric to be sublimation-ready: it must contain polyester (or another synthetic that opens its polymer structure under heat), it must be clean and pre-treated (no silicone softeners, no water-repellent coatings), and the dye must be able to migrate into the fiber during the heat-press window.",
+"When those three conditions are met, the sublimation ink sublimates — turns from solid directly into gas — and bonds with the polyester fiber at the molecular level. The result is a print that is not sitting on the surface of the fabric. It is part of the fabric. That is why sublimated prints survive 50, 100, even 200+ washes without cracking, peeling, or fading.",
+"For a deeper look at the underlying chemistry and process, see our <a href='/blog/what-is-sublimation-printing/'>sublimation printing guide</a> and our <a href='/technique/sublimation/'>dye sublimation process</a>.",
+        ],
+      },
+      {
+        heading: "Why Polyester Is the Only Real Answer",
+        paragraphs: [
+"Polyester works because the polymer chains in PET (polyethylene terephthalate) open up at around 180-200°C. When sublimation ink reaches that temperature as a gas, it slips between the open polymer chains and locks in when the fabric cools. The dye is now chemically bonded to the fiber.",
+"Cotton does the opposite. Cotton is a natural cellulose fiber with no synthetic polymer structure — the dye gas has nothing to bond with. The ink either sits on the surface (washing off within a few cycles) or does not transfer at all. We have a full comparison of <a href='/blog/polyester-vs-cotton-sublima-fabric/'>polyester vs cotton for sublimation</a> in a separate post if you want the technical breakdown.",
+"The short version: 100% polyester gives you the brightest colors and the most durable print. 65/35 poly-cotton blends print, but the cotton portion looks faded or washed-out. Anything below 50% polyester is not worth your time.",
+        ],
+      },
+      {
+        heading: "The Main Types of Sublimation Fabric",
+        paragraphs: [
+"We stock over 60 sublimation-ready fabrics in our Yiwu warehouse, but the B2B market is mostly served by about a dozen. Here are the workhorses, in order of order volume:",
+"Birdseye mesh — 140-160 GSM, 100% polyester, the standard for <a href='/products/cycling/'>cycling jerseys</a>, running singlets, and triathlon suits. Lightweight, breathable, and the small hole pattern wicks sweat well.",
+"Interlock — 160-200 GSM, 100% polyester, the workhorse for <a href='/products/t-shirts/'>t-shirts</a>, <a href='/products/jerseys/'>jerseys</a>, and <a href='/products/esports/'>esports jerseys</a>. Smooth face, soft hand-feel, holds shape.",
+"Brushed poly / French terry — 220-280 GSM, 100% polyester, used for <a href='/products/hoodies/'>hoodies</a>, sweatshirts, and warm-up jackets. Brushed back for warmth without the weight of fleece.",
+"PBT stretch — 180-220 GSM, polyester with PBT (polybutylene terephthalate) for chlorine-resistant stretch. The standard for competitive swimwear, <a href='/industries/endurance-race-events/'>triathlon suits</a>, and race-day apparel that has to survive pool chlorine and saltwater.",
+"Spandex blends — 80-90% polyester + 10-20% spandex, for <a href='/products/training-apparel/'>activewear</a>, <a href='/products/training-apparel/'>training apparel</a>, and any application requiring 4-way stretch.",
+"Full catalog with GSM, composition, and recommended uses is on our <a href='/fabric/'>fabric index</a>.",
+        ],
+      },
+      {
+        heading: "What Fabrics Do NOT Work for Sublimation",
+        paragraphs: [
+"Natural fibers: cotton, wool, silk, linen, hemp. The dye has no synthetic polymer to bond with. If you need an all-over print on cotton, the realistic alternatives are <a href='/technique/dtf/'>DTF (direct-to-film) transfers</a> or <a href='/technique/dtg/'>DTG (direct-to-garment) print</a> — both work on cotton but have trade-offs.",
+"Coated or treated fabrics: anything with a durable water-repellent (DWR) finish, a silicone softener, or a fire-retardant coating. The coating blocks the dye from reaching the fiber. If you need a technical fabric with a DWR finish, you have to sublimate first, then apply the finish in a separate post-production step.",
+"Very dark fabrics: sublimation ink is transparent — the white you see in the print is the white of the fabric. If you sublimate on a black or navy fabric, your print will be nearly invisible. The white base fabric is non-negotiable for true sublimation.",
+"Recycled polyester: works, but with caveats. Recycled PET often has more variation in dye uptake, so you may see slight color shifts between panels. Test before committing to a large run. Our <a href='/fabric/cotton/'>cotton fabric guide</a> covers this in detail.",
+        ],
+      },
+      {
+        heading: "How to Choose the Right Sublimation Fabric for Your Project",
+        paragraphs: [
+"Start with the end use. If you are making <a href='/industries/sports-teams-leagues/'>esports jerseys</a>, you want a 160-180 GSM interlock with a smooth face for sharp print detail. If you are making <a href='/industries/endurance-race-events/'>running singlets</a>, birdseye mesh at 140-150 GSM is the standard. If you are making <a href='/industries/sports-teams-leagues/'>cycling kits</a>, you want a 4-way stretch spandex blend.",
+"Match weight to climate. 140-160 GSM is the sweet spot for hot-weather performance apparel. 180-200 GSM is a year-round middle ground. 220+ GSM is for cool-weather and lifestyle applications.",
+"Order a sample first. We send free <a href='/samples/'>fabric swatches</a> and <a href='/samples/'>printed strike-off samples</a> so you can test the hand-feel, stretch, and color vibrancy before committing to bulk production. Our sample kit includes the 12 most popular sublimation fabrics in A5 size with a printed color test on each.",
+"Talk to us if you are unsure. We have been running sublimation production since 2014 and we have seen almost every fabric scenario. Send us your spec — sport, climate, print design, budget — and we will recommend 2-3 fabrics to sample. There is no charge for fabric consultation.",
+        ],
+      },
+      {
+        heading: "Sublimation Fabric vs All-Over Print Garments",
+        paragraphs: [
+"Sublimation fabric is the material. <a href='/all-over-print/'>All-over print</a> is the result. The two terms get confused, but they are not the same thing. All-over print is a design goal (edge-to-edge artwork across the entire garment); sublimation fabric is the substrate that makes all-over print possible at scale.",
+"Most all-over print apparel on the market today is sublimation — because sublimation is the only decoration method that allows edge-to-edge printing with no print area limit and no surface feel. <a href='/technique/screen-printing/'>Screen printing</a> and <a href='/technique/embroidery/'>embroidery</a> are limited to small areas.",
+"If your project needs all-over print, you need a sublimation fabric. If you only need a chest logo, sublimation is overkill — screen print or embroidery is faster and cheaper for that use case. We help you pick the right method for the design, not the other way around.",
+        ],
+      },
+    ],
+    keyTakeaways: [
+"Sublimation fabric is any polyester or polyester-rich blend that bonds with sublimation ink under heat",
+"100% polyester = brightest, most durable print. Below 50% polyester is not worth the effort",
+"Cotton, wool, silk, coated fabrics do NOT work for true sublimation",
+"Match the fabric to the end use: birdseye for running, interlock for jerseys, brushed poly for hoodies",
+"Order our free fabric swatch kit to test hand-feel, stretch, and color before bulk production",
+    ],
+  },
+  {
+    slug: "polyester-vs-cotton-sublima-fabric",
+    title: "Polyester vs Cotton for Sublimation Printing: A Factory Comparison",
+    excerpt:
+"Polyester prints bright, durable, edge-to-edge. Cotton is comfortable, familiar, and totally incompatible with sublimation. Here is how to choose — and what to do when you need an all-over print on cotton.",
+    category: "Product Guide",
+    date: "2026-09-05",
+    readTime: "8 min read",
+    author: "SublimApparel Team",
+    coverImage: "/blog/polyester-vs-cotton-comparison.jpeg",
+    coverAlt: "Two folded t-shirts side by side on white background — left shirt bright white polyester with vivid full-color edge-to-edge sublimated geometric pattern, right shirt heather grey plain cotton",
+    tags: ["polyester vs cotton", "sublimation fabric", "cotton printing", "DTG", "DTF", "all-over print"],
+    metaTitle: "Polyester vs Cotton for Sublimation 2025: Honest Factory Comparison",
+    metaDescription:
+"Polyester vs cotton for sublimation printing: polyester wins on color and durability, cotton wins on comfort. Honest comparison of cost, feel, wash-fastness, and the cotton alternatives.",
+    intro: [
+"This is the most common question we get from new B2B clients: can we sublimate on cotton? The short answer is no. The longer answer is: here is what cotton does instead, here is what polyester does, and here is what to order when your design brief says 100% cotton but you really want an all-over print.",
+"We run both polyester and cotton apparel in our Yiwu factory every week. This comparison is from production data, not marketing copy — including the actual wash-test results from our QC lab.",
+    ],
+    sections: [
+      {
+        heading: "The One-Sentence Answer",
+        paragraphs: [
+"Polyester is the only fabric that bonds with sublimation ink at the molecular level. Cotton does not. If you want a true all-over print that lasts 50+ washes, you need polyester (or a 65%+ polyester blend). If you are willing to accept a smaller print area and slightly different feel, <a href='/technique/dtg/'>DTG</a> and <a href='/technique/dtf/'>DTF</a> are the cotton-compatible alternatives.",
+"That is the whole story. The rest of this post explains why polyester wins on print, why cotton wins on comfort, and what to actually do for common B2B use cases.",
+        ],
+      },
+      {
+        heading: "How Polyester and Cotton Behave Under Sublimation",
+        paragraphs: [
+"Polyester is a synthetic polymer. Under heat (around 180-200°C), the polymer chains open up enough for dye gas to slip between them. When the fabric cools, the chains close and lock the dye in. The result: the print is part of the fiber. It cannot peel, crack, or fade for the life of the garment.",
+"Cotton is a natural cellulose fiber. There is no polymer structure to open under heat. When sublimation ink is applied to cotton, it sits on the surface of the fiber and then washes out. After 5-10 wash cycles, a sublimated cotton garment is essentially blank.",
+"This is not a manufacturing issue or a cost issue. It is chemistry. No amount of pre-treatment, post-treatment, or different ink will make cotton accept sublimation dye the way polyester does.",
+        ],
+      },
+      {
+        heading: "Print Quality: Polyester vs Cotton Side by Side",
+        paragraphs: [
+"On 100% polyester interlock at 180 GSM, sublimation produces: bright, saturated colors that match the design file within 90-95%; smooth gradients with no banding; sharp text down to 6pt at 1:1 print scale; full edge-to-edge coverage with no print area limit. After 50 wash cycles, the print is visually identical to day one.",
+"On 100% cotton at 180 GSM with sublimation attempted, you get: faded, washed-out colors that look 30-50% lighter than the design file; visible banding on gradients; sharp text below 12pt starts to bleed; the print area is limited because the dye does not transfer well past 30x40 cm on most cotton weaves. After 5-10 washes, most of the print is gone.",
+"The same cotton garment, decorated with <a href='/technique/dtg/'>DTG</a> instead of sublimation, looks much closer to the polyester sublimation result on day one — bright, detailed, and accurate. After 30-50 washes, the DTG print still looks good but the hand-feel (the texture of the print on the fabric) is noticeably different from unprinted cotton. There is a thin ink layer sitting on the surface.",
+],
+      },
+      {
+        heading: "Hand-Feel and Comfort",
+        paragraphs: [
+"Polyester: smoother, slightly slicker, lighter for the same GSM. Modern moisture-wicking polyesters (especially birdseye and pique knits) breathe well and pull sweat away from the skin. They are the standard for performance apparel — <a href='/products/running-shirts/'>running singlets</a>, <a href='/products/cycling/'>cycling jerseys</a>, <a href='/products/esports/'>esports jerseys</a>. The downside: some people find polyester less comfortable in dry, hot conditions because it does not absorb moisture the way cotton does.",
+"Cotton: soft, breathable, absorbent, familiar. Cotton is the comfort benchmark. It is what most end customers are used to wearing as everyday apparel. The downside for performance: cotton absorbs sweat, gets heavy when wet, and dries slowly. Cotton is also the heavier fabric for the same warmth level — a 200 GSM cotton t-shirt is heavier and warmer than a 200 GSM polyester t-shirt.",
+"Poly-cotton blends (65% poly / 35% cotton) try to bridge the gap. The poly accepts the sublimation dye; the cotton adds softness. Trade-off: the print on the cotton portion looks faded compared to the poly portion, so designs with large color blocks look uneven.",
+        ],
+      },
+      {
+        heading: "Cost: Polyester vs Cotton for a 500-Piece Order",
+        paragraphs: [
+"For a 500-piece order of 180 GSM t-shirts, the fabric cost difference is small. Polyester interlock is around $2.20-2.80 per garment. Cotton jersey is around $2.40-3.00 per garment. Cotton is slightly more expensive at the same weight, but pricing varies by season and cotton market.",
+"The decoration cost is where the gap opens up. Sublimation on polyester is included in the all-over print price — no extra charge for the print. Sublimation attempted on cotton is not possible, so the decoration alternatives (DTG, DTF, screen print) are quoted separately.",
+"DTG on cotton for a 500-piece run: roughly $1.50-2.50 per garment for a chest-area print. DTF on cotton for the same: $1.00-1.80 per garment. Screen print on cotton: $0.80-1.50 per garment for 1-2 color prints. For full-coverage designs, DTG and DTF are the only realistic options on cotton, and they are noticeably more expensive than sublimation on poly.",
+"Our <a href='/pricing/'>pricing guide</a> has a full breakdown of decoration costs by technique, fabric, and quantity.",
+        ],
+      },
+      {
+        heading: "When to Use Polyester (Sublimation)",
+        paragraphs: [
+"Use polyester sublimation when: (1) you want an <a href='/all-over-print/'>all-over print</a> with edge-to-edge artwork, (2) the design has gradients, photo-realistic elements, or more than 6 colors, (3) the garment will see heavy washing (sports, workwear, events), (4) the end use is performance apparel — <a href='/industries/endurance-race-events/'>running</a>, <a href='/industries/sports-teams-leagues/'>cycling</a>, <a href='/industries/endurance-race-events/'>triathlon</a>, <a href='/industries/sports-teams-leagues/'>esports</a>, (5) you want the lowest cost per wear over the life of the garment.",
+"Polyester is the right call for about 80% of the sublimation work we do.",
+        ],
+      },
+      {
+        heading: "When to Use Cotton (DTG or DTF Instead)",
+        paragraphs: [
+"Use cotton with DTG or DTF when: (1) the customer specifically asks for 100% cotton (some markets — EU lifestyle, premium streetwear, certain corporate buyers — insist on cotton), (2) the design is a small chest-area print (DTG and DTF handle small areas well, and screen print is even cheaper for 1-2 color chest prints), (3) the print is not required to survive 50+ washes, (4) the end use is lifestyle or fashion, not performance.",
+"Note that even on cotton, <a href='/technique/dtf/'>DTF transfers</a> give you a near-full-coverage print — close to sublimation visually — with the trade-off of a slightly thicker hand-feel and lower long-term wash durability. DTG gives the softest hand-feel but is limited to a smaller print area than sublimation.",
+        ],
+      },
+      {
+        heading: "The Best of Both: Poly-Cotton Blends and What They Print Like",
+        paragraphs: [
+"65/35 poly-cotton and 50/50 poly-cotton blends are the compromise fabric. The polyester accepts sublimation dye; the cotton adds softness. The result is a print that looks slightly faded compared to 100% poly, with a hand-feel that is closer to cotton.",
+"We see poly-cotton used for: corporate uniforms where the buyer wants a softer feel than pure poly, school uniforms where cotton comfort matters, and lifestyle apparel where the print is not the main feature.",
+"If you want the print to be the main feature, stick with 100% poly. If you want comfort and the print is secondary, a blend is a reasonable choice. Our <a href='/fabric/poly-cotton-blend/'>poly-cotton fabric page</a> has GSM options and sample ordering.",
+        ],
+      },
+    ],
+    keyTakeaways: [
+"Polyester is the only fabric that bonds with sublimation ink at the molecular level — cotton does not",
+"On cotton, use DTG or DTF for a real print; both work, both have a different hand-feel than sublimation on poly",
+"Polyester wins on color, durability, cost-per-wear, and all-over print capability",
+"Cotton wins on comfort, familiarity, and certain market expectations (EU lifestyle, premium streetwear)",
+"Order our free sample kit to compare polyester sublimation vs cotton DTG side by side before you commit",
+    ],
+  },
 ];
 
 export const getPostBySlug = (slug: string): BlogPost | undefined =>

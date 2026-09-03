@@ -196,7 +196,7 @@ export default async function BlogPostPage({
       <article className="bg-white">
         <div className="mx-auto max-w-3xl px-4 py-12 md:px-8 md:py-16">
           {/* Intro */}
-          <div className="space-y-4 text-base leading-relaxed text-[#1a1a1a] md:space-y-5 md:text-lg">
+          <div className="space-y-4 text-base leading-relaxed text-[#1a1a1a] md:space-y-5 md:text-lg [&_a]:text-[#cc3d00] [&_a]:underline [&_a]:underline-offset-2 hover:[&_a]:text-[#ff4d00]">
             {post.intro.map((para, i) => (
               <p
                 key={i}
@@ -205,9 +205,8 @@ export default async function BlogPostPage({
                     ? "first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:text-6xl first-letter:font-black first-letter:leading-none first-letter:text-[#cc3d00] md:first-letter:text-7xl"
                     : ""
                 }
-              >
-                {para}
-              </p>
+                dangerouslySetInnerHTML={{ __html: para }}
+              />
             ))}
           </div>
 
@@ -238,9 +237,9 @@ export default async function BlogPostPage({
                 <span className="mr-2 text-[#cc3d00]">0{i + 1}.</span>
                 {section.heading}
               </h2>
-              <div className="space-y-4 text-base leading-relaxed text-[#1a1a1a] md:space-y-5 md:text-lg">
+              <div className="space-y-4 text-base leading-relaxed text-[#1a1a1a] md:space-y-5 md:text-lg [&_a]:text-[#cc3d00] [&_a]:underline [&_a]:underline-offset-2 hover:[&_a]:text-[#ff4d00]">
                 {section.paragraphs.map((para, j) => (
-                  <p key={j}>{para}</p>
+                  <p key={j} dangerouslySetInnerHTML={{ __html: para }} />
                 ))}
               </div>
             </div>
