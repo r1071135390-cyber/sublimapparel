@@ -78,36 +78,6 @@ const resources = [
     label: "How to Source",
     desc: "5-step process from inquiry to delivery",
   },
-  {
-    href: "/compare/polyester-vs-cotton-sublima/",
-    label: "Polyester vs Cotton Sublimation",
-    desc: "Which fabric for which use case",
-  },
-  {
-    href: "/compare/sublimation-vs-dtg/",
-    label: "Sublimation vs DTG Printing",
-    desc: "Print method comparison guide",
-  },
-  {
-    href: "/compare/ddp-vs-fob/",
-    label: "DDP vs FOB Shipping",
-    desc: "Incoterms for apparel imports",
-  },
-  {
-    href: "/pricing/",
-    label: "Pricing & MOQ Guide",
-    desc: "Cost bands, MOQ, sample policy",
-  },
-  {
-    href: "/production/",
-    label: "Production Lead Time",
-    desc: "Calendar, rush options, holidays",
-  },
-  {
-    href: "/samples/",
-    label: "Sample Policy",
-    desc: "How to order a sample run",
-  },
 ];
 
 export function Navbar() {
@@ -129,21 +99,6 @@ export function Navbar() {
           >
             Home
           </Link>
-          <Link
-            href="/products/"
-            className="text-sm font-bold uppercase tracking-wider text-black transition-colors hover:text-[#cc3d00]"
-          >
-            Products
-          </Link>
-
-          <Link
-            href="/all-over-print/"
-            className="inline-flex items-center gap-1 text-sm font-bold uppercase tracking-wider text-black transition-colors hover:text-[#cc3d00]"
-          >
-            <Shirt className="h-3.5 w-3.5" strokeWidth={3} />
-            All-Over Print
-          </Link>
-
           {/* Industries dropdown — 12 industry verticals */}
           <div className="group relative">
             <button
@@ -258,35 +213,10 @@ export function Navbar() {
           </div>
 
           <Link
-            href="/technique/"
-            className="text-sm font-bold uppercase tracking-wider text-black transition-colors hover:text-[#cc3d00]"
-          >
-            Technique
-          </Link>
-
-          <Link
-            href="/fabric/"
-            className="text-sm font-bold uppercase tracking-wider text-black transition-colors hover:text-[#cc3d00]"
-          >
-            Fabric
-          </Link>
-          <Link
-            href="/shipping/"
-            className="text-sm font-bold uppercase tracking-wider text-black transition-colors hover:text-[#cc3d00]"
-          >
-            Shipping
-          </Link>
-          <Link
             href="/about/"
             className="text-sm font-bold uppercase tracking-wider text-black transition-colors hover:text-[#cc3d00]"
           >
             About
-          </Link>
-          <Link
-            href="/blog/"
-            className="text-sm font-bold uppercase tracking-wider text-black transition-colors hover:text-[#cc3d00]"
-          >
-            Blog
           </Link>
         </div>
 
