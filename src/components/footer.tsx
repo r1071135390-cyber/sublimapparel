@@ -55,6 +55,24 @@ const linkGroups = [
       { label: "Promotional & Marketing Apparel", href: "/promotional-marketing-apparel" },
       { label: "Apparel Brands & Agencies", href: "/apparel-brands-agencies" },
       { label: "E-commerce & Fulfillment", href: "/e-commerce-fulfillment" },
+      { label: "All-Over Print Catalog", href: "/all-over-print" },
+    ],
+  },
+  {
+    title: "Industries",
+    items: [
+      { label: "Sports Teams & Leagues", href: "/industries/sports-teams-leagues" },
+      { label: "Endurance & Race Events", href: "/industries/endurance-race-events" },
+      { label: "Events & Conferences", href: "/industries/events-conferences" },
+      { label: "Music, Tour & Festival Merch", href: "/industries/music-festival-tour-merchandise" },
+      { label: "Corporate & Employee Programs", href: "/industries/corporate-employee-programs" },
+      { label: "Schools, Universities & Greek Life", href: "/industries/schools-universities-greek-life" },
+      { label: "Breweries, Coffee & Hospitality", href: "/industries/breweries-coffee-hospitality" },
+      { label: "Promotional & Marketing Agencies", href: "/industries/promotional-marketing-agencies" },
+      { label: "Trade Shows & Display", href: "/industries/trade-shows-display" },
+      { label: "Apparel Brands & Agencies", href: "/industries/apparel-brands-agencies" },
+      { label: "Political Campaigns", href: "/industries/political-campaigns" },
+      { label: "E-commerce & Fulfillment", href: "/industries/e-commerce-fulfillment" },
     ],
   },
   {
@@ -100,7 +118,7 @@ export function Footer() {
     <footer className="border-t-2 border-black bg-white text-black">
       {/* Mega link directory */}
       <div className="mx-auto max-w-7xl px-6 pt-16 pb-12">
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {linkGroups.map((group) => (
             <div key={group.title}>
               <h3 className="mb-5 text-xs font-black uppercase tracking-[0.18em] text-[#cc3d00]">

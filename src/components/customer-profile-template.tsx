@@ -343,6 +343,103 @@ export function CustomerProfilePage({ data }: { data: CustomerProfileData }) {
         );
       })()}
 
+      {/* Related Industries - cross-link between industry sibling pages for SEO */}
+      {(() => {
+        const siblingMap: Record<string, { slug: string; label: string; desc: string }[]> = {
+          "sports-teams-leagues": [
+            { slug: "endurance-race-events", label: "Endurance & Race Events", desc: "Marathon, half-marathon, 5K, triathlon race apparel" },
+            { slug: "schools-universities-greek-life", label: "Schools, Universities & Greek Life", desc: "College, university, fraternity and sorority apparel" },
+            { slug: "events-conferences", label: "Events & Conferences", desc: "Conference, trade show, branded event apparel" },
+          ],
+          "endurance-race-events": [
+            { slug: "sports-teams-leagues", label: "Sports Teams & Leagues", desc: "Team jerseys, league uniforms, club apparel" },
+            { slug: "events-conferences", label: "Events & Conferences", desc: "Race-day event apparel, expo merch" },
+            { slug: "music-festival-tour-merchandise", label: "Music, Festival & Tour Merchandise", desc: "Race-series, festival, outdoor event shirts" },
+          ],
+          "events-conferences": [
+            { slug: "trade-shows-display", label: "Trade Shows & Display", desc: "Booth staff shirts, expo giveaways" },
+            { slug: "corporate-employee-programs", label: "Corporate & Employee Programs", desc: "Corporate event apparel, team offsite shirts" },
+            { slug: "music-festival-tour-merchandise", label: "Music, Festival & Tour Merchandise", desc: "Festival, concert, event merch" },
+          ],
+          "music-festival-tour-merchandise": [
+            { slug: "events-conferences", label: "Events & Conferences", desc: "Tour merch, band apparel, festival shirts" },
+            { slug: "apparel-brands-agencies", label: "Apparel Brands & Agencies", desc: "Brand collabs, limited-edition tour merch" },
+            { slug: "e-commerce-fulfillment", label: "E-commerce & Fulfillment", desc: "Dropship tour merch, fan fulfillment" },
+          ],
+          "corporate-employee-programs": [
+            { slug: "schools-universities-greek-life", label: "Schools, Universities & Greek Life", desc: "Employee merch, swag store, branded uniforms" },
+            { slug: "breweries-coffee-hospitality", label: "Breweries, Coffee & Hospitality", desc: "Hospitality uniforms, F&B staff apparel" },
+            { slug: "promotional-marketing-agencies", label: "Promotional & Marketing Agencies", desc: "Client merch, employee gifts, branded apparel" },
+          ],
+          "schools-universities-greek-life": [
+            { slug: "sports-teams-leagues", label: "Sports Teams & Leagues", desc: "Varsity, intramural, club sports apparel" },
+            { slug: "corporate-employee-programs", label: "Corporate & Employee Programs", desc: "Student org merch, faculty apparel" },
+            { slug: "apparel-brands-agencies", label: "Apparel Brands & Agencies", desc: "Custom campus brand apparel" },
+          ],
+          "breweries-coffee-hospitality": [
+            { slug: "promotional-marketing-agencies", label: "Promotional & Marketing Agencies", desc: "Hospitality merch, branded giveaways" },
+            { slug: "events-conferences", label: "Events & Conferences", desc: "Event staff apparel, hospitality crew shirts" },
+            { slug: "corporate-employee-programs", label: "Corporate & Employee Programs", desc: "Restaurant and cafe uniform programs" },
+          ],
+          "promotional-marketing-agencies": [
+            { slug: "trade-shows-display", label: "Trade Shows & Display", desc: "Client merch, campaign apparel" },
+            { slug: "breweries-coffee-hospitality", label: "Breweries, Coffee & Hospitality", desc: "Promotional merch for F&B clients" },
+            { slug: "political-campaigns", label: "Political Campaigns", desc: "Campaign shirts, yard signs, rally merch" },
+          ],
+          "trade-shows-display": [
+            { slug: "events-conferences", label: "Events & Conferences", desc: "Booth staff, expo apparel" },
+            { slug: "promotional-marketing-agencies", label: "Promotional & Marketing Agencies", desc: "Trade show giveaways, branded booth swag" },
+            { slug: "apparel-brands-agencies", label: "Apparel Brands & Agencies", desc: "Showroom samples, lookbook apparel" },
+          ],
+          "apparel-brands-agencies": [
+            { slug: "e-commerce-fulfillment", label: "E-commerce & Fulfillment", desc: "White-label, POD, dropship production" },
+            { slug: "music-festival-tour-merchandise", label: "Music, Festival & Tour Merchandise", desc: "Brand collabs, limited-edition merch" },
+            { slug: "promotional-marketing-agencies", label: "Promotional & Marketing Agencies", desc: "Agency-led brand apparel production" },
+          ],
+          "political-campaigns": [
+            { slug: "promotional-marketing-agencies", label: "Promotional & Marketing Agencies", desc: "Campaign merchandise, rally shirts" },
+            { slug: "events-conferences", label: "Events & Conferences", desc: "Fundraiser, rally, campaign event apparel" },
+            { slug: "corporate-employee-programs", label: "Corporate & Employee Programs", desc: "PAC, lobbying, advocacy apparel" },
+          ],
+          "e-commerce-fulfillment": [
+            { slug: "apparel-brands-agencies", label: "Apparel Brands & Agencies", desc: "White-label, POD, dropship production" },
+            { slug: "music-festival-tour-merchandise", label: "Music, Festival & Tour Merchandise", desc: "Fan-merch dropship, fulfillment" },
+            { slug: "trade-shows-display", label: "Trade Shows & Display", desc: "Blind ship, sample fulfillment" },
+          ],
+        };
+        const siblings = siblingMap[data.slug];
+        if (!siblings) return null;
+        return (
+          <section className="border-t border-black/10 bg-[#fafafa] py-14 md:py-20">
+            <div className="mx-auto max-w-5xl px-4 md:px-6">
+              <div className="mb-6 max-w-2xl">
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#ff4d00]">Related industries we serve</p>
+                <h2 className="mt-2 text-2xl font-black tracking-tight text-[#0a0a0a] md:text-3xl">
+                  Other industries that source from us
+                </h2>
+              </div>
+              <div className="grid gap-4 md:grid-cols-3">
+                {siblings.map((r) => (
+                  <Link
+                    key={r.slug}
+                    href={`/industries/${r.slug}/`}
+                    className="group flex items-start gap-4 rounded-2xl border border-black/10 bg-white p-5 transition-colors hover:border-[#ff4d00]/40"
+                  >
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#ff4d00]/10 text-[#ff4d00]">
+                      <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-base font-black text-[#0a0a0a]">{r.label}</p>
+                      <p className="mt-1 text-sm text-black/65">{r.desc}</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+        );
+      })()}
+
       {/* RELATED PRODUCTS (tag-driven) */}
       <RelatedProducts industrySlug={data.slug.replace(/^\/industries\/|\/$/g, "")} />
 

@@ -882,9 +882,9 @@ export const fabricTypes: Fabric[] = [
       "polyester", "pbt", "knit", "stretch", "4-way-stretch", "swim",
       "athletic", "fitted", "chlorine-resistant", "sublimation-friendly",
     ],
-    h1: "PBT Stretch Fabric — Chlorine-Resistant Polyester for Swimwear",
+    h1: "PBT Stretch Fabric — Swimwear, Triathlon & Race Suits",
     metaDescription:
-      "100% PBT stretch fabric, 150-180 gsm. Four-way stretch, chlorine-resistant, quick-dry. Competitive swimwear, water polo, triathlon suits. Sublimation printing. Low MOQ 50 pcs.",
+      "100% PBT stretch fabric, 150-180 gsm. Four-way stretch, chlorine-resistant, quick-dry. Competitive swimwear, triathlon suits, race kits, water polo. Sublimation printing. MOQ 50 pcs. DDP shipping.",
     intro:
       "PBT (polybutylene terephthalate) is a polyester variant engineered for swimwear. It's naturally stretchy without spandex, holds its shape in chlorinated water, and dries almost instantly. The standard for competitive swimwear, water polo suits, and triathlon apparel.",
     characteristics: [

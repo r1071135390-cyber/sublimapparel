@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { User, ChevronDown, Mail, Briefcase, Wrench } from "lucide-react";
+import { User, ChevronDown, Mail, Briefcase, Wrench, Building2, Shirt } from "lucide-react";
 
 const solutions = [
   {
@@ -34,6 +34,22 @@ const solutions = [
     label: "E-commerce & Fulfillment",
     desc: "Bulk production, drop-ship, online sellers",
   },
+];
+
+// Industries dropdown — 12 industry verticals (links to /industries/* pages that were orphaned before this change)
+const industries = [
+  { href: "/industries/sports-teams-leagues/", label: "Sports Teams & Leagues" },
+  { href: "/industries/endurance-race-events/", label: "Endurance & Race Events" },
+  { href: "/industries/events-conferences/", label: "Events & Conferences" },
+  { href: "/industries/music-festival-tour-merchandise/", label: "Music, Tour & Festival Merch" },
+  { href: "/industries/corporate-employee-programs/", label: "Corporate & Employee Programs" },
+  { href: "/industries/schools-universities-greek-life/", label: "Schools, Universities & Greek Life" },
+  { href: "/industries/breweries-coffee-hospitality/", label: "Breweries, Coffee & Hospitality" },
+  { href: "/industries/promotional-marketing-agencies/", label: "Promotional & Marketing Agencies" },
+  { href: "/industries/trade-shows-display/", label: "Trade Shows & Display" },
+  { href: "/industries/apparel-brands-agencies/", label: "Apparel Brands & Agencies" },
+  { href: "/industries/political-campaigns/", label: "Political Campaigns" },
+  { href: "/industries/e-commerce-fulfillment/", label: "E-commerce & Fulfillment" },
 ];
 
 const resources = [
@@ -89,6 +105,45 @@ export function Navbar() {
           >
             Products
           </Link>
+
+          <Link
+            href="/all-over-print/"
+            className="inline-flex items-center gap-1 text-sm font-bold uppercase tracking-wider text-black transition-colors hover:text-[#cc3d00]"
+          >
+            <Shirt className="h-3.5 w-3.5" strokeWidth={3} />
+            All-Over Print
+          </Link>
+
+          {/* Industries dropdown — 12 industry verticals */}
+          <div className="group relative">
+            <button
+              type="button"
+              className="inline-flex items-center gap-1 text-sm font-bold uppercase tracking-wider text-black transition-colors hover:text-[#cc3d00]"
+            >
+              Industries
+              <ChevronDown
+                className="h-3.5 w-3.5 transition-transform group-hover:rotate-180"
+                strokeWidth={3}
+              />
+            </button>
+            <div className="invisible absolute left-1/2 top-full z-20 w-80 -translate-x-1/2 border-2 border-black bg-white opacity-0 shadow-[6px_6px_0_0_rgba(10,10,10,1)] transition-all group-hover:visible group-hover:opacity-100">
+              <div className="border-b-2 border-black bg-[#00c2ff] px-4 py-2.5 text-[10px] font-black uppercase tracking-widest text-black">
+                <Building2 className="mr-1 inline h-3 w-3" />
+                By Industry Vertical
+              </div>
+              <div className="max-h-[480px] overflow-y-auto">
+                {industries.map((ind) => (
+                  <Link
+                    key={ind.href}
+                    href={ind.href}
+                    className="block border-b border-black/10 px-4 py-2 text-sm font-bold uppercase tracking-wider text-black transition-colors last:border-0 hover:bg-[#0a0a0a] hover:text-white"
+                  >
+                    {ind.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
 
           {/* Solutions dropdown */}
           <div className="group relative">

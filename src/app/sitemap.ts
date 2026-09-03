@@ -3,6 +3,8 @@ import { techniques } from "@/lib/techniques";
 import { blogPosts } from "@/lib/blog";
 import { getAllTagSlugs } from "@/lib/tag-archive";
 import { products } from "@/lib/products-data";
+import { fabricTypes } from "@/lib/fabric-data";
+import { extraFabricTypes } from "@/lib/fabric-extra";
 
 export const dynamic = 'force-static';
 
@@ -188,5 +190,27 @@ export default function sitemap(): MetadataRoute.Sitemap {
     images: [`${SITE_URL}/og-default.jpg`],
   }));
 
-  return [...staticEntries, ...techniqueEntries, ...blogEntries, ...tagEntries, ...productEntries];
+  // ── Fabric detail pages (65 slugs from fabric-data.ts + fabric-extra.ts) ──
+  // These were previously discoverable only via the /fabric/ hub cross-links
+  // and were absent from the sitemap. Add them so Google indexes them directly
+  // and passes the full weight signal.
+  const allFabricSlugs = Array.from(
+    new Set([...fabricTypes, ...extraFabricTypes].map((f) => f.slug))
+  );
+  const fabricEntries: MetadataRoute.Sitemap = allFabricSlugs.map((slug) => ({
+    url: `${SITE_URL}${withSlash(`/fabric/${slug}`)}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+    images: [`${SITE_URL}/og-default.jpg`],
+  }));
+
+  return [
+    ...staticEntries,
+    ...techniqueEntries,
+    ...blogEntries,
+    ...tagEntries,
+    ...productEntries,
+    ...fabricEntries,
+  ];
 }

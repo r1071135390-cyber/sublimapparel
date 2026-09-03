@@ -12,8 +12,8 @@ import { DDP } from "@/components/ddp";
 import { LazyClientSections } from "@/components/home/lazy-client-sections";
 
 export const metadata = buildPageMetadata({
-    title: "Yiwu Custom Sublimate Apparel Manufacturer | Sublimation & Cotton DDP 100+ Countries",
-    description: "Sublimation on polyester (true all-over, edge-to-edge). DTG and DTF on 100% cotton (A4–A3 per panel, soft hand). Allover digital print on cotton also...",
+    title: "Yiwu Sublimation & All-Over Print | Cotton DDP 100+",
+    description: "Sublimation on polyester (true all-over, edge-to-edge). DTG and DTF on 100% cotton, soft hand. Allover digital print on cotton. MOQ 50, DDP to 100+ countries.",
     other: {
     "article:author": "Ramon Wang, Sales Director, SublimApparel",
     "article:published_time": "2024-01-01T00:00:00.000Z",
@@ -27,7 +27,7 @@ const homeJsonLd = [
     "@type": "WebPage",
     "@id": "https://sublimapparel.com/#webpage",
     url: "https://sublimapparel.com/",
-    name: "Yiwu Sublimation & All-Over Cotton Printing | DDP 100+",
+    name: "Yiwu Sublimation & All-Over Print | Cotton DDP 100+",
     description:
       "Sublimation factory in Yiwu producing all-over print apparel — polyester sublimation, allover digital print on cotton, DTG, DTF. MOQ 50, DDP shipping to 100+ countries, US warehouse in Fontana CA.",
     keywords:

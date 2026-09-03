@@ -278,6 +278,64 @@ export default function PolyesterPage() {
         </div>
       </section>
 
+      {/* FAQ — long-tail search intent capture */}
+      <section className="bg-[#f5f5f5]">
+        <div className="mx-auto max-w-4xl px-4 py-16 md:py-20">
+          <div className="mb-10 text-center">
+            <h2 className="text-3xl font-black tracking-tight md:text-5xl">
+              Polyester sublimation — frequently asked
+            </h2>
+            <p className="mt-3 text-base text-black/60 md:text-lg">
+              The questions sourcing managers ask before placing a polyester sublimation order.
+            </p>
+          </div>
+          <div className="space-y-3">
+            {[
+              {
+                q: "What fabric is best for sublimation?",
+                a: "100% polyester is the industry standard for dye-sublimation because the polyester fibers bond directly with disperse dyes under heat (around 200°C). Light-colored polyester (white, pastel) produces the most vibrant CMYK-to-RGB color reproduction. For athletic and performance apparel, 100–150 gsm micro-polyester and 150–220 gsm interlock are the two most common constructions. If you need an all-over print (edge-to-edge) with no white borders and a soft hand, a 100% polyester knit is the only fabric that can deliver true all-over sublimation at scale.",
+              },
+              {
+                q: "Can you sublimate on cotton or cotton blends?",
+                a: "Pure cotton will not hold disperse sublimation dyes — the ink sits on the surface and washes out. For cotton, we use DTG (Direct-to-Garment) or DTF (Direct-to-Film) printing, which lays pigment ink on top of the cotton fiber. DTF is the most versatile option for 100% cotton apparel, with no pretreatment required and a soft hand. Cotton/polyester blends (e.g. 65/35) accept sublimation with reduced vibrancy proportional to the cotton content. We will recommend the right process based on your fabric, artwork, and order quantity.",
+              },
+              {
+                q: "What GSM of polyester should I choose?",
+                a: "It depends on the application. For race shirts and lightweight training tops, 100–140 gsm micro-polyester is the sweet spot. For team jerseys and basketball uniforms, 140–160 gsm interlock balances opacity and weight. For hoodies, warm-ups and outerwear, 220–320 gsm brushed-back polyester or French terry is typical. Heavier fabric is not always better — heavier fabric feels more premium but sublimation color vibrancy is slightly reduced because the dye saturates more fiber.",
+              },
+              {
+                q: "How does dye-sublimation compare to screen printing?",
+                a: "Sublimation embeds the ink into the polyester fiber, so it does not sit on top of the fabric like screen-printed plastisol. Result: zero hand-feel, no cracking, no peeling, and full all-over coverage. Screen printing is more cost-effective for very small runs (under 25 pcs) and for spot-color logos, but cannot achieve edge-to-edge full-coverage prints on a finished garment. For most custom sublimated apparel in the 50–5,000 pcs range, sublimation is more cost-efficient than screen printing once you factor in setup, color count, and per-unit labor.",
+              },
+              {
+                q: "What is the minimum order quantity (MOQ) for polyester sublimation?",
+                a: "Our standard MOQ is 50 pieces per design per size. For first-time customers or sample runs, we can produce as low as 30 pcs per design at a slightly higher unit price. For repeat orders, we are flexible on smaller re-orders of 20–30 pcs. There is no MOQ on blank sublimated yardage (fabric-by-the-yard) for cut-and-sew customers.",
+              },
+              {
+                q: "How long does polyester sublimation production take?",
+                a: "From approved artwork and fabric in-house, production is typically 7–12 days for an order of 50–500 pcs. Larger orders (1,000+ pcs) run 15–25 days. Air freight adds 5–7 days door-to-door; sea freight adds 22–32 days door-to-door to most US/EU ports. We can also DDP (Delivered Duty Paid) to your warehouse in 100+ countries, with the duty and last-mile cost quoted upfront.",
+              },
+            ].map((f, i) => (
+              <details
+                key={f.q}
+                className="group rounded-lg border border-black/10 bg-white p-5"
+                open={i === 0}
+              >
+                <summary className="flex cursor-pointer items-center justify-between gap-4 font-bold text-[#0a0a0a]">
+                  <span>{f.q}</span>
+                  <span className="text-xl text-[#ff4d00] transition-transform group-open:rotate-45">
+                    +
+                  </span>
+                </summary>
+                <p className="mt-3 text-sm leading-relaxed text-black/70">
+                  {f.a}
+                </p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="bg-[#ff4d00] text-white">
         <div className="mx-auto max-w-7xl px-6 py-16 text-center md:py-20">
