@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, CalendarDays, Package, MapPin } from "lucide-react";
+import { ArrowLeft, ArrowRight, CalendarDays, Package, MapPin } from "lucide-react";
 import { industries, getIndustryBySlug } from "@/lib/cases";
 import { RequestQuoteLink } from "@/components/request-quote-link";
 import { products } from "@/lib/products-data";
 import { getProductImages } from "@/lib/product-images";
+import { JsonLd } from "@/components/json-ld";
+import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 
 type Props = {
   params: Promise<{ slug: string; caseId: string }>;
@@ -64,8 +66,27 @@ export default async function CaseDetailPage({ params }: Props) {
     .filter((p): p is (typeof products)[number] => Boolean(p))
     .slice(0, 4);
 
+  // Pick 3 related industries (same scenario, exclude current)
+  const relatedIndustries = industries
+    .filter((x) => x.slug !== ind.slug && x.relatedScenario === ind.relatedScenario)
+    .slice(0, 3);
+  const fallbackIndustries = relatedIndustries.length < 3
+    ? industries
+        .filter((x) => x.slug !== ind.slug && !relatedIndustries.find((r) => r.slug === x.slug))
+        .slice(0, 3 - relatedIndustries.length)
+    : [];
+  const showRelatedIndustries = [...relatedIndustries, ...fallbackIndustries].slice(0, 3);
+
   return (
     <main>
+      <JsonLd
+        data={buildBreadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "Case Studies", path: "/cases" },
+          { name: ind.title, path: `/cases/${ind.slug}` },
+          { name: c.title, path: `/cases/${ind.slug}/${c.id}` },
+        ])}
+      />
       {/* Hero */}
       <section className="border-b-2 border-black bg-[#0a0a0a] text-white">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
@@ -193,6 +214,40 @@ export default async function CaseDetailPage({ params }: Props) {
           )}
         </div>
       </section>
+
+      {/* Related industries (cross-link for SEO) */}
+      {showRelatedIndustries.length > 0 && (
+        <section className="border-b-2 border-black bg-white">
+          <div className="mx-auto max-w-7xl px-6 py-12 md:py-16">
+            <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-black/50">
+              Related industries we serve
+            </p>
+            <h2 className="mb-6 text-2xl font-black uppercase leading-none tracking-tight md:text-3xl">
+              More {ind.title.toLowerCase()} neighbors
+            </h2>
+            <div className="grid gap-4 sm:grid-cols-3">
+              {showRelatedIndustries.map((ri) => (
+                <Link
+                  key={ri.slug}
+                  href={`/industries/${ri.slug}/`}
+                  className="group flex flex-col gap-2 border-2 border-black bg-white p-5 transition-colors hover:border-[#ff4d00] hover:bg-[#fff5f0]"
+                >
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-black/50">
+                    Industry
+                  </p>
+                  <p className="text-lg font-black leading-tight text-black group-hover:text-[#ff4d00]">
+                    {ri.title}
+                  </p>
+                  <p className="text-sm text-black/70 line-clamp-2">{ri.blurb}</p>
+                  <span className="mt-auto inline-flex items-center gap-1 pt-2 text-xs font-bold uppercase tracking-widest text-[#ff4d00]">
+                    View {ri.title} <ArrowRight size={14} />
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* CTA */}
       <section className="bg-[#0a0a0a] text-white">

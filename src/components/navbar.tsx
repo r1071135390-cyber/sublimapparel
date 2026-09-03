@@ -78,6 +78,36 @@ const resources = [
     label: "How to Source",
     desc: "5-step process from inquiry to delivery",
   },
+  {
+    href: "/compare/polyester-vs-cotton-sublima/",
+    label: "Polyester vs Cotton Sublimation",
+    desc: "Which fabric for which use case",
+  },
+  {
+    href: "/compare/sublimation-vs-dtg/",
+    label: "Sublimation vs DTG Printing",
+    desc: "Print method comparison guide",
+  },
+  {
+    href: "/compare/ddp-vs-fob/",
+    label: "DDP vs FOB Shipping",
+    desc: "Incoterms for apparel imports",
+  },
+  {
+    href: "/pricing/",
+    label: "Pricing & MOQ Guide",
+    desc: "Cost bands, MOQ, sample policy",
+  },
+  {
+    href: "/production/",
+    label: "Production Lead Time",
+    desc: "Calendar, rush options, holidays",
+  },
+  {
+    href: "/samples/",
+    label: "Sample Policy",
+    desc: "How to order a sample run",
+  },
 ];
 
 export function Navbar() {

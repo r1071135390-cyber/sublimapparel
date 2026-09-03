@@ -63,6 +63,20 @@ const ROUTES: SitemapRoute[] = [
   // ── （）──────────
   { path: "/all-over-print", priority: 0.95, changeFrequency: "monthly" }, // P1 — all over print 流量入口
 
+  // ── L2 Hub pages (created in SEO round 2) ───────────────
+  { path: "/industries", priority: 0.85, changeFrequency: "monthly" }, // 12 industries hub
+  { path: "/tag", priority: 0.5, changeFrequency: "monthly" }, // tag archive hub
+
+  // ── L3 Comparison pages (B2B decision-funnel SEO) ──────
+  { path: "/compare/polyester-vs-cotton-sublima", priority: 0.85, changeFrequency: "monthly" },
+  { path: "/compare/sublimation-vs-dtg", priority: 0.85, changeFrequency: "monthly" },
+  { path: "/compare/ddp-vs-fob", priority: 0.8, changeFrequency: "monthly" },
+
+  // ── L3 Policy / guide pages (B2B trust + long-tail) ────
+  { path: "/pricing", priority: 0.85, changeFrequency: "monthly" },
+  { path: "/production", priority: 0.8, changeFrequency: "monthly" },
+  { path: "/samples", priority: 0.75, changeFrequency: "monthly" },
+
   // ── （）──────────────────────────
   { path: "/login", priority: 0.3, changeFrequency: "yearly" },
   { path: "/register", priority: 0.3, changeFrequency: "yearly" },

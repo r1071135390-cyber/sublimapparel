@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { buildPageMetadata } from "@/lib/page-metadata";
+import { JsonLd } from "@/components/json-ld";
+import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 import Link from "next/link";
 import { RequestQuoteLink } from "@/components/request-quote-link";
 import {
@@ -44,6 +46,12 @@ const iconMap: Record<string, typeof CalendarDays> = {
 export default function CasesPage() {
   return (
     <>
+      <JsonLd
+        data={buildBreadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "Case Studies", path: "/cases" },
+        ])}
+      />
       {/* Top utility bar */}
       <div className="border-b-2 border-black bg-black text-white">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-6 py-2.5 text-[11px] font-bold uppercase tracking-wider">

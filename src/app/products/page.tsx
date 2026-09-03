@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { Contact } from "@/components/contact";
+import { JsonLd } from "@/components/json-ld";
+import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Sparkles } from "lucide-react";
@@ -143,6 +145,12 @@ const comparison = [
 export default function ProductsPage() {
   return (
     <main>
+      <JsonLd
+        data={buildBreadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "Products", path: "/products" },
+        ])}
+      />
       <section className="relative overflow-hidden bg-white">
         {/* Full-bleed background image with floating text overlay */}
         <div className="relative h-[85vh] min-h-[640px] w-full">
