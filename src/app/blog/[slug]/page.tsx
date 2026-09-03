@@ -245,6 +245,50 @@ export default async function BlogPostPage({
             </div>
           ))}
 
+          {/* FAQ section + JSON-LD */}
+          {post.faqs && post.faqs.length > 0 && (
+            <>
+              <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                  __html: JSON.stringify({
+                    "@context": "https://schema.org",
+                    "@type": "FAQPage",
+                    mainEntity: post.faqs.map((f) => ({
+                      "@type": "Question",
+                      name: f.q,
+                      acceptedAnswer: {
+                        "@type": "Answer",
+                        text: f.a,
+                      },
+                    })),
+                  }),
+                }}
+              />
+              <section className="mt-12 md:mt-16">
+                <h2 className="mb-6 text-2xl font-black leading-tight tracking-tight text-black md:mb-8 md:text-3xl">
+                  <span className="mr-2 text-[#cc3d00]">?</span>
+                  Frequently Asked Questions
+                </h2>
+                <div className="space-y-6 md:space-y-8">
+                  {post.faqs.map((faq, i) => (
+                    <div
+                      key={i}
+                      className="border-l-4 border-[#ff4d00] bg-[#faf9f6] p-5 md:p-6"
+                    >
+                      <h3 className="mb-3 text-lg font-bold leading-snug text-black md:text-xl">
+                        {faq.q}
+                      </h3>
+                      <p className="text-base leading-relaxed text-[#1a1a1a] md:text-lg">
+                        {faq.a}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            </>
+          )}
+
           {/* Internal CTA */}
           <div className="mt-12 border-2 border-[#ff4d00] bg-[#ff4d00]/5 p-6 md:mt-16 md:p-8">
             <p className="mb-2 text-xs font-bold uppercase tracking-widest text-[#cc3d00] md:text-sm">

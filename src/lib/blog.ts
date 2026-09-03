@@ -19,6 +19,7 @@ export interface BlogPost {
   intro: string[];
   sections: { heading: string; paragraphs: string[] }[];
   keyTakeaways?: string[];
+  faqs?: { q: string; a: string }[];
 }
 
 export const blogPosts: BlogPost[] = [
@@ -85,6 +86,29 @@ export const blogPosts: BlogPost[] = [
 "Best for: all-over print, esports, cycling, racing, streetwear, festival merch",
 "MOQ 50 pieces, lead time 15-25 days, cost-effective at any run size",
     ],
+    faqs: [
+      {
+        q: "What is sublimation printing in simple terms?",
+        a: "Sublimation printing is a process that uses heat (around 200°C) and pressure to turn solid dye into a gas, which then bonds with polyester fibers at the molecular level. The result is a print that becomes part of the fabric — not a layer on top — so it never peels, cracks, or fades for the life of the garment.",
+      },
+      {
+        q: "Does sublimation printing work on cotton?",
+        a: "No. Sublimation dye only bonds with polyester (and polyester-rich blends). 100% cotton cannot be sublimated because the dye has no synthetic fiber to bond with. For cotton apparel with all-over print, we recommend DTF (Direct-to-Film) transfers, which work on any fabric and are widely used as the cotton-friendly alternative to sublimation.",
+      },
+      {
+        q: "How long does sublimation printing last?",
+        a: "Sublimation prints last the full life of the garment. Because the dye becomes part of the polyester fiber (not a coating on the surface), the print cannot peel, crack, or wash out. Our factory's standard wash test is 50+ cycles with no visible fade — in real-world use, sublimated jerseys and t-shirts routinely last 5+ years of regular wear and washing.",
+      },
+      {
+        q: "Is sublimation better than screen printing?",
+        a: "For all-over print, full-coverage artwork, and edge-to-edge designs: yes, sublimation is far better. Screen printing is limited to a defined print area (chest, back, sleeve) and adds a layer on top of the fabric. Sublimation has no print area limit and produces a softer hand-feel because the dye is inside the fabric. For simple 1-2 color logos on a budget, screen printing is cheaper.",
+      },
+      {
+        q: "What is the minimum order quantity for sublimation printing?",
+        a: "Our minimum order quantity for custom sublimated apparel is 50 pieces per design, per size run. This is the industry-standard MOQ that allows us to set up the printer, calibrate colors, and run production economically. We can do smaller runs (sample or rush) at a higher per-piece price — contact us for a quote.",
+      },
+    ],
+
   },
   {
     slug:"dtg-vs-dtf-which-is-better",
@@ -155,6 +179,29 @@ export const blogPosts: BlogPost[] = [
 "For true all-over print: use sublimation. For 5,000+ piece bulk: use screen printing",
 "Send us your design — we will tell you the right method for free",
     ],
+    faqs: [
+      {
+        q: "What is the difference between DTG and DTF printing?",
+        a: "DTG (Direct-to-Garment) sprays water-based ink directly onto the fabric using a print head, like an inkjet printer. DTF (Direct-to-Film) prints the design onto a special film first, then transfers it to the garment with adhesive powder and heat. DTG is best for 100% cotton; DTF works on cotton, polyester, blends, and dark fabrics.",
+      },
+      {
+        q: "Is DTF better than DTG for small orders?",
+        a: "Yes, DTF is usually better for small orders. DTF transfers can be pre-printed and stored, then heat-pressed onto garments on demand — no pre-treatment required. DTG requires pre-treating the garment, a flat surface, and slower production, making it less efficient for runs under 50 pieces.",
+      },
+      {
+        q: "Can DTF be used on any fabric?",
+        a: "Yes. DTF works on cotton, polyester, blends (50/50, 65/35), nylon, leather, and even non-apparel surfaces. This is the main advantage over sublimation, which is restricted to polyester. DTF is the most versatile digital decoration method for mixed-material orders.",
+      },
+      {
+        q: "Which is more durable, DTF or DTG?",
+        a: "Both are durable for normal wear, but they age differently. DTF prints sit on top of the fabric with a thin adhesive layer, so they can crack or peel at the edges after 50+ heavy washes. DTG ink soaks into the cotton fibers, so it ages with the fabric and tends to last longer on 100% cotton shirts.",
+      },
+      {
+        q: "Is DTF more expensive than DTG?",
+        a: "Per-piece cost is similar at small volumes, but DTF is usually cheaper at scale because pre-printed transfers can be applied quickly with a heat press. DTG requires more time per garment (pre-treatment + printing + curing). For runs over 100 pieces, DTF is typically 20-40% cheaper per piece.",
+      },
+    ],
+
   },
   {
     slug:"what-is-ddp-shipping",
@@ -219,6 +266,29 @@ export const blogPosts: BlogPost[] = [
 "Adds 8-15% over FOB but eliminates surprise customs bills",
 "We run DDP to US, UK, EU, AU from our Yiwu factory — quote includes everything",
     ],
+    faqs: [
+      {
+        q: "What does DDP shipping mean?",
+        a: "DDP (Delivered Duty Paid) is an Incoterm where the seller takes full responsibility for shipping, customs clearance, duties, taxes, and final delivery to the buyer's door. The buyer pays one all-inclusive price; there are no surprise customs fees, broker charges, or last-mile logistics to handle. For B2B orders from China to the USA, EU, or UK, DDP is the simplest option.",
+      },
+      {
+        q: "How much does DDP shipping from China to the USA cost?",
+        a: "DDP shipping cost depends on weight, volume, and destination ZIP code. For a 500-piece apparel order (~150-300 kg by air, ~1-2 m³ by sea), all-in DDP to a US commercial address typically runs $3-8 per piece by air and $1.50-3 per piece by sea. Your factory quote should always show the per-piece landed cost — not just the FOB price.",
+      },
+      {
+        q: "How long does DDP shipping from China take?",
+        a: "By air, DDP from China to the USA takes 7-12 days door-to-door. By sea, 30-40 days. Sea is significantly cheaper per kg but slower — suitable for non-restock orders. Air is faster but more expensive — better for rush orders, samples, and time-sensitive restocks. Our standard DDP quote defaults to sea unless you specify air.",
+      },
+      {
+        q: "Do I have to pay customs duty with DDP?",
+        a: "No. With DDP, the seller (your factory or freight forwarder) pays all import duties, GST/VAT, customs broker fees, and last-mile delivery charges upfront. The price you are quoted is the final price. This is one of the main reasons B2B buyers prefer DDP over FOB or EXW — no hidden costs.",
+      },
+      {
+        q: "Is DDP better than FOB for small orders?",
+        a: "For most small and mid-size B2B orders (under 5,000 pieces), DDP is significantly easier. With FOB, you are responsible for arranging the freight forwarder, customs broker, and final-mile delivery — which usually means hiring a 3PL in the destination country. DDP bundles all of that into one price, which is much simpler when you do not have a US/EU logistics partner yet.",
+      },
+    ],
+
   },
   {
     slug:"yiwu-factory-tour",
@@ -290,6 +360,29 @@ export const blogPosts: BlogPost[] = [
 "100% final QC under professional lighting before packing",
 "DDP shipping to 50+ countries, US warehouse for fast fulfillment",
     ],
+    faqs: [
+      {
+        q: "Where is Yiwu and why is it important for apparel?",
+        a: "Yiwu is a city in Zhejiang province, China, about 300 km south of Shanghai. It is the world's largest small-commodity market and one of China's main apparel manufacturing hubs, especially for custom printed apparel, knitwear, and accessories. The Yiwu port and combined Hangzhou/Shanghai airports give it excellent export logistics — most of our B2B shipments leave from Shanghai.",
+      },
+      {
+        q: "How big is your Yiwu factory?",
+        a: "Our production facility is 2,000 m² on one floor, with 80+ production staff across sublimation printing, embroidery, screen printing, sewing, and quality control. We are a mid-size factory — large enough to handle 5,000+ piece orders reliably, but small enough that the owner still walks the floor every day. This is on purpose: it keeps quality consistent.",
+      },
+      {
+        q: "Can I visit your Yiwu factory?",
+        a: "Yes, and we encourage it. We host B2B customers regularly — most combine a factory tour with a trip to the Yiwu International Trade City (the world's largest wholesale market, 5+ million m²). Send us your travel dates at least 2 weeks in advance and we will arrange a pickup, tour, and translation support. Virtual video tours are also available.",
+      },
+      {
+        q: "How long have you been in business?",
+        a: "We have been running our Yiwu sublimation apparel production line since 2014, with over 10 years of experience in all-over print, custom jerseys, cycling kits, and B2B export. We have shipped to 50+ countries and work with brands, agencies, race organizers, and POD sellers across the US, EU, UK, Australia, and Latin America.",
+      },
+      {
+        q: "What is your production capacity?",
+        a: "Our monthly capacity is 50,000-80,000 pieces depending on style complexity. A typical 500-piece sublimated jersey order takes 15-20 days from approved sample to bulk delivery. For larger 5,000+ piece orders, expect 25-35 days. Rush orders (7-10 days) are available at a premium — contact us to confirm capacity for tight deadlines.",
+      },
+    ],
+
   },
   {
     slug:"how-to-choose-fabric-for-esports-jersey",
@@ -353,6 +446,29 @@ export const blogPosts: BlogPost[] = [
 "Avoid cotton, thin fabric, raised seams, buttons",
 "Order samples first, stress-test seams before bulk production",
     ],
+    faqs: [
+      {
+        q: "What is the best fabric for esports jerseys?",
+        a: "The best fabric for esports jerseys is 100% polyester bird-eye mesh or interlock knit, 140-160 GSM. Bird-eye mesh is the most popular because it is breathable, lightweight, and shows sublimated artwork vividly. For long-sleeve or premium lines, we recommend 200-220 GSM interlock polyester for a more substantial feel.",
+      },
+      {
+        q: "Is polyester good for gaming jerseys?",
+        a: "Yes — polyester is the standard fabric for esports jerseys. It accepts sublimation ink (essential for the all-over prints that gaming jerseys are known for), it is breathable, it wicks moisture, and it holds its shape after washing. Cotton is not suitable for esports because it cannot be sublimated and holds sweat.",
+      },
+      {
+        q: "What GSM is best for esports jerseys?",
+        a: "140-160 GSM is the sweet spot for short-sleeve esports jerseys. This weight is light enough for tournament play (players wear them for hours) but opaque enough to look premium. For long-sleeve or training jerseys, 180-220 GSM is more appropriate. Anything under 120 GSM looks cheap; anything over 240 GSM is too heavy for indoor gaming.",
+      },
+      {
+        q: "Should I use mesh fabric for esports jerseys?",
+        a: "Yes, mesh fabric (bird-eye or eyelet mesh) is the most popular choice for esports jerseys because it is highly breathable and shows sublimated colors vividly. Solid interlock is used for the front panel and sponsor logos where you want a smoother surface. Many of our customers use a mesh body with solid shoulder panels for a pro look.",
+      },
+      {
+        q: "Can I make esports jerseys with recycled polyester?",
+        a: "Yes. Recycled polyester (rPET) from post-consumer plastic bottles is increasingly popular for esports jerseys, especially for brands with sustainability commitments. The print quality, feel, and durability are nearly identical to virgin polyester. Minimum order quantities for rPET are usually 100-200 pieces per design — slightly higher than our standard 50-piece MOQ for virgin polyester.",
+      },
+    ],
+
   },
   {
     slug:"moq-explained-apparel-manufacturing",
@@ -408,6 +524,29 @@ export const blogPosts: BlogPost[] = [
 "Stick to one decoration technique, use stocked fabrics, to keep small-run costs down",
 "Sample runs of 3-5 pieces are available at premium per-piece pricing",
     ],
+    faqs: [
+      {
+        q: "What is MOQ in apparel manufacturing?",
+        a: "MOQ stands for Minimum Order Quantity — the smallest number of pieces a factory will produce per design, per size run, per color. For custom sublimation apparel, MOQ is typically 30-100 pieces because setup costs (printer calibration, paper, heat press) are the same whether you make 50 or 500 pieces. Lower MOQ = higher per-piece price.",
+      },
+      {
+        q: "Why do clothing factories have a minimum order?",
+        a: "Factories set MOQs to cover fixed setup costs: print screens, color calibration, fabric setup, cutting templates, and sewing line changeover. A sublimation order under 30 pieces means the factory spends the same setup time for very little output — which is why per-piece prices are higher for small runs. Our 50-piece MOQ is the realistic floor for custom sublimation.",
+      },
+      {
+        q: "Can I order less than 50 custom shirts?",
+        a: "For sampling, yes. We produce 1-5 sample pieces (called 'strike-offs' or 'pre-production samples') so you can check the design, fit, and color before committing to bulk. For bulk production, 50 pieces is our minimum. If you need a smaller run for a test launch or limited edition, contact us — we can sometimes accommodate 30-piece runs at a 20-30% per-piece premium.",
+      },
+      {
+        q: "Is a 50-piece minimum really the smallest?",
+        a: "For custom sublimated apparel from a Chinese factory, 50 pieces is genuinely small. Most factories quote 100-300 piece MOQs. We offer 50 because we work with a lot of small brands, esports teams, and event organizers who don't need 1,000 pieces. The trade-off: per-piece price is higher than a 500-piece run.",
+      },
+      {
+        q: "What is the smallest custom clothing order you can do?",
+        a: "The absolute smallest custom order is a 1-piece sample (for fit and print approval), but it costs almost as much as a 5-piece sample because the setup is the same. For bulk production, our realistic minimum is 50 pieces per design. If you need a smaller bulk run, we can sometimes arrange 30 pieces with a 20-30% upcharge on the per-piece price.",
+      },
+    ],
+
   },
   {
     slug:"cycling-jersey-fabric-guide",
@@ -462,6 +601,29 @@ export const blogPosts: BlogPost[] = [
 "UPF 30+ minimum, UPF 50+ for pro team kits",
 "Flatlock seams, silicone gripper hems, raw-cut or laser-cut sleeve edges",
     ],
+    faqs: [
+      {
+        q: "What fabric do professional cycling teams use?",
+        a: "Pro cycling teams use 100% polyester knit fabric with a brushed or smooth finish, typically 130-180 GSM. The standard is a lightweight polyester with mechanical stretch (4-way stretch) for the body, with mesh side panels for ventilation. Premium teams add Italian fabrics like MITI or Sitip, which are heavier (180-220 GSM) and have higher compression.",
+      },
+      {
+        q: "Is polyester good for cycling jerseys?",
+        a: "Yes — polyester is the standard fabric for performance cycling jerseys. It is breathable, moisture-wicking, lightweight, and accepts sublimation printing for full-coverage team graphics. Most team kits are 100% polyester or polyester-spandex blends (typically 80/20 or 90/10) for stretch and recovery.",
+      },
+      {
+        q: "What is the best material for a cycling jersey?",
+        a: "The best all-around material for a custom team cycling jersey is 100% polyester with 4-way stretch, 140-160 GSM, with a brushed-finish back for moisture management. For premium kits, add 15-20% spandex (or use a poly-spandex blend like our poly-spandex-stretch fabric) for muscle compression and aero fit.",
+      },
+      {
+        q: "Are expensive cycling jerseys worth it?",
+        a: "For team kits, the price difference between a $25 jersey and a $45 jersey usually reflects fabric quality and print detail — better moisture-wicking, more accurate sublimation colors, and a more pro-looking finish. For weekend riders, the difference is less noticeable. For sponsored teams and race-day use, premium fabric is worth the upgrade.",
+      },
+      {
+        q: "How do I make a custom cycling jersey?",
+        a: "Five steps: (1) Send us your design (any format — even a sketch); (2) We create a digital mockup and fabric swatches for your approval; (3) We produce a strike-off sample (1-3 pieces) in 7-10 days; (4) After sample approval, bulk production takes 15-20 days; (5) DDP shipping to your door takes another 7-12 days by air or 30-40 days by sea. Total: 30-60 days door-to-door.",
+      },
+    ],
+
   },
   {
     slug:"screen-printing-vs-embroidery",
@@ -519,6 +681,29 @@ export const blogPosts: BlogPost[] = [
 "Combine them: embroidery chest logo + screen print back design is the most popular setup",
 "Send us your design and we will recommend the right method for free",
     ],
+    faqs: [
+      {
+        q: "Is screen printing cheaper than embroidery?",
+        a: "Yes, for most apparel orders, screen printing is cheaper per piece than embroidery — especially for large runs and multi-color designs. Screen print cost is driven by the number of colors and setup screens, not the number of pieces. Embroidery cost is driven by stitch count and number of pieces, so it gets expensive fast on large runs.",
+      },
+      {
+        q: "Which lasts longer, embroidery or screen printing?",
+        a: "Embroidery typically lasts longer. Embroidered logos are stitched into the fabric with thread — they cannot peel, crack, or fade even after hundreds of washes. Screen printed logos are a layer of ink on top of the fabric, so they will eventually crack or fade after 50-100+ washes. For a uniform that needs to look sharp for 3+ years, embroidery is more durable.",
+      },
+      {
+        q: "What is better, embroidery or screen printing?",
+        a: "It depends on the design. Embroidery is better for: small logos, premium feel, polos, hats, jackets, uniforms that need to last 3+ years. Screen printing is better for: large graphics, multi-color designs, photos or gradients, t-shirts, hoodies, budget orders. Many of our customers combine both: embroidery on the left chest + screen print on the back.",
+      },
+      {
+        q: "When to use screen printing vs embroidery?",
+        a: "Use screen printing when the design is large (over 4 inches wide), multi-color, or photographic. Use embroidery when the design is small (under 4 inches), 1-3 colors, on a polo/hat/jacket, and the brand wants a premium stitched feel. For corporate uniforms, most orders use both: embroidered logo on the chest + screen print on the back.",
+      },
+      {
+        q: "Can you do both screen print and embroidery on the same garment?",
+        a: "Yes — and it's very common. A typical setup: embroidered left chest logo (small, premium feel) + screen printed large back design (brand or event graphic). We do this for most of our corporate uniform and event merchandise orders. The pricing is straightforward: embroidery cost per piece + screen print cost per piece, no extra setup fee for combining.",
+      },
+    ],
+
   },
   {
     slug:"how-to-prepare-artwork-files-for-sublimation",
@@ -605,6 +790,29 @@ export const blogPosts: BlogPost[] = [
 "Use rich black (60,40,40,100) for dark areas; transparent for white",
 "Download our free AI/PDF artwork template to speed up approval",
     ],
+    faqs: [
+      {
+        q: "What file format is best for sublimation printing?",
+        a: "Vector files (AI, EPS, PDF, SVG) are best for sublimation printing because they scale to any size without losing quality. They are also required for any design element that needs sharp edges, text, or logos. Raster files (PNG, PSD, TIFF) are acceptable for photo-realistic artwork as long as the resolution is high enough — typically 150-300 DPI at the final print size.",
+      },
+      {
+        q: "What resolution do I need for sublimation printing?",
+        a: "For raster artwork (PNG, PSD, TIFF, JPEG), we recommend 150 DPI at the final print size, with 300 DPI as the gold standard. For an all-over print t-shirt (roughly 30\" x 40\" print area), this means your file should be at least 4,500 x 6,000 pixels. Lower resolution produces visible pixelation, especially on large print areas.",
+      },
+      {
+        q: "Can I send a PNG for sublimation printing?",
+        a: "Yes, as long as the resolution is high enough (150-300 DPI at final print size) and the file is not heavily compressed. PNG is fine for photo-based or gradient designs. For logos, text, or sharp-edged designs, a vector file (AI, EPS, PDF) is much better because it stays crisp at any size. We can also work from layered PSD files.",
+      },
+      {
+        q: "What color mode should I use for sublimation?",
+        a: "Use RGB color mode (not CMYK) for sublimation printing. Sublimation printers use CMYK ink sets but the color management is different from offset printing — RGB files produce more vibrant, saturated colors on fabric. Save your file in sRGB color space and we will handle the conversion to the printer profile. Avoid heavy CMYK color profiles, which can look dull.",
+      },
+      {
+        q: "Do you need vector files for sublimation?",
+        a: "Vector files are strongly recommended for any text, logo, or sharp-edged design element, because they stay crisp at any print size. Photo or gradient backgrounds can be raster (PNG, PSD, TIFF) at 150-300 DPI. If you only have a low-res raster file, send it anyway — we can assess whether the quality is workable or whether we need to re-create part of the design.",
+      },
+    ],
+
   },
   {
     slug: "what-is-sublimation-fabric",
@@ -688,6 +896,29 @@ export const blogPosts: BlogPost[] = [
 "Match the fabric to the end use: birdseye for running, interlock for jerseys, brushed poly for hoodies",
 "Order our free fabric swatch kit to test hand-feel, stretch, and color before bulk production",
     ],
+    faqs: [
+      {
+        q: "What is the best fabric for sublimation printing?",
+        a: "100% polyester is the best fabric for sublimation printing, with bird-eye mesh, interlock knit, and brushed polyester being the most common choices. Polyester-spandex blends (typically 90/10 or 80/20) also work and add stretch, but the higher the spandex content, the more muted the colors. Avoid cotton, wool, silk, and any natural fiber — they do not bond with sublimation dye.",
+      },
+      {
+        q: "Can sublimation be done on 100% cotton?",
+        a: "No — sublimation dye only bonds with polyester fibers. For 100% cotton, the common alternatives are DTF (Direct-to-Film) transfers and DTG (Direct-to-Garment) printing. DTF is faster, cheaper at scale, and works on any fabric. DTG produces softer prints on cotton but is slower and more expensive. At our factory, we recommend DTF for cotton orders with all-over or full-color designs.",
+      },
+      {
+        q: "What GSM polyester is best for sublimation?",
+        a: "For most apparel, 140-180 GSM polyester is the sweet spot. T-shirts: 140-160 GSM. Cycling jerseys: 130-160 GSM. Polos: 180-200 GSM. Hoodies and sweatshirts: 220-280 GSM. Lower GSM (under 120) is see-through and feels cheap; higher GSM (over 280) is too heavy for warm weather. Our 65 fabric library covers all of these weights.",
+      },
+      {
+        q: "Is sublimation fabric different from regular polyester?",
+        a: "Sublimation fabric is the same physical material as regular polyester — the term 'sublimation fabric' describes how the fabric behaves with sublimation ink, not a special textile. Any polyester knit, woven, or blend will accept sublimation dye. The key is that the fabric must be 100% polyester or a high-polyester blend (above 65% polyester) for vibrant, durable colors.",
+      },
+      {
+        q: "Where can I buy sublimation fabric by the yard?",
+        a: "You can buy sublimation fabric by the yard from our factory for bulk wholesale orders (typically 100+ yards per color/style). For smaller quantities (under 100 yards), we recommend our sister platform or Alibaba. We supply sublimation fabric in rolls to apparel brands, DIY crafters, and small manufacturers worldwide — contact us with your spec for a quote.",
+      },
+    ],
+
   },
   {
     slug: "polyester-vs-cotton-sublima-fabric",
@@ -779,6 +1010,29 @@ export const blogPosts: BlogPost[] = [
 "Cotton wins on comfort, familiarity, and certain market expectations (EU lifestyle, premium streetwear)",
 "Order our free sample kit to compare polyester sublimation vs cotton DTG side by side before you commit",
     ],
+    faqs: [
+      {
+        q: "Can you sublimate on cotton?",
+        a: "No. Sublimation dye only bonds with polyester (and polyester-rich blends above 65%). For 100% cotton apparel with full-color designs, we use DTF (Direct-to-Film) transfers at our factory. DTF is the cotton-friendly alternative to sublimation — it works on any fabric, including cotton, blends, nylon, and even leather.",
+      },
+      {
+        q: "Which is cheaper, polyester or cotton sublimation?",
+        a: "Polyester is significantly cheaper for sublimation because it is the substrate itself — the dye bonds directly into the fabric, no extra transfer step required. Cotton sublimation requires DTF or DTG (a separate transfer process) which adds film, adhesive powder, and labor. For 500 custom t-shirts, expect polyester sublimation to be 30-50% cheaper per piece than cotton DTF.",
+      },
+      {
+        q: "Is cotton sublimation as durable as polyester sublimation?",
+        a: "Cotton sublimation is less durable than polyester sublimation. Polyester sublimation bonds the dye with the fiber, so it cannot peel, crack, or fade for the life of the garment. Cotton sublimation (DTF/DTG) sits on top of the fabric as a thin ink or adhesive layer, which can crack or peel at the edges after 50+ heavy washes. For a uniform that needs to last 5+ years, polyester sublimation is the better choice.",
+      },
+      {
+        q: "What is the best fabric blend for sublimation?",
+        a: "The best blend for sublimation is 90/10 or 80/20 polyester-spandex. The polyester provides the surface for the dye to bond, and the spandex adds 4-way stretch for athletic fit. Cotton-poly blends (50/50, 65/35) can be sublimated but the colors will look muted or washed-out because cotton does not bond with the dye — we generally do not recommend them for vibrant full-color artwork.",
+      },
+      {
+        q: "Is polyester bad for your skin?",
+        a: "Modern performance polyester is safe and widely used in athletic, medical, and everyday apparel. The 'polyester is uncomfortable' reputation comes from cheap, low-quality polyester used in fast fashion in the 1970s-90s. Today's polyester knit fabrics (especially bird-eye mesh and brushed polyester) are breathable, moisture-wicking, and softer than many natural fibers. For sensitive skin, look for higher GSM and brushed-finish polyester.",
+      },
+    ],
+
   },
 ];
 

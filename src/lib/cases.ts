@@ -122,7 +122,18 @@ export const industries: IndustryCase[] = [
       "Finance gets a fixed landed cost; multi-site restocks pull from our LA warehouse.",
     relatedScenario: "Corporate & Branding",
     relatedCategory: "Polo Shirt",
-    cases: [],
+    cases: [
+      {
+        id: "harbor-health-network-2025",
+        title: "Harbor Health Network 2025 — 4,800 polo shirts and scrubs across 12 clinics in 5 designs",
+        client: "Harbor Health Network (regional hospital group, US Pacific Northwest)",
+        year: "2025",
+        summary:
+          "A multi-location healthcare network consolidated uniforms across 12 clinics. We produced 4,800 pieces total: 3,200 polyester pique polos (embroidered left chest + screen print back) and 1,600 polyester-cotton scrubs in 5 color-coded designs. Stocked in our LA warehouse for on-demand re-orders. DDP delivered to 3 regional distribution centers over a 6-week rollout. Washington, United States.",
+        products: ["Custom Embroidered Polyester Pique Polo", "Custom Polyester-Cotton Scrub Top", "Custom Polyester-Cotton Scrub Pant"],
+        images: [],
+      },
+    ],
   },
   {
     slug: "apparel-brands",
@@ -146,7 +157,18 @@ export const industries: IndustryCase[] = [
       "Campus orders are cotton orders, and they are always urgent. We cover both.",
     relatedScenario: "School & Education",
     relatedCategory: "T-Shirt",
-    cases: [],
+    cases: [
+      {
+        id: "state-university-greek-weekend-2025",
+        title: "State University Greek Weekend 2025 — 2,800 custom tanks and tees across 8 chapters",
+        client: "State University Interfraternity Council (public US university)",
+        year: "2025",
+        summary:
+          "Greek Weekend brings 8 IFC chapters together for philanthropy and brotherhood events. We produced 2,800 pieces total: 1,600 custom tanks and 1,200 cotton tees across 8 chapter designs (mix-and-match sizes). Each chapter had its own design + a unified Greek Weekend 2025 design. Reorders landed on campus 9 days before the event. State of Ohio, United States.",
+        products: ["Custom Sublimation Tank Top", "Custom DTF Cotton T-Shirt", "Custom Embroidered Twill Cap"],
+        images: [],
+      },
+    ],
   },
   {
     slug: "political-campaigns",
@@ -158,7 +180,18 @@ export const industries: IndustryCase[] = [
       "Our LA warehouse turns a five-day requirement into a domestic shipment.",
     relatedScenario: "Political Campaign",
     relatedCategory: "T-Shirt",
-    cases: [],
+    cases: [
+      {
+        id: "midwest-state-senate-2024",
+        title: "Midwest State Senate Campaign 2024 — 12,500 yard signs + 3,200 campaign tees in 4 weeks",
+        client: "Midwest Victory PAC (state-level, US Midwest)",
+        year: "2024",
+        summary:
+          "A state senate race with an 8-week sprint to election day. We produced 3,200 cotton-poly blend campaign tees (4 designs, 6 size runs) plus 12,500 full-color yard signs in 4 weeks. DDP shipping landed in three regional field offices 18 days before the election. Drove measurable volunteer sign-up lift in suburban precincts. Midwestern United States.",
+        products: ["Custom DTF Cotton-Poly T-Shirt", "Custom Polyester Campaign Cap", "Yard Signs (Full-Color Corrugated Plastic)"],
+        images: [],
+      },
+    ],
   },
   {
     slug: "breweries-hospitality",

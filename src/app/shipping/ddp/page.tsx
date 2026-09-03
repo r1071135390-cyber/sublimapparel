@@ -96,6 +96,21 @@ export default function DdpPage() {
         </div>
       </section>
 
+      {/* FEATURED SNIPPET — direct answer for "what is DDP shipping" */}
+      <section id="quick-answer" className="border-b-2 border-black bg-[#e6f7ff]">
+        <div className="mx-auto max-w-4xl px-6 py-12 md:py-16">
+          <div className="mb-3 inline-block border-2 border-black bg-[#00c2ff] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+            Quick answer
+          </div>
+          <h2 className="mb-4 text-3xl font-black leading-[0.95] tracking-tight md:text-4xl">
+            What is DDP shipping?
+          </h2>
+          <p className="text-lg leading-relaxed text-black">
+            <strong>DDP (Delivered Duty Paid) is an international shipping term where the seller takes full responsibility for delivering goods to the buyer's door — including shipping, customs clearance, import duties, and taxes.</strong> The buyer pays one all-inclusive price with no surprise fees, customs broker charges, or last-mile logistics to handle. For B2B orders from China to the USA, EU, or UK, DDP is the simplest and most transparent shipping option.
+          </p>
+        </div>
+      </section>
+
       {/* INCOTERMS comparison */}
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
@@ -300,6 +315,49 @@ export default function DdpPage() {
             <ArrowRight className="h-4 w-4" strokeWidth={2.5} /></RequestQuoteLink>
         </div>
       </section>
+
+      {/* FAQPage JSON-LD — featured-snippet optimization */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: [
+            {
+              '@type': 'Question',
+              name: 'What is DDP shipping?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'DDP (Delivered Duty Paid) is an international shipping term where the seller takes full responsibility for delivering goods to the buyer\'s door, including shipping, customs clearance, import duties, and taxes. The buyer pays one all-inclusive price with no surprise customs fees. For B2B orders from China to the USA, EU, or UK, DDP is the simplest and most transparent shipping option.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'How long does DDP shipping from China take?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'DDP shipping from China to the USA takes 7-12 days by air and 30-40 days by sea, door-to-door. Air is faster but more expensive; sea is significantly cheaper per kg but slower. We default to sea for non-urgent orders and switch to air for rush or sample orders.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'How much does DDP shipping from China to the USA cost?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'DDP shipping cost depends on weight, volume, and destination ZIP code. For a 500-piece apparel order (150-300 kg by air, 1-2 m³ by sea), all-in DDP to a US commercial address typically runs $3-8 per piece by air and $1.50-3 per piece by sea. The price you are quoted is the final price — no customs fees or broker charges on top.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'Is DDP better than FOB for small orders?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'For most small and mid-size B2B orders (under 5,000 pieces), DDP is significantly easier than FOB. With FOB, the buyer is responsible for arranging the freight forwarder, customs broker, and final-mile delivery — usually meaning hiring a 3PL in the destination country. DDP bundles all of that into one price, which is much simpler when you do not have a US/EU logistics partner.',
+              },
+            },
+          ],
+        }) }}
+      />
     </main>
   );
 }
