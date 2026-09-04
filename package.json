@@ -15,6 +15,7 @@
     "build": "bash ./scripts/build.sh",
     "build:cf": "next build && next-on-pages",
     "dev": "bash ./scripts/dev.sh",
+    "optimize-images": "node scripts/optimize-images.mjs",
     "preinstall": "npx only-allow pnpm",
     "lint": "eslint",
     "lint:build": "eslint . --quiet",
