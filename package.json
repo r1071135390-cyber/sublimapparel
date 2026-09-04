@@ -3,11 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "browserslist": [
-    "chrome >= 90",
-    "firefox >= 90",
-    "safari >= 14",
-    "edge >= 90",
-    "ios_saf >= 14"
+    "chrome >= 111",
+    "firefox >= 111",
+    "safari >= 16.4",
+    "edge >= 111",
+    "ios_saf >= 16.4",
+    "not op_mini all",
+    "not dead"
   ],
   "scripts": {
     "build": "bash ./scripts/build.sh",
