@@ -226,3 +226,13 @@ html {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Defer style/layout for off-screen <section> elements. Browser computes
+   nothing for sections far below the fold, then computes when they
+   approach the viewport. Trades tiny CLS (held by contain-intrinsic-size)
+   for big main-thread savings (PageSpeed reported 1067ms on home page
+   Style & Layout — most of which was below-fold SSR/dynamic sections). */
+section {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 700px;
+}
