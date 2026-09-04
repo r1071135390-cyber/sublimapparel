@@ -11,6 +11,9 @@ pnpm install --prefer-frozen-lockfile --prefer-offline --loglevel debug --report
 echo "Building the Next.js project (static export)..."
 pnpm next build
 
+echo "Inlining CSS into HTML (eliminates render-blocking CSS)..."
+node scripts/inline-css.mjs
+
 # Only bundle the custom server when not on Vercel/Cloudflare (where static export is served directly)
 if [ -z "${VERCEL:-}" ] && [ -z "${CF_PAGES:-}" ]; then
   echo "Bundling custom server with tsup..."
