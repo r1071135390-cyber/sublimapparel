@@ -43,6 +43,13 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ['lucide-react', 'date-fns'],
   },
+  // Note: Next.js 16 hardcodes `require("../build/polyfills/polyfill-module")`
+  // in client/app-globals.js — Turbopack's resolveAlias can't redirect it.
+  // We patch the file directly in scripts/patch-next-polyfill.mjs
+  // (run automatically via pnpm postinstall). The polyfills it provides
+  // (Array.prototype.at, Object.fromEntries, Object.hasOwn, etc.) are
+  // all Baseline — already supported by every browser in our browserslist.
+  // This drops ~13.5 KiB from the initial client bundle on every page.
   // Edge cache & security headers are configured in `public/_headers`
   // (Next.js output:export does not support headers() — must be a static file)
 };
