@@ -25,15 +25,16 @@ export function FactoryFloor() {
           {/* Printer */}
           <div className="group relative overflow-hidden border-2 border-black">
             <div className="relative aspect-[16/10] overflow-hidden">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src="/printer-closeup.webp"
                 alt="Large-format sublimation printer — CMYK print head in action"
-                className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
                 loading="lazy"
               />
               {/* Overlay label */}
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-6 pt-20">
+              <div className="pointer-events-none absolute bottom-0 left-0 right-0 z-10 bg-gradient-to-t from-black/90 to-transparent p-6 pt-20">
                 <div className="font-mono text-xs font-bold uppercase tracking-widest text-[#0078a8]">
                   Equipment #1
                 </div>
@@ -51,14 +52,15 @@ export function FactoryFloor() {
           {/* Heat press */}
           <div className="group relative overflow-hidden border-2 border-black">
             <div className="relative aspect-[16/10] overflow-hidden">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src="/heat-press.webp"
                 alt="Industrial heat press — 200°C temperature transfer"
-                className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
                 loading="lazy"
               />
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-6 pt-20">
+              <div className="pointer-events-none absolute bottom-0 left-0 right-0 z-10 bg-gradient-to-t from-black/90 to-transparent p-6 pt-20">
                 <div className="font-mono text-xs font-bold uppercase tracking-widest text-[#0078a8]">
                   Equipment #2
                 </div>

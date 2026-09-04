@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { RequestQuoteLink } from "@/components/request-quote-link";
 import { RequestSampleButton } from "@/components/request-sample-button";

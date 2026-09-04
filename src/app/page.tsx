@@ -2,14 +2,16 @@ import { Hero } from "@/components/hero";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { FactoryFloor } from "@/components/factory-floor";
 import { JsonLd } from "@/components/json-ld";
-import { Features } from "@/components/features";
-import { Process } from "@/components/process";
-import { BeyondApparel } from "@/components/beyond-apparel";
-import { ArtworkCTA } from "@/components/artwork-cta";
-import { HowItWorks } from "@/components/how-it-works";
-import { Products } from "@/components/products";
-import { DDP } from "@/components/ddp";
 import { LazyClientSections } from "@/components/home/lazy-client-sections";
+import {
+  Features,
+  Process,
+  BeyondApparel,
+  ArtworkCTA,
+  HowItWorks,
+  Products,
+  DDP,
+} from "@/components/home/home-below-fold";
 
 export const metadata = buildPageMetadata({
     title: "Yiwu Sublimation & All-Over Print | Cotton DDP 100+",
