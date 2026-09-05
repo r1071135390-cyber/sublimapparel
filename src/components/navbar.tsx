@@ -86,7 +86,7 @@ export function Navbar() {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-1.5">
         <Link href="/" className="group flex items-center gap-2">
           <img
-            src="/sublimapparel-logo.webp"
+            src="/sublimapparel-logo-v2.webp"
             alt="SublimApparel — custom all-over print apparel factory, Yiwu China"
             width={220}
             height={88}

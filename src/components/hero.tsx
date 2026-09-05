@@ -57,7 +57,7 @@ export function Hero() {
       <div className="relative block w-full lg:hidden">
         <div className="relative aspect-[16/9] w-full">
           <Image
-            src="/hero-jersey.webp"
+            src="/hero-jersey-v2.webp"
             alt="Vivid full-sublimation jersey"
             fill
             priority

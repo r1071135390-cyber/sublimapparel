@@ -479,7 +479,7 @@ export const blogPosts: BlogPost[] = [
     date:"2026-07-25",
     readTime:"5 min read",
     author:"SublimApparel Team",
-    coverImage:"/printer-closeup.webp",
+    coverImage:"/printer-closeup-v2.webp",
     coverAlt:"Sublimation printer close-up showing color detail",
     tags: ["MOQ","minimum order","apparel manufacturing","pricing"],
     metaTitle: "MOQ Explained: Real Minimums for Custom Apparel 2025",

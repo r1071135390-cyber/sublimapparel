@@ -26,7 +26,7 @@ export function FactoryFloor() {
           <div className="group relative overflow-hidden border-2 border-black">
             <div className="relative aspect-[16/10] overflow-hidden">
               <Image
-                src="/printer-closeup.webp"
+                src="/printer-closeup-v2.webp"
                 alt="Large-format sublimation printer — CMYK print head in action"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -53,7 +53,7 @@ export function FactoryFloor() {
           <div className="group relative overflow-hidden border-2 border-black">
             <div className="relative aspect-[16/10] overflow-hidden">
               <Image
-                src="/heat-press.webp"
+                src="/heat-press-v2.webp"
                 alt="Industrial heat press — 200°C temperature transfer"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"

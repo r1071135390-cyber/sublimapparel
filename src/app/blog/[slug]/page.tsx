@@ -71,7 +71,7 @@ export default async function BlogPostPage({
       name: "SublimApparel",
       logo: {
         "@type": "ImageObject",
-        url: "/sublimapparel-logo.webp",
+        url: "/sublimapparel-logo-v2.webp",
       },
     },
     mainEntityOfPage: {

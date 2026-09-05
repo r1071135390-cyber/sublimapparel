@@ -657,7 +657,7 @@ function PIPreview(props: {
         <div className="flex items-start gap-6">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/sublimapparel-logo.webp"
+            src="/sublimapparel-logo-v2.webp"
             alt="SublimApparel"
             className="h-24 w-auto shrink-0 hover:scale-[1.01] transition-transform"
           />

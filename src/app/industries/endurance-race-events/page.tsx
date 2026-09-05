@@ -44,7 +44,7 @@ const data: CustomerProfileData = {
     "running event shirts",
   ],
   badge: "For Endurance & Race Events",
-  hero: "/hero-jersey.webp",
+  hero: "/hero-jersey-v2.webp",
   h1: "Custom Race Shirts & Marathon Apparel Manufacturer",
   heroTitle: "Apparel Solutions for Races, Marathons & Endurance Events",
   heroBody:
