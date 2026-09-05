@@ -129,7 +129,7 @@ export function Footer() {
                   <li key={item.label}>
                     <Link
                       href={item.href}
-                      className="text-sm text-black/80 transition-colors hover:text-[#cc3d00]"
+                      className="block min-h-11 py-2.5 leading-tight text-sm text-black/80 transition-colors hover:text-[#cc3d00]"
                     >
                       {item.label}
                     </Link>
@@ -139,7 +139,7 @@ export function Footer() {
               {group.viewAll && (
                 <Link
                   href={group.viewAll.href}
-                  className="mt-4 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-black hover:text-[#cc3d00]"
+                  className="mt-4 inline-flex min-h-11 items-center gap-1 py-2.5 text-xs font-bold uppercase tracking-wider text-black hover:text-[#cc3d00]"
                 >
                   {group.viewAll.label} →
                 </Link>

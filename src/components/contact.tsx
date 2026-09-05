@@ -311,7 +311,7 @@ export function Contact() {
                     value={form.name}
                     onChange={onChange}
                     placeholder="Your name"
-                    className="w-full border-b-2 border-black bg-transparent py-2 text-base font-medium text-black placeholder:text-black/30 focus:border-[#ff4d00] focus:outline-none"
+                    className="w-full border-b-2 border-black bg-transparent py-2.5 min-h-11 text-base font-medium text-black placeholder:text-black/30 focus:border-[#ff4d00] focus:outline-none"
                   />
                 </Field>
                 <Field label="Email *">
@@ -322,7 +322,7 @@ export function Contact() {
                     value={form.email}
                     onChange={onChange}
                     placeholder="you@company.com"
-                    className="w-full border-b-2 border-black bg-transparent py-2 text-base font-medium text-black placeholder:text-black/30 focus:border-[#ff4d00] focus:outline-none"
+                    className="w-full border-b-2 border-black bg-transparent py-2.5 min-h-11 text-base font-medium text-black placeholder:text-black/30 focus:border-[#ff4d00] focus:outline-none"
                   />
                 </Field>
                 <Field label="Company">
@@ -332,7 +332,7 @@ export function Contact() {
                     value={form.company}
                     onChange={onChange}
                     placeholder="Company / brand"
-                    className="w-full border-b-2 border-black bg-transparent py-2 text-base font-medium text-black placeholder:text-black/30 focus:border-[#ff4d00] focus:outline-none"
+                    className="w-full border-b-2 border-black bg-transparent py-2.5 min-h-11 text-base font-medium text-black placeholder:text-black/30 focus:border-[#ff4d00] focus:outline-none"
                   />
                 </Field>
                 <Field label="Product *">
@@ -340,7 +340,7 @@ export function Contact() {
                     name="product"
                     value={form.product}
                     onChange={onChange}
-                    className="w-full border-b-2 border-black bg-transparent py-2 text-base font-medium text-black focus:border-[#ff4d00] focus:outline-none"
+                    className="w-full border-b-2 border-black bg-transparent py-2.5 min-h-11 text-base font-medium text-black focus:border-[#ff4d00] focus:outline-none"
                   >
                     <option>Custom T-Shirts (Polyester)</option>
                     <option>Custom T-Shirts (Cotton)</option>
@@ -366,7 +366,7 @@ export function Contact() {
                     value={form.quantity}
                     onChange={onChange}
                     placeholder="e.g. 300 pcs"
-                    className="w-full border-b-2 border-black bg-transparent py-2 text-base font-medium text-black placeholder:text-black/30 focus:border-[#ff4d00] focus:outline-none"
+                    className="w-full border-b-2 border-black bg-transparent py-2.5 min-h-11 text-base font-medium text-black placeholder:text-black/30 focus:border-[#ff4d00] focus:outline-none"
                   />
                 </Field>
               </div>
@@ -387,7 +387,7 @@ export function Contact() {
                       name="process"
                       value={form.process}
                       onChange={onChange}
-                      className="w-full border-b-2 border-black bg-transparent py-2 text-sm font-medium text-black focus:border-[#ff4d00] focus:outline-none"
+                      className="w-full border-b-2 border-black bg-transparent py-2.5 min-h-11 text-sm font-medium text-black focus:border-[#ff4d00] focus:outline-none"
                     >
                       <option>Sublimation</option>
                       <option>DTG (Direct to garment)</option>
@@ -402,7 +402,7 @@ export function Contact() {
                       name="fabric"
                       value={form.fabric}
                       onChange={onChange}
-                      className="w-full border-b-2 border-black bg-transparent py-2 text-sm font-medium text-black focus:border-[#ff4d00] focus:outline-none"
+                      className="w-full border-b-2 border-black bg-transparent py-2.5 min-h-11 text-sm font-medium text-black focus:border-[#ff4d00] focus:outline-none"
                     >
                       <option>Polyester</option>
                       <option>100% cotton</option>
@@ -416,7 +416,7 @@ export function Contact() {
                       name="designStatus"
                       value={form.designStatus}
                       onChange={onChange}
-                      className="w-full border-b-2 border-black bg-transparent py-2 text-sm font-medium text-black focus:border-[#ff4d00] focus:outline-none"
+                      className="w-full border-b-2 border-black bg-transparent py-2.5 min-h-11 text-sm font-medium text-black focus:border-[#ff4d00] focus:outline-none"
                     >
                       <option>Have design ready</option>
                       <option>Have sketch / concept</option>
@@ -461,7 +461,7 @@ export function Contact() {
                       value={form.shipCountry}
                       onChange={onChange}
                       placeholder="Country (e.g. United States)"
-                      className="w-full border-b-2 border-black bg-transparent py-2 text-base font-medium text-black placeholder:text-black/30 focus:border-[#ff4d00] focus:outline-none"
+                      className="w-full border-b-2 border-black bg-transparent py-2.5 min-h-11 text-base font-medium text-black placeholder:text-black/30 focus:border-[#ff4d00] focus:outline-none"
                     />
                   </label>
                   <label className="block">
@@ -473,7 +473,7 @@ export function Contact() {
                       value={form.shipZip}
                       onChange={onChange}
                       placeholder="ZIP / postal code"
-                      className="w-full border-b-2 border-black bg-transparent py-2 text-base font-medium text-black placeholder:text-black/30 focus:border-[#ff4d00] focus:outline-none"
+                      className="w-full border-b-2 border-black bg-transparent py-2.5 min-h-11 text-base font-medium text-black placeholder:text-black/30 focus:border-[#ff4d00] focus:outline-none"
                     />
                   </label>
                 </div>
@@ -761,7 +761,7 @@ function SizeQuantityPicker({
                   placeholder="e.g. 3XL"
                   maxLength={8}
                   aria-label="Custom size label"
-                  className="w-full border-b-2 border-black/30 bg-transparent py-1 text-center text-xs font-black uppercase tracking-widest text-black placeholder:text-black/30 focus:border-[#ff4d00] focus:outline-none"
+                  className="w-full border-b-2 border-black/30 bg-transparent py-2.5 min-h-11 text-center text-sm font-black uppercase tracking-widest text-black placeholder:text-black/30 focus:border-[#ff4d00] focus:outline-none"
                 />
                 <button
                   type="button"
@@ -782,7 +782,7 @@ function SizeQuantityPicker({
       <button
         type="button"
         onClick={onAdd}
-        className="w-full rounded-md border border-dashed border-black/20 px-3 py-2.5 text-xs font-bold text-[#cc3d00] transition-colors hover:border-[#ff4d00] hover:bg-[#ff4d00]/5"
+        className="w-full rounded-md border border-dashed border-black/20 px-4 py-2.5 min-h-11 text-sm font-bold text-[#cc3d00] transition-colors hover:border-[#ff4d00] hover:bg-[#ff4d00]/5"
       >
         + Add special size (e.g. 3XL, 4XL, Tall) — add as many rows as you need
       </button>
