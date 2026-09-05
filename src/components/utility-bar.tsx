@@ -28,7 +28,7 @@ export function UtilityBar() {
               href="https://wa.me/8619817930190"
               className="hover:text-[#cc3d00]"
             >
-              <span className="font-bold uppercase tracking-wider text-white/60">
+              <span className="font-bold uppercase tracking-wider text-white/80">
                 WhatsApp
               </span>
             </a>
@@ -36,7 +36,7 @@ export function UtilityBar() {
           <li>
             <a
               href="mailto:info@sublimapparel.com"
-              className="font-bold uppercase tracking-wider text-white/60 hover:text-white"
+              className="font-bold uppercase tracking-wider text-white/80 hover:text-white"
             >
               info@sublimapparel.com
             </a>

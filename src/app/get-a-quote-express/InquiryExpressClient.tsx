@@ -297,7 +297,7 @@ export default function InquiryExpressClient() {
           </p>
           <button
             type="submit"
-            className="w-full bg-[#ff4d00] px-6 py-4 text-base font-bold uppercase tracking-wider text-white transition-colors hover:bg-[#cc3d00]"
+            className="w-full bg-[#ff4d00] px-6 py-4 text-base font-bold uppercase tracking-wider text-black transition-colors hover:bg-[#cc3d00]"
           >
             Continue to payment →
           </button>

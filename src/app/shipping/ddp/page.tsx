@@ -83,7 +83,7 @@ export default function DdpPage() {
             (overstock only — not a standard service).
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <RequestQuoteLink label="ddp / page / Get a quote" className="group inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-black hover:text-white">Get DDP Quote
+            <RequestQuoteLink label="ddp / page / Get a quote" className="group inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-widest text-black transition-all hover:bg-black hover:text-white">Get DDP Quote
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} /></RequestQuoteLink>
             <Link
               href="/shipping/us-warehouse/"
@@ -99,7 +99,7 @@ export default function DdpPage() {
       {/* FEATURED SNIPPET — direct answer for "what is DDP shipping" */}
       <section id="quick-answer" className="border-b-2 border-black bg-[#e6f7ff]">
         <div className="mx-auto max-w-4xl px-6 py-12 md:py-16">
-          <div className="mb-3 inline-block border-2 border-black bg-[#00c2ff] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+          <div className="mb-3 inline-block border-2 border-black bg-[#00c2ff] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
             Quick answer
           </div>
           <h2 className="mb-4 text-3xl font-black leading-[0.95] tracking-tight md:text-4xl">
@@ -234,7 +234,7 @@ export default function DdpPage() {
                       <div key={j} className="grid gap-1 px-5 py-4 md:grid-cols-3 md:gap-4">
                         <div className="font-black">{row.country}</div>
                         <div className="text-sm text-black/80">{row.ddp}</div>
-                        <div className="text-xs font-medium uppercase tracking-wider text-black/50">
+                        <div className="text-xs font-medium uppercase tracking-wider text-black/70">
                           {row.note}
                         </div>
                       </div>
@@ -255,7 +255,7 @@ export default function DdpPage() {
       {/* WHY DDP — the trust argument */}
       <section className="border-b-2 border-black bg-[#0a0a0a] text-white">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
-          <div className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+          <div className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
             Why DDP
           </div>
           <h2 className="mb-10 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
@@ -300,7 +300,7 @@ export default function DdpPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-[#ff4d00] text-white">
+      <section className="bg-[#ff4d00] text-black">
         <div className="mx-auto max-w-7xl px-6 py-16 text-center md:py-20">
           <h2 className="text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
             Get a DDP quote

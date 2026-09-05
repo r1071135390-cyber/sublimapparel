@@ -11,7 +11,7 @@ export default function GolfBowlingMoved() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-[#0a0a0a] px-6 text-white">
       <div className="max-w-xl text-center">
-        <div className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+        <div className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
           Page moved
         </div>
         <h1 className="text-4xl font-black leading-tight md:text-6xl">
@@ -22,7 +22,7 @@ export default function GolfBowlingMoved() {
         </p>
         <a
           href="/products/golf/"
-          className="mt-8 inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-white hover:text-[#cc3d00]"
+          className="mt-8 inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-widest text-black transition-all hover:bg-white hover:text-[#cc3d00]"
         >
           Go to Golf Apparel →
         </a>

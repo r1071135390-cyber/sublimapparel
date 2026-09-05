@@ -35,7 +35,7 @@ export function FactoryFloor() {
               />
               {/* Overlay label */}
               <div className="pointer-events-none absolute bottom-0 left-0 right-0 z-10 bg-gradient-to-t from-black/90 to-transparent p-6 pt-20">
-                <div className="font-mono text-xs font-bold uppercase tracking-widest text-[#0078a8]">
+                <div className="font-mono text-xs font-bold uppercase tracking-widest text-[#29b6f6]">
                   Equipment #1
                 </div>
                 <h3 className="mt-1 text-2xl font-black uppercase text-white">
@@ -61,7 +61,7 @@ export function FactoryFloor() {
                 loading="lazy"
               />
               <div className="pointer-events-none absolute bottom-0 left-0 right-0 z-10 bg-gradient-to-t from-black/90 to-transparent p-6 pt-20">
-                <div className="font-mono text-xs font-bold uppercase tracking-widest text-[#0078a8]">
+                <div className="font-mono text-xs font-bold uppercase tracking-widest text-[#29b6f6]">
                   Equipment #2
                 </div>
                 <h3 className="mt-1 text-2xl font-black uppercase text-white">

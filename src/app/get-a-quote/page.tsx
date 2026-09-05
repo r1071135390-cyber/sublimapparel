@@ -127,9 +127,9 @@ export default function GetAQuotePage() {
           <div className="mb-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-white/70 md:mb-6 md:text-sm">
             <span>
               <span className="font-bold text-white">DDP to 100+ countries</span>
-              <span className="mx-2 text-white/40">·</span>
+              <span className="mx-2 text-white/80">·</span>
               <span>Free 3D mockup</span>
-              <span className="mx-2 text-white/40">·</span>
+              <span className="mx-2 text-white/80">·</span>
               <span>No setup fee</span>
             </span>
           </div>
@@ -221,7 +221,7 @@ export default function GetAQuotePage() {
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="mb-12 flex items-end justify-between border-b border-white/15 pb-6">
             <div>
-              <div className="mb-2 text-xs font-black uppercase tracking-widest text-white/60">
+              <div className="mb-2 text-xs font-black uppercase tracking-widest text-white/80">
                 [ 001 / Process ]
               </div>
               <h2 className="text-4xl font-black uppercase leading-none tracking-tight md:text-6xl">
@@ -230,7 +230,7 @@ export default function GetAQuotePage() {
                 <span className="text-[#cc3d00]">after you submit.</span>
               </h2>
             </div>
-            <div className="hidden text-right text-xs font-bold uppercase tracking-widest text-white/60 md:block">
+            <div className="hidden text-right text-xs font-bold uppercase tracking-widest text-white/80 md:block">
               <div>From inquiry to door</div>
               <div className="mt-1 text-3xl font-black text-white">7–15 days</div>
             </div>
@@ -248,7 +248,7 @@ export default function GetAQuotePage() {
                     <span className="font-black text-[#cc3d00] text-5xl leading-none">
                       0{i + 1}
                     </span>
-                    <Icon className="h-6 w-6 text-white/40 transition-colors group-hover:text-[#cc3d00]" strokeWidth={1.5} />
+                    <Icon className="h-6 w-6 text-white/80 transition-colors group-hover:text-[#cc3d00]" strokeWidth={1.5} />
                   </div>
                   <div className="mb-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#cc3d00]">
                     {w.time}

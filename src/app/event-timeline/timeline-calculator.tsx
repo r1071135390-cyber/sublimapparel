@@ -134,7 +134,7 @@ export function TimelineCalculator() {
           min={new Date().toISOString().split("T")[0]}
           className="mt-3 w-full rounded-sm border-2 border-black/20 bg-white px-4 py-4 text-2xl font-black tracking-tight text-black focus:border-[#ff4d00] focus:outline-none md:text-3xl"
         />
-        <p className="mt-2 text-xs text-black/50">
+        <p className="mt-2 text-xs text-black/70">
           Today is {fmt(today)}.
         </p>
       </div>
@@ -225,7 +225,7 @@ export function TimelineCalculator() {
       ) : (
         <div className="rounded-sm border-2 border-dashed border-black/10 bg-[#faf9f6] p-10 text-center">
           <Calendar className="mx-auto h-10 w-10 text-black/30" />
-          <p className="mt-3 text-sm font-bold text-black/50">
+          <p className="mt-3 text-sm font-bold text-black/70">
             Select your event date to see your timeline.
           </p>
         </div>

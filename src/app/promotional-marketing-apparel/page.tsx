@@ -132,7 +132,7 @@ export default function CustomEventTShirtsPage() {
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
               href="/contact/"
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#ff4d00] px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-[#ff4d00]/25 transition hover:bg-[#ff5d1a] hover:scale-[1.02]"
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#ff4d00] px-6 py-3.5 text-base font-semibold text-black shadow-lg shadow-[#ff4d00]/25 transition hover:bg-[#ff5d1a] hover:scale-[1.02]"
             >
               Get a quote for your event <ArrowRight className="h-4 w-4" />
             </Link>
@@ -152,7 +152,7 @@ export default function CustomEventTShirtsPage() {
             ].map((s) => (
               <div key={s.l}>
                 <div className="text-2xl font-extrabold text-white md:text-3xl">{s.v}</div>
-                <div className="text-xs uppercase tracking-wider text-white/60">{s.l}</div>
+                <div className="text-xs uppercase tracking-wider text-white/80">{s.l}</div>
               </div>
             ))}
           </div>

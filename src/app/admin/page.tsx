@@ -57,7 +57,7 @@ export default function AdminLandingPage() {
             href="/admin/new-pi/"
             className="group block border-2 border-black bg-white p-8 shadow-[6px_6px_0_0_rgba(10,10,10,1)] transition-all hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[8px_8px_0_0_rgba(255,77,0,1)]"
           >
-            <div className="mb-4 flex h-14 w-14 items-center justify-center border-2 border-black bg-[#ff4d00] text-white">
+            <div className="mb-4 flex h-14 w-14 items-center justify-center border-2 border-black bg-[#ff4d00] text-black">
               <FileEdit className="h-7 w-7" strokeWidth={2.5} />
             </div>
             <h2 className="mb-2 text-2xl font-black uppercase leading-tight tracking-tight">
@@ -82,7 +82,7 @@ export default function AdminLandingPage() {
             href="/admin/upload-pi/"
             className="group block border-2 border-black bg-white p-8 shadow-[6px_6px_0_0_rgba(10,10,10,1)] transition-all hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[8px_8px_0_0_rgba(255,77,0,1)]"
           >
-            <div className="mb-4 flex h-14 w-14 items-center justify-center border-2 border-black bg-[#00c2ff] text-white">
+            <div className="mb-4 flex h-14 w-14 items-center justify-center border-2 border-black bg-[#00c2ff] text-black">
               <Upload className="h-7 w-7" strokeWidth={2.5} />
             </div>
             <h2 className="mb-2 text-2xl font-black uppercase leading-tight tracking-tight">

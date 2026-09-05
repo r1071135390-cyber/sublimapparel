@@ -192,7 +192,7 @@ export function Navbar() {
               </div>
               <Link
                 href="/resources/"
-                className="block border-b-2 border-black bg-[#00c2ff]/20 px-4 py-2.5 transition-colors hover:bg-[#0a0a0a] hover:text-white"
+                className="block border-b-2 border-black bg-[#00c2ff]/20 px-4 py-2.5 transition-colors hover:bg-[#0a0a0a] hover:text-black"
               >
                 <div className="text-sm font-black">View All Resources</div>
                 <div className="mt-0.5 text-[11px] text-black/60 group-hover:text-white/70">

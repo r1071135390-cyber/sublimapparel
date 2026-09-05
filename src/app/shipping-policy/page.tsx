@@ -358,7 +358,7 @@ export default function ShippingPolicyPage() {
             </p>
             <a
               href="mailto:info@sublimapparel.com?subject=Shipping%20quote%20request"
-              className="mt-5 inline-flex items-center gap-2 bg-[#ff4d00] px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-[#e64500]"
+              className="mt-5 inline-flex items-center gap-2 bg-[#ff4d00] px-5 py-3 text-sm font-bold text-black transition-colors hover:bg-[#e64500]"
             >
               <Mail className="h-4 w-4" />
               info@sublimapparel.com

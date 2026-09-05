@@ -154,25 +154,25 @@ export default function QualityControlPage() {
           <div className="mt-12 grid grid-cols-2 gap-6 border-t border-white/10 pt-8 sm:grid-cols-4">
             <div>
               <div className="text-3xl font-black text-[#ff4d00] md:text-4xl">4</div>
-              <div className="mt-1 text-xs font-bold uppercase tracking-wider text-white/60">
+              <div className="mt-1 text-xs font-bold uppercase tracking-wider text-white/80">
                 Inspection stages
               </div>
             </div>
             <div>
               <div className="text-3xl font-black text-[#ff4d00] md:text-4xl">AQL 2.5</div>
-              <div className="mt-1 text-xs font-bold uppercase tracking-wider text-white/60">
+              <div className="mt-1 text-xs font-bold uppercase tracking-wider text-white/80">
                 Industry standard
               </div>
             </div>
             <div>
               <div className="text-3xl font-black text-[#ff4d00] md:text-4xl">100%</div>
-              <div className="mt-1 text-xs font-bold uppercase tracking-wider text-white/60">
+              <div className="mt-1 text-xs font-bold uppercase tracking-wider text-white/80">
                 Re-inspect if failed
               </div>
             </div>
             <div>
               <div className="text-3xl font-black text-[#ff4d00] md:text-4xl">Photo</div>
-              <div className="mt-1 text-xs font-bold uppercase tracking-wider text-white/60">
+              <div className="mt-1 text-xs font-bold uppercase tracking-wider text-white/80">
                 Evidence before ship
               </div>
             </div>

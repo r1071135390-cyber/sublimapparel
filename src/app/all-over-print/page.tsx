@@ -291,7 +291,7 @@ export default function AllOverPrintPage() {
         </div>
         <div className="relative mx-auto grid max-w-7xl gap-12 px-6 py-20 md:grid-cols-12 md:py-32">
           <div className="md:col-span-8">
-            <div className="mb-4 inline-flex items-center gap-2 bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+            <div className="mb-4 inline-flex items-center gap-2 bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
               <Sparkles className="h-3.5 w-3.5" />
               All-Over Print · Edge to Edge
             </div>
@@ -313,7 +313,7 @@ export default function AllOverPrintPage() {
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 href="/get-a-quote/"
-                className="inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-widest text-white transition hover:bg-[#ff5d1a]"
+                className="inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-widest text-black transition hover:bg-[#ff5d1a]"
               >
                 Get a quote
                 <ArrowRight className="h-4 w-4" />
@@ -380,7 +380,7 @@ export default function AllOverPrintPage() {
               </h3>
               <ol className="mt-4 space-y-3 text-base text-neutral-800">
                 <li className="flex gap-3">
-                  <span className="flex h-7 w-7 shrink-0 items-center justify-center bg-[#ff4d00] text-sm font-black text-white">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center bg-[#ff4d00] text-sm font-black text-black">
                     1
                   </span>
                   <span>
@@ -389,7 +389,7 @@ export default function AllOverPrintPage() {
                   </span>
                 </li>
                 <li className="flex gap-3">
-                  <span className="flex h-7 w-7 shrink-0 items-center justify-center bg-[#ff4d00] text-sm font-black text-white">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center bg-[#ff4d00] text-sm font-black text-black">
                     2
                   </span>
                   <span>
@@ -425,7 +425,7 @@ export default function AllOverPrintPage() {
                 key={p.title}
                 className="flex flex-col rounded-lg border-2 border-black bg-white p-6"
               >
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center bg-[#ff4d00] text-white">
+                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center bg-[#ff4d00] text-black">
                   <p.icon className="h-6 w-6" />
                 </div>
                 <h3 className="text-xl font-black">{p.title}</h3>
@@ -559,7 +559,7 @@ export default function AllOverPrintPage() {
                 key={w.title}
                 className="rounded-lg border-2 border-black bg-neutral-50 p-5"
               >
-                <div className="mb-3 inline-flex h-10 w-10 items-center justify-center bg-[#ff4d00] text-white">
+                <div className="mb-3 inline-flex h-10 w-10 items-center justify-center bg-[#ff4d00] text-black">
                   <w.icon className="h-5 w-5" />
                 </div>
                 <h3 className="text-lg font-black">{w.title}</h3>
@@ -599,7 +599,7 @@ export default function AllOverPrintPage() {
                 <Link
                   key={ind}
                   href={`/cases/${slug}/`}
-                  className="group flex items-center justify-between rounded border-2 border-black bg-white p-4 transition hover:bg-[#ff4d00] hover:text-white"
+                  className="group flex items-center justify-between rounded border-2 border-black bg-white p-4 transition hover:bg-[#ff4d00] hover:text-black"
                 >
                   <span className="flex items-center gap-3">
                     <span className="font-mono text-xs text-[#cc3d00] group-hover:text-white">
@@ -650,7 +650,7 @@ export default function AllOverPrintPage() {
       {/* CTA */}
       <section className="bg-[#0a0a0a] text-white">
         <div className="mx-auto max-w-5xl px-6 py-20 text-center md:py-24">
-          <div className="mb-4 inline-flex items-center gap-2 bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+          <div className="mb-4 inline-flex items-center gap-2 bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
             <Zap className="h-3.5 w-3.5" /> Reply within 1 business day
           </div>
           <h2 className="text-4xl font-black leading-tight md:text-6xl">
@@ -666,7 +666,7 @@ export default function AllOverPrintPage() {
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Link
               href="/get-a-quote/"
-              className="inline-flex items-center gap-2 bg-[#ff4d00] px-8 py-4 text-base font-black uppercase tracking-widest text-white transition hover:bg-[#ff5d1a]"
+              className="inline-flex items-center gap-2 bg-[#ff4d00] px-8 py-4 text-base font-black uppercase tracking-widest text-black transition hover:bg-[#ff5d1a]"
             >
               Get a quote
               <ArrowRight className="h-5 w-5" />

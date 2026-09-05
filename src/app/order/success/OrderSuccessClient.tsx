@@ -145,7 +145,7 @@ export default function OrderSuccessClient() {
         <div className="flex flex-col gap-3 sm:flex-row">
           <Link
             href={info.ctaPrimary.href}
-            className="flex-1 bg-[#ff4d00] px-6 py-3 text-center text-sm font-bold uppercase tracking-wider text-white transition-colors hover:bg-[#cc3d00]"
+            className="flex-1 bg-[#ff4d00] px-6 py-3 text-center text-sm font-bold uppercase tracking-wider text-black transition-colors hover:bg-[#cc3d00]"
           >
             {info.ctaPrimary.label}
           </Link>

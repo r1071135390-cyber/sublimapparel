@@ -32,7 +32,7 @@ export function TeamSection() {
               <Stat label="Languages" value="3" sub="EN · ES · CN" />
               <Stat label="Reply time" value="< 24 h" sub="business hours" />
             </div>
-            <p className="mt-3 text-[11px] font-medium leading-snug text-black/50">
+            <p className="mt-3 text-[11px] font-medium leading-snug text-black/70">
               Average tenure covers our four senior account managers (Ramon, Lily, Mark,
               Chris). Junior coordinators reply faster; final quotes always come from
               a senior.
@@ -133,7 +133,7 @@ export function TeamSection() {
 function Stat({ label, value, sub }: { label: string; value: string; sub: string }) {
   return (
     <div className="bg-white p-6">
-      <div className="text-[10px] font-black uppercase tracking-widest text-black/50">
+      <div className="text-[10px] font-black uppercase tracking-widest text-black/70">
         {label}
       </div>
       <div className="mt-1 text-4xl font-black leading-none text-black md:text-5xl">

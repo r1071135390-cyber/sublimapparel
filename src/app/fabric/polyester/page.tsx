@@ -91,7 +91,7 @@ export default function PolyesterPage() {
             </div>
           </div>
           <div className="flex flex-col justify-center border-l-2 border-black bg-[#faf9f6] p-8 md:col-span-5 md:p-12">
-            <div className="mb-4 flex items-center gap-2 text-xs font-black uppercase tracking-widest text-[#0078a8]">
+            <div className="mb-4 flex items-center gap-2 text-xs font-black uppercase tracking-widest text-[#29b6f6]">
               <Sparkles className="h-4 w-4" strokeWidth={2} />
               What makes us different
             </div>
@@ -164,7 +164,7 @@ export default function PolyesterPage() {
                   <h3 className="mb-2 text-sm font-black uppercase leading-tight">
                     {f.name}
                   </h3>
-                  <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-black/50">
+                  <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-black/70">
                     {f.comp}
                   </p>
                   <p className="mb-3 text-[11px] leading-relaxed text-black/70">
@@ -194,7 +194,7 @@ export default function PolyesterPage() {
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="mb-12 flex items-end justify-between border-b border-white/15 pb-6">
             <div>
-              <div className="mb-2 text-xs font-black uppercase tracking-widest text-white/60">
+              <div className="mb-2 text-xs font-black uppercase tracking-widest text-white/80">
                 [ 001 / Why us ]
               </div>
               <h2 className="text-4xl font-black uppercase leading-none tracking-tight md:text-6xl">
@@ -282,7 +282,7 @@ export default function PolyesterPage() {
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {products.map((p, i) => (
               <div key={i} className="group flex flex-col border-2 border-black bg-white p-6 transition-all hover:border-[#ff4d00]">
-                <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#0078a8]">
+                <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#29b6f6]">
                   0{i + 1} / Polyester
                 </div>
                 <h3 className="mb-2 text-xl font-black leading-tight">{p.name}</h3>

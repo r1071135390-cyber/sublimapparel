@@ -152,7 +152,7 @@ export default function ResourcesPage() {
             </div>
             <div className="hidden md:col-span-4 md:flex md:justify-end">
               <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur">
-                <p className="mb-2 text-xs font-bold uppercase tracking-wider text-white/60">
+                <p className="mb-2 text-xs font-bold uppercase tracking-wider text-white/80">
                   On this page
                 </p>
                 <ul className="space-y-2 text-sm text-white/80">

@@ -152,25 +152,25 @@ export default function NinetyDayProgramPage() {
           <div className="mt-12 grid grid-cols-2 gap-6 border-t border-white/10 pt-8 sm:grid-cols-4">
             <div>
               <div className="text-3xl font-black text-[#ff4d00] md:text-4xl">2-Phase</div>
-              <div className="mt-1 text-xs font-bold uppercase tracking-wider text-white/60">
+              <div className="mt-1 text-xs font-bold uppercase tracking-wider text-white/80">
                 Reserve, then lock
               </div>
             </div>
             <div>
               <div className="text-3xl font-black text-[#ff4d00] md:text-4xl">T-30</div>
-              <div className="mt-1 text-xs font-bold uppercase tracking-wider text-white/60">
+              <div className="mt-1 text-xs font-bold uppercase tracking-wider text-white/80">
                 Final count lock
               </div>
             </div>
             <div>
               <div className="text-3xl font-black text-[#ff4d00] md:text-4xl">±5%</div>
-              <div className="mt-1 text-xs font-bold uppercase tracking-wider text-white/60">
+              <div className="mt-1 text-xs font-bold uppercase tracking-wider text-white/80">
                 Buffer, no penalty
               </div>
             </div>
             <div>
               <div className="text-3xl font-black text-[#ff4d00] md:text-4xl">96%</div>
-              <div className="mt-1 text-xs font-bold uppercase tracking-wider text-white/60">
+              <div className="mt-1 text-xs font-bold uppercase tracking-wider text-white/80">
                 On-time, 2024
               </div>
             </div>
@@ -227,7 +227,7 @@ export default function NinetyDayProgramPage() {
 
             <div className="mt-8 grid gap-6 md:grid-cols-2">
               <div>
-                <h3 className="text-sm font-black uppercase tracking-wider text-black/50">
+                <h3 className="text-sm font-black uppercase tracking-wider text-black/70">
                   Deliverables
                 </h3>
                 <ul className="mt-3 space-y-2">

@@ -129,7 +129,7 @@ export default async function FabricDetailPage(
                 <p className="text-lg md:text-xl text-white/80 leading-relaxed mb-6">
                   {fabric.intro}
                 </p>
-                <p className="text-sm text-white/60">
+                <p className="text-sm text-white/80">
                   Composition: <span className="text-white font-bold">{fabric.comp}</span>
                 </p>
               </div>
@@ -220,7 +220,7 @@ export default async function FabricDetailPage(
         {/* PRINT METHODS */}
         <section className="bg-[#0a0a0a] text-white">
           <div className="container mx-auto px-4 md:px-8 py-16 md:py-24">
-            <p className="text-xs font-bold uppercase tracking-widest text-[#0078a8] mb-4">
+            <p className="text-xs font-bold uppercase tracking-widest text-[#29b6f6] mb-4">
               Compatible print methods
             </p>
             <h2 className="text-3xl md:text-4xl font-black mb-8">
@@ -260,7 +260,7 @@ export default async function FabricDetailPage(
                 key={i}
                 className="border-2 border-black p-6 hover:bg-[#0a0a0a] hover:text-white transition-colors group"
               >
-                <p className="text-xs font-bold uppercase tracking-widest text-[#6b6b6b] group-hover:text-[#0078a8] mb-2">
+                <p className="text-xs font-bold uppercase tracking-widest text-[#6b6b6b] group-hover:text-[#29b6f6] mb-2">
                   Application {String(i + 1).padStart(2, "0")}
                 </p>
                 <p className="text-base font-bold text-black group-hover:text-white">
@@ -344,7 +344,7 @@ export default async function FabricDetailPage(
         {relatedFabrics.length > 0 && (
           <section className="bg-[#1a1a1a] text-white">
             <div className="container mx-auto px-4 md:px-8 py-16 md:py-24">
-              <p className="text-xs font-bold uppercase tracking-widest text-[#0078a8] mb-4">
+              <p className="text-xs font-bold uppercase tracking-widest text-[#29b6f6] mb-4">
                 Related fabrics
               </p>
               <h2 className="text-3xl md:text-4xl font-black mb-8">
@@ -369,7 +369,7 @@ export default async function FabricDetailPage(
                     <p className="text-sm font-bold uppercase mt-3 group-hover:text-[#cc3d00]">
                       {related!.name}
                     </p>
-                    <p className="text-xs text-white/60 mt-1">
+                    <p className="text-xs text-white/80 mt-1">
                       {related!.comp}
                     </p>
                   </Link>

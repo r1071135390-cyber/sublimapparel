@@ -209,7 +209,7 @@ export function FloatingChat() {
               type="button"
               onClick={() => setOpen(false)}
               aria-label="Close"
-              className="rounded p-1 text-white/60 transition hover:bg-white/10 hover:text-white"
+              className="rounded p-1 text-white/80 transition hover:bg-white/10 hover:text-white"
             >
               <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                 <path d="M6 6l12 12M6 18L18 6" />

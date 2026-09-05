@@ -170,7 +170,7 @@ function SizeBreakdownEditor({
             key={name}
             type="button"
             onClick={() => onUpdateItem(idx, { sizes: SIZE_PRESETS[name].map((s) => ({ ...s })) })}
-            className="px-2 py-1 rounded border border-[#ff4d00] text-[#ff4d00] hover:bg-[#ff4d00] hover:text-white transition-colors"
+            className="px-2 py-1 rounded border border-[#ff4d00] text-[#ff4d00] hover:bg-[#ff4d00] hover:text-black transition-colors"
           >
             {name}
           </button>
@@ -579,7 +579,7 @@ export default function NewPIPage() {
             <button
               onClick={onSave}
               disabled={saving}
-              className="inline-flex items-center gap-2 px-6 py-2 bg-[#ff4d00] hover:bg-[#e64500] disabled:opacity-50 text-white rounded font-semibold"
+              className="inline-flex items-center gap-2 px-6 py-2 bg-[#ff4d00] hover:bg-[#e64500] disabled:opacity-50 text-black rounded font-semibold"
             >
               <Save className="w-4 h-4" />
               {saving ? "Saving…" : "Save PI & get payment link"}
@@ -1209,7 +1209,7 @@ function SuccessPanel({
           />
           <button
             onClick={onCopy}
-            className="inline-flex items-center gap-1 px-4 py-2 bg-[#ff4d00] hover:bg-[#e64500] text-white rounded text-sm font-semibold"
+            className="inline-flex items-center gap-1 px-4 py-2 bg-[#ff4d00] hover:bg-[#e64500] text-black rounded text-sm font-semibold"
           >
             {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
             {copied ? "Copied!" : "Copy"}

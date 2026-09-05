@@ -104,9 +104,9 @@ export function Hero() {
         <div className="mb-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-white/70 md:mb-6 md:text-sm">
           <span>
             <span className="font-bold text-white">DDP to 100+ countries</span>
-            <span className="mx-2 text-white/40">·</span>
+            <span className="mx-2 text-white/80">·</span>
             <span>US domestic in 2–5 days</span>
-            <span className="mx-2 text-white/40">·</span>
+            <span className="mx-2 text-white/80">·</span>
             <span>Replies within 1 business day</span>
           </span>
         </div>
@@ -178,7 +178,7 @@ export function Hero() {
               <div className={"text-3xl font-black leading-none md:text-5xl " + s.color}>
                 {s.num}
               </div>
-              <div className="mt-2 text-[10px] font-bold uppercase tracking-[0.18em] text-white/60 md:text-xs">
+              <div className="mt-2 text-[10px] font-bold uppercase tracking-[0.18em] text-white/80 md:text-xs">
                 {s.label}
               </div>
             </div>
@@ -206,7 +206,7 @@ export function Hero() {
         <div className="pt-2 md:pt-3">
           <Link
             href="/products/"
-            className="group inline-flex items-center gap-3 text-xs text-white/80 transition-colors hover:text-[#cc3d00] md:text-sm"
+            className="group inline-flex items-center gap-3 text-xs text-white/80 transition-colors hover:text-[#ff4d00] md:text-sm"
           >
             <span className="font-bold uppercase tracking-[0.18em]">
               And we don&rsquo;t stop at apparel

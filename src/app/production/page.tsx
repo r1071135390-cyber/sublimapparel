@@ -217,7 +217,7 @@ export default function ProductionPage() {
             <div className="mt-8">
               <RequestQuoteLink
                 label="Get a production plan"
-                className="inline-flex items-center gap-2 bg-[#ff4d00] px-8 py-4 text-base font-bold uppercase tracking-widest text-white hover:bg-[#ff5d1a]"
+                className="inline-flex items-center gap-2 bg-[#ff4d00] px-8 py-4 text-base font-bold uppercase tracking-widest text-black hover:bg-[#ff5d1a]"
               >
                 Get a production plan
               </RequestQuoteLink>

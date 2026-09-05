@@ -182,7 +182,7 @@ export default function ProductionPage() {
       <section className="border-b-2 border-[#0a0a0a] bg-[#1a1a1a] text-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="mb-12 max-w-3xl">
-            <div className="text-xs font-mono uppercase tracking-widest text-[#0078a8]">[ 011.A / The 7 steps ]</div>
+            <div className="text-xs font-mono uppercase tracking-widest text-[#29b6f6]">[ 011.A / The 7 steps ]</div>
             <h2 className="mt-3 text-3xl font-extrabold leading-tight md:text-5xl">Step by step, day by day.</h2>
           </div>
           <ol className="space-y-px">

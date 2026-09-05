@@ -49,7 +49,7 @@ export function HowItWorks() {
         {/* Section header */}
         <div className="mb-12 flex items-end justify-between border-b border-white/15 pb-6 md:mb-16">
           <div>
-            <div className="mb-2 text-xs font-black uppercase tracking-widest text-white/60">
+            <div className="mb-2 text-xs font-black uppercase tracking-widest text-white/80">
               [ 006 / How it works ]
             </div>
             <h2 className="text-4xl font-black uppercase leading-none tracking-tight md:text-6xl">
@@ -58,7 +58,7 @@ export function HowItWorks() {
               <span className="text-[#cc3d00]">Four steps.</span>
             </h2>
           </div>
-          <div className="hidden text-right text-xs font-bold uppercase tracking-widest text-white/60 md:block">
+          <div className="hidden text-right text-xs font-bold uppercase tracking-widest text-white/80 md:block">
             <div>Average lead time</div>
             <div className="mt-1 text-3xl font-black text-white">7–15 days</div>
           </div>
@@ -78,11 +78,11 @@ export function HowItWorks() {
                   <span className="font-black text-[#cc3d00] text-6xl leading-none md:text-7xl">
                     {s.num}
                   </span>
-                  <Icon className="h-7 w-7 text-white/40 transition-colors group-hover:text-[#cc3d00]" strokeWidth={1.5} />
+                  <Icon className="h-7 w-7 text-white/80 transition-colors group-hover:text-[#cc3d00]" strokeWidth={1.5} />
                 </div>
 
                 {/* Step name */}
-                <div className="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-white/60">
+                <div className="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-white/80">
                   Step {s.num} · {s.title}
                 </div>
 

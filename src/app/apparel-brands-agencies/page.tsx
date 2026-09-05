@@ -248,25 +248,25 @@ export default function ForBrandsPage() {
             <div className="mt-12 grid grid-cols-2 gap-6 border-t border-white/10 pt-8 sm:grid-cols-4">
               <div>
                 <div className="text-3xl font-black text-[#ff4d00] md:text-4xl">2018</div>
-                <div className="mt-1 text-xs font-bold uppercase tracking-wider text-white/60">
+                <div className="mt-1 text-xs font-bold uppercase tracking-wider text-white/80">
                   Year founded
                 </div>
               </div>
               <div>
                 <div className="text-3xl font-black text-[#ff4d00] md:text-4xl">50</div>
-                <div className="mt-1 text-xs font-bold uppercase tracking-wider text-white/60">
+                <div className="mt-1 text-xs font-bold uppercase tracking-wider text-white/80">
                   Pc MOQ for testing
                 </div>
               </div>
               <div>
                 <div className="text-3xl font-black text-[#ff4d00] md:text-4xl">100%</div>
-                <div className="mt-1 text-xs font-bold uppercase tracking-wider text-white/60">
+                <div className="mt-1 text-xs font-bold uppercase tracking-wider text-white/80">
                   Private label
                 </div>
               </div>
               <div>
                 <div className="text-3xl font-black text-[#ff4d00] md:text-4xl">US</div>
-                <div className="mt-1 text-xs font-bold uppercase tracking-wider text-white/60">
+                <div className="mt-1 text-xs font-bold uppercase tracking-wider text-white/80">
                   Drop-ship ready
                 </div>
               </div>
@@ -311,7 +311,7 @@ export default function ForBrandsPage() {
             <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {whatWeMake.map((w) => (
                 <div key={w.label} className="flex items-start gap-3">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-sm bg-[#ff4d00] text-white">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-sm bg-[#ff4d00] text-black">
                     <w.icon className="h-4 w-4" strokeWidth={2.5} />
                   </div>
                   <div>

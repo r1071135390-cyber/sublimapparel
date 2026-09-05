@@ -90,7 +90,7 @@ export default function PolyVsCottonPage() {
             Here&apos;s the full B2B breakdown.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <RequestQuoteLink label="Get a quote" className="inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-bold uppercase tracking-widest text-white hover:bg-[#ff5d1a]">
+            <RequestQuoteLink label="Get a quote" className="inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-bold uppercase tracking-widest text-black hover:bg-[#ff5d1a]">
               <Quote size={18} /> Get a quote
             </RequestQuoteLink>
             <Link
@@ -106,7 +106,7 @@ export default function PolyVsCottonPage() {
       {/* At a glance comparison table */}
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto max-w-7xl px-6 py-12 md:py-16">
-          <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-black/50">
+          <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-black/70">
             Side-by-side
           </p>
           <h2 className="mb-8 text-3xl font-black uppercase leading-none tracking-tight md:text-4xl">
@@ -150,7 +150,7 @@ export default function PolyVsCottonPage() {
           </h2>
           <div className="grid gap-4 md:grid-cols-2">
             <div className="border-2 border-white bg-[#0a0a0a] p-6">
-              <div className="mb-3 inline-flex items-center gap-2 bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+              <div className="mb-3 inline-flex items-center gap-2 bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
                 Choose polyester if…
               </div>
               <ul className="space-y-3 text-white/85">
@@ -194,7 +194,7 @@ export default function PolyVsCottonPage() {
       {/* Process explainer */}
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto max-w-7xl px-6 py-12 md:py-16">
-          <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-black/50">
+          <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-black/70">
             Why the difference
           </p>
           <h2 className="mb-8 text-3xl font-black uppercase leading-none tracking-tight md:text-4xl">
@@ -233,7 +233,7 @@ export default function PolyVsCottonPage() {
       {/* Fabric recommendations */}
       <section className="border-b-2 border-black bg-neutral-50">
         <div className="mx-auto max-w-7xl px-6 py-12 md:py-16">
-          <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-black/50">
+          <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-black/70">
             Browse our fabrics
           </p>
           <h2 className="mb-8 text-3xl font-black uppercase leading-none tracking-tight md:text-4xl">
@@ -251,7 +251,7 @@ export default function PolyVsCottonPage() {
                 href={`/fabric/${f.slug}/`}
                 className="group flex flex-col gap-2 border-2 border-black bg-white p-5 transition-colors hover:border-[#ff4d00] hover:bg-[#fff5f0]"
               >
-                <p className="text-[10px] font-bold uppercase tracking-widest text-black/50">Fabric</p>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-black/70">Fabric</p>
                 <p className="text-lg font-black leading-tight text-black group-hover:text-[#ff4d00]">{f.name}</p>
                 <p className="text-sm text-black/70">{f.desc}</p>
                 <p className="mt-auto pt-2 text-xs font-bold text-black/60">{f.price} / piece</p>
@@ -272,7 +272,7 @@ export default function PolyVsCottonPage() {
       {/* FAQ */}
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto max-w-4xl px-6 py-12 md:py-16">
-          <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-black/50">
+          <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-black/70">
             FAQ
           </p>
           <h2 className="mb-8 text-3xl font-black uppercase leading-none tracking-tight md:text-4xl">
@@ -314,7 +314,7 @@ export default function PolyVsCottonPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-[#ff4d00] text-white">
+      <section className="bg-[#ff4d00] text-black">
         <div className="mx-auto max-w-7xl px-6 py-16 text-center">
           <h2 className="text-3xl font-black uppercase leading-none tracking-tight md:text-5xl">
             Not sure which fabric fits your project?

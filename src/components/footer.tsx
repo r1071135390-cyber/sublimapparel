@@ -121,7 +121,7 @@ export function Footer() {
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {linkGroups.map((group) => (
             <div key={group.title}>
-              <h3 className="mb-5 text-xs font-black uppercase tracking-[0.18em] text-[#cc3d00]">
+              <h3 className="mb-5 text-xs font-black uppercase tracking-[0.18em] text-[#ff4d00]">
                 {group.title}
               </h3>
               <ul className="space-y-2.5">
@@ -139,7 +139,7 @@ export function Footer() {
               {group.viewAll && (
                 <Link
                   href={group.viewAll.href}
-                  className="mt-4 inline-flex min-h-11 items-center gap-1 py-2.5 text-xs font-bold uppercase tracking-wider text-black hover:text-[#cc3d00]"
+                  className="mt-4 inline-flex min-h-11 items-center gap-1 py-2.5 text-xs font-bold uppercase tracking-wider text-black hover:text-[#ff4d00]"
                 >
                   {group.viewAll.label} →
                 </Link>
@@ -169,7 +169,7 @@ export function Footer() {
         <div className="mx-auto grid max-w-7xl gap-10 px-6 py-12 md:grid-cols-2 lg:grid-cols-4">
           {/* Factory */}
           <div>
-            <h3 className="mb-4 flex items-center gap-2 text-xs font-black uppercase tracking-[0.18em] text-[#cc3d00]">
+            <h3 className="mb-4 flex items-center gap-2 text-xs font-black uppercase tracking-[0.18em] text-[#ff4d00]">
               <Building2 size={14} />
               Factory
             </h3>
@@ -182,7 +182,7 @@ export function Footer() {
 
           {/* US Warehouse */}
           <div>
-            <h3 className="mb-4 flex items-center gap-2 text-xs font-black uppercase tracking-[0.18em] text-[#cc3d00]">
+            <h3 className="mb-4 flex items-center gap-2 text-xs font-black uppercase tracking-[0.18em] text-[#ff4d00]">
               <Warehouse size={14} />
               US Warehouse
             </h3>
@@ -197,7 +197,7 @@ export function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="mb-4 flex items-center gap-2 text-xs font-black uppercase tracking-[0.18em] text-[#cc3d00]">
+            <h3 className="mb-4 flex items-center gap-2 text-xs font-black uppercase tracking-[0.18em] text-[#ff4d00]">
               <Mail size={14} />
               Contact
             </h3>
@@ -225,7 +225,7 @@ export function Footer() {
 
           {/* Response Commitment */}
           <div>
-            <h3 className="mb-4 text-xs font-black uppercase tracking-[0.18em] text-[#cc3d00]">
+            <h3 className="mb-4 text-xs font-black uppercase tracking-[0.18em] text-[#ff4d00]">
               Response commitment
             </h3>
             <p className="text-sm leading-relaxed text-black/70">
@@ -247,7 +247,7 @@ export function Footer() {
       <div className="border-t border-black/10 bg-black text-white">
         <div className="mx-auto grid max-w-7xl gap-10 px-6 py-10 md:grid-cols-3">
           <div>
-            <h3 className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-[#cc3d00]">
+            <h3 className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-[#ff4d00]">
               Certifications
             </h3>
             <p className="text-sm leading-relaxed text-white/80">
@@ -256,7 +256,7 @@ export function Footer() {
             </p>
           </div>
           <div>
-            <h3 className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-[#cc3d00]">
+            <h3 className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-[#ff4d00]">
               Payment
             </h3>
             <p className="text-sm leading-relaxed text-white/80">
@@ -265,7 +265,7 @@ export function Footer() {
             </p>
           </div>
           <div>
-            <h3 className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-[#cc3d00]">
+            <h3 className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-[#ff4d00]">
               Platforms
             </h3>
             <p className="text-sm leading-relaxed text-white/80">
@@ -278,7 +278,7 @@ export function Footer() {
 
       {/* Copyright + Legal */}
       <div className="border-t border-white/10 bg-black text-white">
-        <div className="mx-auto flex max-w-7xl flex-col gap-3 px-6 py-6 text-xs text-white/60 md:flex-row md:items-center md:justify-between">
+        <div className="mx-auto flex max-w-7xl flex-col gap-3 px-6 py-6 text-xs text-white/80 md:flex-row md:items-center md:justify-between">
           <p>
             © 2026 Yiwu HomeDorm Commodity Manufacturing Co., Ltd. All rights
             reserved.
@@ -315,7 +315,7 @@ export function Footer() {
             </li>
           </ul>
         </div>
-        <div className="mx-auto max-w-7xl px-6 pb-6 text-[11px] leading-relaxed text-white/40">
+        <div className="mx-auto max-w-7xl px-6 pb-6 text-[11px] leading-relaxed text-white/80">
           sublimapparel.com is a website of Yiwu HomeDorm Commodity Manufacturing
           Co., Ltd. — registered in Yiwu, Zhejiang, China. All artwork, designs
           and trademarks shown are property of their respective owners.

@@ -92,7 +92,7 @@ export default async function CaseDetailPage({ params }: Props) {
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <Link
             href={`/cases/${ind.slug}/`}
-            className="mb-6 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white/60 transition-colors hover:text-white"
+            className="mb-6 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white/80 transition-colors hover:text-white"
           >
             <ArrowLeft size={14} />
             {ind.title}
@@ -133,26 +133,26 @@ export default async function CaseDetailPage({ params }: Props) {
           </div>
           <aside className="space-y-4 border-l-2 border-black pl-6">
             <div>
-              <p className="text-[10px] font-bold uppercase tracking-widest text-black/50">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-black/70">
                 Client
               </p>
               <p className="mt-1 text-sm font-semibold text-black">{c.client}</p>
             </div>
             <div>
-              <p className="text-[10px] font-bold uppercase tracking-widest text-black/50">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-black/70">
                 Year
               </p>
               <p className="mt-1 text-sm font-semibold text-black">{c.year}</p>
             </div>
             <div>
-              <p className="text-[10px] font-bold uppercase tracking-widest text-black/50">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-black/70">
                 Industry
               </p>
               <p className="mt-1 text-sm font-semibold text-black">{ind.title}</p>
             </div>
             <RequestQuoteLink
               label={`Case / ${c.id} / Get a quote like this`}
-              className="inline-flex w-full items-center justify-center bg-[#ff4d00] px-4 py-3 text-xs font-black uppercase tracking-widest text-white transition-colors hover:bg-[#e64500]"
+              className="inline-flex w-full items-center justify-center bg-[#ff4d00] px-4 py-3 text-xs font-black uppercase tracking-widest text-black transition-colors hover:bg-[#e64500]"
             >
               Get a quote like this
             </RequestQuoteLink>
@@ -180,7 +180,7 @@ export default async function CaseDetailPage({ params }: Props) {
 
           {related.length > 0 && (
             <div>
-              <p className="mb-4 text-[10px] font-bold uppercase tracking-widest text-black/50">
+              <p className="mb-4 text-[10px] font-bold uppercase tracking-widest text-black/70">
                 Related products you can order
               </p>
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -200,7 +200,7 @@ export default async function CaseDetailPage({ params }: Props) {
                           className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-105"
                         />
                       </div>
-                      <p className="text-[10px] font-bold uppercase tracking-widest text-black/50">
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-black/70">
                         {p.category}
                       </p>
                       <p className="text-sm font-semibold leading-snug text-black">
@@ -219,7 +219,7 @@ export default async function CaseDetailPage({ params }: Props) {
       {showRelatedIndustries.length > 0 && (
         <section className="border-b-2 border-black bg-white">
           <div className="mx-auto max-w-7xl px-6 py-12 md:py-16">
-            <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-black/50">
+            <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-black/70">
               Related industries we serve
             </p>
             <h2 className="mb-6 text-2xl font-black uppercase leading-none tracking-tight md:text-3xl">
@@ -232,7 +232,7 @@ export default async function CaseDetailPage({ params }: Props) {
                   href={`/industries/${ri.slug}/`}
                   className="group flex flex-col gap-2 border-2 border-black bg-white p-5 transition-colors hover:border-[#ff4d00] hover:bg-[#fff5f0]"
                 >
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-black/50">
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-black/70">
                     Industry
                   </p>
                   <p className="text-lg font-black leading-tight text-black group-hover:text-[#ff4d00]">
@@ -264,7 +264,7 @@ export default async function CaseDetailPage({ params }: Props) {
           <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
             <RequestQuoteLink
               label={`Case / ${c.id} / Bottom CTA / Start your project`}
-              className="inline-flex items-center justify-center bg-[#ff4d00] px-8 py-4 text-sm font-black uppercase tracking-widest text-white transition-colors hover:bg-[#e64500]"
+              className="inline-flex items-center justify-center bg-[#ff4d00] px-8 py-4 text-sm font-black uppercase tracking-widest text-black transition-colors hover:bg-[#e64500]"
             >
               Start your project
             </RequestQuoteLink>

@@ -110,7 +110,7 @@ export default async function CaseCategoryPage({ params }: Props) {
           </Link>
 
           <div className="flex items-start gap-4">
-            <div className="hidden h-16 w-16 flex-shrink-0 items-center justify-center border-2 border-black bg-[#ff4d00] text-white md:flex">
+            <div className="hidden h-16 w-16 flex-shrink-0 items-center justify-center border-2 border-black bg-[#ff4d00] text-black md:flex">
               <Icon size={32} strokeWidth={2.5} />
             </div>
             <div>
@@ -277,7 +277,7 @@ export default async function CaseCategoryPage({ params }: Props) {
                 We&apos;re putting together real examples for this category. In the meantime, send us your artwork and we&apos;ll come back with a free mockup and a landed, duty-paid quote within 1 business day.
               </p>
               <div className="flex flex-wrap items-center justify-center gap-3">
-                <RequestQuoteLink label="[slug] / page / Get a quote" className="inline-flex items-center gap-2 border-2 border-black bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-wider text-white transition-all hover:bg-black hover:shadow-[4px_4px_0_0_#000] hover:-translate-x-1 hover:-translate-y-1">Get a quote
+                <RequestQuoteLink label="[slug] / page / Get a quote" className="inline-flex items-center gap-2 border-2 border-black bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-wider text-black transition-all hover:bg-black hover:shadow-[4px_4px_0_0_#000] hover:-translate-x-1 hover:-translate-y-1">Get a quote
                   <ArrowRight size={16} strokeWidth={3} /></RequestQuoteLink>
                 <Link
                   href="/cases/"
@@ -310,7 +310,7 @@ export default async function CaseCategoryPage({ params }: Props) {
                   <Link
                     key={i.slug}
                     href={`/cases/${i.slug}`}
-                    className="group relative flex items-center gap-3 border-2 border-black bg-white px-4 py-3 transition-all hover:border-[#ff4d00] hover:bg-[#ff4d00] hover:text-white"
+                    className="group relative flex items-center gap-3 border-2 border-black bg-white px-4 py-3 transition-all hover:border-[#ff4d00] hover:bg-[#ff4d00] hover:text-black"
                   >
                     <OtherIcon size={18} strokeWidth={2.5} className="shrink-0" />
                     <span className="flex-1 text-sm font-black uppercase">

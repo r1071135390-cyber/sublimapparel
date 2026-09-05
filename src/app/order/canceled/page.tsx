@@ -31,7 +31,7 @@ export default function OrderCanceledPage() {
           <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
               href="/shop/"
-              className="inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-widest text-white transition-colors hover:bg-[#cc3d00]"
+              className="inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-widest text-black transition-colors hover:bg-[#cc3d00]"
             >
               Back to shop
               <ArrowRight className="h-4 w-4" />

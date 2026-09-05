@@ -45,7 +45,7 @@ const options = [
     tagline:"Duties paid. We handle everything.",
     icon: Globe,
     badge:"Most popular",
-    badgeColor:"bg-[#ff4d00] text-white",
+    badgeColor:"bg-[#ff4d00] text-black",
     desc:"Delivered Duty Paid to 100+ countries from Yiwu. Customs, duties, and last-mile — one invoice, no surprise bills.",
     href:"/shipping/ddp",
   },
@@ -348,25 +348,25 @@ export default function ShippingPage() {
             <div className="mt-10 grid grid-cols-2 gap-x-6 gap-y-5 border-t border-white/15 pt-8 sm:grid-cols-4">
               <div>
                 <div className="text-3xl font-black text-white md:text-4xl">50+</div>
-                <div className="mt-1 text-[11px] font-bold uppercase tracking-widest text-white/60">
+                <div className="mt-1 text-[11px] font-bold uppercase tracking-widest text-white/80">
                   Countries
                 </div>
               </div>
               <div>
                 <div className="text-3xl font-black text-[#0078a8] md:text-4xl">0</div>
-                <div className="mt-1 text-[11px] font-bold uppercase tracking-widest text-white/60">
+                <div className="mt-1 text-[11px] font-bold uppercase tracking-widest text-white/80">
                   Hidden Fees
                 </div>
               </div>
               <div>
                 <div className="text-3xl font-black text-white md:text-4xl">99.3%</div>
-                <div className="mt-1 text-[11px] font-bold uppercase tracking-widest text-white/60">
+                <div className="mt-1 text-[11px] font-bold uppercase tracking-widest text-white/80">
                   On-Time
                 </div>
               </div>
               <div>
                 <div className="text-3xl font-black text-white md:text-4xl">5-7d</div>
-                <div className="mt-1 text-[11px] font-bold uppercase tracking-widest text-white/60">
+                <div className="mt-1 text-[11px] font-bold uppercase tracking-widest text-white/80">
                   US West
                 </div>
               </div>
@@ -484,7 +484,7 @@ export default function ShippingPage() {
               );
             })}
           </div>
-          <p className="mt-6 text-xs text-black/50">
+          <p className="mt-6 text-xs text-black/70">
             <span className="font-mono font-black">$</span> = cheapest ·{" "}
             <span className="font-mono font-black">$$</span> = mid ·{" "}
             <span className="font-mono font-black">$$$</span> = fastest.
@@ -524,7 +524,7 @@ export default function ShippingPage() {
               <p className="mt-2 text-sm text-black/70">Used for samples and try-on orders. The shirt ships with a blank shipping label so you can re-pack it for your own customer without removing stickers.</p>
             </div>
             <div className="border-l-4 border-[#00c2ff] bg-white p-5">
-              <div className="text-xs font-black uppercase tracking-widest text-[#0078a8]">Center — 50 kg</div>
+              <div className="text-xs font-black uppercase tracking-widest text-[#29b6f6]">Center — 50 kg</div>
               <div className="mt-1 text-lg font-black">Four cartons on a wooden pallet.</div>
               <p className="mt-2 text-sm text-black/70">A typical mid-size event or team order. Stretch-wrapped, marked with your PO number, and loaded onto the next air-freight flight out of PVG or SZX.</p>
             </div>
@@ -541,7 +541,7 @@ export default function ShippingPage() {
       {/* SAMPLE COST CALCULATIONS */}
       <section className="border-b-2 border-black bg-[#0a0a0a] text-white">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
-          <div className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+          <div className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
             Real cost examples
           </div>
           <h2 className="mb-4 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
@@ -561,8 +561,8 @@ export default function ShippingPage() {
                   <h3 className="mb-2 text-xl font-black leading-tight">
                     {ex.title}
                   </h3>
-                  <p className="text-xs text-white/60">{ex.weight}</p>
-                  <p className="mt-1 text-xs font-black uppercase tracking-widest text-[#0078a8]">
+                  <p className="text-xs text-white/80">{ex.weight}</p>
+                  <p className="mt-1 text-xs font-black uppercase tracking-widest text-[#29b6f6]">
                     {ex.mode}
                   </p>
                 </div>
@@ -581,7 +581,7 @@ export default function ShippingPage() {
                 </div>
                 <div className="mt-4 border-t-2 border-white/20 pt-4">
                   <div className="mb-1 flex items-baseline justify-between">
-                    <span className="text-xs font-black uppercase tracking-widest text-white/60">
+                    <span className="text-xs font-black uppercase tracking-widest text-white/80">
                       All-in total
                     </span>
                     <span className="text-2xl font-black text-[#cc3d00]">
@@ -589,7 +589,7 @@ export default function ShippingPage() {
                     </span>
                   </div>
                   <div className="flex items-baseline justify-between">
-                    <span className="text-xs text-white/60">Per piece</span>
+                    <span className="text-xs text-white/80">Per piece</span>
                     <span className="font-mono text-sm font-black text-white">
                       {ex.perPiece}
                     </span>
@@ -629,7 +629,7 @@ export default function ShippingPage() {
               </div>
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-4 pt-12">
                 <div className="text-sm font-bold">Container loaded at our dock</div>
-                <div className="text-xs text-white/60">Yiwu, China</div>
+                <div className="text-xs text-white/80">Yiwu, China</div>
               </div>
             </div>
 
@@ -647,7 +647,7 @@ export default function ShippingPage() {
               </div>
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-4 pt-12">
                 <div className="text-sm font-bold">Trans-Pacific to US West Coast</div>
-                <div className="text-xs text-white/60">Pacific Ocean</div>
+                <div className="text-xs text-white/80">Pacific Ocean</div>
               </div>
             </div>
 
@@ -665,7 +665,7 @@ export default function ShippingPage() {
               </div>
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-4 pt-12">
                 <div className="text-sm font-bold">Customs clearance, 2-4 days</div>
-                <div className="text-xs text-white/60">Los Angeles / Long Beach</div>
+                <div className="text-xs text-white/80">Los Angeles / Long Beach</div>
               </div>
             </div>
 
@@ -678,12 +678,12 @@ export default function ShippingPage() {
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
                 priority={false}
               />
-              <div className="absolute left-3 top-3 bg-[#ff4d00] px-2 py-1 text-[10px] font-black uppercase tracking-widest text-white">
+              <div className="absolute left-3 top-3 bg-[#ff4d00] px-2 py-1 text-[10px] font-black uppercase tracking-widest text-black">
                 04 · 2-5 Days
               </div>
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-4 pt-12">
                 <div className="text-sm font-bold">UPS/FedEx to your door</div>
-                <div className="text-xs text-white/60">Any US address, Amazon FBA, or business</div>
+                <div className="text-xs text-white/80">Any US address, Amazon FBA, or business</div>
               </div>
             </div>
           </div>
@@ -735,7 +735,7 @@ export default function ShippingPage() {
       {/* WHAT DDP INCLUDES */}
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
-          <div className="mb-3 inline-block border-2 border-black bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+          <div className="mb-3 inline-block border-2 border-black bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
             What you get
           </div>
           <h2 className="mb-12 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
@@ -873,7 +873,7 @@ export default function ShippingPage() {
       </section>
 
       {/* FINAL CTA */}
-      <section className="bg-[#ff4d00] text-white">
+      <section className="bg-[#ff4d00] text-black">
         <div className="mx-auto max-w-7xl px-6 py-16 text-center md:py-20">
           <h2 className="text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
             Get a shipping quote

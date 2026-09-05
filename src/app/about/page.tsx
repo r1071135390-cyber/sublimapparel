@@ -117,15 +117,15 @@ export default function AboutPage() {
               <div className="mt-3 grid grid-cols-3 gap-4 pt-3">
                 <div>
                   <div className="text-3xl font-black text-white md:text-4xl">2018</div>
-                  <div className="mt-1 text-[10px] font-bold uppercase tracking-widest text-white/60">Founded</div>
+                  <div className="mt-1 text-[10px] font-bold uppercase tracking-widest text-white/80">Founded</div>
                 </div>
                 <div>
                   <div className="text-3xl font-black text-white md:text-4xl">6+</div>
-                  <div className="mt-1 text-[10px] font-bold uppercase tracking-widest text-white/60">Years sublimation-only</div>
+                  <div className="mt-1 text-[10px] font-bold uppercase tracking-widest text-white/80">Years sublimation-only</div>
                 </div>
                 <div>
                   <div className="text-3xl font-black text-white md:text-4xl">50+</div>
-                  <div className="mt-1 text-[10px] font-bold uppercase tracking-widest text-white/60">Countries shipped</div>
+                  <div className="mt-1 text-[10px] font-bold uppercase tracking-widest text-white/80">Countries shipped</div>
                 </div>
               </div>
           </div>
@@ -145,7 +145,7 @@ export default function AboutPage() {
           </h2>
           <div className="grid gap-6 md:grid-cols-3">
             <div className="border-2 border-black bg-white p-6">
-              <div className="text-xs font-black uppercase tracking-widest text-black/50">
+              <div className="text-xs font-black uppercase tracking-widest text-black/70">
                 Legal entity
               </div>
               <div className="mt-2 text-lg font-black leading-tight text-black md:text-xl">
@@ -153,7 +153,7 @@ export default function AboutPage() {
               </div>
             </div>
             <div className="border-2 border-black bg-white p-6">
-              <div className="text-xs font-black uppercase tracking-widest text-black/50">
+              <div className="text-xs font-black uppercase tracking-widest text-black/70">
                 Established
               </div>
               <div className="mt-2 text-4xl font-black text-[#cc3d00] md:text-5xl">
@@ -164,7 +164,7 @@ export default function AboutPage() {
               </div>
             </div>
             <div className="border-2 border-black bg-white p-6">
-              <div className="text-xs font-black uppercase tracking-widest text-black/50">
+              <div className="text-xs font-black uppercase tracking-widest text-black/70">
                 Address
               </div>
               <div className="mt-2 text-base font-bold leading-snug text-black md:text-lg">
@@ -393,7 +393,7 @@ export default function AboutPage() {
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto max-w-7xl px-6 py-20">
           <div className="mb-12">
-            <div className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+            <div className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
               How we work
             </div>
             <h2 className="text-4xl font-black leading-tight text-black md:text-6xl">

@@ -77,7 +77,7 @@ export default function AllProductsPage() {
               <div className="mt-6 flex flex-wrap items-center gap-3">
                 <Link
                   href="/get-a-quote/"
-                  className="inline-flex items-center justify-center gap-2 rounded-sm bg-[#ff4d00] px-5 py-3 text-sm font-black uppercase tracking-wide text-white transition-colors hover:bg-[#e64500] md:text-base"
+                  className="inline-flex items-center justify-center gap-2 rounded-sm bg-[#ff4d00] px-5 py-3 text-sm font-black uppercase tracking-wide text-black transition-colors hover:bg-[#e64500] md:text-base"
                 >
                   Get a quote
                   <ArrowRight className="h-4 w-4" />
@@ -106,7 +106,7 @@ export default function AllProductsPage() {
           ].map((stat) => (
             <div key={stat.label} className="p-4 text-center md:p-6">
               <div className="text-2xl font-black tracking-tight md:text-4xl">{stat.value}</div>
-              <div className="mt-1 text-[10px] font-bold uppercase tracking-widest text-white/60 md:text-xs">
+              <div className="mt-1 text-[10px] font-bold uppercase tracking-widest text-white/80 md:text-xs">
                 {stat.label}
               </div>
             </div>
@@ -136,7 +136,7 @@ export default function AllProductsPage() {
               { step: "04", title: "Door", body: "DDP to your warehouse — duties paid, customs cleared." },
             ].map((s) => (
               <div key={s.step} className="border-2 border-white/15 bg-white/5 p-4 md:p-6">
-                <div className="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#ff4d00] text-base font-black text-white md:h-12 md:w-12 md:text-xl">
+                <div className="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#ff4d00] text-base font-black text-black md:h-12 md:w-12 md:text-xl">
                   {s.step}
                 </div>
                 <h3 className="mb-2 text-sm font-black uppercase tracking-tight text-white md:text-lg">
@@ -151,7 +151,7 @@ export default function AllProductsPage() {
           <div className="mt-10 text-center">
             <Link
               href="/get-a-quote/"
-              className="inline-flex items-center gap-2 rounded-sm bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-wide text-white transition-colors hover:bg-[#e64500] md:text-base"
+              className="inline-flex items-center gap-2 rounded-sm bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-wide text-black transition-colors hover:bg-[#e64500] md:text-base"
             >
               Get a quote on your pick
               <ArrowRight className="h-4 w-4" />

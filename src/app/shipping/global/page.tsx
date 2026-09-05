@@ -130,7 +130,7 @@ export default function GlobalShippingPage() {
       {/* 1 · HERO */}
       <section className="border-b-2 border-[#0a0a0a] bg-[#0a0a0a] text-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
-          <div className="mb-6 text-xs font-mono uppercase tracking-widest text-[#0078a8]">
+          <div className="mb-6 text-xs font-mono uppercase tracking-widest text-[#29b6f6]">
             [ 009 / Shipping &amp; logistics ]
           </div>
           <h1 className="max-w-4xl text-5xl font-extrabold leading-[0.95] tracking-tight md:text-7xl">
@@ -215,7 +215,7 @@ export default function GlobalShippingPage() {
       <section className="border-b-2 border-[#0a0a0a] bg-[#1a1a1a] text-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="mb-12 max-w-3xl">
-            <div className="text-xs font-mono uppercase tracking-widest text-[#0078a8]">
+            <div className="text-xs font-mono uppercase tracking-widest text-[#29b6f6]">
               [ 009.A / Modes of transport ]
             </div>
             <h2 className="mt-3 text-3xl font-extrabold leading-tight md:text-5xl">
@@ -271,13 +271,13 @@ export default function GlobalShippingPage() {
                   <th className="px-3 py-3 text-xs font-bold uppercase tracking-wider md:px-6 md:py-4 md:text-sm">
                     Region
                   </th>
-                  <th className="px-3 py-3 text-xs font-bold uppercase tracking-wider text-[#0078a8] md:px-6 md:py-4 md:text-sm">
+                  <th className="px-3 py-3 text-xs font-bold uppercase tracking-wider text-[#29b6f6] md:px-6 md:py-4 md:text-sm">
                     Sea
                   </th>
-                  <th className="px-3 py-3 text-xs font-bold uppercase tracking-wider text-[#0078a8] md:px-6 md:py-4 md:text-sm">
+                  <th className="px-3 py-3 text-xs font-bold uppercase tracking-wider text-[#29b6f6] md:px-6 md:py-4 md:text-sm">
                     Air
                   </th>
-                  <th className="px-3 py-3 text-xs font-bold uppercase tracking-wider text-[#0078a8] md:px-6 md:py-4 md:text-sm">
+                  <th className="px-3 py-3 text-xs font-bold uppercase tracking-wider text-[#29b6f6] md:px-6 md:py-4 md:text-sm">
                     Express
                   </th>
                   <th className="px-3 py-3 text-xs font-bold uppercase tracking-wider text-[#cc3d00] md:px-6 md:py-4 md:text-sm">
@@ -367,7 +367,7 @@ export default function GlobalShippingPage() {
       {/* 8 · CTA */}
       <section className="bg-[#0a0a0a] text-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
-          <div className="mb-8 text-xs font-mono uppercase tracking-widest text-[#0078a8]">
+          <div className="mb-8 text-xs font-mono uppercase tracking-widest text-[#29b6f6]">
             [ 009.E / Quote a shipment ]
           </div>
           <h2 className="max-w-3xl text-4xl font-extrabold leading-tight md:text-6xl">

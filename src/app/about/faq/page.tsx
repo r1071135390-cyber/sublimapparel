@@ -143,7 +143,7 @@ export default function FaqPage() {
       {/* 3 · SECTION NAV */}
       <section className="border-b-2 border-[#0a0a0a] bg-[#1a1a1a] text-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-12">
-          <div className="mb-6 text-xs font-mono uppercase tracking-widest text-[#0078a8]">
+          <div className="mb-6 text-xs font-mono uppercase tracking-widest text-[#29b6f6]">
             [ Jump to section ]
           </div>
           <div className="grid gap-3 md:grid-cols-5">

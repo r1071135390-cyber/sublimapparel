@@ -141,7 +141,7 @@ export default function TrainingApparelPage() {
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto grid max-w-7xl gap-0 px-6 md:grid-cols-12">
           <div className="md:col-span-7 py-16 md:py-24">
-            <div className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+            <div className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
               01 / Apparel · Training Apparel
             </div>
             <h1 className="text-5xl font-black leading-[0.95] tracking-tight md:text-8xl">
@@ -157,7 +157,7 @@ export default function TrainingApparelPage() {
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 href="/get-a-quote/"
-                className="group inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-black"
+                className="group inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-widest text-black transition-all hover:bg-black"
               >
                 Get a Training Apparel Quote
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
@@ -414,7 +414,7 @@ export default function TrainingApparelPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-[#ff4d00] text-white">
+      <section className="bg-[#ff4d00] text-black">
         <div className="mx-auto max-w-7xl px-6 py-20 md:py-28">
           <div className="mb-3 text-xs font-black uppercase tracking-widest text-white/80">[ 008 / Next step ]</div>
           <h2 className="text-4xl font-black leading-tight md:text-7xl">

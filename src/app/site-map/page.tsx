@@ -52,7 +52,7 @@ const ACCENT_CLASS: Record<SitemapGroup["accent"], string> = {
 };
 
 const ACCENT_BADGE: Record<SitemapGroup["accent"], string> = {
-  orange: "bg-[#ff4d00] text-white",
+  orange: "bg-[#ff4d00] text-black",
   blue: "bg-[#00c2ff] text-[#0a0a0a]",
   black: "bg-[#0a0a0a] text-white",
   grey: "bg-[#6b6b6b] text-white",
@@ -170,7 +170,7 @@ export default function SiteMapPage() {
                 <div className="text-3xl font-extrabold text-[#cc3d00] md:text-4xl">
                   {s.k}
                 </div>
-                <div className="mt-1 font-mono text-[10px] uppercase tracking-[0.25em] text-white/60">
+                <div className="mt-1 font-mono text-[10px] uppercase tracking-[0.25em] text-white/80">
                   {s.l}
                 </div>
               </div>
@@ -223,7 +223,7 @@ export default function SiteMapPage() {
                             {node.path}
                           </code>
                           {node.new && (
-                            <span className="bg-[#ff4d00] px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-widest text-white">
+                            <span className="bg-[#ff4d00] px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-widest text-black">
                               NEW
                             </span>
                           )}

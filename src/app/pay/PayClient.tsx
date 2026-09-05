@@ -266,7 +266,7 @@ export default function PayClient() {
             We couldn&apos;t find invoice <code className="bg-black/5 px-1.5 py-0.5 font-mono">{piNumber}</code>.
             It may have expired or the link is incorrect.
           </p>
-          {error && <p className="mt-3 text-xs text-black/50">Error: {error}</p>}
+          {error && <p className="mt-3 text-xs text-black/70">Error: {error}</p>}
         </div>
       </div>
     );
@@ -388,7 +388,7 @@ export default function PayClient() {
               onClick={() => setPaymentMethod("card")}
               className={`flex items-center justify-center gap-2 px-4 py-3 text-xs font-black uppercase tracking-wider transition-colors ${
                 paymentMethod === "card"
-                  ? "bg-[#ff4d00] text-white"
+                  ? "bg-[#ff4d00] text-black"
                   : "bg-white text-black hover:bg-black/5"
               }`}
             >
@@ -400,7 +400,7 @@ export default function PayClient() {
               onClick={() => setPaymentMethod("bank")}
               className={`flex items-center justify-center gap-2 border-l-2 border-black px-4 py-3 text-xs font-black uppercase tracking-wider transition-colors ${
                 paymentMethod === "bank"
-                  ? "bg-[#ff4d00] text-white"
+                  ? "bg-[#ff4d00] text-black"
                   : "bg-white text-black hover:bg-black/5"
               }`}
             >
@@ -443,7 +443,7 @@ function CardPaymentMethod({ pi }: { pi: PIData }) {
             {fmtMoney(pi.amount_due_cents, pi.currency)}
           </div>
         </div>
-        <div className="text-right text-xs text-black/50">
+        <div className="text-right text-xs text-black/70">
           <div>Secured by Stripe</div>
           <div className="mt-1 inline-flex items-center gap-1">
             <CheckCircle2 className="h-3 w-3" /> SSL encrypted
@@ -507,7 +507,7 @@ function CardPaymentForm({ pi }: { pi: PIData }) {
       <button
         type="submit"
         disabled={!stripe || submitting}
-        className="w-full border-2 border-black bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-wider text-white shadow-[4px_4px_0_0_rgba(10,10,10,1)] transition-all hover:bg-[#cc3d00] hover:shadow-[6px_6px_0_0_rgba(10,10,10,1)] disabled:cursor-not-allowed disabled:opacity-50"
+        className="w-full border-2 border-black bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-wider text-black shadow-[4px_4px_0_0_rgba(10,10,10,1)] transition-all hover:bg-[#cc3d00] hover:shadow-[6px_6px_0_0_rgba(10,10,10,1)] disabled:cursor-not-allowed disabled:opacity-50"
       >
         {submitting ? (
           <span className="inline-flex items-center gap-2">
@@ -518,7 +518,7 @@ function CardPaymentForm({ pi }: { pi: PIData }) {
           `Pay ${fmtMoney(pi.amount_due_cents, pi.currency)}`
         )}
       </button>
-      <p className="text-center text-[10px] uppercase tracking-wider text-black/50">
+      <p className="text-center text-[10px] uppercase tracking-wider text-black/70">
         By paying, you confirm acceptance of PI {pi.pi_number} terms
       </p>
     </form>
@@ -666,7 +666,7 @@ function BankTransferMethod({
         <button
           type="submit"
           disabled={submitting || !agreed}
-          className="w-full border-2 border-black bg-[#00c2ff] px-6 py-3 text-sm font-black uppercase tracking-wider text-white shadow-[4px_4px_0_0_rgba(10,10,10,1)] transition-all hover:bg-[#00a8db] hover:shadow-[6px_6px_0_0_rgba(10,10,10,1)] disabled:cursor-not-allowed disabled:opacity-50"
+          className="w-full border-2 border-black bg-[#00c2ff] px-6 py-3 text-sm font-black uppercase tracking-wider text-black shadow-[4px_4px_0_0_rgba(10,10,10,1)] transition-all hover:bg-[#00a8db] hover:shadow-[6px_6px_0_0_rgba(10,10,10,1)] disabled:cursor-not-allowed disabled:opacity-50"
         >
           {submitting ? (
             <span className="inline-flex items-center gap-2">

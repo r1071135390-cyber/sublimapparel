@@ -147,7 +147,7 @@ export function Industries() {
               >
                 {/* Icon + title */}
                 <div className="mb-4 flex items-center gap-3">
-                  <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center border-2 border-black bg-[#ff4d00] text-white transition-colors group-hover:bg-black">
+                  <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center border-2 border-black bg-[#ff4d00] text-black transition-colors group-hover:bg-black">
                     <Icon size={22} strokeWidth={2.5} />
                   </div>
                   <h3 className="text-lg font-black uppercase leading-tight tracking-tight">
@@ -185,7 +185,7 @@ export function Industries() {
                   </Link>
                   <Link
                     href={`/industries/${ind.slug}/`}
-                    className="text-[10px] font-bold uppercase tracking-wider text-black/50 transition-colors hover:text-black"
+                    className="text-[10px] font-bold uppercase tracking-wider text-black/70 transition-colors hover:text-black"
                   >
                     Industry page →
                   </Link>
@@ -197,7 +197,7 @@ export function Industries() {
 
         {/* Bottom callout */}
         <div className="mt-10 border-2 border-black bg-black p-6 text-center text-white md:p-8">
-          <div className="text-xs font-black uppercase tracking-widest text-[#0078a8]">
+          <div className="text-xs font-black uppercase tracking-widest text-[#29b6f6]">
             Not on the list?
           </div>
           <div className="mt-2 text-2xl font-black leading-tight md:text-3xl">

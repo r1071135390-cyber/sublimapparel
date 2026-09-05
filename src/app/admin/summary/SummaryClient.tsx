@@ -326,7 +326,7 @@ export default function SummaryClient() {
             </div>
             <Link
               href="/admin/new-pi/"
-              className="bg-[#ff4d00] px-3 py-1.5 text-xs font-black uppercase tracking-wider text-white hover:bg-[#e64500]"
+              className="bg-[#ff4d00] px-3 py-1.5 text-xs font-black uppercase tracking-wider text-black hover:bg-[#e64500]"
             >
               + New PI
             </Link>
@@ -350,7 +350,7 @@ export default function SummaryClient() {
               </div>
               <Link
                 href="/admin/new-pi/"
-                className="inline-block bg-[#ff4d00] px-4 py-2 text-sm font-black uppercase tracking-wider text-white hover:bg-[#e64500]"
+                className="inline-block bg-[#ff4d00] px-4 py-2 text-sm font-black uppercase tracking-wider text-black hover:bg-[#e64500]"
               >
                 + Create a PI
               </Link>

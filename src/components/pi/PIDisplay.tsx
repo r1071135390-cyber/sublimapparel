@@ -408,8 +408,8 @@ export function PIStatusBadge({
       bg: "bg-amber-100",
       text: "text-amber-800",
     },
-    canceled: { label: "Canceled", bg: "bg-black/5", text: "text-black/50" },
-    expired: { label: "Expired", bg: "bg-black/5", text: "text-black/50" },
+    canceled: { label: "Canceled", bg: "bg-black/5", text: "text-black/70" },
+    expired: { label: "Expired", bg: "bg-black/5", text: "text-black/70" },
   };
   const c = config[status] || config.draft;
   return (

@@ -176,16 +176,16 @@ function LiveActivity() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center gap-3">
         <div className="flex items-center gap-1.5 shrink-0">
           <Activity className="w-3.5 h-3.5 text-[#cc3d00]" />
-          <span className="text-[10px] md:text-xs uppercase tracking-widest font-bold text-[#cc3d00]">Live</span>
+          <span className="text-[10px] md:text-xs uppercase tracking-widest font-bold text-[#ff4d00]">Live</span>
         </div>
         <div
           className={`flex-1 min-w-0 transition-opacity duration-300 ${visible ? "opacity-100" : "opacity-0"}`}
         >
           <div className="text-xs md:text-sm text-white/90 truncate">
             <span className="font-bold text-white">{a.name}</span>
-            <span className="text-white/60"> from {a.city}</span>
+            <span className="text-white/80"> from {a.city}</span>
             <span className="text-white/90"> {a.action}</span>
-            <span className="text-white/40"> &middot; {a.time}</span>
+            <span className="text-white/80"> &middot; {a.time}</span>
           </div>
         </div>
         <div className="hidden md:flex items-center gap-1.5 shrink-0">
@@ -221,7 +221,7 @@ function VideoShowcase() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
           <div>
-            <div className="text-[10px] md:text-xs uppercase tracking-widest text-[#cc3d00] font-bold mb-3">
+            <div className="text-[10px] md:text-xs uppercase tracking-widest text-[#ff4d00] font-bold mb-3">
               [ 002 / Watch · 40 seconds ]
             </div>
             <h2 className="text-3xl md:text-5xl font-extrabold leading-[1.1] mb-4">
@@ -292,7 +292,7 @@ function Newsletter() {
             placeholder="you@company.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="flex-1 px-4 py-3 rounded-md bg-white/5 border border-white/20 text-white placeholder:text-white/40 text-sm focus:outline-none focus:border-[#ff4d00]"
+            className="flex-1 px-4 py-3 rounded-md bg-white/5 border border-white/20 text-white placeholder:text-white/80 text-sm focus:outline-none focus:border-[#ff4d00]"
           />
           <button
             type="submit"
@@ -301,7 +301,7 @@ function Newsletter() {
             {submitted ? "Check your email" : "Subscribe"}
           </button>
         </form>
-        <p className="text-[10px] text-white/40 mt-3">
+        <p className="text-[10px] text-white/80 mt-3">
           We&apos;ll send a confirmation email to verify your address.
         </p>
       </div>
@@ -326,7 +326,7 @@ function RecentCaseStudies() {
           <div>
             <p className="text-[#cc3d00] text-xs font-bold tracking-[0.2em] uppercase mb-3">Recent work</p>
             <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight">Case studies from the line</h2>
-            <p className="mt-3 text-white/60 text-base max-w-2xl">Real production runs, real numbers, shipped to real customers across the US, EU, and the UK.</p>
+            <p className="mt-3 text-white/80 text-base max-w-2xl">Real production runs, real numbers, shipped to real customers across the US, EU, and the UK.</p>
           </div>
           <Link href="/cases/" className="text-sm font-semibold text-white border-b-2 border-[#ff4d00] pb-1 hover:text-[#cc3d00] transition-colors">View all industries →</Link>
         </div>
@@ -337,10 +337,10 @@ function RecentCaseStudies() {
               href={`/cases/${c.industrySlug}/${c.id}`}
               className="group block bg-[#1a1a1a] border border-white/10 rounded-xl p-6 hover:border-[#ff4d00] transition-all duration-200"
             >
-              <div className="text-[10px] font-bold tracking-widest uppercase text-[#cc3d00] mb-3">{c.industryTitle} · {c.year}</div>
+              <div className="text-[10px] font-bold tracking-widest uppercase text-[#ff4d00] mb-3">{c.industryTitle} · {c.year}</div>
               <h3 className="text-lg font-bold leading-snug mb-3 group-hover:text-[#cc3d00] transition-colors">{c.title}</h3>
-              <p className="text-sm text-white/60 line-clamp-3 leading-relaxed">{c.summary}</p>
-              <div className="mt-5 flex items-center gap-2 text-xs font-semibold text-white/80 group-hover:text-[#cc3d00]">
+              <p className="text-sm text-white/80 line-clamp-3 leading-relaxed">{c.summary}</p>
+              <div className="mt-5 flex items-center gap-2 text-xs font-semibold text-white/80 group-hover:text-[#ff4d00]">
                 <span>Read the case study</span>
                 <span className="transition-transform group-hover:translate-x-1">→</span>
               </div>

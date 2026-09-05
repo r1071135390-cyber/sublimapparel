@@ -168,7 +168,7 @@ export default async function ProductDetailPage({
             All products
           </Link>
           <div className="mb-3 flex flex-wrap items-center gap-2 text-[10px] font-bold uppercase tracking-widest md:text-xs">
-            <span className="rounded-sm bg-[#ff4d00] px-2 py-1 text-white">{product.category}</span>
+            <span className="rounded-sm bg-[#ff4d00] px-2 py-1 text-black">{product.category}</span>
             {isJersey(product) && (
               <Link
                 href="/products/jerseys/"
@@ -200,7 +200,7 @@ export default async function ProductDetailPage({
               </span>
               <Link
                 href={tagArchiveLink("category", product.category)}
-                className="inline-flex items-center gap-1 rounded-sm border-2 border-[#ff4d00] bg-[#ff4d00] px-2 py-0.5 text-[10px] font-black uppercase tracking-wide text-white transition-colors hover:bg-[#e64500] md:text-[11px]"
+                className="inline-flex items-center gap-1 rounded-sm border-2 border-[#ff4d00] bg-[#ff4d00] px-2 py-0.5 text-[10px] font-black uppercase tracking-wide text-black transition-colors hover:bg-[#e64500] md:text-[11px]"
               >
                 <TagIcon className="h-3 w-3" />
                 {product.category}
@@ -210,7 +210,7 @@ export default async function ProductDetailPage({
                 {product.sports.length > 0 ? "Sports" : "Sports (general)"}
               </span>
               {product.sports.length === 0 ? (
-                <span className="inline-flex items-center rounded-sm border-2 border-white/20 bg-white/5 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white/60 md:text-[11px]">
+                <span className="inline-flex items-center rounded-sm border-2 border-white/20 bg-white/5 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white/80 md:text-[11px]">
                   No specific sport
                 </span>
               ) : (
@@ -236,7 +236,7 @@ export default async function ProductDetailPage({
                   <Link
                     key={s.slug}
                     href={solutionLink(s.slug)}
-                    className="inline-flex items-center rounded-sm border-2 border-[#00c2ff] bg-[#00c2ff]/15 px-2 py-0.5 text-[10px] font-black uppercase tracking-wide text-[#7adbff] transition-colors hover:bg-[#00c2ff] hover:text-white md:text-[11px]"
+                    className="inline-flex items-center rounded-sm border-2 border-[#00c2ff] bg-[#00c2ff]/15 px-2 py-0.5 text-[10px] font-black uppercase tracking-wide text-[#7adbff] transition-colors hover:bg-[#00c2ff] hover:text-black md:text-[11px]"
                   >
                     <Compass className="mr-1 h-3 w-3" />
                     {s.name}
@@ -255,7 +255,7 @@ export default async function ProductDetailPage({
                   <Link
                     key={i.slug}
                     href={industryLink(i.slug)}
-                    className="inline-flex items-center rounded-sm border-2 border-[#00c2ff]/40 bg-[#00c2ff]/5 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-[#7adbff] transition-colors hover:border-[#00c2ff] hover:bg-[#00c2ff] hover:text-white md:text-[11px]"
+                    className="inline-flex items-center rounded-sm border-2 border-[#00c2ff]/40 bg-[#00c2ff]/5 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-[#7adbff] transition-colors hover:border-[#00c2ff] hover:bg-[#00c2ff] hover:text-black md:text-[11px]"
                   >
                     <Building2 className="mr-1 h-3 w-3" />
                     {i.name}
@@ -274,7 +274,7 @@ export default async function ProductDetailPage({
                   <Link
                     key={s}
                     href={tagArchiveLink("scenario", s)}
-                    className="inline-flex items-center rounded-sm border-2 border-white/20 bg-white/5 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white/90 transition-colors hover:border-[#00c2ff] hover:bg-[#00c2ff] hover:text-white md:text-[11px]"
+                    className="inline-flex items-center rounded-sm border-2 border-white/20 bg-white/5 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white/90 transition-colors hover:border-[#00c2ff] hover:bg-[#00c2ff] hover:text-black md:text-[11px]"
                   >
                     {s}
                   </Link>
@@ -338,7 +338,7 @@ export default async function ProductDetailPage({
                     productNumber: product.number,
                     productCategory: product.category,
                   }}
-                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-sm bg-[#ff4d00] px-4 py-3 text-sm font-black uppercase tracking-wide text-white transition-colors hover:bg-[#e64500] md:text-base"
+                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-sm bg-[#ff4d00] px-4 py-3 text-sm font-black uppercase tracking-wide text-black transition-colors hover:bg-[#e64500] md:text-base"
                 >
                   Get a quote
                   <ArrowRight className="h-4 w-4" />
@@ -433,7 +433,7 @@ export default async function ProductDetailPage({
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 md:gap-6 lg:grid-cols-5">
             <div>
-              <h3 className="mb-3 text-[10px] font-bold uppercase tracking-widest text-white/60 md:text-xs">
+              <h3 className="mb-3 text-[10px] font-bold uppercase tracking-widest text-white/80 md:text-xs">
                 Sports ({product.sports.length})
               </h3>
               {product.sports.length === 0 ? (
@@ -454,7 +454,7 @@ export default async function ProductDetailPage({
             </div>
 
             <div>
-              <h3 className="mb-3 text-[10px] font-bold uppercase tracking-widest text-white/60 md:text-xs">
+              <h3 className="mb-3 text-[10px] font-bold uppercase tracking-widest text-white/80 md:text-xs">
                 Scenarios ({product.scenarios.length})
               </h3>
               <div className="flex flex-wrap gap-1.5">
@@ -471,7 +471,7 @@ export default async function ProductDetailPage({
             </div>
 
             <div>
-              <h3 className="mb-3 text-[10px] font-bold uppercase tracking-widest text-white/60 md:text-xs">
+              <h3 className="mb-3 text-[10px] font-bold uppercase tracking-widest text-white/80 md:text-xs">
                 {productSolutions.length === 1 ? "Solution" : `Solutions (${productSolutions.length})`}
               </h3>
               {productSolutions.length === 0 ? (
@@ -482,7 +482,7 @@ export default async function ProductDetailPage({
                     <Link
                       key={s.slug}
                       href={solutionLink(s.slug)}
-                      className="inline-flex items-center gap-1 rounded-sm border-2 border-[#00c2ff] bg-[#00c2ff]/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-[#7adbff] transition-colors hover:bg-[#00c2ff] hover:text-white md:text-xs"
+                      className="inline-flex items-center gap-1 rounded-sm border-2 border-[#00c2ff] bg-[#00c2ff]/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-[#7adbff] transition-colors hover:bg-[#00c2ff] hover:text-black md:text-xs"
                     >
                       <Compass className="h-3 w-3" />
                       {s.name}
@@ -493,7 +493,7 @@ export default async function ProductDetailPage({
             </div>
 
             <div>
-              <h3 className="mb-3 text-[10px] font-bold uppercase tracking-widest text-white/60 md:text-xs">
+              <h3 className="mb-3 text-[10px] font-bold uppercase tracking-widest text-white/80 md:text-xs">
                 {productIndustries.length === 1 ? "Industry" : `Industries (${productIndustries.length})`}
               </h3>
               {productIndustries.length === 0 ? (
@@ -504,7 +504,7 @@ export default async function ProductDetailPage({
                     <Link
                       key={i.slug}
                       href={industryLink(i.slug)}
-                      className="inline-flex items-center gap-1 rounded-sm border-2 border-[#00c2ff]/40 bg-[#00c2ff]/5 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-[#7adbff] transition-colors hover:border-[#00c2ff] hover:bg-[#00c2ff] hover:text-white md:text-xs"
+                      className="inline-flex items-center gap-1 rounded-sm border-2 border-[#00c2ff]/40 bg-[#00c2ff]/5 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-[#7adbff] transition-colors hover:border-[#00c2ff] hover:bg-[#00c2ff] hover:text-black md:text-xs"
                     >
                       <Building2 className="h-3 w-3" />
                       {i.name}
@@ -515,12 +515,12 @@ export default async function ProductDetailPage({
             </div>
 
             <div>
-              <h3 className="mb-3 text-[10px] font-bold uppercase tracking-widest text-white/60 md:text-xs">
+              <h3 className="mb-3 text-[10px] font-bold uppercase tracking-widest text-white/80 md:text-xs">
                 Garment type
               </h3>
               <Link
                 href={tagArchiveLink("category", product.category)}
-                className="inline-flex rounded-sm border-2 border-[#ff4d00] bg-[#ff4d00] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white transition-colors hover:bg-[#e64500] md:text-xs"
+                className="inline-flex rounded-sm border-2 border-[#ff4d00] bg-[#ff4d00] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-black transition-colors hover:bg-[#e64500] md:text-xs"
               >
                 {product.category}
               </Link>
@@ -546,7 +546,7 @@ export default async function ProductDetailPage({
               .slice(0, 4)
               .map((f, i) => (
                 <div key={i} className="border-2 border-black bg-[#f5f5f5] p-4 md:p-6">
-                  <div className="mb-2 inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#ff4d00] text-sm font-black text-white md:h-10 md:w-10 md:text-base">
+                  <div className="mb-2 inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#ff4d00] text-sm font-black text-black md:h-10 md:w-10 md:text-base">
                     {i + 1}
                   </div>
                   <h3 className="mb-2 text-sm font-black uppercase text-black md:text-base">
@@ -564,7 +564,7 @@ export default async function ProductDetailPage({
               .slice(0, 4)
               .map((f, i) => (
                 <div key={`cot-${i}`} className="border-2 border-black bg-[#f5f5f5] p-4 md:p-6">
-                  <div className="mb-2 inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#00c2ff] text-sm font-black text-white md:h-10 md:w-10 md:text-base">
+                  <div className="mb-2 inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#00c2ff] text-sm font-black text-black md:h-10 md:w-10 md:text-base">
                     {i + 1}
                   </div>
                   <h3 className="mb-2 text-sm font-black uppercase text-black md:text-base">
@@ -680,7 +680,7 @@ export default async function ProductDetailPage({
             <div className="flex flex-col gap-3">
               <Link
                 href="/get-a-quote/"
-                className="inline-flex items-center justify-center gap-2 rounded-sm bg-[#ff4d00] px-4 py-3 text-sm font-black uppercase tracking-wide text-white hover:bg-[#e64500] md:text-base"
+                className="inline-flex items-center justify-center gap-2 rounded-sm bg-[#ff4d00] px-4 py-3 text-sm font-black uppercase tracking-wide text-black hover:bg-[#e64500] md:text-base"
               >
                 Get a quote
                 <ArrowRight className="h-4 w-4" />

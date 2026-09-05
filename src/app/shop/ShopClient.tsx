@@ -108,7 +108,7 @@ export default function ShopClient() {
         {/* HERO */}
         <section className="border-b-2 border-black bg-[#0a0a0a] text-white">
           <div className="mx-auto max-w-7xl px-6 py-20 md:py-24">
-            <div className="mb-4 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+            <div className="mb-4 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
               Shop
             </div>
             <h1 className="mb-4 text-balance text-4xl font-black leading-[0.95] tracking-tight md:text-6xl lg:text-7xl">
@@ -151,7 +151,7 @@ export default function ShopClient() {
         {/* CHECKOUT FORM */}
         <section className="border-b-2 border-black bg-white">
           <div className="mx-auto max-w-3xl px-6 py-16 md:py-20">
-            <div className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+            <div className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
               Checkout
             </div>
             <h2 className="mb-3 text-3xl font-black leading-tight tracking-tight md:text-5xl">
@@ -164,7 +164,7 @@ export default function ShopClient() {
             {/* Cart summary */}
             <div className="mb-8 border-2 border-black bg-[#faf9f6] p-6">
               {cart.length === 0 ? (
-                <p className="text-sm text-black/50">
+                <p className="text-sm text-black/70">
                   Your cart is empty. Add a product above to get started.
                 </p>
               ) : (
@@ -215,7 +215,7 @@ export default function ShopClient() {
                   placeholder="you@company.com"
                   className="w-full border-2 border-black bg-white px-4 py-3 text-base text-black outline-none focus:border-[#ff4d00]"
                 />
-                <p className="mt-1 text-xs text-black/50">
+                <p className="mt-1 text-xs text-black/70">
                   Receipt + tracking info will be sent here.
                 </p>
               </div>
@@ -246,7 +246,7 @@ export default function ShopClient() {
               type="button"
               onClick={handleCheckout}
               disabled={submitting || cart.length === 0}
-              className="flex w-full items-center justify-center gap-2 bg-[#ff4d00] px-6 py-4 text-base font-black uppercase tracking-widest text-white transition-colors hover:bg-[#cc3d00] disabled:cursor-not-allowed disabled:bg-black/30"
+              className="flex w-full items-center justify-center gap-2 bg-[#ff4d00] px-6 py-4 text-base font-black uppercase tracking-widest text-black transition-colors hover:bg-[#cc3d00] disabled:cursor-not-allowed disabled:bg-black/30"
             >
               {submitting ? (
                 <>
@@ -263,7 +263,7 @@ export default function ShopClient() {
               )}
             </button>
 
-            <p className="mt-4 text-center text-xs text-black/50">
+            <p className="mt-4 text-center text-xs text-black/70">
               You will be redirected to Stripe's secure checkout page to enter
               your card details. We never see or store your card number.
             </p>
@@ -324,7 +324,7 @@ function ProductCard({
           </div>
         )}
         {product.badge && (
-          <div className="absolute right-2 top-2 bg-[#ff4d00] px-2 py-1 text-[10px] font-black uppercase tracking-widest text-white">
+          <div className="absolute right-2 top-2 bg-[#ff4d00] px-2 py-1 text-[10px] font-black uppercase tracking-widest text-black">
             {product.badge}
           </div>
         )}
@@ -336,7 +336,7 @@ function ProductCard({
         <div className="mb-4 text-2xl font-black text-[#ff4d00]">
           {formatUsd(product.amount_cents)}
           {product.min_quantity > 1 && (
-            <span className="ml-1 text-xs font-bold text-black/50">
+            <span className="ml-1 text-xs font-bold text-black/70">
               / pc
             </span>
           )}
@@ -360,7 +360,7 @@ function ProductCard({
             onClick={() =>
               onQuantityChange(quantity === 0 ? product.min_quantity : quantity + 1)
             }
-            className="h-10 w-10 border-2 border-black bg-[#ff4d00] text-lg font-black text-white transition-colors hover:bg-[#cc3d00]"
+            className="h-10 w-10 border-2 border-black bg-[#ff4d00] text-lg font-black text-black transition-colors hover:bg-[#cc3d00]"
           >
             +
           </button>

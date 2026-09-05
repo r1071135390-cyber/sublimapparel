@@ -186,7 +186,7 @@ export default function FactoryPage() {
       <section className="border-b-2 border-[#0a0a0a] bg-[#1a1a1a] text-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="mb-12 max-w-3xl">
-            <div className="text-xs font-mono uppercase tracking-widest text-[#0078a8]">
+            <div className="text-xs font-mono uppercase tracking-widest text-[#29b6f6]">
               [ 010.A / Departments ]
             </div>
             <h2 className="mt-3 text-3xl font-extrabold leading-tight md:text-5xl">

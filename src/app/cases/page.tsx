@@ -85,7 +85,7 @@ export default function CasesPage() {
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-4">
-            <RequestQuoteLink label="Cases / page / Get a quote" className="inline-flex items-center gap-2 border-2 border-black bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-wider text-white transition-all hover:bg-black hover:shadow-[4px_4px_0_0_#000] hover:-translate-x-1 hover:-translate-y-1">Start your project
+            <RequestQuoteLink label="Cases / page / Get a quote" className="inline-flex items-center gap-2 border-2 border-black bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-wider text-black transition-all hover:bg-black hover:shadow-[4px_4px_0_0_#000] hover:-translate-x-1 hover:-translate-y-1">Start your project
               <ArrowRight size={16} strokeWidth={3} /></RequestQuoteLink>
             <a
               href="https://wa.me/8619817930190"
@@ -118,7 +118,7 @@ export default function CasesPage() {
                 <Link
                   key={ind.slug}
                   href={`/cases/${ind.slug}`}
-                  className="group flex items-center justify-between border-2 border-black bg-white p-5 transition-all hover:-translate-x-1 hover:-translate-y-1 hover:bg-[#ff4d00] hover:text-white hover:shadow-[6px_6px_0_0_#000]"
+                  className="group flex items-center justify-between border-2 border-black bg-white p-5 transition-all hover:-translate-x-1 hover:-translate-y-1 hover:bg-[#ff4d00] hover:text-black hover:shadow-[6px_6px_0_0_#000]"
                 >
                   <div className="flex items-center gap-3">
                     <Icon size={24} strokeWidth={2.5} />
@@ -141,7 +141,7 @@ export default function CasesPage() {
       {/* Bottom CTA */}
       <section className="border-b-2 border-black bg-black text-white">
         <div className="mx-auto max-w-7xl px-6 py-16 text-center md:py-20">
-          <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#0078a8]">
+          <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#29b6f6]">
             [ Your project next? ]
           </div>
           <h2 className="mx-auto mb-6 max-w-3xl text-4xl font-black uppercase leading-none tracking-tight md:text-6xl">

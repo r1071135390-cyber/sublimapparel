@@ -246,7 +246,7 @@ export function Contact() {
 
             <div className="mt-10 space-y-8 border-t-2 border-black pt-8 text-sm">
               <div>
-                <div className="text-xs font-black uppercase tracking-widest text-black/50">
+                <div className="text-xs font-black uppercase tracking-widest text-black/70">
                   WhatsApp
                 </div>
                 <div className="mt-1 text-base font-bold text-black">
@@ -256,7 +256,7 @@ export function Contact() {
                 </div>
               </div>
               <div>
-                <div className="text-xs font-black uppercase tracking-widest text-black/50">
+                <div className="text-xs font-black uppercase tracking-widest text-black/70">
                   Email
                 </div>
                 <div className="mt-1 text-base font-bold text-black">
@@ -267,7 +267,7 @@ export function Contact() {
               </div>
               {/* Factory — China */}
               <div>
-                <div className="text-xs font-black uppercase tracking-widest text-black/50">
+                <div className="text-xs font-black uppercase tracking-widest text-black/70">
                   <span className="mr-1.5">🇨🇳</span>Factory · China
                 </div>
                 <div className="mt-1 text-base font-bold leading-snug text-black">
@@ -279,7 +279,7 @@ export function Contact() {
 
               {/* Warehouse — US (Los Angeles) */}
               <div>
-                <div className="text-xs font-black uppercase tracking-widest text-black/50">
+                <div className="text-xs font-black uppercase tracking-widest text-black/70">
                   <span className="mr-1.5">🇺🇸</span>Warehouse · USA
                 </div>
                 <div className="mt-1 text-base font-bold leading-snug text-black">
@@ -289,7 +289,7 @@ export function Contact() {
                   <br />
                   United States
                 </div>
-                <div className="mt-1 text-xs font-medium text-black/50">
+                <div className="mt-1 text-xs font-medium text-black/70">
                   US local pickup · no customs · 2–5 day ground
                 </div>
               </div>
@@ -377,7 +377,7 @@ export function Contact() {
                   <label className="text-xs font-black uppercase tracking-widest text-black">
                     Project specs
                   </label>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-black/50">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-black/70">
                     Helps us quote faster &amp; more accurately
                   </span>
                 </div>
@@ -445,9 +445,9 @@ export function Contact() {
               <div className="mt-6">
                 <div className="mb-1 flex items-baseline justify-between">
                   <label className="block text-xs font-black uppercase tracking-widest text-black">
-                    Ship to <span className="text-black/50">— for DDP quote</span>
+                    Ship to <span className="text-black/70">— for DDP quote</span>
                   </label>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-black/50">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-black/70">
                     Country + ZIP / postal code at minimum
                   </span>
                 </div>
@@ -515,7 +515,7 @@ export function Contact() {
                   <label className="block text-xs font-black uppercase tracking-widest text-black">
                     Artwork / Logo files
                   </label>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-black/50">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-black/70">
                     Max {MAX_FILES} files · {MAX_SIZE_MB} MB each
                   </span>
                 </div>
@@ -550,7 +550,7 @@ export function Contact() {
                   <div className="text-sm font-bold text-black">
                     Drop files here or <span className="text-[#cc3d00] underline">browse</span>
                   </div>
-                  <div className="mt-1 text-[10px] font-medium text-black/50">
+                  <div className="mt-1 text-[10px] font-medium text-black/70">
                     JPG · PNG · PDF · AI · EPS · PSD · SVG · TIFF
                   </div>
                 </div>
@@ -575,7 +575,7 @@ export function Contact() {
                           <span className="truncate text-xs font-bold text-black">
                             {a.name}
                           </span>
-                          <span className="shrink-0 text-[10px] font-medium text-black/50">
+                          <span className="shrink-0 text-[10px] font-medium text-black/70">
                             {formatSize(a.size)}
                           </span>
                         </div>
@@ -598,13 +598,13 @@ export function Contact() {
               </div>
 
               <div className="mt-8 flex flex-col items-stretch gap-3 md:flex-row md:items-center md:justify-between">
-                <p className="text-xs text-black/50">
+                <p className="text-xs text-black/70">
                   We reply within 24 hours. No spam.
                 </p>
                 <button
                   type="submit"
                   disabled={status === "sending"}
-                  className="group inline-flex items-center justify-center gap-2 bg-[#ff4d00] px-8 py-4 text-base font-black uppercase tracking-wider text-white transition-colors hover:bg-black disabled:opacity-50"
+                  className="group inline-flex items-center justify-center gap-2 bg-[#ff4d00] px-8 py-4 text-base font-black uppercase tracking-wider text-black transition-colors hover:bg-black disabled:opacity-50"
                 >
                   {status === "sending" ? "Sending..." : "Send inquiry"}
                   <span className="transition-transform group-hover:translate-x-1">→</span>

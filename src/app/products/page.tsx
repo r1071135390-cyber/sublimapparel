@@ -166,7 +166,7 @@ export default function ProductsPage() {
           {/* Floating text overlay */}
           <div className="absolute inset-0 mx-auto flex max-w-7xl items-center px-6">
             <div className="max-w-2xl">
-              <div className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+              <div className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
                 Products
               </div>
               <h1
@@ -215,7 +215,7 @@ export default function ProductsPage() {
                   <Link
                     key={q.name}
                     href={q.href}
-                    className="border-2 border-black bg-white px-3 py-1.5 text-xs font-black uppercase tracking-wide text-black transition-colors hover:bg-[#ff4d00] hover:text-white"
+                    className="border-2 border-black bg-white px-3 py-1.5 text-xs font-black uppercase tracking-wide text-black transition-colors hover:bg-[#ff4d00] hover:text-black"
                   >
                     {q.name}
                   </Link>
@@ -242,7 +242,7 @@ export default function ProductsPage() {
               <Link
                 key={key}
                 href={tagArchiveLink("category", key)}
-                className="group inline-flex items-center gap-2 border-2 border-black bg-white px-3.5 py-2 text-xs font-black uppercase tracking-wide text-black transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:border-[#ff4d00] hover:bg-[#ff4d00] hover:text-white hover:shadow-[3px_3px_0_0_#000] md:px-5 md:py-2.5 md:text-sm"
+                className="group inline-flex items-center gap-2 border-2 border-black bg-white px-3.5 py-2 text-xs font-black uppercase tracking-wide text-black transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:border-[#ff4d00] hover:bg-[#ff4d00] hover:text-black hover:shadow-[3px_3px_0_0_#000] md:px-5 md:py-2.5 md:text-sm"
               >
                 <span className="text-base md:text-lg" aria-hidden="true">
                   {cat.icon}
@@ -273,7 +273,7 @@ export default function ProductsPage() {
             <div className="flex flex-col gap-2 md:col-span-4 md:items-end">
               <Link
                 href="/products/all/"
-                className="inline-flex items-center justify-center gap-2 rounded-sm bg-[#ff4d00] px-5 py-3 text-sm font-black uppercase tracking-wide text-white transition-colors hover:bg-[#e64500] md:text-base"
+                className="inline-flex items-center justify-center gap-2 rounded-sm bg-[#ff4d00] px-5 py-3 text-sm font-black uppercase tracking-wide text-black transition-colors hover:bg-[#e64500] md:text-base"
               >
                 See all products
                 <ArrowRight className="h-4 w-4" />
@@ -346,7 +346,7 @@ export default function ProductsPage() {
                           <Link
                             key={itemName}
                             href={itemHref}
-                            className="group flex items-center justify-between border-2 border-black bg-[#faf9f6] px-3 py-2.5 text-sm font-black text-black transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:border-[#ff4d00] hover:bg-[#ff4d00] hover:text-white hover:shadow-[3px_3px_0_0_#000]"
+                            className="group flex items-center justify-between border-2 border-black bg-[#faf9f6] px-3 py-2.5 text-sm font-black text-black transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:border-[#ff4d00] hover:bg-[#ff4d00] hover:text-black hover:shadow-[3px_3px_0_0_#000]"
                           >
                             <span>{itemName}</span>
                             <ArrowRight className="h-3.5 w-3.5 opacity-0 transition-opacity group-hover:opacity-100" strokeWidth={3} />
@@ -366,7 +366,7 @@ export default function ProductsPage() {
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto max-w-7xl px-6 py-20">
           <div className="mb-8">
-            <div className="mb-3 inline-block bg-[#00c2ff] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+            <div className="mb-3 inline-block bg-[#00c2ff] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
               Materials
             </div>
             <h2 className="text-4xl font-black leading-tight text-black md:text-6xl">

@@ -284,7 +284,7 @@ export default function UploadPIClient() {
       <header className="border-b-2 border-black bg-white">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4 sm:px-6">
           <div className="flex items-center gap-2">
-            <span className="inline-block bg-[#ff4d00] px-2 py-0.5 text-[10px] font-black uppercase tracking-widest text-white">
+            <span className="inline-block bg-[#ff4d00] px-2 py-0.5 text-[10px] font-black uppercase tracking-widest text-black">
               Sales
             </span>
             <h1 className="text-base font-black uppercase tracking-tight text-black">
@@ -391,7 +391,7 @@ export default function UploadPIClient() {
                     <p className="text-sm font-bold text-black">
                       Click to upload or drag and drop
                     </p>
-                    <p className="mt-1 text-xs text-black/50">
+                    <p className="mt-1 text-xs text-black/70">
                       PNG, JPG, WebP up to 8MB
                     </p>
                   </>
@@ -454,7 +454,7 @@ export default function UploadPIClient() {
                     <p className="text-sm font-bold text-black">
                       Click to upload or drag and drop
                     </p>
-                    <p className="mt-1 text-xs text-black/50">
+                    <p className="mt-1 text-xs text-black/70">
                       PDF or Excel (.pdf, .xlsx, .xls) up to 12MB
                     </p>
                     <p className="mt-3 text-[10px] text-black/40">
@@ -490,7 +490,7 @@ export default function UploadPIClient() {
             type="button"
             onClick={handleExtract}
             disabled={!hasInput || extracting}
-            className="inline-flex items-center gap-2 border-2 border-black bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-wider text-white shadow-[4px_4px_0_0_rgba(10,10,10,1)] transition-all hover:bg-[#cc3d00] hover:shadow-[6px_6px_0_0_rgba(10,10,10,1)] disabled:cursor-not-allowed disabled:bg-black/20 disabled:shadow-none"
+            className="inline-flex items-center gap-2 border-2 border-black bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-wider text-black shadow-[4px_4px_0_0_rgba(10,10,10,1)] transition-all hover:bg-[#cc3d00] hover:shadow-[6px_6px_0_0_rgba(10,10,10,1)] disabled:cursor-not-allowed disabled:bg-black/20 disabled:shadow-none"
           >
             {extracting ? (
               <>
@@ -681,7 +681,7 @@ function Field({
 }) {
   return (
     <div className={className}>
-      <p className="mb-1 text-[10px] font-black uppercase tracking-widest text-black/50">
+      <p className="mb-1 text-[10px] font-black uppercase tracking-widest text-black/70">
         {label}
       </p>
       {value ? (

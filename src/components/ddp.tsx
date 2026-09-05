@@ -98,7 +98,7 @@ export function DDP() {
             </ul>
 
             <div className="mt-6 border-2 border-[#00c2ff] bg-black p-3">
-              <div className="text-[10px] font-black uppercase tracking-widest text-[#0078a8]">
+              <div className="text-[10px] font-black uppercase tracking-widest text-[#29b6f6]">
                 Best for
               </div>
               <div className="mt-1 text-sm font-black uppercase text-white">

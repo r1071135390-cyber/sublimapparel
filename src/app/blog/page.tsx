@@ -198,7 +198,7 @@ export default function BlogIndexPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-[#ff4d00] text-white">
+      <section className="bg-[#ff4d00] text-black">
         <div className="mx-auto max-w-4xl px-4 py-12 text-center md:px-8 md:py-16">
           <h2 className="mb-3 text-2xl font-black uppercase leading-tight md:mb-4 md:text-4xl">
             Have a project in mind?

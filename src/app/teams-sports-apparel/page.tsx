@@ -163,7 +163,7 @@ export default function RaceShirtsPage() {
             ].map((s) => (
               <div key={s.l}>
                 <div className="text-2xl font-extrabold text-white md:text-3xl">{s.v}</div>
-                <div className="text-xs uppercase tracking-wider text-white/60">{s.l}</div>
+                <div className="text-xs uppercase tracking-wider text-white/80">{s.l}</div>
               </div>
             ))}
           </div>

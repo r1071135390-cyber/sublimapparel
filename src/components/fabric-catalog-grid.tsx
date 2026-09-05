@@ -207,7 +207,7 @@ export function FabricCatalogGrid({ fabrics }: Props) {
         </div>
       )}
 
-      <p className="mt-6 text-xs text-black/50">
+      <p className="mt-6 text-xs text-black/70">
         ★ rating = how well the fabric holds sublimation dye. ★★★★★ = full all-over color, ★ = needs special process (we do all of them — including 100% cotton via DTG/DTF).
       </p>
     </div>

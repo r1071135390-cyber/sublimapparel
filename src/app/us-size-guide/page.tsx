@@ -270,7 +270,7 @@ export default function UsSizeGuidePage() {
           <div className="mt-10 grid items-center gap-10 lg:grid-cols-2">
             <div>
               <div className="rounded-sm border-2 border-black/10 bg-[#faf9f6] p-6">
-                <div className="mb-3 text-xs font-black uppercase tracking-wider text-black/50">
+                <div className="mb-3 text-xs font-black uppercase tracking-wider text-black/70">
                   Template columns
                 </div>
                 <ul className="space-y-2 text-sm">

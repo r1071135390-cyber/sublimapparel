@@ -86,7 +86,7 @@ export function KeywordCloud({
           );
         })}
         {maxItems && items.length > maxItems && (
-          <span className="inline-flex items-center px-2 text-[10px] font-bold uppercase tracking-wide text-black/50">
+          <span className="inline-flex items-center px-2 text-[10px] font-bold uppercase tracking-wide text-black/70">
             +{items.length - maxItems} more
           </span>
         )}

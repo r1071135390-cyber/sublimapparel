@@ -176,7 +176,7 @@ export default function FabricPage() {
             <strong>Short answer:</strong> polyester for all-over sublimation, cotton for vintage soft-hand feel, poly-spandex for fitted performance, nylon for outerwear. Every card shows composition, weight, and our sublimation fit rating.
           </p>
             <FabricCatalogGrid fabrics={fabricTypes} />
-          <p className="mt-6 text-xs text-black/50">
+          <p className="mt-6 text-xs text-black/70">
             ★ rating = how well the fabric holds sublimation dye. ★★★★★ = full all-over color, ★ = needs special process (we do all of them — including 100% cotton via DTG/DTF).
           </p>
 

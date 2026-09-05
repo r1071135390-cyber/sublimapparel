@@ -127,7 +127,7 @@ export default function UsWarehousePage() {
           <div className="mt-10 flex flex-col gap-3 sm:flex-row">
             <Link
               href="/get-a-quote/"
-              className="inline-flex items-center justify-center gap-2 rounded-sm bg-[#ff4d00] px-6 py-3.5 text-sm font-black uppercase tracking-wider text-white transition-colors hover:bg-[#e64500]"
+              className="inline-flex items-center justify-center gap-2 rounded-sm bg-[#ff4d00] px-6 py-3.5 text-sm font-black uppercase tracking-wider text-black transition-colors hover:bg-[#e64500]"
             >
               Ask in your RFQ <ArrowRight className="h-4 w-4" />
             </Link>

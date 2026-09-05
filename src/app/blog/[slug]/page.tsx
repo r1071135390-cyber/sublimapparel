@@ -304,7 +304,7 @@ export default async function BlogPostPage({
             </p>
             <Link
               href="/get-a-quote/"
-              className="inline-flex items-center gap-2 bg-[#ff4d00] px-5 py-2.5 text-sm font-bold uppercase tracking-wide text-white transition-colors hover:bg-[#e64500] md:px-6 md:py-3 md:text-base"
+              className="inline-flex items-center gap-2 bg-[#ff4d00] px-5 py-2.5 text-sm font-bold uppercase tracking-wide text-black transition-colors hover:bg-[#e64500] md:px-6 md:py-3 md:text-base"
             >
               Get a Free Quote
               <ArrowRight className="h-4 w-4" />

@@ -209,7 +209,7 @@ export default function BulkDepositClient() {
             className="border-2 border-[#0a0a0a] bg-white p-4"
           >
             <div className="mb-2 flex items-center gap-2">
-              <span className="inline-flex h-6 w-6 items-center justify-center bg-[#ff4d00] text-xs font-black text-white">
+              <span className="inline-flex h-6 w-6 items-center justify-center bg-[#ff4d00] text-xs font-black text-black">
                 {item.step}
               </span>
               <item.icon
@@ -355,7 +355,7 @@ export default function BulkDepositClient() {
           <button
             type="submit"
             disabled={totalCents <= 0}
-            className="w-full bg-[#ff4d00] px-6 py-4 text-base font-bold uppercase tracking-wider text-white transition-colors hover:bg-[#cc3d00] disabled:opacity-50"
+            className="w-full bg-[#ff4d00] px-6 py-4 text-base font-bold uppercase tracking-wider text-black transition-colors hover:bg-[#cc3d00] disabled:opacity-50"
           >
             {totalCents > 0
               ? `Continue to pay ${formatMoney(depositCents)} deposit →`

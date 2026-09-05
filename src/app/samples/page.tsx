@@ -158,7 +158,7 @@ export default function SamplesPage() {
                 ["Approve & order bulk", "You sign off on the sample, we deduct the sample cost from your bulk PO, and we go to production."],
               ].map((step, i) => (
                 <li key={step[0]} className="flex gap-6">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#ff4d00] text-base font-extrabold text-white">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#ff4d00] text-base font-extrabold text-black">
                     {i + 1}
                   </span>
                   <div>
@@ -228,7 +228,7 @@ export default function SamplesPage() {
             <div className="mt-8">
               <RequestQuoteLink
                 label="Request a sample"
-                className="inline-flex items-center gap-2 bg-[#ff4d00] px-8 py-4 text-base font-bold uppercase tracking-widest text-white hover:bg-[#ff5d1a]"
+                className="inline-flex items-center gap-2 bg-[#ff4d00] px-8 py-4 text-base font-bold uppercase tracking-widest text-black hover:bg-[#ff5d1a]"
               >
                 Request a sample
               </RequestQuoteLink>

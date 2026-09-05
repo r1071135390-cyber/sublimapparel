@@ -48,7 +48,7 @@ export default function BlanksCatalogPage() {
         {rows.length} blank apparel styles + 4 decoration crafts (sublimation, embroidery, heat
         transfer, screen print). Mix-and-match fabric + craft. MOQ 50–100 pcs. DDP to your door.
       </p>
-      <p className="mb-8 text-xs text-black/50">
+      <p className="mb-8 text-xs text-black/70">
         Internal review only. Not indexed by search engines. Data may be incomplete — image URLs and
         price ranges need to be filled before going live.
       </p>
@@ -63,7 +63,7 @@ export default function BlanksCatalogPage() {
       {Object.entries(byType).map(([type, items]) => (
         <section key={type} className="mb-12">
           <h2 className="mb-4 border-b-2 border-black pb-2 text-2xl font-black uppercase tracking-tight">
-            {type} <span className="text-base font-bold text-black/50">({items.length})</span>
+            {type} <span className="text-base font-bold text-black/70">({items.length})</span>
           </h2>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {items.map((r) => (
@@ -135,37 +135,37 @@ function BlankCard({ r }: { r: Record<string, string> }) {
 
       <dl className="space-y-1.5 text-xs text-black/70">
         <div>
-          <dt className="inline font-bold text-black/50">Fabric:</dt>{" "}
+          <dt className="inline font-bold text-black/70">Fabric:</dt>{" "}
           <dd className="inline">{r.fabric}</dd>
         </div>
         <div>
-          <dt className="inline font-bold text-black/50">Colors:</dt>{" "}
+          <dt className="inline font-bold text-black/70">Colors:</dt>{" "}
           <dd className="inline">{r.color_options}</dd>
         </div>
         <div>
-          <dt className="inline font-bold text-black/50">Sizes:</dt>{" "}
+          <dt className="inline font-bold text-black/70">Sizes:</dt>{" "}
           <dd className="inline">{r.size_range}</dd>
         </div>
         <div>
-          <dt className="inline font-bold text-black/50">Decoration area:</dt>{" "}
+          <dt className="inline font-bold text-black/70">Decoration area:</dt>{" "}
           <dd className="inline">{r.decoration_area}</dd>
         </div>
         <div>
-          <dt className="inline font-bold text-black/50">Lead time:</dt>{" "}
+          <dt className="inline font-bold text-black/70">Lead time:</dt>{" "}
           <dd className="inline">{r.lead_time_days} days</dd>
         </div>
         <div>
-          <dt className="inline font-bold text-black/50">Blank MOQ:</dt>{" "}
+          <dt className="inline font-bold text-black/70">Blank MOQ:</dt>{" "}
           <dd className="inline font-black text-black">{r.blank_moq} pcs</dd>
         </div>
         <div>
-          <dt className="inline font-bold text-black/50">Price (FOB):</dt>{" "}
+          <dt className="inline font-bold text-black/70">Price (FOB):</dt>{" "}
           <dd className="inline font-black text-black">${r.price_range_usd}</dd>
         </div>
       </dl>
 
       <div className="mt-3 border-t border-black/10 pt-3">
-        <div className="mb-1 text-[10px] font-bold uppercase tracking-wider text-black/50">
+        <div className="mb-1 text-[10px] font-bold uppercase tracking-wider text-black/70">
           Compatible crafts
         </div>
         <div className="flex flex-wrap gap-1">

@@ -343,7 +343,7 @@ export default function TechniquePage() {
           <div className="flex flex-col gap-3 md:flex-row md:gap-4">
             <Link
               href="/get-a-quote/"
-              className="inline-flex items-center justify-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-bold uppercase tracking-wide text-white transition-colors hover:bg-white hover:text-[#cc3d00] md:px-8 md:py-4 md:text-base"
+              className="inline-flex items-center justify-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-bold uppercase tracking-wide text-black transition-colors hover:bg-white hover:text-[#cc3d00] md:px-8 md:py-4 md:text-base"
             >
               Get a Quote →
             </Link>
@@ -508,7 +508,7 @@ export default function TechniquePage() {
               <div className="mt-6 flex flex-col items-start gap-3 border-t border-white/15 pt-6 sm:flex-row sm:items-center md:mt-8 md:gap-4 md:pt-8">
                 <Link
                   href="/get-a-quote/"
-                  className="inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-bold uppercase tracking-wide text-white transition-colors hover:bg-white hover:text-black md:px-8 md:py-4 md:text-base"
+                  className="inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-bold uppercase tracking-wide text-black transition-colors hover:bg-white hover:text-black md:px-8 md:py-4 md:text-base"
                 >
                   Ask About Your Technique →
                 </Link>
@@ -585,7 +585,7 @@ export default function TechniquePage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-[#ff4d00] text-white">
+      <section className="bg-[#ff4d00] text-black">
         <div className="mx-auto max-w-4xl px-4 py-12 text-center md:px-8 md:py-16">
           <h2 className="mb-3 text-2xl font-black uppercase leading-tight md:mb-4 md:text-4xl">
             Not sure which technique fits your design?

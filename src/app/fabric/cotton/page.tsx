@@ -157,7 +157,7 @@ export default function CottonPage() {
                   <h3 className="mb-2 text-sm font-black uppercase leading-tight">
                     {f.name}
                   </h3>
-                  <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-black/50">
+                  <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-black/70">
                     {f.comp}
                   </p>
                   <p className="mb-3 text-[11px] leading-relaxed text-black/70">
@@ -187,7 +187,7 @@ export default function CottonPage() {
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="mb-12 flex items-end justify-between border-b border-white/15 pb-6">
             <div>
-              <div className="mb-2 text-xs font-black uppercase tracking-widest text-white/60">
+              <div className="mb-2 text-xs font-black uppercase tracking-widest text-white/80">
                 [ 001 / Why us ]
               </div>
               <h2 className="text-4xl font-black uppercase leading-none tracking-tight md:text-6xl">
