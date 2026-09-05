@@ -1,0 +1,123 @@
+{
+  "_comment": "Auto-injected outbound links. Each entry is a case-insensitive keyword (longest match wins) that gets wrapped in <a href target=_blank rel=noopener>. Edit freely; runs idempotently on next build.",
+
+  "_source_priority": [
+    "en.wikipedia.org — most terms (neutral, trusted, free)",
+    "oeko-tex.com — textile safety standard",
+    "pantone.com — color system",
+    "iso.org — ISO standards",
+    "iccwbo.org — Incoterms (official ICC source)"
+  ],
+
+  "industry_terms": {
+    "dye-sublimation printing": "https://en.wikipedia.org/wiki/Dye-sublimation_printer",
+    "dye-sublimation": "https://en.wikipedia.org/wiki/Dye-sublimation_printer",
+    "dye sublimation": "https://en.wikipedia.org/wiki/Dye-sublimation_printer",
+    "sublimation printing": "https://en.wikipedia.org/wiki/Dye-sublimation_printer",
+    "sublimation print": "https://en.wikipedia.org/wiki/Dye-sublimation_printer",
+    "all-over print": "https://en.wikipedia.org/wiki/Sublimation_printing",
+    "all over print": "https://en.wikipedia.org/wiki/Sublimation_printing",
+    "direct-to-garment": "https://en.wikipedia.org/wiki/Digital_printing#Direct-to-garment_printing",
+    "DTG": "https://en.wikipedia.org/wiki/Digital_printing#Direct-to-garment_printing",
+    "direct to film": "https://en.wikipedia.org/wiki/Digital_printing",
+    "DTF": "https://en.wikipedia.org/wiki/Digital_printing",
+    "screen printing": "https://en.wikipedia.org/wiki/Screen_printing",
+    "embroidery": "https://en.wikipedia.org/wiki/Embroidery",
+    "heat press": "https://en.wikipedia.org/wiki/Heat_transfer_printing",
+    "heat-transfer": "https://en.wikipedia.org/wiki/Heat_transfer_printing"
+  },
+
+  "materials": {
+    "polyester": "https://en.wikipedia.org/wiki/Polyester",
+    "100% cotton": "https://en.wikipedia.org/wiki/Cotton",
+    "cotton": "https://en.wikipedia.org/wiki/Cotton",
+    "spandex": "https://en.wikipedia.org/wiki/Spandex",
+    "elastane": "https://en.wikipedia.org/wiki/Spandex",
+    "lycra": "https://en.wikipedia.org/wiki/Spandex",
+    "microfiber": "https://en.wikipedia.org/wiki/Microfiber",
+    "fleece": "https://en.wikipedia.org/wiki/Fleece_(fabric)",
+    "jersey": "https://en.wikipedia.org/wiki/Jersey_(fabric)",
+    "mesh": "https://en.wikipedia.org/wiki/Mesh_(textile)",
+    "pique": "https://en.wikipedia.org/wiki/Piqu%C3%A9_(weaving)"
+  },
+
+  "color_systems": {
+    "Pantone Matching System": "https://en.wikipedia.org/wiki/Pantone",
+    "Pantone": "https://www.pantone.com/color-systems/pantone-match-system",
+    "CMYK": "https://en.wikipedia.org/wiki/CMYK_color_model",
+    "RGB": "https://en.wikipedia.org/wiki/RGB_color_model",
+    "hex code": "https://en.wikipedia.org/wiki/Web_colors",
+    "HEX color": "https://en.wikipedia.org/wiki/Web_colors"
+  },
+
+  "compliance_and_safety": {
+    "OEKO-TEX Standard 100": "https://www.oeko-tex.com/en/our-standards/oeko-tex-standard-100",
+    "OEKO-TEX": "https://www.oeko-tex.com/en/our-standards/oeko-tex-standard-100",
+    "REACH": "https://en.wikipedia.org/wiki/Registration,_Evaluation,_Authorisation_and_Restriction_of_Chemicals",
+    "CPSIA": "https://en.wikipedia.org/wiki/Consumer_Product_Safety_Improvement_Act",
+    "CPSC": "https://en.wikipedia.org/wiki/United_States_Consumer_Product_Safety_Commission",
+    "BSCI": "https://en.wikipedia.org/wiki/Business_Social_Compliance_Initiative",
+    "Sedex": "https://en.wikipedia.org/wiki/Sedex",
+    "WRAP": "https://en.wikipedia.org/wiki/Worldwide_Responsible_Apparel_Production",
+    "ISO 9001": "https://en.wikipedia.org/wiki/ISO_9000_family#ISO_9001",
+    "ISO 14001": "https://en.wikipedia.org/wiki/ISO_14000#ISO_14001",
+    "GS1": "https://en.wikipedia.org/wiki/GS1"
+  },
+
+  "shipping_and_trade": {
+    "DDP": "https://en.wikipedia.org/wiki/Delivered_duty_paid",
+    "Delivered Duty Paid": "https://en.wikipedia.org/wiki/Delivered_duty_paid",
+    "FOB": "https://en.wikipedia.org/wiki/Free_on_board",
+    "Free on Board": "https://en.wikipedia.org/wiki/Free_on_board",
+    "EXW": "https://en.wikipedia.org/wiki/Ex_works",
+    "Ex Works": "https://en.wikipedia.org/wiki/Ex_works",
+    "CIF": "https://en.wikipedia.org/wiki/Cost,_insurance_and_freight",
+    "Incoterms": "https://en.wikipedia.org/wiki/Incoterms",
+    "HS code": "https://en.wikipedia.org/wiki/Harmonized_System",
+    "customs clearance": "https://en.wikipedia.org/wiki/Customs_clearance",
+    "bill of lading": "https://en.wikipedia.org/wiki/Bill_of_lading",
+    "air freight": "https://en.wikipedia.org/wiki/Air_freight",
+    "sea freight": "https://en.wikipedia.org/wiki/Sea_freight",
+    "DHL": "https://en.wikipedia.org/wiki/DHL",
+    "FedEx": "https://en.wikipedia.org/wiki/FedEx",
+    "UPS": "https://en.wikipedia.org/wiki/United_Parcel_Service"
+  },
+
+  "trade_terms": {
+    "MOQ": "https://en.wikipedia.org/wiki/Minimum_order_quantity",
+    "minimum order quantity": "https://en.wikipedia.org/wiki/Minimum_order_quantity",
+    "lead time": "https://en.wikipedia.org/wiki/Lead_time",
+    "OEM": "https://en.wikipedia.org/wiki/Original_equipment_manufacturer",
+    "ODM": "https://en.wikipedia.org/wiki/Original_design_manufacturer",
+    "private label": "https://en.wikipedia.org/wiki/Private_label",
+    "white label": "https://en.wikipedia.org/wiki/White-label_product",
+    "B2B": "https://en.wikipedia.org/wiki/Business-to-business",
+    "POD": "https://en.wikipedia.org/wiki/Print_on_demand",
+    "print on demand": "https://en.wikipedia.org/wiki/Print_on_demand",
+    "drop shipping": "https://en.wikipedia.org/wiki/Drop_shipping",
+    "dropshipping": "https://en.wikipedia.org/wiki/Drop_shipping",
+    "wholesale": "https://en.wikipedia.org/wiki/Wholesaling"
+  },
+
+  "geography": {
+    "Yiwu": "https://en.wikipedia.org/wiki/Yiwu",
+    "Fontana": "https://en.wikipedia.org/wiki/Fontana,_California",
+    "Los Angeles": "https://en.wikipedia.org/wiki/Los_Angeles",
+    "California": "https://en.wikipedia.org/wiki/California",
+    "Shenzhen": "https://en.wikipedia.org/wiki/Shenzhen",
+    "Guangdong": "https://en.wikipedia.org/wiki/Guangdong",
+    "Zhejiang": "https://en.wikipedia.org/wiki/Zhejiang",
+    "Ningbo": "https://en.wikipedia.org/wiki/Ningbo",
+    "Shanghai": "https://en.wikipedia.org/wiki/Shanghai",
+    "Hong Kong": "https://en.wikipedia.org/wiki/Hong_Kong",
+    "European Union": "https://en.wikipedia.org/wiki/European_Union",
+    "EU": "https://en.wikipedia.org/wiki/European_Union",
+    "United States": "https://en.wikipedia.org/wiki/United_States",
+    "United Kingdom": "https://en.wikipedia.org/wiki/United_Kingdom",
+    "Canada": "https://en.wikipedia.org/wiki/Canada",
+    "Australia": "https://en.wikipedia.org/wiki/Australia",
+    "Germany": "https://en.wikipedia.org/wiki/Germany",
+    "France": "https://en.wikipedia.org/wiki/France",
+    "Spain": "https://en.wikipedia.org/wiki/Spain"
+  }
+}

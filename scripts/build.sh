@@ -14,6 +14,9 @@ pnpm next build
 echo "Inlining CSS into HTML (eliminates render-blocking CSS)..."
 node scripts/inline-css.mjs
 
+echo "Injecting authoritative outbound links for SEO..."
+node scripts/auto-external-links.mjs
+
 # Only bundle the custom server when not on Vercel/Cloudflare (where static export is served directly)
 if [ -z "${VERCEL:-}" ] && [ -z "${CF_PAGES:-}" ]; then
   echo "Bundling custom server with tsup..."

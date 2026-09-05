@@ -142,6 +142,28 @@
 - **修改视频/图片后**：必须用 `-vX` 后缀改名（或等 30 天 CDN 自动过期）
 - **跑 PageSpeed 看到 "clarity/voltas 注入" 直接忽略**：已确认是 PageSpeed 测试浏览器自带的请求，不是页面发的
 
+### 自动外链工具（SEO）
+
+5. **`scripts/auto-external-links.mjs`**：build 后自动给 `out/**/*.html` 注入权威第三方链接
+   - **输入**：`scripts/external-link-targets.json`（按 category 分组的 keyword → URL 映射，91 个目标）
+   - **触发时机**：在 `scripts/build.sh` 中 `next build` 之后调用，已经自动挂上
+   - **规则**：
+     - 每页最多 8 个外链，超出不加
+     - 每个 keyword 在该页只加 1 次
+     - 跳过 `<a>`/`<script>`/`<style>`/`<h1-h6>`/`<title>`/`<meta>` 等标签内部文本
+     - 用 `data-extlink-keyword` 标记，**幂等**（重复跑不重复加）
+     - `target="_blank" rel="noopener noreferrer"` 安全
+   - **样式**：内联 cyan underline (`#00c2ff` @50% 透明 → hover 实色) + 7x7 external link 图标
+   - **主要目标来源**：
+     - `wikipedia.org`（en）— 通用百科
+     - `pantone.com` — 颜色标准
+     - `oeko-tex.com` — 纺织品认证
+     - `sgs.com` / `bsci-intl.org` — 验厂/合规
+     - `iso.org` — ISO 标准
+   - **修改映射**：直接编辑 `scripts/external-link-targets.json`，跑 `bash scripts/build.sh` 重新构建
+   - **离线单页跑**：`node scripts/auto-external-links.mjs`（脚本默认读 `out/`）
+   - **当前覆盖**：408 个 HTML 页 / 3253 个外链 / 平均 8/页（cap）
+
 ### 优化效果（截至 2025-09）
 
 | 优化项 | 节省 |
