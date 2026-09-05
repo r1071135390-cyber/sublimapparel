@@ -101,7 +101,12 @@
 ## ⚡ 性能优化（已上线，2025-09）
 
 ### 关键发现
-- **Cloudflare CDN s-maxage=2592000 (30 天)**：静态资源（图片、CSS、JS）会被 CDN 缓存 30 天。**修改同名文件不会生效**，必须改文件名才能 bust cache。
+- **Cloudflare CDN 缓存差异化**（实测 2026-09）：不是所有静态资源都缓存 30 天
+  - `/_next/static/*`（CSS/JS chunk）：`s-maxage=300`（5 分钟）—— Next.js 16 默认
+  - `/videos/*.mp4`、`/*.webp`（根目录 public 资源）：`s-maxage=2592000`（30 天）
+  - **修改同名 CSS/JS 文件 5 分钟内全网生效**，无需改名
+  - **视频和图片**：必须用 `-v2.webp`、`-v2.mp4` 后缀改名才能 bust 30 天缓存
+  - 验证命令：`curl -sI "https://sublimapparel.com/_next/static/chunks/<hash>.js" | grep -iE "cache|cf-"`
 - **Next.js 16 强制注入 polyfill-module.js**：`client/app-globals.js` 硬编码 `require('../build/polyfills/polyfill-module')`，Turbopack resolveAlias 不能拦截，必须直接 patch 源文件。
 - **PageSpeed "网络依赖关系树" 报告里的 clarity/voltas 是误报**：是 PageSpeed 测试浏览器自己的请求，不是页面发的。验证：本地 grep + 实际 curl HTML 都没这些脚本。
 
@@ -119,13 +124,15 @@
 
 3. **`scripts/optimize-images-v2.mjs`**：图片优化 + cache-bust 改名
    - **重要**：永远用 `-v2` 后缀改名，**不要**用 `?v=2` 查询字符串
-   - Cloudflare 缓存只认 URL path，查询字符串在某些情况下不参与 cache key
+   - 适用场景：视频 (`/videos/*`) 和根目录图片 (`/*.webp`)，这些资源 30 天 CDN 缓存
+   - 不适用：CSS/JS (`/_next/static/*`)，那些 5 分钟就过期，不需要改
 
 ### 维护注意事项
 
 - **不要在 `package.json` 删除 `postinstall`**：否则 polyfill patch 会被 `pnpm install` 覆盖
-- **新加图片时**必须走 `optimize-images-v2.mjs` 流程：先优化再 `sharp` resize，再以 `-vX.webp` 命名
-- **任何资源修改后**如果 CDN 不刷新，要么改名要么等 30 天
+- **新加图片/视频时**走 `optimize-images-v2.mjs` 流程：先优化再 `sharp` resize，再以 `-vX.webp` / `-vX.mp4` 命名
+- **修改 CSS/JS 后**：等 5 分钟即可全网生效（不需要改名）
+- **修改视频/图片后**：必须用 `-vX` 后缀改名（或等 30 天 CDN 自动过期）
 - **跑 PageSpeed 看到 "clarity/voltas 注入" 直接忽略**：已确认是 PageSpeed 测试浏览器自带的请求，不是页面发的
 
 ### 优化效果（截至 2025-09）
