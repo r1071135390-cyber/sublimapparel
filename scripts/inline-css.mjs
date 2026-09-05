@@ -59,9 +59,10 @@ for (const htmlPath of htmlFiles) {
   }
 }
 
-// Remove the now-unreferenced CSS file
-await fs.unlink(cssPath).catch(() => {});
-const cssDir = path.dirname(cssPath);
-try { await fs.rmdir(cssDir); } catch {}
-
-console.log(`[inline-css] Inlined into ${inlined} HTML file(s). Removed ${cssFile}.`);
+// KEEP the CSS file on disk — Next.js's React Flight payload still
+// references it via :HL["...css","style"]. If we delete it, hydration
+// re-creates the <link> tag and the browser gets 404 → console error.
+// The inlined copy in <style> is what actually renders (synchronous),
+// the linked copy just confirms what the browser already has (deduped).
+// Total cost: 1 file (~200KB) on the CDN; no console error.
+console.log(`[inline-css] Inlined into ${inlined} HTML file(s). Kept ${cssFile} for Flight payload.`);
