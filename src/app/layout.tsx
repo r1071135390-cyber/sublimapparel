@@ -97,6 +97,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen bg-white font-sans text-black antialiased">
+        {/* LCP preloads — mobile hero is inlined as AVIF data URI in hero.tsx,
+            so it doesn't need a preload. Desktop hero is a real file request. */}
+        <link
+          rel="preload"
+          as="image"
+          href="/factory-floor.avif"
+          fetchPriority="high"
+          media="(min-width: 1024px)"
+        />
         <JsonLd data={organizationJsonLd} />
         <JsonLd data={websiteJsonLd} />
         <JsonLd data={localBusinessJsonLd} />

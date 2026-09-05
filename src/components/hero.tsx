@@ -2,6 +2,7 @@ import Link from "next/link";
 import { RequestQuoteLink } from "@/components/request-quote-link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
+import { HERO_JERSEY_AVIF_BASE64 } from "@/lib/hero-jersey-data";
 
 const fabrics = [
   { name: "POLYESTER", note: "Standard", href: "/fabric/polyester" },
@@ -35,7 +36,7 @@ export function Hero() {
       {/* Desktop background image (full bleed) — hidden on mobile */}
       <div className="absolute inset-0 hidden lg:block">
         <Image
-          src="/factory-floor.webp"
+          src="/factory-floor.avif"
           alt="Row of sublimation printers in Yiwu factory — 24/7 production lines"
           fill
           priority
@@ -56,15 +57,19 @@ export function Hero() {
       {/* Mobile hero image — vivid sublimated jersey (no overlay, max impact) */}
       <div className="relative block w-full lg:hidden">
         <div className="relative aspect-[16/9] w-full">
-          <Image
-            src="/hero-jersey-v2.webp"
-            alt="Vivid full-sublimation jersey"
-            fill
-            priority
-            fetchPriority="high"
-            sizes="100vw"
-            className="object-cover object-center brightness-105"
-          />
+          {/* Inline AVIF data URI — eliminates 1 network round-trip for LCP element.
+              412x232 AVIF is ~20 KB; base64 inline adds ~28 KB to HTML.
+              AVIF support: ~97% globally (>= 96% in B2B target markets). */}
+          <picture>
+            <source srcSet={HERO_JERSEY_AVIF_BASE64} type="image/avif" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/hero-jersey-v2.webp"
+              alt="Vivid full-sublimation jersey"
+              className="absolute inset-0 h-full w-full object-cover object-center brightness-105"
+              decoding="async"
+            />
+          </picture>
           {/* Subtle bottom-to-top darken so it joins the dark section seamlessly */}
           <div
             aria-hidden

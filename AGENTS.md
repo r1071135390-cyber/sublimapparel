@@ -127,6 +127,13 @@
    - 适用场景：视频 (`/videos/*`) 和根目录图片 (`/*.webp`)，这些资源 30 天 CDN 缓存
    - 不适用：CSS/JS (`/_next/static/*`)，那些 5 分钟就过期，不需要改
 
+4. **`scripts/optimize-hero-avif.mjs`**：Hero 图 AVIF 化 + 内联
+   - `hero-jersey.avif`：mobile LCP 图，800x800 → 824x464 @ q55 → 20.5 KB
+   - `factory-floor.avif`：desktop LCP 图，800x800 → 1280x720 @ q55 → 42.3 KB
+   - 同时生成 `src/lib/hero-jersey-data.ts`（含 base64 data URI）
+   - Hero 组件用 `<picture>` 包裹，AVIF data URI 作 `<source>`，老浏览器 fallback 到 webp
+   - **不要**把 .avif 改名为 -v2.avif：AVIF 是新扩展名，CDN 不会 cache miss
+
 ### 维护注意事项
 
 - **不要在 `package.json` 删除 `postinstall`**：否则 polyfill patch 会被 `pnpm install` 覆盖
