@@ -260,10 +260,10 @@ export default function AboutPage() {
             </div>
             <div className="relative aspect-video overflow-hidden rounded-2xl border border-white/10 bg-black">
               <video
-                src="/videos/sublimapparel-factory-intro.mp4"
+                src="/videos/sublimapparel-factory-intro-v2.mp4"
                 poster="/about-hero.webp"
                 controls
-                preload="metadata"
+                preload="none"
                 playsInline
                 className="absolute inset-0 h-full w-full object-cover"
               >

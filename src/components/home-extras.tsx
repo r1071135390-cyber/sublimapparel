@@ -240,10 +240,10 @@ function VideoShowcase() {
           </div>
           <div className="relative aspect-video rounded-2xl overflow-hidden bg-black border border-white/10">
             <video
-              src="/videos/sublimapparel-intro.mp4"
+              src="/videos/sublimapparel-intro-v2.mp4"
               poster="/factory-floor.webp"
               controls
-              preload="metadata"
+              preload="none"
               playsInline
               className="absolute inset-0 w-full h-full object-cover"
             >
