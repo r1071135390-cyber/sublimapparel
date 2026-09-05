@@ -5,10 +5,6 @@ import dynamic from "next/dynamic";
 // Below-fold client components: lazy-load on the client so the initial
 // HTML payload is much smaller. Each gets a lightweight skeleton so
 // layout doesn't jump when the real content hydrates.
-const VideoShowcase = dynamic(
-  () => import("@/components/home-extras").then((m) => m.VideoShowcase),
-  { ssr: false, loading: () => <SectionSkeleton aspect="video" /> },
-);
 const InquiryCTA = dynamic(
   () => import("@/components/inquiry-cta").then((m) => m.InquiryCTA),
   { ssr: false, loading: () => <SectionSkeleton aspect="narrow" /> },
@@ -42,13 +38,8 @@ const Newsletter = dynamic(
   { ssr: false, loading: () => <SectionSkeleton aspect="narrow" /> },
 );
 
-function SectionSkeleton({ aspect }: { aspect: "wide" | "narrow" | "video" }) {
-  const h =
-    aspect === "video"
-      ? "aspect-video"
-      : aspect === "wide"
-        ? "h-64 md:h-80"
-        : "h-32 md:h-40";
+function SectionSkeleton({ aspect }: { aspect: "wide" | "narrow" }) {
+  const h = aspect === "wide" ? "h-64 md:h-80" : "h-32 md:h-40";
   return (
     <div className="border-b-2 border-black/5 bg-white">
       <div className="mx-auto max-w-7xl px-6 py-12">
@@ -61,7 +52,6 @@ function SectionSkeleton({ aspect }: { aspect: "wide" | "narrow" | "video" }) {
 export function LazyClientSections() {
   return (
     <>
-      <VideoShowcase />
       <InquiryCTA />
       <FreeDesignService />
       <RecentCaseStudies />

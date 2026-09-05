@@ -1,6 +1,7 @@
 import { Hero } from "@/components/hero";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { FactoryFloor } from "@/components/factory-floor";
+import { VideoShowcase } from "@/components/home-extras";
 import { JsonLd } from "@/components/json-ld";
 import { LazyClientSections } from "@/components/home/lazy-client-sections";
 import {
@@ -102,6 +103,7 @@ export default function Home() {
       <JsonLd data={homeJsonLd} />
       <Hero />
       <FactoryFloor />
+      <VideoShowcase />
       {/* Server-rendered below-fold sections — kept inline for SEO and
           because the data lives in HTML is already optimal (vs shipping
           thousands of lines of catalog data to the client). */}
