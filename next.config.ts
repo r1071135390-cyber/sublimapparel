@@ -41,7 +41,7 @@ const nextConfig: NextConfig = {
   },
   // Performance: enable modern image format hints + experimental CSS optimization
   experimental: {
-    optimizePackageImports: ['lucide-react', 'date-fns'],
+    optimizePackageImports: ['lucide-react'],
   },
   // Note: Next.js 16 hardcodes `require("../build/polyfills/polyfill-module")`
   // in client/app-globals.js — Turbopack's resolveAlias can't redirect it.
