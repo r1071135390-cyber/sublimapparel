@@ -5,7 +5,7 @@ export function TeamSection() {
         {/* Header */}
         <div className="grid gap-10 md:grid-cols-12">
           <div className="md:col-span-5">
-            <div className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+            <div className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
               Your team in Yiwu
             </div>
             <h2 className="text-5xl font-black leading-[0.95] tracking-tight text-black md:text-7xl">
@@ -88,7 +88,7 @@ export function TeamSection() {
             <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/40 to-transparent" />
           </div>
           <figcaption className="absolute inset-y-0 left-0 flex flex-col justify-end p-6 md:p-10 max-w-[55%]">
-            <div className="mb-3 inline-block w-fit bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+            <div className="mb-3 inline-block w-fit bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
               The wider team
             </div>
             <h3 className="text-2xl md:text-3xl font-black leading-tight text-white">

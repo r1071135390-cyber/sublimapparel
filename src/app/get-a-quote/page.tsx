@@ -171,7 +171,7 @@ export default function GetAQuotePage() {
           <div className="mt-2 flex flex-wrap items-center gap-3">
             <Link
               href="#inquiry"
-              className="inline-flex items-center gap-2 rounded-sm bg-[#ff4d00] px-5 py-3 text-sm font-black uppercase tracking-widest text-white shadow-[3px_3px_0_0_rgba(255,255,255,0.25)] transition-all hover:-translate-y-0.5 hover:shadow-[4px_4px_0_0_rgba(255,255,255,0.45)] md:text-base"
+              className="inline-flex items-center gap-2 rounded-sm bg-[#ff4d00] px-5 py-3 text-sm font-black uppercase tracking-widest text-black shadow-[3px_3px_0_0_rgba(255,255,255,0.25)] transition-all hover:-translate-y-0.5 hover:shadow-[4px_4px_0_0_rgba(255,255,255,0.45)] md:text-base"
             >
               Start your quote
               <ArrowRight className="h-4 w-4" />
@@ -292,7 +292,7 @@ export default function GetAQuotePage() {
                       className={
                         "shrink-0 px-2 py-1 text-[10px] font-black uppercase tracking-widest " +
                         (t.tag === "ESSENTIAL"
-                          ? "bg-[#ff4d00] text-white"
+                          ? "bg-[#ff4d00] text-black"
                           : t.tag === "HELPFUL"
                           ? "bg-[#00c2ff] text-black"
                           : "bg-black/10 text-black/70")

@@ -87,7 +87,7 @@ export function BulkDepositForm(props: BulkDepositFormProps) {
       <button
         type="submit"
         disabled={!stripe || isPending}
-        className="w-full bg-[#ff4d00] px-6 py-3 text-base font-bold uppercase tracking-wider text-white transition-colors hover:bg-[#cc3d00] disabled:opacity-50"
+        className="w-full bg-[#ff4d00] px-6 py-3 text-base font-bold uppercase tracking-wider text-black transition-colors hover:bg-[#cc3d00] disabled:opacity-50"
       >
         {isPending
           ? "Processing..."

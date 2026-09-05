@@ -96,7 +96,7 @@ export function Features() {
                 <div className={`flex h-10 w-10 items-center justify-center ${f.color} text-white`}>
                   <Shirt className="h-5 w-5" />
                 </div>
-                <div className="text-5xl font-black leading-none text-black/10">
+                <div className="text-5xl font-black leading-none text-black/30">
                   {f.number}
                 </div>
               </div>

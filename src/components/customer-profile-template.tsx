@@ -122,7 +122,7 @@ export function CustomerProfilePage({ data }: { data: CustomerProfileData }) {
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
               href="/contact/"
-              className="inline-flex items-center justify-center rounded-md bg-[#ff4d00] px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-[#ff5e1a] sm:text-base"
+              className="inline-flex items-center justify-center rounded-md bg-[#ff4d00] px-6 py-3 text-sm font-bold text-black transition-colors hover:bg-[#cc3d00] sm:text-base"
             >
               {data.primaryCta}
               <ArrowRight className="ml-2 h-4 w-4" />
@@ -488,7 +488,7 @@ export function CustomerProfilePage({ data }: { data: CustomerProfileData }) {
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
               href="/contact/"
-              className="inline-flex items-center justify-center rounded-md bg-[#ff4d00] px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-[#ff5e1a] sm:text-base"
+              className="inline-flex items-center justify-center rounded-md bg-[#ff4d00] px-6 py-3 text-sm font-bold text-black transition-colors hover:bg-[#cc3d00] sm:text-base"
             >
               {data.ctaButton}
               <ArrowRight className="ml-2 h-4 w-4" />

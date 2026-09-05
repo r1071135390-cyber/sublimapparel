@@ -140,7 +140,7 @@ export function FloatingChat() {
               setOpen((o) => !o);
             }}
             aria-label={open ? "Close message" : "Send us a message"}
-            className="group relative flex h-14 w-14 items-center justify-center rounded-l-xl bg-[#ff4d00] text-white shadow-lg ring-1 ring-black/10 transition-all duration-200 hover:w-20 hover:shadow-2xl md:h-16 md:w-16 md:hover:w-24"
+            className="group relative flex h-14 w-14 items-center justify-center rounded-l-xl bg-[#ff4d00] text-black shadow-lg ring-1 ring-black/10 transition-all duration-200 hover:w-20 hover:shadow-2xl md:h-16 md:w-16 md:hover:w-24"
           >
             <svg
               className="h-6 w-6 md:h-7 md:w-7"
@@ -259,7 +259,7 @@ export function FloatingChat() {
                       onClick={() => onTopicClick(chip)}
                       className={`rounded-full px-3 py-1.5 text-[11px] font-bold transition ${
                         topic === chip.key
-                          ? "bg-[#ff4d00] text-white"
+                          ? "bg-[#ff4d00] text-black"
                           : "bg-black/5 text-black/70 hover:bg-black/10"
                       }`}
                     >
@@ -329,7 +329,7 @@ export function FloatingChat() {
                 <button
                   type="submit"
                   disabled={state === "submitting"}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#ff4d00] px-4 py-2.5 text-sm font-black uppercase tracking-wider text-white transition hover:bg-[#e64400] disabled:cursor-not-allowed disabled:opacity-60"
+                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#ff4d00] px-4 py-2.5 text-sm font-black uppercase tracking-wider text-black transition hover:bg-[#e64400] disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {state === "submitting" ? (
                     <>

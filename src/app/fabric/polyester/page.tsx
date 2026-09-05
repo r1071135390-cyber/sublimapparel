@@ -76,7 +76,7 @@ export default function PolyesterPage() {
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 href="/get-a-quote/"
-                className="group inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-black"
+                className="group inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-widest text-black transition-all hover:bg-black"
               >
                 Get a Polyester Quote
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
@@ -117,7 +117,7 @@ export default function PolyesterPage() {
       {/* FEATURED SNIPPET — direct answer for "what is sublimation on polyester" */}
       <section id="quick-answer" className="border-b-2 border-black bg-[#fff7e6]">
         <div className="mx-auto max-w-4xl px-6 py-12 md:py-16">
-          <div className="mb-3 inline-block border-2 border-black bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+          <div className="mb-3 inline-block border-2 border-black bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
             Quick answer
           </div>
           <h2 className="mb-4 text-3xl font-black leading-[0.95] tracking-tight md:text-4xl">
@@ -352,7 +352,7 @@ export default function PolyesterPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-[#ff4d00] text-white">
+      <section className="bg-[#ff4d00] text-black">
         <div className="mx-auto max-w-7xl px-6 py-16 text-center md:py-20">
           <h2 className="text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
             Ready to print on polyester?

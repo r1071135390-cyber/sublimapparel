@@ -54,7 +54,7 @@ export function RequestQuoteButton({
 
   const variants: Record<Variant, string> = {
     primary:
-      "bg-[#ff4d00] text-white hover:bg-black hover:scale-[1.02]",
+      "bg-[#ff4d00] text-black hover:bg-black hover:scale-[1.02]",
     secondary:
       "bg-[#0a0a0a] text-white hover:bg-[#1a1a1a]",
     outline:
@@ -107,7 +107,7 @@ export function RequestQuoteLink({
 
   const variants: Record<Variant, string> = {
     primary:
-      "bg-[#ff4d00] text-white hover:bg-black hover:scale-[1.02]",
+      "bg-[#ff4d00] text-black hover:bg-black hover:scale-[1.02]",
     secondary:
       "bg-[#0a0a0a] text-white hover:bg-[#1a1a1a]",
     outline:

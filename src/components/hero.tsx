@@ -189,7 +189,7 @@ export function Hero() {
         <div className="mb-4 flex flex-col gap-3 sm:flex-row md:mb-5">
           <RequestQuoteLink
             label="Home hero / Get a quote"
-            className="group inline-flex items-center justify-center gap-2 rounded-sm border-2 border-[#ff4d00] bg-[#ff4d00] px-6 py-3.5 text-sm font-black uppercase tracking-wider text-white shadow-[4px_4px_0_0_#ffffff] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:bg-[#e64500] hover:shadow-[2px_2px_0_0_#ffffff] md:px-8 md:py-4 md:text-base"
+            className="group inline-flex items-center justify-center gap-2 rounded-sm border-2 border-[#ff4d00] bg-[#ff4d00] px-6 py-3.5 text-sm font-black uppercase tracking-wider text-black shadow-[4px_4px_0_0_#ffffff] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:bg-[#e64500] hover:shadow-[2px_2px_0_0_#ffffff] md:px-8 md:py-4 md:text-base"
           >
             Get a quote
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1 md:h-5 md:w-5" />

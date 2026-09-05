@@ -128,7 +128,7 @@ export default function SolutionsPage() {
           <div className="absolute inset-0 mx-auto max-w-7xl px-6">
             <div className="flex h-full items-start pb-12 pt-20 md:pb-16 md:pt-28 lg:items-center lg:pb-0 lg:pt-0">
               <div className="max-w-2xl">
-                <div className="mb-4 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+                <div className="mb-4 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
                   Solutions
                 </div>
                 <h1 className="text-balance text-3xl font-black leading-[0.95] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
@@ -203,7 +203,7 @@ export default function SolutionsPage() {
         {/* CTA — direct quote */}
         <section className="bg-[#0a0a0a] text-white">
           <div className="mx-auto max-w-5xl px-6 py-20 text-center">
-            <div className="mb-4 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+            <div className="mb-4 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
               Not sure which fits?
             </div>
             <h2 className="mb-6 text-3xl font-black leading-[0.95] tracking-tight md:text-5xl">
@@ -217,7 +217,7 @@ export default function SolutionsPage() {
             <div className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
               <Link
                 href="/get-a-quote/"
-                className="inline-flex items-center gap-2 bg-[#ff4d00] px-8 py-4 text-base font-black uppercase tracking-widest text-white transition-colors hover:bg-[#cc3d00]"
+                className="inline-flex items-center gap-2 bg-[#ff4d00] px-8 py-4 text-base font-black uppercase tracking-widest text-black transition-colors hover:bg-[#cc3d00]"
               >
                 Get a quote
                 <ArrowRight className="h-5 w-5" strokeWidth={2.5} />

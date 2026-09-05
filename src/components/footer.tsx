@@ -235,7 +235,7 @@ export function Footer() {
             </p>
             <RequestQuoteLink
               label="Footer / Get a quote"
-              className="mt-4 inline-flex items-center gap-2 border-2 border-black bg-[#ff4d00] px-4 py-2 text-xs font-black uppercase tracking-wider text-white transition-all hover:bg-black hover:border-black"
+              className="mt-4 inline-flex items-center gap-2 border-2 border-black bg-[#ff4d00] px-4 py-2 text-xs font-black uppercase tracking-wider text-black transition-all hover:bg-black hover:border-black"
             >
               Get a quote →
             </RequestQuoteLink>

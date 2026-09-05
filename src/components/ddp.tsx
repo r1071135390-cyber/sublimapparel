@@ -24,7 +24,7 @@ export function DDP() {
         <div className="grid gap-6 md:grid-cols-2">
           {/* Path 1: DDP Worldwide */}
           <div className="border-2 border-black bg-[#ff4d00] p-6 shadow-[6px_6px_0_0_#000] md:p-8">
-            <div className="mb-4 inline-block -rotate-2 border-2 border-black bg-black px-3 py-1 text-xs font-black uppercase tracking-widest text-[#cc3d00]">
+            <div className="mb-4 inline-block -rotate-2 border-2 border-black bg-black px-3 py-1 text-xs font-black uppercase tracking-widest text-[#ff8052]">
               ★ Path A
             </div>
             <h3 className="mb-3 text-2xl font-black uppercase leading-tight md:text-3xl">

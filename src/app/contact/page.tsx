@@ -50,7 +50,7 @@ export default function ContactPage() {
 
         <div className="relative mx-auto max-w-7xl px-6 py-20 md:py-28 lg:py-32">
           <div className="max-w-2xl">
-            <div className="mb-4 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+            <div className="mb-4 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
               Contact
             </div>
             <h1 className="text-[44px] font-black leading-[1.05] tracking-tight md:text-[64px] lg:text-[72px]">

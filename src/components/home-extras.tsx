@@ -18,7 +18,7 @@ function FreeDesignService() {
         <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
           {/* Left: text */}
           <div>
-            <div className="inline-flex items-center gap-2 bg-[#ff4d00] text-white text-[10px] md:text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">
+            <div className="inline-flex items-center gap-2 bg-[#ff4d00] text-black text-[10px] md:text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">
               <Sparkles className="w-3.5 h-3.5" />
               Free · No commitment
             </div>
@@ -296,7 +296,7 @@ function Newsletter() {
           />
           <button
             type="submit"
-            className="px-6 py-3 rounded-md bg-[#ff4d00] hover:bg-[#ff5d1a] text-white font-semibold text-sm whitespace-nowrap"
+            className="px-6 py-3 rounded-md bg-[#ff4d00] hover:bg-[#ff5d1a] text-black font-semibold text-sm whitespace-nowrap"
           >
             {submitted ? "Check your email" : "Subscribe"}
           </button>

@@ -67,7 +67,7 @@ export function BeyondApparel() {
 
             {/* CTAs */}
             <div className="flex flex-wrap gap-3">
-              <RequestQuoteLink label="Home / Beyond apparel" className="group inline-flex items-center gap-2 bg-[#ff4d00] px-7 py-4 text-sm font-black uppercase tracking-wider text-white transition-all hover:bg-[#e64500]">Get a quote</RequestQuoteLink>
+              <RequestQuoteLink label="Home / Beyond apparel" className="group inline-flex items-center gap-2 bg-[#ff4d00] px-7 py-4 text-sm font-black uppercase tracking-wider text-black transition-all hover:bg-[#e64500]">Get a quote</RequestQuoteLink>
               <Link
                 href="/products/"
                 className="group inline-flex items-center gap-2 border-2 border-[#0a0a0a] bg-white px-7 py-4 text-sm font-black uppercase tracking-wider text-[#0a0a0a] transition-all hover:bg-[#0a0a0a] hover:text-white"
@@ -87,7 +87,7 @@ export function BeyondApparel() {
               sizes="(max-width: 768px) 100vw, 50vw"
               className="object-cover"
             />
-            <div className="absolute bottom-3 left-3 inline-block bg-[#ff4d00] px-3 py-1 text-[10px] font-black uppercase tracking-widest text-white">
+            <div className="absolute bottom-3 left-3 inline-block bg-[#ff4d00] px-3 py-1 text-[10px] font-black uppercase tracking-widest text-black">
               24+ products
             </div>
           </div>

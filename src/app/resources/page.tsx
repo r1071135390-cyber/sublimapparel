@@ -137,7 +137,7 @@ export default function ResourcesPage() {
               <div className="flex flex-col gap-3 sm:flex-row">
                 <Link
                   href="/get-a-quote/"
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-[#ff4d00] px-6 py-3 text-sm font-black text-white transition hover:bg-[#e64500]"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-[#ff4d00] px-6 py-3 text-sm font-black text-black transition hover:bg-[#e64500]"
                 >
                   Get a custom quote
                   <ArrowRight className="h-4 w-4" />
@@ -227,7 +227,7 @@ export default function ResourcesPage() {
             </div>
             <Link
               href="/get-a-quote/"
-              className="inline-flex items-center gap-2 rounded-full bg-[#ff4d00] px-5 py-2.5 text-sm font-black text-white transition hover:bg-[#e64500]"
+              className="inline-flex items-center gap-2 rounded-full bg-[#ff4d00] px-5 py-2.5 text-sm font-black text-black transition hover:bg-[#e64500]"
             >
               Start a project
               <ArrowRight className="h-4 w-4" />

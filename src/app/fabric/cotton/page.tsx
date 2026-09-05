@@ -68,7 +68,7 @@ export default function CottonPage() {
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto grid max-w-7xl gap-0 px-6 md:grid-cols-12">
           <div className="md:col-span-7 py-16 md:py-24">
-            <div className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+            <div className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
               100% Cotton · DTG · DTF
             </div>
             <h1 className="text-5xl font-black leading-[0.95] tracking-tight md:text-8xl">
@@ -84,7 +84,7 @@ export default function CottonPage() {
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 href="/get-a-quote/"
-                className="group inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-black"
+                className="group inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-widest text-black transition-all hover:bg-black"
               >
                 Get a Cotton Quote
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
@@ -214,7 +214,7 @@ export default function CottonPage() {
       </section>
 
       {/* ALLOVER DIGITAL PRINT ON COTTON — distinct from DTG/DTF */}
-      <section className="border-b-2 border-black bg-[#ff4d00] text-white">
+      <section className="border-b-2 border-black bg-[#ff4d00] text-black">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="mb-12 flex items-end justify-between border-b border-white/30 pb-6">
             <div>
@@ -373,7 +373,7 @@ export default function CottonPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-[#ff4d00] text-white">
+      <section className="bg-[#ff4d00] text-black">
         <div className="mx-auto max-w-7xl px-6 py-16 text-center md:py-20">
           <h2 className="text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
             Ready to print on cotton?

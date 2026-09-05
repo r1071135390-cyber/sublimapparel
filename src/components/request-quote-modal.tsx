@@ -322,7 +322,7 @@ function RequestQuoteModal() {
 
         {submitted ? (
           <div className="p-8 text-center">
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#ff4d00] text-white">
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#ff4d00] text-black">
               <Send className="h-8 w-8" />
             </div>
             <h3 className="mb-2 text-2xl font-black">Your email client opened.</h3>
@@ -671,7 +671,7 @@ function RequestQuoteModal() {
                 <Button
                   type="submit"
                   disabled={submitting}
-                  className="bg-[#ff4d00] px-6 text-white hover:bg-black"
+                  className="bg-[#ff4d00] px-6 text-black hover:bg-black"
                 >
                   {submitting ? (
                     <>

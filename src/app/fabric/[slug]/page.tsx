@@ -51,8 +51,8 @@ const printMethodLabels: Record<string, string> = {
 };
 
 const printMethodColors: Record<string, string> = {
-  sublimation: "bg-[#ff4d00] text-white",
-  dtg: "bg-[#00c2ff] text-white",
+  sublimation: "bg-[#ff4d00] text-black",
+  dtg: "bg-[#00c2ff] text-black",
   dtf: "bg-black text-white",
   "screen-print": "bg-[#1a1a1a] text-white",
   embroidery: "bg-[#6b6b6b] text-white",
@@ -390,7 +390,7 @@ export default async function FabricDetailPage(
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/contact/"
-              className="inline-flex items-center justify-center gap-2 bg-[#ff4d00] text-white px-8 py-4 text-sm font-black uppercase tracking-wider hover:bg-[#e64500] transition-colors"
+              className="inline-flex items-center justify-center gap-2 bg-[#ff4d00] text-black px-8 py-4 text-sm font-black uppercase tracking-wider hover:bg-[#e64500] transition-colors"
             >
               Request a quote →
             </Link>

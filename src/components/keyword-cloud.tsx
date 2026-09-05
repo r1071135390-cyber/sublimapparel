@@ -55,8 +55,8 @@ export function KeywordCloud({
     variant === "compact"
       ? `inline-flex items-center gap-1 ${sizeClasses} font-bold uppercase tracking-wide text-black transition-colors hover:text-[#cc3d00]`
       : variant === "bordered"
-        ? `inline-flex items-center gap-1.5 ${sizeClasses} font-bold uppercase tracking-wide border-2 border-black bg-white text-black transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:border-[#ff4d00] hover:bg-[#ff4d00] hover:text-white hover:shadow-[2px_2px_0_0_#000]`
-        : `inline-flex items-center gap-1.5 ${sizeClasses} font-bold uppercase tracking-wide rounded-sm bg-black/5 text-black transition-all hover:bg-[#ff4d00] hover:text-white`;
+        ? `inline-flex items-center gap-1.5 ${sizeClasses} font-bold uppercase tracking-wide border-2 border-black bg-white text-black transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:border-[#ff4d00] hover:bg-[#ff4d00] hover:text-black hover:shadow-[2px_2px_0_0_#000]`
+        : `inline-flex items-center gap-1.5 ${sizeClasses} font-bold uppercase tracking-wide rounded-sm bg-black/5 text-black transition-all hover:bg-[#ff4d00] hover:text-black`;
 
   return (
     <div className={className}>

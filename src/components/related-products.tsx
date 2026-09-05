@@ -58,7 +58,7 @@ export function RelatedProducts({
           </div>
           <Link
             href={viewAllHref}
-            className="group inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-5 py-2.5 text-sm font-semibold text-white transition hover:border-[#ff4d00] hover:bg-[#ff4d00] hover:text-white"
+            className="group inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-5 py-2.5 text-sm font-semibold text-white transition hover:border-[#ff4d00] hover:bg-[#ff4d00] hover:text-black"
           >
             View All
             <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
@@ -109,7 +109,7 @@ function ProductCard({ product }: { product: Product }) {
           className="object-cover transition group-hover:scale-105"
         />
         <div className="absolute left-2 top-2">
-          <span className="rounded-full bg-[#ff4d00] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white">
+          <span className="rounded-full bg-[#ff4d00] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-black">
             {product.category}
           </span>
         </div>

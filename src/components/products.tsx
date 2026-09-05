@@ -200,7 +200,7 @@ export function Products() {
                       <Link
                         key={itemName}
                         href={itemHref}
-                        className={`${baseCls} group flex items-center gap-1.5 bg-[#faf9f6] text-black transition-colors hover:bg-[#ff4d00] hover:text-white`}
+                        className={`${baseCls} group flex items-center gap-1.5 bg-[#faf9f6] text-black transition-colors hover:bg-[#ff4d00] hover:text-black`}
                       >
                         {itemName}
                         {"count" in item && item.count > 0 && (
@@ -242,7 +242,7 @@ export function Products() {
         </div>
 
         {/* Bottom note */}
-        <div className="mt-12 border-2 border-black bg-[#ff4d00] p-6 text-center text-white shadow-[6px_6px_0_0_#000] md:p-8">
+        <div className="mt-12 border-2 border-black bg-[#ff4d00] p-6 text-center text-black shadow-[6px_6px_0_0_#000] md:p-8">
           <p className="text-lg font-black uppercase tracking-tight md:text-2xl">
             Don&apos;t see your product? If it takes sublimation ink, we can print on it.
           </p>

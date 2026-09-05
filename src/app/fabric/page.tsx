@@ -101,7 +101,7 @@ export default function FabricPage() {
         <div className="absolute inset-0 mx-auto max-w-7xl px-6">
           <div className="flex h-full items-start pb-12 pt-24 md:pb-16 md:pt-32 lg:items-center lg:pb-0 lg:pt-0">
             <div className="max-w-2xl">
-              <div className="mb-4 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+              <div className="mb-4 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
                 Fabric &amp; Process
               </div>
               <h1 className="text-balance text-3xl font-black leading-[0.95] tracking-tight sm:text-5xl md:text-6xl md:whitespace-nowrap lg:text-7xl">
@@ -198,7 +198,7 @@ export default function FabricPage() {
               </a>
               <Link
                 href="/get-a-quote/"
-                className="inline-flex items-center gap-2 bg-[#ff4d00] px-4 py-3 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-black"
+                className="inline-flex items-center gap-2 bg-[#ff4d00] px-4 py-3 text-sm font-black uppercase tracking-widest text-black transition-all hover:bg-black"
               >
                 Send your spec
                 <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
@@ -304,7 +304,7 @@ export default function FabricPage() {
           </p>
           <Link
             href="/get-a-quote/"
-            className="mt-8 inline-flex items-center gap-2 bg-[#ff4d00] px-8 py-4 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-white hover:text-black"
+            className="mt-8 inline-flex items-center gap-2 bg-[#ff4d00] px-8 py-4 text-sm font-black uppercase tracking-widest text-black transition-all hover:bg-white hover:text-black"
           >
             Get a Recommendation
             <ArrowRight className="h-4 w-4" strokeWidth={2.5} />

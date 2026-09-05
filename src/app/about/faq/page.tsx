@@ -114,7 +114,7 @@ export default function FaqPage() {
             message us.
           </p>
           <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-            <RequestQuoteLink label="faq / page / Get a quote" className="inline-flex items-center justify-center gap-2 border-2 border-[#ff4d00] bg-[#ff4d00] px-8 py-4 text-base font-bold uppercase tracking-wide text-white transition-colors hover:bg-[#e64400] hover:border-[#e64400]">Skip the FAQ, send a brief →</RequestQuoteLink>
+            <RequestQuoteLink label="faq / page / Get a quote" className="inline-flex items-center justify-center gap-2 border-2 border-[#ff4d00] bg-[#ff4d00] px-8 py-4 text-base font-bold uppercase tracking-wide text-black transition-colors hover:bg-[#e64400] hover:border-[#e64400]">Skip the FAQ, send a brief →</RequestQuoteLink>
             <a
               href="https://wa.me/8619817930190"
               className="inline-flex items-center justify-center gap-2 border-2 border-[#faf9f6] px-8 py-4 text-base font-bold uppercase tracking-wide text-[#faf9f6] transition-colors hover:bg-[#faf9f6] hover:text-[#0a0a0a]"
@@ -189,7 +189,7 @@ export default function FaqPage() {
         <section key={s.id} id={s.id} className="border-b-2 border-[#0a0a0a]">
           <div className="mx-auto max-w-4xl px-6 py-16 md:py-20">
             <div className="mb-10 flex items-center gap-4">
-              <div className="flex h-12 w-12 items-center justify-center border-2 border-[#ff4d00] bg-[#ff4d00] text-white">
+              <div className="flex h-12 w-12 items-center justify-center border-2 border-[#ff4d00] bg-[#ff4d00] text-black">
                 {s.icon}
               </div>
               <div>
@@ -238,7 +238,7 @@ export default function FaqPage() {
           <div className="mt-12 flex flex-col gap-3 sm:flex-row">
             <a
               href="https://wa.me/8619817930190"
-              className="inline-flex items-center justify-center gap-2 border-2 border-[#ff4d00] bg-[#ff4d00] px-8 py-4 text-base font-bold uppercase tracking-wide text-white transition-colors hover:bg-[#e64400] hover:border-[#e64400]"
+              className="inline-flex items-center justify-center gap-2 border-2 border-[#ff4d00] bg-[#ff4d00] px-8 py-4 text-base font-bold uppercase tracking-wide text-black transition-colors hover:bg-[#e64400] hover:border-[#e64400]"
             >
               WhatsApp +86 198 1793 0190 →
             </a>

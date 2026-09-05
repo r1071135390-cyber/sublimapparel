@@ -241,7 +241,7 @@ function FilterGroup({
               className={
                 "border-2 px-2 py-1 text-[10px] font-black uppercase tracking-widest transition-colors " +
                 (active
-                  ? "border-[#ff4d00] bg-[#ff4d00] text-white"
+                  ? "border-[#ff4d00] bg-[#ff4d00] text-black"
                   : "border-black bg-white text-black hover:bg-black hover:text-white")
               }
             >

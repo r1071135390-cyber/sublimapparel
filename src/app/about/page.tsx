@@ -103,7 +103,7 @@ export default function AboutPage() {
               <div className="mt-4 flex flex-wrap gap-3">
                 <Link
                   href="/contact/"
-                  className="inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-widest text-white transition-colors hover:bg-[#e64500]"
+                  className="inline-flex items-center gap-2 bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-widest text-black transition-colors hover:bg-[#e64500]"
                 >
                   Visit the factory →
                 </Link>
@@ -198,7 +198,7 @@ export default function AboutPage() {
           />
         </div>
         <div className="absolute bottom-6 left-6 right-6 md:bottom-10 md:left-10">
-          <div className="mb-2 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+          <div className="mb-2 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
             Inside the factory
           </div>
           <div className="max-w-3xl text-2xl font-black leading-tight text-white md:text-4xl">
@@ -279,7 +279,7 @@ export default function AboutPage() {
         <div className="mx-auto max-w-7xl px-6 py-20">
           <div className="mb-12 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <div>
-              <div className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+              <div className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
                 What we do
               </div>
               <h2 className="text-4xl font-black leading-tight text-black md:text-6xl">
@@ -447,7 +447,7 @@ export default function AboutPage() {
               <Link
                 key={r.href}
                 href={r.href}
-                className="group flex flex-col border-2 border-black bg-white p-6 transition-all hover:bg-[#ff4d00] hover:text-white"
+                className="group flex flex-col border-2 border-black bg-white p-6 transition-all hover:bg-[#ff4d00] hover:text-black"
               >
                 <div className="mb-3 inline-block w-fit bg-black px-2 py-1 text-[10px] font-black uppercase tracking-widest text-white group-hover:bg-white group-hover:text-black">
                   {r.badge}

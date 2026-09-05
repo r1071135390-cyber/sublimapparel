@@ -114,7 +114,7 @@ export default function FactoryPage() {
           <div className="mt-10 flex flex-col gap-3 sm:flex-row">
             <Link
               href="/about/production/"
-              className="inline-flex items-center justify-center gap-2 border-2 border-[#ff4d00] bg-[#ff4d00] px-8 py-4 text-base font-bold uppercase tracking-wide text-white transition-colors hover:bg-[#e64400] hover:border-[#e64400]"
+              className="inline-flex items-center justify-center gap-2 border-2 border-[#ff4d00] bg-[#ff4d00] px-8 py-4 text-base font-bold uppercase tracking-wide text-black transition-colors hover:bg-[#e64400] hover:border-[#e64400]"
             >
               See our production process →
             </Link>
@@ -306,7 +306,7 @@ export default function FactoryPage() {
           <div className="mt-12 flex flex-col gap-3 sm:flex-row">
             <Link
               href="/get-a-quote?process=sublimation&type=visit"
-              className="inline-flex items-center justify-center gap-2 border-2 border-[#ff4d00] bg-[#ff4d00] px-8 py-4 text-base font-bold uppercase tracking-wide text-white transition-colors hover:bg-[#e64400] hover:border-[#e64400]"
+              className="inline-flex items-center justify-center gap-2 border-2 border-[#ff4d00] bg-[#ff4d00] px-8 py-4 text-base font-bold uppercase tracking-wide text-black transition-colors hover:bg-[#e64400] hover:border-[#e64400]"
             >
               Schedule a visit →
             </Link>

@@ -135,7 +135,7 @@ function FilterChip({
       onClick={onClick}
       className={`rounded-full border-2 px-3 py-1 text-[11px] font-bold uppercase tracking-wide transition-colors md:text-xs ${
         active
-          ? "border-[#ff4d00] bg-[#ff4d00] text-white"
+          ? "border-[#ff4d00] bg-[#ff4d00] text-black"
           : "border-black/15 bg-white text-black hover:border-[#ff4d00]/50"
       }`}
     >
@@ -324,7 +324,7 @@ export function ProductCatalog() {
               <button
                 type="button"
                 onClick={clearAll}
-                className="mt-4 inline-flex items-center gap-1 rounded-full border-2 border-[#ff4d00] bg-white px-4 py-2 text-xs font-bold uppercase tracking-wide text-[#cc3d00] hover:bg-[#ff4d00] hover:text-white"
+                className="mt-4 inline-flex items-center gap-1 rounded-full border-2 border-[#ff4d00] bg-white px-4 py-2 text-xs font-bold uppercase tracking-wide text-[#cc3d00] hover:bg-[#ff4d00] hover:text-black"
               >
                 Clear filters
               </button>
@@ -356,7 +356,7 @@ export function ProductCatalog() {
                     <div className="absolute left-2 top-2 rounded-sm bg-black/70 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-white md:text-[10px]">
                       {p.category}
                     </div>
-                    <div className="absolute right-2 top-2 rounded-sm bg-[#ff4d00] px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-white md:text-[10px]">
+                    <div className="absolute right-2 top-2 rounded-sm bg-[#ff4d00] px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-black md:text-[10px]">
                       MOQ {p.moq}
                     </div>
                   </div>

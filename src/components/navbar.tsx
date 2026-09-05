@@ -227,7 +227,7 @@ export function Navbar() {
           <Link
             href="/contact/"
             aria-label="Contact"
-            className="inline-flex items-center gap-1.5 rounded-sm px-2.5 py-2 text-sm font-bold uppercase tracking-wider text-black transition-colors hover:bg-[#ff4d00] hover:text-white"
+            className="inline-flex items-center gap-1.5 rounded-sm px-2.5 py-2 text-sm font-bold uppercase tracking-wider text-black transition-colors hover:bg-[#ff4d00] hover:text-black"
           >
             <Mail className="h-5 w-5" strokeWidth={2.5} />
             <span className="hidden sm:inline">Contact</span>
@@ -251,7 +251,7 @@ export function Navbar() {
               </Link>
               <Link
                 href="/register/"
-                className="block border-t border-black/10 px-4 py-2.5 text-sm font-bold uppercase tracking-wider text-black hover:bg-[#ff4d00] hover:text-white"
+                className="block border-t border-black/10 px-4 py-2.5 text-sm font-bold uppercase tracking-wider text-black hover:bg-[#ff4d00] hover:text-black"
               >
                 Create account
               </Link>
