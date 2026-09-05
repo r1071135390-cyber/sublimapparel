@@ -97,3 +97,45 @@
 - 强调色（橙红）: `#ff4d00`
 - 辅助强调（电光蓝）: `#00c2ff`
 - 详见 `DESIGN.md`
+
+## ⚡ 性能优化（已上线，2025-09）
+
+### 关键发现
+- **Cloudflare CDN s-maxage=2592000 (30 天)**：静态资源（图片、CSS、JS）会被 CDN 缓存 30 天。**修改同名文件不会生效**，必须改文件名才能 bust cache。
+- **Next.js 16 强制注入 polyfill-module.js**：`client/app-globals.js` 硬编码 `require('../build/polyfills/polyfill-module')`，Turbopack resolveAlias 不能拦截，必须直接 patch 源文件。
+- **PageSpeed "网络依赖关系树" 报告里的 clarity/voltas 是误报**：是 PageSpeed 测试浏览器自己的请求，不是页面发的。验证：本地 grep + 实际 curl HTML 都没这些脚本。
+
+### 永久性能 patch
+
+1. **`scripts/patch-next-polyfill.mjs`**：把 Next.js 自带 polyfill 替换成空模块
+   - 由 `package.json` 的 `postinstall` 钩子自动跑
+   - `pnpm install` 不会覆盖修复
+   - 文件带内容标记，重复跑幂等
+
+2. **`scripts/inline-css.mjs`**：把 Next.js 生成的 Tailwind CSS chunk inline 到所有 HTML
+   - 由 `scripts/build.sh` 在 `next build` 之后调用
+   - 消除 CSS 渲染阻塞（节省 ~360ms）
+   - CSS 文件 30+ KiB 跟随 HTML 一起 gzipped
+
+3. **`scripts/optimize-images-v2.mjs`**：图片优化 + cache-bust 改名
+   - **重要**：永远用 `-v2` 后缀改名，**不要**用 `?v=2` 查询字符串
+   - Cloudflare 缓存只认 URL path，查询字符串在某些情况下不参与 cache key
+
+### 维护注意事项
+
+- **不要在 `package.json` 删除 `postinstall`**：否则 polyfill patch 会被 `pnpm install` 覆盖
+- **新加图片时**必须走 `optimize-images-v2.mjs` 流程：先优化再 `sharp` resize，再以 `-vX.webp` 命名
+- **任何资源修改后**如果 CDN 不刷新，要么改名要么等 30 天
+- **跑 PageSpeed 看到 "clarity/voltas 注入" 直接忽略**：已确认是 PageSpeed 测试浏览器自带的请求，不是页面发的
+
+### 优化效果（截至 2025-09）
+
+| 优化项 | 节省 |
+|--------|------|
+| CSS inline | 360ms 渲染阻塞 |
+| content-visibility: auto | ~700ms Style & Layout |
+| Polyfill patch | 13.5 KB gzipped |
+| 4 张图优化 + cache-bust | 33 KB |
+| Logo width/height | CLS 修复 |
+| Cloudflare RUM 关闭 | 1,074ms 关键路径 |
+| Cloudflare Email Obfuscation 关闭 | 395ms 关键路径 |
