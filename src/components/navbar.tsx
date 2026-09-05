@@ -88,6 +88,8 @@ export function Navbar() {
           <img
             src="/sublimapparel-logo.webp"
             alt="SublimApparel — custom all-over print apparel factory, Yiwu China"
+            width={220}
+            height={88}
             className="h-11 w-auto"
           />
         </Link>
