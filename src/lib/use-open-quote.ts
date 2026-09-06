@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { usePathname } from "next/navigation";
-import { useRequestQuote, type QuoteSource } from "@/components/request-quote-modal";
+import { useRequestQuote, type QuoteSource } from "@/components/request-quote-context";
 
 /**
  * Returns a function that opens the global Request Quote modal

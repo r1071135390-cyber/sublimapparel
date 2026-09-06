@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { ArrowRight, Clock, Globe2, Warehouse } from "lucide-react";
-import { useRequestQuote } from "@/components/request-quote-modal";
+import { useRequestQuote } from "@/components/request-quote-context";
 import { RequestSampleButton } from "@/components/request-sample-button";
 
 export function InquiryCTA() {

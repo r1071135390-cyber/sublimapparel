@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { useRequestQuote, type QuoteSource } from "@/components/request-quote-modal";
+import { useRequestQuote, type QuoteSource } from "@/components/request-quote-context";
 import { cn } from "@/lib/utils";
 
 type Variant = "primary" | "secondary" | "outline" | "ghost";

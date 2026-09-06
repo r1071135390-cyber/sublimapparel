@@ -3,7 +3,8 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { UtilityBar } from "@/components/utility-bar";
 import { MobileBottomNav } from "@/components/mobile-bottom-nav";
-import { RequestQuoteProvider } from "@/components/request-quote-modal";
+import { RequestQuoteProvider } from "@/components/request-quote-context";
+import { RequestQuoteMount } from "@/components/request-quote-mount";
 import { FloatingChat } from "@/components/floating-chat";
 import { JsonLd } from "@/components/json-ld";
 import { organizationJsonLd, websiteJsonLd, localBusinessJsonLd, personJsonLd, faqPageJsonLd, aboutArticleJsonLd } from "@/lib/json-ld-data";
@@ -119,6 +120,7 @@ export default function RootLayout({
           <Footer />
           <MobileBottomNav />
           <FloatingChat />
+          <RequestQuoteMount />
         </RequestQuoteProvider>
       </body>
     </html>

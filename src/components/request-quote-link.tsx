@@ -1,6 +1,6 @@
 "use client";
 
-import { useRequestQuote } from "@/components/request-quote-modal";
+import { useRequestQuote } from "@/components/request-quote-context";
 import type { ReactNode, MouseEvent } from "react";
 
 type Props = {

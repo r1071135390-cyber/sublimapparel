@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Sparkles, Calendar, Package, MessageCircle, ChevronRight, Activity, Mail } from "lucide-react";
-import { useRequestQuote } from "@/components/request-quote-modal";
+import { useRequestQuote } from "@/components/request-quote-context";
 import { RequestSampleButton } from "@/components/request-sample-button";
 import type { IndustryCase } from "@/lib/cases";
 

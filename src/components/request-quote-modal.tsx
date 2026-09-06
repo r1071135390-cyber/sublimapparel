@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { usePathname } from "next/navigation";
 import {
   Dialog,
   DialogContent,
@@ -21,6 +20,7 @@ import {
   DESIGN_STATUSES,
   type SizeRow,
 } from "@/components/size-quantity-picker";
+import { useRequestQuote } from "@/components/request-quote-context";
 
 const MAX_FILES = 5;
 const MAX_SIZE_MB = 25;
@@ -53,80 +53,7 @@ function formatSize(bytes: number) {
   return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
 }
 
-export type QuoteSource = {
-  label: string;
-  path: string;
-  prefill?: {
-    productName?: string;
-    productCategory?: string;
-    productNumber?: string;
-  };
-};
-
-type QuoteState = {
-  open: boolean;
-  source: QuoteSource;
-};
-
-type QuoteContextValue = {
-  state: QuoteState;
-  openQuote: (source?: Partial<QuoteSource>) => void;
-  closeQuote: () => void;
-};
-
-const defaultSource: QuoteSource = {
-  label: "this page",
-  path: "/",
-};
-
-const QuoteContext = React.createContext<QuoteContextValue | null>(null);
-
-export function useRequestQuote() {
-  const ctx = React.useContext(QuoteContext);
-  if (!ctx) {
-    throw new Error("useRequestQuote must be used within <RequestQuoteProvider>");
-  }
-  return ctx;
-}
-
-export function RequestQuoteProvider({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
-  const [state, setState] = React.useState<QuoteState>({
-    open: false,
-    source: { ...defaultSource, path: pathname || "/" },
-  });
-
-  React.useEffect(() => {
-    setState((prev) => ({ ...prev, source: { ...prev.source, path: pathname || "/" } }));
-  }, [pathname]);
-
-  const openQuote = React.useCallback(
-    (source?: Partial<QuoteSource>) => {
-      setState((prev) => ({
-        open: true,
-        source: {
-          label: source?.label || prev.source.label,
-          path: source?.path || pathname || "/",
-          prefill: source?.prefill || prev.source.prefill,
-        },
-      }));
-    },
-    [pathname]
-  );
-
-  const closeQuote = React.useCallback(() => {
-    setState((prev) => ({ ...prev, open: false }));
-  }, []);
-
-  return (
-    <QuoteContext.Provider value={{ state, openQuote, closeQuote }}>
-      {children}
-      <RequestQuoteModal />
-    </QuoteContext.Provider>
-  );
-}
-
-function RequestQuoteModal() {
+export function RequestQuoteModal() {
   const { state, closeQuote } = useRequestQuote();
   const [submitting, setSubmitting] = React.useState(false);
   const [submitted, setSubmitted] = React.useState(false);
@@ -151,6 +78,7 @@ function RequestQuoteModal() {
   });
   const [sizeRows, setSizeRows] = React.useState<SizeRow[]>(DEFAULT_SIZES);
   const [files, setFiles] = React.useState<Attached[]>([]);
+
 
   // Prefill product from source (e.g., product detail page)
   React.useEffect(() => {
