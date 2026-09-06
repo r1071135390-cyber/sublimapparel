@@ -12,8 +12,7 @@
  * Run order: pnpm next build → inline CSS → THIS SCRIPT.
  */
 
-import { readFile, writeFile } from "node:fs/promises";
-import { glob } from "node:fs/promises";
+import { readFile, writeFile, readdir, stat } from "node:fs/promises";
 import { join } from "node:path";
 import * as cheerio from "cheerio";
 
