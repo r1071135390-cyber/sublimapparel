@@ -85,11 +85,15 @@ export function Navbar() {
     <nav className="sticky top-0 z-50 border-b-2 border-black bg-[#faf9f6]">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-1.5">
         <Link href="/" className="group flex items-center gap-2">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/sublimapparel-logo-v2.webp"
             alt="SublimApparel — custom all-over print apparel factory, Yiwu China"
             width={220}
             height={88}
+            decoding="async"
+            /* eslint-disable-next-line react/no-unknown-property */
+            fetchPriority="high"
             className="h-11 w-auto"
           />
         </Link>
