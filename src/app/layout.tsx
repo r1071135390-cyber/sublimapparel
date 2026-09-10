@@ -146,8 +146,7 @@ export default function RootLayout({
         {/* Site-wide structured data — one @graph wrapper so Google parses
             6 schema nodes in a single JSON.parse pass and cross-references
             via @id (publisher, author, parentOrganization, isPartOf, etc.)
-            resolve in the same parse. Previously rendered as 6 separate
-            <script> tags. */}
+            resolve in the same parse. */}
         <JsonLd
           data={{
             "@context": "https://schema.org",

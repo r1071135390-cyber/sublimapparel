@@ -15,10 +15,30 @@ export const dynamic = 'force-static';
 // COZE_PROJECT_DOMAIN_DEFAULT is already prefixed with https://, so use it directly.
 const rawDomain = process.env.COZE_PROJECT_DOMAIN_DEFAULT ?? "https://sublimapparel.com";
 const SITE_URL = rawDomain.replace(/\/+$/, ""); // strip trailing slash if any
-const LAST_MOD = new Date(); // bump when meaningful content changes ship
 
 // Trailing-slash helper — site uses trailingSlash: true, so sitemap URLs must too.
 const withSlash = (p: string) => (p.endsWith("/") ? p : `${p}/`);
+
+// IMPORTANT: lastmod stability
+// If every build rewrites every URL's `lastmod` to build time, Googlebot
+// re-evaluates every page on every deploy — that destabilizes rankings for
+// pages whose content didn't actually change. We only bump a route's lastmod
+// when its content actually changes.
+//
+// Strategy:
+//   • STATIC_LAST_MOD  — single fixed anchor for hub/category pages whose
+//                        content is "stable + manually edited". When you ship
+//                        a meaningful content edit on one of those pages,
+//                        override it via the route's `lastModified` field.
+//   • TODAY            — used for the small handful of pages whose copy was
+//                        touched in this SEO traffic-fix push.
+//   • p.date           — used for blog posts (their real publish date).
+//   • dynamic routes (techniques / tags / products / fabrics) keep the
+//     STATIC_LAST_MOD anchor too: their data is regenerated from TS files
+//     on each build, but the *content* rarely changes day-to-day. If a
+//     single product is rewritten, we add a per-route override later.
+const STATIC_LAST_MOD = new Date("2025-08-18T00:00:00.000Z"); // last big SEO/content refresh
+const TODAY = new Date("2026-09-11T00:00:00.000Z"); // this push: /contact copy + /fabric & /about FAQPage JSON-LD
 
 type SitemapRoute = {
   path: string;
@@ -31,11 +51,13 @@ type SitemapRoute = {
     | "monthly"
     | "yearly"
     | "never";
+  /** Override lastmod for this route. Defaults to STATIC_LAST_MOD. */
+  lastModified?: Date;
 };
 
 const ROUTES: SitemapRoute[] = [
   // ── L1 （）──────────────────────────────────
-  { path: "/", priority: 1.0, changeFrequency: "weekly" },
+  { path: "/", priority: 1.0, changeFrequency: "weekly", lastModified: TODAY }, // 2026-09-11 push: refreshed contact copy + FAQPage on /fabric & /about
   { path: "/products", priority: 0.9, changeFrequency: "weekly" },
   { path: "/products/t-shirts", priority: 0.85, changeFrequency: "monthly" },
   { path: "/products/hoodies", priority: 0.85, changeFrequency: "monthly" },
@@ -49,10 +71,10 @@ const ROUTES: SitemapRoute[] = [
   { path: "/products/esports", priority: 0.85, changeFrequency: "monthly" },
   { path: "/products/all", priority: 0.9, changeFrequency: "weekly" }, // all-over-print catalog
   { path: "/get-a-quote", priority: 0.95, changeFrequency: "monthly" }, // 询盘主入口
-  { path: "/contact", priority: 0.7, changeFrequency: "monthly" },
+  { path: "/contact", priority: 0.7, changeFrequency: "monthly", lastModified: TODAY }, // 2026-09-11 push: rewritten title/H1/description
 
   // ── L2  SEO （， 0 ）──────────────
-  { path: "/fabric", priority: 0.85, changeFrequency: "monthly" },
+  { path: "/fabric", priority: 0.85, changeFrequency: "monthly", lastModified: TODAY }, // 2026-09-11 push: added FAQPage JSON-LD
   { path: "/fabric/cotton", priority: 0.9, changeFrequency: "monthly" }, // 王炸
   { path: "/technique", priority: 0.85, changeFrequency: "monthly" },
   { path: "/shipping", priority: 0.8, changeFrequency: "monthly" },
@@ -82,7 +104,7 @@ const ROUTES: SitemapRoute[] = [
   { path: "/register", priority: 0.3, changeFrequency: "yearly" },
 
   // ── L2  /  ────────────────────────────────────
-  { path: "/about", priority: 0.7, changeFrequency: "monthly" },
+  { path: "/about", priority: 0.7, changeFrequency: "monthly", lastModified: TODAY }, // 2026-09-11 push: added FAQPage JSON-LD
   { path: "/about/factory", priority: 0.75, changeFrequency: "monthly" },
   { path: "/about/production", priority: 0.75, changeFrequency: "monthly" },
   { path: "/about/quality", priority: 0.75, changeFrequency: "monthly" },
@@ -135,13 +157,13 @@ const ROUTES: SitemapRoute[] = [
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = LAST_MOD;
-
-  // Static pages — normalize all URLs to trailing-slash form to match trailingSlash: true
+  // Static pages — use each route's own lastModified override, or fall back
+  // to the stable STATIC_LAST_MOD anchor. We deliberately do NOT use
+  // `new Date()` here: see the comment on STATIC_LAST_MOD above.
   const staticEntries: MetadataRoute.Sitemap = ROUTES.map((r) => {
     const entry: MetadataRoute.Sitemap[number] = {
       url: `${SITE_URL}${withSlash(r.path)}`,
-      lastModified: now,
+      lastModified: r.lastModified ?? STATIC_LAST_MOD,
       changeFrequency: r.changeFrequency,
       priority: r.priority,
     };
@@ -166,15 +188,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Re-add here once their content is rewritten to ≥ 600 words.
 
   // ── 20 （SEO ）────────────────
+  // Techniques are data-driven and rarely change day-to-day. Pin to
+  // STATIC_LAST_MOD to avoid sitemap churn.
   const techniqueEntries: MetadataRoute.Sitemap = techniques.map((t) => ({
     url: `${SITE_URL}${withSlash(`/technique/${t.slug}`)}`,
-    lastModified: now,
+    lastModified: STATIC_LAST_MOD,
     changeFrequency: "monthly" as const,
     priority: 0.8,
     images: [`${SITE_URL}/og-default.jpg`],
   }));
 
   // ── （）────────────────────
+  // Blog posts: use the real publish date so freshly-edited posts surface
+  // their bump to Googlebot.
   const blogEntries: MetadataRoute.Sitemap = blogPosts.map((p) => ({
     url: `${SITE_URL}${withSlash(`/blog/${p.slug}`)}`,
     lastModified: new Date(p.date),
@@ -184,11 +210,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
 
   // ── 98  tag archive （29  + 42  + 27 ）────
+  // Tag pages are aggregated from product data; their content changes only
+  // when we add/remove tag definitions. Pin to STATIC_LAST_MOD to avoid churn.
   const tagEntries: MetadataRoute.Sitemap = (["category", "sport", "scenario"] as const).flatMap(
     (dim) =>
       getAllTagSlugs(dim).map(({ slug }) => ({
         url: `${SITE_URL}${withSlash(`/tag/${dim}/${slug}`)}`,
-        lastModified: now,
+        lastModified: STATIC_LAST_MOD,
         changeFrequency: "monthly" as const,
         priority: 0.7,
         images: [`${SITE_URL}/og-default.jpg`],
@@ -196,9 +224,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
   );
 
   // ── 120 （all-over-print ）────
+  // Product detail pages in the all-over-print catalog. Same logic as tags:
+  // data-driven, content rarely changes day-to-day — pin to STATIC_LAST_MOD.
   const productEntries: MetadataRoute.Sitemap = products.map((p) => ({
     url: `${SITE_URL}${withSlash(`/products/all/${p.slug}`)}`,
-    lastModified: now,
+    lastModified: STATIC_LAST_MOD,
     changeFrequency: "weekly" as const,
     priority: 0.8,
     images: [`${SITE_URL}/og-default.jpg`],
@@ -207,13 +237,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // ── Fabric detail pages (65 slugs from fabric-data.ts + fabric-extra.ts) ──
   // These were previously discoverable only via the /fabric/ hub cross-links
   // and were absent from the sitemap. Add them so Google indexes them directly
-  // and passes the full weight signal.
+  // and passes the full weight signal. Pin to STATIC_LAST_MOD — fabric slugs
+  // are stable, and rewriting every fabric URL on every build destabilizes
+  // rankings without any real content change.
   const allFabricSlugs = Array.from(
     new Set([...fabricTypes, ...extraFabricTypes].map((f) => f.slug))
   );
   const fabricEntries: MetadataRoute.Sitemap = allFabricSlugs.map((slug) => ({
     url: `${SITE_URL}${withSlash(`/fabric/${slug}`)}`,
-    lastModified: now,
+    lastModified: STATIC_LAST_MOD,
     changeFrequency: "monthly" as const,
     priority: 0.7,
     images: [`${SITE_URL}/og-default.jpg`],
