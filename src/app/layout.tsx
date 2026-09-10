@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { UtilityBar } from "@/components/utility-bar";
@@ -86,15 +86,6 @@ export const metadata: Metadata = {
   },
   // PWA manifest (Next.js emits <link rel="manifest" href="...">)
   manifest: "/manifest.webmanifest",
-  // Mobile address bar / Windows title bar tinting.
-  // The sticky top nav uses #faf9f6; brand dark is #1a1a1a.
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#faf9f6" },
-    { media: "(prefers-color-scheme: dark)", color: "#1a1a1a" },
-  ],
-  // Tells the browser which color schemes the site supports — used for
-  // built-in form controls, scrollbars, and the like.
-  colorScheme: "light dark",
   // iOS "Add to Home Screen" web app metadata.
   applicationName: "SublimApparel",
   appleWebApp: {
@@ -118,6 +109,21 @@ export const metadata: Metadata = {
         },
       }
     : {}),
+};
+
+// Mobile address bar / Windows title bar tinting.
+// Next.js 14+ requires themeColor / colorScheme in the dedicated `viewport`
+// export, not under `metadata`. See:
+// https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+// The sticky top nav uses #faf9f6; brand dark is #1a1a1a.
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#faf9f6" },
+    { media: "(prefers-color-scheme: dark)", color: "#1a1a1a" },
+  ],
+  // Tells the browser which color schemes the site supports — used for
+  // built-in form controls, scrollbars, and the like.
+  colorScheme: "light dark",
 };
 
 export default function RootLayout({
