@@ -71,9 +71,39 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/icon.png",
-    shortcut: "/icon.png",
-    apple: "/icon.png",
+    icon: [
+      { url: "/icon.png", sizes: "256x256", type: "image/png" },
+      { url: "/favicon.ico", sizes: "256x256", type: "image/x-icon" },
+    ],
+    shortcut: [
+      { url: "/favicon.ico", sizes: "256x256", type: "image/x-icon" },
+    ],
+    apple: [
+      // Apple Touch Icon — 180x180 is the recommended iOS Home Screen size.
+      // We reuse the existing /icon.png (256x256) and let iOS downscale.
+      { url: "/icon.png", sizes: "256x256", type: "image/png" },
+    ],
+  },
+  // PWA manifest (Next.js emits <link rel="manifest" href="...">)
+  manifest: "/manifest.webmanifest",
+  // Mobile address bar / Windows title bar tinting.
+  // The sticky top nav uses #faf9f6; brand dark is #1a1a1a.
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#faf9f6" },
+    { media: "(prefers-color-scheme: dark)", color: "#1a1a1a" },
+  ],
+  // Tells the browser which color schemes the site supports — used for
+  // built-in form controls, scrollbars, and the like.
+  colorScheme: "light dark",
+  // iOS "Add to Home Screen" web app metadata.
+  applicationName: "SublimApparel",
+  appleWebApp: {
+    capable: true,
+    title: "SublimApparel",
+    statusBarStyle: "default",
+  },
+  formatDetection: {
+    telephone: false,
   },
 
   // Google Search Console verification
@@ -107,12 +137,24 @@ export default function RootLayout({
           fetchPriority="high"
           media="(min-width: 1024px)"
         />
-        <JsonLd data={organizationJsonLd} />
-        <JsonLd data={websiteJsonLd} />
-        <JsonLd data={localBusinessJsonLd} />
-        <JsonLd data={personJsonLd} />
-        <JsonLd data={faqPageJsonLd} />
-        <JsonLd data={aboutArticleJsonLd} />
+        {/* Site-wide structured data — one @graph wrapper so Google parses
+            6 schema nodes in a single JSON.parse pass and cross-references
+            via @id (publisher, author, parentOrganization, isPartOf, etc.)
+            resolve in the same parse. Previously rendered as 6 separate
+            <script> tags. */}
+        <JsonLd
+          data={{
+            "@context": "https://schema.org",
+            "@graph": [
+              organizationJsonLd,
+              websiteJsonLd,
+              localBusinessJsonLd,
+              personJsonLd,
+              faqPageJsonLd,
+              aboutArticleJsonLd,
+            ],
+          }}
+        />
         <UtilityBar />
         <Navbar />
         <RequestQuoteProvider>

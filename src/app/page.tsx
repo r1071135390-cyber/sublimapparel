@@ -24,78 +24,84 @@ export const metadata = buildPageMetadata({
   },
   });;
 
-const homeJsonLd = [
-  {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": "https://sublimapparel.com/#webpage",
-    url: "https://sublimapparel.com/",
-    name: "Yiwu Sublimation & All-Over Print | Cotton DDP 100+",
-    description:
-      "Sublimation factory in Yiwu producing all-over print apparel — polyester sublimation, allover digital print on cotton, DTG, DTF. MOQ 50, DDP shipping to 100+ countries, US warehouse in Fontana CA.",
-    keywords:
-      "sublimation factory, all over print, all over print manufacturer, sublimation all over print, all over print t-shirt, all over print hoodie, custom sublimation apparel, Yiwu sublimation factory, DDP sublimation, allover digital print cotton, DTG cotton, DTF cotton, MOQ 50, full body sublimation, edge to edge sublimation",
-    inLanguage: "en",
-    isPartOf: { "@id": "https://sublimapparel.com/#website" },
-    about: {
-      "@type": "Service",
-      name: "Custom Sublimation Apparel Manufacturing",
-      serviceType: "Sublimation Printing & Cut-and-Sew",
-      provider: { "@id": "https://sublimapparel.com/#organization" },
-      areaServed: "Worldwide",
+// Home page structured data — single @graph wrapper.
+// Previously rendered as 2 separate <script> tags (WebPage + FAQPage).
+// Now both share one <script> so Google parses them in a single pass
+// and the @id cross-references (isPartOf → #website, about.provider →
+// #organization) resolve immediately.
+const homeJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://sublimapparel.com/#webpage",
+      url: "https://sublimapparel.com/",
+      name: "Yiwu Sublimation & All-Over Print | Cotton DDP 100+",
+      description:
+        "Sublimation factory in Yiwu producing all-over print apparel — polyester sublimation, allover digital print on cotton, DTG, DTF. MOQ 50, DDP shipping to 100+ countries, US warehouse in Fontana CA.",
+      keywords:
+        "sublimation factory, all over print, all over print manufacturer, sublimation all over print, all over print t-shirt, all over print hoodie, custom sublimation apparel, Yiwu sublimation factory, DDP sublimation, allover digital print cotton, DTG cotton, DTF cotton, MOQ 50, full body sublimation, edge to edge sublimation",
+      inLanguage: "en",
+      isPartOf: { "@id": "https://sublimapparel.com/#website" },
+      about: {
+        "@type": "Service",
+        name: "Custom Sublimation Apparel Manufacturing",
+        serviceType: "Sublimation Printing & Cut-and-Sew",
+        provider: { "@id": "https://sublimapparel.com/#organization" },
+        areaServed: "Worldwide",
+      },
+      primaryImageOfPage: {
+        "@type": "ImageObject",
+        url: "https://sublimapparel.com/product-hero-products.webp",
+      },
     },
-    primaryImageOfPage: {
-      "@type": "ImageObject",
-      url: "https://sublimapparel.com/product-hero-products.webp",
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "What is your minimum order quantity (MOQ)?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Our MOQ is 50 pieces per design per colorway, and as low as 1 piece per size within the run. For repeat orders we can usually drop to 30 pcs. The full order has a 50 pc minimum total.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How long does production take?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Standard lead time is 10-15 business days for bulk production after sample approval, plus 3-7 days for sample development. Rush service (7-10 days) is available for an additional 20%.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Do you handle shipping and customs?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes — we ship DDP (Delivered Duty Paid) to 100+ countries, meaning we handle everything: freight, customs clearance, duties, taxes, and last-mile delivery. You receive the goods at your door with no hidden costs. We also offer FOB and EXW for clients who prefer to arrange their own logistics.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Can I get a sample before placing a bulk order?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes. We offer pre-production samples at $50-150 per piece (refundable on bulk order of 200+ pcs), plus free material swatches and printed color cards. Sample lead time is 5-7 days.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What file formats do you accept for artwork?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "AI, PSD, PDF, PNG, JPG — even a hand sketch. We free-check every artwork for printability and provide a 3D mockup on the actual garment before production. Unlimited revisions until you lock the design.",
+          },
+        },
+      ],
     },
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: [
-      {
-        "@type": "Question",
-        name: "What is your minimum order quantity (MOQ)?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Our MOQ is 50 pieces per design per colorway, and as low as 1 piece per size within the run. For repeat orders we can usually drop to 30 pcs. The full order has a 50 pc minimum total.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "How long does production take?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Standard lead time is 10-15 business days for bulk production after sample approval, plus 3-7 days for sample development. Rush service (7-10 days) is available for an additional 20%.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "Do you handle shipping and customs?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Yes — we ship DDP (Delivered Duty Paid) to 100+ countries, meaning we handle everything: freight, customs clearance, duties, taxes, and last-mile delivery. You receive the goods at your door with no hidden costs. We also offer FOB and EXW for clients who prefer to arrange their own logistics.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "Can I get a sample before placing a bulk order?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Yes. We offer pre-production samples at $50-150 per piece (refundable on bulk order of 200+ pcs), plus free material swatches and printed color cards. Sample lead time is 5-7 days.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "What file formats do you accept for artwork?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "AI, PSD, PDF, PNG, JPG — even a hand sketch. We free-check every artwork for printability and provide a 3D mockup on the actual garment before production. Unlimited revisions until you lock the design.",
-        },
-      },
-    ],
-  },
-];
+  ],
+};
 
 export default function Home() {
   return (
