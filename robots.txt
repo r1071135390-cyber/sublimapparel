@@ -1,0 +1,166 @@
+﻿User-Agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+
+User-Agent: GPTBot
+Allow: /
+
+User-Agent: ChatGPT-User
+Allow: /
+
+User-Agent: OAI-SearchBot
+Allow: /
+
+User-Agent: ClaudeBot
+Allow: /
+
+User-Agent: Claude-Web
+Allow: /
+
+User-Agent: Claude-User
+Allow: /
+
+User-Agent: anthropic-ai
+Allow: /
+
+User-Agent: PerplexityBot
+Allow: /
+
+User-Agent: Perplexity-User
+Allow: /
+
+User-Agent: Google-Extended
+Allow: /
+
+User-Agent: Applebot-Extended
+Allow: /
+
+User-Agent: CCBot
+Allow: /
+
+User-Agent: meta-externalagent
+Allow: /
+
+User-Agent: meta-externalfetcher
+Allow: /
+
+User-Agent: Bytespider
+Allow: /
+
+User-Agent: cohere-ai
+Allow: /
+
+User-Agent: cohere-training-data-crawler
+Allow: /
+
+User-Agent: DeepSeekBot
+Allow: /
+
+User-Agent: MistralAI-User
+Allow: /
+
+User-Agent: GoogleOther
+Allow: /
+
+User-Agent: Googlebot
+Allow: /
+
+User-Agent: Googlebot-Image
+Allow: /
+
+User-Agent: Googlebot-News
+Allow: /
+
+User-Agent: Googlebot-Video
+Allow: /
+
+User-Agent: Mediapartners-Google
+Allow: /
+
+User-Agent: AdsBot-Google
+Allow: /
+
+User-Agent: Bingbot
+Allow: /
+
+User-Agent: BingPreview
+Allow: /
+
+User-Agent: MSNBot-Media
+Allow: /
+
+User-Agent: Baiduspider
+Allow: /
+
+User-Agent: YandexBot
+Allow: /
+
+User-Agent: DuckDuckBot
+Allow: /
+
+User-Agent: Applebot
+Allow: /
+
+User-Agent: Twitterbot
+Allow: /
+
+User-Agent: facebookexternalhit
+Allow: /
+
+User-Agent: LinkedInBot
+Allow: /
+
+User-Agent: Slackbot
+Allow: /
+
+User-Agent: WhatsApp
+Allow: /
+
+User-Agent: TelegramBot
+Allow: /
+
+User-Agent: Discordbot
+Allow: /
+
+User-Agent: PetalBot
+Allow: /
+
+User-Agent: SemrushBot
+Disallow: /
+
+User-Agent: SemrushBot-SA
+Disallow: /
+
+User-Agent: SemrushBot-SI
+Disallow: /
+
+User-Agent: SemrushBot-CT
+Disallow: /
+
+User-Agent: SemrushBot-BM
+Disallow: /
+
+User-Agent: AhrefsBot
+Disallow: /
+
+User-Agent: AhrefsSiteAudit
+Disallow: /
+
+User-Agent: DotBot
+Disallow: /
+
+User-Agent: MJ12bot
+Disallow: /
+
+User-Agent: Rogerbot
+Disallow: /
+
+User-Agent: BLEXBot
+Disallow: /
+
+Host: https://sublimapparel.com
+Sitemap: https://sublimapparel.com/sitemap.xml
+Sitemap: https://sublimapparel.com/llms.txt
+
