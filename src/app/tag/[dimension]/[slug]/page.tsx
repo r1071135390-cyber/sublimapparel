@@ -64,6 +64,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     description: seo.description,
     keywords: seo.keywords,
     alternates: { canonical: path },
+    // SEO: keep only proven B2B winners indexable; noindex the long-tail
+    // tag pages that share products with /products, /fabric and the tag
+    // hub. Internal PageRank still flows (follow: true) so no link equity
+    // is wasted — only the Google index budget is conserved.
+    robots: tag.indexable
+      ? { index: true, follow: true }
+      : { index: false, follow: true, googleBot: { index: false, follow: true } },
     openGraph: {
       title: seo.title,
       description: seo.description,

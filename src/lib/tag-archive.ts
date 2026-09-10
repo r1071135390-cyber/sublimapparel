@@ -16,6 +16,21 @@ export interface TagInfo {
   benefits: string[];     // 3-4 bullet points
   process: string;        // recommended print process for this tag
   icon: string;           // emoji icon
+  /**
+   * Indexing hint for search engines.
+   *
+   * - `true`  — keep in Google index (high commercial intent / proven search volume)
+   * - `false` — exclude from index but keep internal PageRank flowing (default)
+   *
+   * Background: as of Sep 2026 GSC shows 339 impressions / 9 clicks across 45
+   * tag pages. Most tag pages share product cards with /products, /fabric and
+   * the tag hub itself, which Google treats as near-duplicate thin content.
+   * We noindex the long tail so crawl budget flows into the canonical product
+   * pages. Only tags with proven clicks (boxing / dance / golf / lacrosse in
+   * Sep 2026 GSC) plus the obvious B2B winners (t-shirt, jersey, soccer,
+   * basketball, team-and-club, corporate-and-branding) stay indexed.
+   */
+  indexable?: boolean;
 }
 
 // ------------------------------------------------------------
@@ -120,6 +135,7 @@ export const CATEGORY_TAGS: Record<string, Omit<TagInfo, "slug" | "dimension">> 
     ],
     process: "Sublimation (polyester) or All-Over Digital Print on Cotton",
     icon: "👕",
+    indexable: true,
   },
 
   Jersey: {
@@ -133,6 +149,7 @@ export const CATEGORY_TAGS: Record<string, Omit<TagInfo, "slug" | "dimension">> 
     ],
     process: "Sublimation on Polyester Interlock / Mesh",
     icon: "👕",
+    indexable: true,
   },
   "Hoodie": {
     label: "Hoodie",
@@ -340,6 +357,7 @@ export const SPORT_TAGS: Record<string, Omit<TagInfo, "slug" | "dimension">> = {
     ],
     process: "Sublimation on Polyester Mesh",
     icon: "🏀",
+    indexable: true,
   },
   "Beach": {
     label: "Beach",
@@ -373,6 +391,7 @@ export const SPORT_TAGS: Record<string, Omit<TagInfo, "slug" | "dimension">> = {
     ],
     process: "Sublimation on Polyester Satin",
     icon: "🥊",
+    indexable: true,
   },
   "Cheer": {
     label: "Cheer",
@@ -428,6 +447,7 @@ export const SPORT_TAGS: Record<string, Omit<TagInfo, "slug" | "dimension">> = {
     ],
     process: "Sublimation on Polyester Spandex",
     icon: "💃",
+    indexable: true,
   },
   "Dive": {
     label: "Dive",
@@ -483,6 +503,7 @@ export const SPORT_TAGS: Record<string, Omit<TagInfo, "slug" | "dimension">> = {
     ],
     process: "Sublimation on Polyester Piqué",
     icon: "⛳",
+    indexable: true,
   },
   "Gym": {
     label: "Gym",
@@ -516,6 +537,7 @@ export const SPORT_TAGS: Record<string, Omit<TagInfo, "slug" | "dimension">> = {
     ],
     process: "Sublimation on Polyester Mesh",
     icon: "🥍",
+    indexable: true,
   },
   "MMA": {
     label: "MMA",
@@ -628,6 +650,7 @@ export const SPORT_TAGS: Record<string, Omit<TagInfo, "slug" | "dimension">> = {
     ],
     process: "Sublimation on Polyester Eyelet",
     icon: "⚽",
+    indexable: true,
   },
   "Softball": {
     label: "Softball",
@@ -758,6 +781,7 @@ export const SCENARIO_TAGS: Record<string, Omit<TagInfo, "slug" | "dimension">> 
     ],
     process: "Sublimation on Polyester",
     icon: "🎁",
+    indexable: true,
   },
   "Event & Festival": {
     label: "Event & Festival",
@@ -791,6 +815,7 @@ export const SCENARIO_TAGS: Record<string, Omit<TagInfo, "slug" | "dimension">> 
     ],
     process: "Sublimation on Polyester",
     icon: "👥",
+    indexable: true,
   },
   "Sports League": {
     label: "Sports League",
@@ -813,6 +838,7 @@ export const SCENARIO_TAGS: Record<string, Omit<TagInfo, "slug" | "dimension">> 
     ],
     process: "Sublimation on Polyester",
     icon: "🏢",
+    indexable: true,
   },
   "Uniform & Workwear": {
     label: "Uniform & Workwear",
