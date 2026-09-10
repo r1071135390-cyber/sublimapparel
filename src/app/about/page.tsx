@@ -42,12 +42,72 @@ const values = [
 ];
 
 export default function AboutPage() {
+  // SEO: /about is currently the only page ranking #1 in Google
+  // (Sep-2026 GSC). Reinforce it with a FAQPage JSON-LD that mirrors the
+  // recurring "who is / where is / how long / who owns" queries that
+  // Googlebot already associates with this URL.
+  const aboutFaqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "Who owns SublimApparel?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "SublimApparel.com is a website of Yiwu HomeDorm Commodity Manufacturing Co., Ltd., registered in Yiwu, Zhejiang, China. Sales director Ramon Wang leads the B2B team.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Where is the factory located?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Our 2,000 m² Yiwu factory is at 35 Lingyun Road, Yiwu, Zhejiang, China. We also operate a US warehouse at 13052 Jurupa Ave, Fontana, CA 92335 for 2–5 day domestic delivery, plus a European representative in Rotterdam, NL.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "How long has SublimApparel been in business?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Since 2018 — over 8 years. We run 12 production lines and have produced 6,000+ custom designs for customers in 100+ countries.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "What's the minimum order quantity (MOQ)?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "MOQ is 50 pieces per design for cut-and-sew sublimation, and 30 pieces per design on re-orders. Sample runs start at 5–10 pieces with a 7–10 day turnaround.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "What certifications do you hold?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "OEKO-TEX Standard 100, ISO 9001, Sedex-SMETA audited, and CPSIA-compliant inks. We are Alibaba Gold Supplier and Trade Assurance enrolled.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Do you ship DDP (delivered duty paid)?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes — DDP shipping to 100+ countries (US, EU, UK, AU, LATAM). Quotes are landed and duty paid; any customs exclusions are stated up front on the quote.",
+        },
+      },
+    ],
+  };
+
   return (
     <>
       <JsonLd data={buildBreadcrumbJsonLd([
         { name: "Home", path: "/" },
         { name: "About", path: "/about" },
       ])} />
+      <JsonLd data={aboutFaqJsonLd} />
       <main>
       <section className="relative overflow-hidden border-b-2 border-black bg-[#0a0a0a] text-white">
         {/* Full-bleed background image — blurred/dark on left under text, clear on right */}

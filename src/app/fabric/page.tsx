@@ -66,12 +66,73 @@ const processes = [
 ];
 
 export default function FabricPage() {
+  // SEO: GSC Sep-2026 shows recurring FAQ-style queries (e.g. "fabric for
+  // sublimation printing", "is 8 spandex stretchy") pointing at /fabric with
+  // 0 clicks. A FAQPage JSON-LD lets us capture People Also Ask placements
+  // and gives Google enough context to render rich results instead of the
+  // thin navigation link it currently shows.
+  const fabricFaqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "What fabric is best for sublimation printing?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "100% polyester (160–200 GSM interlock or eyelet mesh) is the best fabric for sublimation printing. The dye sublimation process chemically bonds ink to polyester fibers, producing edge-to-edge all-over prints that won't crack, peel, or fade. Poly-spandex blends up to 92/8 also work well and add 4-way stretch for performance apparel.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Can you print all-over on 100% cotton?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes — via cut-and-sew allover digital print on cotton. We print individual fabric panels (front, back, sleeves) edge-to-edge with reactive inks, then stitch the garment together. The result is full-coverage print on 100% cotton with a soft hand feel, no DTG/DTF limits on placement, MOQ 50 pcs per design.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Is 8% spandex stretchy enough for athletic apparel?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes — 92/8 poly-spandex (8% spandex) is the industry standard for cycling jerseys, running shirts, and racing suits. It gives 4-way stretch and shape recovery while keeping the polyester content high enough for sharp sublimation prints. For yoga and dance we recommend 82/18 for extra drape.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "What's the difference between sublimation and DTG printing?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Sublimation uses heat to bond dye into polyester fibers (best for all-over print, edge-to-edge). DTG (Direct-to-Garment) sprays water-based ink onto the fabric surface and works best on 100% cotton for chest-sized logos. Use sublimation for full-coverage patterns; use DTG for small cotton prints.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "What's the minimum order quantity (MOQ) for custom sublimated apparel?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "MOQ is 50 pieces per design for cut-and-sew sublimation. For repeat orders the reorder MOQ drops to 30 pieces per design. Sample orders start at 5–10 pieces with a 7–10 day turnaround.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Which fabric is best for hot yoga and high-sweat sports?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Polyester eyelet mesh (140–160 GSM) or bird-eye (200–220 GSM) — both wick moisture, dry fast, and take sublimation print cleanly. For mid-weight outerwear use 280–320 GSM polyester fleece.",
+        },
+      },
+    ],
+  };
+
   return (
     <>
       <JsonLd data={buildBreadcrumbJsonLd([
         { name: "Home", path: "/" },
         { name: "Fabric", path: "/fabric" },
       ])} />
+      <JsonLd data={fabricFaqJsonLd} />
       <main>
       {/* HERO — full-bleed close-up of sublimation-printed fabric */}
       <section className="relative overflow-hidden bg-[#0a0a0a] text-white">
