@@ -6,9 +6,9 @@ import { Contact } from "@/components/contact";
 import { TeamSection } from "@/components/contact-team";
 
 export const metadata = buildPageMetadata({
-    title: "How to Reach Our Yiwu Factory — WhatsApp, Email, DDP Quote in 12h",
-    description: "How to reach our Yiwu factory: WhatsApp / WeChat +86-137-5793-1042, email sales@sublimapparel.com, US hub in Fontana CA, EU rep in Rotterdam NL. Real...",
-    keywords: ["contact sublimapparel", "Yiwu factory contact", "custom apparel inquiry", "B2B sales contact", "WhatsApp factory China", "sublimation quote request", "DDP shipping inquiry", "Fontana CA warehouse", "Rotterdam EU representative", "bulk order contact"],
+    title: "Get a Yiwu Factory Quote — MOQ 50 · DDP to 100+ Countries · Reply in 1 Day",
+    description: "Request a custom sublimation or all-over cotton print quote directly from our Yiwu factory. MOQ 50 pcs, 15-25 day production, DDP shipping to 100+ countries, US warehouse in Fontana CA. WhatsApp +86-198-1793-0190, info@sublimapparel.com. Replies within 1 business day, no signup required.",
+    keywords: ["sublimation quote Yiwu factory", "custom apparel quote MOQ 50", "DDP shipping quote", "sublimated jersey manufacturer contact", "Yiwu factory WhatsApp", "all-over print cotton quote", "B2B apparel inquiry", "Fontana CA warehouse pickup", "Rotterdam EU rep contact", "bulk custom apparel quote"],
     other: {
     "article:author": "Ramon Wang, Sales Director, SublimApparel",
     "article:published_time": "2024-01-01T00:00:00.000Z",
@@ -51,16 +51,19 @@ export default function ContactPage() {
         <div className="relative mx-auto max-w-7xl px-6 py-20 md:py-28 lg:py-32">
           <div className="max-w-2xl">
             <div className="mb-4 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
-              Contact
+              Get a Quote · MOQ 50
             </div>
-            <h1 className="text-[44px] font-black leading-[1.05] tracking-tight md:text-[64px] lg:text-[72px]">
-              Let&apos;s
-              <br />
-              <span className="text-[#cc3d00]">talk.</span>
+            <h1 className="text-[40px] font-black leading-[1.05] tracking-tight md:text-[56px] lg:text-[64px]">
+              Talk to a Yiwu factory manager — direct quote in 1 business day.
             </h1>
-            <p className="mt-4 max-w-md text-base leading-relaxed text-white/80 md:text-lg">
+            <p className="mt-4 max-w-xl text-base leading-relaxed text-white/80 md:text-lg">
               Real production managers in Yiwu, China — not chatbots.
-              WhatsApp, email. Average reply time: under 24 hours.
+              WhatsApp +86-198-1793-0190, email info@sublimapparel.com.
+              Average reply time: under 24 hours. No signup required.
+            </p>
+            <p className="mt-3 max-w-xl text-sm leading-relaxed text-white/70 md:text-base">
+              MOQ 50 pcs · 15-25 day production · DDP shipping to 100+ countries ·
+              US warehouse in Fontana CA for 2-5 day domestic delivery.
             </p>
           </div>
         </div>
