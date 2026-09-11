@@ -123,7 +123,7 @@ export default function FactoryPage() {
 
   return (
     <main className="min-h-screen bg-[#faf9f6] text-[#0a0a0a]">
-      <JsonLd data={[breadcrumbJsonLd, webPageJsonLd]} />
+      <JsonLd data={[breadcrumbJsonLd, webPageJsonLd, faqJsonLd]} />
       {/* 1 · HERO */}
       <section className="border-b-2 border-[#0a0a0a] bg-[#0a0a0a] text-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">

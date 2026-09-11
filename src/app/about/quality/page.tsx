@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import Link from "next/link";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
+import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 import { RequestQuoteLink } from "@/components/request-quote-link";
 import {
   ShieldCheck,
@@ -114,7 +114,7 @@ export default function QualityPage() {
 
   return (
     <main className="min-h-screen bg-[#faf9f6] text-[#0a0a0a]">
-      <JsonLd data={[breadcrumbJsonLd, webPageJsonLd]} />
+      <JsonLd data={[breadcrumbJsonLd, webPageJsonLd, faqJsonLd]} />
       {/* 1 · HERO */}
       <section className="border-b-2 border-[#0a0a0a] bg-[#0a0a0a] text-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">

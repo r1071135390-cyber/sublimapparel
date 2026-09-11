@@ -114,6 +114,10 @@ export default function ProductionPage() {
     { name: "About", path: "/about/" },
     { name: "Production", path: "/about/production/" },
   ]);
+  // 2026-09-11 (R23): add FAQPage JSON-LD mirroring the 4 inline
+  // production-timeline FAQs. Google uses FAQPage to surface Q&A in
+  // People Also Ask, directly boosting organic CTR.
+  const faqJsonLd = buildFaqJsonLd(faqs);
   const webPageJsonLd = {
     "@context": "https://schema.org",
     "@type": "WebPage",
@@ -133,7 +137,7 @@ export default function ProductionPage() {
 
   return (
     <main className="min-h-screen bg-[#faf9f6] text-[#0a0a0a]">
-      <JsonLd data={[breadcrumbJsonLd, webPageJsonLd]} />
+      <JsonLd data={[breadcrumbJsonLd, webPageJsonLd, faqJsonLd]} />
       {/* 1 · HERO */}
       <section className="border-b-2 border-[#0a0a0a] bg-[#0a0a0a] text-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">

@@ -12,21 +12,36 @@ import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 // URL-only snippet.
 // 2026-09-11 push (Round 4): rewrite description (was truncated mid-word),
 // expand keywords, add ogImage for social cards.
-export const metadata = buildPageMetadata({
-    title: "Allover Digital Print on Cotton | Full-Body + DTG/DTF",
-    // 2026-09-11 (R15-P0-2): was 171 chars — Google meta description limit is ~160. Rewrote to 154 chars.
-    description: "Allover digital print on 100% cotton apparel — true full-body, edge-to-edge printing via our proprietary cotton digital workflow. DTG and DTF for cotton blanks.",
-    ogTitle: "Allover Digital Print on Cotton — Full-Body Sublimation",
-    ogDescription: "True seam-to-seam digital printing on 100% cotton. Soft hand feel, photorealistic color, 50+ wash durability. MOQ 50 pcs. Yiwu factory since 2018.",
-    keywords: ["allover digital print on cotton", "100% cotton printing", "cotton jersey", "cotton t-shirt printing", "DTG printing", "direct to garment", "organic cotton apparel", "DTF heat transfer", "allover digital print cotton", "full body cotton print", "cotton sublimation", "cut and sew cotton"],
-  });;
-
-// 2026-09-11 push (Round 4): breadcrumb schema for rich SERP
+// 2026-09-11 push (R23): add WebPage + speakable so the page joins the
+// brand entity graph and is eligible for voice-search read-aloud of the
+// H1 + lead paragraph. We deliberately skip FAQPage here because the
+// page has no inline FAQ content; emitting an empty FAQPage would
+// violate Google's thin-content quality bar.
 const breadcrumbJsonLd = buildBreadcrumbJsonLd([
   { name: "Home", path: "/" },
   { name: "Fabric", path: "/fabric/" },
   { name: "Cotton", path: "/fabric/cotton/" },
 ]);
+const webPageJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://sublimapparel.com/fabric/cotton/#webpage",
+  url: "https://sublimapparel.com/fabric/cotton/",
+  name: "Allover Digital Print on Cotton | Full-Body + DTG/DTF",
+  description:
+    "Allover digital print on 100% cotton apparel — true full-body, edge-to-edge printing via our proprietary cotton digital workflow. DTG and DTF for cotton blanks.",
+  inLanguage: "en",
+  isPartOf: { "@id": "https://sublimapparel.com/#website" },
+  about: { "@id": "https://sublimapparel.com/#organization" },
+  primaryImageOfPage: {
+    "@type": "ImageObject",
+    url: "https://sublimapparel.com/og/og-home.webp",
+  },
+  speakable: {
+    "@type": "SpeakableSpecification",
+    xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+  },
+};
 
 const whyUs = [
   { icon: Droplets, title: "Reactive dye chemistry", desc: "Cotton needs reactive dyes (not disperse), proper pre-treatment, and steam fixation. We run the full chemistry chain — most sublimation shops simply skip cotton because they don't have the equipment." },
@@ -81,7 +96,7 @@ const products = [
 export default function CottonPage() {
   return (
     <>
-      <JsonLd data={breadcrumbJsonLd} />
+      <JsonLd data={[breadcrumbJsonLd, webPageJsonLd]} />
       <main>
       {/* HERO */}
       <section className="border-b-2 border-black bg-white">

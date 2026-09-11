@@ -32,10 +32,51 @@ const breadcrumbLd = buildBreadcrumbJsonLd([
   { name: "All Products", path: "/products/all/" },
 ]);
 
+// 2026-09-11 (R23): add WebPage + ItemList JSON-LD on /products/all/ so
+// the master catalog joins the brand entity graph and Google can render
+// the product grid as an ItemList rich result. The ItemList limits to the
+// first 50 products to keep payload within Google's recommended budget
+// for ItemList rich results (50 entries cap).
+const webPageJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://sublimapparel.com/products/all/#webpage",
+  url: "https://sublimapparel.com/products/all/",
+  name: "100 All-Over Print Products | Apparel by Garment, Sport, Scenario",
+  description:
+    "100 all-over print apparel products, cross-filtered by garment type (29), sport (42) and scenario (27). From polyester sublimation to all-over digital print on cotton.",
+  inLanguage: "en",
+  isPartOf: { "@id": "https://sublimapparel.com/#website" },
+  about: { "@id": "https://sublimapparel.com/#organization" },
+  primaryImageOfPage: {
+    "@type": "ImageObject",
+    url: "https://sublimapparel.com/og/og-products.webp",
+  },
+  speakable: {
+    "@type": "SpeakableSpecification",
+    xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+  },
+};
+const itemListJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "@id": "https://sublimapparel.com/products/all/#itemlist",
+  name: "All-Over Print Apparel Catalog",
+  description: `${products.length} all-over print apparel products from SublimApparel.`,
+  numberOfItems: products.length,
+  itemListOrder: "https://schema.org/ItemListUnordered",
+  itemListElement: products.slice(0, 50).map((p, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    url: `https://sublimapparel.com/products/all/${p.slug}/`,
+    name: p.name,
+  })),
+};
+
 export default function AllProductsPage() {
   return (
     <>
-      <JsonLd data={breadcrumbLd} />
+      <JsonLd data={[breadcrumbLd, webPageJsonLd, itemListJsonLd]} />
 
       {/* HERO */}
       <section className="relative overflow-hidden border-b-2 border-black bg-[#0A0A0A] text-white">
