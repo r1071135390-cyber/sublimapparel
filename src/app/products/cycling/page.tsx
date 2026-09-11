@@ -1,6 +1,6 @@
 import { JsonLd } from "@/components/json-ld";
 import { buildPageMetadata } from "@/lib/page-metadata";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildCategoryProductGraph } from "@/lib/breadcrumb";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Bike, Users, Palette, Ruler, Layers, Wind } from "lucide-react";
@@ -84,31 +84,29 @@ const faq = [
 ];
 
 export default function CyclingPage() {
+  // 2026-09-12 (R34): consolidate the previous 3 independent
+  // <script> tags (BreadcrumbList + FAQPage + flat Product)
+  // into a single @graph block (WebPage + Product + Service +
+  // BreadcrumbList + FAQPage). The new Product has @id,
+  // manufacturer @id, mpn, additionalProperty, and a
+  // seller-anchored Offer. The new Service node carries the
+  // DDP-shipping + 11 export countries surface.
+  const categoryGraph = buildCategoryProductGraph({
+    slug: "cycling",
+    path: "/products/cycling/",
+    name: "Custom Cycling Jerseys",
+    description:
+      "Custom sublimation printing, low MOQ 50 pcs, DDP shipping worldwide.",
+    productCategory: "Cycling Kit",
+    mpn: "SA-CYC-01",
+    image: "/og-default.jpg",
+    priceRange: "$",
+    faq,
+  });
+
   return (
     <main>
-      <JsonLd data={buildBreadcrumbJsonLd([
-        { name: "Home", path: "/" },
-        { name: "Products", path: "/products" },
-        { name: "Cycling Kits", path: "/products/cycling" },
-      ])} />
-      <JsonLd data={buildFaqJsonLd(faq)} />
-      <JsonLd data={{
-        "@context": "https://schema.org",
-        "@type": "Product",
-        "name": "Custom Cycling Jerseys",
-        "image": `${process.env.NEXT_PUBLIC_SITE_URL || "https://sublimapparel.com"}/og-default.jpg`,
-        "description": "Custom sublimation printing, low MOQ 50 pcs, DDP shipping worldwide.",
-        "brand": { "@type": "Brand", "name": "SublimApparel" },
-        "manufacturer": { "@type": "Organization", "name": "SublimApparel" },
-        "offers": {
-          "@type": "Offer",
-          "url": `${process.env.NEXT_PUBLIC_SITE_URL || "https://sublimapparel.com"}/products/cycling/`,
-          "priceCurrency": "USD",
-          "priceRange": "$",
-          "availability": "https://schema.org/InStock",
-          "itemCondition": "https://schema.org/NewCondition"
-        }
-      }} />
+      <JsonLd data={categoryGraph} />
 
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto grid max-w-7xl gap-0 px-6 md:grid-cols-12">

@@ -1,6 +1,6 @@
 import { JsonLd } from "@/components/json-ld";
 import { buildPageMetadata } from "@/lib/page-metadata";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildCategoryProductGraph } from "@/lib/breadcrumb";
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
@@ -112,31 +112,25 @@ const faq = [
 ];
 
 export default function TrainingApparelPage() {
+  // 2026-09-12 (R34): consolidate the previous 3 independent
+  // <script> tags (BreadcrumbList + FAQPage + flat Product)
+  // into a single @graph block.
+  const categoryGraph = buildCategoryProductGraph({
+    slug: "training-apparel",
+    path: "/products/training-apparel/",
+    name: "Custom All-Over Print Training Apparel",
+    description:
+      "Custom sublimation training apparel, all-over print, 4-way stretch poly-spandex, MOQ 50 pcs, DDP shipping worldwide. Built for CrossFit, gym studios, and team training kits.",
+    productCategory: "Training Apparel",
+    mpn: "SA-TRN-01",
+    image: "/products/0129/0.webp",
+    priceRange: "$",
+    faq,
+  });
+
   return (
     <main>
-      <JsonLd data={buildBreadcrumbJsonLd([
-        { name: "Home", path: "/" },
-        { name: "Products", path: "/products" },
-        { name: "Training Apparel", path: "/products/training-apparel" },
-      ])} />
-      <JsonLd data={{
-        "@context": "https://schema.org",
-        "@type": "Product",
-        "name": "Custom All-Over Print Training Apparel",
-        "image": `${process.env.NEXT_PUBLIC_SITE_URL || "https://sublimapparel.com"}/products/0129/0.webp`,
-        "description": "Custom sublimation training apparel, all-over print, 4-way stretch poly-spandex, MOQ 50 pcs, DDP shipping worldwide. Built for CrossFit, gym studios, and team training kits.",
-        "brand": { "@type": "Brand", "name": "SublimApparel" },
-        "manufacturer": { "@type": "Organization", "name": "SublimApparel" },
-        "offers": {
-          "@type": "Offer",
-          "url": `${process.env.NEXT_PUBLIC_SITE_URL || "https://sublimapparel.com"}/products/training-apparel/`,
-          "priceCurrency": "USD",
-          "priceRange": "$",
-          "availability": "https://schema.org/InStock",
-          "itemCondition": "https://schema.org/NewCondition"
-        }
-      }} />
-      <JsonLd data={buildFaqJsonLd(faq)} />
+      <JsonLd data={categoryGraph} />
 
       {/* HERO */}
       <section className="border-b-2 border-black bg-white">

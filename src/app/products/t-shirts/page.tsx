@@ -1,6 +1,6 @@
 import { JsonLd } from "@/components/json-ld";
 import { buildPageMetadata } from "@/lib/page-metadata";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildCategoryProductGraph } from "@/lib/breadcrumb";
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
@@ -94,31 +94,25 @@ const faq = [
 ];
 
 export default function TShirtsPage() {
+  // 2026-09-12 (R34): consolidate the previous 3 independent
+  // <script> tags (BreadcrumbList + FAQPage + flat Product)
+  // into a single @graph block.
+  const categoryGraph = buildCategoryProductGraph({
+    slug: "t-shirts",
+    path: "/products/t-shirts/",
+    name: "Custom Sublimation T-Shirts",
+    description:
+      "Custom sublimation printing, low MOQ 50 pcs, DDP shipping worldwide.",
+    productCategory: "T-Shirt",
+    mpn: "SA-TSH-01",
+    image: "/og-default.jpg",
+    priceRange: "$",
+    faq,
+  });
+
   return (
     <main>
-      <JsonLd data={buildBreadcrumbJsonLd([
-        { name: "Home", path: "/" },
-        { name: "Products", path: "/products" },
-        { name: "T-Shirts", path: "/products/t-shirts" },
-      ])} />
-      <JsonLd data={{
-        "@context": "https://schema.org",
-        "@type": "Product",
-        "name": "Custom Sublimation T-Shirts",
-        "image": `${process.env.NEXT_PUBLIC_SITE_URL || "https://sublimapparel.com"}/og-default.jpg`,
-        "description": "Custom sublimation printing, low MOQ 50 pcs, DDP shipping worldwide.",
-        "brand": { "@type": "Brand", "name": "SublimApparel" },
-        "manufacturer": { "@type": "Organization", "name": "SublimApparel" },
-        "offers": {
-          "@type": "Offer",
-          "url": `${process.env.NEXT_PUBLIC_SITE_URL || "https://sublimapparel.com"}/products/t-shirts/`,
-          "priceCurrency": "USD",
-          "priceRange": "$",
-          "availability": "https://schema.org/InStock",
-          "itemCondition": "https://schema.org/NewCondition"
-        }
-      }} />
-      <JsonLd data={buildFaqJsonLd(faq)} />
+      <JsonLd data={categoryGraph} />
 
       {/* HERO */}
       <section className="border-b-2 border-black bg-white">

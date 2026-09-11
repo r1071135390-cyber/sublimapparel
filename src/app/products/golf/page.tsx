@@ -1,6 +1,6 @@
 import { JsonLd } from "@/components/json-ld";
 import { buildPageMetadata } from "@/lib/page-metadata";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildCategoryProductGraph } from "@/lib/breadcrumb";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Flag, Users, Palette, Ruler, Layers, Shirt, Sun, Mountain, Trophy } from "lucide-react";
@@ -83,31 +83,25 @@ const faq = [
 ];
 
 export default function GolfPage() {
+  // 2026-09-12 (R34): consolidate the previous 3 independent
+  // <script> tags (BreadcrumbList + FAQPage + flat Product)
+  // into a single @graph block.
+  const categoryGraph = buildCategoryProductGraph({
+    slug: "golf",
+    path: "/products/golf/",
+    name: "Custom Golf Apparel",
+    description:
+      "Custom sublimation golf apparel — polos, mock necks, quarter-zips, long sleeve. MOQ 50 pcs, DDP shipping worldwide.",
+    productCategory: "Golf Polo",
+    mpn: "SA-GLF-01",
+    image: "/og-default.jpg",
+    priceRange: "$",
+    faq,
+  });
+
   return (
     <main>
-      <JsonLd data={buildBreadcrumbJsonLd([
-        { name: "Home", path: "/" },
-        { name: "Products", path: "/products" },
-        { name: "Golf Shirts", path: "/products/golf" },
-      ])} />
-      <JsonLd data={buildFaqJsonLd(faq)} />
-      <JsonLd data={{
-        "@context": "https://schema.org",
-        "@type": "Product",
-        "name": "Custom Golf Apparel — Polos, Mock Necks, Quarter-Zips",
-        "image": `${process.env.NEXT_PUBLIC_SITE_URL || "https://sublimapparel.com"}/og-default.jpg`,
-        "description": "Custom sublimation golf apparel — polos, mock necks, quarter-zips, long sleeve. MOQ 50 pcs, DDP shipping worldwide.",
-        "brand": { "@type": "Brand", "name": "SublimApparel" },
-        "manufacturer": { "@type": "Organization", "name": "SublimApparel" },
-        "offers": {
-          "@type": "Offer",
-          "url": `${process.env.NEXT_PUBLIC_SITE_URL || "https://sublimapparel.com"}/products/golf/`,
-          "priceCurrency": "USD",
-          "priceRange": "$",
-          "availability": "https://schema.org/InStock",
-          "itemCondition": "https://schema.org/NewCondition"
-        }
-      }} />
+      <JsonLd data={categoryGraph} />
 
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto grid max-w-7xl gap-0 px-6 md:grid-cols-12">

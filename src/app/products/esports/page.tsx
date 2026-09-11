@@ -1,6 +1,6 @@
 import { JsonLd } from "@/components/json-ld";
 import { buildPageMetadata } from "@/lib/page-metadata";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildCategoryProductGraph } from "@/lib/breadcrumb";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Users, Palette, Ruler, Sparkles, Shirt, Gamepad2, Crown, Layers, Zap } from "lucide-react";
@@ -83,31 +83,25 @@ const faq = [
 ];
 
 export default function EsportsPage() {
+  // 2026-09-12 (R34): consolidate the previous 3 independent
+  // <script> tags (BreadcrumbList + FAQPage + flat Product)
+  // into a single @graph block.
+  const categoryGraph = buildCategoryProductGraph({
+    slug: "esports",
+    path: "/products/esports/",
+    name: "Custom Esports Apparel",
+    description:
+      "Custom sublimation esports apparel — jerseys, hoodies, tees, team kits. MOQ 50 pcs, DDP shipping worldwide.",
+    productCategory: "Esports Jersey",
+    mpn: "SA-ESP-01",
+    image: "/og-default.jpg",
+    priceRange: "$",
+    faq,
+  });
+
   return (
     <main>
-      <JsonLd data={buildBreadcrumbJsonLd([
-        { name: "Home", path: "/" },
-        { name: "Products", path: "/products" },
-        { name: "Esports Jerseys", path: "/products/esports" },
-      ])} />
-      <JsonLd data={buildFaqJsonLd(faq)} />
-      <JsonLd data={{
-        "@context": "https://schema.org",
-        "@type": "Product",
-        "name": "Custom Esports Apparel — Jerseys, Hoodies, Team Kits",
-        "image": `${process.env.NEXT_PUBLIC_SITE_URL || "https://sublimapparel.com"}/og-default.jpg`,
-        "description": "Custom sublimation esports apparel — jerseys, hoodies, tees, team kits. MOQ 50 pcs, DDP shipping worldwide.",
-        "brand": { "@type": "Brand", "name": "SublimApparel" },
-        "manufacturer": { "@type": "Organization", "name": "SublimApparel" },
-        "offers": {
-          "@type": "Offer",
-          "url": `${process.env.NEXT_PUBLIC_SITE_URL || "https://sublimapparel.com"}/products/esports/`,
-          "priceCurrency": "USD",
-          "priceRange": "$",
-          "availability": "https://schema.org/InStock",
-          "itemCondition": "https://schema.org/NewCondition"
-        }
-      }} />
+      <JsonLd data={categoryGraph} />
 
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto grid max-w-7xl gap-0 px-6 md:grid-cols-12">

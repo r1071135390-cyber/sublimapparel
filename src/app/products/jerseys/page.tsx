@@ -1,6 +1,6 @@
 import { JsonLd } from "@/components/json-ld";
 import { buildPageMetadata } from "@/lib/page-metadata";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildCategoryProductGraph } from "@/lib/breadcrumb";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Shirt, Users, Palette, Ruler, Layers, Sparkles } from "lucide-react";
@@ -91,31 +91,25 @@ export default function JerseysPage() {
   // Build the list of jersey products (sport T-shirts)
   const jerseys = products.filter(isJersey).slice(0, 24);
 
+  // 2026-09-12 (R34): consolidate the previous 3 independent
+  // <script> tags (BreadcrumbList + FAQPage + flat Product)
+  // into a single @graph block.
+  const categoryGraph = buildCategoryProductGraph({
+    slug: "jerseys",
+    path: "/products/jerseys/",
+    name: "Custom Team Jerseys",
+    description:
+      "Custom sublimation team jerseys for soccer, baseball, basketball, volleyball. All-over print, MOQ 50 pcs, DDP shipping worldwide.",
+    productCategory: "Team Jersey",
+    mpn: "SA-JRS-01",
+    image: "/og-default.jpg",
+    priceRange: "$",
+    faq,
+  });
+
   return (
     <main>
-      <JsonLd data={buildBreadcrumbJsonLd([
-        { name: "Home", path: "/" },
-        { name: "Products", path: "/products" },
-        { name: "Jerseys", path: "/products/jerseys" },
-      ])} />
-      <JsonLd data={buildFaqJsonLd(faq)} />
-      <JsonLd data={{
-        "@context": "https://schema.org",
-        "@type": "Product",
-        "name": "Custom Team Jerseys",
-        "image": `${process.env.NEXT_PUBLIC_SITE_URL || "https://sublimapparel.com"}/og-default.jpg`,
-        "description": "Custom sublimation printing, low MOQ 50 pcs, DDP shipping worldwide.",
-        "brand": { "@type": "Brand", "name": "SublimApparel" },
-        "manufacturer": { "@type": "Organization", "name": "SublimApparel" },
-        "offers": {
-          "@type": "Offer",
-          "url": `${process.env.NEXT_PUBLIC_SITE_URL || "https://sublimapparel.com"}/products/jerseys/`,
-          "priceCurrency": "USD",
-          "priceRange": "$",
-          "availability": "https://schema.org/InStock",
-          "itemCondition": "https://schema.org/NewCondition"
-        }
-      }} />
+      <JsonLd data={categoryGraph} />
 
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto grid max-w-7xl gap-0 px-6 md:grid-cols-12">

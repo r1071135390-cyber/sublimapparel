@@ -1,6 +1,6 @@
 import { JsonLd } from "@/components/json-ld";
 import { buildPageMetadata } from "@/lib/page-metadata";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildCategoryProductGraph } from "@/lib/breadcrumb";
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
@@ -108,31 +108,25 @@ const faq = [
 ];
 
 export default function RunningShirtsPage() {
+  // 2026-09-12 (R34): consolidate the previous 3 independent
+  // <script> tags (BreadcrumbList + FAQPage + flat Product)
+  // into a single @graph block.
+  const categoryGraph = buildCategoryProductGraph({
+    slug: "running-shirts",
+    path: "/products/running-shirts/",
+    name: "Custom All-Over Print Running Shirts",
+    description:
+      "Custom sublimation running shirts, all-over print, low MOQ 50 pcs, DDP shipping worldwide. Poly interlock or mesh, 4-way stretch, anti-odor finish.",
+    productCategory: "Running Shirt",
+    mpn: "SA-RUN-01",
+    image: "/products/0128/0.webp",
+    priceRange: "$",
+    faq,
+  });
+
   return (
     <main>
-      <JsonLd data={buildBreadcrumbJsonLd([
-        { name: "Home", path: "/" },
-        { name: "Products", path: "/products" },
-        { name: "Running Shirts", path: "/products/running-shirts" },
-      ])} />
-      <JsonLd data={{
-        "@context": "https://schema.org",
-        "@type": "Product",
-        "name": "Custom All-Over Print Running Shirts",
-        "image": `${process.env.NEXT_PUBLIC_SITE_URL || "https://sublimapparel.com"}/products/0128/0.webp`,
-        "description": "Custom sublimation running shirts, all-over print, low MOQ 50 pcs, DDP shipping worldwide. Poly interlock or mesh, 4-way stretch, anti-odor finish.",
-        "brand": { "@type": "Brand", "name": "SublimApparel" },
-        "manufacturer": { "@type": "Organization", "name": "SublimApparel" },
-        "offers": {
-          "@type": "Offer",
-          "url": `${process.env.NEXT_PUBLIC_SITE_URL || "https://sublimapparel.com"}/products/running-shirts/`,
-          "priceCurrency": "USD",
-          "priceRange": "$",
-          "availability": "https://schema.org/InStock",
-          "itemCondition": "https://schema.org/NewCondition"
-        }
-      }} />
-      <JsonLd data={buildFaqJsonLd(faq)} />
+      <JsonLd data={categoryGraph} />
 
       {/* HERO */}
       <section className="border-b-2 border-black bg-white">
