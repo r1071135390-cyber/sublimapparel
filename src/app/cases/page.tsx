@@ -80,6 +80,37 @@ export default function CasesPage() {
     },
   ]);
 
+  // 2026-09-11 push (Round 7): add CollectionPage + ItemList JSON-LD on
+  // /cases/. Mirrors the structure of /products/ — the page is a hub of
+  // industry-specific case-study landing pages, but Google would otherwise
+  // see only an unannotated grid of <a> tags. With CollectionPage +
+  // ItemList, the hub → industry hub → case detail relationship is
+  // explicit in structured data, and each industry URL gets a clear
+  // position in the index.
+  const caseCollection = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": "https://sublimapparel.com/cases/#collection",
+    url: "https://sublimapparel.com/cases/",
+    name: "Custom Apparel Case Studies — 12 Industries, 6,000+ Projects",
+    description:
+      "Browse sublimation and all-over-print apparel case studies by industry. Real custom apparel, DDP shipping and full-bleed cotton prints shipped to 50+ countries. Sports teams, events, brands, music festivals, e-commerce, and more.",
+    inLanguage: "en",
+    isPartOf: { "@id": "https://sublimapparel.com/#website" },
+    provider: { "@id": "https://sublimapparel.com/#organization" },
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: industries.length,
+      itemListOrder: "https://schema.org/ItemListOrderAscending",
+      itemListElement: industries.map((ind, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        url: `https://sublimapparel.com/cases/${ind.slug}/`,
+        name: ind.title,
+      })),
+    },
+  };
+
   return (
     <>
       <JsonLd
@@ -89,6 +120,7 @@ export default function CasesPage() {
         ])}
       />
       <JsonLd data={faqJsonLd} />
+      <JsonLd data={caseCollection} />
       {/* Top utility bar */}
       <div className="border-b-2 border-black bg-black text-white">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-6 py-2.5 text-[11px] font-bold uppercase tracking-wider">

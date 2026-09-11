@@ -169,10 +169,43 @@ export default function IndustriesIndexPage() {
     },
   ]);
 
+  // 2026-09-11 push (Round 7): add CollectionPage + ItemList JSON-LD on
+  // /industries/. This page is the master hub for 12 industry landing
+  // pages; without structured data Google only sees a grid of <a> links
+  // and has to infer the parent → child relationship. With CollectionPage
+  // + ItemList, the 12 industry URLs are listed in a stable order
+  // (alphabetical by slug) and each gets a position number, which makes
+  // the hub eligible for "list snippets" rich results and gives Google's
+  // crawler an explicit map of the industries section.
+  const industriesCollection = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": "https://sublimapparel.com/industries/#collection",
+    url: "https://sublimapparel.com/industries/",
+    name: "Custom Apparel Industries — 12 Verticals, 6,000+ Projects",
+    description:
+      "Browse 12 industries we serve with custom sublimation and all-over-print apparel: sports teams, endurance events, conferences, music festivals, corporate, schools, hospitality, marketing, trade shows, brands & agencies, political campaigns, and e-commerce fulfillment.",
+    inLanguage: "en",
+    isPartOf: { "@id": "https://sublimapparel.com/#website" },
+    provider: { "@id": "https://sublimapparel.com/#organization" },
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: INDUSTRIES.length,
+      itemListOrder: "https://schema.org/ItemListOrderAscending",
+      itemListElement: INDUSTRIES.map((ind, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        url: `https://sublimapparel.com${ind.href}`,
+        name: ind.badge,
+      })),
+    },
+  };
+
   return (
     <>
       <JsonLd data={breadcrumb} />
       <JsonLd data={faqJsonLd} />
+      <JsonLd data={industriesCollection} />
       <main className="bg-background text-foreground">
       <section className="border-b border-border bg-muted/30 py-16 md:py-24">
         <div className="mx-auto max-w-6xl px-6">

@@ -22,12 +22,43 @@ export default function BlogIndexPage() {
   const rest = blogPosts.filter((p) => p.slug !== featured.slug);
   const categories = getAllCategories();
 
+  // 2026-09-11 push (Round 7): add Blog + ItemList JSON-LD on /blog/.
+  // Google treats /blog/ as a flat archive of <a> links by default, which
+  // misses the fact that each link is a distinct Article. With Blog as the
+  // @type and an ItemList enumerating the actual blog post URLs, Google's
+  // crawler can map the index → individual posts without re-walking
+  // internal links, and the index itself becomes eligible for "Articles
+  // from this site" rich-result groups in the SERP carousel.
+  const blogList = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "@id": "https://sublimapparel.com/blog/#blog",
+    url: "https://sublimapparel.com/blog/",
+    name: "SublimApparel Blog — Apparel Manufacturing Insights",
+    description:
+      "Industry guides, factory stories, and B2B apparel manufacturing insights from a 2,000 m² Yiwu sublimation factory. Sublimation vs DTG, DDP shipping, fabric guides, esports jersey fabric, and more.",
+    inLanguage: "en",
+    publisher: { "@id": "https://sublimapparel.com/#organization" },
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: blogPosts.length,
+      itemListOrder: "https://schema.org/ItemListOrderDescending",
+      itemListElement: blogPosts.map((p, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        url: `https://sublimapparel.com/blog/${p.slug}/`,
+        name: p.title,
+      })),
+    },
+  };
+
   return (
     <>
       <JsonLd data={buildBreadcrumbJsonLd([
         { name: "Home", path: "/" },
         { name: "Blog", path: "/blog" },
       ])} />
+      <JsonLd data={blogList} />
       <main>
       {/* HERO */}
       <section className="border-b-2 border-black bg-[#faf9f6]">

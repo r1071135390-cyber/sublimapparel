@@ -8,6 +8,7 @@ import Link from "next/link";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { tagArchiveLink, resolveArchiveLink } from "@/lib/tag-utils";
 import { CATEGORY_TAGS } from "@/lib/tag-archive";
+import { products } from "@/lib/products-data";
 import { KeywordCloud } from "@/components/keyword-cloud";
 
 export const metadata = buildPageMetadata({
@@ -143,6 +144,48 @@ const comparison = [
 ];
 
 export default function ProductsPage() {
+  // 2026-09-11 push (Round 7): add CollectionPage + ItemList JSON-LD on /products/.
+  // The page is structurally a catalog index that lists 119 products across
+  // 14 categories, 42 sports, and 25 use cases. Without explicit structured
+  // data, Google only sees a flat list of <a> tags and has to infer the
+  // hierarchy. With CollectionPage + ItemList:
+  //  - CollectionPage signals "this is a catalog landing page" and ties the
+  //    page to the Organization publisher.
+  //  - ItemList enumerates the top 20 product slugs (by number) so Google's
+  //    crawler can find them without re-walking the whole sitemap, and so
+  //    sitelinks-style "carousel" rich results are more likely.
+  // We use the top 20 (not all 119) because ItemList >50 items is deprecated
+  // and >100 is ignored by Google; 20 is a safe signal-rich size.
+  const topProducts = [...products]
+    .sort((a, b) => a.number.localeCompare(b.number))
+    .slice(0, 20)
+    .map((p, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      url: `https://sublimapparel.com/products/all/${p.slug}/`,
+      name: p.name,
+    }));
+
+  const collectionPage = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": "https://sublimapparel.com/products/#collection",
+    url: "https://sublimapparel.com/products/",
+    name: "Custom Sublimation Apparel Catalog — 119 Products, 14 Categories",
+    description:
+      "Full product catalog of sublimation-printed custom apparel. 14 categories including t-shirts, hoodies, jerseys, sportswear, polo shirts, jackets, pants, sweatshirts, shirts, skirts, caps, home textiles, workwear, and tank tops. 42 sports, 25 use cases.",
+    inLanguage: "en",
+    isPartOf: { "@id": "https://sublimapparel.com/#website" },
+    about: { "@id": "https://sublimapparel.com/#organization" },
+    provider: { "@id": "https://sublimapparel.com/#organization" },
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: topProducts.length,
+      itemListOrder: "https://schema.org/ItemListOrderAscending",
+      itemListElement: topProducts,
+    },
+  };
+
   return (
     <main>
       <JsonLd
@@ -151,6 +194,7 @@ export default function ProductsPage() {
           { name: "Products", path: "/products" },
         ])}
       />
+      <JsonLd data={collectionPage} />
       <section className="relative overflow-hidden bg-white">
         {/* Full-bleed background image with floating text overlay */}
         <div className="relative h-[85vh] min-h-[640px] w-full">

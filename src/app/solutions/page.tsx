@@ -126,6 +126,35 @@ const solutionsFaq = [
 const solutionsFaqJsonLd = buildFaqJsonLd(solutionsFaq);
 
 export default function SolutionsPage() {
+  // 2026-09-11 push (Round 7): add CollectionPage + ItemList JSON-LD on
+  // /solutions/. The page is the master hub for 6 solution landing pages
+  // (teams, events, corporate, promotional, brands, e-commerce). Same
+  // reason as /products/, /cases/, and /industries/ — without structured
+  // data, the hub → child relationship is invisible to Google.
+  const solutionsCollection = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": "https://sublimapparel.com/solutions/#collection",
+    url: "https://sublimapparel.com/solutions/",
+    name: "Custom Apparel Solutions — 6 B2B Buyer Workflows",
+    description:
+      "Six apparel solutions built for specific B2B buyers: sports teams, events, corporate, promotional, brands, and e-commerce. Each solution has its own fabric, MOQ, lead time, and case studies.",
+    inLanguage: "en",
+    isPartOf: { "@id": "https://sublimapparel.com/#website" },
+    provider: { "@id": "https://sublimapparel.com/#organization" },
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: solutions.length,
+      itemListOrder: "https://schema.org/ItemListOrderAscending",
+      itemListElement: solutions.map((s, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        url: `https://sublimapparel.com/${s.slug}/`,
+        name: s.title,
+      })),
+    },
+  };
+
   return (
     <>
       <JsonLd
@@ -135,6 +164,7 @@ export default function SolutionsPage() {
         ])}
       />
       <JsonLd data={solutionsFaqJsonLd} />
+      <JsonLd data={solutionsCollection} />
       <main>
         {/* HERO — dark industrial style */}
         <section className="relative overflow-hidden bg-[#0a0a0a] text-white">
