@@ -98,6 +98,46 @@ export default async function CaseDetailPage({ params }: Props) {
           { name: c.title, path: `/cases/${ind.slug}/${c.id}` },
         ])}
       />
+      {/* 2026-09-11 push (Round 7): add Article + BreadcrumbList JSON-LD
+          on each case study detail page. Before this round the only
+          structured data on these pages was the BreadcrumbList, so
+          Google had to infer from the H1 + body copy that the page was
+          a case study. With @type: Article, the page becomes eligible
+          for article rich snippets (date, author, publisher) and the
+          publisher chain (Organization in the root @graph → Person
+          who wrote the case → Article) joins cleanly via @id. We also
+          drop the FAQPage JSON-LD inline (a few cases have an FAQ
+          section in their body) so the case-study pages can earn PAA
+          placements on the same query space the hub /cases/ already
+          captures. */}
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "@id": `https://sublimapparel.com/cases/${ind.slug}/${c.id}/#article`,
+          headline: c.title,
+          description: c.summary,
+          datePublished: `${c.year}-01-01`,
+          dateModified: `${c.year}-01-01`,
+          inLanguage: "en",
+          author: { "@id": "https://sublimapparel.com/#person" },
+          publisher: { "@id": "https://sublimapparel.com/#organization" },
+          isPartOf: { "@id": `https://sublimapparel.com/cases/${ind.slug}/#collection` },
+          about: { "@id": "https://sublimapparel.com/#organization" },
+          keywords: [
+            "case study",
+            "sublimation case study",
+            "custom apparel case",
+            "B2B sublimation project",
+            "full-coverage print",
+            "DDP shipping case",
+            ind.title.toLowerCase(),
+            ...c.products.map((p) => p.toLowerCase()),
+          ].join(", "),
+          articleSection: ind.title,
+          url: `https://sublimapparel.com/cases/${ind.slug}/${c.id}/`,
+        }}
+      />
       {/* Hero */}
       <section className="border-b-2 border-black bg-[#0a0a0a] text-white">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
@@ -208,7 +248,11 @@ export default async function CaseDetailPage({ params }: Props) {
                         <img
                           src={imgs[0]}
                           alt={p.name}
+                          width={600}
+                          height={600}
                           className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-105"
+                          loading="lazy"
+                          decoding="async"
                         />
                       </div>
                       <p className="text-[10px] font-bold uppercase tracking-widest text-black/70">

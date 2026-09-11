@@ -177,8 +177,11 @@ export default function TrainingApparelPage() {
                 <img
                   src={heroGallery[0].src}
                   alt={heroGallery[0].alt}
+                  width={1200}
+                  height={900}
                   className="h-full w-full object-cover"
                   loading="eager"
+                  decoding="async"
                 />
               </div>
               <p className="mt-4 text-center text-xs font-bold uppercase tracking-widest text-neutral-600">
@@ -220,8 +223,11 @@ export default function TrainingApparelPage() {
                 <img
                   src={img.src}
                   alt={img.alt}
+                  width={800}
+                  height={800}
                   className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
                   loading={i < 3 ? "eager" : "lazy"}
+                  decoding="async"
                 />
               </div>
             ))}

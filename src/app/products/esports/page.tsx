@@ -161,15 +161,15 @@ export default function EsportsPage() {
           <h2 className="text-4xl font-black leading-tight md:text-6xl">From <span className="text-[#cc3d00]">scrim server</span> to main stage.</h2>
           <div className="mt-10 grid gap-0 md:grid-cols-3">
             <div className="border-2 border-black bg-white">
-              <img src="/esports-jersey-prodigy.webp" alt="Custom sublimated black esports jersey with neon geometric print and gamer tag" className="aspect-[4/5] w-full object-cover" />
+              <img src="/esports-jersey-prodigy.webp" alt="Custom sublimated black esports jersey with neon geometric print and gamer tag" width={800} height={1000} className="aspect-[4/5] w-full object-cover" loading="lazy" decoding="async" />
               <div className="border-t-2 border-black p-3 text-xs font-black uppercase tracking-widest text-black">Match Jersey · Prodigy</div>
             </div>
             <div className="border-2 border-t-0 border-black bg-white md:border-t-2 md:border-l-0">
-              <img src="/esports-hoodie-circuit.webp" alt="Custom sublimated charcoal gamer hoodie with circuit board pattern print" className="aspect-[4/5] w-full object-cover" />
+              <img src="/esports-hoodie-circuit.webp" alt="Custom sublimated charcoal gamer hoodie with circuit board pattern print" width={800} height={1000} className="aspect-[4/5] w-full object-cover" loading="lazy" decoding="async" />
               <div className="border-t-2 border-black p-3 text-xs font-black uppercase tracking-widest text-black">Gamer Hoodie · Circuit</div>
             </div>
             <div className="border-2 border-t-0 border-black bg-white md:border-t-2 md:border-l-0">
-              <img src="/esports-travel-hoodie.webp" alt="Custom sublimated black full-zip travel hoodie with brand identity print" className="aspect-[4/5] w-full object-cover" />
+              <img src="/esports-travel-hoodie.webp" alt="Custom sublimated black full-zip travel hoodie with brand identity print" width={800} height={1000} className="aspect-[4/5] w-full object-cover" loading="lazy" decoding="async" />
               <div className="border-t-2 border-black p-3 text-xs font-black uppercase tracking-widest text-black">Travel Hoodie · LAN</div>
             </div>
           </div>

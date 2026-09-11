@@ -96,8 +96,11 @@ export function Process() {
                   <img
                     src={step.img}
                     alt={step.title}
+                    width={800}
+                    height={600}
                     className="aspect-[4/3] w-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all"
                     loading="lazy"
+                    decoding="async"
                   />
                 </div>
               )}

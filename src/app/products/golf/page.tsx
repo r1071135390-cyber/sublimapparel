@@ -161,19 +161,19 @@ export default function GolfPage() {
           <h2 className="text-4xl font-black leading-tight md:text-6xl">From the <span className="text-[#cc3d00]">factory floor</span> to the first tee.</h2>
           <div className="mt-10 grid gap-0 md:grid-cols-2 lg:grid-cols-4">
             <div className="border-2 border-black bg-white">
-              <img src="/golf-polo-navy.webp" alt="Custom sublimated navy golf polo with all-over abstract print" className="aspect-[4/5] w-full object-cover" />
+              <img src="/golf-polo-navy.webp" alt="Custom sublimated navy golf polo with all-over abstract print" width={800} height={1000} className="aspect-[4/5] w-full object-cover" loading="lazy" decoding="async" />
               <div className="border-t-2 border-black p-3 text-xs font-black uppercase tracking-widest text-black">Polo · Navy</div>
             </div>
             <div className="border-2 border-t-0 border-black bg-white md:border-t-2 md:border-l-0">
-              <img src="/golf-quarter-zip.webp" alt="Custom sublimated charcoal quarter-zip with mountain landscape print" className="aspect-[4/5] w-full object-cover" />
+              <img src="/golf-quarter-zip.webp" alt="Custom sublimated charcoal quarter-zip with mountain landscape print" width={800} height={1000} className="aspect-[4/5] w-full object-cover" loading="lazy" decoding="async" />
               <div className="border-t-2 border-black p-3 text-xs font-black uppercase tracking-widest text-black">Quarter-Zip · Mountain</div>
             </div>
             <div className="border-2 border-t-0 border-black bg-white md:border-t-2 lg:border-l-0">
-              <img src="/golf-mockneck-tropical.webp" alt="Custom sublimated white mock neck with tropical leaf print" className="aspect-[4/5] w-full object-cover" />
+              <img src="/golf-mockneck-tropical.webp" alt="Custom sublimated white mock neck with tropical leaf print" width={800} height={1000} className="aspect-[4/5] w-full object-cover" loading="lazy" decoding="async" />
               <div className="border-t-2 border-black p-3 text-xs font-black uppercase tracking-widest text-black">Mock Neck · Tropical</div>
             </div>
             <div className="border-2 border-t-0 border-black bg-white md:border-t-2 lg:border-l-0">
-              <img src="/golf-womens-sleeveless.webp" alt="Custom sublimated women's pink sleeveless polo with floral print" className="aspect-[4/5] w-full object-cover" />
+              <img src="/golf-womens-sleeveless.webp" alt="Custom sublimated women's pink sleeveless polo with floral print" width={800} height={1000} className="aspect-[4/5] w-full object-cover" loading="lazy" decoding="async" />
               <div className="border-t-2 border-black p-3 text-xs font-black uppercase tracking-widest text-black">Women's · Floral</div>
             </div>
           </div>

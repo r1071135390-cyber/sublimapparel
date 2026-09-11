@@ -108,6 +108,41 @@ export default function AboutPage() {
         { name: "About", path: "/about" },
       ])} />
       <JsonLd data={aboutFaqJsonLd} />
+      {/* 2026-09-11 push (Round 7 part 3): add AboutPage + Organization @graph.
+          Google has a dedicated @type: "AboutPage" schema that helps the
+          crawler identify the page as the brand's authoritative "about"
+          surface. Linking it to the global Organization via mainEntity
+          and to the website via isPartOf joins the about page to the
+          site-wide entity graph. We deliberately omit aggregateRating
+          because we don't publish a verified public review count, and
+          fabricated ratings would violate Google's structured data
+          spam policy. */}
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "AboutPage",
+          "@id": "https://sublimapparel.com/about/#webpage",
+          url: "https://sublimapparel.com/about/",
+          name: "About SublimApparel — Yiwu Custom Apparel Factory",
+          description:
+            "SublimApparel is a Yiwu-based apparel factory producing custom sublimated, all-over digital printed, DTG, DTF, and screen-printed apparel for B2B customers in 50+ countries since 2018.",
+          inLanguage: "en",
+          isPartOf: { "@id": "https://sublimapparel.com/#website" },
+          about: { "@id": "https://sublimapparel.com/#organization" },
+          mainEntity: { "@id": "https://sublimapparel.com/#organization" },
+          primaryImageOfPage: {
+            "@type": "ImageObject",
+            url: "https://sublimapparel.com/about-hero.webp",
+          },
+          significantLink: [
+            "https://sublimapparel.com/about/",
+            "https://sublimapparel.com/quality-control/",
+            "https://sublimapparel.com/factory/",
+          ],
+          keywords:
+            "about SublimApparel, Yiwu factory, custom apparel manufacturer, 8 years experience, 50+ countries served, US warehouse, B2B sublimation manufacturer, OEM apparel, OEKO-TEX certified",
+        }}
+      />
       <main>
       <section className="relative overflow-hidden border-b-2 border-black bg-[#0a0a0a] text-white">
         {/* Full-bleed background image — blurred/dark on left under text, clear on right */}

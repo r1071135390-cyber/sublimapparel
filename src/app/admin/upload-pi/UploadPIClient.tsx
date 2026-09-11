@@ -379,6 +379,10 @@ export default function UploadPIClient() {
                     <img
                       src={imageData}
                       alt="PI preview"
+                      width={300}
+                      height={300}
+                      loading="eager"
+                      decoding="async"
                       className="mx-auto max-h-[300px] border border-black"
                     />
                     <p className="mt-3 text-center text-xs text-black/60">

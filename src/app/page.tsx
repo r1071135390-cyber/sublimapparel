@@ -43,16 +43,153 @@ const homeJsonLd = {
         "sublimation factory, all over print, all over print manufacturer, sublimation all over print, all over print t-shirt, all over print hoodie, custom sublimation apparel, Yiwu sublimation factory, DDP sublimation, allover digital print cotton, DTG cotton, DTF cotton, MOQ 50, full body sublimation, edge to edge sublimation",
       inLanguage: "en",
       isPartOf: { "@id": "https://sublimapparel.com/#website" },
-      about: {
-        "@type": "Service",
-        name: "Custom Sublimation Apparel Manufacturing",
-        serviceType: "Sublimation Printing & Cut-and-Sew",
-        provider: { "@id": "https://sublimapparel.com/#organization" },
-        areaServed: "Worldwide",
-      },
+      about: { "@id": "https://sublimapparel.com/#service" },
       primaryImageOfPage: {
         "@type": "ImageObject",
         url: "https://sublimapparel.com/product-hero-products.webp",
+      },
+    },
+    // 2026-09-11 push (Round 7 part 3): add explicit Service + hasOfferCatalog
+    // to the home @graph. The previous WebPage.about already had a Service
+    // node, but it only had a serviceType label. Without an Offer catalog,
+    // Google can't confidently match long-tail buyer queries like
+    // "sublimation hoodie factory MOQ 50 DDP" against the home page. The
+    // OfferCatalog below lists the 6 main product families we ship,
+    // each priced with a representative unit range so Google can
+    // return "$-$$" price labels in the SERP for product-intent queries.
+    {
+      "@type": "Service",
+      "@id": "https://sublimapparel.com/#service",
+      name: "Custom Sublimation Apparel Manufacturing",
+      serviceType: "Custom apparel sublimation, DTG, DTF, screen print, cut-and-sew, DDP shipping",
+      category: "B2B Apparel Manufacturing",
+      provider: { "@id": "https://sublimapparel.com/#organization" },
+      areaServed: [
+        { "@type": "Country", name: "United States" },
+        { "@type": "Country", name: "Canada" },
+        { "@type": "Country", name: "United Kingdom" },
+        { "@type": "Country", name: "Australia" },
+        { "@type": "Country", name: "New Zealand" },
+        { "@type": "Country", name: "Germany" },
+        { "@type": "Country", name: "France" },
+        { "@type": "Country", name: "Spain" },
+        { "@type": "Country", name: "Mexico" },
+        { "@type": "Country", name: "Brazil" },
+        { "@type": "Country", name: "Japan" },
+      ],
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "Custom Apparel Product Families",
+        itemListElement: [
+          {
+            "@type": "OfferCatalog",
+            name: "All-over sublimation jerseys",
+            itemListElement: [
+              {
+                "@type": "Offer",
+                itemOffered: { "@type": "Service", name: "All-over sublimation jerseys (polyester)" },
+                priceSpecification: {
+                  "@type": "PriceSpecification",
+                  priceCurrency: "USD",
+                  price: 18.0,
+                  minPrice: 12.0,
+                  maxPrice: 35.0,
+                  description: "Per-piece FOB Yiwu, MOQ 50, depends on fabric & complexity",
+                },
+              },
+            ],
+          },
+          {
+            "@type": "OfferCatalog",
+            name: "Allover digital print on cotton",
+            itemListElement: [
+              {
+                "@type": "Offer",
+                itemOffered: { "@type": "Service", name: "Allover digital print on 100% cotton (DTG/DTF)" },
+                priceSpecification: {
+                  "@type": "PriceSpecification",
+                  priceCurrency: "USD",
+                  price: 22.0,
+                  minPrice: 15.0,
+                  maxPrice: 38.0,
+                  description: "Per-piece FOB Yiwu, MOQ 50, depends on cotton GSM & ink coverage",
+                },
+              },
+            ],
+          },
+          {
+            "@type": "OfferCatalog",
+            name: "Hoodies & sweatshirts",
+            itemListElement: [
+              {
+                "@type": "Offer",
+                itemOffered: { "@type": "Service", name: "Custom hoodies, crewnecks, zip-ups" },
+                priceSpecification: {
+                  "@type": "PriceSpecification",
+                  priceCurrency: "USD",
+                  price: 28.0,
+                  minPrice: 18.0,
+                  maxPrice: 55.0,
+                  description: "Per-piece FOB Yiwu, MOQ 50, fleece weight & print process drive price",
+                },
+              },
+            ],
+          },
+          {
+            "@type": "OfferCatalog",
+            name: "Polos & quarter-zips",
+            itemListElement: [
+              {
+                "@type": "Offer",
+                itemOffered: { "@type": "Service", name: "Custom polo shirts, quarter-zips, mock necks" },
+                priceSpecification: {
+                  "@type": "PriceSpecification",
+                  priceCurrency: "USD",
+                  price: 20.0,
+                  minPrice: 13.0,
+                  maxPrice: 38.0,
+                  description: "Per-piece FOB Yiwu, MOQ 50, pique / interlock / jersey knits available",
+                },
+              },
+            ],
+          },
+          {
+            "@type": "OfferCatalog",
+            name: "Sports & esports kits",
+            itemListElement: [
+              {
+                "@type": "Offer",
+                itemOffered: { "@type": "Service", name: "Team kits — esports, race, league, club" },
+                priceSpecification: {
+                  "@type": "PriceSpecification",
+                  priceCurrency: "USD",
+                  price: 19.0,
+                  minPrice: 13.0,
+                  maxPrice: 40.0,
+                  description: "Per-piece FOB Yiwu, MOQ 50, includes sublimated jersey + matching short",
+                },
+              },
+            ],
+          },
+          {
+            "@type": "OfferCatalog",
+            name: "T-shirts & tanks",
+            itemListElement: [
+              {
+                "@type": "Offer",
+                itemOffered: { "@type": "Service", name: "Custom t-shirts, tanks, singlets" },
+                priceSpecification: {
+                  "@type": "PriceSpecification",
+                  priceCurrency: "USD",
+                  price: 9.0,
+                  minPrice: 6.0,
+                  maxPrice: 18.0,
+                  description: "Per-piece FOB Yiwu, MOQ 50, polyester / cotton / blends available",
+                },
+              },
+            ],
+          },
+        ],
       },
     },
     {

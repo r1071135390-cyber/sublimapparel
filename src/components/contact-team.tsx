@@ -82,8 +82,11 @@ export function TeamSection() {
             <img
               src="/team-group.webp"
               alt="SublimApparel team photo — production floor and account staff, Yiwu factory"
+              width={1600}
+              height={900}
               className="h-full w-full object-cover"
               loading="lazy"
+              decoding="async"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/40 to-transparent" />
           </div>
@@ -170,8 +173,11 @@ function Person({
         <img
           src={image}
           alt={`${name} — ${role} at SublimApparel`}
+          width={120}
+          height={160}
           className="h-full w-full object-cover"
           loading="lazy"
+          decoding="async"
         />
       </div>
       {/* Text */}

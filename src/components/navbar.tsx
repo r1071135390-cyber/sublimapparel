@@ -92,6 +92,7 @@ export function Navbar() {
             width={220}
             height={88}
             decoding="async"
+            loading="eager"
             /* eslint-disable-next-line react/no-unknown-property */
             fetchPriority="high"
             className="h-11 w-auto"

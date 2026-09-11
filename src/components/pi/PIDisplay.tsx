@@ -83,6 +83,10 @@ function ItemWithSizesRow({
             <img
               src={it.image_url}
               alt={it.description}
+              width={64}
+              height={64}
+              loading="lazy"
+              decoding="async"
               className="mx-auto h-16 w-16 border border-black/20 object-cover"
             />
           ) : (

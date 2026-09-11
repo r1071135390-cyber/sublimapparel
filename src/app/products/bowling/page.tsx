@@ -161,15 +161,15 @@ export default function BowlingPage() {
           <h2 className="text-4xl font-black leading-tight md:text-6xl">From <span className="text-[#cc3d00]">the lanes</span> to the league wall.</h2>
           <div className="mt-10 grid gap-0 md:grid-cols-3">
             <div className="border-2 border-black bg-white">
-              <img src="/bowling-jersey-striker.webp" alt="Custom sublimated cream bowling jersey with retro print, name and number" className="aspect-[4/5] w-full object-cover" />
+              <img src="/bowling-jersey-striker.webp" alt="Custom sublimated cream bowling jersey with retro print, name and number" width={800} height={1000} className="aspect-[4/5] w-full object-cover" loading="lazy" decoding="async" />
               <div className="border-t-2 border-black p-3 text-xs font-black uppercase tracking-widest text-black">Classic Jersey · Striker</div>
             </div>
             <div className="border-2 border-t-0 border-black bg-white md:border-t-2 md:border-l-0">
-              <img src="/bowling-raglan-retro.webp" alt="Custom sublimated raglan sleeve bowling shirt with retro geometric print" className="aspect-[4/5] w-full object-cover" />
+              <img src="/bowling-raglan-retro.webp" alt="Custom sublimated raglan sleeve bowling shirt with retro geometric print" width={800} height={1000} className="aspect-[4/5] w-full object-cover" loading="lazy" decoding="async" />
               <div className="border-t-2 border-black p-3 text-xs font-black uppercase tracking-widest text-black">Raglan Sleeve · Retro</div>
             </div>
             <div className="border-2 border-t-0 border-black bg-white md:border-t-2 md:border-l-0">
-              <img src="/bowling-womens-queen.webp" alt="Custom sublimated women's black bowling jersey with neon geometric print" className="aspect-[4/5] w-full object-cover" />
+              <img src="/bowling-womens-queen.webp" alt="Custom sublimated women's black bowling jersey with neon geometric print" width={800} height={1000} className="aspect-[4/5] w-full object-cover" loading="lazy" decoding="async" />
               <div className="border-t-2 border-black p-3 text-xs font-black uppercase tracking-widest text-black">Women's · Queen</div>
             </div>
           </div>

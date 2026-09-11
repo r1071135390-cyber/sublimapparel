@@ -659,6 +659,10 @@ function PIPreview(props: {
           <img
             src="/sublimapparel-logo-v2.webp"
             alt="SublimApparel"
+            width={220}
+            height={88}
+            loading="eager"
+            decoding="async"
             className="h-24 w-auto shrink-0 hover:scale-[1.01] transition-transform"
           />
           <div className="flex-1 pl-[6%]">
@@ -806,7 +810,7 @@ function PIPreview(props: {
                       {it.imageUrl ? (
                         <>
                           {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={it.imageUrl} alt="" className="object-cover w-full h-full" />
+                          <img src={it.imageUrl} alt="" width={96} height={96} loading="lazy" decoding="async" className="object-cover w-full h-full" />
                           <button
                             onClick={() => onUpdateItem(idx, { imageUrl: "" })}
                             className="absolute top-0.5 right-0.5 p-0.5 bg-black/60 text-white rounded"

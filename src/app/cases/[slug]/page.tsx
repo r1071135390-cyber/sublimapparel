@@ -237,7 +237,11 @@ export default async function CaseCategoryPage({ params }: Props) {
                         <img
                           src={c.images[0]}
                           alt={c.title}
+                          width={800}
+                          height={600}
                           className="h-full w-full object-cover"
+                          loading="lazy"
+                          decoding="async"
                         />
                       ) : (
                         <div className="flex h-full items-center justify-center text-black/30">

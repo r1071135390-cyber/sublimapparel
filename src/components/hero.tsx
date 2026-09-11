@@ -68,6 +68,7 @@ export function Hero() {
               alt="Vivid full-sublimation jersey"
               width={1200}
               height={900}
+              loading="eager"
               /* eslint-disable-next-line react/no-unknown-property */
               fetchPriority="low"
               className="absolute inset-0 h-full w-full object-cover object-center brightness-105"
