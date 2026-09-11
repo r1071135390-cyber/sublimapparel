@@ -11,7 +11,11 @@ export const metadata = buildPageMetadata({
     title: "Which Print Technique Fits Your Design? — 20 Methods Compared (Sublimation...",
     description: "Compare 20 apparel decoration techniques — sublimation, screen printing, DTG, DTF, embroidery, 3D puff & rhinestone. We run all 20 in-house and accept custom t…",
     keywords: ["sublimation printing", "screen printing techniques", "DTG vs DTF", "custom embroidery", "all-over printing", "3D puff printing", "rhinestone apparel", "Chinese apparel factory"],
-    alternates: { canonical:"./" },
+    // 2026-09-11 (Round 15 P0-3): was `alternates: { canonical:"./" }` — implicit
+    // self-referential. Switching to an explicit absolute path "/technique/" so
+    // the preferred URL is unambiguous to crawlers, matching the canonical pattern
+    // used on every other page on the site.
+    canonical: "/technique/",
     other: {
     "article:author": "Ramon Wang, Sales Director, SublimApparel",
     "article:published_time": "2024-01-15T00:00:00.000Z",

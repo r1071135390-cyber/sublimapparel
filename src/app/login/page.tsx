@@ -5,7 +5,12 @@ import Link from "next/link";
 export const metadata = buildPageMetadata({
     title: "Sign In | SublimApparel Account",
     description: "Sign in to your SublimApparel account to view order history, request reprints, and manage shipping addresses.",
-    alternates: { canonical: "./" },
+    // 2026-09-11 (Round 15 P0-3): was `alternates: { canonical: "./" }` — the "./"
+    // is a relative path that Next.js resolves against metadataBase. It works,
+    // but it's an implicit self-referential. Switching to an explicit absolute
+    // path "/login/" makes the preferred URL unambiguous to crawlers and is
+    // also the same shape every other page on the site uses.
+    canonical: "/login/",
     robots: { index: false },
   });;
 

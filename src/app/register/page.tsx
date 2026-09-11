@@ -5,7 +5,11 @@ import Link from "next/link";
 export const metadata = buildPageMetadata({
     title: "Create Account",
     description: "Create your SublimApparel account to manage orders, request reprints, and access saved shipping addresses.",
-    alternates: { canonical: "./" },
+    // 2026-09-11 (Round 15 P0-3): was `alternates: { canonical: "./" }` — implicit
+    // self-referential. Switching to an explicit absolute path "/register/" so the
+    // preferred URL is unambiguous to crawlers, matching the canonical pattern used
+    // on every other page on the site.
+    canonical: "/register/",
     robots: { index: false },
   });;
 

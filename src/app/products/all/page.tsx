@@ -13,7 +13,11 @@ export const metadata = buildPageMetadata({
     title: "100 All-Over Print Products | Apparel by Garment, Sport",
     description: "100 all-over print apparel products, cross-filtered by garment type (29), sport (42) and scenario (27). From polyester sublimation to all-over digital print on…",
     keywords: ["all-over print catalog", "sublimation apparel wholesale", "all-over digital print on cotton", "custom jerseys China", "DDP apparel factory", "Yiwu apparel factory", "custom workwear China", "promotional apparel bulk"],
-    alternates: { canonical: "./" },
+    // 2026-09-11 (Round 15 P0-3): was `alternates: { canonical: "./" }` — implicit
+    // self-referential. Switching to an explicit absolute path "/products/all/" so
+    // the preferred URL is unambiguous to crawlers, matching the canonical pattern
+    // used on every other page on the site.
+    canonical: "/products/all/",
     ogTitle: "100 All-Over Print Products | Apparel by Garment, Sport",
     ogDescription: "100 all-over print apparel products, cross-filtered by garment, sport and scenario. Polyester sublimation + all-over digital…",
     // 2026-09-11 (Round 15 P0-1): was "/products/all/" — a page URL, not an
