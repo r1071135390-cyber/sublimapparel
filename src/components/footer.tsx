@@ -88,12 +88,21 @@ const linkGroups = [
   // /shipping/us-warehouse were all orphan pages (no navbar or footer links).
   // Add a Shipping group so Google can crawl and index these high-value
   // informational pages (priority 0.8–0.9).
+  // 2026-09-11 (R21-A): also add the 5 country-specific DDP pages so
+  // buyers searching for "DDP shipping to USA / UK / EU / AU / Canada"
+  // can find the relevant page from any page on the site, and so the
+  // new pages get internal link weight.
   {
     title: "Shipping",
     items: [
       { label: "Shipping overview", href: "/shipping" },
       { label: "DDP shipping — duty paid", href: "/shipping/ddp" },
       { label: "Global shipping guide", href: "/shipping/global" },
+      { label: "DDP shipping to USA", href: "/shipping/usa" },
+      { label: "DDP shipping to UK", href: "/shipping/uk" },
+      { label: "DDP shipping to EU", href: "/shipping/eu" },
+      { label: "DDP shipping to Australia", href: "/shipping/au" },
+      { label: "DDP shipping to Canada", href: "/shipping/canada" },
       { label: "US warehouse & fulfilment", href: "/shipping/us-warehouse" },
     ],
   },
@@ -111,6 +120,10 @@ const linkGroups = [
       // Fabric library → /fabric (hub), Sublimation vs DTG → /compare page,
       // Ordering FAQ → /about/faq (29 Q&A with FAQPage schema).
       { label: "Fabric library", href: "/fabric" },
+      // 2026-09-11 (R21-C): /fabric/care targets PAA queries like
+      // "how to wash sublimated shirts". Add it to the resources group
+      // so buyers can find the care guide from any page.
+      { label: "Care & washing guide", href: "/fabric/care" },
       // 2026-09-11 (Round 12): all 3 compare pages were orphan pages in sitemap
       // (priority 0.80-0.85) — now linked from footer so Google can crawl them.
       { label: "Sublimation vs screen print vs DTG", href: "/compare/sublimation-vs-dtg" },

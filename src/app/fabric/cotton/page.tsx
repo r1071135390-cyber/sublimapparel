@@ -109,6 +109,13 @@ export default function CottonPage() {
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
               </Link>
               <Link
+                href="/fabric/care/"
+                className="group inline-flex items-center gap-2 border-2 border-black bg-white px-6 py-3 text-sm font-black uppercase tracking-widest text-black transition-all hover:bg-black hover:text-white"
+              >
+                Wash &amp; care guide
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
+              </Link>
+              <Link
                 href="/fabric/"
                 className="group inline-flex items-center gap-2 border-2 border-black bg-white px-6 py-3 text-sm font-black uppercase tracking-widest text-black transition-all hover:bg-black hover:text-white"
               >

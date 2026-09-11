@@ -111,6 +111,16 @@ const ROUTES: SitemapRoute[] = [
   { path: "/shipping/ddp", priority: 0.9, changeFrequency: "monthly" }, // 王炸
   { path: "/shipping/us-warehouse", priority: 0.1, changeFrequency: "yearly" }, // placeholder — not actively promoted
   { path: "/shipping/global", priority: 0.9, changeFrequency: "monthly" }, // 王炸
+  // 2026-09-11 (R21-A): 5 country-specific DDP landing pages for B2B
+  // importer queries like "DDP shipping to USA", "China to UK import
+  // duty", "Australian GST on Chinese apparel". Each page targets a
+  // specific PAA + featured snippet cluster. Paired with /shipping/ddp
+  // and /shipping/global in the internal link graph.
+  { path: "/shipping/usa", priority: 0.9, changeFrequency: "monthly", lastModified: TODAY },
+  { path: "/shipping/uk", priority: 0.9, changeFrequency: "monthly", lastModified: TODAY },
+  { path: "/shipping/eu", priority: 0.9, changeFrequency: "monthly", lastModified: TODAY },
+  { path: "/shipping/au", priority: 0.9, changeFrequency: "monthly", lastModified: TODAY },
+  { path: "/shipping/canada", priority: 0.9, changeFrequency: "monthly", lastModified: TODAY },
 
   // ── （）──────────
   { path: "/all-over-print", priority: 0.95, changeFrequency: "monthly", lastModified: TODAY }, // P1 — all over print 流量入口 (2026-09-11 Round 13: OG image URL fixed)

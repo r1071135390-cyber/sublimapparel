@@ -360,6 +360,50 @@ export default function DdpPage() {
         </div>
       </section>
 
+      {/* Country-specific DDP pages — internal cross-link (R21-A) */}
+      <section className="border-b-2 border-black bg-white">
+        <div className="mx-auto max-w-7xl px-6 py-12 md:py-16">
+          <div className="mb-2 text-xs font-black uppercase tracking-widest text-black/60">
+            [ 008 / By destination ]
+          </div>
+          <h2 className="mb-6 text-2xl font-black uppercase tracking-tight md:text-3xl">
+            DDP shipping to specific countries
+          </h2>
+          <div className="flex flex-wrap gap-2">
+            <Link
+              href="/shipping/usa/"
+              className="inline-flex items-center gap-1.5 border-2 border-black bg-white px-4 py-2 text-sm font-black uppercase tracking-wider text-black transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-[#00c2ff] hover:shadow-[3px_3px_0_0_#000]"
+            >
+              🇺🇸 USA <ArrowRight size={14} strokeWidth={3} />
+            </Link>
+            <Link
+              href="/shipping/uk/"
+              className="inline-flex items-center gap-1.5 border-2 border-black bg-white px-4 py-2 text-sm font-black uppercase tracking-wider text-black transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-[#00c2ff] hover:shadow-[3px_3px_0_0_#000]"
+            >
+              🇬🇧 UK <ArrowRight size={14} strokeWidth={3} />
+            </Link>
+            <Link
+              href="/shipping/eu/"
+              className="inline-flex items-center gap-1.5 border-2 border-black bg-white px-4 py-2 text-sm font-black uppercase tracking-wider text-black transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-[#00c2ff] hover:shadow-[3px_3px_0_0_#000]"
+            >
+              🇪🇺 EU <ArrowRight size={14} strokeWidth={3} />
+            </Link>
+            <Link
+              href="/shipping/au/"
+              className="inline-flex items-center gap-1.5 border-2 border-black bg-white px-4 py-2 text-sm font-black uppercase tracking-wider text-black transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-[#00c2ff] hover:shadow-[3px_3px_0_0_#000]"
+            >
+              🇦🇺 Australia <ArrowRight size={14} strokeWidth={3} />
+            </Link>
+            <Link
+              href="/shipping/canada/"
+              className="inline-flex items-center gap-1.5 border-2 border-black bg-white px-4 py-2 text-sm font-black uppercase tracking-wider text-black transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-[#00c2ff] hover:shadow-[3px_3px_0_0_#000]"
+            >
+              🇨🇦 Canada <ArrowRight size={14} strokeWidth={3} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="bg-[#ff4d00] text-black">
         <div className="mx-auto max-w-7xl px-6 py-16 text-center md:py-20">

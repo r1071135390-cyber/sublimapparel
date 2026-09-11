@@ -137,7 +137,14 @@ export default function PolyVsCottonPage() {
             Polyester sublimation vs DTG cotton
           </h2>
           <div className="overflow-x-auto border-2 border-black">
-            <table className="w-full text-sm">
+            {/* 2026-09-11 (R21-B): explicit Schema.org Table markup so Google
+                AI Overviews can lift this comparison table as a direct answer
+                for "polyester sublimation vs DTG cotton" queries. */}
+            <table
+              itemScope
+              itemType="https://schema.org/Table"
+              className="w-full text-sm"
+            >
               <thead>
                 <tr className="bg-[#0a0a0a] text-left text-white">
                   <th className="px-4 py-4 font-black uppercase tracking-widest">Feature</th>

@@ -210,7 +210,14 @@ export default function SublimationVsDtgPage() {
               Side-by-side comparison
             </h2>
             <div className="mt-8 overflow-x-auto">
-              <table className="w-full border-collapse text-left">
+              {/* 2026-09-11 (R21-B): explicit Schema.org Table markup so Google
+                  AI Overviews can reuse this side-by-side comparison as a
+                  direct answer for "sublimation vs DTG" PAA queries. */}
+              <table
+                itemScope
+                itemType="https://schema.org/Table"
+                className="w-full border-collapse text-left"
+              >
                 <thead>
                   <tr className="border-b-2 border-black">
                     <th className="w-1/4 py-4 pr-4 text-sm font-bold uppercase tracking-widest">

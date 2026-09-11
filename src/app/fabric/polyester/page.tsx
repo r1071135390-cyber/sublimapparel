@@ -115,6 +115,13 @@ export default function PolyesterPage() {
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
               </Link>
               <Link
+                href="/fabric/care/"
+                className="group inline-flex items-center gap-2 border-2 border-black bg-white px-6 py-3 text-sm font-black uppercase tracking-widest text-black transition-all hover:bg-black hover:text-white"
+              >
+                Wash &amp; care guide
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
+              </Link>
+              <Link
                 href="/fabric/"
                 className="group inline-flex items-center gap-2 border-2 border-black bg-white px-6 py-3 text-sm font-black uppercase tracking-widest text-black transition-all hover:bg-black hover:text-white"
               >
@@ -270,7 +277,14 @@ export default function PolyesterPage() {
           </p>
 
           <div className="overflow-x-auto border-2 border-black">
-            <table className="w-full min-w-[640px]">
+            {/* 2026-09-11 (R21-B): explicit Schema.org Table markup so Google
+                AI Overviews can lift this polyester vs cotton comparison as a
+                direct answer for "polyester vs cotton for sublimation" queries. */}
+            <table
+              itemScope
+              itemType="https://schema.org/Table"
+              className="w-full min-w-[640px]"
+            >
               <thead>
                 <tr className="border-b-2 border-black bg-black text-left text-xs font-black uppercase tracking-widest text-white">
                   <th className="px-4 py-3">Spec</th>
