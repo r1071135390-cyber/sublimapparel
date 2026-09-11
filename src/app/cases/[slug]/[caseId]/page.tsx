@@ -28,8 +28,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const ind = getIndustryBySlug(slug);
   const c = ind?.cases.find((x) => x.id === caseId);
   if (!c) return { title: "Case Study — SublimApparel" };
+  // 2026-09-11 push (Round 5): use { absolute: title } so the layout's
+  // "%s | SublimApparel" template doesn't append a duplicate brand suffix.
+  // Brand signal is already provided by canonical + og:site_name.
+  // Also: budget the case-study title so the final `<title> | Case Study`
+  // string stays within Google's 60-char SERP cap (suffix = 12 chars,
+  // so case title itself must be ≤ 48 chars).
+  const SUFFIX = " | Case Study"; // 12 chars
+  const TITLE_BUDGET = 60 - SUFFIX.length; // 48 chars
+  const rawTitle = c.title.length > TITLE_BUDGET
+    ? c.title.slice(0, TITLE_BUDGET - 1).trimEnd() + "…"
+    : c.title;
   return {
-    title: `${c.title} | SublimApparel Case Study`,
+    title: { absolute: `${rawTitle}${SUFFIX}` },
     description: c.summary.slice(0, 160),
     keywords: [
       "case study",
