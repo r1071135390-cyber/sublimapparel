@@ -81,7 +81,7 @@ const ROUTES: SitemapRoute[] = [
   // ── L2  SEO （， 0 ）──────────────
   { path: "/fabric", priority: 0.85, changeFrequency: "monthly", lastModified: TODAY }, // 2026-09-11 push: added FAQPage JSON-LD
   { path: "/fabric/cotton", priority: 0.9, changeFrequency: "monthly" }, // 王炸
-  { path: "/technique", priority: 0.85, changeFrequency: "monthly" },
+  { path: "/technique", priority: 0.85, changeFrequency: "monthly", lastModified: TODAY }, // 2026-09-11 push: added CollectionPage+ItemList JSON-LD
   { path: "/shipping", priority: 0.8, changeFrequency: "monthly" },
   { path: "/shipping/ddp", priority: 0.9, changeFrequency: "monthly" }, // 王炸
   { path: "/shipping/us-warehouse", priority: 0.1, changeFrequency: "yearly" }, // placeholder — not actively promoted
@@ -110,11 +110,11 @@ const ROUTES: SitemapRoute[] = [
 
   // ── L2  /  ────────────────────────────────────
   { path: "/about", priority: 0.7, changeFrequency: "monthly", lastModified: TODAY }, // 2026-09-11 push: added FAQPage JSON-LD
-  { path: "/about/factory", priority: 0.75, changeFrequency: "monthly" },
-  { path: "/about/production", priority: 0.75, changeFrequency: "monthly" },
-  { path: "/about/quality", priority: 0.75, changeFrequency: "monthly" },
-  { path: "/about/cases", priority: 0.75, changeFrequency: "monthly" },
-  { path: "/about/faq", priority: 0.7, changeFrequency: "monthly" },
+  { path: "/about/factory", priority: 0.75, changeFrequency: "monthly", lastModified: TODAY }, // 2026-09-11 push: added WebPage JSON-LD
+  { path: "/about/production", priority: 0.75, changeFrequency: "monthly", lastModified: TODAY }, // 2026-09-11 push: added WebPage JSON-LD
+  { path: "/about/quality", priority: 0.75, changeFrequency: "monthly", lastModified: TODAY }, // 2026-09-11 push: added WebPage JSON-LD
+  { path: "/about/cases", priority: 0.75, changeFrequency: "monthly", lastModified: TODAY }, // 2026-09-11 push: added WebPage JSON-LD
+  { path: "/about/faq", priority: 0.7, changeFrequency: "monthly", lastModified: TODAY }, // 2026-09-11 push: added FAQPage+WebPage JSON-LD
   { path: "/cases", priority: 0.7, changeFrequency: "weekly" },
 
   // ── Case study detail pages ──
