@@ -3,14 +3,15 @@
 //
 // Post-build JSON-LD injector for Next.js `output: 'export'` static sites.
 //
-// Problem: Next.js 16 renders most <JsonLd> components to <script> tags inside
-// <body>, but page-level schemas that use the *non-@graph* (legacy) JsonLd path
-// sometimes get dropped during static export, AND we want a single guarantee
-// that every page has the site-wide @graph (Organization, WebSite, etc.) so
-// Google Rich Results and other crawlers can always read them.
+// Problem: Next.js 16 renders <JsonLd> components to <script> tags inside
+// <body>, but page-level schemas that use the *non-@graph* (legacy) JsonLd
+// path are sometimes dropped during static export, AND we want a single
+// guarantee that every page has the site-wide @graph (Organization,
+// WebSite, etc.) so Google Rich Results and other crawlers can always
+// read them.
 //
 // This script:
-//   1. Walks the out/ directory
+//   1. Walks the out/ directory (recursively, cross-platform — no GNU find)
 //   2. For every *.html file, ensures exactly two JSON-LD blocks are present
 //      right before </head>:
 //        a) the site-wide layout @graph (Organization + WebSite + LocalBusiness
@@ -31,7 +32,6 @@
 
 import fs from "node:fs";
 import path from "node:path";
-import { execSync } from "node:child_process";
 import { getLayoutGraph, getPageSchemas } from "./json-ld-registry.mjs";
 
 const ROOT = process.cwd();
@@ -42,15 +42,36 @@ if (!fs.existsSync(OUT)) {
   process.exit(0); // non-fatal: don't break the build
 }
 
-console.log("[inject-json-ld] Scanning out/ for HTML files...");
-const htmlFiles = execSync(`find "${OUT}" -name "*.html" -type f`, {
-  stdio: ["pipe", "pipe", "ignore"],
-})
-  .toString()
-  .trim()
-  .split("\n")
-  .filter(Boolean);
+/**
+ * Recursively collect all .html files under `dir`, relative to `dir`.
+ * Cross-platform alternative to `find ... -name "*.html"`.
+ */
+function collectHtmlFiles(dir) {
+  const out = [];
+  const stack = [dir];
+  while (stack.length > 0) {
+    const current = stack.pop();
+    let entries;
+    try {
+      entries = fs.readdirSync(current, { withFileTypes: true });
+    } catch (e) {
+      console.warn(`[inject-json-ld] cannot read ${current}: ${e.message}`);
+      continue;
+    }
+    for (const entry of entries) {
+      const full = path.join(current, entry.name);
+      if (entry.isDirectory()) {
+        stack.push(full);
+      } else if (entry.isFile() && entry.name.endsWith(".html")) {
+        out.push(full);
+      }
+    }
+  }
+  return out;
+}
 
+console.log("[inject-json-ld] Scanning out/ for HTML files...");
+const htmlFiles = collectHtmlFiles(OUT);
 console.log(`[inject-json-ld] ${htmlFiles.length} HTML files found`);
 
 const layoutGraph = getLayoutGraph();
@@ -63,7 +84,7 @@ for (const htmlPath of htmlFiles) {
     let html = fs.readFileSync(htmlPath, "utf-8");
 
     // Idempotency guard: skip pages we've already injected on a previous run
-    if (html.includes("data-jsonld-injected=\"1\"")) {
+    if (html.includes('data-jsonld-injected="1"')) {
       skippedCount++;
       continue;
     }
