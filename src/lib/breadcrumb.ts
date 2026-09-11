@@ -387,6 +387,403 @@ export function buildCollectionPageGraph(input: {
   };
 }
 
+// 2026-09-12 (R37): shared helper for /about/ that consolidates
+// the 4 separate JSON-LD <script> tags (BreadcrumbList + FAQPage
+// + AboutPage + Organization review carrier) into a single @graph
+// payload, with every node @id-anchored and joined to the global
+// brand entity graph (so Google can parse the entire entity surface
+// for the page in one pass and correctly associate the about
+// surface with the publisher).
+//
+// Key design choices:
+//   - AboutPage uses the dedicated schema.org @type: "AboutPage"
+//     (Google recognizes this as the brand's authoritative "about"
+//     surface, distinct from a generic WebPage) and links
+//     mainEntity → #organization so the about page IS the
+//     Organization.
+//   - Person #person-ramon is inlined (same as buildBlogHubGraph
+//     R36-C + buildBlogPostGraph R35-D) so the publisher author
+//     chain stays self-contained.
+//   - The legacy Organization review carrier block lives at
+//     #organization-about-reviews and keeps the exact same
+//     gating behavior: review + aggregateRating are emitted only
+//     when the caller passes non-empty data. This preserves the
+//     R27 "no fabricated ratings" rule — when the public review
+//     feed is empty, the page emits a clean schema with no
+//     rating data, and Google's review parser sees a no-op
+//     instead of a fabricated rating.
+//   - The 5 "Dive deeper" sub-pages (factory, production,
+//     quality, cases, faq) are emitted as a single ItemList
+//     #subpage-list so the /about/ page exposes the full sub-page
+//     hierarchy to Google in one shot. Without it the about page
+//     only points to the hub pages; with it, every child page is
+//     also reachable from a single ItemList.
+export type AboutInput = {
+  /** Optional FAQ items rendered on the page. */
+  faq?: FaqItem[];
+  /** Optional list of "Dive deeper" sub-pages. */
+  subPages?: { href: string; title: string }[];
+  /** Pre-mapped schema review array. Omit to strip the
+   *  review field (preserves R27 gating). */
+  review?: unknown[];
+  /** Pre-computed aggregate rating. Omit to strip
+   *  aggregateRating. */
+  aggregateRating?: {
+    ratingValue: number;
+    reviewCount: number;
+    bestRating: number;
+    worstRating: number;
+  };
+};
+
+export function buildAboutGraph(input: AboutInput) {
+  const url = `${SITE_URL}/about/`;
+  const webpageId = `${url}#webpage`;
+  const aboutId = `${url}#about`;
+  const breadcrumbId = `${url}#breadcrumb`;
+  const faqId = input.faq && input.faq.length > 0 ? `${url}#faq` : null;
+  const subPageListId =
+    input.subPages && input.subPages.length > 0
+      ? `${url}#subpage-list`
+      : null;
+  const hasReviews = !!(input.review && input.review.length > 0);
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": webpageId,
+        url,
+        name: "About SublimApparel — Yiwu Custom Apparel Factory",
+        description:
+          "SublimApparel is a Yiwu-based apparel factory producing custom sublimated, all-over digital printed, DTG, DTF, and screen-printed apparel for B2B customers in 50+ countries since 2018.",
+        inLanguage: "en",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        about: { "@id": `${SITE_URL}/#organization` },
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: `${SITE_URL}/about-hero.webp`,
+        },
+        significantLink: [
+          `${SITE_URL}/about/`,
+          `${SITE_URL}/about/quality-control/`,
+          `${SITE_URL}/about/factory/`,
+        ],
+        speakable: {
+          "@type": "SpeakableSpecification",
+          xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+        },
+        ...(aboutId ? { mainEntity: { "@id": aboutId } } : {}),
+        keywords:
+          "about SublimApparel, Yiwu factory, custom apparel manufacturer, 8 years experience, 50+ countries served, US warehouse, B2B sublimation manufacturer, OEM apparel, OEKO-TEX certified",
+      },
+      {
+        "@type": "AboutPage",
+        "@id": aboutId,
+        url,
+        name: "About SublimApparel — Yiwu Custom Apparel Factory",
+        description:
+          "SublimApparel is a Yiwu-based apparel factory producing custom sublimated, all-over digital printed, DTG, DTF, and screen-printed apparel for B2B customers in 50+ countries since 2018.",
+        inLanguage: "en",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        about: { "@id": `${SITE_URL}/#organization` },
+        // 2026-09-12 (R37): AboutPage.mainEntity points to the
+        // Organization so Google knows the about page IS the
+        // brand's authoritative corporate description. Same
+        // pattern as the homepage / contact page.
+        mainEntity: { "@id": `${SITE_URL}/#organization` },
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: `${SITE_URL}/about-hero.webp`,
+        },
+        significantLink: [
+          `${SITE_URL}/about/`,
+          `${SITE_URL}/about/quality-control/`,
+          `${SITE_URL}/about/factory/`,
+        ],
+      },
+      {
+        // 2026-09-12 (R37): same Person node emitted by
+        // buildBlogHubGraph (R36-C) and buildBlogPostGraph
+        // (R35-D) so any future about-page content (case
+        // studies, testimonials) can join to the same author
+        // @id. The Sales Director card on /about/ also points
+        // to this node, so the about page stays
+        // self-contained.
+        "@type": "Person",
+        "@id": `${SITE_URL}/#person-ramon`,
+        name: "Ramon Hsu",
+        jobTitle: "Founder & CEO, SublimApparel",
+        worksFor: { "@id": `${SITE_URL}/#organization` },
+        url: `${SITE_URL}/about/`,
+        knowsAbout: [
+          "Dye-sublimation printing",
+          "Custom apparel manufacturing",
+          "DDP (Delivered Duty Paid) shipping",
+          "All-over digital print on cotton",
+          "Yiwu, China apparel supply chain",
+        ],
+      },
+      {
+        // 2026-09-12 (R37): the Organization review carrier
+        // block that used to be a separate JSON-LD <script>.
+        // We keep the exact same @id
+        // (#organization-about-reviews) so any external
+        // reference still resolves, and we preserve the R27
+        // gating: review + aggregateRating are emitted only
+        // when the caller passes non-empty data. When the
+        // public review feed is empty (current state) only
+        // the bare Organization shell is emitted, which is a
+        // no-op for Google's review parser and ready for the
+        // day the feed is wired up.
+        "@type": "Organization",
+        "@id": `${SITE_URL}/#organization-about-reviews`,
+        url,
+        name: "SublimApparel",
+        description:
+          "Yiwu-based allover-print apparel factory reviewed on this page. Polyester sublimation + all-cotton DTG. 50-piece MOQ. DDP door-to-door to 50+ countries.",
+        parentOrganization: { "@id": `${SITE_URL}/#organization` },
+        ...(hasReviews ? { review: input.review } : {}),
+        ...(input.aggregateRating
+          ? {
+              aggregateRating: {
+                "@type": "AggregateRating",
+                ratingValue: input.aggregateRating.ratingValue,
+                reviewCount: input.aggregateRating.reviewCount,
+                bestRating: input.aggregateRating.bestRating,
+                worstRating: input.aggregateRating.worstRating,
+              },
+            }
+          : {}),
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": breadcrumbId,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${SITE_URL}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "About",
+            item: url,
+          },
+        ],
+      },
+      ...(faqId
+        ? [
+            {
+              "@type": "FAQPage",
+              "@id": faqId,
+              mainEntity: input.faq!.map((it) => ({
+                "@type": "Question",
+                name: it.q,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: it.a,
+                },
+              })),
+            },
+          ]
+        : []),
+      ...(subPageListId
+        ? [
+            {
+              "@type": "ItemList",
+              "@id": subPageListId,
+              name: "Dive deeper — SublimApparel /about/ sub-pages",
+              description:
+                "Five sub-pages that answer the questions buyers ask in the second call: factory floor, production process, quality control, industries served, and 30 B2B FAQ answers.",
+              numberOfItems: input.subPages!.length,
+              itemListOrder:
+                "https://schema.org/ItemListOrderUnordered",
+              itemListElement: input.subPages!.map((p, i) => ({
+                "@type": "ListItem",
+                position: i + 1,
+                name: p.title,
+                url: `${SITE_URL}${p.href.startsWith("/") ? p.href : `/${p.href}`}`,
+              })),
+            },
+          ]
+        : []),
+    ],
+  };
+}
+
+// 2026-09-12 (R36-C): unified @graph payload for the
+// /blog/ blog index hub page. Pre-R36, the page emitted
+// 4 separate JSON-LD nodes across 2 <JsonLd> calls:
+//   - BreadcrumbList (flat, no @id)
+//   - Blog + ItemList inline mainEntity (no @id, no
+//     isPartOf / about to the brand entity graph)
+//   - WebPage (with @id but no @graph join — emitted as
+//     a separate @context)
+//   - FAQPage (flat, no @id join to the WebPage via
+//     mainEntity round-trip)
+//
+// R36-C promotes all 4 to a single @graph block:
+//   - WebPage   #webpage (isPartOf #website + about
+//               #organization + speakable +
+//               primaryImageOfPage)
+//   - Blog      #blog (the canonical @type for a
+//               publisher's blog index — joins the
+//               publisher entity graph via publisher @id
+//               and the post list via mainEntity round-trip)
+//   - ItemList  #post-list (all blog posts in
+//               ItemListOrderDescending by date, links
+//               to /blog/{slug}/)
+//   - Person    #person-ramon (inline author reference
+//               so future blog posts can use author @id
+//               to link back to this hub's author node)
+//   - BreadcrumbList #breadcrumb
+//   - FAQPage   #faq (5 inline FAQs, optional)
+//
+// Note: this helper does NOT include a Service #service
+// sibling — the /blog/ index is an editorial content hub,
+// not a service surface, and adding a service node would
+// dilute the content / publisher signal that the Blog @type
+// is meant to carry. Commercial DDP intent is already
+// captured by the homepage, the /shipping/ pages, and the
+// product / fabric surfaces elsewhere in the site.
+//
+// Sharing the helper with the per-post pages (R35-D uses
+// buildBlogPostGraph, this helper is the hub-side sibling)
+// means a single edit to the @graph shape now touches the
+// whole blog surface in one place.
+export type BlogHubInput = {
+  /** The blog posts to enumerate inside the ItemList.
+   *  Posts should be in the order you want them listed
+   *  (the helper applies itemListOrder Descending so
+   *  position 1 = most recent). */
+  posts: { slug: string; title: string }[];
+  /** Optional FAQ items rendered inline. Omit to skip
+   *  the FAQPage node. */
+  faq?: FaqItem[];
+};
+
+export function buildBlogHubGraph(input: BlogHubInput) {
+  const url = `${SITE_URL}/blog/`;
+  const webpageId = `${url}#webpage`;
+  const blogId = `${url}#blog`;
+  const postListId = `${url}#post-list`;
+  const breadcrumbId = `${url}#breadcrumb`;
+  const faqId = input.faq && input.faq.length > 0 ? `${url}#faq` : null;
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": webpageId,
+        url,
+        name: "SublimApparel Blog — Apparel Manufacturing Insights",
+        description:
+          "Industry guides, factory stories, and B2B apparel manufacturing insights from a 2,000 m² Yiwu sublimation factory. Sublimation vs DTG, DDP shipping, fabric guides, esports jersey fabric, and more.",
+        inLanguage: "en",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        about: { "@id": `${SITE_URL}/#organization` },
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: `${SITE_URL}/og/og-default.jpg`,
+        },
+        speakable: {
+          "@type": "SpeakableSpecification",
+          xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+        },
+        ...(faqId ? { mainEntity: { "@id": faqId } } : {}),
+      },
+      {
+        "@type": "Blog",
+        "@id": blogId,
+        url,
+        name: "SublimApparel Blog — Apparel Manufacturing Insights",
+        description:
+          "Industry guides, factory stories, and B2B apparel manufacturing insights from a 2,000 m² Yiwu sublimation factory.",
+        inLanguage: "en",
+        publisher: { "@id": `${SITE_URL}/#organization` },
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        about: { "@id": `${SITE_URL}/#organization` },
+        mainEntity: { "@id": postListId },
+      },
+      {
+        "@type": "ItemList",
+        "@id": postListId,
+        name: "All SublimApparel Blog Posts",
+        description:
+          "All SublimApparel blog posts, ordered from most recent to oldest. Industry guides, factory stories, and B2B apparel manufacturing insights.",
+        numberOfItems: input.posts.length,
+        itemListOrder: "https://schema.org/ItemListOrderDescending",
+        itemListElement: input.posts.map((p, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          name: p.title,
+          url: `${SITE_URL}/blog/${p.slug}/`,
+        })),
+        isPartOf: { "@id": blogId },
+      },
+      {
+        // 2026-09-12 (R36-C): define the Person node inline so
+        // future blog posts and the /about/ page can use the
+        // same author @id and the Blog entity graph stays
+        // self-contained. Mirrors the Person node emitted by
+        // buildBlogPostGraph (R35-D).
+        "@type": "Person",
+        "@id": `${SITE_URL}/#person-ramon`,
+        name: "Ramon Hsu",
+        jobTitle: "Founder & CEO, SublimApparel",
+        worksFor: { "@id": `${SITE_URL}/#organization` },
+        url: `${SITE_URL}/about/`,
+        knowsAbout: [
+          "Dye-sublimation printing",
+          "Custom apparel manufacturing",
+          "DDP (Delivered Duty Paid) shipping",
+          "All-over digital print on cotton",
+          "Yiwu, China apparel supply chain",
+        ],
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": breadcrumbId,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${SITE_URL}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Blog",
+            item: url,
+          },
+        ],
+      },
+      ...(input.faq && faqId
+        ? [
+            {
+              "@type": "FAQPage",
+              "@id": faqId,
+              mainEntity: input.faq.map((it) => ({
+                "@type": "Question",
+                name: it.q,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: it.a,
+                },
+              })),
+            },
+          ]
+        : []),
+    ],
+  };
+}
+
 // 2026-09-12 (R36-B): unified @graph payload for the
 // /fabric/ fabric hub page (lists all 41 fabric types and
 // the 20 print processes we run on them). Pre-R36, the page

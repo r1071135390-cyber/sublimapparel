@@ -1,7 +1,7 @@
 import { Contact } from "@/components/contact";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
+import { buildAboutGraph } from "@/lib/breadcrumb";
 import {
   verifiedReviews,
   hasAggregateableReviews,
@@ -53,163 +53,91 @@ export default function AboutPage() {
   // (Sep-2026 GSC). Reinforce it with a FAQPage JSON-LD that mirrors the
   // recurring "who is / where is / how long / who owns" queries that
   // Googlebot already associates with this URL.
-  const aboutFaqJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: [
-      {
-        "@type": "Question",
-        name: "Who owns SublimApparel?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "SublimApparel.com is a website of Yiwu HomeDorm Commodity Manufacturing Co., Ltd., registered in Yiwu, Zhejiang, China. Sales director Ramon Wang leads the B2B team.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "Where is the factory located?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Our 2,000 m² Yiwu factory is at 35 Lingyun Road, Yiwu, Zhejiang, China. We also operate a US warehouse at 13052 Jurupa Ave, Fontana, CA 92335 for 2–5 day domestic delivery, plus a European representative in Rotterdam, NL.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "How long has SublimApparel been in business?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Since 2018 — over 8 years. We run 12 production lines and have produced 6,000+ custom designs for customers in 100+ countries.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "What's the minimum order quantity (MOQ)?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "MOQ is 50 pieces per design for cut-and-sew sublimation, and 30 pieces per design on re-orders. Sample runs start at 5–10 pieces with a 7–10 day turnaround.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "What certifications do you hold?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "OEKO-TEX Standard 100, ISO 9001, Sedex-SMETA audited, and CPSIA-compliant inks. We are Alibaba Gold Supplier and Trade Assurance enrolled.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "Do you ship DDP (delivered duty paid)?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Yes — DDP shipping to 100+ countries (US, EU, UK, AU, LATAM). Quotes are landed and duty paid; any customs exclusions are stated up front on the quote.",
-        },
-      },
-    ],
-  };
+  const aboutFaqs = [
+    {
+      q: "Who owns SublimApparel?",
+      a: "SublimApparel.com is a website of Yiwu HomeDorm Commodity Manufacturing Co., Ltd., registered in Yiwu, Zhejiang, China. Sales director Ramon Wang leads the B2B team.",
+    },
+    {
+      q: "Where is the factory located?",
+      a: "Our 2,000 m² Yiwu factory is at 35 Lingyun Road, Yiwu, Zhejiang, China. We also operate a US warehouse at 13052 Jurupa Ave, Fontana, CA 92335 for 2–5 day domestic delivery, plus a European representative in Rotterdam, NL.",
+    },
+    {
+      q: "How long has SublimApparel been in business?",
+      a: "Since 2018 — over 8 years. We run 12 production lines and have produced 6,000+ custom designs for customers in 100+ countries.",
+    },
+    {
+      q: "What's the minimum order quantity (MOQ)?",
+      a: "MOQ is 50 pieces per design for cut-and-sew sublimation, and 30 pieces per design on re-orders. Sample runs start at 5–10 pieces with a 7–10 day turnaround.",
+    },
+    {
+      q: "What certifications do you hold?",
+      a: "OEKO-TEX Standard 100, ISO 9001, Sedex-SMETA audited, and CPSIA-compliant inks. We are Alibaba Gold Supplier and Trade Assurance enrolled.",
+    },
+    {
+      q: "Do you ship DDP (delivered duty paid)?",
+      a: "Yes — DDP shipping to 100+ countries (US, EU, UK, AU, LATAM). Quotes are landed and duty paid; any customs exclusions are stated up front on the quote.",
+    },
+  ];
+
+  // 2026-09-12 (R37): the 5 "Dive deeper" sub-pages lifted to a
+  // top-level const so we can hand them straight to
+  // buildAboutGraph as the ItemList #subpage-list node. The
+  // helper emits them at /about/#subpage-list so the /about/
+  // page exposes the full sub-page hierarchy to Google in one
+  // shot instead of just pointing at hub pages.
+  const aboutSubPages = [
+    { href: "/about/factory/", title: "Inside the factory" },
+    { href: "/about/production/", title: "Production process" },
+    { href: "/about/quality/", title: "Quality control" },
+    { href: "/about/cases/", title: "Industries we serve" },
+    { href: "/about/faq/", title: "30 B2B questions" },
+  ];
+
+  // 2026-09-12 (R37): review gating — preserved exactly as
+  // before. review is emitted only when verifiedReviews is
+  // non-empty; aggregateRating is emitted only when there is
+  // at least one rating-bearing entry. Fabricated ratings
+  // would violate Google's structured data spam policy.
+  const aboutReviews =
+    verifiedReviews.length > 0 ? verifiedReviews.map(toSchemaReview) : undefined;
+  const aboutAggregateRating = hasAggregateableReviews()
+    ? computeAggregateRating() ?? undefined
+    : undefined;
+
+  // 2026-09-12 (R37): consolidate the 4 separate JSON-LD
+  // <script> tags (BreadcrumbList + FAQPage + AboutPage +
+  // Organization review carrier) into a single @graph
+  // payload via buildAboutGraph. The new graph:
+  //   - joins the WebPage, AboutPage, Person #person-ramon,
+  //     Organization #organization-about-reviews, FAQPage
+  //     #faq, ItemList #subpage-list, and BreadcrumbList into
+  //     a single @graph with all @id cross-linking
+  //   - AboutPage.mainEntity → #organization so Google
+  //     recognizes /about/ as the brand's authoritative
+  //     corporate description surface
+  //   - Person #person-ramon is inlined so the publisher
+  //     author chain is self-contained (matches R36-C and
+  //     R35-D blog work)
+  //   - The Organization review carrier block keeps the
+  //     exact same @id (#organization-about-reviews) and
+  //     the same gating so any future external reference
+  //     still resolves, and the page is schema-clean today
+  //     (no fabricated ratings) and ready for the day a
+  //     real public review feed is wired up
+  //   - The 5 "Dive deeper" sub-pages are emitted as an
+  //     ItemList so Google sees the full /about/ hierarchy
+  //     from a single ItemList
+  const aboutGraph = buildAboutGraph({
+    faq: aboutFaqs,
+    subPages: aboutSubPages,
+    review: aboutReviews,
+    aggregateRating: aboutAggregateRating,
+  });
 
   return (
     <>
-      <JsonLd data={buildBreadcrumbJsonLd([
-        { name: "Home", path: "/" },
-        { name: "About", path: "/about" },
-      ])} />
-      <JsonLd data={aboutFaqJsonLd} />
-      {/* 2026-09-11 push (Round 7 part 3): add AboutPage + Organization @graph.
-          Google has a dedicated @type: "AboutPage" schema that helps the
-          crawler identify the page as the brand's authoritative "about"
-          surface. Linking it to the global Organization via mainEntity
-          and to the website via isPartOf joins the about page to the
-          site-wide entity graph.
-          2026-09-11 (R27): we now also emit a Review node (and, when
-          verifiedReviews contains at least one rating-bearing entry, an
-          AggregateRating node) on the same Organization. Until a real
-          public review feed is wired up, verifiedReviews is an empty
-          array — so the AggregateRating block is intentionally omitted
-          and only Review nodes (zero of them) are emitted. Fabricated
-          ratings would violate Google's structured data spam policy;
-          see src/lib/reviews.ts for the activation checklist. */}
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "AboutPage",
-          "@id": "https://sublimapparel.com/about/#webpage",
-          url: "https://sublimapparel.com/about/",
-          name: "About SublimApparel — Yiwu Custom Apparel Factory",
-          description:
-            "SublimApparel is a Yiwu-based apparel factory producing custom sublimated, all-over digital printed, DTG, DTF, and screen-printed apparel for B2B customers in 50+ countries since 2018.",
-          inLanguage: "en",
-          isPartOf: { "@id": "https://sublimapparel.com/#website" },
-          about: { "@id": "https://sublimapparel.com/#organization" },
-          mainEntity: { "@id": "https://sublimapparel.com/#organization" },
-          primaryImageOfPage: {
-            "@type": "ImageObject",
-            url: "https://sublimapparel.com/about-hero.webp",
-          },
-          significantLink: [
-            "https://sublimapparel.com/about/",
-            "https://sublimapparel.com/quality-control/",
-            "https://sublimapparel.com/factory/",
-          ],
-          keywords:
-            "about SublimApparel, Yiwu factory, custom apparel manufacturer, 8 years experience, 50+ countries served, US warehouse, B2B sublimation manufacturer, OEM apparel, OEKO-TEX certified",
-        }}
-      />
-      {/* 2026-09-11 (R27): Review + AggregateRating carrier JSON-LD.
-          This is a separate JSON-LD block (not nested inside AboutPage
-          above) because the global Organization node already lives at
-          #organization. We re-emit the same @id as a separate
-          Organization block and conditionally add `review` and
-          `aggregateRating` so Google can pick them up without us
-          mutating the global organizationJsonLd (which is reused on
-          the homepage, contact page, and across the site).
-
-          The gating logic is:
-            - review: emitted only when verifiedReviews is non-empty.
-            - aggregateRating: emitted only when
-              hasAggregateableReviews() returns true, which requires
-              at least one VerifiedReview with a 1-5 ratingValue.
-            - When both gates are false, only the bare Organization
-              shell is emitted (a no-op for Google's review parser).
-
-          This keeps the page schema-clean today (no fabricated
-          ratings) and ready for the day a real public review feed
-          (Trustpilot, Google Business Profile, Alibaba review widget)
-          is wired up. */}
-      <JsonLd
-        data={(() => {
-          const base = {
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            "@id": "https://sublimapparel.com/#organization-about-reviews",
-            url: "https://sublimapparel.com/about/",
-            name: "SublimApparel",
-            description:
-              "Yiwu-based allover-print apparel factory reviewed on this page. Polyester sublimation + all-cotton DTG. 50-piece MOQ. DDP door-to-door to 50+ countries.",
-          };
-          // Both gates fail: emit a minimal Organization node so the
-          // JSON-LD block is still valid (a JSON-LD block with no
-          // review data is harmless and acts as a future-ready hook).
-          if (verifiedReviews.length === 0) return base;
-          const reviewNodes = verifiedReviews.map(toSchemaReview);
-          const agg = computeAggregateRating();
-          return {
-            ...base,
-            review: reviewNodes,
-            ...(agg
-              ? {
-                  aggregateRating: {
-                    "@type": "AggregateRating",
-                    ratingValue: agg.ratingValue,
-                    reviewCount: agg.reviewCount,
-                    bestRating: agg.bestRating,
-                    worstRating: agg.worstRating,
-                  },
-                }
-              : {}),
-          };
-        })()}
-      />
+      <JsonLd data={aboutGraph} />
       <main>
       <section className="relative overflow-hidden border-b-2 border-black bg-[#0a0a0a] text-white">
         {/* Full-bleed background image — blurred/dark on left under text, clear on right */}
