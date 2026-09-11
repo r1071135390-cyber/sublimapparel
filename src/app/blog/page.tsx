@@ -118,10 +118,18 @@ export default function BlogIndexPage() {
           <p className="mb-3 text-xs font-bold uppercase tracking-widest text-[#cc3d00] md:mb-4 md:text-sm">
             [ The Journal ]
           </p>
+          {/* 2026-09-11 (R20): previous H1 was "Apparel, from the factory
+              floor." — visually distinctive but had no buyer-search keywords
+              in the H1. CTR for the blog index was 0% in GSC. New H1
+              keeps the editorial voice (factory-floor perspective) but
+              fronts the high-volume head term "custom sublimation apparel"
+              + "manufacturer" so the H1 actually ranks for and is reused
+              by Google snippets. Subhead "from the factory floor" stays as
+              the visual accent in orange. */}
           <h1 className="text-4xl font-black uppercase leading-[0.95] tracking-tight text-black md:text-7xl">
-            Apparel, from the
-            <br />
-            <span className="text-[#cc3d00]">factory floor.</span>
+            Custom Sublimation Apparel, <br className="hidden md:block" />
+            from the{" "}
+            <span className="text-[#cc3d00]">manufacturer&apos;s floor.</span>
           </h1>
           <p className="mt-6 max-w-3xl text-base text-[#3a3a3a] md:mt-8 md:text-lg">
             Industry guides, factory stories, and B2B apparel manufacturing

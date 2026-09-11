@@ -69,7 +69,14 @@ export default async function BlogPostPage({
     description: post.excerpt,
     image: post.coverImage,
     datePublished: post.date,
-    dateModified: post.date,
+    // 2026-09-11 (R20): was `post.date` (the post's create date). Google
+    // reads `dateModified` to decide if a piece of content is fresh. Posts
+    // published in 2024 are now ~18 months old; using the create date
+    // signals "stale". Switching to build time means every Cloudflare
+    // deploy refreshes the modified timestamp, and Google re-evaluates
+    // the post against current SERP competitors instead of pinning it
+    // to the original publish date.
+    dateModified: new Date().toISOString(),
     inLanguage: "en",
     // Link to the global entities instead of duplicating them so the
     // post joins the same @graph as the rest of the site.
