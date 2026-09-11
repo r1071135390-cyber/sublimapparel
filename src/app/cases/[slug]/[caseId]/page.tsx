@@ -1,13 +1,19 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, CalendarDays, Package, MapPin } from "lucide-react";
+import { ArrowLeft, ArrowRight, CalendarDays, Package, MapPin, Star, Quote } from "lucide-react";
 import { industries, getIndustryBySlug } from "@/lib/cases";
 import { RequestQuoteLink } from "@/components/request-quote-link";
 import { products } from "@/lib/products-data";
 import { getProductImages } from "@/lib/product-images";
 import { JsonLd } from "@/components/json-ld";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
+import {
+  filterReviewsForCase,
+  hasAggregateableReviews,
+  computeAggregateRating,
+  toSchemaReview,
+} from "@/lib/reviews";
 
 type Props = {
   params: Promise<{ slug: string; caseId: string }>;
@@ -88,6 +94,45 @@ export default async function CaseDetailPage({ params }: Props) {
     : [];
   const showRelatedIndustries = [...relatedIndustries, ...fallbackIndustries].slice(0, 3);
 
+  // 2026-09-11 (R29): per-case study review aggregation. We pull the
+  // subset of verifiedReviews that are linked to this exact case study
+  // (relatedCaseId === c.id). When the subset is non-empty we emit a
+  // separate JSON-LD block carrying review + aggregateRating for the
+  // specific project described on this page. This is the most
+  // decision-critical surface for a buyer comparing vendors — Google
+  // now sees each case study detail as a reviewable Service node in
+  // addition to the Article node. The gating is identical to R27/R28
+  // (verifiedReviews empty today → no fabricated data, just a clean
+  // Service shell).
+  const caseReviews = filterReviewsForCase(c.id);
+  const caseAggregate = hasAggregateableReviews(caseReviews)
+    ? computeAggregateRating(caseReviews)
+    : null;
+  const caseReviewJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `https://sublimapparel.com/cases/${ind.slug}/${c.id}/#service-reviews`,
+    url: `https://sublimapparel.com/cases/${ind.slug}/${c.id}/`,
+    name: `${c.title} — buyer review surface`,
+    description: `Aggregated buyer feedback for the "${c.title}" case study (${c.client}, ${c.year}).`,
+    serviceType: "Custom apparel manufacturing case study review aggregation",
+    provider: { "@id": "https://sublimapparel.com/#organization" },
+    ...(caseReviews.length > 0
+      ? { review: caseReviews.map(toSchemaReview) }
+      : {}),
+    ...(caseAggregate
+      ? {
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: caseAggregate.ratingValue,
+            reviewCount: caseAggregate.reviewCount,
+            bestRating: caseAggregate.bestRating,
+            worstRating: caseAggregate.worstRating,
+          },
+        }
+      : {}),
+  };
+
   return (
     <main>
       <JsonLd
@@ -97,6 +142,17 @@ export default async function CaseDetailPage({ params }: Props) {
           { name: ind.title, path: `/cases/${ind.slug}` },
           { name: c.title, path: `/cases/${ind.slug}/${c.id}` },
         ])}
+      />
+      {/* 2026-09-11 (R29): also emit the per-case review-surface Service
+          node in the same JsonLd list, alongside BreadcrumbList /
+          Article. The Service block is a no-op minimal node today
+          (verifiedReviews is still empty) and lights up with review +
+          aggregateRating automatically once a real review is added
+          to verifiedReviews with `relatedCaseId: "${c.id}"`. Same
+          contract as R27 (/about/) and R28 (/cases/[slug]/) — three
+          pages, one reviews.ts single source of truth. */}
+      <JsonLd
+        data={caseReviewJsonLd}
       />
       {/* 2026-09-11 push (Round 7): add Article + BreadcrumbList JSON-LD
           on each case study detail page. Before this round the only
@@ -269,6 +325,110 @@ export default async function CaseDetailPage({ params }: Props) {
           )}
         </div>
       </section>
+
+      {/* Buyer feedback — per-case study review surface.
+          2026-09-11 (R29): mirrors the /about/ "Trusted by buyers" block
+          and the /cases/[slug]/ "Buyer feedback" block, but scoped to
+          this specific case study (filtered by relatedCaseId === c.id).
+          Renders only when at least one review is attached to this
+          case — when empty (today's state), the entire section is
+          omitted to keep the page focused on the project itself. The
+          /about/ page already shows the global "Reviews coming soon"
+          placeholder; repeating it on every case detail page would be
+          visual noise. Schema and UI light up simultaneously the day a
+          real review with relatedCaseId === c.id is added to
+          verifiedReviews. */}
+      {caseReviews.length > 0 && (
+        <section className="border-b-2 border-black bg-white">
+          <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
+            <div className="mb-10 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+              <div>
+                <div className="mb-3 inline-block bg-[#00c2ff] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
+                  Buyer feedback
+                </div>
+                <h2 className="text-3xl font-black leading-tight text-black md:text-5xl">
+                  What {c.client} said
+                  <br />
+                  <span className="text-[#cc3d00]">about this project.</span>
+                </h2>
+              </div>
+              {caseAggregate ? (
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-1 text-[#cc3d00]">
+                    {[1, 2, 3, 4, 5].map((i) => (
+                      <Star
+                        key={i}
+                        className={
+                          "h-5 w-5 " +
+                          (i <= Math.round(caseAggregate.ratingValue)
+                            ? "fill-[#cc3d00]"
+                            : "opacity-30")
+                        }
+                      />
+                    ))}
+                  </div>
+                  <div className="text-sm font-black uppercase tracking-widest text-black">
+                    {caseAggregate.ratingValue.toFixed(1)} / 5
+                    <span className="ml-1 text-black/60">
+                      · {caseAggregate.reviewCount} review
+                      {caseAggregate.reviewCount === 1 ? "" : "s"}
+                    </span>
+                  </div>
+                </div>
+              ) : null}
+            </div>
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {caseReviews.map((r) => (
+                <article
+                  key={r.id}
+                  className="flex flex-col border-2 border-black bg-[#faf9f6] p-6"
+                >
+                  <div className="mb-3 flex items-center gap-1 text-[#cc3d00]">
+                    {[1, 2, 3, 4, 5].map((i) => (
+                      <Star
+                        key={i}
+                        className={
+                          "h-4 w-4 " +
+                          (typeof r.ratingValue === "number" &&
+                          i <= Math.round(r.ratingValue)
+                            ? "fill-[#cc3d00]"
+                            : "opacity-30")
+                        }
+                      />
+                    ))}
+                    {typeof r.ratingValue === "number" ? (
+                      <span className="ml-1 text-xs font-black uppercase tracking-widest text-black/70">
+                        {r.ratingValue.toFixed(1)} / 5
+                      </span>
+                    ) : null}
+                  </div>
+                  <Quote className="mb-2 h-5 w-5 text-[#00c2ff]" />
+                  <p className="flex-1 text-base leading-relaxed text-black">
+                    {r.reviewBody}
+                  </p>
+                  <div className="mt-4 border-t-2 border-black/10 pt-3 text-xs font-black uppercase tracking-widest text-black/70">
+                    {r.author}
+                    {r.authorRole ? ` · ${r.authorRole}` : ""}
+                    <span className="ml-2 text-black/40">
+                      {r.datePublished}
+                    </span>
+                    {r.url ? (
+                      <a
+                        href={r.url}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        className="ml-2 text-[#00c2ff] underline"
+                      >
+                        Source ↗
+                      </a>
+                    ) : null}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Related industries (cross-link for SEO) */}
       {showRelatedIndustries.length > 0 && (
