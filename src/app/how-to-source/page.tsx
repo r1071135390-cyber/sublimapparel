@@ -27,7 +27,10 @@ export const metadata = buildPageMetadata({
   },
     ogTitle: "How to Source Custom Apparel from China | 5-Step Process",
     ogDescription: "5-step process from inquiry to delivery. Quoting, sample, production, QC, and shipping.",
-    ogImage: "https://sublimapparel.com/how-to-source/",
+    // 2026-09-11 (Round 15 P0-1): was "https://sublimapparel.com/how-to-source/"
+    // — a page URL, not an image. Social crawlers would render a broken
+    // share card. Resource/guide pages fall back to /og-default.jpg.
+    ogImage: "/og-default.jpg",
   });;
 
 const breadcrumb = buildBreadcrumbJsonLd([

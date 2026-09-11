@@ -25,7 +25,10 @@ export const metadata = buildPageMetadata({
   },
     ogTitle: "4-Step Quality Control Process",
     ogDescription: "Pre-production sample, in-line inspection, AQL 2.5 final inspection, pre-shipment photo evidence. We catch defects before yo…",
-    ogImage: "https://sublimapparel.com/quality-control/",
+    // 2026-09-11 (Round 15 P0-1): was "https://sublimapparel.com/quality-control/"
+    // — a page URL, not an image. Social crawlers would render a broken
+    // share card. Resource/guide pages fall back to /og-default.jpg.
+    ogImage: "/og-default.jpg",
   });;
 
 const breadcrumb = buildBreadcrumbJsonLd([

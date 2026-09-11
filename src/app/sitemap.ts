@@ -167,6 +167,15 @@ const ROUTES: SitemapRoute[] = [
   { path: "/cases/endurance-race-events/alpine-ultra-50k-2024", priority: 0.65, changeFrequency: "yearly" },
   { path: "/cases/music-tour-festival/harbor-sound-festival-2025", priority: 0.65, changeFrequency: "yearly" },
   { path: "/cases/sports-teams/nova-racing-academy-2025", priority: 0.65, changeFrequency: "yearly" },
+  // 2026-09-11 (Round 15 P0-2): 3 more case detail pages exist (each has
+  // full generateStaticParams + robots: { index: true } in their page.tsx)
+  // but were missing from the sitemap. Adding them at the same 0.65/yearly
+  // priority as the other 4 case detail pages to avoid mixed signals —
+  // Google would otherwise crawl them via /cases/[slug]/ links, see no
+  // priority signal in the sitemap, and treat them as secondary content.
+  { path: "/cases/corporate-programs/harbor-health-network-2025", priority: 0.65, changeFrequency: "yearly" },
+  { path: "/cases/schools-greek-life/state-university-greek-weekend-2025", priority: 0.65, changeFrequency: "yearly" },
+  { path: "/cases/political-campaigns/midwest-state-senate-2024", priority: 0.65, changeFrequency: "yearly" },
 
 
   // ── L2  Solution pages (6) — Phase 1 SEO focus ────────────────

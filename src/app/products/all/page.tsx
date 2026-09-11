@@ -16,7 +16,10 @@ export const metadata = buildPageMetadata({
     alternates: { canonical: "./" },
     ogTitle: "100 All-Over Print Products | Apparel by Garment, Sport",
     ogDescription: "100 all-over print apparel products, cross-filtered by garment, sport and scenario. Polyester sublimation + all-over digital…",
-    ogImage: "/products/all/",
+    // 2026-09-11 (Round 15 P0-1): was "/products/all/" — a page URL, not an
+    // image. Social crawlers would render a broken share card. Pointing to
+    // /og/og-products.webp (the products OG card).
+    ogImage: "/og/og-products.webp",
   });;
 
 const breadcrumbLd = buildBreadcrumbJsonLd([

@@ -39,7 +39,10 @@ export const metadata = buildPageMetadata({
   },
     ogTitle: "Custom Apparel Fulfillment Partner | DDP Shipping Manufacturer",
     ogDescription: "Bulk production, warehouse support, DDP shipping and inventory management for e-commerce brands and resellers. Flexible MOQ,…",
-    ogImage: "https://sublimapparel.com/e-commerce-fulfillment/",
+    // 2026-09-11 (Round 15 P0-1): was "https://sublimapparel.com/e-commerce-fulfillment/"
+    // — a page URL, not an image. Social crawlers would render a broken
+    // share card. Industry pages use /og/og-industry.webp.
+    ogImage: "/og/og-industry.webp",
   });;
 
 const fulfillmentSegments = [

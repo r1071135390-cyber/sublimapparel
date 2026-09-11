@@ -29,7 +29,10 @@ export const metadata = buildPageMetadata({
   },
     ogTitle: "90-Day Custom Apparel Production Program",
     ogDescription: "Reserve early, lock late. 2-Phase Production Model designed for events, corporate, and brand apparel.",
-    ogImage: "https://sublimapparel.com/90-day-program/",
+    // 2026-09-11 (Round 15 P0-1): was "https://sublimapparel.com/90-day-program/"
+    // — a page URL, not an image. Social crawlers would render a broken
+    // share card. Resource/guide pages fall back to /og-default.jpg.
+    ogImage: "/og-default.jpg",
   });;
 
 const breadcrumb = buildBreadcrumbJsonLd([

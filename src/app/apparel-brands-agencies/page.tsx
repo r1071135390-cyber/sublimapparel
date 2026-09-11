@@ -38,7 +38,10 @@ export const metadata = buildPageMetadata({
   },
     ogTitle: "Private Label Apparel Manufacturer | Custom Clothing Production Partner",
     ogDescription: "Custom labels, hang tags, retail packaging and drop-ship fulfillment for growing brands and creative agencies. China-based f…",
-    ogImage: "https://sublimapparel.com/apparel-brands-agencies/",
+    // 2026-09-11 (Round 15 P0-1): was "https://sublimapparel.com/apparel-brands-agencies/"
+    // — a page URL, not an image. Social crawlers would render a broken
+    // share card. Industry pages use /og/og-industry.webp.
+    ogImage: "/og/og-industry.webp",
   });;
 
 const brandSegments = [

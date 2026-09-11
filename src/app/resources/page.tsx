@@ -28,7 +28,10 @@ export const metadata = buildPageMetadata({
   },
     ogTitle: "Tools & Resources for Custom Apparel Buyers",
     ogDescription: "Plan, size, qualify and ship — every tool a custom apparel buyer needs, free from Sublimapparel.",
-    ogImage: "/resources",
+    // 2026-09-11 (Round 15 P0-1): was "/resources" — a page path, not an
+    // image. Social crawlers would render a broken share card. Resource
+    // hub falls back to /og-default.jpg.
+    ogImage: "/og-default.jpg",
   });;
 
 const tools = [

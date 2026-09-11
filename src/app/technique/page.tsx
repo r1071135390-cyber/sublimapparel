@@ -19,8 +19,11 @@ export const metadata = buildPageMetadata({
   },
     ogTitle: "Which Print Technique Fits Your Design? — 20 Methods Compared",
     ogDescription: "20 decoration techniques, compared. Sublimation, screen print, DTG, DTF, embroidery, 3D puff, rhinestone and more — costs, d…",
-    ogImage: "/technique/",
-  });;
+    // 2026-09-11 (Round 15 P0-1): was "/technique/" — a page URL, not an
+  // image. Social crawlers would render a broken share card. Defaulting
+  // to /og-default.jpg for the techniques hub.
+  ogImage: "/og-default.jpg",
+});;
 
 // Speed up static generation by skipping unnecessary work
 export const revalidate = false;

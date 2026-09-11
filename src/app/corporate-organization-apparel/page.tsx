@@ -36,7 +36,10 @@ export const metadata = buildPageMetadata({
   },
     ogTitle: "Custom Corporate Apparel Manufacturer | Employee Uniform Supplier",
     ogDescription: "Employee uniforms, branded work shirts, company polo shirts, team clothing. Brand-color matching, flexible quantities, DDP w…",
-    ogImage: "https://sublimapparel.com/corporate-organization-apparel/",
+    // 2026-09-11 (Round 15 P0-1): was "https://sublimapparel.com/corporate-organization-apparel/"
+    // — a page URL, not an image. Social crawlers would render a broken
+    // share card. Industry pages use /og/og-industry.webp.
+    ogImage: "/og/og-industry.webp",
   });;
 
 const useCases = [

@@ -15,7 +15,10 @@ export const metadata = buildPageMetadata({
   },
     ogTitle: "Event Apparel Timeline Calculator",
     ogDescription: "Enter your event date. Get the exact order date, design lock date, and final count lock date.",
-    ogImage: "https://sublimapparel.com/event-timeline/",
+    // 2026-09-11 (Round 15 P0-1): was "https://sublimapparel.com/event-timeline/"
+    // — a page URL, not an image. Social crawlers would render a broken
+    // share card. Resource/guide pages fall back to /og-default.jpg.
+    ogImage: "/og-default.jpg",
   });;
 
 const breadcrumb = buildBreadcrumbJsonLd([

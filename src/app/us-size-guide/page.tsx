@@ -22,7 +22,12 @@ export const metadata = buildPageMetadata({
   },
     ogTitle: "US Size Guide for Custom Apparel",
     ogDescription: "Men&apos;s, women&apos;s, youth, hoodie size charts. Free Excel template for collecting sizes from your registration system.",
-    ogImage: "https://sublimapparel.com/us-size-guide/",
+    // 2026-09-11 (Round 15 P0-1): was "https://sublimapparel.com/us-size-guide/"
+    // (a page URL, not an image — Facebook/Twitter/LinkedIn would have shown
+    // a broken image when this page is shared). Pointing to /og-default.jpg
+    // so all platforms render a real share card. Resource/guide pages fall
+    // back to the default OG image.
+    ogImage: "/og-default.jpg",
   });;
 
 const breadcrumb = buildBreadcrumbJsonLd([

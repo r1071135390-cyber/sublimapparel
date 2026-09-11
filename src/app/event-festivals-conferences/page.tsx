@@ -38,7 +38,10 @@ export const metadata = buildPageMetadata({
   },
     ogTitle: "Custom Event Apparel Manufacturer | Festival & Conference Shirts",
     ogDescription: "Conference shirts, festival merchandise, volunteer shirts, staff uniforms. Bulk production, deadline guarantee, DDP worldwid…",
-    ogImage: "https://sublimapparel.com/event-festivals-conferences/",
+    // 2026-09-11 (Round 15 P0-1): was "https://sublimapparel.com/event-festivals-conferences/"
+    // — a page URL, not an image. Social crawlers would render a broken
+    // share card. Industry pages use /og/og-industry.webp.
+    ogImage: "/og/og-industry.webp",
   });;
 
 const eventTypes = [
