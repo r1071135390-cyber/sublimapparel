@@ -14,6 +14,13 @@ pnpm next build
 echo "Inlining CSS into HTML (eliminates render-blocking CSS)..."
 node scripts/inline-css.mjs
 
+# 2026-09-11 (Round 4 follow-up): ensure every HTML page has the site-wide
+# JSON-LD @graph + page-level schemas. Next.js 16's <JsonLd> component
+# does not always render in static export, so we inject directly into the
+# HTML before </head> as a guarantee. Idempotent.
+echo "Injecting JSON-LD structured data into HTML..."
+node scripts/inject-json-ld.mjs
+
 echo "Injecting authoritative outbound links for SEO..."
 node scripts/auto-external-links.mjs
 

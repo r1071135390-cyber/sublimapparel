@@ -2,14 +2,14 @@
 //
 // Why this file exists:
 //   Next.js 16 App Router does NOT emit `<script type="application/ld+json">`
-//   from React `<script>` components into static-exported HTML — verified
-//   2026-09-11 by inspecting production HTML on sublimapparel.com (every
-//   page, including the layout-level @graph and page-level FAQPage/BreadcrumbList,
-//   was missing the schema.org tag entirely).
-//
-//   We work around it by injecting the script tags at build time in
-//   `assemble-out.mjs` (step 8). This file defines what gets injected and
-//   to which page path.
+//   from React `<script>` components into static-exported HTML in a reliable
+//   way — some page-level schemas (notably BreadcrumbList rendered via the
+//   non-@graph JsonLd branch) are silently dropped. To guarantee every page
+//   has both the site-wide @graph AND the right page-level schemas, we
+//   inject them at build time. Cloudflare Pages runs this via
+//   `scripts/build.sh` → `node scripts/inject-json-ld.mjs`.
+//   (The `assemble-out.mjs` script also has a step that uses this same
+//   registry, for the local-dev fallback pipeline.)
 //
 // Sync requirements:
 //   - The 6 layout schemas mirror `src/lib/json-ld-data.ts` — keep them
