@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import Link from "next/link";
+import { JsonLd } from "@/components/json-ld";
+import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 import { RequestQuoteLink } from "@/components/request-quote-link";
 import {
   HelpCircle,
@@ -95,8 +97,37 @@ const sections = [
 ];
 
 export default function FaqPage() {
+  // 2026-09-11 (Round 9): extract all 29 Q&As from 5 sections into a
+  // FAQPage JSON-LD. The page has "30 questions" in the H1 — Google uses
+  // FAQPage to surface Q&A rich results in SERP (People Also Ask + FAQ
+  // expansion), directly boosting organic CTR.
+  const allFaqs = sections.flatMap((s) => s.questions);
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "About", path: "/about/" },
+    { name: "FAQ", path: "/about/faq/" },
+  ]);
+  const faqJsonLd = buildFaqJsonLd(allFaqs);
+  const webPageJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://sublimapparel.com/about/faq/#webpage",
+    url: "https://sublimapparel.com/about/faq/",
+    name: "FAQ · 30 B2B Sublimation Questions Answered | SublimApparel",
+    description:
+      "30 frequently asked B2B questions about sublimation apparel: pricing, MOQ, fabric, lead time, shipping, customs, payment, samples, file prep. Yiwu factory direct.",
+    inLanguage: "en",
+    isPartOf: { "@id": "https://sublimapparel.com/#website" },
+    about: { "@id": "https://sublimapparel.com/#organization" },
+    speakable: {
+      "@type": "SpeakableSpecification",
+      xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+    },
+  };
+
   return (
     <main className="min-h-screen bg-[#faf9f6] text-[#0a0a0a]">
+      <JsonLd data={[breadcrumbJsonLd, webPageJsonLd, faqJsonLd]} />
       {/* 1 · HERO */}
       <section className="border-b-2 border-[#0a0a0a] bg-[#0a0a0a] text-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">

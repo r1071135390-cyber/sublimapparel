@@ -270,11 +270,40 @@ const breadcrumbJsonLd = buildBreadcrumbJsonLd([
   { name: "Technique", path: "/technique/" },
 ]);
 
+// 2026-09-11 (Round 9): add CollectionPage + ItemList JSON-LD for the 20
+// techniques. This tells Google the page is a curated hub listing all 20
+// decoration techniques with stable ordering, mirroring the /industries/ hub
+// pattern. Each ItemListElement.url points to /technique/{slug}/.
+const techniqueCollection = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": "https://sublimapparel.com/technique/#collection",
+  url: "https://sublimapparel.com/technique/",
+  name: "Which Print Technique Fits Your Design? — 20 Methods Compared",
+  description:
+    "Compare 20 apparel decoration techniques — sublimation, screen printing, DTG, DTF, embroidery, 3D puff, rhinestone and more. We run all 20 in-house.",
+  inLanguage: "en",
+  isPartOf: { "@id": "https://sublimapparel.com/#website" },
+  about: { "@id": "https://sublimapparel.com/#organization" },
+  mainEntity: {
+    "@type": "ItemList",
+    itemListOrder: "https://schema.org/ItemListOrderAscending",
+    numberOfItems: techniques.length,
+    itemListElement: techniques.map((t, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: t.name,
+      url: `https://sublimapparel.com/technique/${t.slug}/`,
+    })),
+  },
+};
+
 export default function TechniquePage() {
   return (
     <>
       <JsonLd data={breadcrumbJsonLd} />
       <JsonLd data={techniqueData} />
+      <JsonLd data={techniqueCollection} />
 
       {/* HERO — same split pattern as homepage: dark text on left, clear image on right */}
       <section className="relative overflow-hidden border-b-2 border-black bg-[#0a0a0a] text-white">

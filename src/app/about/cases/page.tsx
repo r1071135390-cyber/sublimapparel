@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import Link from "next/link";
+import { JsonLd } from "@/components/json-ld";
+import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 import { RequestQuoteLink } from "@/components/request-quote-link";
 import {
   Trophy,
@@ -65,8 +67,33 @@ const faqs = [
 ];
 
 export default function CasesPage() {
+  // 2026-09-11 (Round 9): add WebPage + breadcrumb JSON-LD so the
+  // case studies page joins the brand entity graph.
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "About", path: "/about/" },
+    { name: "Case Studies", path: "/about/cases/" },
+  ]);
+  const webPageJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://sublimapparel.com/about/cases/#webpage",
+    url: "https://sublimapparel.com/about/cases/",
+    name: "Industries We Serve · 12 Verticals, 1,000+ B2B Clients | SublimApparel",
+    description:
+      "12 industries we serve: race events, sports clubs, schools, ecommerce brands, political campaigns, trade shows, esports, churches, fitness, cycling, gaming, hospitality. 1,000+ B2B clients worldwide.",
+    inLanguage: "en",
+    isPartOf: { "@id": "https://sublimapparel.com/#website" },
+    about: { "@id": "https://sublimapparel.com/#organization" },
+    speakable: {
+      "@type": "SpeakableSpecification",
+      xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+    },
+  };
+
   return (
     <main className="min-h-screen bg-[#faf9f6] text-[#0a0a0a]">
+      <JsonLd data={[breadcrumbJsonLd, webPageJsonLd]} />
       {/* 1 · HERO */}
       <section className="border-b-2 border-[#0a0a0a] bg-[#0a0a0a] text-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
