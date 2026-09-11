@@ -615,6 +615,165 @@ export function buildAboutGraph(input: AboutInput) {
   };
 }
 
+// 2026-09-12 (R39): shared helper for /resources/ that
+// consolidates the 4 separate JSON-LD nodes (BreadcrumbList +
+// WebPage + ItemList tools + FAQPage) into a single @graph
+// payload, with every node @id-anchored and joined to the
+// global brand entity graph.
+//
+// Key design choices:
+//   - Two sibling ItemLists (one for the 5 free tools, one for
+//     the 4 guides) so the /resources/ hub exposes both the
+//     interactive-tool hierarchy and the guide-card hierarchy
+//     in one pass. Both ItemLists are <= 50, so Google keeps
+//     them eligible for carousel rich results.
+//   - WebPage + mainEntity round-trip to the FAQPage #faq
+//     so the PAA-style rich results on "apparel sourcing
+//     tools" queries still resolve.
+//   - Person #person-ramon is inlined (same pattern as
+//     R36-C blog hub, R35-D blog post, R37 about, R38
+//     contact) so the publisher author chain stays
+//     self-contained.
+export type ResourcesHubInput = {
+  /** Free interactive tools (timeline planner, size guide, etc.). */
+  tools: { slug: string; title: string }[];
+  /** Guide cards linking to fabric / products / quality / shipping. */
+  guides: { href: string; title: string }[];
+  /** Optional FAQ items rendered on the page. */
+  faq?: FaqItem[];
+};
+
+export function buildResourcesHubGraph(input: ResourcesHubInput) {
+  const url = `${SITE_URL}/resources/`;
+  const webpageId = `${url}#webpage`;
+  const breadcrumbId = `${url}#breadcrumb`;
+  const toolsListId = input.tools.length > 0 ? `${url}#tools` : null;
+  const guidesListId = input.guides.length > 0 ? `${url}#guides` : null;
+  const faqId = input.faq && input.faq.length > 0 ? `${url}#faq` : null;
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": webpageId,
+        url,
+        name: "Tools & Resources for Custom Apparel Buyers | SublimApparel",
+        description:
+          "Free interactive tools, printable checklists, and step-by-step guides built for custom apparel buyers, brand owners, and event organizers. Event timeline planner, US size chart, QC checklist, 90-day roadmap, sourcing playbook.",
+        inLanguage: "en",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        about: { "@id": `${SITE_URL}/#organization` },
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: `${SITE_URL}/og/og-home.webp`,
+        },
+        speakable: {
+          "@type": "SpeakableSpecification",
+          xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+        },
+        ...(faqId ? { mainEntity: { "@id": faqId } } : {}),
+      },
+      {
+        // 2026-09-12 (R39): same Person node emitted by
+        // buildBlogHubGraph (R36-C), buildBlogPostGraph
+        // (R35-D), buildAboutGraph (R37), and
+        // buildContactGraph (R38) so the publisher author
+        // chain stays self-contained across the site.
+        "@type": "Person",
+        "@id": `${SITE_URL}/#person-ramon`,
+        name: "Ramon Hsu",
+        jobTitle: "Founder & CEO, SublimApparel",
+        worksFor: { "@id": `${SITE_URL}/#organization` },
+        url: `${SITE_URL}/about/`,
+        knowsAbout: [
+          "Dye-sublimation printing",
+          "Custom apparel manufacturing",
+          "DDP (Delivered Duty Paid) shipping",
+          "All-over digital print on cotton",
+          "Yiwu, China apparel supply chain",
+        ],
+      },
+      ...(toolsListId
+        ? [
+            {
+              "@type": "ItemList",
+              "@id": toolsListId,
+              name: "SublimApparel Free Custom Apparel Tools",
+              description:
+                "5 free interactive tools: event timeline planner, US size chart, quality control checklist, 90-day new program roadmap, how-to-source playbook.",
+              numberOfItems: input.tools.length,
+              itemListOrder:
+                "https://schema.org/ItemListOrderAscending",
+              itemListElement: input.tools.map((t, i) => ({
+                "@type": "ListItem",
+                position: i + 1,
+                url: `${SITE_URL}/${t.slug}/`,
+                name: t.title,
+              })),
+              isPartOf: { "@id": webpageId },
+            },
+          ]
+        : []),
+      ...(guidesListId
+        ? [
+            {
+              "@type": "ItemList",
+              "@id": guidesListId,
+              name: "SublimApparel Custom Apparel Guides",
+              description:
+                "4 deep-dive guides that connect the free tools to the actual production surface: fabric & print methods, product catalog, quality control process, DDP shipping & logistics.",
+              numberOfItems: input.guides.length,
+              itemListOrder:
+                "https://schema.org/ItemListOrderUnordered",
+              itemListElement: input.guides.map((g, i) => ({
+                "@type": "ListItem",
+                position: i + 1,
+                url: `${SITE_URL}${g.href.startsWith("/") ? g.href : `/${g.href}`}`,
+                name: g.title,
+              })),
+              isPartOf: { "@id": webpageId },
+            },
+          ]
+        : []),
+      {
+        "@type": "BreadcrumbList",
+        "@id": breadcrumbId,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${SITE_URL}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Tools & Resources",
+            item: url,
+          },
+        ],
+      },
+      ...(faqId
+        ? [
+            {
+              "@type": "FAQPage",
+              "@id": faqId,
+              mainEntity: input.faq!.map((it) => ({
+                "@type": "Question",
+                name: it.q,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: it.a,
+                },
+              })),
+            },
+          ]
+        : []),
+    ],
+  };
+}
+
 // 2026-09-12 (R38): shared helper for /contact/ that consolidates
 // the 3 separate JSON-LD <script> tags (BreadcrumbList + FAQPage
 // + ContactPage) into a single @graph payload, with every node
