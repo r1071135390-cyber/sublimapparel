@@ -36,20 +36,94 @@ export default function YiwuFactoryWhatsappPage() {
     { name: "Yiwu Factory WhatsApp", path: "/yiwu-factory-whatsapp" },
   ]);
 
+  // 2026-09-11 push (Round 8 part 1): upgrade Service to a richer node
+  // with @id, hasOfferCatalog, and areaServed as Country array, plus
+  // add a WebPage JSON-LD so the page is eligible for sitelinks +
+  // speakable + cross-page entity linking. The previous Service was
+  // minimal (no @id, areaServed as a string, no offers catalog) which
+  // meant Google couldn't tie it back to the global Organization
+  // entity. Now the page is a real, queryable contact surface.
   const serviceJsonLd = {
     "@context": "https://schema.org",
     "@type": "Service",
-    serviceType: "Custom Sublimation Apparel Manufacturing",
+    "@id": "https://sublimapparel.com/yiwu-factory-whatsapp/#service",
+    name: "Direct WhatsApp Line to the Yiwu Factory",
+    serviceType: "Direct WhatsApp contact with the Yiwu production team for custom sublimated and all-over print apparel, MOQ 50 pcs, DDP shipping to 100+ countries",
+    category: "B2B Apparel Manufacturing — Direct Factory Contact",
     provider: { "@id": "https://sublimapparel.com/#organization" },
-    areaServed: "Worldwide",
+    // Link to the actual brick-and-mortar LocalBusiness so Google can
+    // match "Yiwu factory WhatsApp" queries to a verified location
+    // and surface the tap-to-call affordance in the knowledge panel.
+    areaServed: [
+      { "@type": "Country", name: "United States" },
+      { "@type": "Country", name: "Canada" },
+      { "@type": "Country", name: "United Kingdom" },
+      { "@type": "Country", name: "Australia" },
+      { "@type": "Country", name: "New Zealand" },
+      { "@type": "Country", name: "Germany" },
+      { "@type": "Country", name: "France" },
+      { "@type": "Country", name: "Spain" },
+      { "@type": "Country", name: "Mexico" },
+      { "@type": "Country", name: "Brazil" },
+      { "@type": "Country", name: "Japan" },
+    ],
     description:
-      "Direct WhatsApp line to the SublimApparel production team in Yiwu, China. Custom sublimated and all-over print apparel, MOQ 50 pcs, DDP shipping to 100+ countries.",
+      "Direct WhatsApp line (+86 198 1793 0190) to the SublimApparel production team in Yiwu, China. Custom sublimated and all-over print apparel, MOQ 50 pcs, DDP shipping to 100+ countries, average reply under 1 business day.",
     offers: {
-      "@type": "Offer",
+      "@type": "AggregateOffer",
       priceCurrency: "USD",
-      priceRange: "$8–$28",
+      lowPrice: 6,
+      highPrice: 55,
+      priceRange: "$6–$55",
+      offerCount: 6,
       availability: "https://schema.org/InStock",
     },
+    url: "https://sublimapparel.com/yiwu-factory-whatsapp/",
+    // Same-day-or-next-business-day WhatsApp reply SLO as a
+    // `potentialAction` so Google can render the contact affordance
+    // consistently with the Yiwu LocalBusiness node.
+    potentialAction: {
+      "@type": "CommunicateAction",
+      target: "https://wa.me/8619817930190",
+      name: "Message the Yiwu factory on WhatsApp",
+    },
+  };
+
+  // 2026-09-11 push (Round 8 part 1): WebPage JSON-LD for the
+  // WhatsApp landing page. Adds the page into the site entity graph
+  // and exposes `speakable` so voice-search "what is the SublimApparel
+  // WhatsApp number" gets a direct verbatim answer from the page's
+  // hero copy.
+  const webPageJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://sublimapparel.com/yiwu-factory-whatsapp/#webpage",
+    url: "https://sublimapparel.com/yiwu-factory-whatsapp/",
+    name: "Yiwu Factory WhatsApp — +86-198-1793-0190 | SublimApparel",
+    description:
+      "Message the SublimApparel Yiwu factory direct on WhatsApp +86 198 1793 0190. Custom sublimated apparel, MOQ 50 pcs, DDP shipping to 100+ countries, US warehouse in Fontana CA. Real production managers reply within 1 business day.",
+    inLanguage: "en",
+    isPartOf: { "@id": "https://sublimapparel.com/#website" },
+    about: { "@id": "https://sublimapparel.com/#organization" },
+    mainEntity: { "@id": "https://sublimapparel.com/yiwu-factory-whatsapp/#service" },
+    primaryImageOfPage: {
+      "@type": "ImageObject",
+      url: "https://sublimapparel.com/contact-hero.webp",
+    },
+    significantLink: [
+      "https://sublimapparel.com/contact/",
+      "https://sublimapparel.com/get-a-quote/",
+      "https://sublimapparel.com/shipping/us-warehouse/",
+    ],
+    speakable: {
+      "@type": "SpeakableSpecification",
+      xpath: [
+        "/html/body//h1",
+        "/html/body//section[contains(@class,'hero')]//p",
+      ],
+    },
+    keywords:
+      "Yiwu factory WhatsApp, Yiwu factory contact WhatsApp, sublimation factory WhatsApp number, China apparel factory WhatsApp, +86 198 1793 0190, SublimApparel WhatsApp",
   };
 
   // 2026-09-11 push (Round 6): add FAQPage JSON-LD on /yiwu-factory-whatsapp/
@@ -86,6 +160,7 @@ export default function YiwuFactoryWhatsappPage() {
     <>
       <JsonLd data={breadcrumb} />
       <JsonLd data={serviceJsonLd} />
+      <JsonLd data={webPageJsonLd} />
       <JsonLd data={faqJsonLd} />
 
       <main>
