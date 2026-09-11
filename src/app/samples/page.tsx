@@ -127,7 +127,7 @@ export default function SamplesPage() {
   return (
     <>
       <Navbar />
-      <JsonLd data={[breadcrumb, webPageJsonLd, faqJsonLd]} />
+      <JsonLd data={[breadcrumb, webPageJsonLd, faqJsonLd, samplesHowToJsonLd]} />
       <main className="min-h-screen bg-white text-black">
         <section className="border-b-4 border-black bg-[#f5f5f5] py-20">
           <div className="mx-auto max-w-5xl px-6">
@@ -184,15 +184,7 @@ export default function SamplesPage() {
               How a sample order flows
             </h2>
             <ol className="mt-8 space-y-6">
-              {[
-                ["Request the sample", "Tell us the fabric, style, decoration method, and quantity. We send a confirmation within 4 hours."],
-                ["We confirm cost & lead time", "Sample fee + express shipping. You pay via PayPal or T/T. We schedule the line."],
-                ["Design mock-up (free)", "If it's a pre-production sample, we send a digital mock-up first. You approve the layout."],
-                ["Sample production", "We cut, print, sew, and QC the sample on the same line as your bulk order will run."],
-                ["Photo proof", "We send high-res photos of the finished sample. You confirm or request changes."],
-                ["Ship via DHL / FedEx", "Tracking sent same day. Door-to-door 3-5 days to most countries."],
-                ["Approve & order bulk", "You sign off on the sample, we deduct the sample cost from your bulk PO, and we go to production."],
-              ].map((step, i) => (
+              {sampleSteps.map((step, i) => (
                 <li key={step[0]} className="flex gap-6">
                   <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#ff4d00] text-base font-extrabold text-black">
                     {i + 1}

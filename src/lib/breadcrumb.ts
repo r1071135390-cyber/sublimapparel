@@ -50,3 +50,39 @@ export function buildFaqJsonLd(items: FaqItem[]) {
     })),
   };
 }
+
+/**
+ * Build a HowTo schema from an ordered list of steps.
+ * Used on step-by-step process pages to make them eligible for
+ * "How to ..." rich results and AI-overview extraction.
+ * @example
+ *   buildHowToJsonLd({
+ *     name: "How to source custom apparel from China",
+ *     description: "5 steps from inquiry to delivery.",
+ *     steps: [
+ *       { name: "Inquiry & quote", text: "Send your inquiry..." },
+ *     ],
+ *   })
+ */
+export type HowToStep = { name: string; text: string };
+
+export function buildHowToJsonLd(input: {
+  name: string;
+  description: string;
+  steps: HowToStep[];
+  totalTime?: string; // ISO 8601 duration, e.g. "P60D"
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: input.name,
+    description: input.description,
+    ...(input.totalTime ? { totalTime: input.totalTime } : {}),
+    step: input.steps.map((s, i) => ({
+      "@type": "HowToStep",
+      position: i + 1,
+      name: s.name,
+      text: s.text,
+    })),
+  };
+}

@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildBreadcrumbJsonLd, buildFaqJsonLd, buildHowToJsonLd } from "@/lib/breadcrumb";
 
 export const metadata = buildPageMetadata({
     title: "How to Source Custom Apparel from China | 5-Step Process",
@@ -224,9 +224,23 @@ export default function HowToSourcePage() {
   };
 
   const faqJsonLd = buildFaqJsonLd(sourceFaqs);
+  // 2026-09-11 (R22-C): add HowTo schema for the 5-step sourcing
+  // process. Google has begun surfacing HowTo steps as rich results
+  // for "how to ..." queries. The totalTime covers the full inquiry
+  // → delivery window (60-90 days per the steps array).
+  const howToJsonLd = buildHowToJsonLd({
+    name: "How to source custom apparel from China",
+    description:
+      "5-step process from first inquiry to delivered boxes. Refined over 8 years and 1,200+ orders.",
+    totalTime: "P75D",
+    steps: steps.map((s) => ({
+      name: `Step ${s.n}: ${s.title}`,
+      text: `${s.summary} ${s.details.join(" ")}`,
+    })),
+  });
   return (
     <>
-      <JsonLd data={[breadcrumb, webPageJsonLd, faqJsonLd]} />
+      <JsonLd data={[breadcrumb, webPageJsonLd, faqJsonLd, howToJsonLd]} />
 
       {/* HERO */}
       <section className="border-b border-black/10 bg-[#0a0a0a] py-16 text-white md:py-20">

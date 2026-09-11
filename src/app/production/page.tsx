@@ -265,7 +265,7 @@ export default function ProductionPage() {
           separate schema outputs (raw FAQPage script + JsonLd
           breadcrumb) into a single JsonLd with breadcrumb +
           WebPage + FAQPage. */}
-      <JsonLd data={[breadcrumb, webPageJsonLd, faqJsonLd]} />
+      <JsonLd data={[breadcrumb, webPageJsonLd, faqJsonLd, productionHowToJsonLd]} />
     </>
   );
 }

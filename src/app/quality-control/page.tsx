@@ -167,9 +167,22 @@ export default function QualityControlPage() {
   };
 
   const faqJsonLd = buildFaqJsonLd(qcFaqs);
+  // 2026-09-11 (R22-C): add HowTo schema for the 4-step QC process.
+  // Each step is timed (T-60, T-30 to T-15, T-7, T-3) so the
+  // totalTime is the production window where these checks happen.
+  const howToJsonLd = buildHowToJsonLd({
+    name: "How we quality-control custom apparel orders",
+    description:
+      "4-stage quality control with AQL 2.5 standard: pre-production sample, in-line inspection, final random inspection, pre-shipment photo evidence.",
+    totalTime: "P60D",
+    steps: steps.map((s) => ({
+      name: `Stage ${s.n}: ${s.title}`,
+      text: `${s.summary} ${s.details.join(" ")}`,
+    })),
+  });
   return (
     <>
-      <JsonLd data={[breadcrumb, webPageJsonLd, faqJsonLd]} />
+      <JsonLd data={[breadcrumb, webPageJsonLd, faqJsonLd, howToJsonLd]} />
 
       {/* HERO */}
       <section className="relative overflow-hidden border-b border-black/10 bg-[#0a0a0a] py-16 text-white md:py-20">
