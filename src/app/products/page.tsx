@@ -250,6 +250,23 @@ export default function ProductsPage() {
               <div className="mt-6 flex flex-wrap gap-2">
                 {[
                   { name: "All products", href: "/products/all/" },
+                  // 2026-09-11 (R18-P1): added the 5 product sub-categories
+                  // that were orphan pages (no parent link, no footer link,
+                  // no navbar link — only in the sitemap). They had priority
+                  // 0.85 in the sitemap but Google had to discover them via
+                  // the sitemap alone, with no internal PageRank. Adding them
+                  // here so they get contextually linked from the
+                  // highest-traffic product page on the site.
+                  { name: "T-shirts", href: "/products/t-shirts/" },
+                  { name: "Hoodies & sweatshirts", href: "/products/hoodies/" },
+                  { name: "Jerseys", href: "/products/jerseys/" },
+                  { name: "Running shirts", href: "/products/running-shirts/" },
+                  { name: "Training apparel", href: "/products/training-apparel/" },
+                  { name: "Cycling kits", href: "/products/cycling/" },
+                  { name: "Golf apparel", href: "/products/golf/" },
+                  { name: "Bowling shirts", href: "/products/bowling/" },
+                  { name: "Esports jerseys", href: "/products/esports/" },
+                  { name: "Golf & bowling", href: "/products/golf-bowling/" },
                   { name: "Teams & Sports", href: "/teams-sports-apparel/" },
                   { name: "Racing kits", href: "/products/racing/" },
                   { name: "Events & Conferences", href: "/event-festivals-conferences/" },

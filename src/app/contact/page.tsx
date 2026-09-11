@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight, FileText, MessageCircle, Package, Ruler, Sparkles, Truck, Wrench } from "lucide-react";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { JsonLd } from "@/components/json-ld";
 import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
@@ -156,7 +158,108 @@ export default function ContactPage() {
         </div>
       </section>
       <TeamSection />
-      <Contact /></main>
+      <Contact />
+
+      {/* 2026-09-11 (R18-P1): /contact/ was a complete link dead-end — 16
+          pages poured PageRank into this page (highest inbound count on the
+          entire site) but /contact/ had ZERO outbound internal links,
+          meaning all that accumulated equity was trapped and never flowed
+          on to other important pages (e.g. /get-a-quote/, /samples/,
+          /fabric/, /yiwu-factory-whatsapp/). On a B2B site, /contact/ is
+          typically a near-end-of-funnel page; the user has just submitted
+          a form or copied the email, so this is exactly the right place
+          to show next-step resources they may also want while they wait
+          for a reply (a sample order form, fabric library, DDP shipping
+          guide, WhatsApp number, etc.). Each card is a real utility link,
+          not SEO filler — the same buyer persona benefits from them. */}
+      <section className="border-t-2 border-black bg-[#faf9f6]">
+        <div className="mx-auto max-w-7xl px-6 py-16">
+          <div className="mb-8 max-w-2xl">
+            <p className="mb-2 text-xs font-bold uppercase tracking-widest text-[#cc3d00]">
+              While you wait for our reply
+            </p>
+            <h2 className="text-2xl font-black uppercase leading-tight tracking-tight md:text-3xl">
+              Useful resources before we get back to you
+            </h2>
+            <p className="mt-3 text-sm text-black/70 md:text-base">
+              Most quotes go out within 1 business day. If you want to keep
+              moving while you wait, these pages are the most useful next
+              steps for a B2B apparel buyer — sample ordering, fabric library,
+              shipping guide, and direct WhatsApp.
+            </p>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              {
+                href: "/get-a-quote/",
+                icon: FileText,
+                title: "Detailed quote form",
+                body: "Step-by-step inquiry with size breakdown, deadline, destination. Best for orders 200+ pcs.",
+              },
+              {
+                href: "/get-a-quote-express/",
+                icon: Sparkles,
+                title: "Express 30-min quote",
+                body: "Skip the form. Get a fast rough quote by WhatsApp, email or our 1-step express page.",
+              },
+              {
+                href: "/yiwu-factory-whatsapp/",
+                icon: MessageCircle,
+                title: "WhatsApp the factory",
+                body: "Direct chat with a Yiwu production manager. +86 198 1793 0190. No signup, no bot.",
+              },
+              {
+                href: "/samples/",
+                icon: Package,
+                title: "Order a custom sample",
+                body: "Pre-production sample with your design, $25-60/pc, refunded on bulk 100+ order.",
+              },
+              {
+                href: "/fabric/",
+                icon: Ruler,
+                title: "Fabric library",
+                body: "Polyester sublimation vs DTG/DTF on 100% cotton — GSM, hand-feel, best use case.",
+              },
+              {
+                href: "/all-over-print/",
+                icon: Sparkles,
+                title: "All-over print catalog",
+                body: "120 products, 14 categories. Filter by sport, scenario & garment type.",
+              },
+              {
+                href: "/shipping/ddp/",
+                icon: Truck,
+                title: "DDP shipping guide",
+                body: "What duty-paid delivery includes, lead times by region, US warehouse 2-5 day.",
+              },
+              {
+                href: "/resources/",
+                icon: Wrench,
+                title: "All tools & calculators",
+                body: "Event timeline calculator, US size guide, 90-day program, how-to-source guide.",
+              },
+            ].map((card) => (
+              <Link
+                key={card.href}
+                href={card.href}
+                className="group flex flex-col gap-3 border-2 border-black bg-white p-5 transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:border-[#ff4d00] hover:shadow-[4px_4px_0_0_#000]"
+              >
+                <card.icon className="h-5 w-5 text-[#ff4d00]" strokeWidth={2.5} />
+                <h3 className="text-base font-black uppercase tracking-tight text-black">
+                  {card.title}
+                </h3>
+                <p className="text-sm leading-relaxed text-black/70">
+                  {card.body}
+                </p>
+                <span className="mt-auto inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-[#ff4d00] transition-colors group-hover:text-[#cc3d00]">
+                  Open <ArrowRight className="h-3.5 w-3.5" strokeWidth={3} />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+      </main>
     </>
   );
 }
