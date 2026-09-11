@@ -284,6 +284,33 @@ export function getLayoutGraph() {
   return LAYOUT_GRAPH;
 }
 
+/**
+ * Stable content fingerprint for the page-level registry. Used by
+ * inject-json-ld.mjs to detect pages that have already been injected
+ * (idempotency), robust against data-* attribute stripping.
+ *
+ * We use the count of registered paths and a hash of the canonical
+ * @ids of all registered schemas. This stays stable across builds as
+ * long as the registry contents don't change.
+ */
+export function getRegistryFingerprint() {
+  const ids = [];
+  for (const [path, schemas] of Object.entries(PAGE_SCHEMAS)) {
+    ids.push(path);
+    for (const s of schemas) {
+      if (s["@type"]) ids.push(s["@type"]);
+      if (s["@id"]) ids.push(s["@id"]);
+    }
+  }
+  // Cheap stable hash (FNV-1a style, base36). No crypto needed.
+  let h = 0x811c9dc5;
+  for (const c of ids.join("|")) {
+    h ^= c.charCodeAt(0);
+    h = (h * 0x01000193) >>> 0;
+  }
+  return `jsonldreg-${h.toString(36)}`;
+}
+
 export function getPageSchemas(htmlPath) {
   // htmlPath examples: "/index.html", "/shipping/index.html", "/shipping/ddp/index.html"
   // Convert to URL path: strip "index.html" and trailing index, normalize slashes.

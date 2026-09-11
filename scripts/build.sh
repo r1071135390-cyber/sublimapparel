@@ -14,19 +14,23 @@ pnpm next build
 echo "Inlining CSS into HTML (eliminates render-blocking CSS)..."
 node scripts/inline-css.mjs
 
+echo "Injecting authoritative outbound links for SEO..."
+node scripts/auto-external-links.mjs
+
 # 2026-09-11 (Round 4 follow-up): ensure every HTML page has the site-wide
 # JSON-LD @graph + page-level schemas. Next.js 16's <JsonLd> component
 # does not always render in static export, so we inject directly into the
 # HTML before </head> as a guarantee. Idempotent.
+# IMPORTANT: must run AFTER auto-external-links.mjs, because that script
+# re-parses the HTML with cheerio (which can strip data-* attributes from
+# script tags). Running inject last means our markers + content survive
+# intact and can be detected on re-runs.
 # Wrap in `|| true` so a failure here does NOT abort the rest of the
 # build (e.g. tsup bundle) — the worst case is the same as before this
 # step existed (no injected JSON-LD), which is strictly better than a
 # failed deploy.
 echo "Injecting JSON-LD structured data into HTML..."
 node scripts/inject-json-ld.mjs || { echo "[build.sh] WARN: inject-json-ld.mjs failed — continuing without injected JSON-LD"; true; }
-
-echo "Injecting authoritative outbound links for SEO..."
-node scripts/auto-external-links.mjs
 
 # Only bundle the custom server when not on Vercel/Cloudflare (where static export is served directly)
 if [ -z "${VERCEL:-}" ] && [ -z "${CF_PAGES:-}" ]; then
