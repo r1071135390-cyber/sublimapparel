@@ -1,7 +1,11 @@
 import type { MetadataRoute } from "next";
 import { techniques } from "@/lib/techniques";
 import { blogPosts } from "@/lib/blog";
-import { getAllTagSlugs } from "@/lib/tag-archive";
+import {
+  getAllTagSlugs,
+  ALL_TAGS,
+  type TagDimension,
+} from "@/lib/tag-archive";
 import { products } from "@/lib/products-data";
 import { fabricTypes } from "@/lib/fabric-data";
 import { extraFabricTypes } from "@/lib/fabric-extra";
@@ -72,6 +76,7 @@ const ROUTES: SitemapRoute[] = [
   { path: "/products/all", priority: 0.9, changeFrequency: "weekly" }, // all-over-print catalog
   { path: "/get-a-quote", priority: 0.95, changeFrequency: "monthly" }, // 询盘主入口
   { path: "/contact", priority: 0.7, changeFrequency: "monthly", lastModified: TODAY }, // 2026-09-11 push: rewritten title/H1/description
+  { path: "/yiwu-factory-whatsapp", priority: 0.9, changeFrequency: "monthly" }, // 2026-09-11 push: dedicated WhatsApp landing page for high-exposure "Yiwu factory WhatsApp" queries
 
   // ── L2  SEO （， 0 ）──────────────
   { path: "/fabric", priority: 0.85, changeFrequency: "monthly", lastModified: TODAY }, // 2026-09-11 push: added FAQPage JSON-LD
@@ -212,15 +217,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // ── 98  tag archive （29  + 42  + 27 ）────
   // Tag pages are aggregated from product data; their content changes only
   // when we add/remove tag definitions. Pin to STATIC_LAST_MOD to avoid churn.
+  //
+  // SEO round 2 (2026-09-11): only the 10 B2B-winner tags are indexable; the
+  // other 35 emit <meta name="robots" content="noindex, follow"> from the page
+  // template. Excluding them from the sitemap here stops Google from crawling
+  // a URL we have told it not to index (avoids mixed signals + crawl budget
+  // waste). Internal PageRank still flows through the `follow` attribute.
+  const isIndexable = (dim: TagDimension, label: string) =>
+    ALL_TAGS[dim]?.[label]?.indexable === true;
   const tagEntries: MetadataRoute.Sitemap = (["category", "sport", "scenario"] as const).flatMap(
     (dim) =>
-      getAllTagSlugs(dim).map(({ slug }) => ({
-        url: `${SITE_URL}${withSlash(`/tag/${dim}/${slug}`)}`,
-        lastModified: STATIC_LAST_MOD,
-        changeFrequency: "monthly" as const,
-        priority: 0.7,
-        images: [`${SITE_URL}/og-default.jpg`],
-      }))
+      getAllTagSlugs(dim)
+        .filter(({ value }) => isIndexable(dim, value))
+        .map(({ slug }) => ({
+          url: `${SITE_URL}${withSlash(`/tag/${dim}/${slug}`)}`,
+          lastModified: STATIC_LAST_MOD,
+          changeFrequency: "monthly" as const,
+          priority: 0.7,
+          images: [`${SITE_URL}/og-default.jpg`],
+        }))
   );
 
   // ── 120 （all-over-print ）────
