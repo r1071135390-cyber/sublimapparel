@@ -18,8 +18,12 @@ node scripts/inline-css.mjs
 # JSON-LD @graph + page-level schemas. Next.js 16's <JsonLd> component
 # does not always render in static export, so we inject directly into the
 # HTML before </head> as a guarantee. Idempotent.
+# Wrap in `|| true` so a failure here does NOT abort the rest of the
+# build (e.g. tsup bundle) — the worst case is the same as before this
+# step existed (no injected JSON-LD), which is strictly better than a
+# failed deploy.
 echo "Injecting JSON-LD structured data into HTML..."
-node scripts/inject-json-ld.mjs
+node scripts/inject-json-ld.mjs || { echo "[build.sh] WARN: inject-json-ld.mjs failed — continuing without injected JSON-LD"; true; }
 
 echo "Injecting authoritative outbound links for SEO..."
 node scripts/auto-external-links.mjs

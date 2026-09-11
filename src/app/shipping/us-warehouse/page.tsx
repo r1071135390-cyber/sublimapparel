@@ -23,9 +23,19 @@ const usWarehouseData = {
     "An honest note about our US warehouse address in Fontana, CA. It's a placeholder service for occasional overstock buffer storage — not a standard feature.",
 };
 
+// 2026-09-11 fix (Round 4 follow-up): wire up buildBreadcrumbJsonLd that was
+// imported but never invoked — Next.js 16 strict ESLint fails build on
+// unused imports, which was killing the Cloudflare Pages deploy.
+const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+  { name: "Home", path: "/" },
+  { name: "Shipping", path: "/shipping/" },
+  { name: "US Warehouse", path: "/shipping/us-warehouse/" },
+]);
+
 export default function UsWarehousePage() {
   return (
     <main className="bg-white text-[#0a0a0a]">
+      <JsonLd data={breadcrumbJsonLd} />
       <JsonLd data={usWarehouseData} />
 
       {/* HERO — brutally honest */}

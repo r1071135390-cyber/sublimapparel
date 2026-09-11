@@ -262,9 +262,18 @@ const faqs = [
   },
 ];
 
+// 2026-09-11 fix (Round 4 follow-up): wire up buildBreadcrumbJsonLd that was
+// imported but never invoked — Next.js 16 strict ESLint fails build on
+// unused imports, which was killing the Cloudflare Pages deploy.
+const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+  { name: "Home", path: "/" },
+  { name: "Technique", path: "/technique/" },
+]);
+
 export default function TechniquePage() {
   return (
     <>
+      <JsonLd data={breadcrumbJsonLd} />
       <JsonLd data={techniqueData} />
 
       {/* HERO — same split pattern as homepage: dark text on left, clear image on right */}
