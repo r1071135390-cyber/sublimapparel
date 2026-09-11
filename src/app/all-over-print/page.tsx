@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import Image from "next/image";
 import Link from "next/link";
+import { JsonLd } from "@/components/json-ld";
 import {
   ArrowRight,
   Check,
@@ -262,12 +263,7 @@ const allOverPrintSchema = {
 export default function AllOverPrintPage() {
   return (
     <main>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(allOverPrintSchema),
-        }}
-      />
+      <JsonLd data={allOverPrintSchema} />
 
       {/* HERO */}
       <section className="relative overflow-hidden border-b-2 border-black bg-[#0a0a0a] text-white">

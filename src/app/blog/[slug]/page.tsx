@@ -117,10 +117,24 @@ export default async function BlogPostPage({
     ],
   };
 
+  // 2026-09-11 (Round 9): consolidate all three schema nodes (article +
+  // breadcrumb + FAQPage) into a single JsonLd output to avoid multiple
+  // <script> tags. The FAQPage was previously emitted as a raw <script> tag.
+  const faqSchema = post.faqs && post.faqs.length > 0
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: post.faqs.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
+      }
+    : null;
+
   return (
     <main>
-      <JsonLd data={articleSchema} />
-      <JsonLd data={breadcrumbSchema} />
+      <JsonLd data={[articleSchema, breadcrumbSchema, faqSchema].filter(Boolean)} />
 
       {/* Breadcrumb */}
       <nav
@@ -255,27 +269,9 @@ export default async function BlogPostPage({
             </div>
           ))}
 
-          {/* FAQ section + JSON-LD */}
+          {/* FAQ section */}
           {post.faqs && post.faqs.length > 0 && (
-            <>
-              <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{
-                  __html: JSON.stringify({
-                    "@context": "https://schema.org",
-                    "@type": "FAQPage",
-                    mainEntity: post.faqs.map((f) => ({
-                      "@type": "Question",
-                      name: f.q,
-                      acceptedAnswer: {
-                        "@type": "Answer",
-                        text: f.a,
-                      },
-                    })),
-                  }),
-                }}
-              />
-              <section className="mt-12 md:mt-16">
+            <section className="mt-12 md:mt-16">
                 <h2 className="mb-6 text-2xl font-black leading-tight tracking-tight text-black md:mb-8 md:text-3xl">
                   <span className="mr-2 text-[#cc3d00]">?</span>
                   Frequently Asked Questions
@@ -296,7 +292,6 @@ export default async function BlogPostPage({
                   ))}
                 </div>
               </section>
-            </>
           )}
 
           {/* Internal CTA */}

@@ -3,6 +3,7 @@ import { buildPageMetadata } from "@/lib/page-metadata";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Check, Droplets, Shirt, Sparkles, Layers, Zap } from "lucide-react";
+import { JsonLd } from "@/components/json-ld";
 import { polyesterFabrics } from "@/lib/fabric-data";
 
 export const metadata = buildPageMetadata({
@@ -55,8 +56,40 @@ const products = [
 ];
 
 export default function PolyesterPage() {
+  // 2026-09-11 (Round 9): migrate raw <script> FAQPage to JsonLd component.
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "What is sublimation on polyester?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Sublimation on polyester is a heat-transfer printing process that bonds disperse dyes directly into polyester fibers at the molecular level. At around 200°C, solid dye turns to gas and permanently embeds in the fabric — the result is a print that cannot peel, crack, or fade, with zero hand-feel and full edge-to-edge coverage. Polyester is the only fabric that accepts sublimation, which is why it is the standard for all-over print sportswear, esports jerseys, and cycling kits.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Why is polyester used for sublimation printing?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Polyester is used for sublimation because its synthetic polymer fibers open up at high heat and bond directly with disperse dye at the molecular level. The dye becomes part of the fiber, so the print never sits on top of the fabric, never peels, and never washes out for the life of the garment. Natural fibers (cotton, wool, silk) do not have this property, which is why polyester is the only real option for all-over sublimation printing.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "What GSM polyester is best for sublimation?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "For t-shirts, 140-160 GSM polyester is ideal. For cycling jerseys, 130-160 GSM. For polos, 180-200 GSM. For hoodies, 220-280 GSM. Below 120 GSM is see-through and feels cheap; above 280 GSM is too heavy for warm weather. Our 65-fabric library covers the full range with bird-eye mesh, interlock, brushed poly, and poly-spandex stretch.",
+        },
+      },
+    ],
+  };
   return (
     <main>
+      <JsonLd data={faqJsonLd} />
       {/* HERO */}
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto grid max-w-7xl gap-0 px-6 md:grid-cols-12">
@@ -370,41 +403,3 @@ export default function PolyesterPage() {
           </Link>
         </div>
       </section>
-
-      {/* FAQPage JSON-LD — featured-snippet optimization */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify({
-          '@context': 'https://schema.org',
-          '@type': 'FAQPage',
-          mainEntity: [
-            {
-              '@type': 'Question',
-              name: 'What is sublimation on polyester?',
-              acceptedAnswer: {
-                '@type': 'Answer',
-                text: 'Sublimation on polyester is a heat-transfer printing process that bonds disperse dyes directly into polyester fibers at the molecular level. At around 200°C, solid dye turns to gas and permanently embeds in the fabric — the result is a print that cannot peel, crack, or fade, with zero hand-feel and full edge-to-edge coverage. Polyester is the only fabric that accepts sublimation, which is why it is the standard for all-over print sportswear, esports jerseys, and cycling kits.',
-              },
-            },
-            {
-              '@type': 'Question',
-              name: 'Why is polyester used for sublimation printing?',
-              acceptedAnswer: {
-                '@type': 'Answer',
-                text: 'Polyester is used for sublimation because its synthetic polymer fibers open up at high heat and bond directly with disperse dye at the molecular level. The dye becomes part of the fiber, so the print never sits on top of the fabric, never peels, and never washes out for the life of the garment. Natural fibers (cotton, wool, silk) do not have this property, which is why polyester is the only real option for all-over sublimation printing.',
-              },
-            },
-            {
-              '@type': 'Question',
-              name: 'What GSM polyester is best for sublimation?',
-              acceptedAnswer: {
-                '@type': 'Answer',
-                text: 'For t-shirts, 140-160 GSM polyester is ideal. For cycling jerseys, 130-160 GSM. For polos, 180-200 GSM. For hoodies, 220-280 GSM. Below 120 GSM is see-through and feels cheap; above 280 GSM is too heavy for warm weather. Our 65-fabric library covers the full range with bird-eye mesh, interlock, brushed poly, and poly-spandex stretch.',
-              },
-            },
-          ],
-        }) }}
-      />
-    </main>
-  );
-}

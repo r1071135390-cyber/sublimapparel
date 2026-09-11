@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { fabricTypes, fabricBySlug } from "@/lib/fabric-data";
+import { JsonLd } from "@/components/json-ld";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 
@@ -109,10 +110,7 @@ export default async function FabricDetailPage(
   return (
     <>
       <Navbar />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <JsonLd data={jsonLd} />
 
       <main className="min-h-screen bg-white">
         {/* HERO */}
