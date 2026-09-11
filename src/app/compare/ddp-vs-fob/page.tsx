@@ -5,18 +5,27 @@ import { Footer } from "@/components/footer";
 import { RequestQuoteLink } from "@/components/request-quote-link";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 import { buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildPageMetadata } from "@/lib/page-metadata";
 
-export const metadata: Metadata = {
-  title: "DDP vs FOB Shipping: Which Is Right? | SublimApparel",
+// 2026-09-11 push (Round 4): same fix as /production/ — switch to buildPageMetadata
+// so the title doesn't pick up a duplicate "| SublimApparel" suffix from the
+// layout's title template. Title becomes keyword-rich; brand signals come from
+// canonical + OG siteName.
+export const metadata: Metadata = buildPageMetadata({
+  title: "DDP vs FOB Shipping: Which Is Right?",
   description:
     "DDP (Delivered Duty Paid) vs FOB (Free on Board) shipping for overseas apparel orders. Who pays duties, who handles customs, which is riskier, and which saves money.",
-  openGraph: {
-    title: "DDP vs FOB — Which Shipping Terms Fit Your Apparel Order?",
-    description:
-      "Duty exposure, customs clearance, risk, and total landed cost. Side-by-side for B2B buyers sourcing from China.",
-    type: "article",
-  },
-};
+  ogTitle: "DDP vs FOB — Which Shipping Terms Fit Your Apparel Order?",
+  ogDescription:
+    "Duty exposure, customs clearance, risk, and total landed cost. Side-by-side for B2B buyers sourcing from China.",
+  keywords: [
+    "DDP vs FOB shipping",
+    "DDP shipping China",
+    "FOB vs DDP apparel",
+    "customs duty B2B",
+    "landed cost China apparel",
+  ],
+});
 
 const breadcrumb = buildBreadcrumbJsonLd([
   { name: "Home", path: "https://sublimapparel.com/" },

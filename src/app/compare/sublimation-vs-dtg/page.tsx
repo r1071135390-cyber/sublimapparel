@@ -5,18 +5,27 @@ import { Footer } from "@/components/footer";
 import { RequestQuoteLink } from "@/components/request-quote-link";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 import { buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildPageMetadata } from "@/lib/page-metadata";
 
-export const metadata: Metadata = {
-  title: "Sublimation vs DTG: Which Print Method? | SublimApparel",
+// 2026-09-11 push (Round 4): same fix as /production/ — switch to buildPageMetadata
+// so the title doesn't pick up a duplicate "| SublimApparel" suffix from the
+// layout's title template. Title becomes keyword-rich; brand signals come from
+// canonical + OG siteName.
+export const metadata: Metadata = buildPageMetadata({
+  title: "Sublimation vs DTG: Which Print Method?",
   description:
     "Sublimation vs DTG (Direct-to-Garment) compared for custom apparel: cost, color vibrancy, fabric compatibility, MOQ, hand feel, and durability. Which one fits your order?",
-  openGraph: {
-    title: "Sublimation vs DTG — Which Print Method Should You Order?",
-    description:
-      "Cost, color vibrancy, fabric, MOQ, hand feel, durability. A side-by-side B2B comparison for buyers choosing between sublimation and DTG.",
-    type: "article",
-  },
-};
+  ogTitle: "Sublimation vs DTG — Which Print Method Should You Order?",
+  ogDescription:
+    "Cost, color vibrancy, fabric, MOQ, hand feel, durability. A side-by-side B2B comparison for buyers choosing between sublimation and DTG.",
+  keywords: [
+    "sublimation vs DTG",
+    "DTG vs sublimation cost",
+    "print method comparison",
+    "sublimation vs direct to garment",
+    "B2B print method",
+  ],
+});
 
 const breadcrumb = buildBreadcrumbJsonLd([
   { name: "Home", path: "https://sublimapparel.com/" },

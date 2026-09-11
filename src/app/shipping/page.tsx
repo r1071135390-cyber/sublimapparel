@@ -306,8 +306,15 @@ const faqs = [
 ];
 
 export default function ShippingPage() {
+  // 2026-09-11 push (Round 4): add BreadcrumbList so Google can show
+  // crumbs in SERP for /shipping/. Boosts CTR vs URL-only snippet.
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Shipping", path: "/shipping/" },
+  ]);
   return (
     <main>
+      <JsonLd data={breadcrumbJsonLd} />
       {/* HERO */}
       {/* HERO — dark text on left, warehouse image on right (same pattern as home page) */}
       <section className="relative overflow-hidden border-b-2 border-black bg-[#0a0a0a] text-white">

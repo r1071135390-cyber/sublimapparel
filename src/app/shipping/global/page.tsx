@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import Link from "next/link";
 import { Globe, Plane, Ship, Truck, Package, Shield, Clock, DollarSign } from "lucide-react";
+import { JsonLd } from "@/components/json-ld";
+import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 
 export const metadata = buildPageMetadata({
     title: "Worldwide Shipping · DDP to 100+ Countries from Yiwu Factory",
@@ -125,8 +127,15 @@ const faqs = [
 ];
 
 export default function GlobalShippingPage() {
+  // 2026-09-11 push (Round 4): breadcrumb schema for rich SERP
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Shipping", path: "/shipping/" },
+    { name: "Worldwide", path: "/shipping/global/" },
+  ]);
   return (
     <main className="min-h-screen bg-[#faf9f6] text-[#0a0a0a]">
+      <JsonLd data={breadcrumbJsonLd} />
       {/* 1 · HERO */}
       <section className="border-b-2 border-[#0a0a0a] bg-[#0a0a0a] text-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">

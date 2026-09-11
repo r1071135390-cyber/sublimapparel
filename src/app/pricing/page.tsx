@@ -4,18 +4,27 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { RequestQuoteLink } from "@/components/request-quote-link";
 import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildPageMetadata } from "@/lib/page-metadata";
 
-export const metadata: Metadata = {
-  title: "Pricing & MOQ: How Quotes Are Built | SublimApparel",
+// 2026-09-11 push (Round 4): same fix as /production/ — switch to buildPageMetadata
+// so the title doesn't pick up a duplicate "| SublimApparel" suffix from the
+// layout's title template. Title becomes keyword-rich; brand signals come from
+// canonical + OG siteName.
+export const metadata: Metadata = buildPageMetadata({
+  title: "Pricing & MOQ: How Quotes Are Built",
   description:
     "How SublimApparel quotes custom apparel: pricing tiers, MOQ by fabric, what's included (sublimation, sewing, DDP shipping), and what's extra (samples, rush, labels).",
-  openGraph: {
-    title: "Pricing & MOQ — How Quotes Are Built at SublimApparel",
-    description:
-      "Per-unit pricing tiers, MOQ by fabric, what's included in the quote, and what costs extra. Real ranges, not vague 'contact us' answers.",
-    type: "article",
-  },
-};
+  ogTitle: "Pricing & MOQ — How Quotes Are Built at SublimApparel",
+  ogDescription:
+    "Per-unit pricing tiers, MOQ by fabric, what's included in the quote, and what costs extra. Real ranges, not vague 'contact us' answers.",
+  keywords: [
+    "custom apparel pricing",
+    "sublimation MOQ",
+    "apparel quote breakdown",
+    "B2B apparel pricing tiers",
+    "sublimation cost per piece",
+  ],
+});
 
 const breadcrumb = buildBreadcrumbJsonLd([
   { name: "Home", path: "https://sublimapparel.com/" },

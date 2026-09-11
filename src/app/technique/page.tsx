@@ -4,6 +4,7 @@ import Link from"next/link";
 import Image from"next/image";
 import { CheckCircle2, Sparkles, Plus } from"lucide-react";
 import { JsonLd } from"@/components/json-ld";
+import { buildBreadcrumbJsonLd } from"@/lib/breadcrumb";
 import { techniqueData } from"@/lib/json-ld-data";
 
 export const metadata = buildPageMetadata({

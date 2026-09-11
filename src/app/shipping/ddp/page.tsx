@@ -56,8 +56,15 @@ const regions = [
 ];
 
 export default function DdpPage() {
+  // 2026-09-11 push (Round 4): breadcrumb schema for rich SERP
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Shipping", path: "/shipping/" },
+    { name: "DDP", path: "/shipping/ddp/" },
+  ]);
   return (
     <main>
+      <JsonLd data={breadcrumbJsonLd} />
       {/* HERO */}
       <section className="border-b-2 border-black bg-[#0a0a0a] text-white">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">

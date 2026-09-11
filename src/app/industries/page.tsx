@@ -7,10 +7,21 @@ export const dynamic = "force-static";
 
 export const metadata: Metadata = buildPageMetadata({
   alternates: { canonical: "/industries/" },
-  title: "Industries We Serve | SublimApparel",
+  // 2026-09-11 push (Round 4): was "Industries We Serve | SublimApparel" (35 chars) —
+  // too short, doesn't telegraph breadth. New title leads with the actual page
+  // breadth (12 industries) + the head keyword buyers search for.
+  title: "12 Industries: Custom Sublimated Apparel Manufacturer",
   description:
     "Custom sublimation & all-over-print apparel for sports teams, race events, festivals, corporate programs, breweries, schools, political campaigns, and more. DDP shipping to 100+ countries.",
-  
+  ogTitle: "12 Industries We Serve: Custom Sublimated Apparel",
+  keywords: [
+    "custom apparel industries",
+    "sublimation manufacturer by industry",
+    "B2B apparel vertical",
+    "sports team apparel factory",
+    "event merchandise manufacturer",
+    "corporate apparel supplier",
+  ],
 });
 
 type IndustryCard = {

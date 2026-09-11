@@ -3,6 +3,7 @@ import { buildPageMetadata } from "@/lib/page-metadata";
 import Link from "next/link";
 import { ArrowRight, MapPin } from "lucide-react";
 import { JsonLd } from "@/components/json-ld";
+import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 
 export const metadata = buildPageMetadata({
     title: "US Buffer-Storage Address · Honest Note",

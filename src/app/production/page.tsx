@@ -4,18 +4,28 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { RequestQuoteLink } from "@/components/request-quote-link";
 import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildPageMetadata } from "@/lib/page-metadata";
 
-export const metadata: Metadata = {
-  title: "Production & Lead Times: Calendar, Rush, Holidays | SublimApparel",
+// 2026-09-11 push (Round 4): switch from raw `Metadata` to `buildPageMetadata` so the
+// title uses `.absolute` and bypasses the layout's "%s | SublimApparel" template —
+// otherwise the brand suffix gets duplicated and pushes the title past Google's
+// 60-char SERP limit. The title here is the keyword-rich headline; brand is
+// surfaced through canonical + OG siteName + Twitter card.
+export const metadata: Metadata = buildPageMetadata({
+  title: "Production & Lead Times: Calendar, Rush, Holidays",
   description:
     "How long custom apparel takes to produce at SublimApparel: standard lead time, rush options, the production calendar from PO to delivery, and Chinese holiday slowdowns.",
-  openGraph: {
-    title: "Production & Lead Times — PO to Door",
-    description:
-      "Real lead times, rush options, and the production calendar. No vague '6-8 weeks' — here's exactly when each step happens.",
-    type: "article",
-  },
-};
+  ogTitle: "Production & Lead Times — PO to Door",
+  ogDescription:
+    "Real lead times, rush options, and the production calendar. No vague '6-8 weeks' — here's exactly when each step happens.",
+  keywords: [
+    "custom apparel lead time",
+    "sublimation production time",
+    "rush order custom apparel",
+    "Chinese holidays production",
+    "PO to delivery calendar",
+  ],
+});
 
 const breadcrumb = buildBreadcrumbJsonLd([
   { name: "Home", path: "https://sublimapparel.com/" },

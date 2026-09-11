@@ -4,18 +4,27 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { RequestQuoteLink } from "@/components/request-quote-link";
 import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildPageMetadata } from "@/lib/page-metadata";
 
-export const metadata: Metadata = {
-  title: "Sample Policy: Free & Pre-Production Samples | SublimApparel",
+// 2026-09-11 push (Round 4): same fix as /production/ — switch to buildPageMetadata
+// so the title doesn't pick up a duplicate "| SublimApparel" suffix from the
+// layout's title template (was 80 chars rendered, would never fit Google's 60-char
+// SERP cap). Keyword-rich headline + brand via OG/Twitter meta.
+export const metadata: Metadata = buildPageMetadata({
+  title: "Sample Policy: Free & Pre-Production Samples",
   description:
     "How SublimApparel handles samples: free stock-color swatches, pre-production samples with your design ($25-60), refund policy, and what to expect on lead time.",
-  openGraph: {
-    title: "Sample Policy — How We Handle Samples",
-    description:
-      "Free stock swatches, paid pre-production samples with your design, refund on bulk orders, and express shipping worldwide.",
-    type: "article",
-  },
-};
+  ogTitle: "Sample Policy — How We Handle Samples",
+  ogDescription:
+    "Free stock swatches, paid pre-production samples with your design, refund on bulk orders, and express shipping worldwide.",
+  keywords: [
+    "free sample custom apparel",
+    "pre-production sample policy",
+    "sublimation sample refund",
+    "custom apparel swatch",
+    "sample lead time",
+  ],
+});
 
 const breadcrumb = buildBreadcrumbJsonLd([
   { name: "Home", path: "https://sublimapparel.com/" },

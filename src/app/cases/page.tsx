@@ -23,8 +23,13 @@ import {
 import { industries } from "@/lib/cases";
 
 export const metadata = buildPageMetadata({
-    title: "Case Studies ",
-    description: "Browse sublimation printing case studies by industry. See real examples of custom apparel, DDP shipping and full-bleed cotton prints we",
+    // 2026-09-11 push (Round 4): was just "Case Studies" (13 chars) — far too short,
+    // Google treats thin titles as a low-quality signal and CTR is poor when the
+    // title doesn't telegraph what the page is about. New title leads with the
+    // search-intent keyword + signals breadth (12 industries).
+    title: "Custom Apparel Case Studies: Sports, Events & Brands",
+    description: "Browse sublimation printing case studies by industry. See real examples of custom apparel, DDP shipping and full-bleed cotton prints we shipped to 50+ countries.",
+    ogTitle: "Custom Apparel Case Studies: 12 Industries",
     keywords: ["sublimation case studies", "custom apparel portfolio", "sports team apparel", "event merchandise", "music festival merch", "promotional apparel", "brand campaigns", "custom uniform projects", "B2B sublimation success stories", "sublimated apparel projects"],
   });;
 
