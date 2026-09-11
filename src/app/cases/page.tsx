@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
+import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 import Link from "next/link";
 import { RequestQuoteLink } from "@/components/request-quote-link";
 import {
@@ -49,6 +49,37 @@ const iconMap: Record<string, typeof CalendarDays> = {
 };
 
 export default function CasesPage() {
+  // 2026-09-11 push (Round 6): add FAQPage JSON-LD on /cases/ to capture
+  // PAA placements for the buyer-intent queries that already associate
+  // with case-study pages — "what kind of apparel projects can a Yiwu
+  // factory do", "real custom apparel examples", etc.
+  const faqJsonLd = buildFaqJsonLd([
+    {
+      q: "What kind of custom apparel projects has SublimApparel done?",
+      a: "We produce custom sublimation and all-over-print apparel for 12 verticals: sports teams and leagues (cycling kits, race jerseys, basketball uniforms, esports jerseys), events and conferences (staff shirts, attendee merch, swag bundles), corporate programs (employee polos, hospitality wear, branded outerwear), music festivals and tour merch, schools and Greek life, breweries and coffee shops, promotional and marketing agencies, trade shows and retail displays, apparel brands and agencies (private label, white label, dropship), political campaigns, e-commerce fulfillment, and more.",
+    },
+    {
+      q: "Can I see a case study for my specific use case?",
+      a: "Yes. Each industry tile on this page links to a dedicated case-study hub with 3–6 real projects, including the artwork brief, fabric choice, print method, quantity, and the final delivery destination. If you don't see a tile that matches your project, send a WhatsApp to +86 198 1793 0190 with a short brief and we'll pull a similar reference from our 6,000+ design archive.",
+    },
+    {
+      q: "What's the typical order size for a case-study project?",
+      a: "Most case studies fall in 50–500 pieces per design, with re-orders scaling to 1,000+ pieces per quarter. Our smallest case study project was 30 pieces (a school club cap line); our largest was 12,000 pieces over 4 quarterly drops for an apparel brand. For 1,000+ piece standing orders we offer separate pricing tiers — ask us about it in your brief.",
+    },
+    {
+      q: "How long does a custom apparel project take from brief to delivery?",
+      a: "Standard timeline: 3–5 days for design mockup, 7–10 days for pre-production sample, 15–25 days for bulk production, plus 7–14 days for DDP ocean or air freight. Total door-to-door is typically 4–6 weeks for first orders, and 3–4 weeks for re-orders where artwork and patterns are already locked.",
+    },
+    {
+      q: "Do you sign NDAs before sharing artwork for a new project?",
+      a: "Yes — mutual NDA is standard before any pattern, grading, or branded label work. We also offer white-label shipping (your packing slip, your carton mark, no SublimApparel branding anywhere on the outward packaging) and blind invoicing for dropship-to-customer orders. Several of the brand-side case studies on this page are under NDA; we share anonymized versions only.",
+    },
+    {
+      q: "Can I get a quote based on a project similar to a case study?",
+      a: "Yes. Pick the case study closest to your project, send us the link plus your quantity / deadline / destination, and we'll send a landed DDP quote within 1 business day. If you have a tech pack or reference photo, attach it on the first message so we can match fabric weight, print method, and panel layout exactly.",
+    },
+  ]);
+
   return (
     <>
       <JsonLd
@@ -57,6 +88,7 @@ export default function CasesPage() {
           { name: "Case Studies", path: "/cases" },
         ])}
       />
+      <JsonLd data={faqJsonLd} />
       {/* Top utility bar */}
       <div className="border-b-2 border-black bg-black text-white">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-6 py-2.5 text-[11px] font-bold uppercase tracking-wider">

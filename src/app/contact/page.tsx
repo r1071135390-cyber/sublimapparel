@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
+import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 import { Contact } from "@/components/contact";
 import { TeamSection } from "@/components/contact-team";
 
@@ -17,12 +17,44 @@ export const metadata = buildPageMetadata({
   });;
 
 export default function ContactPage() {
+  // 2026-09-11 push (Round 6): add FAQPage JSON-LD on /contact/ to capture
+  // PAA-style rich results for "how to contact Yiwu factory", "MOQ 50
+  // quote", "DDP shipping quote" — the three query clusters GSC shows
+  // pointing at /contact/ with low CTR in Sep-2026.
+  const faqJsonLd = buildFaqJsonLd([
+    {
+      q: "How do I contact the Yiwu factory directly?",
+      a: "Three channels: (1) WhatsApp +86 198 1793 0190 (fastest — 1 business day reply, no signup). (2) Email info@sublimapparel.com (1 business day reply). (3) The form on /contact/ or /get-a-quote/ (1 business day reply). All three go to the same Yiwu production managers — no call center, no chat bot, no funnel.",
+    },
+    {
+      q: "What's the minimum order quantity (MOQ)?",
+      a: "MOQ is 50 pieces per design for cut-and-sew sublimation on polyester, and 30 pieces per design on re-orders. For DTG on 100% cotton the MOQ is 30 pieces per design. Sample runs start at 5–10 pieces with a 7–10 day turnaround, sample cost is refundable on bulk order of 100+ pieces.",
+    },
+    {
+      q: "Do you ship DDP (delivered duty paid) to my country?",
+      a: "Yes — DDP shipping to 100+ countries including the US, UK, EU, AU, CA, MENA, LATAM, and most of SE Asia. The quote you receive is the landed cost at your door: garment, print, freight, import duties, customs clearance, and last-mile delivery. The only thing not included is your local sales tax / VAT on the commercial invoice.",
+    },
+    {
+      q: "How long does it take to get a quote?",
+      a: "Most quotes go out within 1 business day. If your inquiry is missing a critical detail (size breakdown, deadline, destination) we reply with a clarification request the same day. Once artwork is approved, full bulk production takes 15–25 days, plus 7–14 days for DDP ocean or air freight to your door.",
+    },
+    {
+      q: "Can I get a sample before placing a bulk order?",
+      a: "Yes. Pre-production samples with your design cost $25–60 per piece plus express shipping; we refund the sample cost when you place a bulk order of 100+ pieces. We also send free material swatches and printed color cards so you can check the hand feel and color before committing.",
+    },
+    {
+      q: "What file formats do you accept for artwork?",
+      a: "AI, PSD, PDF, PNG, JPG — even a hand sketch. We free-check every artwork for printability (resolution, color profile, seam alignment) and send back a 3D mockup on the actual garment before production. Revisions are unlimited until you lock the design.",
+    },
+  ]);
+
   return (
     <>
       <JsonLd data={buildBreadcrumbJsonLd([
         { name: "Home", path: "/" },
         { name: "Contact", path: "/contact" },
       ])} />
+      <JsonLd data={faqJsonLd} />
       <main>
       <section className="relative overflow-hidden border-b-2 border-black bg-[#0a0a0a] text-white">
         {/* Background image — full bleed */}

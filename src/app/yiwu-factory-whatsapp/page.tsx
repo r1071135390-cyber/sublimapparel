@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ChevronRight, MessageCircle, Clock, Package, Truck, Shield } from "lucide-react";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
+import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 
 export const metadata = buildPageMetadata({
   title: "Yiwu Factory WhatsApp — +86-198-1793-0190 | 1-Day Reply",
@@ -52,10 +52,41 @@ export default function YiwuFactoryWhatsappPage() {
     },
   };
 
+  // 2026-09-11 push (Round 6): add FAQPage JSON-LD on /yiwu-factory-whatsapp/
+  // to capture PAA-style rich results for the high-exposure query
+  // "Yiwu factory WhatsApp". Each Q is the exact phrasing buyers search.
+  const faqJsonLd = buildFaqJsonLd([
+    {
+      q: "Is +86-198-1793-0190 a real Yiwu factory WhatsApp number?",
+      a: "Yes. +86 198 1793 0190 is the direct WhatsApp line of SublimApparel's Yiwu production team. The number is registered on a corporate account, the line is monitored Monday–Saturday 08:00–22:00 China Standard Time, and a real production manager (not a chatbot) replies. You can also email info@sublimapparel.com or use the form on /contact/.",
+    },
+    {
+      q: "Can I message the factory direct without signing up?",
+      a: "Yes. No account, no form, no portal — send a WhatsApp with your product type, quantity, target delivery country, and deadline. The first reply usually comes within 1 business day with a mockup + landed DDP quote. If you already have tech packs or reference photos, attach them on the first message to save a round-trip.",
+    },
+    {
+      q: "What's the minimum order quantity (MOQ) for sublimated apparel?",
+      a: "MOQ is 50 pieces per design for cut-and-sew sublimation on polyester, and 30 pieces per design on re-orders. For DTG on 100% cotton, MOQ is 30 pieces per design. We can do trial runs of 5–10 pieces for samples before committing to bulk.",
+    },
+    {
+      q: "Do you ship DDP (delivered duty paid) to my country?",
+      a: "Yes — DDP to 100+ countries including US, UK, EU, AU, CA, LATAM, MENA, and most of SE Asia. The quote you receive is the landed cost at your door: production, freight, duties, customs clearance, and last-mile. The only thing not included is local sales tax / VAT on the commercial invoice.",
+    },
+    {
+      q: "How long does a Yiwu-to-USA shipment take?",
+      a: "Standard ocean DDP to US: 18–25 days door-to-door including production (15 days) + ocean + customs + last-mile. Air DDP upgrade: 10–14 days. For urgent restocks we also offer 2–5 day domestic shipping from our Fontana, CA warehouse if we hold buffer stock for your design.",
+    },
+    {
+      q: "What payment terms do you accept for a first order?",
+      a: "First order: 30% T/T deposit on order confirmation, 70% balance before shipment. After 3 successful orders we offer Net 30 for buyers in the US, UK, EU, AU, and CA. We accept T/T (wire), PayPal for small orders (under $5,000), and L/C for orders over $50,000.",
+    },
+  ]);
+
   return (
     <>
       <JsonLd data={breadcrumb} />
       <JsonLd data={serviceJsonLd} />
+      <JsonLd data={faqJsonLd} />
 
       <main>
         {/* Hero — WhatsApp CTA front and center */}

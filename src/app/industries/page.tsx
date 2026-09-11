@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Trophy, Shirt, Briefcase, Users, Calendar, Ruler, Globe, MessageCircle, Megaphone, GraduationCap, Coffee, ShoppingCart, Building2, Mic2 } from "lucide-react";
 import { buildPageMetadata } from "@/lib/page-metadata";
+import { JsonLd } from "@/components/json-ld";
+import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 
 export const dynamic = "force-static";
 
@@ -132,8 +134,46 @@ const INDUSTRIES: IndustryCard[] = [
 ];
 
 export default function IndustriesIndexPage() {
+  // 2026-09-11 push (Round 6): /industries/ was the only top-tier hub page
+  // with zero JSON-LD. Adding BreadcrumbList + FAQPage here unlocks
+  // breadcrumb SERP rendering and PAA-style placements for the buyer
+  // queries that already associate with industry tiles.
+  const breadcrumb = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Industries", path: "/industries" },
+  ]);
+  const faqJsonLd = buildFaqJsonLd([
+    {
+      q: "Which industries does SublimApparel serve?",
+      a: "We produce custom sublimation and all-over-print apparel for 12 verticals: sports teams & leagues, endurance & race events, events & conferences, music festival & tour merch, corporate & employee programs, schools & Greek life, breweries & coffee shops, promotional & marketing agencies, trade shows & retail displays, apparel brands & agencies, political campaigns, and e-commerce fulfillment. Each vertical has a dedicated page with fabric, print method, MOQ, and case studies.",
+    },
+    {
+      q: "Do you have a minimum order quantity (MOQ) for all industries?",
+      a: "MOQ is 50 pieces per design for cut-and-sew sublimation on polyester, and 30 pieces per design on re-orders. For DTG on 100% cotton, MOQ is 30 pieces per design. For sample / trial runs we can do 5–10 pieces with a 7–10 day turnaround.",
+    },
+    {
+      q: "Can you handle rush deadlines for an event or campaign?",
+      a: "Yes. Promotional & marketing runs on a 7-day rush lane, and event / festival / conference orders ship in 2 weeks under DDP. Rush always costs a 20% production surcharge plus any air-freight delta; we confirm capacity the same day you ask, not after you commit.",
+    },
+    {
+      q: "Do you sign NDAs for brand-side work?",
+      a: "Yes — mutual NDA is standard before any pattern, grading, or branded label work. We also offer white-label shipping (your packing slip, your carton mark, no SublimApparel branding on the outward packaging) and blind invoicing for dropship-to-customer orders.",
+    },
+    {
+      q: "What if my industry isn't listed on this page?",
+      a: "Most non-listed buyers (churches, charities, fraternal organizations, hospitality groups, pet apparel brands) still fit one of the 12 verticals above — pick the closest match. If your project is genuinely unique, send a brief to info@sublimapparel.com or WhatsApp +86 198 1793 0190 and we'll confirm feasibility within 1 business day.",
+    },
+    {
+      q: "Can I order across multiple industries under one account?",
+      a: "Yes. Multi-channel buyers typically run Apparel Brands & Agencies (white-label) + E-commerce Fulfillment (DDP-to-door) in parallel. The production line, fabric library, and account manager stay the same across both workflows; you just get separate release windows and packaging per batch.",
+    },
+  ]);
+
   return (
-    <main className="bg-background text-foreground">
+    <>
+      <JsonLd data={breadcrumb} />
+      <JsonLd data={faqJsonLd} />
+      <main className="bg-background text-foreground">
       <section className="border-b border-border bg-muted/30 py-16 md:py-24">
         <div className="mx-auto max-w-6xl px-6">
           <p className="text-sm font-semibold uppercase tracking-wider text-primary">
@@ -218,6 +258,7 @@ export default function IndustriesIndexPage() {
           </div>
         </div>
       </section>
-    </main>
+      </main>
+    </>
   );
 }
