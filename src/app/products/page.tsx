@@ -251,6 +251,7 @@ export default function ProductsPage() {
                 {[
                   { name: "All products", href: "/products/all/" },
                   { name: "Teams & Sports", href: "/teams-sports-apparel/" },
+                  { name: "Racing kits", href: "/products/racing/" },
                   { name: "Events & Conferences", href: "/event-festivals-conferences/" },
                   { name: "Corporate Apparel", href: "/corporate-organization-apparel/" },
                   { name: "Promotional & Marketing", href: "/promotional-marketing-apparel/" },
@@ -344,6 +345,19 @@ export default function ProductsPage() {
             <p className="mt-3 text-sm text-black/70 md:text-base">
               {`Pick a sport, a use case, or an apparel type below — every link routes to a curated tag page with sublimation-printed garments ready for DDP shipping to your door. ${Object.keys(CATEGORY_TAGS).length} apparel types · 42 sports · 25 use cases.`}
             </p>
+            {/* 2026-09-11 (R15-P2): /tag/ is the canonical tag-archive index page
+                (sitemap priority 0.80) but had ZERO internal inlinks — Google only
+                discovered it via the sitemap, so it received almost no PageRank.
+                Adding a direct "Browse all tags" link here, next to the three
+                tag clouds, gives /tag/ a strong contextual inlink from the
+                highest-traffic product page on the site. */}
+            <Link
+              href="/tag/"
+              className="mt-4 inline-flex items-center gap-2 border-2 border-black bg-white px-4 py-2 text-xs font-black uppercase tracking-widest text-black transition-colors hover:bg-[#ff4d00] hover:text-black md:text-sm"
+            >
+              Browse all tags (80+ curated pages)
+              <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
           <div className="grid gap-8 md:grid-cols-3">
             <KeywordCloud dimension="category" title="By apparel type" />

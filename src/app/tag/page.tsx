@@ -3,6 +3,8 @@ import Link from "next/link";
 import { ArrowRight, Shirt, Trophy, Briefcase } from "lucide-react";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { ALL_TAGS, getAllTagSlugs, type TagDimension } from "@/lib/tag-archive";
+import { JsonLd } from "@/components/json-ld";
+import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 
 export const dynamic = "force-static";
 
@@ -11,7 +13,7 @@ export const metadata: Metadata = buildPageMetadata({
   title: "Browse Custom Apparel by Tag | SublimApparel",
   description:
     "Browse our custom sublimation and all-over-print apparel by category, sport, and use case. T-shirts, hoodies, race jerseys, esports, team kits, and more.",
-  
+
 });
 
 const DIMENSIONS: {
@@ -45,8 +47,66 @@ const DIMENSIONS: {
 ];
 
 export default function TagIndexPage() {
+  // 2026-09-11 (R15-P3): /tag/ is the canonical tag-archive index page that
+  // hubs 80+ tag pages (13 categories × 42 sports × 25 use cases). It now
+  // emits a CollectionPage + ItemList + BreadcrumbList @graph so Google can
+  // (a) understand the page is a hub linking to a structured inventory of
+  // 80+ related pages and (b) surface it in a sitelinks-style "browse all
+  // tags" rich result.
+  const totalTags =
+    Object.keys(ALL_TAGS.category).length +
+    Object.keys(ALL_TAGS.sport).length +
+    Object.keys(ALL_TAGS.scenario).length;
+
+  const tagItems: { "@type": "ListItem"; position: number; name: string; url: string }[] = [];
+  let pos = 1;
+  for (const dim of ["category", "sport", "scenario"] as const) {
+    for (const [value, info] of Object.entries(ALL_TAGS[dim])) {
+      const slug = value
+        .toLowerCase()
+        .replace(/&/g, "and")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+      tagItems.push({
+        "@type": "ListItem",
+        position: pos++,
+        name: info.label,
+        url: `https://sublimapparel.com/tag/${dim}/${slug}/`,
+      });
+      if (tagItems.length >= 50) break; // Google ignores ItemList > 50
+    }
+    if (tagItems.length >= 50) break;
+  }
+
+  const collectionPage = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": "https://sublimapparel.com/tag/#collection",
+    url: "https://sublimapparel.com/tag/",
+    name: "Browse Custom Apparel by Tag",
+    description:
+      "Browse our custom sublimation and all-over-print apparel by category, sport, and use case. T-shirts, hoodies, race jerseys, esports, team kits, and more.",
+    inLanguage: "en",
+    isPartOf: { "@id": "https://sublimapparel.com/#website" },
+    about: { "@id": "https://sublimapparel.com/#organization" },
+    provider: { "@id": "https://sublimapparel.com/#organization" },
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: totalTags,
+      itemListOrder: "https://schema.org/ItemListOrderAscending",
+      itemListElement: tagItems,
+    },
+  };
+
   return (
     <main className="bg-background text-foreground">
+      <JsonLd
+        data={buildBreadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "Browse by Tag", path: "/tag" },
+        ])}
+      />
+      <JsonLd data={collectionPage} />
       <section className="border-b border-border bg-muted/30 py-16 md:py-24">
         <div className="mx-auto max-w-6xl px-6">
           <p className="text-sm font-semibold uppercase tracking-wider text-primary">
