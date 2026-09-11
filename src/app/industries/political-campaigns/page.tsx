@@ -21,8 +21,10 @@ export const dynamic = "force-static";
 const data: CustomerProfileData = {
   slug: "/industries/political-campaigns/",
   metaTitle: "Political Campaign Apparel & Merchandise",
+  // 2026-09-11 push (Round 5): tightened from 180 → 150 chars to fit Google's
+  // 160-char SERP cap.
   metaDescription:
-    "Political campaign apparel manufacturer for campaigns, parties and political action committees. Custom yard signs, campaign shirts, hats and rally merchandise with fast production.",
+    "Political campaign apparel manufacturer for campaigns, parties, and PACs. Custom yard signs, campaign shirts, hats, and rally merchandise with fast production.",
   keywords: [
     "campaign shirts manufacturer",
     "political campaign apparel",

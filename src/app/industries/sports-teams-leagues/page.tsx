@@ -17,8 +17,10 @@ export const dynamic = "force-static";
 const data: CustomerProfileData = {
   slug: "/industries/sports-teams-leagues/",
   metaTitle: "Custom Sports Team Apparel Manufacturer | Jerseys & Uniforms",
+  // 2026-09-11 push (Round 5): tightened from 169 → 152 chars to fit Google's
+  // 160-char SERP cap (truncated descriptions hurt CTR).
   metaDescription:
-    "Custom sports team apparel manufacturer for clubs, leagues and athletes. Sublimated jerseys, uniforms and training wear with flexible quantities and reliable production.",
+    "Custom sports team apparel manufacturer for clubs, leagues, and athletes. Sublimated jerseys, uniforms, and training wear. Flexible MOQ and reliable production.",
   keywords: [
     "custom sports team apparel",
     "team jersey supplier",

@@ -1,0 +1,1005 @@
+[
+  {
+    "path": "/",
+    "status": 200,
+    "title": "Yiwu Sublimation & All-Over Print | Cotton DDP 100+",
+    "titleLen": 51,
+    "desc": "Sublimation on polyester (true all-over, edge-to-edge). DTG and DTF on 100% cotton, soft hand. Allover digital print on cotton. MOQ 50, DDP to 100+ countries.",
+    "descLen": 158,
+    "canonical": "https://sublimapparel.com/",
+    "ogImage": "https://sublimapparel.com/og/og-home.webp",
+    "h1s": [
+      "Yiwu custom sublimate apparel manufacturerYour trusted partner for custom apparel solutions for events, teams, organizations and promotional needs."
+    ],
+    "h2Count": 4,
+    "lang": "en",
+    "jsonLdCount": 2,
+    "robots": "index, follow",
+    "problems": []
+  },
+  {
+    "path": "/about/",
+    "status": 200,
+    "title": "About SublimApparel — Yiwu Custom Apparel Factory Since 201…",
+    "titleLen": 60,
+    "desc": "SublimApparel is a Yiwu-based apparel factory producing custom sublimated, all-over digital printed, DTG, DTF, and screen-printed apparel for B2B customers...",
+    "descLen": 158,
+    "canonical": "https://sublimapparel.com/about/",
+    "ogImage": "https://sublimapparel.com/og/og-home.webp",
+    "h1s": [
+      "One factoryin Yiwu, China.Print for the world."
+    ],
+    "h2Count": 8,
+    "lang": "en",
+    "jsonLdCount": 3,
+    "robots": "index, follow",
+    "problems": []
+  },
+  {
+    "path": "/contact/",
+    "status": 200,
+    "title": "Get a Yiwu Factory Quote — MOQ 50 · DDP to 100+ Countries ·…",
+    "titleLen": 60,
+    "desc": "Request a custom sublimation or all-over cotton print quote directly from our Yiwu factory. MOQ 50 pcs, 15-25 day production, DDP shipping to 100+ countries, U…",
+    "descLen": 160,
+    "canonical": "https://sublimapparel.com/contact/",
+    "ogImage": "https://sublimapparel.com/og/og-home.webp",
+    "h1s": [
+      "Talk to a Yiwu factory manager — direct quote in 1 business day."
+    ],
+    "h2Count": 3,
+    "lang": "en",
+    "jsonLdCount": 2,
+    "robots": "index, follow",
+    "problems": []
+  },
+  {
+    "path": "/shipping/",
+    "status": 200,
+    "title": "How Do We Ship DDP to 100+ Countries? — Sea, Air, Express,…",
+    "titleLen": 59,
+    "desc": "DDP (Delivered Duty Paid) shipping to 100+ countries. One invoice, no surprise duties. Sea, air, and express options from Yiwu to your door. US warehouse in...",
+    "descLen": 159,
+    "canonical": "https://sublimapparel.com/shipping/",
+    "ogImage": "https://sublimapparel.com/og/og-home.webp",
+    "h1s": [
+      "How do we shipdoor-to-door worldwide?"
+    ],
+    "h2Count": 11,
+    "lang": "en",
+    "jsonLdCount": 1,
+    "robots": "index, follow",
+    "problems": []
+  },
+  {
+    "path": "/shipping/ddp/",
+    "status": 200,
+    "title": "DDP Shipping — Duties Paid, Delivered to Your Door",
+    "titleLen": 50,
+    "desc": "DDP (Delivered Duty Paid) shipping from Yiwu to 100+ countries. We handle customs, duties, and last-mile delivery — one invoice, no surprise fees. Domestic US…",
+    "descLen": 159,
+    "canonical": "https://sublimapparel.com/shipping/ddp/",
+    "ogImage": "https://sublimapparel.com/og/og-home.webp",
+    "h1s": [
+      "You order.We deliver.No customs.No duties.No paperwork."
+    ],
+    "h2Count": 7,
+    "lang": "en",
+    "jsonLdCount": 2,
+    "robots": "index, follow",
+    "problems": []
+  },
+  {
+    "path": "/shipping/global/",
+    "status": 200,
+    "title": "Worldwide Shipping · DDP to 100+ Countries from Yiwu Factory",
+    "titleLen": 60,
+    "desc": "Sea, air, and express shipping from Yiwu to 100+ countries. DDP delivered duty paid to US, UK, EU, AU, CA. Incoterms FOB, CIF, DDP, EXW. Track every shipment e…",
+    "descLen": 160,
+    "canonical": "https://sublimapparel.com/shipping/global/",
+    "ogImage": "https://sublimapparel.com/og/og-home.webp",
+    "h1s": [
+      "Worldwide.Delivered duty paidOne landed cost."
+    ],
+    "h2Count": 7,
+    "lang": "en",
+    "jsonLdCount": 1,
+    "robots": "index, follow",
+    "problems": []
+  },
+  {
+    "path": "/shipping/us-warehouse/",
+    "status": 200,
+    "title": "US Buffer-Storage Address · Honest Note",
+    "titleLen": 39,
+    "desc": "An honest note about our US warehouse address in Fontana, CA. It",
+    "descLen": 64,
+    "canonical": "https://sublimapparel.com/shipping/us-warehouse/",
+    "ogImage": "https://sublimapparel.com/og/og-home.webp",
+    "h1s": [
+      "About our US warehouse.The short version."
+    ],
+    "h2Count": 4,
+    "lang": "en",
+    "jsonLdCount": 2,
+    "robots": "index, follow",
+    "problems": [
+      "desc short (64ch)"
+    ]
+  },
+  {
+    "path": "/fabric/",
+    "status": 200,
+    "title": "Which Fabric & Print Process Should You Choose? — 24 Fabric…",
+    "titleLen": 60,
+    "desc": "Pick the right fabric-process combo for your apparel project. 24 fabrics in stock (polyester, poly-spandex, nylon, cotton, organic, rPET, blends), 6 print...",
+    "descLen": 157,
+    "canonical": "https://sublimapparel.com/fabric/",
+    "ogImage": "https://sublimapparel.com/og/og-home.webp",
+    "h1s": [
+      "Which fabric and printprocess fits your design?24 fabrics, 6 methods."
+    ],
+    "h2Count": 6,
+    "lang": "en",
+    "jsonLdCount": 3,
+    "robots": "index, follow",
+    "problems": []
+  },
+  {
+    "path": "/fabric/cotton/",
+    "status": 200,
+    "title": "Allover Digital Print on Cotton | Full-Body + DTG/DTF",
+    "titleLen": 53,
+    "desc": "Allover digital print on 100% cotton apparel — true full-body, edge-to-edge printing via our proprietary cotton digital workflow. Also offer DTG and DTF for...",
+    "descLen": 159,
+    "canonical": "https://sublimapparel.com/fabric/cotton/",
+    "ogImage": "https://sublimapparel.com/og/og-home.webp",
+    "h1s": [
+      "100% cotton.DTG"
+    ],
+    "h2Count": 8,
+    "lang": "en",
+    "jsonLdCount": 1,
+    "robots": "index, follow",
+    "problems": []
+  },
+  {
+    "path": "/technique/",
+    "status": 200,
+    "title": "Which Print Technique Fits Your Design? — 20 Methods Compar…",
+    "titleLen": 60,
+    "desc": "Compare 20 apparel decoration techniques — sublimation, screen printing, DTG, DTF, embroidery, 3D puff & rhinestone. We run all 20 in-house and accept custom t…",
+    "descLen": 160,
+    "canonical": "https://sublimapparel.com/technique/",
+    "ogImage": "https://sublimapparel.com/technique/",
+    "h1s": [
+      "Which print techniquefits your design?"
+    ],
+    "h2Count": 6,
+    "lang": "en",
+    "jsonLdCount": 2,
+    "robots": "index, follow",
+    "problems": []
+  },
+  {
+    "path": "/products/",
+    "status": 200,
+    "title": "Which Custom Apparel Do You Need? — 123 Products, 14 Catego…",
+    "titleLen": 60,
+    "desc": "Custom sublimated apparel for B2B: t-shirts, jerseys, hoodies, cycling kits, golf polos, racing suits. No setup fees, MOQ 50 pcs, full color all-over print, sa…",
+    "descLen": 160,
+    "canonical": "https://sublimapparel.com/products/",
+    "ogImage": "https://sublimapparel.com/og/og-home.webp",
+    "h1s": [
+      "Whatever you needto customizewe make it."
+    ],
+    "h2Count": 12,
+    "lang": "en",
+    "jsonLdCount": 2,
+    "robots": "index, follow",
+    "problems": []
+  },
+  {
+    "path": "/solutions/",
+    "status": 200,
+    "title": "Custom Apparel Solutions for Every B2B Buyer | SublimApparel",
+    "titleLen": 60,
+    "desc": "Six apparel solutions built for specific B2B buyers: sports teams, events, corporate, promotional, brands, and e-commerce. Pick yours, get a quote in 24 hours.",
+    "descLen": 159,
+    "canonical": "https://sublimapparel.com/solutions/",
+    "ogImage": "https://sublimapparel.com/og/og-home.webp",
+    "h1s": [
+      "Six apparel solutions.One factory. DDP worldwide."
+    ],
+    "h2Count": 3,
+    "lang": "en",
+    "jsonLdCount": 2,
+    "robots": "index, follow",
+    "problems": []
+  },
+  {
+    "path": "/yiwu-factory-whatsapp/",
+    "status": 200,
+    "title": "Yiwu Factory WhatsApp — +86-198-1793-0190 | 1-Day Reply",
+    "titleLen": 55,
+    "desc": "Message our Yiwu factory direct on WhatsApp +86-198-1793-0190. Custom sublimated apparel, MOQ 50 pcs, DDP shipping to 100+ countries, US warehouse in Fontana C…",
+    "descLen": 160,
+    "canonical": "https://sublimapparel.com/yiwu-factory-whatsapp/",
+    "ogImage": "https://sublimapparel.com/og/og-home.webp",
+    "h1s": [
+      "Message our Yiwu factory direct on WhatsApp."
+    ],
+    "h2Count": 5,
+    "lang": "en",
+    "jsonLdCount": 3,
+    "robots": "index, follow",
+    "problems": []
+  },
+  {
+    "path": "/get-a-quote/",
+    "status": 200,
+    "title": "Get a Quote | Custom Sublimation & Cotton Apparel Manufactu…",
+    "titleLen": 60,
+    "desc": "Request a landed-cost quote in under 12 hours. Free digital mockup, free sample round on first order. Sublimation on polyester, DTG / DTF on 100% cotton, DDP s…",
+    "descLen": 160,
+    "canonical": "https://sublimapparel.com/get-a-quote/",
+    "ogImage": "https://sublimapparel.com/og/og-home.webp",
+    "h1s": [
+      "Tell us yourproduct, quantityand deadline."
+    ],
+    "h2Count": 4,
+    "lang": "en",
+    "jsonLdCount": 2,
+    "robots": "index, follow",
+    "problems": []
+  },
+  {
+    "path": "/cases/",
+    "status": 200,
+    "title": "Case Studies",
+    "titleLen": 12,
+    "desc": "Browse sublimation printing case studies by industry. See real examples of custom apparel, DDP shipping and full-bleed cotton prints we",
+    "descLen": 135,
+    "canonical": "https://sublimapparel.com/cases/",
+    "ogImage": "https://sublimapparel.com/og/og-home.webp",
+    "h1s": [
+      "See what we'vemade."
+    ],
+    "h2Count": 3,
+    "lang": "en",
+    "jsonLdCount": 2,
+    "robots": "index, follow",
+    "problems": [
+      "title very short (12ch)"
+    ]
+  },
+  {
+    "path": "/industries/",
+    "status": 200,
+    "title": "Industries We Serve | SublimApparel",
+    "titleLen": 35,
+    "desc": "Custom sublimation & all-over-print apparel for sports teams, race events, festivals, corporate programs, breweries, schools, political campaigns, and more. DD…",
+    "descLen": 160,
+    "canonical": "https://sublimapparel.com/industries/",
+    "ogImage": "https://sublimapparel.com/og/og-home.webp",
+    "h1s": [
+      "Custom sublimation & all-over-print apparel, built for your industry"
+    ],
+    "h2Count": 14,
+    "lang": "en",
+    "jsonLdCount": 1,
+    "robots": "index, follow",
+    "problems": []
+  },
+  {
+    "path": "/industries/sports-teams-leagues/",
+    "status": 200,
+    "title": "Custom Sports Team Apparel Manufacturer | Jerseys & Uniforms",
+    "titleLen": 60,
+    "desc": "Custom sports team apparel manufacturer for clubs, leagues and athletes. Sublimated jerseys, uniforms and training wear with flexible quantities and reliable production.",
+    "descLen": 169,
+    "canonical": "https://sublimapparel.com/industries/sports-teams-leagues/",
+    "ogImage": "https://sublimapparel.com/og/og-industry.webp",
+    "h1s": [
+      "Custom Sports Team Apparel Manufacturer for Clubs & Leagues"
+    ],
+    "h2Count": 8,
+    "lang": "en",
+    "jsonLdCount": 3,
+    "robots": "index, follow",
+    "problems": [
+      "desc too long (169ch)"
+    ]
+  },
+  {
+    "path": "/industries/endurance-race-events/",
+    "status": 200,
+    "title": "Marathon & Running Race Shirts Manufacturer",
+    "titleLen": 43,
+    "desc": "Custom race shirts manufacturer for marathons, running events and endurance competitions. Bulk sublimation apparel with accurate sizing and reliable delivery.",
+    "descLen": 158,
+    "canonical": "https://sublimapparel.com/industries/endurance-race-events/",
+    "ogImage": "https://sublimapparel.com/og/og-industry.webp",
+    "h1s": [
+      "Custom Race Shirts & Marathon Apparel Manufacturer"
+    ],
+    "h2Count": 8,
+    "lang": "en",
+    "jsonLdCount": 3,
+    "robots": "index, follow",
+    "problems": []
+  },
+  {
+    "path": "/industries/events-conferences/",
+    "status": 200,
+    "title": "Event Apparel & Conference Shirts Manufacturer",
+    "titleLen": 46,
+    "desc": "Custom event apparel manufacturer for conferences, corporate events and community activities. Bulk T-shirts, staff uniforms and branded clothing with reliable production.",
+    "descLen": 170,
+    "canonical": "https://sublimapparel.com/industries/events-conferences/",
+    "ogImage": "https://sublimapparel.com/og/og-industry.webp",
+    "h1s": [
+      "Custom Event Apparel for Conferences, Activities & Special Events"
+    ],
+    "h2Count": 8,
+    "lang": "en",
+    "jsonLdCount": 3,
+    "robots": "index, follow",
+    "problems": [
+      "desc too long (170ch)"
+    ]
+  },
+  {
+    "path": "/industries/music-festival-tour-merchandise/",
+    "status": 200,
+    "title": "Tour Merch & Band Tee Manufacturer",
+    "titleLen": 34,
+    "desc": "Custom tour merchandise manufacturer for musicians, festivals and entertainment brands. Band T-shirts, festival apparel and event merchandise with flexible quantities.",
+    "descLen": 167,
+    "canonical": "https://sublimapparel.com/industries/music-festival-tour-merchandise/",
+    "ogImage": "https://sublimapparel.com/og/og-industry.webp",
+    "h1s": [
+      "Custom Tour Merchandise for Musicians, Festivals & Entertainment Brands"
+    ],
+    "h2Count": 8,
+    "lang": "en",
+    "jsonLdCount": 3,
+    "robots": "index, follow",
+    "problems": [
+      "desc too long (167ch)"
+    ]
+  },
+  {
+    "path": "/industries/corporate-employee-programs/",
+    "status": 200,
+    "title": "Corporate Uniform & Employee Apparel Manufacturer",
+    "titleLen": 49,
+    "desc": "Corporate uniform manufacturer for employee apparel and branded workwear. Custom polo shirts, office apparel, and company uniforms with reliable production and global delivery.",
+    "descLen": 176,
+    "canonical": "https://sublimapparel.com/industries/corporate-employee-programs/",
+    "ogImage": "https://sublimapparel.com/og/og-industry.webp",
+    "h1s": [
+      "Corporate Uniforms & Employee Apparel for Growing Companies"
+    ],
+    "h2Count": 8,
+    "lang": "en",
+    "jsonLdCount": 3,
+    "robots": "index, follow",
+    "problems": [
+      "desc too long (176ch)"
+    ]
+  },
+  {
+    "path": "/industries/schools-universities-greek-life/",
+    "status": 200,
+    "title": "School Apparel & Greek Life Merchandise",
+    "titleLen": 39,
+    "desc": "Custom school apparel manufacturer for universities, schools, Greek life and student organizations. Bulk T-shirts, hoodies and student merchandise with reliable delivery.",
+    "descLen": 170,
+    "canonical": "https://sublimapparel.com/industries/schools-universities-greek-life/",
+    "ogImage": "https://sublimapparel.com/og/og-industry.webp",
+    "h1s": [
+      "Custom School Apparel for Universities, Greek Life & Student Organizations"
+    ],
+    "h2Count": 8,
+    "lang": "en",
+    "jsonLdCount": 3,
+    "robots": "index, follow",
+    "problems": [
+      "desc too long (170ch)"
+    ]
+  },
+  {
+    "path": "/industries/breweries-coffee-hospitality/",
+    "status": 200,
+    "title": "Brewery, Coffee Shop & Bar Apparel Manufacturer",
+    "titleLen": 47,
+    "desc": "Custom hospitality apparel manufacturer for breweries, coffee shops, bars and restaurants. Staff uniforms, branded merchandise and venue apparel with flexible quantities.",
+    "descLen": 170,
+    "canonical": "https://sublimapparel.com/industries/breweries-coffee-hospitality/",
+    "ogImage": "https://sublimapparel.com/og/og-industry.webp",
+    "h1s": [
+      "Custom Apparel for Breweries, Coffee Shops & Hospitality Venues"
+    ],
+    "h2Count": 8,
+    "lang": "en",
+    "jsonLdCount": 3,
+    "robots": "index, follow",
+    "problems": [
+      "desc too long (170ch)"
+    ]
+  },
+  {
+    "path": "/industries/promotional-marketing-agencies/",
+    "status": 200,
+    "title": "Promotional Apparel Manufacturer for Agencies",
+    "titleLen": 45,
+    "desc": "Promotional apparel manufacturer for marketing and promotional agencies. Branded merchandise, campaign apparel and client gifts with flexible quantities and reliable delivery.",
+    "descLen": 175,
+    "canonical": "https://sublimapparel.com/industries/promotional-marketing-agencies/",
+    "ogImage": "https://sublimapparel.com/og/og-industry.webp",
+    "h1s": [
+      "Promotional Apparel Manufacturer for Marketing & Promotional Agencies"
+    ],
+    "h2Count": 8,
+    "lang": "en",
+    "jsonLdCount": 3,
+    "robots": "index, follow",
+    "problems": [
+      "desc too long (175ch)"
+    ]
+  },
+  {
+    "path": "/industries/trade-shows-display/",
+    "status": 200,
+    "title": "Trade Show Apparel & Booth Staff Shirts",
+    "titleLen": 39,
+    "desc": "Trade show apparel manufacturer for booth staff, exhibitors and event displays. Custom branded shirts, giveaways and team uniforms with reliable production and global delivery.",
+    "descLen": 176,
+    "canonical": "https://sublimapparel.com/industries/trade-shows-display/",
+    "ogImage": "https://sublimapparel.com/og/og-industry.webp",
+    "h1s": [
+      "Custom Apparel for Trade Shows, Exhibitions & Display Booths"
+    ],
+    "h2Count": 8,
+    "lang": "en",
+    "jsonLdCount": 3,
+    "robots": "index, follow",
+    "problems": [
+      "desc too long (176ch)"
+    ]
+  },
+  {
+    "path": "/industries/apparel-brands-agencies/",
+    "status": 200,
+    "title": "Apparel Manufacturing Partner for Brands & Agencies",
+    "titleLen": 51,
+    "desc": "Apparel manufacturing partner for apparel brands, agencies and designers. Private label production, ODM services and custom apparel manufacturing with flexible MOQ.",
+    "descLen": 164,
+    "canonical": "https://sublimapparel.com/industries/apparel-brands-agencies/",
+    "ogImage": "https://sublimapparel.com/og/og-industry.webp",
+    "h1s": [
+      "Apparel Manufacturing Partner for Brands, Agencies & Designers"
+    ],
+    "h2Count": 8,
+    "lang": "en",
+    "jsonLdCount": 3,
+    "robots": "index, follow",
+    "problems": [
+      "desc too long (164ch)"
+    ]
+  },
+  {
+    "path": "/industries/political-campaigns/",
+    "status": 200,
+    "title": "Political Campaign Apparel & Merchandise",
+    "titleLen": 40,
+    "desc": "Political campaign apparel manufacturer for campaigns, parties and political action committees. Custom yard signs, campaign shirts, hats and rally merchandise with fast production.",
+    "descLen": 180,
+    "canonical": "https://sublimapparel.com/industries/political-campaigns/",
+    "ogImage": "https://sublimapparel.com/og/og-industry.webp",
+    "h1s": [
+      "Political Campaign Apparel Manufacturer for Campaigns, Parties & PACs"
+    ],
+    "h2Count": 8,
+    "lang": "en",
+    "jsonLdCount": 3,
+    "robots": "index, follow",
+    "problems": [
+      "desc too long (180ch)"
+    ]
+  },
+  {
+    "path": "/industries/e-commerce-fulfillment/",
+    "status": 200,
+    "title": "E-commerce & Dropshipping Apparel Manufacturer",
+    "titleLen": 46,
+    "desc": "Apparel manufacturing for e-commerce brands, dropshippers and B2B sellers. Custom production, white label, private label and dropship fulfillment with global shipping.",
+    "descLen": 167,
+    "canonical": "https://sublimapparel.com/industries/e-commerce-fulfillment/",
+    "ogImage": "https://sublimapparel.com/og/og-industry.webp",
+    "h1s": [
+      "Apparel Manufacturing for E-commerce, Dropship & B2B Sellers"
+    ],
+    "h2Count": 8,
+    "lang": "en",
+    "jsonLdCount": 3,
+    "robots": "index, follow",
+    "problems": [
+      "desc too long (167ch)"
+    ]
+  },
+  {
+    "path": "/compare/sublimation-vs-dtg/",
+    "status": 200,
+    "title": "Sublimation vs DTG: Which Print Method? | SublimApparel | SublimApparel",
+    "titleLen": 71,
+    "desc": "Sublimation vs DTG (Direct-to-Garment) compared for custom apparel: cost, color vibrancy, fabric compatibility, MOQ, hand feel, and durability. Which one fits your order?",
+    "descLen": 170,
+    "canonical": "https://sublimapparel.com/compare/sublimation-vs-dtg/",
+    "ogImage": "https://sublimapparel.com/og/og-home.webp",
+    "h1s": [
+      "Sublimation vs DTG: which print method should you order?"
+    ],
+    "h2Count": 7,
+    "lang": "en",
+    "jsonLdCount": 3,
+    "robots": "index, follow",
+    "problems": [
+      "title too long (71ch)",
+      "desc too long (170ch)"
+    ]
+  },
+  {
+    "path": "/compare/ddp-vs-fob/",
+    "status": 200,
+    "title": "DDP vs FOB Shipping: Which Is Right? | SublimApparel | SublimApparel",
+    "titleLen": 68,
+    "desc": "DDP (Delivered Duty Paid) vs FOB (Free on Board) shipping for overseas apparel orders. Who pays duties, who handles customs, which is riskier, and which saves money.",
+    "descLen": 165,
+    "canonical": "https://sublimapparel.com/compare/ddp-vs-fob/",
+    "ogImage": "https://sublimapparel.com/og/og-home.webp",
+    "h1s": [
+      "DDP vs FOB shipping: which terms fit your order?"
+    ],
+    "h2Count": 7,
+    "lang": "en",
+    "jsonLdCount": 3,
+    "robots": "index, follow",
+    "problems": [
+      "desc too long (165ch)"
+    ]
+  },
+  {
+    "path": "/production/",
+    "status": 200,
+    "title": "Production & Lead Times: Calendar, Rush, Holidays | SublimApparel | SublimApparel",
+    "titleLen": 81,
+    "desc": "How long custom apparel takes to produce at SublimApparel: standard lead time, rush options, the production calendar from PO to delivery, and Chinese holiday slowdowns.",
+    "descLen": 168,
+    "canonical": "https://sublimapparel.com/production/",
+    "ogImage": "https://sublimapparel.com/og/og-home.webp",
+    "h1s": [
+      "Production & lead times: PO to door"
+    ],
+    "h2Count": 7,
+    "lang": "en",
+    "jsonLdCount": 3,
+    "robots": "index, follow",
+    "problems": [
+      "title too long (81ch)",
+      "desc too long (168ch)"
+    ]
+  },
+  {
+    "path": "/samples/",
+    "status": 200,
+    "title": "Sample Policy: Free & Pre-Production Samples | SublimApparel | SublimApparel",
+    "titleLen": 76,
+    "desc": "How SublimApparel handles samples: free stock-color swatches, pre-production samples with your design ($25-60), refund policy, and what to expect on lead time.",
+    "descLen": 159,
+    "canonical": "https://sublimapparel.com/samples/",
+    "ogImage": "https://sublimapparel.com/og/og-home.webp",
+    "h1s": [
+      "Sample policy: what we send, what it costs"
+    ],
+    "h2Count": 7,
+    "lang": "en",
+    "jsonLdCount": 3,
+    "robots": "index, follow",
+    "problems": [
+      "title too long (76ch)"
+    ]
+  },
+  {
+    "path": "/pricing/",
+    "status": 200,
+    "title": "Pricing & MOQ: How Quotes Are Built | SublimApparel | SublimApparel",
+    "titleLen": 67,
+    "desc": "How SublimApparel quotes custom apparel: pricing tiers, MOQ by fabric, what's included (sublimation, sewing, DDP shipping), and what's extra (samples, rush, labels).",
+    "descLen": 165,
+    "canonical": "https://sublimapparel.com/pricing/",
+    "ogImage": "https://sublimapparel.com/og/og-home.webp",
+    "h1s": [
+      "Pricing & MOQ: how quotes are built"
+    ],
+    "h2Count": 7,
+    "lang": "en",
+    "jsonLdCount": 3,
+    "robots": "index, follow",
+    "problems": [
+      "desc too long (165ch)"
+    ]
+  },
+  {
+    "path": "/quality-control/",
+    "status": 200,
+    "title": "4-Step Quality Control Process | AQL 2.5 Inspection | Custo…",
+    "titleLen": 60,
+    "desc": "Our 4-step quality control process for custom apparel: pre-production sample, in-line inspection, AQL 2.5 final inspection, pre-shipment photo evidence. We cat…",
+    "descLen": 160,
+    "canonical": "https://sublimapparel.com/quality-control/",
+    "ogImage": "https://sublimapparel.com/quality-control/",
+    "h1s": [
+      "We catch defectsbefore you do."
+    ],
+    "h2Count": 5,
+    "lang": "en",
+    "jsonLdCount": 2,
+    "robots": "index, follow",
+    "problems": []
+  },
+  {
+    "path": "/resources/",
+    "status": 200,
+    "title": "Tools & Resources for Custom Apparel Buyers | Sublimapparel",
+    "titleLen": 59,
+    "desc": "Free tools, calculators, and guides for sourcing custom apparel: event timeline planner, US size chart, quality control checklist, 90-day new program roadmap,…",
+    "descLen": 159,
+    "canonical": "https://sublimapparel.com/resources/",
+    "ogImage": "https://sublimapparel.com/resources",
+    "h1s": [
+      "Everything you need to plan, source and ship custom apparel."
+    ],
+    "h2Count": 5,
+    "lang": "en",
+    "jsonLdCount": 2,
+    "robots": "index, follow",
+    "problems": []
+  },
+  {
+    "path": "/event-timeline/",
+    "status": 200,
+    "title": "Event Apparel Timeline Calculator | When to Order Custom Sh…",
+    "titleLen": 60,
+    "desc": "Free event apparel timeline calculator. Enter your event date, get exact dates for when to order, lock designs, and lock final counts. For race organizers, cam…",
+    "descLen": 160,
+    "canonical": "https://sublimapparel.com/event-timeline/",
+    "ogImage": "https://sublimapparel.com/event-timeline/",
+    "h1s": [
+      "Event ApparelTimeline Calculator"
+    ],
+    "h2Count": 4,
+    "lang": "en",
+    "jsonLdCount": 2,
+    "robots": "index, follow",
+    "problems": []
+  },
+  {
+    "path": "/us-size-guide/",
+    "status": 200,
+    "title": "US Size Guide for Custom Apparel | Specs, Charts & Excel Te…",
+    "titleLen": 60,
+    "desc": "US-spec size charts for custom apparel: men&apos;s, women&apos;s, youth, hoodies. Free Excel template for collecting sizes from your registration system. Subli…",
+    "descLen": 160,
+    "canonical": "https://sublimapparel.com/us-size-guide/",
+    "ogImage": "https://sublimapparel.com/us-size-guide/",
+    "h1s": [
+      "US Size Guide forCustom Apparel"
+    ],
+    "h2Count": 6,
+    "lang": "en",
+    "jsonLdCount": 2,
+    "robots": "index, follow",
+    "problems": []
+  },
+  {
+    "path": "/how-to-source/",
+    "status": 200,
+    "title": "How to Source Custom Apparel from China | 5-Step Process",
+    "titleLen": 56,
+    "desc": "How to source custom apparel from China: 5-step process from inquiry to delivery. Learn about quoting, sample, production, QC, and shipping for event, corporat…",
+    "descLen": 160,
+    "canonical": "https://sublimapparel.com/how-to-source/",
+    "ogImage": "https://sublimapparel.com/how-to-source/",
+    "h1s": [
+      "How to sourcecustom apparel from China."
+    ],
+    "h2Count": 6,
+    "lang": "en",
+    "jsonLdCount": 2,
+    "robots": "index, follow",
+    "problems": []
+  },
+  {
+    "path": "/90-day-program/",
+    "status": 200,
+    "title": "90-Day Custom Apparel Production Program | 2-Phase Model",
+    "titleLen": 56,
+    "desc": "Our 90-day custom apparel production program in detail. 2-Phase model: reserve early, lock late. Designed for events, corporate, and brand apparel with deadlin…",
+    "descLen": 160,
+    "canonical": "https://sublimapparel.com/90-day-program/",
+    "ogImage": "https://sublimapparel.com/90-day-program/",
+    "h1s": [
+      "The 90-DayCustom Apparel Program"
+    ],
+    "h2Count": 7,
+    "lang": "en",
+    "jsonLdCount": 2,
+    "robots": "index, follow",
+    "problems": []
+  },
+  {
+    "path": "/all-over-print/",
+    "status": 200,
+    "title": "All-Over Print Manufacturer | Edge-to-Edge Sublimation & Co…",
+    "titleLen": 60,
+    "desc": "All-over print clothing manufacturer in Yiwu, China. Edge-to-edge sublimation on polyester, allover digital print on 100% cotton, plus DTF, DTG and...",
+    "descLen": 150,
+    "canonical": "https://sublimapparel.com/all-over-print/",
+    "ogImage": "https://sublimapparel.com/all-over-print/",
+    "h1s": [
+      "All-over print.Any material.Any product."
+    ],
+    "h2Count": 9,
+    "lang": "en",
+    "jsonLdCount": 2,
+    "robots": "index, follow",
+    "problems": []
+  },
+  {
+    "path": "/teams-sports-apparel/",
+    "status": 200,
+    "title": "Custom Team Sports Apparel Manufacturer | Sublimation Jerse…",
+    "titleLen": 60,
+    "desc": "Custom team sports apparel manufacturer for clubs, leagues and athletes. We produce sublimated soccer jerseys, basketball uniforms, cycling kits, running...",
+    "descLen": 156,
+    "canonical": "https://sublimapparel.com/teams-sports-apparel/",
+    "ogImage": "https://sublimapparel.com/og-default.jpg",
+    "h1s": [
+      "Custom team sports apparel manufacturer."
+    ],
+    "h2Count": 13,
+    "lang": "en",
+    "jsonLdCount": 4,
+    "robots": "index, follow",
+    "problems": []
+  },
+  {
+    "path": "/event-festivals-conferences/",
+    "status": 200,
+    "title": "Custom Event Apparel Manufacturer | Festival & Conference S…",
+    "titleLen": 60,
+    "desc": "Custom event apparel manufacturer for conferences, festivals, charity events, and community gatherings. Conference shirts, festival merchandise, volunteer...",
+    "descLen": 157,
+    "canonical": "https://sublimapparel.com/event-festivals-conferences/",
+    "ogImage": "https://sublimapparel.com/event-festivals-conferences/",
+    "h1s": [
+      "Custom event apparel manufacturerfor large-scale events."
+    ],
+    "h2Count": 10,
+    "lang": "en",
+    "jsonLdCount": 4,
+    "robots": "index, follow",
+    "problems": []
+  },
+  {
+    "path": "/corporate-organization-apparel/",
+    "status": 200,
+    "title": "Custom Corporate Apparel Manufacturer | Employee Uniform Su…",
+    "titleLen": 60,
+    "desc": "Custom corporate apparel manufacturer for companies, schools, clubs and organizations. Employee uniforms, branded work shirts, company polo shirts and team...",
+    "descLen": 158,
+    "canonical": "https://sublimapparel.com/corporate-organization-apparel/",
+    "ogImage": "https://sublimapparel.com/corporate-organization-apparel/",
+    "h1s": [
+      "Custom corporate apparel manufacturerfor companies & organizations."
+    ],
+    "h2Count": 9,
+    "lang": "en",
+    "jsonLdCount": 4,
+    "robots": "index, follow",
+    "problems": []
+  },
+  {
+    "path": "/promotional-marketing-apparel/",
+    "status": 200,
+    "title": "Custom Promotional Apparel Manufacturer | Marketing Merchan…",
+    "titleLen": 60,
+    "desc": "Custom promotional apparel manufacturer for trade shows, marketing campaigns, giveaways and brand activations. Promotional t-shirts, branded merchandise and...",
+    "descLen": 159,
+    "canonical": "https://sublimapparel.com/promotional-marketing-apparel/",
+    "ogImage": "https://sublimapparel.com/og-default.jpg",
+    "h1s": [
+      "Promotional apparel made for marketing campaigns."
+    ],
+    "h2Count": 12,
+    "lang": "en",
+    "jsonLdCount": 4,
+    "robots": "index, follow",
+    "problems": []
+  },
+  {
+    "path": "/apparel-brands-agencies/",
+    "status": 200,
+    "title": "Private Label Apparel Manufacturer | Custom Clothing Produc…",
+    "titleLen": 60,
+    "desc": "Private label apparel manufacturer and custom clothing production partner for growing brands and creative agencies. Custom labels, hang tags, retail...",
+    "descLen": 151,
+    "canonical": "https://sublimapparel.com/apparel-brands-agencies/",
+    "ogImage": "https://sublimapparel.com/apparel-brands-agencies/",
+    "h1s": [
+      "Your manufacturing partnerfor custom apparel projects."
+    ],
+    "h2Count": 11,
+    "lang": "en",
+    "jsonLdCount": 4,
+    "robots": "index, follow",
+    "problems": []
+  },
+  {
+    "path": "/e-commerce-fulfillment/",
+    "status": 200,
+    "title": "Custom Apparel Fulfillment Partner | DDP Shipping Manufactu…",
+    "titleLen": 60,
+    "desc": "Custom apparel fulfillment partner for e-commerce brands, dropshippers and resellers. Bulk production, warehouse support, DDP shipping and inventory...",
+    "descLen": 151,
+    "canonical": "https://sublimapparel.com/e-commerce-fulfillment/",
+    "ogImage": "https://sublimapparel.com/e-commerce-fulfillment/",
+    "h1s": [
+      "Custom apparel manufacturing partnerfor e-commerce brands."
+    ],
+    "h2Count": 9,
+    "lang": "en",
+    "jsonLdCount": 4,
+    "robots": "index, follow",
+    "problems": []
+  },
+  {
+    "path": "/terms/",
+    "status": 200,
+    "title": "Terms of Sale",
+    "titleLen": 13,
+    "desc": "Terms and conditions governing quotes, orders, payment, production, shipping, returns, and liability for custom sublimation apparel from SublimApparel.",
+    "descLen": 151,
+    "canonical": "https://sublimapparel.com/terms/",
+    "ogImage": "https://sublimapparel.com/og/og-home.webp",
+    "h1s": [
+      "Terms of sale."
+    ],
+    "h2Count": 13,
+    "lang": "en",
+    "jsonLdCount": 1,
+    "robots": "index, follow",
+    "problems": [
+      "title very short (13ch)"
+    ]
+  },
+  {
+    "path": "/privacy/",
+    "status": 200,
+    "title": "Privacy Policy",
+    "titleLen": 14,
+    "desc": "How SublimApparel collects, uses, and protects your personal data across our website, inquiry form, and order workflow.",
+    "descLen": 119,
+    "canonical": "https://sublimapparel.com/privacy/",
+    "ogImage": "https://sublimapparel.com/og/og-home.webp",
+    "h1s": [
+      "Privacy policy."
+    ],
+    "h2Count": 10,
+    "lang": "en",
+    "jsonLdCount": 1,
+    "robots": "index, follow",
+    "problems": [
+      "title very short (14ch)"
+    ]
+  },
+  {
+    "path": "/shipping-policy/",
+    "status": 200,
+    "title": "Shipping Policy",
+    "titleLen": 15,
+    "desc": "How we ship, the difference between FOB / CIF / DDP, US warehouse fulfillment from Fontana CA, production lead times, tracking, and what to do if a shipment is…",
+    "descLen": 160,
+    "canonical": "https://sublimapparel.com/shipping-policy/",
+    "ogImage": "https://sublimapparel.com/og/og-home.webp",
+    "h1s": [
+      "Shipping policy."
+    ],
+    "h2Count": 8,
+    "lang": "en",
+    "jsonLdCount": 1,
+    "robots": "index, follow",
+    "problems": [
+      "title very short (15ch)"
+    ]
+  },
+  {
+    "path": "/site-map/",
+    "status": 200,
+    "title": "Site Map · SublimApparel",
+    "titleLen": 24,
+    "desc": "Internal site architecture overview.",
+    "descLen": 36,
+    "canonical": "https://sublimapparel.com/site-map/",
+    "ogImage": "https://sublimapparel.com/og/og-home.webp",
+    "h1s": [
+      "How this siteis wired together."
+    ],
+    "h2Count": 6,
+    "lang": "en",
+    "jsonLdCount": 1,
+    "robots": "noindex, nofollow",
+    "problems": [
+      "desc short (36ch)",
+      "noindex (noindex, nofollow)"
+    ]
+  },
+  {
+    "path": "/sitemap.xml",
+    "status": 200,
+    "type": "non-html"
+  },
+  {
+    "path": "/robots.txt",
+    "status": 200,
+    "type": "non-html"
+  },
+  {
+    "path": "/llms.txt",
+    "status": 200,
+    "type": "non-html"
+  },
+  {
+    "path": "/manifest.webmanifest",
+    "status": 200,
+    "type": "non-html"
+  },
+  {
+    "path": "/icon.png",
+    "status": 200,
+    "type": "non-html"
+  },
+  {
+    "path": "/favicon.ico",
+    "status": 200,
+    "type": "non-html"
+  },
+  {
+    "path": "/og/og-home.webp",
+    "status": 200,
+    "type": "non-html"
+  },
+  {
+    "path": "/og-default.jpg",
+    "status": 404,
+    "title": "404: This page could not be found.",
+    "titleLen": 34,
+    "desc": "Sublimation on polyester, All-over digital print 100% cotton. MOQ 50, DDP to your door in 100+ countries, US warehouse in Fontana CA. Yiwu factory est. 2018.",
+    "descLen": 157,
+    "canonical": "https://sublimapparel.com/_not-found/",
+    "ogImage": "https://sublimapparel.com/og/og-home.webp",
+    "h1s": [
+      "404"
+    ],
+    "h2Count": 2,
+    "lang": "en",
+    "jsonLdCount": 1,
+    "robots": "noindex",
+    "problems": [
+      "status=404",
+      "noindex (noindex)"
+    ]
+  }
+]

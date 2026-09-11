@@ -12,8 +12,10 @@ import { buildPageMetadata } from "@/lib/page-metadata";
 // canonical + OG siteName.
 export const metadata: Metadata = buildPageMetadata({
   title: "Pricing & MOQ: How Quotes Are Built",
+  // 2026-09-11 push (Round 5): tightened from 165 → 152 chars to fit Google's
+  // 160-char SERP cap.
   description:
-    "How SublimApparel quotes custom apparel: pricing tiers, MOQ by fabric, what's included (sublimation, sewing, DDP shipping), and what's extra (samples, rush, labels).",
+    "How SublimApparel quotes custom apparel: pricing tiers, MOQ by fabric, what's included in the DDP price, and what's extra (samples, rush, custom labels).",
   ogTitle: "Pricing & MOQ — How Quotes Are Built at SublimApparel",
   ogDescription:
     "Per-unit pricing tiers, MOQ by fabric, what's included in the quote, and what costs extra. Real ranges, not vague 'contact us' answers.",

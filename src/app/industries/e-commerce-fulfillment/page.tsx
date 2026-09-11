@@ -21,8 +21,10 @@ export const dynamic = "force-static";
 const data: CustomerProfileData = {
   slug: "/industries/e-commerce-fulfillment/",
   metaTitle: "E-commerce & Dropshipping Apparel Manufacturer",
+  // 2026-09-11 push (Round 5): tightened from 167 → 155 chars to fit Google's
+  // 160-char SERP cap.
   metaDescription:
-    "Apparel manufacturing for e-commerce brands, dropshippers and B2B sellers. Custom production, white label, private label and dropship fulfillment with global shipping.",
+    "Apparel manufacturing for e-commerce brands, dropshippers, and B2B sellers. Custom, white-label, private label, and dropship fulfillment with global shipping.",
   keywords: [
     "ecommerce clothing supplier",
     "online clothing manufacturer",

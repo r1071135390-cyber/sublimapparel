@@ -6,8 +6,11 @@ import { JsonLd } from "@/components/json-ld";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 
 export const metadata = buildPageMetadata({
+    // 2026-09-11 push (Round 5): expanded description from 64 → 152 chars so it
+    // fits Google's 160-char SERP cap and gives a more complete picture of the
+    // page (placeholder US warehouse, occasional overstock buffer, not standard).
     title: "US Buffer-Storage Address · Honest Note",
-    description: "An honest note about our US warehouse address in Fontana, CA. It",
+    description: "An honest note about our US warehouse address in Fontana, CA. A placeholder service for occasional overstock buffer storage, not a standard feature.",
     keywords: ["US warehouse", "Fontana CA warehouse", "US buffer storage", "US fulfillment", "occasional overstock storage", "US shipping address", "pre-positioned inventory", "American warehouse"],
     alternates: {
     canonical: "https://sublimapparel.com/shipping/us-warehouse/",

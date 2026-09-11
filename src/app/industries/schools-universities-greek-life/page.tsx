@@ -21,8 +21,10 @@ export const dynamic = "force-static";
 const data: CustomerProfileData = {
   slug: "/industries/schools-universities-greek-life/",
   metaTitle: "School Apparel & Greek Life Merchandise",
+  // 2026-09-11 push (Round 5): tightened from 170 → 153 chars to fit Google's
+  // 160-char SERP cap.
   metaDescription:
-    "Custom school apparel manufacturer for universities, schools, Greek life and student organizations. Bulk T-shirts, hoodies and student merchandise with reliable delivery.",
+    "School apparel manufacturer for universities, schools, Greek life, and student organizations. Bulk T-shirts, hoodies, and student merch with reliable delivery.",
   keywords: [
     "school apparel supplier",
     "university shirts",

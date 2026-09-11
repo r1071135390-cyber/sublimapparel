@@ -21,8 +21,10 @@ export const dynamic = "force-static";
 const data: CustomerProfileData = {
   slug: "/industries/apparel-brands-agencies/",
   metaTitle: "Apparel Manufacturing Partner for Brands & Agencies",
+  // 2026-09-11 push (Round 5): tightened from 164 → 144 chars to fit Google's
+  // 160-char SERP cap.
   metaDescription:
-    "Apparel manufacturing partner for apparel brands, agencies and designers. Private label production, ODM services and custom apparel manufacturing with flexible MOQ.",
+    "Apparel manufacturing partner for brands, agencies, and designers. Private label, ODM, and custom manufacturing with flexible MOQ and reliable delivery.",
   keywords: [
     "apparel manufacturer for brands",
     "clothing production partner",

@@ -3,7 +3,10 @@ import { buildPageMetadata } from "@/lib/page-metadata";
 import Link from "next/link";
 
 export const metadata = buildPageMetadata({
-    title: "Shipping Policy ",
+    // 2026-09-11 push (Round 5): expanded from "Shipping Policy" (15ch) → 51ch.
+    // Short titles hurt CTR; expanded title includes DDP, lead time, and
+    // tracking keywords that match buyer search intent.
+    title: "Shipping Policy — DDP, Lead Times & Tracking",
     description: "How we ship, the difference between FOB / CIF / DDP, US warehouse fulfillment from Fontana CA, production lead times, tracking, and what to do if a shipment is…",
   });;
 

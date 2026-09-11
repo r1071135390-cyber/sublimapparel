@@ -21,8 +21,10 @@ export const dynamic = "force-static";
 const data: CustomerProfileData = {
   slug: "/industries/music-festival-tour-merchandise/",
   metaTitle: "Tour Merch & Band Tee Manufacturer",
+  // 2026-09-11 push (Round 5): tightened from 167 → 149 chars to fit Google's
+  // 160-char SERP cap.
   metaDescription:
-    "Custom tour merchandise manufacturer for musicians, festivals and entertainment brands. Band T-shirts, festival apparel and event merchandise with flexible quantities.",
+    "Custom tour merch manufacturer for musicians, festivals, and entertainment brands. Band T-shirts, festival apparel, and event merchandise with flexible MOQ.",
   keywords: [
     "festival merchandise supplier",
     "concert shirts",

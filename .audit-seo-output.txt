@@ -1,0 +1,93 @@
+﻿  /                                                200 ✓    title= 51ch desc=158ch h1=1 jsonld=2 og=y can=y
+  /about/                                          200 ✓    title= 60ch desc=158ch h1=1 jsonld=3 og=y can=y
+  /contact/                                        200 ✓    title= 60ch desc=160ch h1=1 jsonld=2 og=y can=y
+  /shipping/                                       200 ✓    title= 59ch desc=159ch h1=1 jsonld=1 og=y can=y
+  /shipping/ddp/                                   200 ✓    title= 50ch desc=159ch h1=1 jsonld=2 og=y can=y
+  /shipping/global/                                200 ✓    title= 60ch desc=160ch h1=1 jsonld=1 og=y can=y
+  /shipping/us-warehouse/                          200 ✗ 1  title= 39ch desc= 64ch h1=1 jsonld=2 og=y can=y
+       desc short (64ch)
+  /fabric/                                         200 ✓    title= 60ch desc=157ch h1=1 jsonld=3 og=y can=y
+  /fabric/cotton/                                  200 ✓    title= 53ch desc=159ch h1=1 jsonld=1 og=y can=y
+  /technique/                                      200 ✓    title= 60ch desc=160ch h1=1 jsonld=2 og=y can=y
+  /products/                                       200 ✓    title= 60ch desc=160ch h1=1 jsonld=2 og=y can=y
+  /solutions/                                      200 ✓    title= 60ch desc=159ch h1=1 jsonld=2 og=y can=y
+  /yiwu-factory-whatsapp/                          200 ✓    title= 55ch desc=160ch h1=1 jsonld=3 og=y can=y
+  /get-a-quote/                                    200 ✓    title= 60ch desc=160ch h1=1 jsonld=2 og=y can=y
+  /cases/                                          200 ✗ 1  title= 12ch desc=135ch h1=1 jsonld=2 og=y can=y
+       title very short (12ch)
+  /industries/                                     200 ✓    title= 35ch desc=160ch h1=1 jsonld=1 og=y can=y
+  /industries/sports-teams-leagues/                200 ✗ 1  title= 60ch desc=169ch h1=1 jsonld=3 og=y can=y
+       desc too long (169ch)
+  /industries/endurance-race-events/               200 ✓    title= 43ch desc=158ch h1=1 jsonld=3 og=y can=y
+  /industries/events-conferences/                  200 ✗ 1  title= 46ch desc=170ch h1=1 jsonld=3 og=y can=y
+       desc too long (170ch)
+  /industries/music-festival-tour-merchandise/     200 ✗ 1  title= 34ch desc=167ch h1=1 jsonld=3 og=y can=y
+       desc too long (167ch)
+  /industries/corporate-employee-programs/         200 ✗ 1  title= 49ch desc=176ch h1=1 jsonld=3 og=y can=y
+       desc too long (176ch)
+  /industries/schools-universities-greek-life/     200 ✗ 1  title= 39ch desc=170ch h1=1 jsonld=3 og=y can=y
+       desc too long (170ch)
+  /industries/breweries-coffee-hospitality/        200 ✗ 1  title= 47ch desc=170ch h1=1 jsonld=3 og=y can=y
+       desc too long (170ch)
+  /industries/promotional-marketing-agencies/      200 ✗ 1  title= 45ch desc=175ch h1=1 jsonld=3 og=y can=y
+       desc too long (175ch)
+  /industries/trade-shows-display/                 200 ✗ 1  title= 39ch desc=176ch h1=1 jsonld=3 og=y can=y
+       desc too long (176ch)
+  /industries/apparel-brands-agencies/             200 ✗ 1  title= 51ch desc=164ch h1=1 jsonld=3 og=y can=y
+       desc too long (164ch)
+  /industries/political-campaigns/                 200 ✗ 1  title= 40ch desc=180ch h1=1 jsonld=3 og=y can=y
+       desc too long (180ch)
+  /industries/e-commerce-fulfillment/              200 ✗ 1  title= 46ch desc=167ch h1=1 jsonld=3 og=y can=y
+       desc too long (167ch)
+  /compare/sublimation-vs-dtg/                     200 ✗ 2  title= 71ch desc=170ch h1=1 jsonld=3 og=y can=y
+       title too long (71ch) | desc too long (170ch)
+  /compare/ddp-vs-fob/                             200 ✗ 1  title= 68ch desc=165ch h1=1 jsonld=3 og=y can=y
+       desc too long (165ch)
+  /production/                                     200 ✗ 2  title= 81ch desc=168ch h1=1 jsonld=3 og=y can=y
+       title too long (81ch) | desc too long (168ch)
+  /samples/                                        200 ✗ 1  title= 76ch desc=159ch h1=1 jsonld=3 og=y can=y
+       title too long (76ch)
+  /pricing/                                        200 ✗ 1  title= 67ch desc=165ch h1=1 jsonld=3 og=y can=y
+       desc too long (165ch)
+  /quality-control/                                200 ✓    title= 60ch desc=160ch h1=1 jsonld=2 og=y can=y
+  /resources/                                      200 ✓    title= 59ch desc=159ch h1=1 jsonld=2 og=y can=y
+  /event-timeline/                                 200 ✓    title= 60ch desc=160ch h1=1 jsonld=2 og=y can=y
+  /us-size-guide/                                  200 ✓    title= 60ch desc=160ch h1=1 jsonld=2 og=y can=y
+  /how-to-source/                                  200 ✓    title= 56ch desc=160ch h1=1 jsonld=2 og=y can=y
+  /90-day-program/                                 200 ✓    title= 56ch desc=160ch h1=1 jsonld=2 og=y can=y
+  /all-over-print/                                 200 ✓    title= 60ch desc=150ch h1=1 jsonld=2 og=y can=y
+  /teams-sports-apparel/                           200 ✓    title= 60ch desc=156ch h1=1 jsonld=4 og=y can=y
+  /event-festivals-conferences/                    200 ✓    title= 60ch desc=157ch h1=1 jsonld=4 og=y can=y
+  /corporate-organization-apparel/                 200 ✓    title= 60ch desc=158ch h1=1 jsonld=4 og=y can=y
+  /promotional-marketing-apparel/                  200 ✓    title= 60ch desc=159ch h1=1 jsonld=4 og=y can=y
+  /apparel-brands-agencies/                        200 ✓    title= 60ch desc=151ch h1=1 jsonld=4 og=y can=y
+  /e-commerce-fulfillment/                         200 ✓    title= 60ch desc=151ch h1=1 jsonld=4 og=y can=y
+  /terms/                                          200 ✗ 1  title= 13ch desc=151ch h1=1 jsonld=1 og=y can=y
+       title very short (13ch)
+  /privacy/                                        200 ✗ 1  title= 14ch desc=119ch h1=1 jsonld=1 og=y can=y
+       title very short (14ch)
+  /shipping-policy/                                200 ✗ 1  title= 15ch desc=160ch h1=1 jsonld=1 og=y can=y
+       title very short (15ch)
+  /site-map/                                       200 ✗ 2  title= 24ch desc= 36ch h1=1 jsonld=1 og=y can=y
+       desc short (36ch) | noindex (noindex, nofollow)
+  /sitemap.xml                                     200 (79406b, application/xml; charset=utf-8)
+  /robots.txt                                      200 (2041b, text/plain; charset=utf-8)
+  /llms.txt                                        200 (5334b, text/markdown; charset=utf-8)
+  /manifest.webmanifest                            200 (1834b, application/manifest+json)
+  /icon.png                                        200 (48207b, image/png)
+  /favicon.ico                                     200 (25593b, image/vnd.microsoft.icon)
+  /og/og-home.webp                                 200 (89121b, image/webp)
+  /og-default.jpg                                  404 ✗ 2  title= 34ch desc=157ch h1=1 jsonld=1 og=y can=y
+       status=404 | noindex (noindex)
+
+=== 27 total problems across 58 URLs ===
+
+By category:
+  descTooLong: 15
+  titleTooShort: 4
+  titleTooLong: 3
+  descTooShort: 2
+  noindex: 2
+  statusError: 1
+
+Full report: C:\Users\Administrator\.trae-cn\work\6a9d25e18218ab0836ada44c\sublimapparel-src\.audit-seo-report.json

@@ -13,8 +13,10 @@ import { buildPageMetadata } from "@/lib/page-metadata";
 // canonical + OG siteName.
 export const metadata: Metadata = buildPageMetadata({
   title: "DDP vs FOB Shipping: Which Is Right?",
+  // 2026-09-11 push (Round 5): tightened from 165 → 152 chars to fit Google's
+  // 160-char SERP cap.
   description:
-    "DDP (Delivered Duty Paid) vs FOB (Free on Board) shipping for overseas apparel orders. Who pays duties, who handles customs, which is riskier, and which saves money.",
+    "DDP (Delivered Duty Paid) vs FOB (Free on Board) shipping for overseas apparel: who pays duties, who handles customs, risk, and which saves money.",
   ogTitle: "DDP vs FOB — Which Shipping Terms Fit Your Apparel Order?",
   ogDescription:
     "Duty exposure, customs clearance, risk, and total landed cost. Side-by-side for B2B buyers sourcing from China.",

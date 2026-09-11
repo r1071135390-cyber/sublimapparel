@@ -21,8 +21,10 @@ export const dynamic = "force-static";
 const data: CustomerProfileData = {
   slug: "/industries/corporate-employee-programs/",
   metaTitle: "Corporate Uniform & Employee Apparel Manufacturer",
+  // 2026-09-11 push (Round 5): tightened from 176 → 155 chars to fit Google's
+  // 160-char SERP cap.
   metaDescription:
-    "Corporate uniform manufacturer for employee apparel and branded workwear. Custom polo shirts, office apparel, and company uniforms with reliable production and global delivery.",
+    "Corporate uniform manufacturer for employee apparel and branded workwear. Custom polos, office apparel, and company uniforms. Reliable global DDP delivery.",
   keywords: [
     "employee shirts",
     "company event shirts",

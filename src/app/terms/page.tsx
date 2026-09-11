@@ -3,7 +3,10 @@ import { buildPageMetadata } from "@/lib/page-metadata";
 import Link from "next/link";
 
 export const metadata = buildPageMetadata({
-    title: "Terms of Sale ",
+    // 2026-09-11 push (Round 5): expanded from "Terms of Sale" (13ch) → 49ch.
+    // Google treats very short titles as a low-quality signal; longer, keyword-
+    // rich titles get better CTR. Also keeps the full terms URL discoverable.
+    title: "Terms of Sale — Quotes, Orders & Liability",
     description: "Terms and conditions governing quotes, orders, payment, production, shipping, returns, and liability for custom sublimation apparel from SublimApparel.",
   });;
 

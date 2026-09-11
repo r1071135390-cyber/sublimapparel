@@ -21,8 +21,10 @@ export const dynamic = "force-static";
 const data: CustomerProfileData = {
   slug: "/industries/promotional-marketing-agencies/",
   metaTitle: "Promotional Apparel Manufacturer for Agencies",
+  // 2026-09-11 push (Round 5): tightened from 175 → 152 chars to fit Google's
+  // 160-char SERP cap.
   metaDescription:
-    "Promotional apparel manufacturer for marketing and promotional agencies. Branded merchandise, campaign apparel and client gifts with flexible quantities and reliable delivery.",
+    "Promotional apparel manufacturer for marketing and promo agencies. Branded merch, campaign apparel, and client gifts with flexible MOQ and reliable delivery.",
   keywords: [
     "promotional apparel supplier",
     "promotional products apparel",

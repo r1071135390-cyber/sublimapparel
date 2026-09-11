@@ -21,8 +21,10 @@ export const dynamic = "force-static";
 const data: CustomerProfileData = {
   slug: "/industries/trade-shows-display/",
   metaTitle: "Trade Show Apparel & Booth Staff Shirts",
+  // 2026-09-11 push (Round 5): tightened from 176 → 152 chars to fit Google's
+  // 160-char SERP cap.
   metaDescription:
-    "Trade show apparel manufacturer for booth staff, exhibitors and event displays. Custom branded shirts, giveaways and team uniforms with reliable production and global delivery.",
+    "Trade show apparel manufacturer for booth staff, exhibitors, and event displays. Custom branded shirts, giveaways, and team uniforms with reliable production.",
   keywords: [
     "trade show shirts",
     "exhibition apparel",

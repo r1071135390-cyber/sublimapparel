@@ -3,7 +3,10 @@ import { buildPageMetadata } from "@/lib/page-metadata";
 import Link from "next/link";
 
 export const metadata = buildPageMetadata({
-    title: "Privacy Policy ",
+    // 2026-09-11 push (Round 5): expanded from "Privacy Policy" (14ch) → 49ch.
+    // Google treats very short titles as low-quality; longer keyword-rich
+    // titles boost CTR on policy page SERPs.
+    title: "Privacy Policy — Data, Cookies & Inquiries",
     description: "How SublimApparel collects, uses, and protects your personal data across our website, inquiry form, and order workflow.",
   });;
 

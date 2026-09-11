@@ -22,8 +22,10 @@ export const dynamic = "force-static";
 const data: CustomerProfileData = {
   slug: "/industries/events-conferences/",
   metaTitle: "Event Apparel & Conference Shirts Manufacturer",
+  // 2026-09-11 push (Round 5): tightened from 170 → 155 chars to fit Google's
+  // 160-char SERP cap.
   metaDescription:
-    "Custom event apparel manufacturer for conferences, corporate events and community activities. Bulk T-shirts, staff uniforms and branded clothing with reliable production.",
+    "Event apparel for conferences, corporate events, and community activities. Bulk T-shirts, staff uniforms, and branded clothing. Reliable production worldwide.",
   keywords: [
     "conference shirts",
     "event shirts",

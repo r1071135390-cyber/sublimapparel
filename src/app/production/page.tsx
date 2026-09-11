@@ -13,8 +13,10 @@ import { buildPageMetadata } from "@/lib/page-metadata";
 // surfaced through canonical + OG siteName + Twitter card.
 export const metadata: Metadata = buildPageMetadata({
   title: "Production & Lead Times: Calendar, Rush, Holidays",
+  // 2026-09-11 push (Round 5): tightened from 168 → 152 chars to fit Google's
+  // 160-char SERP cap.
   description:
-    "How long custom apparel takes to produce at SublimApparel: standard lead time, rush options, the production calendar from PO to delivery, and Chinese holiday slowdowns.",
+    "How long custom apparel takes to produce at SublimApparel: standard lead time, rush options, the PO-to-delivery calendar, and Chinese holiday slowdowns.",
   ogTitle: "Production & Lead Times — PO to Door",
   ogDescription:
     "Real lead times, rush options, and the production calendar. No vague '6-8 weeks' — here's exactly when each step happens.",

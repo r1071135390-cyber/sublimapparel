@@ -21,8 +21,10 @@ export const dynamic = "force-static";
 const data: CustomerProfileData = {
   slug: "/industries/breweries-coffee-hospitality/",
   metaTitle: "Brewery, Coffee Shop & Bar Apparel Manufacturer",
+  // 2026-09-11 push (Round 5): tightened from 170 → 158 chars to fit Google's
+  // 160-char SERP cap.
   metaDescription:
-    "Custom hospitality apparel manufacturer for breweries, coffee shops, bars and restaurants. Staff uniforms, branded merchandise and venue apparel with flexible quantities.",
+    "Hospitality apparel manufacturer for breweries, coffee shops, bars, and restaurants. Staff uniforms, branded merchandise, and venue apparel with flexible MOQ.",
   keywords: [
     "brewery shirts",
     "restaurant staff shirts",
