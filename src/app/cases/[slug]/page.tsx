@@ -173,6 +173,25 @@ export default async function CaseCategoryPage({ params }: Props) {
           <div className="mt-8 border-l-4 border-[#ff4d00] bg-[#fff7f0] px-4 py-3 text-sm font-bold leading-relaxed text-black md:text-base">
             {ind.pitch}
           </div>
+
+          {/* 2026-09-11 (Round 14): cross-link to the matching /industries/[slug]/
+              industry profile page. /cases/[slug]/ and /industries/[slug]/ use
+              different slugs (cases = case-study angle; industries = full
+              profile) — without this link, Google sees them as unrelated and
+              PageRank doesn't flow between them. The industry profile page is
+              higher-priority in the sitemap (0.9 vs 0.6), so passing link
+              equity to it lifts the more important page. */}
+          {ind.relatedIndustrySlug && (
+            <div className="mt-6">
+              <Link
+                href={`/industries/${ind.relatedIndustrySlug}/`}
+                className="inline-flex items-center gap-2 border-2 border-black bg-white px-4 py-2 text-xs font-black uppercase tracking-wider text-black transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-[#ff4d00] hover:shadow-[3px_3px_0_0_#000]"
+              >
+                Full industry profile
+                <ArrowRight size={14} strokeWidth={3} />
+              </Link>
+            </div>
+          )}
         </div>
       </section>
 

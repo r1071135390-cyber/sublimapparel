@@ -414,57 +414,15 @@ export const fabricTypes: Fabric[] = [
       },
     ],
   },
+  // 2026-09-11 (Round 14): removed duplicate entry for "polyester-satin-chiffon".
+  // The original entry at line ~417 had less content (1 FAQ, less bestForList) and
+  // was silently overriding the more comprehensive entry further down via
+  // fabricBySlug().find() — only the first match wins. Google was rendering
+  // the less-detailed version, hurting content quality signals for this high-
+  // priority fabric page. Keeping the more comprehensive entry (2 FAQs, richer
+  // bestForList, relatedSlugs pointing to fabric-data entries that exist).
   {
     name: "Polyester satin / chiffon",
-    slug: "polyester-satin-chiffon",
-    comp: "100% Polyester",
-    gsm: "60-120",
-    spec: "Width 150cm, woven",
-    use: "Dance, dresses, performance costumes",
-    fit: 4,
-    swatch: "09-satin",
-    description:
-      "Polyester satin and chiffon. Silky drape, used for dance and dresses.",
-    printMethods: ["sublimation"],
-    tags: [
-      "polyester", "woven", "satin", "chiffon", "lightweight", "silky",
-      "dresses", "dance", "performance", "sublimation-friendly", "elegant",
-    ],
-    h1: "Polyester Satin & Chiffon — Silky Woven Fabric for Dance and Dresses",
-    metaDescription:
-      "Polyester satin and chiffon, 60-120 gsm. Silky drape, vibrant sublimation prints. Dance costumes, performance dresses, scarves, and event wear. Low MOQ 50 pcs.",
-    intro:
-      "Polyester satin and chiffon are lightweight woven fabrics with a smooth, lustrous face. Both accept sublimation ink beautifully and produce prints with deep blacks and saturated colors. The lightweight nature makes them ideal for flowy garments — dance costumes, evening dresses, scarves, and any application where drape matters.",
-    characteristics: [
-      "100% polyester woven satin or chiffon",
-      "60-120 gsm — very lightweight",
-      "Smooth lustrous face (satin) or sheer drape (chiffon)",
-      "Excellent sublimation print quality",
-      "Sheer chiffon requires lining for modesty",
-      "Hand wash or gentle cycle recommended",
-    ],
-    bestForList: [
-      "Dance and cheerleading costumes",
-      "Evening and event dresses",
-      "Scarves and accessories",
-      "Theatrical and performance wear",
-    ],
-    careNotes: [
-      "Hand wash cold or dry clean",
-      "Do not wring — roll in towel to remove water",
-      "Hang or lay flat to dry",
-      "Iron on low with cloth barrier",
-    ],
-    relatedSlugs: ["organza", "chiffon", "georgette", "voile"],
-    faq: [
-      {
-        q: "Is polyester chiffon see-through?",
-        a: "Yes — chiffon is semi-sheer. For modest garments, line the dress or use a double layer. For overlays and dance costumes where transparency is desired, single layer is fine.",
-      },
-    ],
-  },
-  {
-    name: "French terry",
     slug: "french-terry",
     comp: "100% Polyester (or poly-cotton)",
     gsm: "220-320",

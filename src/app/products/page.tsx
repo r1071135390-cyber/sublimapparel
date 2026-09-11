@@ -12,7 +12,7 @@ import { products } from "@/lib/products-data";
 import { KeywordCloud } from "@/components/keyword-cloud";
 
 export const metadata = buildPageMetadata({
-    title: "Which Custom Apparel Do You Need? — 123 Products, 14 Categories, MOQ 50",
+    title: "Which Custom Apparel Do You Need? — 120+ Products, 14 Categories, MOQ 50",
     description: "Custom sublimated apparel for B2B: t-shirts, jerseys, hoodies, cycling kits, golf polos, racing suits. No setup fees, MOQ 50 pcs, full color all-over print, sa…",
     keywords: ["custom sublimation apparel", "all-over print manufacturer", "sublimated t-shirts", "custom jerseys", "sublimation hoodies", "cycling kits custom", "golf polos custom", "racing suits sublimation", "B2B apparel manufacturer", "MOQ 50 custom apparel", "all over print t-shirts", "sublimation factory China"],
     other: {
@@ -20,8 +20,8 @@ export const metadata = buildPageMetadata({
     "article:published_time": "2024-01-01T00:00:00.000Z",
     "article:modified_time": "2025-08-18T00:00:00.000Z",
   },
-    ogTitle: "Which Custom Apparel Do You Need? — 123 Products, 14 Categories",
-    ogDescription: "123 custom sublimated apparel products for B2B: t-shirts, jerseys, hoodies, cycling kits, golf polos, racing suits, plus 100…",
+    ogTitle: "Which Custom Apparel Do You Need? — 120+ Products, 14 Categories",
+    ogDescription: "120+ custom sublimated apparel products for B2B: t-shirts, jerseys, hoodies, cycling kits, golf polos, racing suits, plus all-over print on 100% cotton. MOQ 50, DDP worldwide.",
   });;
 
 type CategoryItem = { name: string; category?: keyof typeof CATEGORY_TAGS };
@@ -145,7 +145,7 @@ const comparison = [
 
 export default function ProductsPage() {
   // 2026-09-11 push (Round 7): add CollectionPage + ItemList JSON-LD on /products/.
-  // The page is structurally a catalog index that lists 119 products across
+  // The page is structurally a catalog index that lists 120+ products across
   // 14 categories, 42 sports, and 25 use cases. Without explicit structured
   // data, Google only sees a flat list of <a> tags and has to infer the
   // hierarchy. With CollectionPage + ItemList:
@@ -154,7 +154,7 @@ export default function ProductsPage() {
   //  - ItemList enumerates the top 20 product slugs (by number) so Google's
   //    crawler can find them without re-walking the whole sitemap, and so
   //    sitelinks-style "carousel" rich results are more likely.
-  // We use the top 20 (not all 119) because ItemList >50 items is deprecated
+  // We use the top 20 (not all 120+) because ItemList >50 items is deprecated
   // and >100 is ignored by Google; 20 is a safe signal-rich size.
   const topProducts = [...products]
     .sort((a, b) => a.number.localeCompare(b.number))
@@ -171,7 +171,7 @@ export default function ProductsPage() {
     "@type": "CollectionPage",
     "@id": "https://sublimapparel.com/products/#collection",
     url: "https://sublimapparel.com/products/",
-    name: "Custom Sublimation Apparel Catalog — 119 Products, 14 Categories",
+    name: "Custom Sublimation Apparel Catalog — 120+ Products, 14 Categories",
     description:
       "Full product catalog of sublimation-printed custom apparel. 14 categories including t-shirts, hoodies, jerseys, sportswear, polo shirts, jackets, pants, sweatshirts, shirts, skirts, caps, home textiles, workwear, and tank tops. 42 sports, 25 use cases.",
     inLanguage: "en",

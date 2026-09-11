@@ -11,10 +11,13 @@ export const metadata = buildPageMetadata({
     title: "Blog | Sublimation Apparel Insights & Factory Stories",
     description: "Industry guides, factory stories, and B2B apparel manufacturing insights from a 2,000 m² Yiwu sublimation factory. Sublimation vs DTG, DDP shipping, fabric gui…",
     keywords: ["sublimation printing blog", "apparel manufacturing insights", "Yiwu factory", "B2B apparel guide", "DTG vs DTF", "DDP shipping guide", "esports jersey fabric"],
-    alternates: { canonical:"./" },
+    alternates: { canonical:"/blog/" },
     ogTitle: "SublimApparel Blog — Apparel Manufacturing Insights",
     ogDescription: "Industry guides, factory stories, and B2B apparel insights. Written by the team behind our 2,000 m² Yiwu sublimation factory.",
-    ogImage: "/blog/",
+    // 2026-09-11 (Round 13): was "/blog/" — a directory path, not an image.
+    // Social crawlers (Facebook, Twitter, LinkedIn) cannot fetch directory
+    // URLs as images. Fixed to the real OG image in /og/.
+    ogImage: "/og/og-default.jpg",
   });;
 
 export default function BlogIndexPage() {

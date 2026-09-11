@@ -26,7 +26,10 @@ export const metadata = buildPageMetadata({
   },
     ogTitle: "All-Over Print Manufacturer | Edge-to-Edge Sublimation & Cotton",
     ogDescription: "Yiwu factory. Polyester sublimation, allover cotton print, DTG, DTF, cut-and-sew. MOQ 50 pcs, no setup fee, DDP worldwide.",
-    ogImage: "https://sublimapparel.com/all-over-print/",
+    ogImage: "/og/og-products.webp",
+    // 2026-09-11 (Round 13): removed "https://sublimapparel.com/all-over-print/"
+    // — that was the page URL, not an image file. Social crawlers cannot
+    // use a URL as an OG image. Pointing to /og/og-products.webp instead.
   });;
 
 const processes = [

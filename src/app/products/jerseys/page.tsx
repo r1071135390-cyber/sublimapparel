@@ -138,7 +138,7 @@ export default function JerseysPage() {
                 Get a Jersey Quote
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
               </Link>
-              <Link href="/cases/sports-teams/" className="inline-flex items-center gap-2 border-2 border-black bg-white px-6 py-3 text-sm font-black uppercase tracking-widest text-black transition-all hover:bg-black hover:text-white">
+              <Link href="/industries/sports-teams-leagues/" className="inline-flex items-center gap-2 border-2 border-black bg-white px-6 py-3 text-sm font-black uppercase tracking-widest text-black transition-all hover:bg-black hover:text-white">
                 See Team Case Studies
               </Link>
             </div>

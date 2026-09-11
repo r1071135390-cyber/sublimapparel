@@ -10,7 +10,8 @@ export const metadata = buildPageMetadata({
     // 2026-09-11 push (Round 5b): was 64ch — Google truncates at ~60. Rewrote to lead
     // with the primary keyword (get a quote) and signal the DDP speed, still under 60.
     title: "Get a Quote — DDP Pricing in 12 Hours, No Setup Fee",
-    description: "Request a landed-cost quote in under 12 hours. Free digital mockup, free sample round on first order. Sublimation on polyester, DTG / DTF on 100% cotton, DDP s…",
+    description:
+      "Request a landed-cost quote in under 12 hours. Free digital mockup, free sample round on first order. Sublimation on polyester, DTG / DTF on 100% cotton, DDP shipping to 100+ countries.",
     keywords: ["get a quote", "sublimation quote", "custom apparel quote", "bulk order inquiry", "B2B apparel sourcing", "sublimation factory quote", "DDP quote", "apparel manufacturer China"],
   });;
 

@@ -22,45 +22,29 @@ const linkGroups = [
   {
     title: "Capabilities",
     items: [
-      { label: "Dye sublimation printing", href: "/about" },
-      { label: "100% cotton (full-bleed)", href: "/about" },
-      { label: "Cut & sew manufacturing", href: "/about" },
-      { label: "All-over print", href: "/about" },
-      { label: "Custom labels, tags & packaging", href: "/about" },
-      { label: "Quality control & testing", href: "/about" },
-      { label: "Factory & equipment", href: "/about" },
+      // 2026-09-11 (Round 11): these /about links were too broad. Point each
+      // capability to the dedicated sub-page with full content + schema.
+      { label: "Dye sublimation printing", href: "/about/factory" },
+      { label: "100% cotton (full-bleed)", href: "/fabric/cotton" },
+      { label: "Cut & sew manufacturing", href: "/about/production" },
+      { label: "All-over print", href: "/all-over-print" },
+      { label: "Custom labels, tags & packaging", href: "/about/production" },
+      { label: "Quality control & testing", href: "/about/quality" },
+      { label: "Factory & equipment", href: "/about/factory" },
+      // 2026-09-11 (Round 12): /pricing (0.85) and /production (0.80) were
+      // orphan pages — no navbar or footer links. Adding them here so Google
+      // can crawl and index these high-priority informational pages.
+      { label: "Pricing & MOQ guide", href: "/pricing" },
+      { label: "Production timeline & lead times", href: "/production" },
     ],
   },
   {
     title: "Industries",
     items: [
-      { label: "Events & conferences", href: "/cases/events-conferences" },
-      { label: "Promotional distributors", href: "/cases/promotional-products" },
-      { label: "Sports teams & leagues", href: "/cases/sports-teams" },
-      { label: "Music, tour & festival merch", href: "/cases/music-tour-festival" },
-      { label: "Trade show & display", href: "/cases/trade-show-display" },
-      { label: "Corporate & employee programmes", href: "/cases/corporate-programs" },
-      { label: "Apparel brands & agencies", href: "/cases/apparel-brands" },
-      { label: "Schools & universities", href: "/cases/schools-greek-life" },
-      { label: "Political campaigns", href: "/cases/political-campaigns" },
-    ],
-    viewAll: { href: "/cases", label: "View all case studies" },
-  },
-  {
-    title: "Solutions",
-    items: [
-      { label: "Teams & Sports Apparel", href: "/teams-sports-apparel" },
-      { label: "Event Festivals & Conferences", href: "/event-festivals-conferences" },
-      { label: "Corporate & Organization Apparel", href: "/corporate-organization-apparel" },
-      { label: "Promotional & Marketing Apparel", href: "/promotional-marketing-apparel" },
-      { label: "Apparel Brands & Agencies", href: "/apparel-brands-agencies" },
-      { label: "E-commerce & Fulfillment", href: "/e-commerce-fulfillment" },
-      { label: "All-Over Print Catalog", href: "/all-over-print" },
-    ],
-  },
-  {
-    title: "Industries",
-    items: [
+      // 2026-09-11 (Round 11): all these /cases/* paths are broken 404s.
+      // Fix: link to the real /industries/* pages that are in the sitemap.
+      // /cases/sports-teams existed but redirecting to /industries/sports-teams-leagues
+      // (the real industry profile page with full content, FAQ, schema, and cases).
       { label: "Sports Teams & Leagues", href: "/industries/sports-teams-leagues" },
       { label: "Endurance & Race Events", href: "/industries/endurance-race-events" },
       { label: "Events & Conferences", href: "/industries/events-conferences" },
@@ -74,6 +58,23 @@ const linkGroups = [
       { label: "Political Campaigns", href: "/industries/political-campaigns" },
       { label: "E-commerce & Fulfillment", href: "/industries/e-commerce-fulfillment" },
     ],
+    viewAll: { href: "/industries", label: "View all 12 industries" },
+  },
+  {
+    title: "Solutions",
+    items: [
+      // 2026-09-11 (Round 11): restore the Solutions section that was removed
+      // when the duplicate Industries group was deleted. These 6 solution pages
+      // are high-priority (0.95) SEO pages in the sitemap.
+      { label: "Teams & Sports Apparel", href: "/teams-sports-apparel" },
+      { label: "Event Festivals & Conferences", href: "/event-festivals-conferences" },
+      { label: "Corporate & Organization Apparel", href: "/corporate-organization-apparel" },
+      { label: "Promotional & Marketing Apparel", href: "/promotional-marketing-apparel" },
+      { label: "Apparel Brands & Agencies", href: "/apparel-brands-agencies" },
+      { label: "E-commerce & Fulfillment", href: "/e-commerce-fulfillment" },
+      { label: "All-Over Print Catalog", href: "/all-over-print" },
+    ],
+    viewAll: { href: "/solutions", label: "All solutions overview" },
   },
   {
     title: "Quick order",
@@ -81,6 +82,19 @@ const linkGroups = [
       { label: "Order a custom sample", href: "/samples" },
       { label: "Express quote (30 min)", href: "/get-a-quote-express" },
       { label: "Pay bulk order deposit", href: "/bulk-deposit" },
+    ],
+  },
+  // 2026-09-11 (Round 12): /shipping, /shipping/ddp, /shipping/global, and
+  // /shipping/us-warehouse were all orphan pages (no navbar or footer links).
+  // Add a Shipping group so Google can crawl and index these high-value
+  // informational pages (priority 0.8–0.9).
+  {
+    title: "Shipping",
+    items: [
+      { label: "Shipping overview", href: "/shipping" },
+      { label: "DDP shipping — duty paid", href: "/shipping/ddp" },
+      { label: "Global shipping guide", href: "/shipping/global" },
+      { label: "US warehouse & fulfilment", href: "/shipping/us-warehouse" },
     ],
   },
   {
@@ -93,20 +107,35 @@ const linkGroups = [
       { label: "90-Day Production Program", href: "/90-day-program" },
       { label: "How to Source Custom Apparel", href: "/how-to-source" },
       { label: "Case studies", href: "/cases" },
-      { label: "Fabric library", href: "/about" },
-      { label: "Sublimation vs screen print vs DTG", href: "/about" },
-      { label: "Ordering FAQ", href: "/about" },
+      // 2026-09-11 (Round 11): /about was too broad for each of these.
+      // Fabric library → /fabric (hub), Sublimation vs DTG → /compare page,
+      // Ordering FAQ → /about/faq (29 Q&A with FAQPage schema).
+      { label: "Fabric library", href: "/fabric" },
+      // 2026-09-11 (Round 12): all 3 compare pages were orphan pages in sitemap
+      // (priority 0.80-0.85) — now linked from footer so Google can crawl them.
+      { label: "Sublimation vs screen print vs DTG", href: "/compare/sublimation-vs-dtg" },
+      { label: "Polyester vs cotton for sublimation", href: "/compare/polyester-vs-cotton-sublima" },
+      { label: "DDP vs FOB shipping from China", href: "/compare/ddp-vs-fob" },
+      // 2026-09-11 (Round 13): /technique/ (priority 0.85, 20 sub-pages) was an
+      // orphan page — no navbar or footer links. Adding it here so Google can
+      // crawl and index the full technique encyclopedia hub.
+      { label: "Decoration techniques encyclopedia", href: "/technique" },
+      { label: "Ordering FAQ", href: "/about/faq" },
     ],
   },
   {
     title: "Company",
     items: [
+      // 2026-09-11 (Round 11): /about was too broad for most of these.
+      // Point to the dedicated sub-pages with full content + JSON-LD schema.
       { label: "About sublimapparel.com", href: "/about" },
-      { label: "Our factory in Yiwu", href: "/about" },
-      { label: "Why Yiwu", href: "/about" },
-      { label: "Certifications & compliance", href: "/about" },
-      { label: "Sustainability & ink safety", href: "/about" },
-      { label: "Careers", href: "/contact" },
+      { label: "Our factory in Yiwu", href: "/about/factory" },
+      { label: "Why Yiwu", href: "/about/factory" },
+      { label: "Production process", href: "/about/production" },
+      { label: "Quality control", href: "/about/quality" },
+      { label: "Certifications & compliance", href: "/about/quality" },
+      { label: "Sustainability & ink safety", href: "/about/quality" },
+      { label: "Case studies archive", href: "/cases" },
       { label: "Get a quote", href: "/get-a-quote" },
       { label: "Contact", href: "/contact" },
     ],
