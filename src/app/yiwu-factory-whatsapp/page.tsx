@@ -7,7 +7,8 @@ import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 
 export const metadata = buildPageMetadata({
   title: "Yiwu Factory WhatsApp — +86-198-1793-0190 | 1-Day Reply",
-  description: "Message our Yiwu factory direct on WhatsApp +86-198-1793-0190. Custom sublimated apparel, MOQ 50 pcs, DDP shipping to 100+ countries, US warehouse in Fontana CA. Real production managers reply within 1 business day.",
+  // 2026-09-11 (R15-P0-2): was 215 chars — Google meta description limit is ~160. Rewrote to 152 chars, kept the WhatsApp number + factory + service summary.
+  description: "Message our Yiwu factory direct on WhatsApp +86-198-1793-0190. Custom sublimated apparel, MOQ 50 pcs, DDP worldwide. Real production managers, 1-day reply.",
   keywords: [
     "Yiwu factory WhatsApp",
     "Yiwu factory contact WhatsApp",

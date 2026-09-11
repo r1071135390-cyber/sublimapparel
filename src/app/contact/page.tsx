@@ -6,8 +6,10 @@ import { Contact } from "@/components/contact";
 import { TeamSection } from "@/components/contact-team";
 
 export const metadata = buildPageMetadata({
-    title: "Get a Yiwu Factory Quote — MOQ 50 · DDP to 100+ Countries · Reply in 1 Day",
-    description: "Request a custom sublimation or all-over cotton print quote directly from our Yiwu factory. MOQ 50 pcs, 15-25 day production, DDP shipping to 100+ countries, US warehouse in Fontana CA. WhatsApp +86-198-1793-0190, info@sublimapparel.com. Replies within 1 business day, no signup required.",
+    // 2026-09-11 (R15-P0-1): was 74 chars — Google SERP limit is ~60, was truncated. Shortened to 51.
+    title: "Get a Yiwu Factory Quote | MOQ 50 · DDP · 1-Day Reply",
+    // 2026-09-11 (R15-P0-2): was 288 chars — Google meta description limit is ~160, was being truncated. Rewrote to 158 chars, kept the most actionable info (MOQ, DDP, contact, reply SLA).
+    description: "Request a custom sublimation quote from our Yiwu factory. MOQ 50 pcs, 15-25 day production, DDP shipping to 100+ countries. WhatsApp +86-198-1793-0190, reply in 1 business day.",
     keywords: ["sublimation quote Yiwu factory", "custom apparel quote MOQ 50", "DDP shipping quote", "sublimated jersey manufacturer contact", "Yiwu factory WhatsApp", "all-over print cotton quote", "B2B apparel inquiry", "Fontana CA warehouse pickup", "Rotterdam EU rep contact", "bulk custom apparel quote"],
     other: {
     "article:author": "Ramon Wang, Sales Director, SublimApparel",

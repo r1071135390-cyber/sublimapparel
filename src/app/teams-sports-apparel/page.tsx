@@ -30,7 +30,8 @@ export const dynamic = "force-static";
 const siteUrl = "https://sublimapparel.com";
 
 export const metadata = buildPageMetadata({
-    title: "Custom Team Sports Apparel Manufacturer | Sublimation Jerseys & Uniforms — SublimApparel",
+    // 2026-09-11 (R15-P0-1): was 88 chars ("Custom Team Sports Apparel Manufacturer | Sublimation Jerseys & Uniforms — SublimApparel") — Google's SERP limit is ~60 chars, so it was being truncated to "Custom Team Sports Apparel Manufacturer | Sublimatio…" in search results, losing the "Jerseys & Uniforms" tail. Shortened to 53 chars to fit fully.
+    title: "Team Sports Apparel Manufacturer | Sublimation Jerseys",
     description: "Custom team sports apparel manufacturer for clubs, leagues and athletes. We produce sublimated soccer jerseys, basketball uniforms, cycling kits, running...",
     keywords: ["custom team apparel", "custom sports apparel manufacturer", "team apparel manufacturer", "custom sportswear", "team uniforms supplier", "sports clothing manufacturer"],
     alternates: { canonical: `${siteUrl}/teams-sports-apparel/` },

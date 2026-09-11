@@ -28,7 +28,8 @@ import { JsonLd } from "@/components/json-ld";
 import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 
 export const metadata = buildPageMetadata({
-    title: "How Do We Ship DDP to 100+ Countries? — Sea, Air, Express, US Warehouse",
+    // 2026-09-11 (R15-P0-1): was 71 chars — Google SERP limit ~60. Shortened to 56.
+    title: "DDP Shipping to 100+ Countries | Sea, Air, US Warehouse",
     description: "DDP (Delivered Duty Paid) shipping to 100+ countries. One invoice, no surprise duties. Sea, air, and express options from Yiwu to your door. US warehouse in...",
     keywords: ["DDP shipping", "global apparel delivery", "DDP delivery worldwide", "customs cleared", "landed cost shipping", "international clothing delivery", "Yiwu factory direct shipping", "no customs duties"],
     other: {

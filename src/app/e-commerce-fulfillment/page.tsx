@@ -31,7 +31,8 @@ import { forEventsFaqJsonLd, genericServiceJsonLd } from "@/lib/json-ld-data";
 import { RelatedProducts } from "@/components/related-products";
 
 export const metadata = buildPageMetadata({
-    title: "Custom Apparel Fulfillment Partner | DDP Shipping Manufacturer — SublimApparel",
+    // 2026-09-11 (R15-P0-1): was 78 chars — Google truncates >60. Shortened to 54.
+    title: "Apparel Fulfillment Partner | DDP Shipping Manufacturer",
     description: "Custom apparel fulfillment partner for e-commerce brands, dropshippers and resellers. Bulk production, warehouse support, DDP shipping and inventory...",
     keywords: ["ecommerce apparel supplier", "online clothing manufacturer", "apparel production partner", "Shopify clothing supplier", "online apparel production"],
     alternates: {

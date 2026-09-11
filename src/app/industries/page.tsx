@@ -13,8 +13,9 @@ export const metadata: Metadata = buildPageMetadata({
   // too short, doesn't telegraph breadth. New title leads with the actual page
   // breadth (12 industries) + the head keyword buyers search for.
   title: "12 Industries: Custom Sublimated Apparel Manufacturer",
+  // 2026-09-11 (R15-P0-2): was 188 chars — Google meta description limit is ~160. Rewrote to 159 chars.
   description:
-    "Custom sublimation & all-over-print apparel for sports teams, race events, festivals, corporate programs, breweries, schools, political campaigns, and more. DDP shipping to 100+ countries.",
+    "Custom sublimation & all-over-print apparel for sports teams, race events, festivals, corporate programs, breweries, schools, political campaigns, trade shows. DDP worldwide.",
   ogTitle: "12 Industries We Serve: Custom Sublimated Apparel",
   keywords: [
     "custom apparel industries",

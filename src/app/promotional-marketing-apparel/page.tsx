@@ -28,7 +28,8 @@ export const dynamic = "force-static";
 const siteUrl = "https://sublimapparel.com";
 
 export const metadata = buildPageMetadata({
-    title: "Custom Promotional Apparel Manufacturer | Marketing Merchandise Supplier — SublimApparel",
+    // 2026-09-11 (R15-P0-1): was 88 chars — Google SERP limit is ~60, was being truncated losing "Marketing Merchandise" tail. Shortened to 59 chars.
+    title: "Promotional Apparel Manufacturer | Marketing Merch Supplier",
     description: "Custom promotional apparel manufacturer for trade shows, marketing campaigns, giveaways and brand activations. Promotional t-shirts, branded merchandise and...",
     keywords: ["promotional apparel supplier", "promotional t shirt manufacturer", "bulk promotional shirts", "giveaway shirts", "branded merchandise", "marketing apparel"],
     alternates: { canonical: `${siteUrl}/promotional-marketing-apparel/` },

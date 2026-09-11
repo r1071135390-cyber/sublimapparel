@@ -6,7 +6,8 @@ import Link from "next/link";
 import { ArrowRight, Users, Palette, Ruler, Sparkles, Shirt, Trophy, Layers, Star } from "lucide-react";
 
 export const metadata = buildPageMetadata({
-    title: "Custom Bowling Jerseys | Sublimated League & Tournament Shirts",
+    // 2026-09-11 (R15-P0-1): was 62 chars — over 60 limit. Shortened to 51.
+    title: "Custom Bowling Jerseys | Sublimated League Shirts",
     description: "Custom sublimated bowling jerseys for leagues, tournaments, and retro-style nights. Loose fit, contrasting side panels, name & number front and back. MOQ 50 pc…",
     keywords: ["custom bowling jersey", "bowling shirt", "sublimated bowling jersey", "bowling league shirts", "bowling tournament apparel", "retro bowling shirt", "name number bowling", "all over print bowling", "boutique bowling apparel", "DDP bowling jerseys"],
   });;

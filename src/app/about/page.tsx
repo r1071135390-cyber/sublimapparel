@@ -7,7 +7,8 @@ import { MapPin } from"lucide-react";
 import Image from"next/image";
 
 export const metadata = buildPageMetadata({
-    title: "About SublimApparel — Yiwu Custom Apparel Factory Since 2018 (12 Lines, 70%...",
+    // 2026-09-11 (R15-P0-1): was 78 chars and explicitly truncated in source ("..."), Google's SERP would show it as truncated. Rewrote to 59 chars to fit fully.
+    title: "About SublimApparel | Yiwu Custom Apparel Factory Since 2018",
     description: "SublimApparel is a Yiwu-based apparel factory producing custom sublimated, all-over digital printed, DTG, DTF, and screen-printed apparel for B2B customers...",
     keywords: ["about SublimApparel", "Yiwu sublimation factory", "custom apparel manufacturer", "8 years experience", "50+ countries served", "US warehouse Fontana", "B2B manufacturer", "6000+ designs", "in-house design team", "OEM apparel"],
     other: {

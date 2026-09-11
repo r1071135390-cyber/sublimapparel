@@ -30,7 +30,8 @@ import { forEventsFaqJsonLd, genericServiceJsonLd } from "@/lib/json-ld-data";
 import { RelatedProducts } from "@/components/related-products";
 
 export const metadata = buildPageMetadata({
-    title: "Private Label Apparel Manufacturer | Custom Clothing Production Partner — SublimApparel",
+    // 2026-09-11 (R15-P0-1): was 87 chars — Google truncates >60. Shortened to 53.
+    title: "Private Label Apparel Manufacturer | Custom Production",
     description: "Private label apparel manufacturer and custom clothing production partner for growing brands and creative agencies. Custom labels, hang tags, retail...",
     keywords: ["custom apparel manufacturer", "private label apparel manufacturer", "clothing production partner", "small brand manufacturer", "apparel sourcing partner"],
     alternates: {

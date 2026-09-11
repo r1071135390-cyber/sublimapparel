@@ -17,7 +17,8 @@ import { JsonLd } from "@/components/json-ld";
 import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 
 export const metadata = buildPageMetadata({
-    title: "4-Step Quality Control Process | AQL 2.5 Inspection | Custom Apparel",
+    // 2026-09-11 (R15-P0-1): was 68 chars — Google SERP limit ~60. Shortened to 50.
+    title: "4-Step Quality Control | AQL 2.5 Inspection Process",
     description: "Our 4-step quality control process for custom apparel: pre-production sample, in-line inspection, AQL 2.5 final inspection, pre-shipment photo evidence. We cat…",
     keywords: ["apparel quality control", "AQL 2.5 inspection", "custom apparel inspection", "pre-shipment inspection", "sublimation quality control", "garment inspection process"],
     alternates: {

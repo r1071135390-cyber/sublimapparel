@@ -30,7 +30,8 @@ import { forEventsServiceJsonLd, forEventsFaqJsonLd, genericServiceJsonLd } from
 import { RelatedProducts } from "@/components/related-products";
 
 export const metadata = buildPageMetadata({
-    title: "Custom Event Apparel Manufacturer | Festival & Conference Shirts — SublimApparel",
+    // 2026-09-11 (R15-P0-1): was 80 chars — Google truncates >60. Shortened to 57.
+    title: "Event Apparel Manufacturer | Festival & Conference Shirts",
     description: "Custom event apparel manufacturer for conferences, festivals, charity events, and community gatherings. Conference shirts, festival merchandise, volunteer...",
     keywords: ["custom event apparel", "event apparel manufacturer", "event shirts supplier", "festival apparel", "event merchandise", "volunteer shirts"],
     alternates: {

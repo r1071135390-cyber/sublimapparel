@@ -6,7 +6,8 @@ import Link from "next/link";
 import { ArrowRight, Bike, Users, Palette, Ruler, Layers, Wind } from "lucide-react";
 
 export const metadata = buildPageMetadata({
-    title: "Custom Cycling Jerseys | Sublimation Apparel for Teams & Clubs",
+    // 2026-09-11 (R15-P0-1): was 62 chars — over 60 limit. Shortened to 55.
+    title: "Custom Cycling Jerseys | Sublimation for Teams & Clubs",
     description: "Premium custom cycling jerseys, shorts, and kits via sublimation. Italian-performance fabric, full hidden zip, race-cut or club-cut, padded shorts. MOQ 50 pcs.…",
     keywords: ["custom cycling jerseys", "sublimation cycling kit", "cycling team apparel", "cycling uniform", "bike jersey custom", "road cycling kit", "triathlon suit", "cycling club uniform", "all over print cycling", "racing cycling jersey"],
   });;

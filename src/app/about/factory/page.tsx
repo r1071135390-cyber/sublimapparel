@@ -20,7 +20,8 @@ import {
 } from "lucide-react";
 
 export const metadata = buildPageMetadata({
-    title: "Inside Our Yiwu Factory | 2,000 sqm Sublimation Apparel Plant",
+    // 2026-09-11 (R15-P0-1): was 61 chars — over 60 limit. Shortened to 52.
+    title: "Inside Our Yiwu Factory | 2,000 sqm Sublimation Plant",
     description: "2,000 sqm Yiwu sublimation apparel factory. 12 production lines, 50+ staff, 24/7 capacity. 6 inline printing machines, full cutting-sewing-printing-packaging v…",
     keywords: ["yiwu factory", "sublimation factory", "apparel factory china", "sublimation printing factory", "factory tour", "factory capacity", "vertical integration", "oem apparel factory"],
   });;

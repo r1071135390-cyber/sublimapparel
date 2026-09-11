@@ -7,7 +7,8 @@ import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 import { TimelineCalculator } from "./timeline-calculator";
 
 export const metadata = buildPageMetadata({
-    title: "Event Apparel Timeline Calculator | When to Order Custom Shirts",
+    // 2026-09-11 (R15-P0-1): was 63 chars — over 60 limit. Shortened to 57.
+    title: "Event Apparel Timeline Calculator | Order Custom Shirts",
     description: "Free event apparel timeline calculator. Enter your event date, get exact dates for when to order, lock designs, and lock final counts. For race organizers, cam…",
     keywords: ["event timeline calculator", "when to order custom shirts", "race shirt lead time", "custom apparel production timeline", "event apparel schedule"],
     alternates: {

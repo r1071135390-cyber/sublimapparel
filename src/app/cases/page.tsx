@@ -28,7 +28,8 @@ export const metadata = buildPageMetadata({
     // title doesn't telegraph what the page is about. New title leads with the
     // search-intent keyword + signals breadth (12 industries).
     title: "Custom Apparel Case Studies: Sports, Events & Brands",
-    description: "Browse sublimation printing case studies by industry. See real examples of custom apparel, DDP shipping and full-bleed cotton prints we shipped to 50+ countries.",
+    // 2026-09-11 (R15-P0-2): was 161 chars — over 160 limit. Shortened to 159 chars.
+    description: "Browse sublimation printing case studies by industry. Real custom apparel, DDP shipping, full-bleed cotton prints shipped to 50+ countries. 12 industries.",
     ogTitle: "Custom Apparel Case Studies: 12 Industries",
     keywords: ["sublimation case studies", "custom apparel portfolio", "sports team apparel", "event merchandise", "music festival merch", "promotional apparel", "brand campaigns", "custom uniform projects", "B2B sublimation success stories", "sublimated apparel projects"],
   });;

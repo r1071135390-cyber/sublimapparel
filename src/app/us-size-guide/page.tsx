@@ -14,7 +14,8 @@ import { JsonLd } from "@/components/json-ld";
 import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 
 export const metadata = buildPageMetadata({
-    title: "US Size Guide for Custom Apparel | Specs, Charts & Excel Template",
+    // 2026-09-11 (R15-P0-1): was 65 chars — Google SERP limit ~60. Shortened to 52.
+    title: "US Size Guide for Custom Apparel | Specs & Templates",
     description: "US-spec size charts for custom apparel: men&apos;s, women&apos;s, youth, hoodies. Free Excel template for collecting sizes from your registration system. Subli…",
     keywords: ["US size guide", "custom apparel size chart", "sublimation sizing", "men", ",\n    ", "s t-shirt size chart", "youth apparel sizes", "hoodie size chart", "size collection template"],
     alternates: {

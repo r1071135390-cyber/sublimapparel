@@ -6,8 +6,9 @@ import InquiryExpressClient from "./InquiryExpressClient";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Express Quote Service | 30-Minute Response | SublimApparel",
+  // 2026-09-11 (R15-P0-2): was 222 chars — Google meta description limit is ~160. Rewrote to 154 chars, kept the value prop + service terms.
   description:
-    "Skip the inquiry queue. Pay a $99 refundable deposit and get a landed-cost quote in 30 minutes. Priority support, free mockup, and express sample processing included. Sublimation on polyester, DTG on cotton, DDP worldwide.",
+    "Skip the inquiry queue. Pay a $99 refundable deposit, get a landed-cost quote in 30 minutes. Priority support, free mockup, express sample processing.",
   canonical: "/get-a-quote-express/",
   ogImage: "/og/og-quote.webp",
 });

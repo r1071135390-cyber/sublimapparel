@@ -28,7 +28,8 @@ import { forEventsFaqJsonLd, genericServiceJsonLd } from "@/lib/json-ld-data";
 import { RelatedProducts } from "@/components/related-products";
 
 export const metadata = buildPageMetadata({
-    title: "Custom Corporate Apparel Manufacturer | Employee Uniform Supplier — SublimApparel",
+    // 2026-09-11 (R15-P0-1): was 81 chars — Google truncates >60. Shortened to 55.
+    title: "Corporate Apparel Manufacturer | Employee Uniform Supplier",
     description: "Custom corporate apparel manufacturer for companies, schools, clubs and organizations. Employee uniforms, branded work shirts, company polo shirts and team...",
     keywords: ["corporate apparel manufacturer", "corporate apparel supplier", "company shirts supplier", "employee apparel", "company uniforms", "branded company shirts"],
     alternates: {

@@ -12,7 +12,8 @@ import { products } from "@/lib/products-data";
 import { KeywordCloud } from "@/components/keyword-cloud";
 
 export const metadata = buildPageMetadata({
-    title: "Which Custom Apparel Do You Need? — 120+ Products, 14 Categories, MOQ 50",
+    // 2026-09-11 (R15-P0-1): was 72 chars — Google SERP limit ~60. Shortened to 53.
+    title: "Custom Apparel Catalog | 120+ Products, 14 Categories",
     description: "Custom sublimated apparel for B2B: t-shirts, jerseys, hoodies, cycling kits, golf polos, racing suits. No setup fees, MOQ 50 pcs, full color all-over print, sa…",
     keywords: ["custom sublimation apparel", "all-over print manufacturer", "sublimated t-shirts", "custom jerseys", "sublimation hoodies", "cycling kits custom", "golf polos custom", "racing suits sublimation", "B2B apparel manufacturer", "MOQ 50 custom apparel", "all over print t-shirts", "sublimation factory China"],
     other: {

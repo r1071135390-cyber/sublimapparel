@@ -8,7 +8,8 @@ import { buildBreadcrumbJsonLd } from"@/lib/breadcrumb";
 import { techniqueData } from"@/lib/json-ld-data";
 
 export const metadata = buildPageMetadata({
-    title: "Which Print Technique Fits Your Design? — 20 Methods Compared (Sublimation...",
+    // 2026-09-11 (R15-P0-1): was 77 chars and explicitly truncated. Rewrote to 58 chars.
+    title: "Print Technique Comparison | 20 Methods for Custom Apparel",
     description: "Compare 20 apparel decoration techniques — sublimation, screen printing, DTG, DTF, embroidery, 3D puff & rhinestone. We run all 20 in-house and accept custom t…",
     keywords: ["sublimation printing", "screen printing techniques", "DTG vs DTF", "custom embroidery", "all-over printing", "3D puff printing", "rhinestone apparel", "Chinese apparel factory"],
     // 2026-09-11 (Round 15 P0-3): was `alternates: { canonical:"./" }` — implicit

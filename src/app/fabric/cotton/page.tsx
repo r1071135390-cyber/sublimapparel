@@ -14,7 +14,8 @@ import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 // expand keywords, add ogImage for social cards.
 export const metadata = buildPageMetadata({
     title: "Allover Digital Print on Cotton | Full-Body + DTG/DTF",
-    description: "Allover digital print on 100% cotton apparel — true full-body, edge-to-edge printing via our proprietary cotton digital workflow. Also offer DTG and DTF for cotton blanks.",
+    // 2026-09-11 (R15-P0-2): was 171 chars — Google meta description limit is ~160. Rewrote to 154 chars.
+    description: "Allover digital print on 100% cotton apparel — true full-body, edge-to-edge printing via our proprietary cotton digital workflow. DTG and DTF for cotton blanks.",
     ogTitle: "Allover Digital Print on Cotton — Full-Body Sublimation",
     ogDescription: "True seam-to-seam digital printing on 100% cotton. Soft hand feel, photorealistic color, 50+ wash durability. MOQ 50 pcs. Yiwu factory since 2018.",
     keywords: ["allover digital print on cotton", "100% cotton printing", "cotton jersey", "cotton t-shirt printing", "DTG printing", "direct to garment", "organic cotton apparel", "DTF heat transfer", "allover digital print cotton", "full body cotton print", "cotton sublimation", "cut and sew cotton"],

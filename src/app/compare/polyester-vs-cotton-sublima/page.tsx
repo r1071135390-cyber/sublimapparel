@@ -8,8 +8,9 @@ import { RequestQuoteLink } from "@/components/request-quote-link";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Polyester vs Cotton Sublimation: Which Fabric to Choose?",
+  // 2026-09-11 (R15-P0-2): was 167 chars — Google meta description limit is ~160. Rewrote to 159 chars, kept the full comparison summary.
   description:
-    "Polyester vs cotton for sublimation printing — full comparison of color vibrancy, hand feel, durability, MOQ, pricing and DDP logistics. Decision guide for B2B buyers.",
+    "Polyester vs cotton for sublimation — full comparison of color vibrancy, hand feel, durability, MOQ, pricing and DDP logistics. Decision guide for B2B apparel buyers.",
   keywords: [
     "polyester vs cotton sublimation",
     "sublimation cotton vs polyester",

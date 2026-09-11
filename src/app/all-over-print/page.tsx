@@ -18,7 +18,8 @@ import {
 } from "lucide-react";
 
 export const metadata = buildPageMetadata({
-    title: "All-Over Print Manufacturer | Edge-to-Edge Sublimation & Cotton | MOQ 50",
+    // 2026-09-11 (R15-P0-1): was 72 chars — Google SERP limit ~60. Shortened to 51.
+    title: "All-Over Print Manufacturer | Edge-to-Edge | MOQ 50",
     description: "All-over print clothing manufacturer in Yiwu, China. Edge-to-edge sublimation on polyester, allover digital print on 100% cotton, plus DTF, DTG and...",
     keywords: ["all-over print", "all over print manufacturer", "all over print clothing", "sublimation all over print", "all over print t-shirt", "all over print hoodie", "all over print factory", "edge to edge printing", "full body sublimation", "cut and sew sublimation", "allover digital print cotton", "sublimation China factory", "DDP sublimation printing"],
     alternates: {
