@@ -98,6 +98,23 @@ export type VerifiedReview = {
    * highest-intent surface a buyer sees before clicking Get a quote.
    */
   relatedProductSlug?: string;
+  /**
+   * 2026-09-11 (R31): optional link to a blog post slug (matches
+   * `Post.slug` in src/lib/blog-data.ts). When set, this review shows
+   * up on /blog/[slug]/. Used for buyer comments on tutorial / case
+   * study posts where the review is content-specific (e.g. "Following
+   * your wash-care guide reduced our shrinkage claims 80%") rather
+   * than product-specific. Embedded into the BlogPosting node.
+   */
+  relatedBlogSlug?: string;
+  /**
+   * 2026-09-11 (R31): optional link to a fabric catalog slug
+   * (matches `Fabric.slug` in src/lib/fabric-data.ts). When set, this
+   * review shows up on /fabric/[slug]/, embedded into the Product
+   * JSON-LD node (R30 /fabric/[slug]/ uses the same Product schema
+   * shape, so we re-use the embedded review/aggregateRating pattern).
+   */
+  relatedFabricSlug?: string;
 };
 
 /**
@@ -171,6 +188,36 @@ export function filterReviewsForProduct(
   reviews: VerifiedReview[] = verifiedReviews
 ): VerifiedReview[] {
   return reviews.filter((r) => r.relatedProductSlug === productSlug);
+}
+
+/**
+ * 2026-09-11 (R31): returns the subset of reviews attached to a
+ * blog post slug. Used by /blog/[slug]/. A blog-level review
+ * ("Following your wash-care guide reduced our shrinkage claims 80%")
+ * is content-specific rather than product-specific — the buyer
+ * reacted to a tutorial, not a product. Embedded into the
+ * BlogPosting node.
+ */
+export function filterReviewsForBlog(
+  blogSlug: string,
+  reviews: VerifiedReview[] = verifiedReviews
+): VerifiedReview[] {
+  return reviews.filter((r) => r.relatedBlogSlug === blogSlug);
+}
+
+/**
+ * 2026-09-11 (R31): returns the subset of reviews attached to a
+ * fabric catalog slug. Used by /fabric/[slug]/. A fabric-level
+ * review ("The 220gsm polyester survived 40 wash cycles with no
+ * fade") is the highest-intent surface for a buyer choosing between
+ * fabric options before they even open a product detail page.
+ * Embedded into the Product JSON-LD node (same shape as R30).
+ */
+export function filterReviewsForFabric(
+  fabricSlug: string,
+  reviews: VerifiedReview[] = verifiedReviews
+): VerifiedReview[] {
+  return reviews.filter((r) => r.relatedFabricSlug === fabricSlug);
 }
 
 /**

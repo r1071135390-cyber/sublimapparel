@@ -2,9 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, Calendar, Clock, User } from "lucide-react";
+import { ArrowLeft, ArrowRight, Calendar, Clock, User, Star, Quote } from "lucide-react";
 import { blogPosts, getPostBySlug, getRelatedPosts } from "@/lib/blog";
 import { JsonLd } from "@/components/json-ld";
+import {
+  filterReviewsForBlog,
+  hasAggregateableReviews,
+  computeAggregateRating,
+  toSchemaReview,
+} from "@/lib/reviews";
 
 export const dynamic = "error";
 export const dynamicParams = false;
@@ -54,6 +60,16 @@ export default async function BlogPostPage({
   if (!post) notFound();
   const related = getRelatedPosts(slug, 3);
 
+  // 2026-09-11 (R31): per-blog-post review aggregation. Pull the
+  // subset of verifiedReviews that are linked to this post
+  // (relatedBlogSlug === post.slug). Gated by the same contract as
+  // R27/R28/R29/R30 — verifiedReviews empty today, so the spread
+  // strips both fields at JSON-LD build time.
+  const blogReviews = filterReviewsForBlog(post.slug);
+  const blogAggregate = hasAggregateableReviews(blogReviews)
+    ? computeAggregateRating(blogReviews)
+    : null;
+
   // 2026-09-11 push (Round 8 part 1): upgrade Article → BlogPosting +
   // link the post to the global entity graph via @id. BlogPosting is
   // a more specific @type than Article — it tells Google the page is
@@ -97,6 +113,31 @@ export default async function BlogPostPage({
       ? post.content.replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length
       : undefined,
     timeRequired: post.readTime,
+    // 2026-09-11 (R31): embed review + aggregateRating INSIDE the
+    // BlogPosting node. BlogPosting extends Article (schema.org
+    // inheritance), and Article supports both fields. The embed
+    // mirrors R30's product-page pattern (R30 also embeds
+    // `review` + `aggregateRating` into the Product node — Google
+    // prefers this for the visible star-rating rich result). Same
+    // contract as the rest of the review chain: verifiedReviews is
+    // empty today, so both fields are stripped at spread-time and
+    // the JSON-LD is byte-equivalent to R20. A real review with
+    // `relatedBlogSlug: "${post.slug}"` lights up the schema and
+    // the on-page Buyer feedback section automatically.
+    ...(blogReviews.length > 0
+      ? { review: blogReviews.map(toSchemaReview) }
+      : {}),
+    ...(blogAggregate
+      ? {
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: blogAggregate.ratingValue,
+            reviewCount: blogAggregate.reviewCount,
+            bestRating: blogAggregate.bestRating,
+            worstRating: blogAggregate.worstRating,
+          },
+        }
+      : {}),
   };
 
   const breadcrumbSchema = {
@@ -324,6 +365,111 @@ export default async function BlogPostPage({
           </div>
         </div>
       </article>
+
+      {/* Buyer feedback — per-blog-post review surface.
+          2026-09-11 (R31): mirrors the /about/, /cases/*, and
+          /products/* review blocks, but scoped to this post
+          (filtered by relatedBlogSlug === post.slug). Renders only
+          when at least one review is attached to this post — when
+          empty (today's state), the entire section is omitted to
+          keep the post focused on its content. The /about/ page
+          already shows the global "Reviews coming soon" placeholder;
+          repeating it on every blog post would be visual noise. The
+          embedded schema fields (BlogPosting.review + BlogPosting.
+          aggregateRating) and the UI section light up simultaneously
+          the day a real review with relatedBlogSlug === post.slug is
+          added to verifiedReviews. */}
+      {blogReviews.length > 0 && (
+        <section className="border-b-2 border-black bg-white">
+          <div className="mx-auto max-w-5xl px-6 py-16 md:py-20">
+            <div className="mb-10 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+              <div>
+                <div className="mb-3 inline-block bg-[#00c2ff] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
+                  Buyer feedback
+                </div>
+                <h2 className="text-3xl font-black leading-tight text-black md:text-5xl">
+                  What readers say
+                  <br />
+                  <span className="text-[#cc3d00]">after applying this post.</span>
+                </h2>
+              </div>
+              {blogAggregate ? (
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-1 text-[#cc3d00]">
+                    {[1, 2, 3, 4, 5].map((i) => (
+                      <Star
+                        key={i}
+                        className={
+                          "h-5 w-5 " +
+                          (i <= Math.round(blogAggregate.ratingValue)
+                            ? "fill-[#cc3d00]"
+                            : "opacity-30")
+                        }
+                      />
+                    ))}
+                  </div>
+                  <div className="text-sm font-black uppercase tracking-widest text-black">
+                    {blogAggregate.ratingValue.toFixed(1)} / 5
+                    <span className="ml-1 text-black/60">
+                      · {blogAggregate.reviewCount} review
+                      {blogAggregate.reviewCount === 1 ? "" : "s"}
+                    </span>
+                  </div>
+                </div>
+              ) : null}
+            </div>
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {blogReviews.map((r) => (
+                <article
+                  key={r.id}
+                  className="flex flex-col border-2 border-black bg-[#faf9f6] p-6"
+                >
+                  <div className="mb-3 flex items-center gap-1 text-[#cc3d00]">
+                    {[1, 2, 3, 4, 5].map((i) => (
+                      <Star
+                        key={i}
+                        className={
+                          "h-4 w-4 " +
+                          (typeof r.ratingValue === "number" &&
+                          i <= Math.round(r.ratingValue)
+                            ? "fill-[#cc3d00]"
+                            : "opacity-30")
+                        }
+                      />
+                    ))}
+                    {typeof r.ratingValue === "number" ? (
+                      <span className="ml-1 text-xs font-black uppercase tracking-widest text-black/70">
+                        {r.ratingValue.toFixed(1)} / 5
+                      </span>
+                    ) : null}
+                  </div>
+                  <Quote className="mb-2 h-5 w-5 text-[#00c2ff]" />
+                  <p className="flex-1 text-base leading-relaxed text-black">
+                    {r.reviewBody}
+                  </p>
+                  <div className="mt-4 border-t-2 border-black/10 pt-3 text-xs font-black uppercase tracking-widest text-black/70">
+                    {r.author}
+                    {r.authorRole ? ` · ${r.authorRole}` : ""}
+                    <span className="ml-2 text-black/40">
+                      {r.datePublished}
+                    </span>
+                    {r.url ? (
+                      <a
+                        href={r.url}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        className="ml-2 text-[#00c2ff] underline"
+                      >
+                        Source ↗
+                      </a>
+                    ) : null}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* RELATED POSTS */}
       {related.length > 0 && (

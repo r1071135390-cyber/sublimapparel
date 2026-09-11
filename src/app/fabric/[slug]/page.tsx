@@ -2,10 +2,17 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Star, Quote } from "lucide-react";
 import { fabricTypes, fabricBySlug } from "@/lib/fabric-data";
 import { JsonLd } from "@/components/json-ld";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
+import {
+  filterReviewsForFabric,
+  hasAggregateableReviews,
+  computeAggregateRating,
+  toSchemaReview,
+} from "@/lib/reviews";
 
 export function generateStaticParams() {
   return fabricTypes.map((f) => ({ slug: f.slug }));
@@ -110,6 +117,20 @@ export default async function FabricDetailPage(
       value: fabric.sublimationSuitability,
     });
   }
+
+  // 2026-09-11 (R31): per-fabric review aggregation. Pull the subset
+  // of verifiedReviews that are linked to this fabric
+  // (relatedFabricSlug === fabric.slug). A fabric-level review ("The
+  // 220gsm polyester survived 40 wash cycles with no fade") is the
+  // highest-intent surface for a buyer choosing between fabric
+  // options before they even open a product detail page. Gated by
+  // the same contract as R27/R28/R29/R30 — verifiedReviews empty
+  // today, so the spread strips both fields at JSON-LD build time.
+  const fabricReviews = filterReviewsForFabric(fabric.slug);
+  const fabricAggregate = hasAggregateableReviews(fabricReviews)
+    ? computeAggregateRating(fabricReviews)
+    : null;
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -126,6 +147,28 @@ export default async function FabricDetailPage(
         brand: { "@type": "Brand", name: "SublimApparel" },
         manufacturer: { "@id": "https://sublimapparel.com/#organization" },
         additionalProperty: additionalProps,
+        // 2026-09-11 (R31): embed review + aggregateRating INSIDE the
+        // Product node (same shape as R30 /products/all/[slug]/).
+        // Google reads this for the product star-rating rich result.
+        // Mirrors the R30 contract exactly — verifiedReviews empty
+        // today, both fields stripped at spread-time, JSON-LD is
+        // byte-equivalent to R25. A real review with
+        // `relatedFabricSlug: "${fabric.slug}"` lights up the schema
+        // and the on-page Buyer feedback section automatically.
+        ...(fabricReviews.length > 0
+          ? { review: fabricReviews.map(toSchemaReview) }
+          : {}),
+        ...(fabricAggregate
+          ? {
+              aggregateRating: {
+                "@type": "AggregateRating",
+                ratingValue: fabricAggregate.ratingValue,
+                reviewCount: fabricAggregate.reviewCount,
+                bestRating: fabricAggregate.bestRating,
+                worstRating: fabricAggregate.worstRating,
+              },
+            }
+          : {}),
         offers: {
           "@type": "Offer",
           "@id": `https://sublimapparel.com/fabric/${fabric.slug}/#offer`,
@@ -401,6 +444,113 @@ export default async function FabricDetailPage(
                   </p>
                 </div>
               ))}
+            </div>
+          </section>
+        )}
+
+        {/* Buyer feedback — per-fabric review surface.
+            2026-09-11 (R31): mirrors the /about/, /cases/*,
+            /products/all/*, and /blog/* review blocks, but scoped
+            to this fabric (filtered by relatedFabricSlug ===
+            fabric.slug). Renders only when at least one review is
+            attached to this fabric — when empty (today's state),
+            the entire section is omitted to keep the page focused
+            on the fabric content. The /about/ page already shows
+            the global "Reviews coming soon" placeholder; repeating
+            it on every one of the 64 fabric detail pages would be
+            visual noise. The embedded schema fields (Product.review
+            + Product.aggregateRating, R30 shape) and the UI section
+            light up simultaneously the day a real review with
+            relatedFabricSlug === fabric.slug is added to
+            verifiedReviews. */}
+        {fabricReviews.length > 0 && (
+          <section className="border-b-2 border-black bg-white">
+            <div className="container mx-auto px-4 md:px-8 py-16 md:py-20">
+              <div className="mb-10 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+                <div>
+                  <div className="mb-3 inline-block bg-[#00c2ff] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
+                    Buyer feedback
+                  </div>
+                  <h2 className="text-3xl font-black leading-tight text-black md:text-5xl">
+                    What buyers say
+                    <br />
+                    <span className="text-[#cc3d00]">about {fabric.name.toLowerCase()}.</span>
+                  </h2>
+                </div>
+                {fabricAggregate ? (
+                  <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-1 text-[#cc3d00]">
+                      {[1, 2, 3, 4, 5].map((i) => (
+                        <Star
+                          key={i}
+                          className={
+                            "h-5 w-5 " +
+                            (i <= Math.round(fabricAggregate.ratingValue)
+                              ? "fill-[#cc3d00]"
+                              : "opacity-30")
+                          }
+                        />
+                      ))}
+                    </div>
+                    <div className="text-sm font-black uppercase tracking-widest text-black">
+                      {fabricAggregate.ratingValue.toFixed(1)} / 5
+                      <span className="ml-1 text-black/60">
+                        · {fabricAggregate.reviewCount} review
+                        {fabricAggregate.reviewCount === 1 ? "" : "s"}
+                      </span>
+                    </div>
+                  </div>
+                ) : null}
+              </div>
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                {fabricReviews.map((r) => (
+                  <article
+                    key={r.id}
+                    className="flex flex-col border-2 border-black bg-[#faf9f6] p-6"
+                  >
+                    <div className="mb-3 flex items-center gap-1 text-[#cc3d00]">
+                      {[1, 2, 3, 4, 5].map((i) => (
+                        <Star
+                          key={i}
+                          className={
+                            "h-4 w-4 " +
+                            (typeof r.ratingValue === "number" &&
+                            i <= Math.round(r.ratingValue)
+                              ? "fill-[#cc3d00]"
+                              : "opacity-30")
+                          }
+                        />
+                      ))}
+                      {typeof r.ratingValue === "number" ? (
+                        <span className="ml-1 text-xs font-black uppercase tracking-widest text-black/70">
+                          {r.ratingValue.toFixed(1)} / 5
+                        </span>
+                      ) : null}
+                    </div>
+                    <Quote className="mb-2 h-5 w-5 text-[#00c2ff]" />
+                    <p className="flex-1 text-base leading-relaxed text-black">
+                      {r.reviewBody}
+                    </p>
+                    <div className="mt-4 border-t-2 border-black/10 pt-3 text-xs font-black uppercase tracking-widest text-black/70">
+                      {r.author}
+                      {r.authorRole ? ` · ${r.authorRole}` : ""}
+                      <span className="ml-2 text-black/40">
+                        {r.datePublished}
+                      </span>
+                      {r.url ? (
+                        <a
+                          href={r.url}
+                          rel="noopener noreferrer"
+                          target="_blank"
+                          className="ml-2 text-[#00c2ff] underline"
+                        >
+                          Source ↗
+                        </a>
+                      ) : null}
+                    </div>
+                  </article>
+                ))}
+              </div>
             </div>
           </section>
         )}
