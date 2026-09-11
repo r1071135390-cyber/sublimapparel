@@ -9,7 +9,10 @@ import { ArrowRight, ArrowUpRight, Download, Droplets, Leaf } from "lucide-react
 import { fabricTypes } from "@/lib/fabric-data";
 
 export const metadata = buildPageMetadata({
-    title: "Which Fabric & Print Process Should You Choose? — 24 Fabrics, 6 Print Methods",
+    // 2026-09-11 push (Round 5b): was 81ch — Google truncates at ~60 and shows "...".
+    // Tightened to lead with the buyer intent (fabric + process), keep the breadth signals,
+    // and finish well under 60ch so the full title renders in SERPs.
+    title: "Fabric & Print Process Guide — 24 Fabrics, 6 Methods",
     description: "Pick the right fabric-process combo for your apparel project. 24 fabrics in stock (polyester, poly-spandex, nylon, cotton, organic, rPET, blends), 6 print...",
     keywords: ["sublimation fabric", "polyester jersey", "poly-cotton blend", "bird-eye mesh", "poly-spandex stretch", "performance fabric", "activewear fabric", "custom apparel fabric", "fabric for sublimation printing", "wholesale fabric China"],
     other: {

@@ -10,7 +10,7 @@ import {
   Truck,
   ArrowRight,
 } from "lucide-react";
-import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
+import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 import { JsonLd } from "@/components/json-ld";
 import { buildPageMetadata } from "@/lib/page-metadata";
 
@@ -92,6 +92,39 @@ const solutions = [
   },
 ];
 
+// 2026-09-11 push (Round 5): add FAQPage JSON-LD on /solutions/ so the page
+// can earn PAA-style rich results. Each Q/A mirrors a real buyer question
+// we'd otherwise have to answer in chat — surfacing them in SERPs captures
+// informational-intent clicks and shortens the pre-quote education loop.
+const solutionsFaq = [
+  {
+    q: "Which solution should I pick if I sell across multiple buyer types?",
+    a: "Most multi-channel buyers start with the Apparel Brands & Agencies solution (white-label, NDA-friendly, your brand on every label), then add E-commerce Fulfillment for DDP-to-door or blind-shipping. You can run both workflows in parallel without re-onboarding — the production line, fabric library, and account manager stay the same.",
+  },
+  {
+    q: "Can I combine two solutions, e.g. team apparel + event merchandise?",
+    a: "Yes. We regularly run hybrid orders: a sports league's player kits ship under Teams & Sports, while the fan merch from the same league ships under Event & Festival. Pricing stays per-piece; we just route the two halves to different delivery addresses or release windows so each batch arrives on its own deadline.",
+  },
+  {
+    q: "Do all solutions have the same MOQ?",
+    a: "MOQ is 50 pieces per design across every solution. The difference is what 50 pieces gets you: a fully sublimated cut-and-sew cycling kit (Teams), a polybagged merch bundle (Event), a poly-cotton polo with DTG chest logo (Corporate), or a retail-packaged DTC tee (E-commerce). Below 50 pcs we can do it but per-unit cost rises sharply because setup doesn't amortize.",
+  },
+  {
+    q: "Which solution is fastest if I have a 7-day deadline?",
+    a: "Promotional & Marketing carries an explicit 7-day rush lane, and Event & Festival ships in 2 weeks under DDP. The other solutions sit at 14–21 days. Rush always costs a 20% production surcharge plus any air-freight delta; we confirm capacity the same day you ask, not after you commit.",
+  },
+  {
+    q: "Do you sign NDAs for Apparel Brands & Agencies work?",
+    a: "Yes — mutual NDA is standard before any pattern, grading, or branded label work. We also offer white-label shipping (your packing slip, your carton mark, no SublimApparel branding anywhere on the outward packaging) and blind invoicing for dropship-to-customer orders.",
+  },
+  {
+    q: "Is the E-commerce Fulfillment solution US-only?",
+    a: "We hold buffer stock at our Fontana, CA warehouse for US-bound orders (2–5 day domestic) and route EU/UK/AU orders from our Yiwu hub via DDP. Shopify, Amazon FBA, and TikTok Shop integrations are live; for other platforms we provide CSV-based order feeds with daily auto-sync.",
+  },
+];
+
+const solutionsFaqJsonLd = buildFaqJsonLd(solutionsFaq);
+
 export default function SolutionsPage() {
   return (
     <>
@@ -101,6 +134,7 @@ export default function SolutionsPage() {
           { name: "Solutions", path: "/solutions" },
         ])}
       />
+      <JsonLd data={solutionsFaqJsonLd} />
       <main>
         {/* HERO — dark industrial style */}
         <section className="relative overflow-hidden bg-[#0a0a0a] text-white">
