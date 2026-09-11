@@ -41,9 +41,17 @@ import {
   BadgePercent,
   Headphones,
   HelpCircle,
+  Star,
+  Quote,
 } from "lucide-react";
 import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 import { genericServiceJsonLd } from "@/lib/json-ld-data";
+import {
+  filterReviewsForIndustry,
+  hasAggregateableReviews,
+  computeAggregateRating,
+  toSchemaReview,
+} from "@/lib/reviews";
 import { Contact } from "@/components/contact";
 import type { CustomerProfileData } from "@/lib/customer-profile-data";
 
@@ -142,13 +150,66 @@ export function CustomerProfilePage({ data }: { data: CustomerProfileData }) {
     [data.slug, data.h1, data.metaDescription, data.hero]
   );
 
+  // 2026-09-11 (R32): per-industry review surface. The 12
+  // /industries/[slug]/ pages all share this template, so a single
+  // hook here lights up review + aggregateRating on every one of
+  // them. data.slug looks like "/industries/events-conferences/" —
+  // we split on "/" and pick the second-to-last non-empty segment
+  // to derive the canonical industry slug. We reuse R28's
+  // filterReviewsForIndustry with an empty caseIds array because
+  // the industry hub here is independent of /cases/[slug]/
+  // (which already has its own review surface). Gating is the same
+  // as the rest of the chain: verifiedReviews empty today, so
+  // both fields are stripped at spread-time.
+  const industrySlug = useMemo(() => {
+    const parts = data.slug.split("/").filter(Boolean);
+    return parts[parts.length - 1] ?? "";
+  }, [data.slug]);
+  const industryReviews = useMemo(
+    () => (industrySlug ? filterReviewsForIndustry(industrySlug, []) : []),
+    [industrySlug]
+  );
+  const industryAggregate = useMemo(
+    () =>
+      hasAggregateableReviews(industryReviews)
+        ? computeAggregateRating(industryReviews)
+        : null,
+    [industryReviews]
+  );
+  const industryReviewJsonLd = useMemo(
+    () => ({
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "@id": `https://sublimapparel.com${data.slug.replace(/\/+$/, "")}/#service-reviews`,
+      url: `https://sublimapparel.com${data.slug}`,
+      name: `${data.h1} — buyer review surface`,
+      serviceType: `Custom apparel manufacturing review aggregation for the ${data.h1} industry`,
+      provider: { "@id": "https://sublimapparel.com/#organization" },
+      ...(industryReviews.length > 0
+        ? { review: industryReviews.map(toSchemaReview) }
+        : {}),
+      ...(industryAggregate
+        ? {
+            aggregateRating: {
+              "@type": "AggregateRating",
+              ratingValue: industryAggregate.ratingValue,
+              reviewCount: industryAggregate.reviewCount,
+              bestRating: industryAggregate.bestRating,
+              worstRating: industryAggregate.worstRating,
+            },
+          }
+        : {}),
+    }),
+    [data.slug, data.h1, industryReviews, industryAggregate]
+  );
+
   return (
     <main className="bg-white text-black">
       <JsonLd data={[breadcrumb, genericServiceJsonLd({
         slug: data.slug,
         metaTitle: data.h1,
         metaDescription: data.metaDescription,
-      }), webPageJsonLd, faqJsonLd]} />
+      }), webPageJsonLd, faqJsonLd, industryReviewJsonLd]} />
 
       {/* HERO */}
       <section className="bg-[#0a0a0a] text-white">
@@ -553,6 +614,113 @@ export function CustomerProfilePage({ data }: { data: CustomerProfileData }) {
           </div>
         </div>
       </section>
+
+      {/* Buyer feedback — per-industry review surface.
+          2026-09-11 (R32): the 12 /industries/[slug]/ pages all share
+          this template, so a single hook here lights up the
+          'Buyer feedback' section on every one of them. Mirrors the
+          R28 /cases/[slug]/ block — same data source
+          (verifiedReviews via filterReviewsForIndustry), same gating,
+          same star-render, scoped to the current industry. Renders
+          only when at least one review is attached to this
+          industry — when empty (today's state), the entire section
+          is omitted to keep the page focused on the industry
+          content. The /about/ page already shows the global
+          "Reviews coming soon" placeholder; repeating it on every
+          industry page would be visual noise. The schema (R32
+          sibling Service node) and the UI section light up
+          simultaneously the day a real review with
+          relatedIndustrySlug === industrySlug is added to
+          verifiedReviews. */}
+      {industryReviews.length > 0 && (
+        <section className="border-b-2 border-black bg-white">
+          <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
+            <div className="mb-10 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+              <div>
+                <div className="mb-3 inline-block bg-[#00c2ff] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
+                  Buyer feedback
+                </div>
+                <h2 className="text-3xl font-black leading-tight text-black md:text-5xl">
+                  What {data.h1.toLowerCase()} buyers say.
+                </h2>
+              </div>
+              {industryAggregate ? (
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-1 text-[#cc3d00]">
+                    {[1, 2, 3, 4, 5].map((i) => (
+                      <Star
+                        key={i}
+                        className={
+                          "h-5 w-5 " +
+                          (i <= Math.round(industryAggregate.ratingValue)
+                            ? "fill-[#cc3d00]"
+                            : "opacity-30")
+                        }
+                      />
+                    ))}
+                  </div>
+                  <div className="text-sm font-black uppercase tracking-widest text-black">
+                    {industryAggregate.ratingValue.toFixed(1)} / 5
+                    <span className="ml-1 text-black/60">
+                      · {industryAggregate.reviewCount} review
+                      {industryAggregate.reviewCount === 1 ? "" : "s"}
+                    </span>
+                  </div>
+                </div>
+              ) : null}
+            </div>
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {industryReviews.map((r) => (
+                <article
+                  key={r.id}
+                  className="flex flex-col border-2 border-black bg-[#faf9f6] p-6"
+                >
+                  <div className="mb-3 flex items-center gap-1 text-[#cc3d00]">
+                    {[1, 2, 3, 4, 5].map((i) => (
+                      <Star
+                        key={i}
+                        className={
+                          "h-4 w-4 " +
+                          (typeof r.ratingValue === "number" &&
+                          i <= Math.round(r.ratingValue)
+                            ? "fill-[#cc3d00]"
+                            : "opacity-30")
+                        }
+                      />
+                    ))}
+                    {typeof r.ratingValue === "number" ? (
+                      <span className="ml-1 text-xs font-black uppercase tracking-widest text-black/70">
+                        {r.ratingValue.toFixed(1)} / 5
+                      </span>
+                    ) : null}
+                  </div>
+                  <Quote className="mb-2 h-5 w-5 text-[#00c2ff]" />
+                  <p className="flex-1 text-base leading-relaxed text-black">
+                    {r.reviewBody}
+                  </p>
+                  <div className="mt-4 border-t-2 border-black/10 pt-3 text-xs font-black uppercase tracking-widest text-black/70">
+                    {r.author}
+                    {r.authorRole ? ` · ${r.authorRole}` : ""}
+                    <span className="ml-2 text-black/40">
+                      {r.datePublished}
+                    </span>
+                    {r.url ? (
+                      <a
+                        href={r.url}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        className="ml-2 text-[#00c2ff] underline"
+                      >
+                        Source ↗
+                      </a>
+                    ) : null}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <Contact />
     </main>
