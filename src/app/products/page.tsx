@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
+import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Sparkles } from "lucide-react";
@@ -187,6 +187,40 @@ export default function ProductsPage() {
     },
   };
 
+  // 2026-09-11 push (R18-P2): add FAQPage JSON-LD on /products/.
+  // This page lists 120+ products across 14 garment categories, 42 sports,
+  // and 25 use cases — it naturally answers the questions buyers ask before
+  // they browse the catalog. Adding FAQPage makes it eligible for PAA
+  // (People Also Ask) rich results in the same query space as "what is
+  // sublimation MOQ", "custom apparel minimum order", "polyester vs cotton
+  // sublimation", and "all-over print pricing".
+  const faqJsonLd = buildFaqJsonLd([
+    {
+      q: "What is the minimum order quantity for custom sublimated apparel?",
+      a: "MOQ is 50 pieces per design for cut-and-sew sublimation on polyester, and 30 pieces per design on re-orders. For DTG on 100% cotton the MOQ is 30 pieces per design. Trial sample runs of 5–10 pieces are available before committing to bulk.",
+    },
+    {
+      q: "What is sublimation printing and how does it work?",
+      a: "Dye-sublimation transfer uses heat to bond ink directly into polyester fibers, producing full-coverage, photo-realistic prints that won't fade, peel, or crack. For 100% cotton, we use an allover digital print coating workflow — true edge-to-edge, cut-and-sew, with the same vivid color as polyester sublimation.",
+    },
+    {
+      q: "Can I print full-coverage all-over designs on 100% cotton apparel?",
+      a: "Yes. While most sublimation factories only print on polyester, we run an allover digital print workflow on 100% cotton in-house. The result is true edge-to-edge, cut-and-sew cotton apparel with full-coverage photorealistic color and a soft natural cotton hand feel. MOQ 50 pcs per design.",
+    },
+    {
+      q: "What file formats do you accept for custom apparel artwork?",
+      a: "We accept AI, PDF, PSD, PNG, and JPG. For sublimation on polyester, vector files (AI/PDF) are preferred so we can scale to any print size without quality loss. For allover digital print on cotton, high-resolution 300 DPI images work well. We free-check every artwork and reply with a 3D mockup before you commit.",
+    },
+    {
+      q: "Do you offer samples before bulk production?",
+      a: "Yes. Pre-production samples with your design cost $25–60 per piece plus express shipping. We refund the sample cost when you place a bulk order of 100+ pieces. We also ship free material swatches and printed color cards so you can check hand feel and color accuracy before committing.",
+    },
+    {
+      q: "What are the production lead times for custom apparel?",
+      a: "Standard bulk production: 15–25 business days after sample sign-off. Sample lead time: 5–7 days. Rush bulk service (7–10 days) is available for select product types at an additional 20%. DDP ocean freight adds 18–25 days door-to-door from Yiwu to most countries.",
+    },
+  ]);
+
   return (
     <main>
       <JsonLd
@@ -196,6 +230,7 @@ export default function ProductsPage() {
         ])}
       />
       <JsonLd data={collectionPage} />
+      <JsonLd data={faqJsonLd} />
       <section className="relative overflow-hidden bg-white">
         {/* Full-bleed background image with floating text overlay */}
         <div className="relative h-[85vh] min-h-[640px] w-full">
