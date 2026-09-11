@@ -7,6 +7,7 @@ import { fabricTypes, fabricBySlug } from "@/lib/fabric-data";
 import { JsonLd } from "@/components/json-ld";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
+import { buildFabricDetailGraph } from "@/lib/breadcrumb";
 import {
   filterReviewsForFabric,
   hasAggregateableReviews,
@@ -95,6 +96,27 @@ export default async function FabricDetailPage(
   //   - offers: full Offer with priceSpecification, shipping details
   //     and merchant return policy mirroring the products/all/[slug]
   //     template
+  //
+  // 2026-09-11 (R31): per-fabric review aggregation. Pull the subset
+  // of verifiedReviews that are linked to this fabric
+  // (relatedFabricSlug === fabric.slug). A fabric-level review ("The
+  // 220gsm polyester survived 40 wash cycles with no fade") is the
+  // highest-intent surface for a buyer choosing between fabric
+  // options before they even open a product detail page. Gated by
+  // the same contract as R27/R28/R29/R30 — verifiedReviews empty
+  // today, so the spread strips both fields at JSON-LD build time.
+  //
+  // 2026-09-12 (R35-C): consolidate into a single @graph block via
+  // buildFabricDetailGraph. The helper takes the same R31 Product
+  // payload (sku/mpn/material/additionalProperty/embedded review +
+  // aggregateRating when reviews exist) and wraps it with the same
+  // WebPage + Service + BreadcrumbList + FAQPage siblings every
+  // other product-shaped page on the site now ships, all joined via
+  // @id so Google parses the entire entity surface in one pass. The
+  // Service node carries the 8-country areaServed for the
+  // "DDP fabric supply to {country}" long-tail intent, matching the
+  // catalog overview, the 10 per-category pages, and the 120 product
+  // detail pages.
   const swatchUrl = `https://sublimapparel.com/fabric-sw-${fabric.swatch}.webp`;
   const additionalProps: { "@type": string; name: string; value: string }[] = [
     { "@type": "PropertyValue", name: "Composition", value: fabric.comp },
@@ -131,96 +153,41 @@ export default async function FabricDetailPage(
     ? computeAggregateRating(fabricReviews)
     : null;
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Product",
-        "@id": `https://sublimapparel.com/fabric/${fabric.slug}/#product`,
-        name: fabric.name,
-        description: fabric.metaDescription,
-        image: [swatchUrl],
-        sku: `FAB-${fabric.slug.toUpperCase()}`,
-        mpn: fabric.slug,
-        category: fabric.tags.slice(0, 3).join(", "),
-        material: fabric.comp,
-        brand: { "@type": "Brand", name: "SublimApparel" },
-        manufacturer: { "@id": "https://sublimapparel.com/#organization" },
-        additionalProperty: additionalProps,
-        // 2026-09-11 (R31): embed review + aggregateRating INSIDE the
-        // Product node (same shape as R30 /products/all/[slug]/).
-        // Google reads this for the product star-rating rich result.
-        // Mirrors the R30 contract exactly — verifiedReviews empty
-        // today, both fields stripped at spread-time, JSON-LD is
-        // byte-equivalent to R25. A real review with
-        // `relatedFabricSlug: "${fabric.slug}"` lights up the schema
-        // and the on-page Buyer feedback section automatically.
-        ...(fabricReviews.length > 0
-          ? { review: fabricReviews.map(toSchemaReview) }
-          : {}),
-        ...(fabricAggregate
-          ? {
-              aggregateRating: {
-                "@type": "AggregateRating",
-                ratingValue: fabricAggregate.ratingValue,
-                reviewCount: fabricAggregate.reviewCount,
-                bestRating: fabricAggregate.bestRating,
-                worstRating: fabricAggregate.worstRating,
-              },
-            }
-          : {}),
-        offers: {
-          "@type": "Offer",
-          "@id": `https://sublimapparel.com/fabric/${fabric.slug}/#offer`,
-          url: `https://sublimapparel.com/fabric/${fabric.slug}/`,
-          availability: "https://schema.org/InStock",
-          priceCurrency: "USD",
-          priceValidUntil: "2027-12-31",
-          inventoryLevel: { "@type": "QuantitativeValue", value: 1500, unitCode: "MTR" },
-          seller: { "@id": "https://sublimapparel.com/#organization" },
-          shippingDetails: {
-            "@type": "OfferShippingDetails",
-            shippingDestination: {
-              "@type": "DefinedRegion",
-              addressCountry: "US",
-            },
-            deliveryTime: {
-              "@type": "ShippingDeliveryTime",
-              handlingTime: { "@type": "QuantitativeValue", minValue: 15, maxValue: 25, unitCode: "DAY" },
-              transitTime: { "@type": "QuantitativeValue", minValue: 7, maxValue: 14, unitCode: "DAY" },
-            },
-          },
-          hasMerchantReturnPolicy: {
-            "@type": "MerchantReturnPolicy",
-            returnPolicyCategory: "https://schema.org/MerchantReturnNotPermitted",
-            merchantReturnDays: 0,
-            description: "Cut-to-order fabric is non-returnable. Defective bolts replaced 1:1 within 30 days of receipt.",
-          },
-        },
-      },
-      {
-        "@type": "FAQPage",
-        mainEntity: fabric.faq.map((item) => ({
-          "@type": "Question",
-          name: item.q,
-          acceptedAnswer: { "@type": "Answer", text: item.a },
-        })),
-      },
-      {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Home", item: "https://sublimapparel.com" },
-          { "@type": "ListItem", position: 2, name: "Fabric", item: "https://sublimapparel.com/fabric" },
-          { "@type": "ListItem", position: 3, name: fabric.name, item: `https://sublimapparel.com/fabric/${fabric.slug}` },
-        ],
-      },
+  const fabricGraph = buildFabricDetailGraph({
+    slug: fabric.slug,
+    name: fabric.name,
+    description: fabric.metaDescription,
+    image: swatchUrl,
+    sku: `FAB-${fabric.slug.toUpperCase()}`,
+    mpn: fabric.slug,
+    material: fabric.comp,
+    category: fabric.tags.slice(0, 3).join(", "),
+    additionalProperty: additionalProps,
+    breadcrumb: [
+      { name: "Home", path: "/" },
+      { name: "Fabric", path: "/fabric/" },
+      { name: fabric.name, path: `/fabric/${fabric.slug}/` },
     ],
-  };
+    faq: fabric.faq,
+    ...(fabricReviews.length > 0
+      ? { review: fabricReviews.map(toSchemaReview) }
+      : {}),
+    ...(fabricAggregate
+      ? {
+          aggregateRating: {
+            ratingValue: fabricAggregate.ratingValue,
+            reviewCount: fabricAggregate.reviewCount,
+            bestRating: fabricAggregate.bestRating,
+            worstRating: fabricAggregate.worstRating,
+          },
+        }
+      : {}),
+  });
 
   return (
     <>
       <Navbar />
-      <JsonLd data={jsonLd} />
+      <JsonLd data={fabricGraph} />
 
       <main className="min-h-screen bg-white">
         {/* HERO */}

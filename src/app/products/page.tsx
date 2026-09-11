@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildCollectionPageGraph } from "@/lib/breadcrumb";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Sparkles } from "lucide-react";
@@ -144,93 +144,86 @@ const comparison = [
   { feature: "MOQ", poly: "50 pcs", cotton: "50 pcs" },
 ];
 
+// 2026-09-12 (R35-A): extracted from the inline FAQPage JSON-LD so the
+// same items can be fed into buildCollectionPageGraph. Pre-R35 the
+// questions lived inside a `buildFaqJsonLd([...])` call; R35 promotes
+// them to a top-level const so the data has a single source of truth
+// (the JSON-LD block, the <details> accordion render, and any future
+// content surface all read from the same array).
+const faq = [
+  {
+    q: "What is the minimum order quantity for custom sublimated apparel?",
+    a: "MOQ is 50 pieces per design for cut-and-sew sublimation on polyester, and 30 pieces per design on re-orders. For DTG on 100% cotton the MOQ is 30 pieces per design. Trial sample runs of 5–10 pieces are available before committing to bulk.",
+  },
+  {
+    q: "What is sublimation printing and how does it work?",
+    a: "Dye-sublimation transfer uses heat to bond ink directly into polyester fibers, producing full-coverage, photo-realistic prints that won't fade, peel, or crack. For 100% cotton, we use an allover digital print coating workflow — true edge-to-edge, cut-and-sew, with the same vivid color as polyester sublimation.",
+  },
+  {
+    q: "Can I print full-coverage all-over designs on 100% cotton apparel?",
+    a: "Yes. While most sublimation factories only print on polyester, we run an allover digital print workflow on 100% cotton in-house. The result is true edge-to-edge, cut-and-sew cotton apparel with full-coverage photorealistic color and a soft natural cotton hand feel. MOQ 50 pcs per design.",
+  },
+  {
+    q: "What file formats do you accept for custom apparel artwork?",
+    a: "We accept AI, PDF, PSD, PNG, and JPG. For sublimation on polyester, vector files (AI/PDF) are preferred so we can scale to any print size without quality loss. For allover digital print on cotton, high-resolution 300 DPI images work well. We free-check every artwork and reply with a 3D mockup before you commit.",
+  },
+  {
+    q: "Do you offer samples before bulk production?",
+    a: "Yes. Pre-production samples with your design cost $25–60 per piece plus express shipping. We refund the sample cost when you place a bulk order of 100+ pieces. We also ship free material swatches and printed color cards so you can check hand feel and color accuracy before committing.",
+  },
+  {
+    q: "What are the production lead times for custom apparel?",
+    a: "Standard bulk production: 15–25 business days after sample sign-off. Sample lead time: 5–7 days. Rush bulk service (7–10 days) is available for select product types at an additional 20%. DDP ocean freight adds 18–25 days door-to-door from Yiwu to most countries.",
+  },
+];
+
 export default function ProductsPage() {
-  // 2026-09-11 push (Round 7): add CollectionPage + ItemList JSON-LD on /products/.
-  // The page is structurally a catalog index that lists 120+ products across
-  // 14 categories, 42 sports, and 25 use cases. Without explicit structured
-  // data, Google only sees a flat list of <a> tags and has to infer the
-  // hierarchy. With CollectionPage + ItemList:
-  //  - CollectionPage signals "this is a catalog landing page" and ties the
-  //    page to the Organization publisher.
-  //  - ItemList enumerates the top 20 product slugs (by number) so Google's
-  //    crawler can find them without re-walking the whole sitemap, and so
-  //    sitelinks-style "carousel" rich results are more likely.
-  // We use the top 20 (not all 120+) because ItemList >50 items is deprecated
-  // and >100 is ignored by Google; 20 is a safe signal-rich size.
+  // 2026-09-12 (R35-A): consolidate the previous 3 independent
+  // <script> tags (BreadcrumbList + flat CollectionPage + FAQPage)
+  // into a single @graph block via buildCollectionPageGraph.
+  //
+  // Pre-R35 the page emitted three separate JSON-LD blocks:
+  //   1. <script type="application/ld+json"> BreadcrumbList
+  //   2. <script type="application/ld+json"> CollectionPage
+  //      with an inline ItemList mainEntity (no @id on either)
+  //   3. <script type="application/ld+json"> FAQPage
+  // None of the three had an @id, none referenced #website or
+  // #organization by @id, and the CollectionPage's mainEntity
+  // ItemList was a flat child node Google had to re-discover on
+  // each parse pass.
+  //
+  // R35-A replaces all three with one @graph containing:
+  //   - WebPage    #webpage     isPartOf #website + about #organization
+  //   - CollectionPage #collection  mainEntity @id round-trip to ItemList
+  //   - ItemList   #itemlist    top 20 products, ordered by number
+  //   - Service    #service     DDP custom manufacturing, 8-country
+  //                             areaServed, same as the 10 per-category
+  //                             pages so the catalog index joins the
+  //                             same service intent
+  //   - BreadcrumbList #breadcrumb  Home → Products
+  //   - FAQPage    #faq         the 6 buyer questions, same content
+  //                             that already renders inline
+  //
+  // We keep the top-20 cap (Google ignores ItemList >50) and the
+  // number-ascending order so the JSON-LD matches the visible
+  // sitemap order.
   const topProducts = [...products]
     .sort((a, b) => a.number.localeCompare(b.number))
     .slice(0, 20)
-    .map((p, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      url: `https://sublimapparel.com/products/all/${p.slug}/`,
+    .map((p) => ({
+      slug: p.slug,
       name: p.name,
+      url: `https://sublimapparel.com/products/all/${p.slug}/`,
     }));
 
-  const collectionPage = {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    "@id": "https://sublimapparel.com/products/#collection",
-    url: "https://sublimapparel.com/products/",
-    name: "Custom Sublimation Apparel Catalog — 120+ Products, 14 Categories",
-    description:
-      "Full product catalog of sublimation-printed custom apparel. 14 categories including t-shirts, hoodies, jerseys, sportswear, polo shirts, jackets, pants, sweatshirts, shirts, skirts, caps, home textiles, workwear, and tank tops. 42 sports, 25 use cases.",
-    inLanguage: "en",
-    isPartOf: { "@id": "https://sublimapparel.com/#website" },
-    about: { "@id": "https://sublimapparel.com/#organization" },
-    provider: { "@id": "https://sublimapparel.com/#organization" },
-    mainEntity: {
-      "@type": "ItemList",
-      numberOfItems: topProducts.length,
-      itemListOrder: "https://schema.org/ItemListOrderAscending",
-      itemListElement: topProducts,
-    },
-  };
-
-  // 2026-09-11 push (R18-P2): add FAQPage JSON-LD on /products/.
-  // This page lists 120+ products across 14 garment categories, 42 sports,
-  // and 25 use cases — it naturally answers the questions buyers ask before
-  // they browse the catalog. Adding FAQPage makes it eligible for PAA
-  // (People Also Ask) rich results in the same query space as "what is
-  // sublimation MOQ", "custom apparel minimum order", "polyester vs cotton
-  // sublimation", and "all-over print pricing".
-  const faqJsonLd = buildFaqJsonLd([
-    {
-      q: "What is the minimum order quantity for custom sublimated apparel?",
-      a: "MOQ is 50 pieces per design for cut-and-sew sublimation on polyester, and 30 pieces per design on re-orders. For DTG on 100% cotton the MOQ is 30 pieces per design. Trial sample runs of 5–10 pieces are available before committing to bulk.",
-    },
-    {
-      q: "What is sublimation printing and how does it work?",
-      a: "Dye-sublimation transfer uses heat to bond ink directly into polyester fibers, producing full-coverage, photo-realistic prints that won't fade, peel, or crack. For 100% cotton, we use an allover digital print coating workflow — true edge-to-edge, cut-and-sew, with the same vivid color as polyester sublimation.",
-    },
-    {
-      q: "Can I print full-coverage all-over designs on 100% cotton apparel?",
-      a: "Yes. While most sublimation factories only print on polyester, we run an allover digital print workflow on 100% cotton in-house. The result is true edge-to-edge, cut-and-sew cotton apparel with full-coverage photorealistic color and a soft natural cotton hand feel. MOQ 50 pcs per design.",
-    },
-    {
-      q: "What file formats do you accept for custom apparel artwork?",
-      a: "We accept AI, PDF, PSD, PNG, and JPG. For sublimation on polyester, vector files (AI/PDF) are preferred so we can scale to any print size without quality loss. For allover digital print on cotton, high-resolution 300 DPI images work well. We free-check every artwork and reply with a 3D mockup before you commit.",
-    },
-    {
-      q: "Do you offer samples before bulk production?",
-      a: "Yes. Pre-production samples with your design cost $25–60 per piece plus express shipping. We refund the sample cost when you place a bulk order of 100+ pieces. We also ship free material swatches and printed color cards so you can check hand feel and color accuracy before committing.",
-    },
-    {
-      q: "What are the production lead times for custom apparel?",
-      a: "Standard bulk production: 15–25 business days after sample sign-off. Sample lead time: 5–7 days. Rush bulk service (7–10 days) is available for select product types at an additional 20%. DDP ocean freight adds 18–25 days door-to-door from Yiwu to most countries.",
-    },
-  ]);
+  const collectionGraph = buildCollectionPageGraph({
+    items: topProducts,
+    faq,
+  });
 
   return (
     <main>
-      <JsonLd
-        data={buildBreadcrumbJsonLd([
-          { name: "Home", path: "/" },
-          { name: "Products", path: "/products" },
-        ])}
-      />
-      <JsonLd data={collectionPage} />
-      <JsonLd data={faqJsonLd} />
+      <JsonLd data={collectionGraph} />
       <section className="relative overflow-hidden bg-white">
         {/* Full-bleed background image with floating text overlay */}
         <div className="relative h-[85vh] min-h-[640px] w-full">

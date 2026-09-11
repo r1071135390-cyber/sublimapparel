@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, Calendar, Clock, User, Star, Quote } from "lucide-react";
 import { blogPosts, getPostBySlug, getRelatedPosts } from "@/lib/blog";
 import { JsonLd } from "@/components/json-ld";
+import { buildBlogPostGraph } from "@/lib/breadcrumb";
 import {
   filterReviewsForBlog,
   hasAggregateableReviews,
@@ -77,60 +78,42 @@ export default async function BlogPostPage({
   // the post becomes eligible for the blog carousel rich result and
   // joins the same entity chain (publisher → #organization, author →
   // #person-ramon) that all other content on the site uses.
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "@id": `https://sublimapparel.com/blog/${post.slug}/#article`,
-    headline: post.title,
-    description: post.excerpt,
-    image: post.coverImage,
-    datePublished: post.date,
-    // 2026-09-11 (R20): was `post.date` (the post's create date). Google
-    // reads `dateModified` to decide if a piece of content is fresh. Posts
-    // published in 2024 are now ~18 months old; using the create date
-    // signals "stale". Switching to build time means every Cloudflare
-    // deploy refreshes the modified timestamp, and Google re-evaluates
-    // the post against current SERP competitors instead of pinning it
-    // to the original publish date.
-    dateModified: new Date().toISOString(),
-    inLanguage: "en",
-    // Link to the global entities instead of duplicating them so the
-    // post joins the same @graph as the rest of the site.
-    author: { "@id": "https://sublimapparel.com/#person-ramon" },
-    publisher: { "@id": "https://sublimapparel.com/#organization" },
-    isPartOf: { "@id": "https://sublimapparel.com/blog/#blog" },
-    about: { "@id": "https://sublimapparel.com/#organization" },
-    mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": `https://sublimapparel.com/blog/${post.slug}/`,
-    },
-    keywords: post.tags.join(", "),
-    articleSection: post.category,
-    url: `https://sublimapparel.com/blog/${post.slug}/`,
-    // wordCount + timeRequired help Google surface the post for
-    // "long-read" / "how to" queries that have a length intent.
-    wordCount: post.content
-      ? post.content.replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length
-      : undefined,
-    timeRequired: post.readTime,
-    // 2026-09-11 (R31): embed review + aggregateRating INSIDE the
-    // BlogPosting node. BlogPosting extends Article (schema.org
-    // inheritance), and Article supports both fields. The embed
-    // mirrors R30's product-page pattern (R30 also embeds
-    // `review` + `aggregateRating` into the Product node — Google
-    // prefers this for the visible star-rating rich result). Same
-    // contract as the rest of the review chain: verifiedReviews is
-    // empty today, so both fields are stripped at spread-time and
-    // the JSON-LD is byte-equivalent to R20. A real review with
-    // `relatedBlogSlug: "${post.slug}"` lights up the schema and
-    // the on-page Buyer feedback section automatically.
+  //
+  // 2026-09-12 (R35-D): consolidate the previous 3 JSON-LD objects
+  // (articleSchema + breadcrumbSchema + faqSchema) inside one JsonLd
+  // array into a single @graph block via buildBlogPostGraph. The
+  // BlogPosting payload (headline, datePublished, dateModified,
+  // author @id, publisher @id, isPartOf #blog, embedded review +
+  // aggregateRating when reviews exist, wordCount, timeRequired)
+  // is fed straight into the helper; the helper wraps it with
+  // WebPage #webpage, Person #person-ramon (defined inline so the
+  // author @id resolves without an external lookup), BreadcrumbList
+  // #breadcrumb, and FAQPage #faq (when post.faqs.length > 0),
+  // all joined via @id so Google parses the entire entity surface
+  // in one pass.
+  const blogGraph = buildBlogPostGraph({
+    slug: post.slug,
+    title: post.title,
+    excerpt: post.excerpt,
+    coverImage: post.coverImage,
+    date: post.date,
+    author: post.author,
+    category: post.category,
+    tags: post.tags,
+    readTime: post.readTime,
+    content: post.content,
+    faqs: post.faqs,
+    breadcrumb: [
+      { name: "Home", path: "/" },
+      { name: "Blog", path: "/blog/" },
+      { name: post.title, path: `/blog/${post.slug}/` },
+    ],
     ...(blogReviews.length > 0
       ? { review: blogReviews.map(toSchemaReview) }
       : {}),
     ...(blogAggregate
       ? {
           aggregateRating: {
-            "@type": "AggregateRating",
             ratingValue: blogAggregate.ratingValue,
             reviewCount: blogAggregate.reviewCount,
             bestRating: blogAggregate.bestRating,
@@ -138,51 +121,11 @@ export default async function BlogPostPage({
           },
         }
       : {}),
-  };
-
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: "/",
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Blog",
-        item: "/blog/",
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: post.title,
-        item: `/blog/${post.slug}/`,
-      },
-    ],
-  };
-
-  // 2026-09-11 (Round 9): consolidate all three schema nodes (article +
-  // breadcrumb + FAQPage) into a single JsonLd output to avoid multiple
-  // <script> tags. The FAQPage was previously emitted as a raw <script> tag.
-  const faqSchema = post.faqs && post.faqs.length > 0
-    ? {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        mainEntity: post.faqs.map((f) => ({
-          "@type": "Question",
-          name: f.q,
-          acceptedAnswer: { "@type": "Answer", text: f.a },
-        })),
-      }
-    : null;
+  });
 
   return (
     <main>
-      <JsonLd data={[articleSchema, breadcrumbSchema, faqSchema].filter(Boolean)} />
+      <JsonLd data={blogGraph} />
 
       {/* Breadcrumb */}
       <nav
