@@ -467,6 +467,85 @@ export default function ProductsPage() {
         </div>
       </section>
 
+      {/* 2026-09-11 push (Round 7): internal cross-link band on /products/.
+          Until this round, /products/ was almost a dead end — the hero
+          had 7 quick-filter chips, the rest of the page linked down into
+          tag archives and the /products/all/ grid, but no path back to
+          the other top-level hubs (/industries/, /solutions/, /cases/).
+          Adding 3 explicit cards above the contact CTA lets crawlers
+          re-enter the cross-link graph and helps real buyers see the
+          "by industry" and "by buyer profile" angles. */}
+      <section className="border-b-2 border-black bg-white">
+        <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
+          <div className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
+            Keep exploring
+          </div>
+          <h2 className="mb-3 text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
+            Browse by what you need next
+          </h2>
+          <p className="mb-10 max-w-3xl text-base text-black/70 md:text-lg">
+            {`Pick the angle that fits your project: filter our ${products.length}+ products by your industry, find the right B2B solution for your buyer profile, or open the case-study gallery to see real briefs and outcomes.`}
+          </p>
+
+          <div className="grid gap-4 md:grid-cols-3">
+            <Link
+              href="/industries/"
+              className="group flex flex-col border-2 border-black bg-[#faf9f6] p-6 transition-all hover:-translate-x-1 hover:-translate-y-1 hover:border-[#ff4d00] hover:bg-[#ff4d00] hover:text-black hover:shadow-[6px_6px_0_0_#000]"
+            >
+              <div className="text-[10px] font-black uppercase tracking-widest">
+                Industries
+              </div>
+              <div className="mt-2 text-2xl font-black uppercase leading-tight md:text-3xl">
+                12 verticals
+              </div>
+              <div className="mt-2 flex-1 text-sm">
+                Sports teams, race events, conferences, music festivals, schools, breweries, hospitality, marketing, trade shows, brands, political campaigns, and e-commerce fulfillment.
+              </div>
+              <div className="mt-3 inline-flex items-center gap-2 text-sm font-black uppercase tracking-widest">
+                See all industries
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
+              </div>
+            </Link>
+            <Link
+              href="/solutions/"
+              className="group flex flex-col border-2 border-black bg-[#faf9f6] p-6 transition-all hover:-translate-x-1 hover:-translate-y-1 hover:border-[#ff4d00] hover:bg-[#ff4d00] hover:text-black hover:shadow-[6px_6px_0_0_#000]"
+            >
+              <div className="text-[10px] font-black uppercase tracking-widest">
+                Solutions
+              </div>
+              <div className="mt-2 text-2xl font-black uppercase leading-tight md:text-3xl">
+                6 B2B buyer workflows
+              </div>
+              <div className="mt-2 flex-1 text-sm">
+                Team kits, event merch, corporate apparel, promotional, brand white-label, and e-commerce fulfillment. Each solution pre-configures the right fabric, print method, MOQ, and delivery plan.
+              </div>
+              <div className="mt-3 inline-flex items-center gap-2 text-sm font-black uppercase tracking-widest">
+                See all solutions
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
+              </div>
+            </Link>
+            <Link
+              href="/cases/"
+              className="group flex flex-col border-2 border-black bg-[#faf9f6] p-6 transition-all hover:-translate-x-1 hover:-translate-y-1 hover:border-[#ff4d00] hover:bg-[#ff4d00] hover:text-black hover:shadow-[6px_6px_0_0_#000]"
+            >
+              <div className="text-[10px] font-black uppercase tracking-widest">
+                Case Studies
+              </div>
+              <div className="mt-2 text-2xl font-black uppercase leading-tight md:text-3xl">
+                6,000+ projects
+              </div>
+              <div className="mt-2 flex-1 text-sm">
+                Real briefs, fabric choices, and delivery outcomes from sports leagues, race events, music festivals, conferences, schools, and more.
+              </div>
+              <div className="mt-3 inline-flex items-center gap-2 text-sm font-black uppercase tracking-widest">
+                Open the gallery
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <Contact />
     </main>
   );

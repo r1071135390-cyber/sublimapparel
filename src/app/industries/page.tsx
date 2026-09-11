@@ -266,6 +266,82 @@ export default function IndustriesIndexPage() {
         </div>
       </section>
 
+      {/* 2026-09-11 push (Round 7): add an internal cross-link band so
+          /industries/ also routes link equity to /products/ and /solutions/.
+          Previously this page only linked outward to /cases/ and
+          /get-a-quote/, leaving it as a dead end for crawlers and an
+          orphan in the site graph. Linking to the other two top-level
+          hubs gives Google's PageRank-style flow a reason to revisit
+          /industries/ from /products/ and /solutions/, and gives human
+          visitors an obvious next step if they don't yet know which
+          page answers their question. */}
+      <section className="border-t border-border bg-background py-16">
+        <div className="mx-auto max-w-6xl px-6">
+          <p className="text-xs font-semibold uppercase tracking-wider text-primary">
+            Keep exploring
+          </p>
+          <h2 className="mt-3 text-3xl font-bold leading-tight md:text-4xl">
+            Browse by what you need next
+          </h2>
+          <p className="mt-3 max-w-3xl text-base text-muted-foreground">
+            {`Pick the angle that fits your project: the full 119-product catalog, the 6 buyer-type solutions, or the case studies archive — every page on this site links back to the others so you can move in any direction.`}
+          </p>
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <Link
+              href="/products/"
+              className="group flex flex-col rounded-lg border border-border bg-card p-6 transition-all hover:border-primary hover:shadow-md"
+            >
+              <p className="text-[10px] font-black uppercase tracking-widest text-primary">
+                Catalog
+              </p>
+              <h3 className="mt-2 text-lg font-semibold text-foreground group-hover:text-primary">
+                All 119 products, 14 categories
+              </h3>
+              <p className="mt-2 flex-1 text-sm text-muted-foreground">
+                T-shirts, hoodies, jerseys, sportswear, polos, jackets, pants, sweatshirts, shirts, skirts, caps, home textiles, workwear, and tank tops. Filter by sport, scenario, and garment type.
+              </p>
+              <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary">
+                Browse the catalog <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+              </span>
+            </Link>
+            <Link
+              href="/solutions/"
+              className="group flex flex-col rounded-lg border border-border bg-card p-6 transition-all hover:border-primary hover:shadow-md"
+            >
+              <p className="text-[10px] font-black uppercase tracking-widest text-primary">
+                Solutions
+              </p>
+              <h3 className="mt-2 text-lg font-semibold text-foreground group-hover:text-primary">
+                6 B2B buyer workflows
+              </h3>
+              <p className="mt-2 flex-1 text-sm text-muted-foreground">
+                Team kits, event merch, corporate apparel, promotional, brand white-label, and e-commerce fulfillment. Each solution pre-configures the right fabric, print method, MOQ, and delivery plan.
+              </p>
+              <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary">
+                See all solutions <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+              </span>
+            </Link>
+            <Link
+              href="/cases/"
+              className="group flex flex-col rounded-lg border border-border bg-card p-6 transition-all hover:border-primary hover:shadow-md"
+            >
+              <p className="text-[10px] font-black uppercase tracking-widest text-primary">
+                Case Studies
+              </p>
+              <h3 className="mt-2 text-lg font-semibold text-foreground group-hover:text-primary">
+                12 industries, 6,000+ projects
+              </h3>
+              <p className="mt-2 flex-1 text-sm text-muted-foreground">
+                Real briefs, fabric choices, and delivery outcomes from sports leagues, race events, music festivals, conferences, schools, and more. Pick an industry to see what's shipped.
+              </p>
+              <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary">
+                Open the gallery <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+              </span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <section className="border-t border-border bg-muted/30 py-16">
         <div className="mx-auto max-w-4xl px-6 text-center">
           <h2 className="text-3xl font-bold md:text-4xl">

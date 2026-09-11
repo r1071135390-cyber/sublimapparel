@@ -228,6 +228,86 @@ export default function BlogIndexPage() {
         </div>
       </section>
 
+      {/* 2026-09-11 push (Round 7): internal cross-link band on /blog/.
+          The blog previously had only "Get a Free Quote" as an
+          outbound link below the post grid, so the page was a one-way
+          funnel that ate up crawl budget without giving Google a way
+          to discover the higher-value transactional hubs. The 3
+          cross-link cards route link equity back to /products/,
+          /industries/, and /cases/ and give readers who finished an
+          article an obvious next step into the buyer's journey. */}
+      <section className="border-b-2 border-black bg-[#faf9f6]">
+        <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-16">
+          <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-[#cc3d00] md:text-sm">
+            Keep exploring
+          </p>
+          <h2 className="mb-3 text-2xl font-black uppercase leading-tight tracking-tight text-black md:text-4xl">
+            From the journal to the catalog
+          </h2>
+          <p className="mb-8 max-w-3xl text-sm text-black/70 md:text-base">
+            Every post is rooted in real production experience — so the
+            natural next step is the catalog, the 12 industry hubs, or the
+            case-study gallery.
+          </p>
+          <div className="grid gap-4 md:grid-cols-3">
+            <Link
+              href="/products/"
+              className="group flex flex-col border-2 border-black bg-white p-5 transition-all hover:-translate-x-1 hover:-translate-y-1 hover:border-[#ff4d00] hover:bg-[#ff4d00] hover:text-black hover:shadow-[6px_6px_0_0_#000]"
+            >
+              <div className="text-[10px] font-black uppercase tracking-widest">
+                Catalog
+              </div>
+              <div className="mt-2 text-lg font-black uppercase leading-tight">
+                All 119 products
+              </div>
+              <div className="mt-2 flex-1 text-sm">
+                T-shirts, hoodies, jerseys, sportswear, polos, jackets, pants, sweatshirts, shirts, skirts, caps, home textiles, workwear, and tank tops. Filter by sport, scenario, and garment type.
+              </div>
+              <div className="mt-3 inline-flex items-center gap-2 text-sm font-black uppercase tracking-widest">
+                Open the catalog
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </div>
+            </Link>
+            <Link
+              href="/industries/"
+              className="group flex flex-col border-2 border-black bg-white p-5 transition-all hover:-translate-x-1 hover:-translate-y-1 hover:border-[#ff4d00] hover:bg-[#ff4d00] hover:text-black hover:shadow-[6px_6px_0_0_#000]"
+            >
+              <div className="text-[10px] font-black uppercase tracking-widest">
+                Industries
+              </div>
+              <div className="mt-2 text-lg font-black uppercase leading-tight">
+                12 verticals
+              </div>
+              <div className="mt-2 flex-1 text-sm">
+                Sports teams, race events, conferences, music festivals, schools, breweries, hospitality, marketing, trade shows, brands, political campaigns, and e-commerce fulfillment.
+              </div>
+              <div className="mt-3 inline-flex items-center gap-2 text-sm font-black uppercase tracking-widest">
+                See all industries
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </div>
+            </Link>
+            <Link
+              href="/cases/"
+              className="group flex flex-col border-2 border-black bg-white p-5 transition-all hover:-translate-x-1 hover:-translate-y-1 hover:border-[#ff4d00] hover:bg-[#ff4d00] hover:text-black hover:shadow-[6px_6px_0_0_#000]"
+            >
+              <div className="text-[10px] font-black uppercase tracking-widest">
+                Case Studies
+              </div>
+              <div className="mt-2 text-lg font-black uppercase leading-tight">
+                6,000+ projects
+              </div>
+              <div className="mt-2 flex-1 text-sm">
+                Real briefs, fabric choices, and delivery outcomes from sports leagues, race events, music festivals, conferences, schools, and more.
+              </div>
+              <div className="mt-3 inline-flex items-center gap-2 text-sm font-black uppercase tracking-widest">
+                Open the gallery
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="bg-[#ff4d00] text-black">
         <div className="mx-auto max-w-4xl px-4 py-12 text-center md:px-8 md:py-16">

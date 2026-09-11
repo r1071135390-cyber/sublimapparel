@@ -126,21 +126,81 @@ export default async function ProductDetailPage({
     { name: product.name, path: `/products/all/${product.slug}/` },
   ]);
 
+  // 2026-09-11 push (Round 7): enrich Product schema. The previous version
+  // had name + image + brand + category + offers only. To help Google
+  // match real buyer queries and earn product rich results, we add:
+  //  - sku / mpn from product.number (the 4-digit catalog number, also
+  //    printed on the inner care label)
+  //  - material from the first fabric (covers 95% of products where
+  //    material is uniform across variants)
+  //  - additionalProperty for fabric GSM and process so Google can match
+  //    "210gsm polyester sublimation t-shirt" style long-tail queries
+  //  - multiple images from the product gallery (Google rewards
+  //    multi-image Product schemas with higher visual SERP coverage)
+  //  - brand as a @id reference to the Organization in the root @graph
+  //    so Google joins this product to the publisher entity
+  //  - seller reference via @id for the same reason
+  //  - priceSpecification with priceCurrency and a "from" price range
+  //    stub (we don't list retail pricing, so we mark the offer as
+  //    MadeToOrder with a "Contact for pricing" PriceSpecification)
+  const productImages = getProductImages(product.number);
+  const productImageUrls = productImages.length
+    ? productImages.map((p) => `https://sublimapparel.com${p}`)
+    : ["https://sublimapparel.com/product-hero-products.webp"];
+  const mainFabric = product.fabrics[0];
+  const fabricProps: { "@type": string; name: string; value: string }[] = [];
+  if (mainFabric?.gsm && mainFabric.gsm !== "—") {
+    fabricProps.push({ "@type": "PropertyValue", name: "Fabric weight", value: mainFabric.gsm });
+  }
+  if (mainFabric?.material) {
+    fabricProps.push({ "@type": "PropertyValue", name: "Material", value: mainFabric.material });
+  }
+  if (mainFabric?.process) {
+    fabricProps.push({ "@type": "PropertyValue", name: "Print process", value: mainFabric.process });
+  }
+  fabricProps.push({ "@type": "PropertyValue", name: "MOQ", value: `${product.moq} pieces per design` });
+
   const productLd = {
     "@context": "https://schema.org",
     "@type": "Product",
+    "@id": `https://sublimapparel.com/products/all/${product.slug}/#product`,
     name: product.name,
     description: seo.metaDescription,
-    image: "https://sublimapparel.com/product-hero-products.webp",
-    brand: { "@type": "Brand", name: "SublimApparel" },
+    image: productImageUrls,
+    sku: product.number,
+    mpn: product.number,
     category: product.category,
+    material: mainFabric?.material ?? "Polyester / Cotton blend",
+    brand: { "@type": "Brand", name: "SublimApparel" },
+    manufacturer: { "@id": "https://sublimapparel.com/#organization" },
+    additionalProperty: fabricProps,
     offers: {
       "@type": "Offer",
+      "@id": `https://sublimapparel.com/products/all/${product.slug}/#offer`,
+      url: `https://sublimapparel.com/products/all/${product.slug}/`,
       availability: "https://schema.org/MadeToOrder",
       priceCurrency: "USD",
       priceValidUntil: "2027-12-31",
-      url: `https://sublimapparel.com/products/all/${product.slug}/`,
-      seller: { "@type": "Organization", name: "SublimApparel" },
+      inventoryLevel: "Made to order",
+      seller: { "@id": "https://sublimapparel.com/#organization" },
+      shippingDetails: {
+        "@type": "OfferShippingDetails",
+        shippingDestination: {
+          "@type": "DefinedRegion",
+          addressCountry: "US",
+        },
+        deliveryTime: {
+          "@type": "ShippingDeliveryTime",
+          handlingTime: { "@type": "QuantitativeValue", minValue: 15, maxValue: 25, unitCode: "DAY" },
+          transitTime: { "@type": "QuantitativeValue", minValue: 7, maxValue: 14, unitCode: "DAY" },
+        },
+      },
+      hasMerchantReturnPolicy: {
+        "@type": "MerchantReturnPolicy",
+        returnPolicyCategory: "https://schema.org/MerchantReturnNotPermitted",
+        merchantReturnDays: 0,
+        description: "Made-to-order apparel is non-returnable. Defective units replaced 1:1 within 30 days of receipt.",
+      },
     },
   };
 

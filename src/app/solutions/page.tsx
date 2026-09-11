@@ -264,6 +264,89 @@ export default function SolutionsPage() {
           </div>
         </section>
 
+        {/* 2026-09-11 push (Round 7): internal cross-link band on /solutions/.
+            Same reason as /industries/ and /cases/ — the page used to be a
+            dead end for crawlers (the 6 solution tiles + 1 CTA, all
+            pointing inward to /get-a-quote/ or /cases/). Adding 3
+            explicit cross-link cards to /products/, /industries/, and
+            /cases/ routes link equity back into the rest of the site and
+            gives human visitors an obvious next step if they're not yet
+            sure which solution matches their brief. */}
+        <section className="border-b-2 border-black bg-[#f5f5f5]">
+          <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
+            <div className="mb-3 inline-block bg-black px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+              Keep exploring
+            </div>
+            <h2 className="mb-3 text-3xl font-black leading-[0.95] tracking-tight md:text-5xl">
+              Browse by what you need next
+            </h2>
+            <p className="mb-10 max-w-3xl text-base text-black/70 md:text-lg">
+              The 6 solutions above map to specific buyer profiles — but if you
+              know exactly what garment you want, jump to the full 119-product
+              catalog; if you want to see real briefs and outcomes, open the
+              case-study gallery; if you want to know which verticals we
+              specialize in, browse the 12 industries.
+            </p>
+
+            <div className="grid gap-4 md:grid-cols-3">
+              <Link
+                href="/products/"
+                className="group flex flex-col border-2 border-black bg-white p-6 transition-all hover:-translate-x-1 hover:-translate-y-1 hover:bg-[#ff4d00] hover:text-black hover:shadow-[6px_6px_0_0_#000]"
+              >
+                <div className="text-[10px] font-black uppercase tracking-widest">
+                  Catalog
+                </div>
+                <div className="mt-2 text-xl font-black uppercase leading-tight md:text-2xl">
+                  All 119 products
+                </div>
+                <div className="mt-2 flex-1 text-sm">
+                  T-shirts, hoodies, jerseys, sportswear, polos, jackets, pants, sweatshirts, shirts, skirts, caps, home textiles, workwear, and tank tops. Filter by sport, scenario, and garment type.
+                </div>
+                <div className="mt-3 inline-flex items-center gap-2 text-sm font-black uppercase tracking-widest">
+                  Open the catalog
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
+                </div>
+              </Link>
+              <Link
+                href="/industries/"
+                className="group flex flex-col border-2 border-black bg-white p-6 transition-all hover:-translate-x-1 hover:-translate-y-1 hover:bg-[#ff4d00] hover:text-black hover:shadow-[6px_6px_0_0_#000]"
+              >
+                <div className="text-[10px] font-black uppercase tracking-widest">
+                  Industries
+                </div>
+                <div className="mt-2 text-xl font-black uppercase leading-tight md:text-2xl">
+                  12 verticals
+                </div>
+                <div className="mt-2 flex-1 text-sm">
+                  Sports teams, race events, conferences, music festivals, schools, breweries, hospitality, marketing, trade shows, brands, political campaigns, and e-commerce fulfillment.
+                </div>
+                <div className="mt-3 inline-flex items-center gap-2 text-sm font-black uppercase tracking-widest">
+                  See all industries
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
+                </div>
+              </Link>
+              <Link
+                href="/cases/"
+                className="group flex flex-col border-2 border-black bg-white p-6 transition-all hover:-translate-x-1 hover:-translate-y-1 hover:bg-[#ff4d00] hover:text-black hover:shadow-[6px_6px_0_0_#000]"
+              >
+                <div className="text-[10px] font-black uppercase tracking-widest">
+                  Case Studies
+                </div>
+                <div className="mt-2 text-xl font-black uppercase leading-tight md:text-2xl">
+                  6,000+ projects
+                </div>
+                <div className="mt-2 flex-1 text-sm">
+                  Real briefs, fabric choices, and delivery outcomes from sports leagues, race events, music festivals, conferences, schools, and more.
+                </div>
+                <div className="mt-3 inline-flex items-center gap-2 text-sm font-black uppercase tracking-widest">
+                  Open the gallery
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
+                </div>
+              </Link>
+            </div>
+          </div>
+        </section>
+
         {/* CTA — direct quote */}
         <section className="bg-[#0a0a0a] text-white">
           <div className="mx-auto max-w-5xl px-6 py-20 text-center">
