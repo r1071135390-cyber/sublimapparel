@@ -243,8 +243,8 @@ export const industries: IndustryCase[] = [
         client: "Lakeshore Marathon Organizing Committee",
         year: "2025",
         summary:
-          "Final registration numbers landed 12 days before the race — 8,200 finishers across three distance categories. Cut-and-sew cotton tees with full-bleed sublimation on the back, three distinct designs (5K / 10K / Marathon), and a 1,500-piece volunteer staff batch on polyester. Lake County, United States.",
-        products: ["Custom Sublimation Cotton T-Shirt", "Custom Sublimation Polyester T-Shirt", "Volunteer Staff Tee"],
+          "Final registration numbers landed 12 days before the race — 8,200 finishers across three distance categories. Cut-and-sew cotton tees with allover digital print (DTG/DTF, not sublimation — dye-sub cannot bond to cotton) on the back, three distinct designs (5K / 10K / Marathon), and a 1,500-piece volunteer staff batch on polyester. Lake County, United States.",
+        products: ["Custom Full-Coverage Cotton T-Shirt (Allover Digital Print)", "Custom Sublimation Polyester T-Shirt", "Volunteer Staff Tee"],
         images: [],
       },
       {
@@ -254,7 +254,7 @@ export const industries: IndustryCase[] = [
         year: "2024",
         summary:
           "1,800 finisher tees printed on heavyweight 220gsm cotton with a full-color mountain panorama on the back. 5 design revisions over 3 weeks; final mockup locked 21 days before race day. Bulk shipped by DDP air to Denver with the route banner drop.",
-        products: ["Custom Sublimation Cotton T-Shirt", "Custom Race Banner"],
+        products: ["Custom Full-Coverage Cotton T-Shirt (Allover Digital Print)", "Custom Race Banner"],
         images: [],
       },
     ],

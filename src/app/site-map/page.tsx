@@ -81,7 +81,7 @@ const GROUPS: SitemapGroup[] = [
     accent: "blue",
     nodes: [
       { path: "/fabric", label: "Fabric & Craft", note: "Index — fabric comparison, DTG vs sublimation, specs", new: true },
-      { path: "/fabric/cotton", label: "Sublimation on 100% Cotton", note: "★ king differentiator · eats cotton jersey / 100% cotton / sublimation cotton / direct to garment", new: true },
+      { path: "/fabric/cotton", label: "Allover Digital Print on 100% Cotton", note: "★ king differentiator · eats cotton jersey / 100% cotton / allover cotton / direct to garment / DTG on cotton (NOT sublimation — dye-sub ink cannot bond to cotton fiber)", new: true },
       { path: "/shipping", label: "Shipping & Warehouse", note: "Index — DDP / US warehouse / Global delivery", new: true },
       { path: "/shipping/ddp", label: "DDP Delivered Duty Paid", note: "★ king SEO · eats ddp / duties paid / overseas warehouse", new: true },
       { path: "/shipping/us-warehouse", label: "US Warehouse · Fontana, CA", note: "★ king SEO · eats us warehouse / overseas warehouse / fulfillment", new: true },

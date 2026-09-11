@@ -40,7 +40,13 @@ const TYPE_TABS: { id: "all" | SearchResultType; label: string }[] = [
 // so pre-populating them on the empty-state gives the page an entry
 // point for every visitor.
 const POPULAR_QUERIES: { q: string; intent: string }[] = [
-  { q: "sublimation cotton", intent: "All-over print on 100% cotton" },
+  // 2026-09-11 (R26.5): replaced the previously incorrect popular-query
+  // "sublimation cotton" with the technically correct buyer-intent
+  // "allover cotton". Dye-sublimation ink cannot bond to cotton fiber
+  // (it requires polyester or polyamide); on cotton we run allover
+  // digital print (DTG / DTF), not classic heat-transfer sublimation.
+  // The intent string is rewritten to make that explicit to the buyer.
+  { q: "allover cotton", intent: "Allover digital print on 100% cotton (DTG/DTF, not sublimation)" },
   { q: "DDP shipping USA", intent: "Delivered duty paid to the US" },
   { q: "MOQ 50", intent: "Minimum order quantity" },
   { q: "cycling jersey", intent: "Cut-and-sew cycling apparel" },

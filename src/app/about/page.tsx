@@ -1,10 +1,16 @@
-import { Contact } from"@/components/contact";
+import { Contact } from "@/components/contact";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { JsonLd } from "@/components/json-ld";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
-import Link from"next/link";
-import { MapPin } from"lucide-react";
-import Image from"next/image";
+import {
+  verifiedReviews,
+  hasAggregateableReviews,
+  computeAggregateRating,
+  toSchemaReview,
+} from "@/lib/reviews";
+import Link from "next/link";
+import { MapPin, Star, Quote } from "lucide-react";
+import Image from "next/image";
 
 export const metadata = buildPageMetadata({
     // 2026-09-11 (R15-P0-1): was 78 chars and explicitly truncated in source ("..."), Google's SERP would show it as truncated. Rewrote to 59 chars to fit fully.
@@ -114,10 +120,15 @@ export default function AboutPage() {
           crawler identify the page as the brand's authoritative "about"
           surface. Linking it to the global Organization via mainEntity
           and to the website via isPartOf joins the about page to the
-          site-wide entity graph. We deliberately omit aggregateRating
-          because we don't publish a verified public review count, and
-          fabricated ratings would violate Google's structured data
-          spam policy. */}
+          site-wide entity graph.
+          2026-09-11 (R27): we now also emit a Review node (and, when
+          verifiedReviews contains at least one rating-bearing entry, an
+          AggregateRating node) on the same Organization. Until a real
+          public review feed is wired up, verifiedReviews is an empty
+          array — so the AggregateRating block is intentionally omitted
+          and only Review nodes (zero of them) are emitted. Fabricated
+          ratings would violate Google's structured data spam policy;
+          see src/lib/reviews.ts for the activation checklist. */}
       <JsonLd
         data={{
           "@context": "https://schema.org",
@@ -143,6 +154,61 @@ export default function AboutPage() {
           keywords:
             "about SublimApparel, Yiwu factory, custom apparel manufacturer, 8 years experience, 50+ countries served, US warehouse, B2B sublimation manufacturer, OEM apparel, OEKO-TEX certified",
         }}
+      />
+      {/* 2026-09-11 (R27): Review + AggregateRating carrier JSON-LD.
+          This is a separate JSON-LD block (not nested inside AboutPage
+          above) because the global Organization node already lives at
+          #organization. We re-emit the same @id as a separate
+          Organization block and conditionally add `review` and
+          `aggregateRating` so Google can pick them up without us
+          mutating the global organizationJsonLd (which is reused on
+          the homepage, contact page, and across the site).
+
+          The gating logic is:
+            - review: emitted only when verifiedReviews is non-empty.
+            - aggregateRating: emitted only when
+              hasAggregateableReviews() returns true, which requires
+              at least one VerifiedReview with a 1-5 ratingValue.
+            - When both gates are false, only the bare Organization
+              shell is emitted (a no-op for Google's review parser).
+
+          This keeps the page schema-clean today (no fabricated
+          ratings) and ready for the day a real public review feed
+          (Trustpilot, Google Business Profile, Alibaba review widget)
+          is wired up. */}
+      <JsonLd
+        data={(() => {
+          const base = {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "@id": "https://sublimapparel.com/#organization-about-reviews",
+            url: "https://sublimapparel.com/about/",
+            name: "SublimApparel",
+            description:
+              "Yiwu-based allover-print apparel factory reviewed on this page. Polyester sublimation + all-cotton DTG. 50-piece MOQ. DDP door-to-door to 50+ countries.",
+          };
+          // Both gates fail: emit a minimal Organization node so the
+          // JSON-LD block is still valid (a JSON-LD block with no
+          // review data is harmless and acts as a future-ready hook).
+          if (verifiedReviews.length === 0) return base;
+          const reviewNodes = verifiedReviews.map(toSchemaReview);
+          const agg = computeAggregateRating();
+          return {
+            ...base,
+            review: reviewNodes,
+            ...(agg
+              ? {
+                  aggregateRating: {
+                    "@type": "AggregateRating",
+                    ratingValue: agg.ratingValue,
+                    reviewCount: agg.reviewCount,
+                    bestRating: agg.bestRating,
+                    worstRating: agg.worstRating,
+                  },
+                }
+              : {}),
+          };
+        })()}
       />
       <main>
       <section className="relative overflow-hidden border-b-2 border-black bg-[#0a0a0a] text-white">
@@ -482,6 +548,110 @@ export default function AboutPage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Trusted by buyers — Review + AggregateRating carrier block.
+          2026-09-11 (R27): renders on /about/ only. Source of truth is
+          `verifiedReviews` in src/lib/reviews.ts; the same array drives
+          the JSON-LD above, so the visible block and the schema stay
+          in lockstep. When the array is non-empty we render real
+          review cards (with star rating + author + body + source).
+          When the array is empty (the current state) we render a
+          "Reviews coming soon" placeholder so the section still
+          exists in the DOM and the page hierarchy is stable. This
+          also makes the page a future-friendly hook: as soon as
+          verifiedReviews is populated, the schema and the visible UI
+          light up automatically with no additional code change. */}
+      <section className="border-b-2 border-black bg-white">
+        <div className="mx-auto max-w-7xl px-6 py-20">
+          <div className="mb-10 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+            <div>
+              <div className="mb-3 inline-block bg-[#00c2ff] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
+                Trusted by buyers
+              </div>
+              <h2 className="text-4xl font-black leading-tight text-black md:text-6xl">
+                What buyers
+                <br />
+                <span className="text-[#cc3d00]">actually say.</span>
+              </h2>
+            </div>
+            <p className="max-w-md text-base text-black/70">
+              Verbatim feedback from public case-study clients. Each
+              entry below is a real, attributable review — not
+              marketing copy.
+            </p>
+          </div>
+
+          {verifiedReviews.length > 0 ? (
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {verifiedReviews.map((r) => (
+                <article
+                  key={r.id}
+                  className="flex flex-col border-2 border-black bg-[#faf9f6] p-6"
+                >
+                  <div className="mb-3 flex items-center gap-1 text-[#cc3d00]">
+                    {[1, 2, 3, 4, 5].map((i) => (
+                      <Star
+                        key={i}
+                        className={
+                          "h-4 w-4 " +
+                          (typeof r.ratingValue === "number" &&
+                          i <= Math.round(r.ratingValue)
+                            ? "fill-[#cc3d00]"
+                            : "opacity-30")
+                        }
+                      />
+                    ))}
+                    {typeof r.ratingValue === "number" ? (
+                      <span className="ml-1 text-xs font-black uppercase tracking-widest text-black/70">
+                        {r.ratingValue.toFixed(1)} / 5
+                      </span>
+                    ) : null}
+                  </div>
+                  <Quote className="mb-2 h-5 w-5 text-[#00c2ff]" />
+                  <p className="flex-1 text-base leading-relaxed text-black">
+                    {r.reviewBody}
+                  </p>
+                  <div className="mt-4 border-t-2 border-black/10 pt-3 text-xs font-black uppercase tracking-widest text-black/70">
+                    {r.author}
+                    {r.authorRole ? ` · ${r.authorRole}` : ""}
+                    <span className="ml-2 text-black/40">
+                      {r.datePublished}
+                    </span>
+                  </div>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <div className="border-2 border-dashed border-black/30 bg-[#faf9f6] p-8">
+              <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div>
+                  <div className="mb-2 text-2xl font-black text-black md:text-3xl">
+                    Reviews coming soon.
+                  </div>
+                  <p className="max-w-2xl text-sm text-black/70">
+                    We don&apos;t publish a public star-rating feed
+                    yet — every rating you see on the open web needs
+                    to come from a real, verifiable buyer review
+                    (Trustpilot, Google Business Profile, or a
+                    signed opt-in case-study follow-up). When our
+                    public review feed goes live, this section and
+                    the corresponding JSON-LD on this page will
+                    activate automatically. The schema, gating
+                    logic, and UI hookup are all in place — only
+                    the data is missing.
+                  </p>
+                </div>
+                <Link
+                  href="/about/cases/"
+                  className="inline-flex shrink-0 items-center gap-2 border-2 border-black bg-white px-5 py-3 text-xs font-black uppercase tracking-widest text-black transition-colors hover:bg-[#ff4d00]"
+                >
+                  Read case studies →
+                </Link>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
