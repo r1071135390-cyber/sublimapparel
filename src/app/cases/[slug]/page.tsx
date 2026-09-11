@@ -25,6 +25,8 @@ import { industries, getIndustryBySlug } from "@/lib/cases";
 import { products, type Product } from "@/lib/products-data";
 import { tagArchiveLink } from "@/lib/tag-utils";
 import { getProductImages } from "@/lib/product-images";
+import { JsonLd } from "@/components/json-ld";
+import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 
 const iconMap: Record<string, typeof CalendarDays> = {
   CalendarDays,
@@ -80,8 +82,49 @@ export default async function CaseCategoryPage({ params }: Props) {
   const Icon = iconMap[ind.icon] ?? Camera;
   const hasCases = ind.cases.length > 0;
 
+  // 2026-09-11 (Round 10): this page had zero JSON-LD schema despite being
+  // indexed in sitemap. Add WebPage + breadcrumb + ItemList so the page joins
+  // the brand entity graph and Google can enumerate the case study links.
+  // The ItemList mirrors the /industries/ and /technique/ hub pattern.
+  const slugCanonical = `/cases/${slug}/`;
+  const caseListItems = ind.cases.map((c, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: c.title,
+    url: `https://sublimapparel.com/cases/${ind.slug}/${c.id}/`,
+  }));
+
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Case Studies", path: "/cases/" },
+    { name: ind.title, path: slugCanonical },
+  ]);
+  const webPageJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `https://sublimapparel.com${slugCanonical}#webpage`,
+    url: `https://sublimapparel.com${slugCanonical}`,
+    name: `${ind.title} Case Studies — SublimApparel`,
+    description: ind.blurb,
+    inLanguage: "en",
+    isPartOf: { "@id": "https://sublimapparel.com/#website" },
+    about: { "@id": "https://sublimapparel.com/#organization" },
+    speakable: {
+      "@type": "SpeakableSpecification",
+      xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+    },
+  };
+  const itemListJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListOrder: "https://schema.org/ItemListOrderAscending",
+    numberOfItems: ind.cases.length,
+    itemListElement: caseListItems,
+  };
+
   return (
     <>
+      <JsonLd data={[breadcrumbJsonLd, webPageJsonLd, itemListJsonLd]} />
       {/* Top utility bar */}
       <div className="border-b-2 border-black bg-black text-white">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-6 py-2.5 text-[11px] font-bold uppercase tracking-wider">

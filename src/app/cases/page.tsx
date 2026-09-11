@@ -111,6 +111,26 @@ export default function CasesPage() {
     },
   };
 
+  // 2026-09-11 (Round 10): the page had FAQPage + CollectionPage + ItemList +
+  // breadcrumb but no WebPage. Adding WebPage so it joins the brand entity
+  // graph with isPartOf → #website and about → #organization cross-links.
+  const webPageJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://sublimapparel.com/cases/#webpage",
+    url: "https://sublimapparel.com/cases/",
+    name: "Custom Apparel Case Studies: Sports, Events & Brands | SublimApparel",
+    description:
+      "Browse sublimation printing case studies by industry. See real examples of custom apparel, DDP shipping and full-bleed cotton prints we shipped to 50+ countries.",
+    inLanguage: "en",
+    isPartOf: { "@id": "https://sublimapparel.com/#website" },
+    about: { "@id": "https://sublimapparel.com/#organization" },
+    speakable: {
+      "@type": "SpeakableSpecification",
+      xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+    },
+  };
+
   return (
     <>
       <JsonLd
@@ -119,8 +139,7 @@ export default function CasesPage() {
           { name: "Case Studies", path: "/cases" },
         ])}
       />
-      <JsonLd data={faqJsonLd} />
-      <JsonLd data={caseCollection} />
+      <JsonLd data={[faqJsonLd, webPageJsonLd, caseCollection]} />
       {/* Top utility bar */}
       <div className="border-b-2 border-black bg-black text-white">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-6 py-2.5 text-[11px] font-bold uppercase tracking-wider">

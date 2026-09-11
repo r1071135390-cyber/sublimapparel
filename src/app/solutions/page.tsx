@@ -155,6 +155,26 @@ export default function SolutionsPage() {
     },
   };
 
+  // 2026-09-11 (Round 10): the page had FAQPage + CollectionPage + ItemList
+  // + breadcrumb but no WebPage. Adding WebPage so it joins the brand entity
+  // graph with isPartOf → #website and about → #organization cross-links.
+  const webPageJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://sublimapparel.com/solutions/#webpage",
+    url: "https://sublimapparel.com/solutions/",
+    name: "Custom Apparel Solutions for Every B2B Buyer | SublimApparel",
+    description:
+      "Six apparel solutions built for specific B2B buyers: sports teams, events, corporate, promotional, brands, and e-commerce. Pick yours, get a quote in 24 hours.",
+    inLanguage: "en",
+    isPartOf: { "@id": "https://sublimapparel.com/#website" },
+    about: { "@id": "https://sublimapparel.com/#organization" },
+    speakable: {
+      "@type": "SpeakableSpecification",
+      xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+    },
+  };
+
   return (
     <>
       <JsonLd
@@ -163,8 +183,7 @@ export default function SolutionsPage() {
           { name: "Solutions", path: "/solutions" },
         ])}
       />
-      <JsonLd data={solutionsFaqJsonLd} />
-      <JsonLd data={solutionsCollection} />
+      <JsonLd data={[solutionsFaqJsonLd, webPageJsonLd, solutionsCollection]} />
       <main>
         {/* HERO — dark industrial style */}
         <section className="relative overflow-hidden bg-[#0a0a0a] text-white">

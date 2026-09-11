@@ -52,13 +52,33 @@ export default function BlogIndexPage() {
     },
   };
 
+  // 2026-09-11 (Round 10): the page had Blog + ItemList + BreadcrumbList but
+  // no WebPage. Adding WebPage so the index joins the brand entity graph
+  // with @id cross-links (isPartOf → #website, about → #organization).
+  const webPageJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://sublimapparel.com/blog/#webpage",
+    url: "https://sublimapparel.com/blog/",
+    name: "Blog | Sublimation Apparel Insights & Factory Stories | SublimApparel",
+    description:
+      "Industry guides, factory stories, and B2B apparel manufacturing insights from a 2,000 m² Yiwu sublimation factory. Sublimation vs DTG, DDP shipping, fabric guides, esports jersey fabric, and more.",
+    inLanguage: "en",
+    isPartOf: { "@id": "https://sublimapparel.com/#website" },
+    about: { "@id": "https://sublimapparel.com/#organization" },
+    speakable: {
+      "@type": "SpeakableSpecification",
+      xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+    },
+  };
+
   return (
     <>
       <JsonLd data={buildBreadcrumbJsonLd([
         { name: "Home", path: "/" },
         { name: "Blog", path: "/blog" },
       ])} />
-      <JsonLd data={blogList} />
+      <JsonLd data={[blogList, webPageJsonLd]} />
       <main>
       {/* HERO */}
       <section className="border-b-2 border-black bg-[#faf9f6]">

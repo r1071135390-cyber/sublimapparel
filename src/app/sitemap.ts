@@ -42,7 +42,7 @@ const withSlash = (p: string) => (p.endsWith("/") ? p : `${p}/`);
 //     on each build, but the *content* rarely changes day-to-day. If a
 //     single product is rewritten, we add a per-route override later.
 const STATIC_LAST_MOD = new Date("2025-08-18T00:00:00.000Z"); // last big SEO/content refresh
-const TODAY = new Date("2026-09-11T00:00:00.000Z"); // this push: /contact copy + /fabric & /about FAQPage JSON-LD
+const TODAY = new Date("2026-09-11T00:00:00.000Z"); // 2026-09-11 Round 10 push: WebPage schema added to /cases/[slug] + /cases + /blog + /solutions
 
 type SitemapRoute = {
   path: string;
@@ -115,12 +115,12 @@ const ROUTES: SitemapRoute[] = [
   { path: "/about/quality", priority: 0.75, changeFrequency: "monthly", lastModified: TODAY }, // 2026-09-11 push: added WebPage JSON-LD
   { path: "/about/cases", priority: 0.75, changeFrequency: "monthly", lastModified: TODAY }, // 2026-09-11 push: added WebPage JSON-LD
   { path: "/about/faq", priority: 0.7, changeFrequency: "monthly", lastModified: TODAY }, // 2026-09-11 push: added FAQPage+WebPage JSON-LD
-  { path: "/cases", priority: 0.7, changeFrequency: "weekly" },
+  { path: "/cases", priority: 0.7, changeFrequency: "weekly", lastModified: TODAY }, // 2026-09-11 push: added WebPage JSON-LD
 
   // ── Case study detail pages ──
-  { path: "/cases/endurance-race-events", priority: 0.7, changeFrequency: "monthly" },
-  { path: "/cases/music-tour-festival", priority: 0.7, changeFrequency: "monthly" },
-  { path: "/cases/sports-teams", priority: 0.7, changeFrequency: "monthly" },
+  { path: "/cases/endurance-race-events", priority: 0.7, changeFrequency: "monthly", lastModified: TODAY }, // 2026-09-11 push: added WebPage+ItemList JSON-LD
+  { path: "/cases/music-tour-festival", priority: 0.7, changeFrequency: "monthly", lastModified: TODAY }, // 2026-09-11 push: added WebPage+ItemList JSON-LD
+  { path: "/cases/sports-teams", priority: 0.7, changeFrequency: "monthly", lastModified: TODAY }, // 2026-09-11 push: added WebPage+ItemList JSON-LD
   { path: "/cases/endurance-race-events/lakeshore-marathon-2025", priority: 0.65, changeFrequency: "yearly" },
   { path: "/cases/endurance-race-events/alpine-ultra-50k-2024", priority: 0.65, changeFrequency: "yearly" },
   { path: "/cases/music-tour-festival/harbor-sound-festival-2025", priority: 0.65, changeFrequency: "yearly" },
@@ -128,7 +128,7 @@ const ROUTES: SitemapRoute[] = [
 
 
   // ── L2  Solution pages (6) — Phase 1 SEO focus ────────────────
-  { path: "/solutions", priority: 0.9, changeFrequency: "weekly" }, // 2026-09-11 push: solutions hub added — 6 buyer profiles in one place
+  { path: "/solutions", priority: 0.9, changeFrequency: "weekly", lastModified: TODAY }, // 2026-09-11 push: added WebPage JSON-LD
   { path: "/teams-sports-apparel", priority: 0.95, changeFrequency: "weekly" },
   { path: "/event-festivals-conferences", priority: 0.95, changeFrequency: "weekly" },
   { path: "/corporate-organization-apparel", priority: 0.95, changeFrequency: "weekly" },
@@ -154,7 +154,7 @@ const ROUTES: SitemapRoute[] = [
   { path: "/resources", priority: 0.85, changeFrequency: "weekly" },
 
   // ── L2 （ / ）─────────────────
-  { path: "/blog", priority: 0.8, changeFrequency: "weekly" },
+  { path: "/blog", priority: 0.8, changeFrequency: "weekly", lastModified: TODAY }, // 2026-09-11 push: added WebPage JSON-LD
 
   // ── L3 （）────────────────────────
   { path: "/privacy", priority: 0.3, changeFrequency: "yearly" },
