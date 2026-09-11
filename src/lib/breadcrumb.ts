@@ -615,6 +615,188 @@ export function buildAboutGraph(input: AboutInput) {
   };
 }
 
+// 2026-09-12 (R38): shared helper for /contact/ that consolidates
+// the 3 separate JSON-LD <script> tags (BreadcrumbList + FAQPage
+// + ContactPage) into a single @graph payload, with every node
+// @id-anchored and joined to the global brand entity graph.
+//
+// Key design choices:
+//   - ContactPage uses the dedicated schema.org @type: "ContactPage"
+//     (Google recognizes this as the brand's authoritative "how to
+//     reach this business" surface, distinct from a generic WebPage).
+//   - WebPage + ContactPage both link mainEntity → #organization so
+//     Google knows the contact page IS the brand's authoritative
+//     contact surface.
+//   - Person #person-ramon is inlined (same pattern as
+//     buildBlogHubGraph R36-C, buildBlogPostGraph R35-D,
+//     buildAboutGraph R37) so the publisher author chain stays
+//     self-contained.
+//   - The 8 "While you wait" sub-pages (get-a-quote, get-a-quote-
+//     express, yiwu-factory-whatsapp, samples, fabric,
+//     all-over-print, shipping/ddp, resources) are emitted as a
+//     single ItemList #next-step-list so the /contact/ page exposes
+//     the full next-step resource hierarchy to Google in one shot.
+//     Without it the contact page only points at hub pages; with it,
+//     every B2B conversion path is reachable from a single ItemList.
+export type ContactInput = {
+  /** Optional FAQ items rendered on the page. */
+  faq?: FaqItem[];
+  /** Optional list of "While you wait" next-step resource cards. */
+  nextSteps?: { href: string; title: string }[];
+};
+
+export function buildContactGraph(input: ContactInput) {
+  const url = `${SITE_URL}/contact/`;
+  const webpageId = `${url}#webpage`;
+  const contactId = `${url}#contact`;
+  const breadcrumbId = `${url}#breadcrumb`;
+  const faqId = input.faq && input.faq.length > 0 ? `${url}#faq` : null;
+  const nextStepListId =
+    input.nextSteps && input.nextSteps.length > 0
+      ? `${url}#next-step-list`
+      : null;
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": webpageId,
+        url,
+        name: "Contact SublimApparel — Yiwu Factory Quote in 1 Business Day",
+        description:
+          "Get a custom sublimation or all-over cotton print quote directly from our Yiwu factory. MOQ 50 pcs, 15-25 day production, DDP shipping to 100+ countries, US warehouse in Fontana CA. WhatsApp +86-198-1793-0190, email info@sublimapparel.com. Replies within 1 business day, no signup required.",
+        inLanguage: "en",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        about: { "@id": `${SITE_URL}/#organization` },
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: `${SITE_URL}/contact-hero.webp`,
+        },
+        significantLink: [
+          `${SITE_URL}/get-a-quote/`,
+          `${SITE_URL}/yiwu-factory-whatsapp/`,
+          `${SITE_URL}/shipping/us-warehouse/`,
+        ],
+        // 2026-09-12 (R38): voice-search / Google-Assistant
+        // read-aloud markers (matches the existing ContactPage
+        // block on the page). Users frequently ask "what's the
+        // phone number for SublimApparel" or "how do I contact
+        // SublimApparel" — the h1 + hero subhead are the
+        // speakable surfaces.
+        speakable: {
+          "@type": "SpeakableSpecification",
+          xpath: [
+            "/html/body//h1",
+            "/html/body//section[contains(@class,'hero')]//p",
+          ],
+        },
+        ...(contactId ? { mainEntity: { "@id": contactId } } : {}),
+        keywords:
+          "contact SublimApparel, Yiwu factory contact, get a quote, MOQ 50, DDP shipping quote, Yiwu factory WhatsApp, info@sublimapparel.com, custom apparel quote",
+      },
+      {
+        "@type": "ContactPage",
+        "@id": contactId,
+        url,
+        name: "Contact SublimApparel — Yiwu Factory Quote in 1 Business Day",
+        description:
+          "Get a custom sublimation or all-over cotton print quote directly from our Yiwu factory. MOQ 50 pcs, 15-25 day production, DDP shipping to 100+ countries, US warehouse in Fontana CA. WhatsApp +86-198-1793-0190, email info@sublimapparel.com. Replies within 1 business day, no signup required.",
+        inLanguage: "en",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        about: { "@id": `${SITE_URL}/#organization` },
+        // 2026-09-12 (R38): ContactPage.mainEntity points to the
+        // Organization so Google knows the contact page IS the
+        // brand's authoritative contact surface. Same pattern as
+        // the about page (R37) and the homepage.
+        mainEntity: { "@id": `${SITE_URL}/#organization` },
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: `${SITE_URL}/contact-hero.webp`,
+        },
+        significantLink: [
+          `${SITE_URL}/get-a-quote/`,
+          `${SITE_URL}/yiwu-factory-whatsapp/`,
+          `${SITE_URL}/shipping/us-warehouse/`,
+        ],
+      },
+      {
+        // 2026-09-12 (R38): same Person node emitted by
+        // buildBlogHubGraph (R36-C), buildBlogPostGraph (R35-D),
+        // and buildAboutGraph (R37) so the publisher author
+        // chain stays self-contained across the site.
+        "@type": "Person",
+        "@id": `${SITE_URL}/#person-ramon`,
+        name: "Ramon Hsu",
+        jobTitle: "Founder & CEO, SublimApparel",
+        worksFor: { "@id": `${SITE_URL}/#organization` },
+        url: `${SITE_URL}/about/`,
+        knowsAbout: [
+          "Dye-sublimation printing",
+          "Custom apparel manufacturing",
+          "DDP (Delivered Duty Paid) shipping",
+          "All-over digital print on cotton",
+          "Yiwu, China apparel supply chain",
+        ],
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": breadcrumbId,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${SITE_URL}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Contact",
+            item: url,
+          },
+        ],
+      },
+      ...(faqId
+        ? [
+            {
+              "@type": "FAQPage",
+              "@id": faqId,
+              mainEntity: input.faq!.map((it) => ({
+                "@type": "Question",
+                name: it.q,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: it.a,
+                },
+              })),
+            },
+          ]
+        : []),
+      ...(nextStepListId
+        ? [
+            {
+              "@type": "ItemList",
+              "@id": nextStepListId,
+              name: "While you wait — SublimApparel next-step resources",
+              description:
+                "Eight resources that help a B2B apparel buyer keep moving while waiting for the 1-business-day quote reply: detailed quote form, express 30-min quote, WhatsApp, custom sample order, fabric library, all-over print catalog, DDP shipping guide, and all tools/calculators.",
+              numberOfItems: input.nextSteps!.length,
+              itemListOrder:
+                "https://schema.org/ItemListOrderUnordered",
+              itemListElement: input.nextSteps!.map((p, i) => ({
+                "@type": "ListItem",
+                position: i + 1,
+                name: p.title,
+                url: `${SITE_URL}${p.href.startsWith("/") ? p.href : `/${p.href}`}`,
+              })),
+            },
+          ]
+        : []),
+    ],
+  };
+}
+
 // 2026-09-12 (R36-C): unified @graph payload for the
 // /blog/ blog index hub page. Pre-R36, the page emitted
 // 4 separate JSON-LD nodes across 2 <JsonLd> calls:

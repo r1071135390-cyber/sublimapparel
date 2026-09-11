@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowRight, FileText, MessageCircle, Package, Ruler, Sparkles, Truck, Wrench } from "lucide-react";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildContactGraph } from "@/lib/breadcrumb";
 import { Contact } from "@/components/contact";
 import { TeamSection } from "@/components/contact-team";
 
@@ -25,7 +25,7 @@ export default function ContactPage() {
   // PAA-style rich results for "how to contact Yiwu factory", "MOQ 50
   // quote", "DDP shipping quote" — the three query clusters GSC shows
   // pointing at /contact/ with low CTR in Sep-2026.
-  const faqJsonLd = buildFaqJsonLd([
+  const contactFaqs = [
     {
       q: "How do I contact the Yiwu factory directly?",
       a: "Three channels: (1) WhatsApp +86 198 1793 0190 (fastest — 1 business day reply, no signup). (2) Email info@sublimapparel.com (1 business day reply). (3) The form on /contact/ or /get-a-quote/ (1 business day reply). All three go to the same Yiwu production managers — no call center, no chat bot, no funnel.",
@@ -50,68 +50,52 @@ export default function ContactPage() {
       q: "What file formats do you accept for artwork?",
       a: "AI, PSD, PDF, PNG, JPG — even a hand sketch. We free-check every artwork for printability (resolution, color profile, seam alignment) and send back a 3D mockup on the actual garment before production. Revisions are unlimited until you lock the design.",
     },
-  ]);
+  ];
+
+  // 2026-09-12 (R38): the 8 "While you wait" resource
+  // cards lifted to a top-level const so we can hand them
+  // straight to buildContactGraph as the ItemList
+  // #next-step-list node. The helper emits them at
+  // /contact/#next-step-list so /contact/ exposes the full
+  // next-step resource hierarchy to Google in one shot
+  // instead of just pointing at hub pages. Same pattern as
+  // the about page "Dive deeper" ItemList (R37).
+  const contactNextSteps = [
+    { href: "/get-a-quote/", title: "Detailed quote form" },
+    { href: "/get-a-quote-express/", title: "Express 30-min quote" },
+    { href: "/yiwu-factory-whatsapp/", title: "WhatsApp the factory" },
+    { href: "/samples/", title: "Order a custom sample" },
+    { href: "/fabric/", title: "Fabric library" },
+    { href: "/all-over-print/", title: "All-over print catalog" },
+    { href: "/shipping/ddp/", title: "DDP shipping guide" },
+    { href: "/resources/", title: "All tools & calculators" },
+  ];
+
+  // 2026-09-12 (R38): consolidate the 3 separate JSON-LD
+  // <script> tags (BreadcrumbList + FAQPage + ContactPage)
+  // into a single @graph payload via buildContactGraph. The
+  // new graph:
+  //   - joins the WebPage, ContactPage, Person #person-ramon,
+  //     FAQPage #faq, ItemList #next-step-list, and
+  //     BreadcrumbList into a single @graph with all @id
+  //     cross-linking
+  //   - ContactPage.mainEntity → #organization so Google
+  //     recognizes /contact/ as the brand's authoritative
+  //     contact surface (same pattern as the about page R37)
+  //   - Person #person-ramon is inlined so the publisher
+  //     author chain is self-contained (matches R36-C,
+  //     R35-D, and R37)
+  //   - The 8 "While you wait" resource cards are emitted as
+  //     an ItemList so Google sees the full B2B conversion
+  //     path from /contact/ in a single ItemList
+  const contactGraph = buildContactGraph({
+    faq: contactFaqs,
+    nextSteps: contactNextSteps,
+  });
 
   return (
     <>
-      <JsonLd data={buildBreadcrumbJsonLd([
-        { name: "Home", path: "/" },
-        { name: "Contact", path: "/contact" },
-      ])} />
-      <JsonLd data={faqJsonLd} />
-      {/* 2026-09-11 push (Round 8 part 1): add explicit ContactPage +
-          WebPage JSON-LD on /contact/. ContactPage is the schema.org
-          type dedicated to "how to reach this business" surfaces.
-          Linking it via mainEntity → #organization, primaryImageOfPage,
-          and `significantLink` to the WhatsApp landing page
-          (/yiwu-factory-whatsapp/) and the request-a-quote page
-          (/get-a-quote/) reinforces /contact/'s role as the canonical
-          conversion entry-point for high-intent B2B queries and gives
-          Google the cross-page entity graph to attach the
-          WhatsApp-tap-to-call affordance consistently. */}
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "ContactPage",
-          "@id": "https://sublimapparel.com/contact/#webpage",
-          url: "https://sublimapparel.com/contact/",
-          name: "Contact SublimApparel — Yiwu Factory Quote in 1 Business Day",
-          description:
-            "Get a custom sublimation or all-over cotton print quote directly from our Yiwu factory. MOQ 50 pcs, 15-25 day production, DDP shipping to 100+ countries, US warehouse in Fontana CA. WhatsApp +86-198-1793-0190, email info@sublimapparel.com. Replies within 1 business day, no signup required.",
-          inLanguage: "en",
-          isPartOf: { "@id": "https://sublimapparel.com/#website" },
-          about: { "@id": "https://sublimapparel.com/#organization" },
-          mainEntity: { "@id": "https://sublimapparel.com/#organization" },
-          primaryImageOfPage: {
-            "@type": "ImageObject",
-            url: "https://sublimapparel.com/contact-hero.webp",
-          },
-          // `significantLink` tells Google which outbound links from
-          // this page are the most semantically important for users.
-          // Both of these are direct conversion paths the user might
-          // prefer over the contact form.
-          significantLink: [
-            "https://sublimapparel.com/get-a-quote/",
-            "https://sublimapparel.com/yiwu-factory-whatsapp/",
-            "https://sublimapparel.com/shipping/us-warehouse/",
-          ],
-          // 2026-09-11 push (Round 8 part 1): WebPage.speakable marks
-          // which sections of the page are best-suited to voice-search
-          // / Google-Assistant read-aloud answers. Voice search
-          // optimization is a no-cost E-E-A-T win on contact pages
-          // because users frequently ask "what's the phone number for
-          // SublimApparel" or "how do I contact SublimApparel".
-          speakable: {
-            "@type": "SpeakableSpecification",
-            xpath: [
-              "/html/body//h1",
-              "/html/body//section[contains(@class,'hero')]//p",
-            ],
-          },
-          keywords:
-            "contact SublimApparel, Yiwu factory contact, get a quote, MOQ 50, DDP shipping quote, Yiwu factory WhatsApp, info@sublimapparel.com, custom apparel quote",
-        }}
-      />
+      <JsonLd data={contactGraph} />
       <main>
       <section className="relative overflow-hidden border-b-2 border-black bg-[#0a0a0a] text-white">
         {/* Background image — full bleed */}
