@@ -387,6 +387,210 @@ export function buildCollectionPageGraph(input: {
   };
 }
 
+// 2026-09-12 (R36-B): unified @graph payload for the
+// /fabric/ fabric hub page (lists all 41 fabric types and
+// the 20 print processes we run on them). Pre-R36, the page
+// emitted 2 independent JSON-LD <script> tags (BreadcrumbList
+// + FAQPage). The BreadcrumbList had no @id join, no
+// isPartOf / about to the brand entity graph, and the
+// FabricCatalogGrid that renders the 41 fabric cards + the
+// 20-process table were invisible to crawlers — the only
+// structured-data signal was the 6 inline FAQs.
+//
+// R36-B promotes the 2 <script> tags + the 41 fabric cards
+// + the 20 print processes to a single @graph block:
+//   - WebPage   #webpage (isPartOf #website + about
+//               #organization + speakable + primaryImageOfPage)
+//   - CollectionPage #collection (with @id, mainEntity
+//               round-trip to the first ItemList)
+//   - ItemList  #fabric-list (the 41 fabric types in
+//               FabricCatalogGrid — kept <= 50, Google
+//               supports up to 50 before ignoring)
+//   - ItemList  #process-list (the 20 print processes from
+//               the inline table, each linking back to
+//               /technique/{slug}/ — reinforces the
+//               technique-hub-to-fabric-hub entity join)
+//   - Service   #service (DDP fabric supply + cut-to-order,
+//               same 8-country areaServed as the per-fabric
+//               pages so the hub is also a service surface
+//               for "DDP fabric supply to {country}" long-tail
+//               intent)
+//   - BreadcrumbList #breadcrumb (Home → Fabric)
+//   - FAQPage   #faq (the 6 inline FAQs)
+//
+// Sharing the helper across the fabric hub + all 64 fabric
+// detail pages (R35-C uses buildFabricDetailGraph, this
+// helper is the hub-side sibling) means a single edit to
+// the @graph shape now touches the whole fabric site
+// surface in one place.
+export type FabricHubInput = {
+  /** The 41 fabric types to enumerate inside the fabric
+   *  ItemList. Each entry: slug + name. */
+  fabrics: { slug: string; name: string }[];
+  /** The 20 print processes to enumerate inside the
+   *  process ItemList. Each entry: slug + name. The
+   *  process slug is the same as the technique slug, so
+   *  each ListItem points to /technique/{slug}/. */
+  processes: { slug: string; name: string }[];
+  /** Optional FAQ items rendered inline. Omit to skip
+   *  the FAQPage node. */
+  faq?: FaqItem[];
+};
+
+export function buildFabricHubGraph(input: FabricHubInput) {
+  const url = `${SITE_URL}/fabric/`;
+  const webpageId = `${url}#webpage`;
+  const collectionId = `${url}#collection`;
+  const fabricListId = `${url}#fabric-list`;
+  const processListId = `${url}#process-list`;
+  const serviceId = `${url}#service`;
+  const breadcrumbId = `${url}#breadcrumb`;
+  const faqId = input.faq && input.faq.length > 0 ? `${url}#faq` : null;
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": webpageId,
+        url,
+        name: "Fabric & Print Process Guide — 24 Fabrics, 6 Methods",
+        description:
+          "Pick the right fabric-process combo for your apparel project. 24 fabrics in stock (polyester, poly-spandex, nylon, cotton, organic, rPET, blends), 6 print methods, 20 techniques, MOQ 50 pcs, DDP to 100+ countries.",
+        inLanguage: "en",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        about: { "@id": `${SITE_URL}/#organization` },
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: `${SITE_URL}/fabric-hero.webp`,
+        },
+        speakable: {
+          "@type": "SpeakableSpecification",
+          xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+        },
+        ...(faqId ? { mainEntity: { "@id": faqId } } : {}),
+      },
+      {
+        "@type": "CollectionPage",
+        "@id": collectionId,
+        url,
+        name: "Fabric & Print Process Guide — All Fabrics & Methods",
+        description:
+          "Full fabric catalogue: 41 in-stock fabrics (polyester, cotton, poly-spandex, nylon, fleece, blends) with composition, weight, and our sublimation fit rating. 20 print processes, 6 in-house methods.",
+        inLanguage: "en",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        about: { "@id": `${SITE_URL}/#organization` },
+        provider: { "@id": `${SITE_URL}/#organization` },
+        mainEntity: { "@id": fabricListId },
+      },
+      {
+        "@type": "ItemList",
+        "@id": fabricListId,
+        name: "All SublimApparel Fabric Types",
+        description:
+          "All 41 in-stock fabric types we run on our production floor at the Yiwu factory, ordered by fabric family.",
+        numberOfItems: input.fabrics.length,
+        itemListOrder: "https://schema.org/ItemListOrderAscending",
+        itemListElement: input.fabrics.map((f, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          name: f.name,
+          url: `${SITE_URL}/fabric/${f.slug}/`,
+        })),
+        isPartOf: { "@id": collectionId },
+      },
+      {
+        "@type": "ItemList",
+        "@id": processListId,
+        name: "Print Processes Available for These Fabrics",
+        description:
+          "All 20 print processes we run on these fabrics, each linking to its technique page for specs, MOQ, and best substrates.",
+        numberOfItems: input.processes.length,
+        itemListOrder: "https://schema.org/ItemListOrderAscending",
+        itemListElement: input.processes.map((p, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          name: p.name,
+          url: `${SITE_URL}/technique/${p.slug}/`,
+        })),
+        isPartOf: { "@id": collectionId },
+      },
+      {
+        "@type": "Service",
+        "@id": serviceId,
+        url,
+        name: "Bulk fabric supply + cut-to-spec DDP shipping from Yiwu, China",
+        serviceType:
+          "B2B fabric supply + cut-to-order + international DDP shipping",
+        description:
+          "Factory-direct fabric supply in bulk bolts, cut-to-order yardage from 50 m MOQ, plus DDP (delivered duty paid) shipping to 100+ countries. 41 fabric types in stock, 20 print processes.",
+        provider: { "@id": `${SITE_URL}/#organization` },
+        areaServed: [
+          { "@type": "Country", name: "United States" },
+          { "@type": "Country", name: "Canada" },
+          { "@type": "Country", name: "United Kingdom" },
+          { "@type": "Country", name: "Australia" },
+          { "@type": "Country", name: "Germany" },
+          { "@type": "Country", name: "France" },
+          { "@type": "Country", name: "Spain" },
+          { "@type": "Country", name: "Japan" },
+        ],
+        offers: {
+          "@type": "Offer",
+          "@id": `${url}#service-offer`,
+          url,
+          priceCurrency: "USD",
+          price: "0",
+          availability: "https://schema.org/PreOrder",
+          availabilityStarts: "2026-01-01",
+          priceValidUntil: "2027-12-31",
+          inventoryLevel: {
+            "@type": "QuantitativeValue",
+            value: 0,
+            unitText: "quote-based",
+          },
+          seller: { "@id": `${SITE_URL}/#organization` },
+        },
+        mainEntityOfPage: { "@id": webpageId },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": breadcrumbId,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${SITE_URL}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Fabric",
+            item: url,
+          },
+        ],
+      },
+      ...(input.faq && faqId
+        ? [
+            {
+              "@type": "FAQPage",
+              "@id": faqId,
+              mainEntity: input.faq.map((it) => ({
+                "@type": "Question",
+                name: it.q,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: it.a,
+                },
+              })),
+            },
+          ]
+        : []),
+    ],
+  };
+}
+
 // 2026-09-12 (R35-C): unified @graph payload for the 64
 // /fabric/[slug]/ fabric detail pages. Pre-R35, every fabric
 // page emitted one <script> with a @graph that already had
