@@ -220,7 +220,7 @@ const STATIC_PAGES: SearchResult[] = [
     badge: "Fabric",
     tag: "DTG / DTF cotton",
     keywords: [
-      "cotton", "100% cotton", "sublimation cotton", "dtg", "dtf",
+      "cotton", "100% cotton", "dtg", "dtf",
       "all-over cotton", "cotton jersey", "cotton hoodie", "cut and sew cotton",
     ],
   },

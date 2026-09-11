@@ -135,6 +135,10 @@ const ROUTES: SitemapRoute[] = [
   // 2026-09-11 (Round 14): was 0.8 — bumping to 0.85 to match the other two
   // compare pages. DDP vs FOB is equally high-intent (B2B logistics decision).
   { path: "/compare/ddp-vs-fob", priority: 0.85, changeFrequency: "monthly" },
+  // 2026-09-11 (R26-D): new compare page for "sublimation vs screen printing"
+  // (separate query cluster from DTG). Same 0.85 priority + monthly cadence
+  // as the other compare pages so the sitemap pin reflects equal importance.
+  { path: "/compare/sublimation-vs-screen-print", priority: 0.85, changeFrequency: "monthly" },
 
   // ── L3 Policy / guide pages (B2B trust + long-tail) ────
   { path: "/pricing", priority: 0.85, changeFrequency: "monthly" },

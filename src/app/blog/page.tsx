@@ -11,7 +11,19 @@ export const metadata = buildPageMetadata({
     title: "Blog | Sublimation Apparel Insights & Factory Stories",
     description: "Industry guides, factory stories, and B2B apparel manufacturing insights from a 2,000 m² Yiwu sublimation factory. Sublimation vs DTG, DDP shipping, fabric gui…",
     keywords: ["sublimation printing blog", "apparel manufacturing insights", "Yiwu factory", "B2B apparel guide", "DTG vs DTF", "DDP shipping guide", "esports jersey fabric"],
-    alternates: { canonical:"/blog/" },
+    alternates: {
+      canonical:"/blog/",
+      // 2026-09-11 (R26-A): self-link the RSS feed so headless
+      // crawlers (and browser RSS-icon auto-discovery extensions)
+      // can find /blog/feed.xml on the first request. Without this,
+      // a crawler has to guess a /feed or /rss path. With it, the
+      // link tag in <head> is enough.
+      types: {
+        "application/rss+xml": [
+          { url: "/blog/feed.xml", title: "SublimApparel Blog — RSS Feed" },
+        ],
+      },
+    },
     ogTitle: "SublimApparel Blog — Apparel Manufacturing Insights",
     ogDescription: "Industry guides, factory stories, and B2B apparel insights. Written by the team behind our 2,000 m² Yiwu sublimation factory.",
     // 2026-09-11 (Round 13): was "/blog/" — a directory path, not an image.

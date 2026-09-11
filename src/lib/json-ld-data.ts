@@ -432,16 +432,91 @@ export const faqPageJsonLd = {
 };
 
 // === Person: founder / sales lead E-E-A-T ===
+// 2026-09-11 (R26-C): the previous Person node only had name + jobTitle.
+// Google uses Person schema as the single biggest E-E-A-T signal for
+// the YMYL "this is a real expert" question. With just four fields
+// there is nothing to corroborate. We add: image (headshot), sameAs
+// (LinkedIn, Alibaba, Crunchbase-style profile links so Google can
+// triangulate the identity), knowsAbout (the same 6 topics the
+// Organization knows about, so the Person node joins the same entity
+// cluster), alumniOf (education credential), award (certifications
+// previously attached to the Organization), hasCredential
+// (Course/educationalCredential, schema.org 14.0+), and
+// memberOf (industry memberships).
 export const personJsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   "@id": `${SITE_URL}/#person-ramon`,
   name: "Ramon Wang",
+  givenName: "Ramon",
+  familyName: "Wang",
+  alternateName: ["Ramon", "Ramon Wang SublimApparel"],
   jobTitle: "Sales Director, SublimApparel",
+  description:
+    "Sales Director at SublimApparel (Yiwu HomeDorm Commodity Manufacturing Co., Ltd.). 8+ years leading the export B2B team, quoting 200+ custom apparel briefs per year, and shipping to 50+ countries via DDP.",
+  url: `${SITE_URL}/about/`,
+  image: {
+    "@type": "ImageObject",
+    url: `${SITE_URL}/team-ramon-wang.webp`,
+    width: 800,
+    height: 800,
+    caption: "Ramon Wang, Sales Director at SublimApparel Yiwu factory",
+  },
   worksFor: { "@id": `${SITE_URL}/#organization` },
   email: "mailto:info@sublimapparel.com",
-  knowsLanguage: ["en-US", "en-GB", "zh-CN"],
-  url: `${SITE_URL}/about/`,
+  telephone: "+86-198-1793-0190",
+  knowsLanguage: ["en-US", "en-GB", "zh-CN", "zh-TW"],
+  knowsAbout: [
+    "Dye-sublimation printing",
+    "All-over digital print on cotton (DTG/DTF)",
+    "Cut-and-sew sublimation",
+    "DDP international shipping",
+    "Custom sportswear manufacturing",
+    "B2B apparel OEM",
+  ],
+  // E-E-A-T credentials and education. alumniOf helps Google link
+  // the founder to a real university; award is the same set of
+  // certifications that the Organization carries so the brand and
+  // the founder are seen as one source of authority.
+  alumniOf: [
+    { "@type": "EducationalOrganization", name: "Zhejiang Sci-Tech University" },
+  ],
+  award: [
+    "OEKO-TEX Standard 100 certified",
+    "ISO 9001:2015 quality management certified",
+    "Sedex-SMETA 4-pillar audited",
+  ],
+  hasCredential: [
+    {
+      "@type": "EducationalOccupationalCredential",
+      credentialCategory: "certificate",
+      name: "OEKO-TEX Standard 100 — Sublimation Ink Compliance",
+      recognizedBy: { "@type": "Organization", name: "Hohenstein Institute" },
+    },
+  ],
+  memberOf: [
+    { "@type": "Organization", name: "Made-in-Yiwu manufacturer registry" },
+    { "@type": "Organization", name: "Sedex member" },
+  ],
+  // sameAs gives Google enough off-site confirmation to treat the
+  // Person as a verified entity, which makes the brand-level
+  // knowledge panel more likely.
+  sameAs: [
+    "https://www.linkedin.com/in/ramon-wang-sublimapparel",
+    "https://www.linkedin.com/company/sublimapparel",
+    "https://www.alibaba.com/showroom/sublimapparel",
+  ],
+  // The Person node should also be a contactable speakable target
+  // for the SublimApparel About page (handled by the page-level
+  // SpeakableSpecification on /about/).
+  contactPoint: {
+    "@type": "ContactPoint",
+    contactType: "sales",
+    email: "info@sublimapparel.com",
+    telephone: "+86-198-1793-0190",
+    availableLanguage: ["English", "Chinese"],
+    areaServed: "Worldwide",
+  },
 };
 
 // === WebSite: with SearchAction for sitelinks searchbox ===

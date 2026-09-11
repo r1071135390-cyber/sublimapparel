@@ -131,7 +131,11 @@ const linkGroups = [
       { label: "Care & washing guide", href: "/fabric/care" },
       // 2026-09-11 (Round 12): all 3 compare pages were orphan pages in sitemap
       // (priority 0.80-0.85) — now linked from footer so Google can crawl them.
+      // 2026-09-11 (R26-D): added the 4th compare page (sublimation vs screen
+      // printing) so the new URL has a real internal link to inherit PageRank
+      // from the high-authority homepage + footer.
       { label: "Sublimation vs screen print vs DTG", href: "/compare/sublimation-vs-dtg" },
+      { label: "Sublimation vs screen printing", href: "/compare/sublimation-vs-screen-print" },
       { label: "Polyester vs cotton for sublimation", href: "/compare/polyester-vs-cotton-sublima" },
       { label: "DDP vs FOB shipping from China", href: "/compare/ddp-vs-fob" },
       // 2026-09-11 (Round 13): /technique/ (priority 0.85, 20 sub-pages) was an
