@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { User, ChevronDown, Mail, Briefcase, Wrench, Building2, Shirt } from "lucide-react";
+import { User, ChevronDown, Mail, MessageCircle, Briefcase, Wrench, Building2, Shirt } from "lucide-react";
 
 const solutions = [
   {
@@ -227,6 +227,18 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-1">
+          {/* WhatsApp — direct chat for high-intent B2B buyers (2026-09-11 push)
+              Linked to /yiwu-factory-whatsapp/ so internal PageRank flows into
+              the new landing page from every page that renders the navbar. */}
+          <Link
+            href="/yiwu-factory-whatsapp/"
+            aria-label="Chat on WhatsApp"
+            className="inline-flex items-center gap-1.5 rounded-sm bg-[#ff4d00] px-2.5 py-2 text-sm font-black uppercase tracking-wider text-black transition-all hover:-translate-y-0.5 hover:bg-[#cc3d00] hover:shadow-[3px_3px_0_0_rgba(0,0,0,1)]"
+          >
+            <MessageCircle className="h-5 w-5" strokeWidth={2.5} />
+            <span className="hidden sm:inline">WhatsApp</span>
+          </Link>
+
           {/* Contact — sits next to account, always visible (desktop + mobile) */}
           <Link
             href="/contact/"

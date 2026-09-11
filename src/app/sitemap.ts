@@ -128,6 +128,7 @@ const ROUTES: SitemapRoute[] = [
 
 
   // ── L2  Solution pages (6) — Phase 1 SEO focus ────────────────
+  { path: "/solutions", priority: 0.9, changeFrequency: "weekly" }, // 2026-09-11 push: solutions hub added — 6 buyer profiles in one place
   { path: "/teams-sports-apparel", priority: 0.95, changeFrequency: "weekly" },
   { path: "/event-festivals-conferences", priority: 0.95, changeFrequency: "weekly" },
   { path: "/corporate-organization-apparel", priority: 0.95, changeFrequency: "weekly" },
