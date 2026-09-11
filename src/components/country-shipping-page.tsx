@@ -60,6 +60,123 @@ export function CountryShippingPage({ slug }: { slug: CountryShipping["slug"] })
   };
   const faqJsonLd = buildFaqJsonLd(data.faqs);
 
+  // 2026-09-12 (R33-A2): country + Service schema nodes so each
+  // /shipping/{slug}/ page joins the brand entity graph with a
+  // proper areaServed and a Country anchor for the destination.
+  //
+  // We emit three extra nodes that all share an @id with the page
+  // (so Google parses them in the same JSON.parse pass and joins
+  // them via the URL fragment):
+  //
+  //   1. Country  — anchors the destination country. Holds the
+  //                 ISO 3166-1 alpha-2 code in `identifier` and
+  //                 the capital city in `address`, with verifiable
+  //                 `geo` coordinates so Google trusts the Country
+  //                 as canonical. EU is the only exception (no
+  //                 alpha-2 code; we use "EU" + Brussels as
+  //                 administrative anchor).
+  //   2. Service  — a sibling Service node that ties the
+  //                 international shipping offering to the
+  //                 Organization via `provider`, declares the
+  //                 service surface via `areaServed → Country`,
+  //                 and lists a single Offer for the DDP shipping
+  //                 product so it can match against
+  //                 "DDP shipping to <country>" intent queries.
+  //   3. ServiceArea — explicit geographic service boundary
+  //                 (Schema.org's recommended shape for
+  //                 `areaServed` when a service targets a whole
+  //                 country, not just a city). We attach it as a
+  //                 secondary `areaServed` so the Country +
+  //                 ServiceArea combination matches both Google
+  //                 documentation patterns.
+  //
+  // The Service node also references the page-level #webpage
+  // node so the schema graph stays self-contained.
+  const countryNode = {
+    "@context": "https://schema.org",
+    "@type": "Country",
+    "@id": `https://sublimapparel.com/shipping/${slug}/#country`,
+    name: data.regionFacts.regionLabel,
+    identifier: data.regionFacts.isoCountryCode,
+    url: `https://sublimapparel.com/shipping/${slug}/`,
+    address: {
+      "@type": "PostalAddress",
+      addressCountry: data.regionFacts.isoCountryCode,
+      addressLocality: data.regionFacts.capital,
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: data.regionFacts.latitude,
+      longitude: data.regionFacts.longitude,
+    },
+    sameAs: [
+      // ISO Online Browsing Platform URL pattern (verifiable
+      // authority for the country code, helps Google validate
+      // the identifier).
+      `https://www.iso.org/obp/ui/#iso:code:3166:${data.regionFacts.isoCountryCode}`,
+    ],
+  };
+  const serviceAreaNode = {
+    "@context": "https://schema.org",
+    "@type": "ServiceArea",
+    "@id": `https://sublimapparel.com/shipping/${slug}/#service-area`,
+    name: `${data.regionFacts.regionLabel} — door-to-door service zone`,
+    addressCountry: data.regionFacts.isoCountryCode,
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: data.regionFacts.latitude,
+      longitude: data.regionFacts.longitude,
+    },
+  };
+  const serviceNode = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `https://sublimapparel.com/shipping/${slug}/#service`,
+    url: `https://sublimapparel.com/shipping/${slug}/`,
+    name: `DDP shipping to ${data.countryName}`,
+    serviceType: "International door-to-door apparel shipping (DDP)",
+    description: `DDP (delivered duty paid) custom apparel shipping from Yiwu, China to ${data.countryName}. Includes customs clearance, import duty, ${data.regionFacts.currency === "EUR" ? "VAT" : data.regionFacts.currency === "GBP" ? "VAT + import duty" : data.regionFacts.currency === "AUD" ? "GST + import duty" : data.regionFacts.currency === "CAD" ? "GST/HST + import duty" : "Section 301 tariffs + import duty"}, and last-mile delivery.`,
+    provider: { "@id": "https://sublimapparel.com/#organization" },
+    areaServed: [
+      { "@id": `https://sublimapparel.com/shipping/${slug}/#country` },
+      { "@id": `https://sublimapparel.com/shipping/${slug}/#service-area` },
+    ],
+    availableChannel: {
+      "@type": "ServiceChannel",
+      serviceUrl: `https://sublimapparel.com/shipping/${slug}/`,
+      availableLanguage: ["en"],
+      serviceLocation: {
+        "@type": "Place",
+        address: {
+          "@type": "PostalAddress",
+          addressCountry: data.regionFacts.isoCountryCode,
+        },
+      },
+    },
+    offers: {
+      "@type": "Offer",
+      "@id": `https://sublimapparel.com/shipping/${slug}/#offer`,
+      url: `https://sublimapparel.com/shipping/${slug}/`,
+      priceCurrency: data.regionFacts.currency,
+      price: "0",
+      // price=0 because DDP rates are quote-based (per kg, per
+      // destination, per mode). Google accepts 0 + availability
+      // "PreOrder" as a valid quote-requested Offer surface.
+      availability: "https://schema.org/PreOrder",
+      availabilityStarts: "2026-01-01",
+      priceValidUntil: "2027-12-31",
+      inventoryLevel: {
+        "@type": "QuantitativeValue",
+        value: 0,
+        unitText: "quote-based",
+      },
+      seller: { "@id": "https://sublimapparel.com/#organization" },
+      areaServed: { "@id": `https://sublimapparel.com/shipping/${slug}/#country` },
+      eligibleRegion: { "@id": `https://sublimapparel.com/shipping/${slug}/#country` },
+    },
+    mainEntityOfPage: { "@id": `https://sublimapparel.com/shipping/${slug}/#webpage` },
+  };
+
   // "Quick answer" block — direct answer to "DDP shipping to <country>".
   // This is the first thing Google indexes for PAA + featured snippets.
   const quickAnswer =
@@ -75,7 +192,16 @@ export function CountryShippingPage({ slug }: { slug: CountryShipping["slug"] })
 
   return (
     <main>
-      <JsonLd data={[breadcrumbJsonLd, webPageJsonLd, faqJsonLd]} />
+      <JsonLd
+        data={[
+          breadcrumbJsonLd,
+          webPageJsonLd,
+          countryNode,
+          serviceAreaNode,
+          serviceNode,
+          faqJsonLd,
+        ]}
+      />
 
       {/* HERO */}
       <section className="border-b-2 border-black bg-[#0a0a0a] text-white">

@@ -5,6 +5,7 @@ import { Footer } from "@/components/footer";
 import { RequestQuoteLink } from "@/components/request-quote-link";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 import { buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildComparisonJsonLd } from "@/lib/breadcrumb";
 import { buildPageMetadata } from "@/lib/page-metadata";
 
 // 2026-09-11 push (Round 4): same fix as /production/ — switch to buildPageMetadata
@@ -87,6 +88,28 @@ const webPageJsonLd = {
     xpath: ["/html/body//h1", "/html/body//section[1]//p"],
   },
 };
+
+// 2026-09-12 (R33-B1): Comparison schema node for this side-by-side
+// print-method comparison. We pass both sides as Thing nodes so the
+// comparison is discoverable as a noun phrase by AI Overviews.
+const comparisonJsonLd = buildComparisonJsonLd({
+  slug: "sublimation-vs-dtg",
+  name: "Sublimation vs DTG (direct-to-garment) — print method comparison",
+  description:
+    "Side-by-side comparison of sublimation vs DTG (direct-to-garment) for custom apparel: fabric compatibility, color vibrancy, all-over print, hand feel, MOQ, cost, lead time, durability.",
+  sideA: {
+    name: "Dye sublimation",
+    description:
+      "Heat-transfer dye-sublimation print on 100% polyester or poly blends. Edge-to-edge all-over print, CMYK range, no hand feel, best for >30 pcs runs.",
+  },
+  sideB: {
+    name: "DTG (direct-to-garment)",
+    description:
+      "Water-based pigment ink printed directly onto pre-treated cotton garments. Platen-limited (~16×20 in), excellent on 100% cotton, lower setup cost for small runs.",
+  },
+  sharedContent:
+    "Print method selection for custom apparel B2B orders",
+});
 
 const comparisonRows: Array<{ label: string; sub: string; dtg: string; sublimation: string }> = [
   {
@@ -362,7 +385,7 @@ export default function SublimationVsDtgPage() {
           separate schema outputs (raw FAQPage script + JsonLd
           breadcrumb) into a single JsonLd with breadcrumb +
           WebPage + FAQPage. */}
-      <JsonLd data={[breadcrumb, webPageJsonLd, faqJsonLd]} />
+      <JsonLd data={[breadcrumb, webPageJsonLd, comparisonJsonLd, faqJsonLd]} />
     </>
   );
 }

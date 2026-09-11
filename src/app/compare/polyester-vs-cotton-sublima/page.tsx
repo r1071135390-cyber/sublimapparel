@@ -94,10 +94,36 @@ const webPageJsonLd = {
   },
 };
 
+// 2026-09-12 (R33-B1): Comparison schema node for the
+// polyester sublimation vs cotton (DTG/DTF) side-by-side.
+// The audience is B2B buyers choosing fabric for an apparel
+// program: polyester wins for performance, race kit, and
+// all-over print; cotton (printed via DTG/DTF — *not* classic
+// sublimation) wins for soft-hand lifestyle merch. The two
+// Thing nodes mirror the page's framing.
+const comparisonJsonLd = buildComparisonJsonLd({
+  slug: "polyester-vs-cotton-sublima",
+  name: "Polyester vs Cotton for sublimation — fabric comparison",
+  description:
+    "Side-by-side comparison of polyester vs cotton as a sublimation substrate: classic heat-transfer sublimation on polyester vs DTG/DTF all-over digital print on cotton. Covers color vibrancy, hand feel, durability, moisture-wicking, MOQ, lead time, and price range.",
+  sideA: {
+    name: "Polyester (classic sublimation)",
+    description:
+      "100% polyester or poly-rich blend fabric printed via heat-transfer dye sublimation. Edge-to-edge all-over print, full CMYK range, moisture-wicking, zero print hand feel, lifetime durability. The canonical substrate for sublimation.",
+  },
+  sideB: {
+    name: "Cotton (DTG / DTF all-over digital print)",
+    description:
+      "100% cotton fabric printed via DTG (direct-to-garment) or DTF (direct-to-film) all-over digital print. Soft natural hand feel, breathable, durable for 50+ washes, but the print sits on the fiber so it gradually softens and the color range is slightly narrower than sublimation.",
+  },
+  sharedContent:
+    "Substrate selection for all-over digital print on custom apparel",
+});
+
 export default function PolyVsCottonPage() {
   return (
     <main className="min-h-screen bg-white">
-      <JsonLd data={[breadcrumb, webPageJsonLd, faq]} />
+      <JsonLd data={[breadcrumb, webPageJsonLd, faq, comparisonJsonLd]} />
 
       {/* Hero */}
       <section className="border-b-2 border-black bg-[#0a0a0a] text-white">

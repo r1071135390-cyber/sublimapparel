@@ -27,6 +27,33 @@ export type CountryShipping = {
   transit: { mode: string; time: string; price: string }[];
   /** 3–4 country-specific FAQs (PAA + featured snippet targeting). */
   faqs: { q: string; a: string }[];
+
+  // 2026-09-12 (R33-A1): region-level facts for ServiceArea + Country
+  // schema nodes. Drives areaServed / addressCountry / identifier in
+  // the Service + Country JSON-LD nodes that the shared template now
+  // emits. Coordinates point at the country's administrative
+  // capital (or Brussels for EU), so the GeoCoordinates are
+  // verifiable on a public map and Google trusts them as canonical.
+  regionFacts: {
+    /** ISO 3166-1 alpha-2 country code (e.g. "US", "GB"), or
+     *  "EU" for the supranational region. Used as the
+     *  Country.identifier and the ServiceArea.addressCountry
+     *  value so Google can match a country-level service surface. */
+    isoCountryCode: string;
+    /** Administrative capital city shown in the page footer + the
+     *  Country.address. */
+    capital: string;
+    /** Latitude / longitude of the capital — used in
+     *  Country.geo. Verifiable on any public map. */
+    latitude: number;
+    longitude: number;
+    /** Local currency code (ISO 4217) — used in the
+     *  ServiceArea / Offer priceCurrency references. */
+    currency: string;
+    /** Short human-readable region label, used in the
+     *  Country.name and ServiceArea.name fields. */
+    regionLabel: string;
+  };
 };
 
 export const COUNTRY_SHIPPING: Record<CountryShipping["slug"], CountryShipping> = {
@@ -77,6 +104,14 @@ export const COUNTRY_SHIPPING: Record<CountryShipping["slug"], CountryShipping> 
         a: "Yes. We can deliver to both. Residential deliveries sometimes add $4–8 per shipment in carrier surcharges, which we include in the DDP quote. If you have a loading dock or can accept LTL freight at a commercial address, sea freight on full pallets is significantly cheaper per kg.",
       },
     ],
+    regionFacts: {
+      isoCountryCode: "US",
+      capital: "Washington, D.C.",
+      latitude: 38.9072,
+      longitude: -77.0369,
+      currency: "USD",
+      regionLabel: "United States of America",
+    },
   },
   uk: {
     slug: "uk",
@@ -125,6 +160,14 @@ export const COUNTRY_SHIPPING: Record<CountryShipping["slug"], CountryShipping> 
         a: "No. Our DDP quote is all-inclusive — customs broker fees, CDS filing, port handling, and last-mile delivery are all bundled. The price you receive is the price you pay. We don't add a customs clearance surcharge after the fact.",
       },
     ],
+    regionFacts: {
+      isoCountryCode: "GB",
+      capital: "London",
+      latitude: 51.5074,
+      longitude: -0.1278,
+      currency: "GBP",
+      regionLabel: "United Kingdom of Great Britain and Northern Ireland",
+    },
   },
   eu: {
     slug: "eu",
@@ -173,6 +216,20 @@ export const COUNTRY_SHIPPING: Record<CountryShipping["slug"], CountryShipping> 
         a: "If you use our DDP service, no. We file the customs declaration under our EORI number, so you don't need to register your own. If you want to clear customs yourself and reclaim VAT on resale, you'll need an EU EORI (free, issued by your national customs authority in 3–10 working days). Most EU buyers prefer DDP for the first 12 months while they scale.",
       },
     ],
+    regionFacts: {
+      // EU isn't an ISO 3166-1 alpha-2 country (it's a supranational
+      // region), so we use "EU" as the Country.identifier. Google
+      // understands this as the European Union region and the
+      // ServiceArea.addressCountry value can still be "EU" without
+      // triggering a country-code validity error. Coordinates point
+      // at Brussels, the de facto EU administrative capital.
+      isoCountryCode: "EU",
+      capital: "Brussels",
+      latitude: 50.8503,
+      longitude: 4.3517,
+      currency: "EUR",
+      regionLabel: "European Union (27 member states)",
+    },
   },
   au: {
     slug: "au",
@@ -221,6 +278,14 @@ export const COUNTRY_SHIPPING: Record<CountryShipping["slug"], CountryShipping> 
         a: "Yes — shipments under AUD $1,000 to Australia are currently GST-free on entry. We can split orders into AUD $999 consignments for very small samples and rush orders, but for production runs above 50 kg the per-shipment overhead makes splitting uneconomical. The 10% GST on production orders is included in our DDP quote — you don't pay extra.",
       },
     ],
+    regionFacts: {
+      isoCountryCode: "AU",
+      capital: "Canberra",
+      latitude: -35.2809,
+      longitude: 149.13,
+      currency: "AUD",
+      regionLabel: "Commonwealth of Australia",
+    },
   },
   canada: {
     slug: "canada",
@@ -270,5 +335,13 @@ export const COUNTRY_SHIPPING: Record<CountryShipping["slug"], CountryShipping> 
         a: "If you use our DDP service, no. We file the customs declaration under our own Business Number, so you don't need to register for one. If you want to clear customs yourself and recover GST/HST on resale, you'll need a BN from CRA (free, 1–2 weeks by mail). Most Canadian buyers prefer DDP for the first year to keep import paperwork off their finance team's desk.",
       },
     ],
+    regionFacts: {
+      isoCountryCode: "CA",
+      capital: "Ottawa",
+      latitude: 45.4215,
+      longitude: -75.6972,
+      currency: "CAD",
+      regionLabel: "Canada",
+    },
   },
 };

@@ -86,3 +86,66 @@ export function buildHowToJsonLd(input: {
     })),
   };
 }
+
+// 2026-09-12 (R33-B1): Comparison schema for the 4
+// /compare/{slug}/ pages. Comparison is a lightweight
+// schema.org type that wraps a side-by-side comparison
+// between two Thing nodes. Google doesn't ship a dedicated
+// rich result for it, but the type is the canonical marker
+// for comparison intent, joins the page to the brand entity
+// graph via isPartOf, and the Thing[] we emit for each
+// "side" of the comparison becomes a discoverable noun
+// phrase for AI Overviews and Bing Copilot. The
+// `mainEntityOfPage` round-trip also keeps the schema graph
+// self-contained: the comparison node, the page-level
+// #webpage node, and the WebSite #website node all resolve
+// to the same parse pass.
+export type ComparisonSide = {
+  name: string;
+  description: string;
+};
+
+export function buildComparisonJsonLd(input: {
+  /** Slug of the comparison page, e.g. "sublimation-vs-dtg". */
+  slug: string;
+  name: string;
+  description: string;
+  sideA: ComparisonSide;
+  sideB: ComparisonSide;
+  /** Optional: a one-line description of what the two sides
+   *  are being compared *on* (e.g. "Print method selection
+   *  for custom apparel"). Lands in `sharedContent`. */
+  sharedContent?: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Comparison",
+    "@id": `${SITE_URL}/compare/${input.slug}/#comparison`,
+    url: `${SITE_URL}/compare/${input.slug}/`,
+    name: input.name,
+    description: input.description,
+    inLanguage: "en",
+    isPartOf: { "@id": `${SITE_URL}/#website` },
+    about: [
+      {
+        "@type": "Thing",
+        name: input.sideA.name,
+        description: input.sideA.description,
+      },
+      {
+        "@type": "Thing",
+        name: input.sideB.name,
+        description: input.sideB.description,
+      },
+    ],
+    ...(input.sharedContent
+      ? {
+          sharedContent: {
+            "@type": "WebContent",
+            name: input.sharedContent,
+          },
+        }
+      : {}),
+    mainEntityOfPage: { "@id": `${SITE_URL}/compare/${input.slug}/#webpage` },
+  };
+}

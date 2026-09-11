@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { RequestQuoteLink } from "@/components/request-quote-link";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildBreadcrumbJsonLd, buildFaqJsonLd, buildComparisonJsonLd } from "@/lib/breadcrumb";
 import { buildPageMetadata } from "@/lib/page-metadata";
 
 // 2026-09-11 (R26-D): the /compare/ directory already covers
@@ -102,6 +102,32 @@ const webPageJsonLd = {
     xpath: ["/html/body//h1", "/html/body//section[1]//p"],
   },
 };
+
+// 2026-09-12 (R33-B1): Comparison schema node for the
+// sublimation vs screen print side-by-side. The audience here is
+// different from sublimation-vs-dtg: screen-print buyers are
+// typically high-volume apparel programs (1000+ pcs), not small
+// all-over runs, so the recommendation lands on screen print for
+// large runs of simple designs and sublimation for all-over /
+// small-batch.
+const comparisonJsonLd = buildComparisonJsonLd({
+  slug: "sublimation-vs-screen-print",
+  name: "Sublimation vs Screen Printing — print method comparison",
+  description:
+    "Side-by-side comparison of sublimation vs screen printing for custom apparel: fabric compatibility, color range, setup cost, unit cost at scale, MOQ, hand feel, durability, ideal run size.",
+  sideA: {
+    name: "Dye sublimation",
+    description:
+      "Heat-transfer dye-sublimation print on polyester. Unlimited colors, no per-color setup, edge-to-edge all-over, best for <500 pcs or all-over print programs.",
+  },
+  sideB: {
+    name: "Screen printing (silk screen)",
+    description:
+      "Plastoisol or water-based ink pushed through mesh screens. Per-color setup, lower unit cost at scale, ideal for 1000+ pcs of 1–6 color designs on cotton or poly-cotton.",
+  },
+  sharedContent:
+    "Print method selection for custom apparel B2B orders",
+});
 
 const comparisonRows: Array<{ label: string; sub: string; screen: string; sublimation: string }> = [
   {

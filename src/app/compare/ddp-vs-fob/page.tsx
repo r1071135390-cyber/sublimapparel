@@ -90,6 +90,32 @@ const webPageJsonLd = {
   },
 };
 
+// 2026-09-12 (R33-B1): Comparison schema node for the
+// DDP vs FOB side-by-side. The audience here is B2B buyers
+// choosing an incoterm: DDP is best for first-time / small
+// buyers who want one landed-cost invoice, FOB is best for
+// high-volume importers with a customs broker on retainer.
+// The two Thing nodes mirror the way the page frames them
+// (incoterm = shipping term, not a physical product).
+const comparisonJsonLd = buildComparisonJsonLd({
+  slug: "ddp-vs-fob",
+  name: "DDP vs FOB shipping terms — international apparel sourcing comparison",
+  description:
+    "Side-by-side comparison of DDP (Delivered Duty Paid) vs FOB (Free on Board) shipping terms for overseas apparel: who pays duties, who handles customs, who owns the risk in transit, cash flow, and which fits a small brand vs a high-volume importer.",
+  sideA: {
+    name: "DDP (Delivered Duty Paid)",
+    description:
+      "Incoterm where the factory's forwarder takes responsibility from the Yiwu factory all the way to the buyer's door: freight, customs clearance, duties, taxes, and last-mile delivery. One invoice, one lead time, risk on the forwarder.",
+  },
+  sideB: {
+    name: "FOB (Free on Board)",
+    description:
+      "Incoterm where the buyer takes ownership once goods cross the ship's rail at the origin port. Buyer arranges ocean freight, customs clearance, duties, and final delivery. Cheaper on paper, but requires a customs broker and exposes the buyer to clearance risk.",
+  },
+  sharedContent:
+    "International shipping term (incoterm) selection for B2B apparel orders",
+});
+
 const rows = [
   {
     label: "Who pays duties",
@@ -335,8 +361,10 @@ export default function DdpVsFobPage() {
           for FAQPage + a separate JsonLd for breadcrumb (two separate
           JSON-LD outputs that Google may parse inconsistently).
           Consolidate to a single JsonLd with breadcrumb + WebPage +
-          FAQPage and drop the raw script tag. */}
-      <JsonLd data={[breadcrumb, webPageJsonLd, faqJsonLd]} />
+          FAQPage and drop the raw script tag. 2026-09-12 (R33-B1):
+          add the Comparison node so the incoterm side-by-side
+          joins the entity graph. */}
+      <JsonLd data={[breadcrumb, webPageJsonLd, faqJsonLd, comparisonJsonLd]} />
     </>
   );
 }
