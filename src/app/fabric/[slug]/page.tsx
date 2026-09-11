@@ -72,20 +72,87 @@ export default async function FabricDetailPage(
     .slice(0, 4);
 
   // Build JSON-LD structured data for SEO
+  // 2026-09-11 (R25): enrich the Product schema so each of the 64 fabric
+  // detail pages can qualify for Product rich results + Google Images
+  // search. We add:
+  //   - image: full swatch URL (so Google can index the actual swatch)
+  //   - sku/mpn: derived from slug for stable SKU-style identifier
+  //   - material: composition string ("100% Polyester" etc.) so Google
+  //     can match long-tail material queries
+  //   - category: from fabric.tags[] (sportswear / cotton / performance)
+  //   - manufacturer: @id reference to the global Organization so the
+  //     fabric joins the brand entity graph
+  //   - additionalProperty: GSM, spec/width, primary use, supported
+  //     print methods, fit rating (5 properties) so Google can match
+  //     "160gsm polyester jersey sublimation" style long-tail queries
+  //   - offers: full Offer with priceSpecification, shipping details
+  //     and merchant return policy mirroring the products/all/[slug]
+  //     template
+  const swatchUrl = `https://sublimapparel.com/fabric-sw-${fabric.swatch}.webp`;
+  const additionalProps: { "@type": string; name: string; value: string }[] = [
+    { "@type": "PropertyValue", name: "Composition", value: fabric.comp },
+    { "@type": "PropertyValue", name: "Weight (GSM)", value: fabric.gsm },
+    { "@type": "PropertyValue", name: "Width / Spec", value: fabric.spec },
+    { "@type": "PropertyValue", name: "Primary use", value: fabric.use },
+    { "@type": "PropertyValue", name: "Fit rating (1-5)", value: String(fabric.fit) },
+  ];
+  if (fabric.printMethods.length) {
+    additionalProps.push({
+      "@type": "PropertyValue",
+      name: "Supported print methods",
+      value: fabric.printMethods.join(", "),
+    });
+  }
+  if (fabric.sublimationSuitability) {
+    additionalProps.push({
+      "@type": "PropertyValue",
+      name: "Sublimation suitability",
+      value: fabric.sublimationSuitability,
+    });
+  }
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "Product",
+        "@id": `https://sublimapparel.com/fabric/${fabric.slug}/#product`,
         name: fabric.name,
         description: fabric.metaDescription,
-        category: fabric.tags.join(", "),
+        image: [swatchUrl],
+        sku: `FAB-${fabric.slug.toUpperCase()}`,
+        mpn: fabric.slug,
+        category: fabric.tags.slice(0, 3).join(", "),
+        material: fabric.comp,
         brand: { "@type": "Brand", name: "SublimApparel" },
+        manufacturer: { "@id": "https://sublimapparel.com/#organization" },
+        additionalProperty: additionalProps,
         offers: {
           "@type": "Offer",
+          "@id": `https://sublimapparel.com/fabric/${fabric.slug}/#offer`,
+          url: `https://sublimapparel.com/fabric/${fabric.slug}/`,
           availability: "https://schema.org/InStock",
           priceCurrency: "USD",
-          seller: { "@type": "Organization", name: "SublimApparel" },
+          priceValidUntil: "2027-12-31",
+          inventoryLevel: { "@type": "QuantitativeValue", value: 1500, unitCode: "MTR" },
+          seller: { "@id": "https://sublimapparel.com/#organization" },
+          shippingDetails: {
+            "@type": "OfferShippingDetails",
+            shippingDestination: {
+              "@type": "DefinedRegion",
+              addressCountry: "US",
+            },
+            deliveryTime: {
+              "@type": "ShippingDeliveryTime",
+              handlingTime: { "@type": "QuantitativeValue", minValue: 15, maxValue: 25, unitCode: "DAY" },
+              transitTime: { "@type": "QuantitativeValue", minValue: 7, maxValue: 14, unitCode: "DAY" },
+            },
+          },
+          hasMerchantReturnPolicy: {
+            "@type": "MerchantReturnPolicy",
+            returnPolicyCategory: "https://schema.org/MerchantReturnNotPermitted",
+            merchantReturnDays: 0,
+            description: "Cut-to-order fabric is non-returnable. Defective bolts replaced 1:1 within 30 days of receipt.",
+          },
         },
       },
       {

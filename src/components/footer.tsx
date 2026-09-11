@@ -110,6 +110,11 @@ const linkGroups = [
     title: "Resources",
     items: [
       { label: "View All Tools & Resources", href: "/resources" },
+      // 2026-09-11 (R25-C): /search/ is the new dedicated full-text
+      // search page. It is the target of the WebSite SearchAction, so
+      // a footer link here gives the page internal link weight and
+      // makes the search affordance discoverable from every page.
+      { label: "Site search (products, fabric, blog)", href: "/search" },
       { label: "Event Timeline Calculator", href: "/event-timeline" },
       { label: "US Size Guide & Excel Template", href: "/us-size-guide" },
       { label: "Quality Control Process", href: "/quality-control" },

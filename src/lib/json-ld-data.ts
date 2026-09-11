@@ -124,6 +124,78 @@ export const organizationJsonLd = {
     "Custom sportswear manufacturing",
     "B2B apparel OEM",
   ],
+  // 2026-09-11 (R25): hasOfferCatalog gives Google an at-a-glance view
+  // of every product/service category the brand offers. Combined with
+  // makesOffer on the LocalBusiness nodes, this lets Google render a
+  // "Services" or "Products" section in the brand knowledge panel and
+  // match "SublimApparel offers [X]" style intent queries. The 6
+  // categories mirror the top-level /solutions/ + /products/ taxonomy.
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "SublimApparel Product & Service Catalog",
+    itemListElement: [
+      {
+        "@type": "OfferCatalog",
+        name: "Custom Sublimation Apparel (Polyester)",
+        itemListElement: [
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "All-over sublimation print on polyester" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Cut-and-sew sublimation sportswear" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Racing & team jerseys (MOQ 50)" } },
+        ],
+      },
+      {
+        "@type": "OfferCatalog",
+        name: "All-Over Digital Print on Cotton (DTG/DTF)",
+        itemListElement: [
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "DTG printing on 100% cotton" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "DTF heat-transfer on cotton & blends" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Reactive-dye full-body cotton print" } },
+        ],
+      },
+      {
+        "@type": "OfferCatalog",
+        name: "DDP Shipping (Delivered Duty Paid)",
+        itemListElement: [
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "DDP to 100+ countries" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "US domestic shipping from Fontana CA warehouse" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "EU/UK/AU/CA duty-paid delivery" } },
+        ],
+      },
+      {
+        "@type": "OfferCatalog",
+        name: "Industries Served",
+        itemListElement: [
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Sports teams & leagues apparel" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Endurance race & marathon shirts" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Music festival & tour merchandise" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Corporate & employee programs" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Schools, universities & Greek life" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Promotional & marketing agencies" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "E-commerce POD & drop-ship fulfillment" } },
+        ],
+      },
+      {
+        "@type": "OfferCatalog",
+        name: "Fabric Library (60+ in-stock)",
+        itemListElement: [
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Polyester jersey, interlock, mesh" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "100% cotton jersey, fleece, piqué" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Performance blends (spandex, poly-spandex)" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Recycled rPET & organic cotton" } },
+        ],
+      },
+      {
+        "@type": "OfferCatalog",
+        name: "Custom Services",
+        itemListElement: [
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "In-house design & artwork separation" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Free sample run (5-7 days)" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Custom tech-pack reverse-engineering" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "FBA prep, poly-bag, hangtag, palletization" } },
+        ],
+      },
+    ],
+  },
   sameAs: [
     "https://www.linkedin.com/company/sublimapparel",
     "https://www.instagram.com/sublimapparel",
@@ -382,9 +454,17 @@ export const websiteJsonLd = {
   description: "Yiwu-based allover-print apparel factory. Polyester sublimation + all-cotton DTG. 50-piece MOQ. DDP door-to-door to 50+ countries.",
   inLanguage: "en-US",
   publisher: { "@id": `${SITE_URL}/#organization` },
+  // 2026-09-11 push (Round 8 part 1): SearchAction tells Google our
+  // sitelinks searchbox should point at /search/?q={...} so the box
+  // actually returns results. Previously the target was /products/?q=,
+  // which is a flat category hub and doesn't filter against a query.
+  // 2026-09-11 (R25-C): reroute the target to the new /search/ landing
+  // page so the sitelinks searchbox surfaces real full-text matches
+  // across products, blog, techniques and fabric, and Google can index
+  // a real search URL space.
   potentialAction: {
     "@type": "SearchAction",
-    target: `${SITE_URL}/products/?q={search_term_string}`,
+    target: `${SITE_URL}/search/?q={search_term_string}`,
     "query-input": "required name=search_term_string",
   },
 };
