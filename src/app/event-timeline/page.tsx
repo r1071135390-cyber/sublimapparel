@@ -3,7 +3,7 @@ import { buildPageMetadata } from "@/lib/page-metadata";
 import { ArrowRight, AlertTriangle, Calendar, CheckCircle2, Clock, Plane } from "lucide-react";
 import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
+import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 import { TimelineCalculator } from "./timeline-calculator";
 
 export const metadata = buildPageMetadata({
@@ -23,10 +23,57 @@ const breadcrumb = buildBreadcrumbJsonLd([
   { name: "Event Timeline Calculator", path: "/event-timeline/" },
 ]);
 
+// 2026-09-11 push (Round 8 part 2): pulled up to a constant so the
+// inline FAQ section can map the same items into the body and we can
+// emit a matching FAQPage JSON-LD.
+const timelineFaqs = [
+  {
+    q: "What if I'm under 30 days out?",
+    a: "We can still help. Air-freight production compresses to 25-30 days, but pricing is 20-30% higher and fabric choices are limited. If you're under 15 days out, our US warehouse in Fontana, CA stocks blank apparel that we can decorate and ship domestically in 2-5 days.",
+  },
+  {
+    q: "Can I change my design after the design lock date?",
+    a: "Major design changes (different artwork, different layout) are not possible after the design lock. Minor tweaks (color adjustment, font size) can be accommodated with a small rush fee. This is why we lock the design 60 days out — to give you buffer.",
+  },
+  {
+    q: "What if I overshoot my final count estimate?",
+    a: "We adjust production within 5% above or below your estimate. If you need significantly more (10%+ above), we run a supplementary re-order at the same per-piece price (30 pc MOQ) and ship it separately. If you need less, you only pay for what's produced.",
+  },
+  {
+    q: "Do you ship from the US or China?",
+    a: "Both, depending on timeline. Standard 90-day orders ship ocean freight from China (25-40 days, lowest cost). Rush orders ship air freight from China (5-10 days). Emergency orders under 15 days ship from our US warehouse in Fontana, CA (2-5 days).",
+  },
+];
+
 export default function EventTimelinePage() {
+  // 2026-09-11 push (Round 8 part 2): add WebPage + FAQPage JSON-LD
+  // to the existing breadcrumb so the page is eligible for PAA rich
+  // results and joins the brand entity graph.
+  const webPageJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://sublimapparel.com/event-timeline/#webpage",
+    url: "https://sublimapparel.com/event-timeline/",
+    name: "Event Apparel Timeline Calculator | SublimApparel",
+    description:
+      "Free event apparel timeline calculator. Enter your event date, get exact dates for when to order, lock designs, and lock final counts.",
+    inLanguage: "en",
+    isPartOf: { "@id": "https://sublimapparel.com/#website" },
+    about: { "@id": "https://sublimapparel.com/#organization" },
+    primaryImageOfPage: {
+      "@type": "ImageObject",
+      url: "https://sublimapparel.com/og/og-home.webp",
+    },
+    speakable: {
+      "@type": "SpeakableSpecification",
+      xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+    },
+  };
+
+  const faqJsonLd = buildFaqJsonLd(timelineFaqs);
   return (
     <>
-      <JsonLd data={breadcrumb} />
+      <JsonLd data={[breadcrumb, webPageJsonLd, faqJsonLd]} />
 
       {/* HERO */}
       <section className="border-b border-black/10 bg-[#0a0a0a] py-16 text-white md:py-20">
@@ -151,24 +198,7 @@ export default function EventTimelinePage() {
           </h2>
 
           <div className="mt-10 space-y-4">
-            {[
-              {
-                q: "What if I&apos;m under 30 days out?",
-                a: "We can still help. Air-freight production compresses to 25-30 days, but pricing is 20-30% higher and fabric choices are limited. If you&apos;re under 15 days out, our US warehouse in Fontana, CA stocks blank apparel that we can decorate and ship domestically in 2-5 days.",
-              },
-              {
-                q: "Can I change my design after the design lock date?",
-                a: "Major design changes (different artwork, different layout) are not possible after the design lock. Minor tweaks (color adjustment, font size) can be accommodated with a small rush fee. This is why we lock the design 60 days out — to give you buffer.",
-              },
-              {
-                q: "What if I overshoot my final count estimate?",
-                a: "We adjust production within 5% above or below your estimate. If you need significantly more (10%+ above), we run a supplementary re-order at the same per-piece price (30 pc MOQ) and ship it separately. If you need less, you only pay for what&apos;s produced.",
-              },
-              {
-                q: "Do you ship from the US or China?",
-                a: "Both, depending on timeline. Standard 90-day orders ship ocean freight from China (25-40 days, lowest cost). Rush orders ship air freight from China (5-10 days). Emergency orders under 15 days ship from our US warehouse in Fontana, CA (2-5 days).",
-              },
-            ].map((f) => (
+            {timelineFaqs.map((f) => (
               <details
                 key={f.q}
                 className="group rounded-sm border-2 border-black/10 bg-white p-6 open:border-[#ff4d00]"

@@ -24,6 +24,8 @@ import {
   Calendar,
 } from"lucide-react";
 import { RequestQuoteLink } from "@/components/request-quote-link";
+import { JsonLd } from "@/components/json-ld";
+import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 
 export const metadata = buildPageMetadata({
     title: "How Do We Ship DDP to 100+ Countries? — Sea, Air, Express, US Warehouse",
@@ -312,9 +314,38 @@ export default function ShippingPage() {
     { name: "Home", path: "/" },
     { name: "Shipping", path: "/shipping/" },
   ]);
+
+  // 2026-09-11 push (Round 8 part 2): /shipping/ previously had only
+  // a breadcrumb. Add WebPage (speakable) + FAQPage so the existing
+  // 6 inline FAQs are eligible for PAA rich results, and so the page
+  // joins the brand entity graph. The /shipping/ page is the canonical
+  // answer for "DDP shipping from China" / "shipping to 100+ countries"
+  // type queries, so it deserves full structured data.
+  const webPageJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://sublimapparel.com/shipping/#webpage",
+    url: "https://sublimapparel.com/shipping/",
+    name: "How We Ship DDP to 100+ Countries | SublimApparel",
+    description:
+      "DDP (Delivered Duty Paid) shipping to 100+ countries. One invoice, no surprise duties. Sea, air, express, and US warehouse options from Yiwu factory to your door.",
+    inLanguage: "en",
+    isPartOf: { "@id": "https://sublimapparel.com/#website" },
+    about: { "@id": "https://sublimapparel.com/#organization" },
+    primaryImageOfPage: {
+      "@type": "ImageObject",
+      url: "https://sublimapparel.com/shipping-hero.webp",
+    },
+    speakable: {
+      "@type": "SpeakableSpecification",
+      xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+    },
+  };
+
+  const faqJsonLd = buildFaqJsonLd(faqs);
   return (
     <main>
-      <JsonLd data={breadcrumbJsonLd} />
+      <JsonLd data={[breadcrumbJsonLd, webPageJsonLd, faqJsonLd]} />
       {/* HERO */}
       {/* HERO — dark text on left, warehouse image on right (same pattern as home page) */}
       <section className="relative overflow-hidden border-b-2 border-black bg-[#0a0a0a] text-white">

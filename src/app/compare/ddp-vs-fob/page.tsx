@@ -65,6 +65,31 @@ const faqItems = [
 
 const faqJsonLd = buildFaqJsonLd(faqItems);
 
+// 2026-09-11 push (Round 8 part 2): add a proper WebPage entry so
+// this comparison page joins the brand entity graph. The page is
+// the canonical answer for "DDP vs FOB" / "which shipping term to
+// use" type queries, so it deserves full structured data.
+const webPageJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://sublimapparel.com/compare/ddp-vs-fob/#webpage",
+  url: "https://sublimapparel.com/compare/ddp-vs-fob/",
+  name: "DDP vs FOB Shipping: Which Is Right? | SublimApparel",
+  description:
+    "DDP (Delivered Duty Paid) vs FOB (Free on Board) shipping for overseas apparel: who pays duties, who handles customs, risk, and which saves money.",
+  inLanguage: "en",
+  isPartOf: { "@id": "https://sublimapparel.com/#website" },
+  about: { "@id": "https://sublimapparel.com/#organization" },
+  primaryImageOfPage: {
+    "@type": "ImageObject",
+    url: "https://sublimapparel.com/og/og-home.webp",
+  },
+  speakable: {
+    "@type": "SpeakableSpecification",
+    xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+  },
+};
+
 const rows = [
   {
     label: "Who pays duties",
@@ -299,11 +324,12 @@ export default function DdpVsFobPage() {
         </section>
       </main>
       <Footer />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
-      <JsonLd data={breadcrumb} />
+      {/* 2026-09-11 push (Round 8 part 2): was a raw <script> tag
+          for FAQPage + a separate JsonLd for breadcrumb (two separate
+          JSON-LD outputs that Google may parse inconsistently).
+          Consolidate to a single JsonLd with breadcrumb + WebPage +
+          FAQPage and drop the raw script tag. */}
+      <JsonLd data={[breadcrumb, webPageJsonLd, faqJsonLd]} />
     </>
   );
 }

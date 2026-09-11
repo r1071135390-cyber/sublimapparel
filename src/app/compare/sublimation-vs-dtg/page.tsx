@@ -65,6 +65,29 @@ const faqItems = [
 
 const faqJsonLd = buildFaqJsonLd(faqItems);
 
+// 2026-09-11 push (Round 8 part 2): add a proper WebPage entry so
+// this comparison page joins the brand entity graph.
+const webPageJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://sublimapparel.com/compare/sublimation-vs-dtg/#webpage",
+  url: "https://sublimapparel.com/compare/sublimation-vs-dtg/",
+  name: "Sublimation vs DTG Printing: Which Fits Your Apparel? | SublimApparel",
+  description:
+    "Sublimation vs DTG: fabric compatibility, color vibrancy, all-over print, hand feel, MOQ, cost, and lead time. Side-by-side for B2B buyers.",
+  inLanguage: "en",
+  isPartOf: { "@id": "https://sublimapparel.com/#website" },
+  about: { "@id": "https://sublimapparel.com/#organization" },
+  primaryImageOfPage: {
+    "@type": "ImageObject",
+    url: "https://sublimapparel.com/og/og-home.webp",
+  },
+  speakable: {
+    "@type": "SpeakableSpecification",
+    xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+  },
+};
+
 const comparisonRows: Array<{ label: string; sub: string; dtg: string; sublimation: string }> = [
   {
     label: "Best fabric",
@@ -328,11 +351,11 @@ export default function SublimationVsDtgPage() {
         </section>
       </main>
       <Footer />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
-      <JsonLd data={breadcrumb} />
+      {/* 2026-09-11 push (Round 8 part 2): consolidate the two
+          separate schema outputs (raw FAQPage script + JsonLd
+          breadcrumb) into a single JsonLd with breadcrumb +
+          WebPage + FAQPage. */}
+      <JsonLd data={[breadcrumb, webPageJsonLd, faqJsonLd]} />
     </>
   );
 }

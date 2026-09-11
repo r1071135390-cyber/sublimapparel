@@ -69,11 +69,34 @@ const comparisonRows = [
   { feature: "DDP shipping", poly: "Yes, 100+ countries", cotton: "Yes, 100+ countries" },
 ];
 
+// 2026-09-11 push (Round 8 part 2): add a WebPage entry so this
+// comparison page joins the brand entity graph and consolidates
+// the breadcrumb + FAQ into a single JsonLd output.
+const webPageJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://sublimapparel.com/compare/polyester-vs-cotton-sublima/#webpage",
+  url: "https://sublimapparel.com/compare/polyester-vs-cotton-sublima/",
+  name: "Polyester vs Cotton Sublimation: Which Fabric to Choose? | SublimApparel",
+  description:
+    "Polyester vs cotton for sublimation printing — full comparison of color vibrancy, hand feel, durability, MOQ, pricing and DDP logistics.",
+  inLanguage: "en",
+  isPartOf: { "@id": "https://sublimapparel.com/#website" },
+  about: { "@id": "https://sublimapparel.com/#organization" },
+  primaryImageOfPage: {
+    "@type": "ImageObject",
+    url: "https://sublimapparel.com/og/og-home.webp",
+  },
+  speakable: {
+    "@type": "SpeakableSpecification",
+    xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+  },
+};
+
 export default function PolyVsCottonPage() {
   return (
     <main className="min-h-screen bg-white">
-      <JsonLd data={breadcrumb} />
-      <JsonLd data={faq} />
+      <JsonLd data={[breadcrumb, webPageJsonLd, faq]} />
 
       {/* Hero */}
       <section className="border-b-2 border-black bg-[#0a0a0a] text-white">

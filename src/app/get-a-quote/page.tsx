@@ -3,7 +3,7 @@ import { buildPageMetadata } from "@/lib/page-metadata";
 import Image from "next/image";
 import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
+import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 import { Check, Clock, FileText, MessageCircle, ArrowRight, Zap } from "lucide-react";
 
 export const metadata = buildPageMetadata({
@@ -50,13 +50,76 @@ const tips = [
   { tag: "OPTIONAL", text: "Pantone colors, reference images, brand guidelines — anything that helps us match your vision." },
 ];
 
+// 2026-09-11 push (Round 8 part 2): /get-a-quote/ is the highest-
+// intent landing page on the site but had no FAQPage schema. These
+// questions are the ones our sales team gets most often, and they
+// are valid for the page's stated process (inquiry → quote → sample
+// → production → DDP delivery).
+const quoteFaqs = [
+  {
+    q: "How fast will I get a quote?",
+    a: "Within 12 business hours. For complex projects (multi-style, custom fabric, multi-destination), 24-48 hours. We confirm receipt of your inquiry within 1 hour during business hours.",
+  },
+  {
+    q: "Is there a setup fee or sampling charge?",
+    a: "No setup fee. Sample cost is $80-150 per sample (refunded on bulk order). We provide a free digital mockup of your design on the actual garment before you commit to a paid sample.",
+  },
+  {
+    q: "What's the minimum order quantity (MOQ)?",
+    a: "50 pieces per design for standard sublimation / DTG / DTF. For per-piece customization (names, numbers), MOQ is 100 pieces. We do not accept single-piece orders.",
+  },
+  {
+    q: "Do you ship DDP worldwide?",
+    a: "Yes. Delivered Duty Paid to 100+ countries including US, UK, EU, Canada, Australia, Japan, Middle East, and most of South America. We pay duties and VAT upfront and roll it into one invoice. Transit time depends on mode: express 3-5 days, air 5-10 days, sea 18-40 days.",
+  },
+  {
+    q: "Can you work with our design files?",
+    a: "Yes. Send us your artwork in vector (.ai / .eps / .svg) or 300+ DPI raster (.png / .pdf). We'll create a digital mockup on the exact garment for your approval before any production begins.",
+  },
+  {
+    q: "What payment methods do you accept?",
+    a: "T/T (bank wire), PayPal, and Wise. Production starts after deposit (typically 30-50%, balance before shipment). For repeat customers we offer Net-30 terms after 3 successful orders.",
+  },
+];
+
 export default function GetAQuotePage() {
+  // 2026-09-11 push (Round 8 part 2): add WebPage (speakable) +
+  // FAQPage to the existing breadcrumb so the page is eligible for
+  // PAA rich results and joins the brand entity graph.
+  const webPageJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://sublimapparel.com/get-a-quote/#webpage",
+    url: "https://sublimapparel.com/get-a-quote/",
+    name: "Get a Quote — DDP Pricing in 12 Hours | SublimApparel",
+    description:
+      "Request a landed-cost quote in under 12 hours. Free digital mockup, free sample round on first order. Sublimation, DTG, DTF, DDP shipping worldwide.",
+    inLanguage: "en",
+    isPartOf: { "@id": "https://sublimapparel.com/#website" },
+    about: { "@id": "https://sublimapparel.com/#organization" },
+    primaryImageOfPage: {
+      "@type": "ImageObject",
+      url: "https://sublimapparel.com/quote-hero-showroom.webp",
+    },
+    speakable: {
+      "@type": "SpeakableSpecification",
+      xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+    },
+  };
+
+  const faqJsonLd = buildFaqJsonLd(quoteFaqs);
   return (
     <>
-      <JsonLd data={buildBreadcrumbJsonLd([
-        { name: "Home", path: "/" },
-        { name: "Get a Quote", path: "/get-a-quote" },
-      ])} />
+      <JsonLd
+        data={[
+          buildBreadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Get a Quote", path: "/get-a-quote" },
+          ]),
+          webPageJsonLd,
+          faqJsonLd,
+        ]}
+      />
       <main>
       {/* HERO — matches home page hero style: dark background, full-bleed image, gradient overlay, text on top */}
       <section

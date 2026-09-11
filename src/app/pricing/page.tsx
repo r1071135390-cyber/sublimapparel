@@ -68,6 +68,29 @@ const faqItems = [
 
 const faqJsonLd = buildFaqJsonLd(faqItems);
 
+// 2026-09-11 push (Round 8 part 2): add a WebPage entry so this
+// pricing page joins the brand entity graph.
+const webPageJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://sublimapparel.com/pricing/#webpage",
+  url: "https://sublimapparel.com/pricing/",
+  name: "Pricing & Cost Calculator for Custom Apparel | SublimApparel",
+  description:
+    "Per-piece price ranges for sublimation, DTG, DTF and embroidery, plus a free cost calculator. MOQ, decoration method, fabric, and quantity all impact the final landed cost.",
+  inLanguage: "en",
+  isPartOf: { "@id": "https://sublimapparel.com/#website" },
+  about: { "@id": "https://sublimapparel.com/#organization" },
+  primaryImageOfPage: {
+    "@type": "ImageObject",
+    url: "https://sublimapparel.com/og/og-home.webp",
+  },
+  speakable: {
+    "@type": "SpeakableSpecification",
+    xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+  },
+};
+
 const tiers = [
   {
     qty: "30–49 pcs",
@@ -276,11 +299,11 @@ export default function PricingPage() {
         </section>
       </main>
       <Footer />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
-      <JsonLd data={breadcrumb} />
+      {/* 2026-09-11 push (Round 8 part 2): consolidate the two
+          separate schema outputs (raw FAQPage script + JsonLd
+          breadcrumb) into a single JsonLd with breadcrumb +
+          WebPage + FAQPage. */}
+      <JsonLd data={[breadcrumb, webPageJsonLd, faqJsonLd]} />
     </>
   );
 }

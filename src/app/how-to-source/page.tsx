@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
+import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 
 export const metadata = buildPageMetadata({
     title: "How to Source Custom Apparel from China | 5-Step Process",
@@ -34,6 +34,32 @@ const breadcrumb = buildBreadcrumbJsonLd([
   { name: "Home", path: "/" },
   { name: "How to Source Custom Apparel", path: "/how-to-source/" },
 ]);
+
+// 2026-09-11 push (Round 8 part 2): pulled up to a constant so the
+// inline FAQ section can map the same items into the body and we can
+// emit a matching FAQPage JSON-LD.
+const sourceFaqs = [
+  {
+    q: "What's the minimum order quantity (MOQ)?",
+    a: "MOQ is 50 pieces per design. For per-piece customization (names, numbers), MOQ is 100 pieces. We do not accept single-piece orders.",
+  },
+  {
+    q: "Do you accept custom designs or only stock designs?",
+    a: "We accept any design. Send us your artwork (vector .ai/.eps/.svg preferred, or 300+ DPI PNG/PDF). We create a digital mockup for your approval before sample production.",
+  },
+  {
+    q: "How do I know I can trust a Chinese factory?",
+    a: "Ask for: (1) factory photos/video, (2) customer references, (3) sample before bulk, (4) third-party inspection access. We provide all four. We also have a US warehouse in California for transparency.",
+  },
+  {
+    q: "What if I need a 100% cotton feel, not poly?",
+    a: "We do offer cotton-feel sublimation (cotton-rich blends with sublimation coating). It's a 2-3 day longer process and slightly higher cost. Many event organizers use this for marathon shirts where comfort is the top priority.",
+  },
+  {
+    q: "Can I split an order into multiple shipments?",
+    a: "Yes. Many events have a pre-event shipment (volunteer/staff shirts) and a main-event shipment (participant shirts). We can ship in waves if production allows. Standard wave shipping is 1 wave + 1 main shipment.",
+  },
+];
 
 const steps = [
   {
@@ -170,9 +196,34 @@ const shippingOptions = [
 ];
 
 export default function HowToSourcePage() {
+  // 2026-09-11 push (Round 8 part 2): add WebPage + FAQPage JSON-LD
+  // to the existing breadcrumb so the page is eligible for PAA rich
+  // results and joins the brand entity graph.
+  const webPageJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://sublimapparel.com/how-to-source/#webpage",
+    url: "https://sublimapparel.com/how-to-source/",
+    name: "How to Source Custom Apparel from China | SublimApparel",
+    description:
+      "5-step process from inquiry to delivery. Quoting, sample, production, QC, and shipping for custom apparel.",
+    inLanguage: "en",
+    isPartOf: { "@id": "https://sublimapparel.com/#website" },
+    about: { "@id": "https://sublimapparel.com/#organization" },
+    primaryImageOfPage: {
+      "@type": "ImageObject",
+      url: "https://sublimapparel.com/og/og-home.webp",
+    },
+    speakable: {
+      "@type": "SpeakableSpecification",
+      xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+    },
+  };
+
+  const faqJsonLd = buildFaqJsonLd(sourceFaqs);
   return (
     <>
-      <JsonLd data={breadcrumb} />
+      <JsonLd data={[breadcrumb, webPageJsonLd, faqJsonLd]} />
 
       {/* HERO */}
       <section className="border-b border-black/10 bg-[#0a0a0a] py-16 text-white md:py-20">
@@ -354,28 +405,7 @@ export default function HowToSourcePage() {
           </h2>
 
           <div className="mt-10 space-y-4">
-            {[
-              {
-                q: "What&apos;s the minimum order quantity (MOQ)?",
-                a: "MOQ is 50 pieces per design. For per-piece customization (names, numbers), MOQ is 100 pieces. We do not accept single-piece orders.",
-              },
-              {
-                q: "Do you accept custom designs or only stock designs?",
-                a: "We accept any design. Send us your artwork (vector .ai/.eps/.svg preferred, or 300+ DPI PNG/PDF). We create a digital mockup for your approval before sample production.",
-              },
-              {
-                q: "How do I know I can trust a Chinese factory?",
-                a: "Ask for: (1) factory photos/video, (2) customer references, (3) sample before bulk, (4) third-party inspection access. We provide all four. We also have a US warehouse in California for transparency.",
-              },
-              {
-                q: "What if I need a 100% cotton feel, not poly?",
-                a: "We do offer cotton-feel sublimation (cotton-rich blends with sublimation coating). It&apos;s a 2-3 day longer process and slightly higher cost. Many event organizers use this for marathon shirts where comfort is the top priority.",
-              },
-              {
-                q: "Can I split an order into multiple shipments?",
-                a: "Yes. Many events have a pre-event shipment (volunteer/staff shirts) and a main-event shipment (participant shirts). We can ship in waves if production allows. Standard wave shipping is 1 wave + 1 main shipment.",
-              },
-            ].map((f) => (
+            {sourceFaqs.map((f) => (
               <details
                 key={f.q}
                 className="group rounded-sm border-2 border-black/10 bg-white p-6 open:border-[#ff4d00]"

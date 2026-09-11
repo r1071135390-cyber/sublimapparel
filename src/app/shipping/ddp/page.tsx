@@ -3,6 +3,14 @@ import { buildPageMetadata } from "@/lib/page-metadata";
 import Link from "next/link";
 import { RequestQuoteLink } from "@/components/request-quote-link";
 import { ArrowRight, Globe, ShieldCheck, Truck, Warehouse, MapPin, Package } from "lucide-react";
+// 2026-09-11 fix (Round 8 part 2): file was missing these two imports
+// entirely — line 60 used `buildBreadcrumbJsonLd` and line 67 used
+// `<JsonLd />` but neither was imported. This was a latent build-breaker
+// (likely survived only because of `ignoreBuildErrors` in next.config).
+// Adding the imports + a proper WebPage (speakable) entry + consolidating
+// the raw FAQPage <script> into a single JsonLd output.
+import { JsonLd } from "@/components/json-ld";
+import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 
 export const metadata = buildPageMetadata({
     title: "DDP Shipping — Duties Paid, Delivered to Your Door",
@@ -55,16 +63,62 @@ const regions = [
   },
 ];
 
+// 2026-09-11 push (Round 8 part 2): the page had a hard-coded FAQPage
+// inside a raw <script> tag. Pull the same 4 questions up here so we
+// can emit the matching FAQPage JSON-LD via the same JsonLd component
+// that emits the breadcrumb + WebPage (single consolidated output).
+const ddpFaqs = [
+  {
+    q: "What is DDP shipping?",
+    a: "DDP (Delivered Duty Paid) is an international shipping term where the seller takes full responsibility for delivering goods to the buyer's door, including shipping, customs clearance, import duties, and taxes. The buyer pays one all-inclusive price with no surprise customs fees. For B2B orders from China to the USA, EU, or UK, DDP is the simplest and most transparent shipping option.",
+  },
+  {
+    q: "How long does DDP shipping from China take?",
+    a: "DDP shipping from China to the USA takes 7-12 days by air and 30-40 days by sea, door-to-door. Air is faster but more expensive; sea is significantly cheaper per kg but slower. We default to sea for non-urgent orders and switch to air for rush or sample orders.",
+  },
+  {
+    q: "How much does DDP shipping from China to the USA cost?",
+    a: "DDP shipping cost depends on weight, volume, and destination ZIP code. For a 500-piece apparel order (150-300 kg by air, 1-2 m³ by sea), all-in DDP to a US commercial address typically runs $3-8 per piece by air and $1.50-3 per piece by sea. The price you are quoted is the final price — no customs fees or broker charges on top.",
+  },
+  {
+    q: "Is DDP better than FOB for small orders?",
+    a: "For most small and mid-size B2B orders (under 5,000 pieces), DDP is significantly easier than FOB. With FOB, the buyer is responsible for arranging the freight forwarder, customs broker, and final-mile delivery — usually meaning hiring a 3PL in the destination country. DDP bundles all of that into one price, which is much simpler when you do not have a US/EU logistics partner.",
+  },
+];
+
 export default function DdpPage() {
-  // 2026-09-11 push (Round 4): breadcrumb schema for rich SERP
+  // 2026-09-11 push (Round 8 part 2): upgrade the breadcrumb-only
+  // schema to breadcrumb + WebPage (speakable) + FAQPage (from the
+  // ddpFaqs constant above) in a single consolidated JsonLd output.
   const breadcrumbJsonLd = buildBreadcrumbJsonLd([
     { name: "Home", path: "/" },
     { name: "Shipping", path: "/shipping/" },
     { name: "DDP", path: "/shipping/ddp/" },
   ]);
+  const webPageJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://sublimapparel.com/shipping/ddp/#webpage",
+    url: "https://sublimapparel.com/shipping/ddp/",
+    name: "DDP Shipping — Duties Paid, Delivered to Your Door | SublimApparel",
+    description:
+      "DDP (Delivered Duty Paid) shipping from Yiwu to 100+ countries. Customs, duties, and last-mile included. One invoice, no surprise fees. US, UK, EU, AU, CA, JP, KR, MX, BR.",
+    inLanguage: "en",
+    isPartOf: { "@id": "https://sublimapparel.com/#website" },
+    about: { "@id": "https://sublimapparel.com/#organization" },
+    primaryImageOfPage: {
+      "@type": "ImageObject",
+      url: "https://sublimapparel.com/og/og-home.webp",
+    },
+    speakable: {
+      "@type": "SpeakableSpecification",
+      xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+    },
+  };
+  const faqJsonLd = buildFaqJsonLd(ddpFaqs);
   return (
     <main>
-      <JsonLd data={breadcrumbJsonLd} />
+      <JsonLd data={[breadcrumbJsonLd, webPageJsonLd, faqJsonLd]} />
       {/* HERO */}
       <section className="border-b-2 border-black bg-[#0a0a0a] text-white">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
@@ -323,48 +377,10 @@ export default function DdpPage() {
         </div>
       </section>
 
-      {/* FAQPage JSON-LD — featured-snippet optimization */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify({
-          '@context': 'https://schema.org',
-          '@type': 'FAQPage',
-          mainEntity: [
-            {
-              '@type': 'Question',
-              name: 'What is DDP shipping?',
-              acceptedAnswer: {
-                '@type': 'Answer',
-                text: 'DDP (Delivered Duty Paid) is an international shipping term where the seller takes full responsibility for delivering goods to the buyer\'s door, including shipping, customs clearance, import duties, and taxes. The buyer pays one all-inclusive price with no surprise customs fees. For B2B orders from China to the USA, EU, or UK, DDP is the simplest and most transparent shipping option.',
-              },
-            },
-            {
-              '@type': 'Question',
-              name: 'How long does DDP shipping from China take?',
-              acceptedAnswer: {
-                '@type': 'Answer',
-                text: 'DDP shipping from China to the USA takes 7-12 days by air and 30-40 days by sea, door-to-door. Air is faster but more expensive; sea is significantly cheaper per kg but slower. We default to sea for non-urgent orders and switch to air for rush or sample orders.',
-              },
-            },
-            {
-              '@type': 'Question',
-              name: 'How much does DDP shipping from China to the USA cost?',
-              acceptedAnswer: {
-                '@type': 'Answer',
-                text: 'DDP shipping cost depends on weight, volume, and destination ZIP code. For a 500-piece apparel order (150-300 kg by air, 1-2 m³ by sea), all-in DDP to a US commercial address typically runs $3-8 per piece by air and $1.50-3 per piece by sea. The price you are quoted is the final price — no customs fees or broker charges on top.',
-              },
-            },
-            {
-              '@type': 'Question',
-              name: 'Is DDP better than FOB for small orders?',
-              acceptedAnswer: {
-                '@type': 'Answer',
-                text: 'For most small and mid-size B2B orders (under 5,000 pieces), DDP is significantly easier than FOB. With FOB, the buyer is responsible for arranging the freight forwarder, customs broker, and final-mile delivery — usually meaning hiring a 3PL in the destination country. DDP bundles all of that into one price, which is much simpler when you do not have a US/EU logistics partner.',
-              },
-            },
-          ],
-        }) }}
-      />
+      {/* FAQPage JSON-LD — moved to the JsonLd component above in
+          Round 8 part 2 to consolidate schema output (was a raw
+          script tag, now part of the same <JsonLd data={[...]} />
+          as the breadcrumb and WebPage). */}
     </main>
   );
 }

@@ -34,6 +34,29 @@ const breadcrumb = buildBreadcrumbJsonLd([
   { name: "Production & lead times", path: "https://sublimapparel.com/production/" },
 ]);
 
+// 2026-09-11 push (Round 8 part 2): add a WebPage entry so this
+// core production page joins the brand entity graph.
+const webPageJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://sublimapparel.com/production/#webpage",
+  url: "https://sublimapparel.com/production/",
+  name: "Production & Lead Times: Calendar, Rush, Holidays | SublimApparel",
+  description:
+    "How long custom apparel takes to produce at SublimApparel: standard lead time, rush options, the PO-to-delivery calendar, and Chinese holiday slowdowns.",
+  inLanguage: "en",
+  isPartOf: { "@id": "https://sublimapparel.com/#website" },
+  about: { "@id": "https://sublimapparel.com/#organization" },
+  primaryImageOfPage: {
+    "@type": "ImageObject",
+    url: "https://sublimapparel.com/og/og-home.webp",
+  },
+  speakable: {
+    "@type": "SpeakableSpecification",
+    xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+  },
+};
+
 const faqItems = [
   {
     q: "What is the standard lead time for sublimated apparel?",
@@ -238,11 +261,11 @@ export default function ProductionPage() {
         </section>
       </main>
       <Footer />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
-      <JsonLd data={breadcrumb} />
+      {/* 2026-09-11 push (Round 8 part 2): consolidate the two
+          separate schema outputs (raw FAQPage script + JsonLd
+          breadcrumb) into a single JsonLd with breadcrumb +
+          WebPage + FAQPage. */}
+      <JsonLd data={[breadcrumb, webPageJsonLd, faqJsonLd]} />
     </>
   );
 }

@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
+import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 
 export const metadata = buildPageMetadata({
     title: "US Size Guide for Custom Apparel | Specs, Charts & Excel Template",
@@ -29,6 +29,28 @@ const breadcrumb = buildBreadcrumbJsonLd([
   { name: "Home", path: "/" },
   { name: "US Size Guide", path: "/us-size-guide/" },
 ]);
+
+// 2026-09-11 push (Round 8 part 2): pulled up to a constant so the
+// inline FAQ section can map the same items into the body and we can
+// emit a matching FAQPage JSON-LD.
+const sizeFaqs = [
+  {
+    q: "Are these sizes the same as Anvil, Gildan, or Bella+Canvas?",
+    a: "Our sublimation cut & sew specs are close to industry-standard but not identical. We run slightly slimmer than Gildan and slightly looser than Bella+Canvas. For exact comparison, request a free size sample set before you commit.",
+  },
+  {
+    q: "Can you make a custom size not on this chart?",
+    a: "Yes. We've made XXS petite cuts and 6XL big-and-tall. Custom sizes need a one-time pattern setup (~$30-50) and a 5-10 day sample lead time. We keep the pattern on file for re-orders at no extra cost.",
+  },
+  {
+    q: "How do I handle sizes I forgot to collect?",
+    a: "For a small percentage (5-10% of registrations), we recommend ordering Medium as a default. Medians skew toward L for men and M for women. If you have leftover Meds, you can swap them via re-order at MOQ 30 within 30 days.",
+  },
+  {
+    q: "Do you offer women's cut and men's cut separately?",
+    a: "Yes. Women's cut is tapered at the waist, narrower in the shoulder, and has a shorter sleeve length. Men's cut is straight, boxier, and longer. Same design, different fit. No extra setup fee.",
+  },
+];
 
 interface SizeRow {
   size: string;
@@ -122,9 +144,34 @@ function SizeTable({ title, rows, notes }: { title: string; rows: SizeRow[]; not
 }
 
 export default function UsSizeGuidePage() {
+  // 2026-09-11 push (Round 8 part 2): add WebPage + FAQPage JSON-LD
+  // to the existing breadcrumb so the page is eligible for PAA rich
+  // results and joins the brand entity graph.
+  const webPageJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://sublimapparel.com/us-size-guide/#webpage",
+    url: "https://sublimapparel.com/us-size-guide/",
+    name: "US Size Guide for Custom Apparel | SublimApparel",
+    description:
+      "US-spec size charts for custom apparel: men's, women's, youth, hoodies. Free Excel template for collecting sizes.",
+    inLanguage: "en",
+    isPartOf: { "@id": "https://sublimapparel.com/#website" },
+    about: { "@id": "https://sublimapparel.com/#organization" },
+    primaryImageOfPage: {
+      "@type": "ImageObject",
+      url: "https://sublimapparel.com/og/og-home.webp",
+    },
+    speakable: {
+      "@type": "SpeakableSpecification",
+      xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+    },
+  };
+
+  const faqJsonLd = buildFaqJsonLd(sizeFaqs);
   return (
     <>
-      <JsonLd data={breadcrumb} />
+      <JsonLd data={[breadcrumb, webPageJsonLd, faqJsonLd]} />
 
       {/* HERO */}
       <section className="border-b border-black/10 bg-[#0a0a0a] py-16 text-white md:py-20">
@@ -343,24 +390,7 @@ export default function UsSizeGuidePage() {
           </h2>
 
           <div className="mt-10 space-y-4">
-            {[
-              {
-                q: "Are these sizes the same as Anvil, Gildan, or Bella+Canvas?",
-                a: "Our sublimation cut & sew specs are close to industry-standard but not identical. We run slightly slimmer than Gildan and slightly looser than Bella+Canvas. For exact comparison, request a free size sample set before you commit.",
-              },
-              {
-                q: "Can you make a custom size not on this chart?",
-                a: "Yes. We&apos;ve made XXS petite cuts and 6XL big-and-tall. Custom sizes need a one-time pattern setup (~$30-50) and a 5-10 day sample lead time. We keep the pattern on file for re-orders at no extra cost.",
-              },
-              {
-                q: "How do I handle sizes I forgot to collect?",
-                a: "For a small percentage (5-10% of registrations), we recommend ordering Medium as a default. Medians skew toward L for men and M for women. If you have leftover Meds, you can swap them via re-order at MOQ 30 within 30 days.",
-              },
-              {
-                q: "Do you offer women&apos;s cut and men&apos;s cut separately?",
-                a: "Yes. Women&apos;s cut is tapered at the waist, narrower in the shoulder, and has a shorter sleeve length. Men&apos;s cut is straight, boxier, and longer. Same design, different fit. No extra setup fee.",
-              },
-            ].map((f) => (
+            {sizeFaqs.map((f) => (
               <details
                 key={f.q}
                 className="group rounded-sm border-2 border-black/10 bg-white p-6 open:border-[#ff4d00]"

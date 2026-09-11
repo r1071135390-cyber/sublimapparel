@@ -98,9 +98,36 @@ const sampleTypes = [
 ];
 
 export default function SamplesPage() {
+  // 2026-09-11 push (Round 8 part 2): the page already had a FAQPage
+  // raw script + a separate JsonLd breadcrumb, which meant two
+  // BreadcrumbList nodes emitted (Google may ignore one of them).
+  // Consolidate to a single JsonLd with breadcrumb + WebPage +
+  // FAQPage, and drop the raw <script> tag.
+  const webPageJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://sublimapparel.com/samples/#webpage",
+    url: "https://sublimapparel.com/samples/",
+    name: "Sample Policy: Free & Pre-Production Samples | SublimApparel",
+    description:
+      "Free stock-color swatches, pre-production samples with your design ($25-60), refund policy, and what to expect on lead time.",
+    inLanguage: "en",
+    isPartOf: { "@id": "https://sublimapparel.com/#website" },
+    about: { "@id": "https://sublimapparel.com/#organization" },
+    primaryImageOfPage: {
+      "@type": "ImageObject",
+      url: "https://sublimapparel.com/og/og-home.webp",
+    },
+    speakable: {
+      "@type": "SpeakableSpecification",
+      xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+    },
+  };
+
   return (
     <>
       <Navbar />
+      <JsonLd data={[breadcrumb, webPageJsonLd, faqJsonLd]} />
       <main className="min-h-screen bg-white text-black">
         <section className="border-b-4 border-black bg-[#f5f5f5] py-20">
           <div className="mx-auto max-w-5xl px-6">
@@ -246,11 +273,9 @@ export default function SamplesPage() {
         </section>
       </main>
       <Footer />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
-      <JsonLd data={buildBreadcrumbJsonLd([{name: "Home", path: "/"}, {name: "Samples", path: "/samples/"}])} />
+      {/* 2026-09-11 cleanup: the old raw <script> FAQPage + duplicate
+          breadcrumb JsonLd were left over from before the
+          consolidation on line 130. Removing them. */}
     </>
   );
 }

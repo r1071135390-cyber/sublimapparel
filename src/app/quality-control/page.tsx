@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
+import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 
 export const metadata = buildPageMetadata({
     title: "4-Step Quality Control Process | AQL 2.5 Inspection | Custom Apparel",
@@ -32,6 +32,28 @@ const breadcrumb = buildBreadcrumbJsonLd([
   { name: "Home", path: "/" },
   { name: "Quality Control Process", path: "/quality-control/" },
 ]);
+
+// 2026-09-11 push (Round 8 part 2): inline FAQ items below are
+// already shown in the FAQ section. We pull them up here so we can
+// generate a matching FAQPage JSON-LD alongside the breadcrumb.
+const qcFaqs = [
+  {
+    q: "Can I do my own inspection?",
+    a: "Yes. We welcome buyer-side inspections. We can host your QC team at our Yiwu facility for a half-day or full-day inspection. Inspection fees are typically $200-400/day plus travel. Most clients use our in-house QC and only visit for first-time orders or large lots (5,000+ pcs).",
+  },
+  {
+    q: "What if I receive defective pieces after delivery?",
+    a: "Document the defects with photos within 7 days of receipt. We'll credit the value of the defective pieces on your next order, or issue a refund if no next order is planned. In 8 years, our defect claim rate has been under 1% of total pieces shipped.",
+  },
+  {
+    q: "Do you use third-party inspection (QIMA, SGS, Bureau Veritas)?",
+    a: "Yes, for orders over 5,000 pcs we recommend third-party inspection as a final check. Cost is typically $300-500 per man-day. We work with QIMA, SGS, and Bureau Veritas. The third-party inspector uses our QC checklist and AQL 2.5 standard.",
+  },
+  {
+    q: "How do you handle fabric defects before printing?",
+    a: "Every fabric roll is inspected before cutting. Fabric with visible defects (slubs, holes, dye spots) is rejected and replaced. We use approximately 8-10% more fabric than the finished piece count to account for cuttable defects.",
+  },
+];
 
 const steps = [
   {
@@ -116,9 +138,34 @@ const defectCategories = [
 ];
 
 export default function QualityControlPage() {
+  // 2026-09-11 push (Round 8 part 2): add WebPage + FAQPage to the
+  // existing breadcrumb so the page is eligible for PAA rich
+  // results and joins the brand entity graph.
+  const webPageJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://sublimapparel.com/quality-control/#webpage",
+    url: "https://sublimapparel.com/quality-control/",
+    name: "4-Step Quality Control Process | SublimApparel",
+    description:
+      "4-stage quality control with AQL 2.5 standard. Pre-production sample, in-line inspection, final random inspection, pre-shipment photo evidence.",
+    inLanguage: "en",
+    isPartOf: { "@id": "https://sublimapparel.com/#website" },
+    about: { "@id": "https://sublimapparel.com/#organization" },
+    primaryImageOfPage: {
+      "@type": "ImageObject",
+      url: "https://sublimapparel.com/about-process-qc.webp",
+    },
+    speakable: {
+      "@type": "SpeakableSpecification",
+      xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+    },
+  };
+
+  const faqJsonLd = buildFaqJsonLd(qcFaqs);
   return (
     <>
-      <JsonLd data={breadcrumb} />
+      <JsonLd data={[breadcrumb, webPageJsonLd, faqJsonLd]} />
 
       {/* HERO */}
       <section className="relative overflow-hidden border-b border-black/10 bg-[#0a0a0a] py-16 text-white md:py-20">
@@ -297,24 +344,7 @@ export default function QualityControlPage() {
           </h2>
 
           <div className="mt-10 space-y-4">
-            {[
-              {
-                q: "Can I do my own inspection?",
-                a: "Yes. We welcome buyer-side inspections. We can host your QC team at our Yiwu facility for a half-day or full-day inspection. Inspection fees are typically $200-400/day plus travel. Most clients use our in-house QC and only visit for first-time orders or large lots (5,000+ pcs).",
-              },
-              {
-                q: "What if I receive defective pieces after delivery?",
-                a: "Document the defects with photos within 7 days of receipt. We&apos;ll credit the value of the defective pieces on your next order, or issue a refund if no next order is planned. In 8 years, our defect claim rate has been under 1% of total pieces shipped.",
-              },
-              {
-                q: "Do you use third-party inspection (QIMA, SGS, Bureau Veritas)?",
-                a: "Yes, for orders over 5,000 pcs we recommend third-party inspection as a final check. Cost is typically $300-500 per man-day. We work with QIMA, SGS, and Bureau Veritas. The third-party inspector uses our QC checklist and AQL 2.5 standard.",
-              },
-              {
-                q: "How do you handle fabric defects before printing?",
-                a: "Every fabric roll is inspected before cutting. Fabric with visible defects (slubs, holes, dye spots) is rejected and replaced. We use approximately 8-10% more fabric than the finished piece count to account for cuttable defects.",
-              },
-            ].map((f) => (
+            {qcFaqs.map((f) => (
               <details
                 key={f.q}
                 className="group rounded-sm border-2 border-black/10 bg-[#faf9f6] p-6 open:border-[#ff4d00]"

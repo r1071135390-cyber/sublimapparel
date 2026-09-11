@@ -3,7 +3,7 @@ import { buildPageMetadata } from "@/lib/page-metadata";
 import Link from "next/link";
 import { Globe, Plane, Ship, Truck, Package, Shield, Clock, DollarSign } from "lucide-react";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
+import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 
 export const metadata = buildPageMetadata({
     title: "Worldwide Shipping · DDP to 100+ Countries from Yiwu Factory",
@@ -127,15 +127,40 @@ const faqs = [
 ];
 
 export default function GlobalShippingPage() {
-  // 2026-09-11 push (Round 4): breadcrumb schema for rich SERP
+  // 2026-09-11 push (Round 8 part 2): add WebPage (speakable) +
+  // FAQPage to the existing breadcrumb so the page is eligible for
+  // PAA rich results and joins the brand entity graph. The page is
+  // the canonical answer for "international shipping from China" /
+  // "DDP to 100+ countries" type queries.
   const breadcrumbJsonLd = buildBreadcrumbJsonLd([
     { name: "Home", path: "/" },
     { name: "Shipping", path: "/shipping/" },
     { name: "Worldwide", path: "/shipping/global/" },
   ]);
+  const webPageJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://sublimapparel.com/shipping/global/#webpage",
+    url: "https://sublimapparel.com/shipping/global/",
+    name: "Worldwide Shipping · DDP to 100+ Countries from Yiwu | SublimApparel",
+    description:
+      "Sea, air, express, rail, and truck from Yiwu to 100+ countries. DDP delivered duty paid to US, UK, EU, AU, CA. Incoterms FOB, CIF, DDP, EXW. End-to-end tracking.",
+    inLanguage: "en",
+    isPartOf: { "@id": "https://sublimapparel.com/#website" },
+    about: { "@id": "https://sublimapparel.com/#organization" },
+    primaryImageOfPage: {
+      "@type": "ImageObject",
+      url: "https://sublimapparel.com/og/og-home.webp",
+    },
+    speakable: {
+      "@type": "SpeakableSpecification",
+      xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+    },
+  };
+  const faqJsonLd = buildFaqJsonLd(faqs);
   return (
     <main className="min-h-screen bg-[#faf9f6] text-[#0a0a0a]">
-      <JsonLd data={breadcrumbJsonLd} />
+      <JsonLd data={[breadcrumbJsonLd, webPageJsonLd, faqJsonLd]} />
       {/* 1 · HERO */}
       <section className="border-b-2 border-[#0a0a0a] bg-[#0a0a0a] text-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">

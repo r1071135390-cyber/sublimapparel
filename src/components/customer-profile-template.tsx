@@ -42,7 +42,7 @@ import {
   Headphones,
   HelpCircle,
 } from "lucide-react";
-import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
+import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 import { genericServiceJsonLd } from "@/lib/json-ld-data";
 import { Contact } from "@/components/contact";
 import type { CustomerProfileData } from "@/lib/customer-profile-data";
@@ -99,13 +99,56 @@ export function CustomerProfilePage({ data }: { data: CustomerProfileData }) {
     [data.badge, data.slug]
   );
 
+  // 2026-09-11 push (Round 8 part 2): every industry page already has
+  // FAQs in the body (driven by data.faqs), but the JSON-LD layer was
+  // missing. We add two new nodes to the shared component so all 12
+  // industry pages get them in a single edit:
+  //   1. FAQPage   — mirrors data.faqs verbatim so PAA-style rich
+  //                   results show for high-intent queries
+  //                   ("custom sports team apparel MOQ" etc).
+  //   2. WebPage   — adds @id, canonical URL, isPartOf → #website,
+  //                   about → #organization, and `speakable` for voice
+  //                   search / Google Assistant read-aloud.
+  // Without these, Google treats each industry page as an unannotated
+  // HTML list and can't tie the page to the brand entity graph.
+  const faqJsonLd = useMemo(
+    () => buildFaqJsonLd(data.faqs),
+    [data.faqs]
+  );
+  const webPageJsonLd = useMemo(
+    () => ({
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "@id": `https://sublimapparel.com${data.slug.replace(/\/+$/, "")}/#webpage`,
+      url: `https://sublimapparel.com${data.slug}`,
+      name: data.h1,
+      description: data.metaDescription,
+      inLanguage: "en",
+      isPartOf: { "@id": "https://sublimapparel.com/#website" },
+      about: { "@id": "https://sublimapparel.com/#organization" },
+      mainEntity: { "@id": `https://sublimapparel.com${data.slug.replace(/\/+$/, "")}/#service` },
+      primaryImageOfPage: {
+        "@type": "ImageObject",
+        url: `https://sublimapparel.com${data.hero}`,
+      },
+      speakable: {
+        "@type": "SpeakableSpecification",
+        xpath: [
+          "/html/body//h1",
+          "/html/body//section[1]//p",
+        ],
+      },
+    }),
+    [data.slug, data.h1, data.metaDescription, data.hero]
+  );
+
   return (
     <main className="bg-white text-black">
       <JsonLd data={[breadcrumb, genericServiceJsonLd({
         slug: data.slug,
         metaTitle: data.h1,
         metaDescription: data.metaDescription,
-      })]} />
+      }), webPageJsonLd, faqJsonLd]} />
 
       {/* HERO */}
       <section className="bg-[#0a0a0a] text-white">

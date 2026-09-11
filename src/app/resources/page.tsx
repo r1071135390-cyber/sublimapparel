@@ -16,7 +16,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { Contact } from "@/components/contact";
-import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
+import { JsonLd } from "@/components/json-ld";
+import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 
 export const metadata = buildPageMetadata({
     title: "Tools & Resources for Custom Apparel Buyers | Sublimapparel",
@@ -111,12 +112,76 @@ export default function ResourcesPage() {
     { name: "Tools & Resources", path: "/resources" },
   ]);
 
+  // 2026-09-11 push (Round 8 part 2): /resources/ previously had only
+  // a breadcrumb. Add WebPage (speakable) + ItemList of the 5 free
+  // tools + FAQPage so Google can return rich results for
+  // "apparel sourcing tools" / "event timeline calculator" /
+  // "quality control checklist" queries and so the page joins the
+  // brand entity graph.
+  const webPageJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://sublimapparel.com/resources/#webpage",
+    url: "https://sublimapparel.com/resources/",
+    name: "Tools & Resources for Custom Apparel Buyers | SublimApparel",
+    description:
+      "Free interactive tools, printable checklists, and step-by-step guides built for custom apparel buyers, brand owners, and event organizers. Event timeline planner, US size chart, QC checklist, 90-day roadmap, sourcing playbook.",
+    inLanguage: "en",
+    isPartOf: { "@id": "https://sublimapparel.com/#website" },
+    about: { "@id": "https://sublimapparel.com/#organization" },
+    primaryImageOfPage: {
+      "@type": "ImageObject",
+      url: "https://sublimapparel.com/og/og-home.webp",
+    },
+    speakable: {
+      "@type": "SpeakableSpecification",
+      xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+    },
+  };
+
+  const itemListJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "@id": "https://sublimapparel.com/resources/#tools",
+    name: "SublimApparel Free Custom Apparel Tools",
+    description:
+      "5 free interactive tools: event timeline planner, US size chart, quality control checklist, 90-day new program roadmap, how-to-source playbook.",
+    numberOfItems: tools.length,
+    itemListOrder: "https://schema.org/ItemListOrderAscending",
+    itemListElement: tools.map((t, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      url: `https://sublimapparel.com/${t.slug}/`,
+      name: t.title,
+    })),
+  };
+
+  const faqJsonLd = buildFaqJsonLd([
+    {
+      q: "Are SublimApparel's tools really free?",
+      a: "Yes. Every tool on /resources/ — timeline planner, US size guide, QC checklist, 90-day roadmap, how-to-source playbook — is free to use, no email gate, no signup. They run in your browser and produce a downloadable plan, sheet, or checklist.",
+    },
+    {
+      q: "Can I save my answers in the event timeline planner?",
+      a: "Yes. The timeline calculator saves your inputs in your browser's local storage, so you can come back later and pick up where you left off. You can also print or screenshot the resulting plan to share with your team or quote request.",
+    },
+    {
+      q: "Do you have a US/UK/EU size conversion guide?",
+      a: "Yes. The US Size & Measurement Guide on /resources/ converts US, UK, and EU sizes to garment measurements, and includes sublimation-shrinkage math, unisex vs ladies fit, and a printable measurement sheet for accurate fit across your order.",
+    },
+    {
+      q: "What's in the 47-point quality control checklist?",
+      a: "The pre-shipment QC checklist on /quality-control/ covers stitching, print registration, color fastness, sizing tolerances, fabric hand-feel, packaging, and labeling across 47 inspection points grouped by product type. It's what we use internally before a shipment leaves the Yiwu factory.",
+    },
+    {
+      q: "Do I have to order from you to use the sourcing playbook?",
+      a: "No. The how-to-source playbook on /how-to-source/ is a generic step-by-step guide for finding, vetting, and onboarding any Chinese apparel factory, with downloadable templates (RFQ, sampling contract, payment terms, QC checklist, freight quote). It is useful whether you eventually work with us or with another supplier.",
+    },
+  ]);
+
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
-      />
+      <JsonLd data={[breadcrumb, webPageJsonLd, itemListJsonLd, faqJsonLd]} />
 
       {/* HERO */}
       <section className="bg-[#0a0a0a] text-white">
