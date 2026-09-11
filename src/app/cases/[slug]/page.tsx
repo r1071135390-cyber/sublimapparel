@@ -26,7 +26,7 @@ import { products, type Product } from "@/lib/products-data";
 import { tagArchiveLink } from "@/lib/tag-utils";
 import { getProductImages } from "@/lib/product-images";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
+import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 
 const iconMap: Record<string, typeof CalendarDays> = {
   CalendarDays,
@@ -122,9 +122,40 @@ export default async function CaseCategoryPage({ params }: Props) {
     itemListElement: caseListItems,
   };
 
+  // 2026-09-11 (R19): add FAQPage JSON-LD on every /cases/[slug]/ industry
+  // hub. These pages get ~9500 words of case study content but had zero
+  // FAQPage, which means Google has no structured hint that the page also
+  // answers common pre-purchase questions — the same questions that earn
+  // "People Also Ask" (PAA) rich results. Adding 5 Q&A entries covers the
+  // informational query space ("how long does production take for [industry]
+  // custom apparel", "what MOQ for team uniforms", "can I get samples") that
+  // buyers ask before they reach the inquiry form.
+  const casesFaq = buildFaqJsonLd([
+    {
+      q: `How long does it take to produce custom ${ind.title.toLowerCase()} apparel?`,
+      a: `Standard bulk production for ${ind.title.toLowerCase()} custom apparel is 15–25 business days after you approve the pre-production sample. Sample lead time is 5–7 days. Rush bulk production (7–10 days) is available for select product types at an additional 20% surcharge.`,
+    },
+    {
+      q: "What is the minimum order quantity for custom team or event apparel?",
+      a: "MOQ is 50 pieces per design across every product type we offer. For repeat orders of an existing design, we can sometimes drop to 30 pieces per colorway. The full order total must meet the 50-piece minimum — we can't combine two unrelated designs into one run to hit MOQ.",
+    },
+    {
+      q: "Can I get a pre-production sample before committing to bulk?",
+      a: "Yes. Pre-production samples cost $25–60 per piece depending on the product and print process, plus express shipping. We credit the sample cost back to you when you place a bulk order of 100+ pieces. Free material swatches and printed color cards are available on request so you can check hand-feel and color accuracy before paying for samples.",
+    },
+    {
+      q: "Do you handle DDP shipping to our country?",
+      a: "We ship DDP (Delivered Duty Paid) to 100+ countries — that means we cover freight, customs clearance, import duties, taxes, and last-mile delivery. You receive the goods at your door with no surprise costs. For the US we also hold buffer stock at our Fontana, CA warehouse for 2–5 day domestic shipping.",
+    },
+    {
+      q: `Can you match our existing design style or replicate a competitor's ${ind.title.toLowerCase()} look?`,
+      a: `Yes. Send us your existing artwork or a reference photo and we can either match the style directly or use it as a starting point for something better. We free-check every design for printability and will flag any artwork issues — such as low resolution, color space mismatches, or bleed problems — before we commit to production.`,
+    },
+  ]);
+
   return (
     <>
-      <JsonLd data={[breadcrumbJsonLd, webPageJsonLd, itemListJsonLd]} />
+      <JsonLd data={[breadcrumbJsonLd, webPageJsonLd, itemListJsonLd, casesFaq]} />
       {/* Top utility bar */}
       <div className="border-b-2 border-black bg-black text-white">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-6 py-2.5 text-[11px] font-bold uppercase tracking-wider">

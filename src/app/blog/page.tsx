@@ -1,7 +1,7 @@
 import type { Metadata } from"next";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
+import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 import Link from"next/link";
 import Image from"next/image";
 import { ArrowRight, Clock, Calendar } from"lucide-react";
@@ -75,13 +75,42 @@ export default function BlogIndexPage() {
     },
   };
 
+  // 2026-09-11 (R19): add FAQPage JSON-LD on /blog/. The index has 621
+  // words of genuine editorial content but was missing FAQPage, which means
+  // Google has no structured signal that the page also answers B2B buyer
+  // questions. Adding 5 Q&A entries targets the informational query space
+  // ("what is sublimation MOQ", "DDP vs FOB shipping", "DTG vs sublimation")
+  // that matches readers who land on the blog from industry searches.
+  const blogFaq = buildFaqJsonLd([
+    {
+      q: "What is dye-sublimation and why does it matter for custom apparel?",
+      a: "Dye-sublimation transfer bonds ink into polyester fibers under high heat, producing full-coverage prints that won't fade, peel, or crack — even after hundreds of washes. The result is true all-over print (edge-to-edge) on polyester performance fabrics, which is why it's the dominant process for custom sportswear, cycling kits, and esports jerseys.",
+    },
+    {
+      q: "DDP or FOB — which shipping method should I choose for custom apparel from China?",
+      a: "DDP (Delivered Duty Paid) means the supplier handles freight, customs clearance, import duties, taxes, and last-mile delivery — you receive the goods at your door with no surprise costs. FOB (Free on Board) is cheaper upfront but you pay separately for freight, customs brokerage, duties, and delivery, which can add 15–35% on top of the quoted price and requires more logistical coordination on your end.",
+    },
+    {
+      q: "Can you do all-over print on 100% cotton apparel?",
+      a: "Most sublimation factories only print on polyester. We run an allover digital print (DTG/DTF) workflow on 100% cotton in-house, producing true edge-to-edge cut-and-sew cotton apparel with vivid color and a soft natural cotton hand-feel. MOQ is 50 pieces per design. This is a genuine differentiator — ask us to compare samples before you commit.",
+    },
+    {
+      q: "What file formats do apparel manufacturers accept for custom printing?",
+      a: "Vector files (AI, EPS, PDF) are preferred for sublimation on polyester because they scale to any print size without quality loss. High-resolution raster images (300 DPI PNG, PSD, JPG) work for DTG on cotton and for allover print workflows. We free-check every artwork submission and will tell you exactly what's wrong and how to fix it before you commit to production.",
+    },
+    {
+      q: "How do I avoid common quality issues when ordering custom apparel from a China factory?",
+      a: "The three most common issues are: (1) color shifts from CMYK-to-RGB conversion — always confirm color space and request a printed color card before bulk; (2) size grading errors — request a pre-production fit sample in every size you need; (3) print registration misalignment — our team marks every seam line on your artwork proof before sublimation, which is why we insist on sample approval before bulk runs start.",
+    },
+  ]);
+
   return (
     <>
       <JsonLd data={buildBreadcrumbJsonLd([
         { name: "Home", path: "/" },
         { name: "Blog", path: "/blog" },
       ])} />
-      <JsonLd data={[blogList, webPageJsonLd]} />
+      <JsonLd data={[blogList, webPageJsonLd, blogFaq]} />
       <main>
       {/* HERO */}
       <section className="border-b-2 border-black bg-[#faf9f6]">
