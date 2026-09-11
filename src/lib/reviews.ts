@@ -87,6 +87,17 @@ export type VerifiedReview = {
    * binding to one specific case study.
    */
   relatedIndustrySlug?: string;
+  /**
+   * 2026-09-11 (R30): optional link to a product catalog slug
+   * (matches `Product.slug` in src/lib/products-data.ts). When set,
+   * this review shows up on /products/all/[slug]/ — Google's
+   * preferred shape for Product rich-results is to embed the
+   * review + aggregateRating directly inside the Product JSON-LD
+   * node, not as a sibling Service node. A product-level review
+   * ("These jerseys survived 40 washes with no fade") is the
+   * highest-intent surface a buyer sees before clicking Get a quote.
+   */
+  relatedProductSlug?: string;
 };
 
 /**
@@ -144,6 +155,22 @@ export function filterReviewsForCase(
   reviews: VerifiedReview[] = verifiedReviews
 ): VerifiedReview[] {
   return reviews.filter((r) => r.relatedCaseId === caseId);
+}
+
+/**
+ * 2026-09-11 (R30): returns the subset of reviews attached to a
+ * product catalog slug. Used by /products/all/[slug]/ — the most
+ * decision-critical surface for a buyer who has already opened a
+ * product detail page and is comparing this product to alternatives.
+ * The result feeds both the embedded `review` + `aggregateRating`
+ * fields inside the Product JSON-LD node and the on-page "Buyer
+ * feedback" UI section.
+ */
+export function filterReviewsForProduct(
+  productSlug: string,
+  reviews: VerifiedReview[] = verifiedReviews
+): VerifiedReview[] {
+  return reviews.filter((r) => r.relatedProductSlug === productSlug);
 }
 
 /**

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { ArrowLeft, CheckCircle2, Sparkles, ArrowRight, Truck, Ruler, Compass, Building2, Tag as TagIcon } from "lucide-react";
+import { ArrowLeft, CheckCircle2, Sparkles, ArrowRight, Truck, Ruler, Compass, Building2, Tag as TagIcon, Star, Quote } from "lucide-react";
 import { JsonLd } from "@/components/json-ld";
 import { tagArchiveLink } from "@/lib/tag-utils";
 import { RequestQuoteLink } from "@/components/request-quote-link";
@@ -22,6 +22,12 @@ import {
   getIndustriesForProduct,
 } from "@/lib/taxonomy";
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
+import {
+  filterReviewsForProduct,
+  hasAggregateableReviews,
+  computeAggregateRating,
+  toSchemaReview,
+} from "@/lib/reviews";
 import { ProductGallery } from "@/components/product-gallery";
 import { KeywordCloud } from "@/components/keyword-cloud";
 import { getProductImages } from "@/lib/product-images";
@@ -143,6 +149,19 @@ export default async function ProductDetailPage({
   //  - priceSpecification with priceCurrency and a "from" price range
   //    stub (we don't list retail pricing, so we mark the offer as
   //    MadeToOrder with a "Contact for pricing" PriceSpecification)
+  //
+  // 2026-09-11 (R30): also embed `review` and `aggregateRating`
+  // INSIDE this Product node (Google's preferred shape for Product
+  // rich-results — see
+  // https://developers.google.com/search/docs/appearance/structured-data/product#review-properties).
+  // We embed in-place rather than emitting a sibling Service node
+  // (R28/R29 pattern on /cases/*) because Google only treats
+  // embedded Product.review + Product.aggregateRating as eligible
+  // for the product star-rating rich result. Same gating contract:
+  // verifiedReviews empty today → both fields are stripped at
+  // spread-time so the existing schema is byte-equivalent to R25
+  // until a real review is added to verifiedReviews with
+  // `relatedProductSlug: "${product.slug}"`.
   const productImages = getProductImages(product.number);
   const productImageUrls = productImages.length
     ? productImages.map((p) => `https://sublimapparel.com${p}`)
@@ -160,6 +179,11 @@ export default async function ProductDetailPage({
   }
   fabricProps.push({ "@type": "PropertyValue", name: "MOQ", value: `${product.moq} pieces per design` });
 
+  const productReviews = filterReviewsForProduct(product.slug);
+  const productAggregate = hasAggregateableReviews(productReviews)
+    ? computeAggregateRating(productReviews)
+    : null;
+
   const productLd = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -174,6 +198,20 @@ export default async function ProductDetailPage({
     brand: { "@type": "Brand", name: "SublimApparel" },
     manufacturer: { "@id": "https://sublimapparel.com/#organization" },
     additionalProperty: fabricProps,
+    ...(productReviews.length > 0
+      ? { review: productReviews.map(toSchemaReview) }
+      : {}),
+    ...(productAggregate
+      ? {
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: productAggregate.ratingValue,
+            reviewCount: productAggregate.reviewCount,
+            bestRating: productAggregate.bestRating,
+            worstRating: productAggregate.worstRating,
+          },
+        }
+      : {}),
     offers: {
       "@type": "Offer",
       "@id": `https://sublimapparel.com/products/all/${product.slug}/#offer`,
@@ -697,6 +735,112 @@ export default async function ProductDetailPage({
                 </Link>
                 );
               })}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Buyer feedback — per-product review surface.
+          2026-09-11 (R30): mirrors the /about/, /cases/[slug]/, and
+          /cases/[slug]/[caseId]/ review blocks, but scoped to this
+          product (filtered by relatedProductSlug === product.slug).
+          Renders only when at least one review is attached to this
+          product — when empty (today's state), the entire section is
+          omitted to keep the page focused on the product content. The
+          /about/ page already shows the global "Reviews coming soon"
+          placeholder; repeating it on every one of the 120 product
+          detail pages would be visual noise. The embedded schema
+          fields (Product.review + Product.aggregateRating) and the UI
+          section light up simultaneously the day a real review with
+          relatedProductSlug === product.slug is added to
+          verifiedReviews. */}
+      {productReviews.length > 0 && (
+        <section className="border-b-2 border-black bg-white">
+          <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
+            <div className="mb-10 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+              <div>
+                <div className="mb-3 inline-block bg-[#00c2ff] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
+                  Buyer feedback
+                </div>
+                <h2 className="text-3xl font-black leading-tight text-black md:text-5xl">
+                  What buyers say
+                  <br />
+                  <span className="text-[#cc3d00]">about this {product.name.toLowerCase()}.</span>
+                </h2>
+              </div>
+              {productAggregate ? (
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-1 text-[#cc3d00]">
+                    {[1, 2, 3, 4, 5].map((i) => (
+                      <Star
+                        key={i}
+                        className={
+                          "h-5 w-5 " +
+                          (i <= Math.round(productAggregate.ratingValue)
+                            ? "fill-[#cc3d00]"
+                            : "opacity-30")
+                        }
+                      />
+                    ))}
+                  </div>
+                  <div className="text-sm font-black uppercase tracking-widest text-black">
+                    {productAggregate.ratingValue.toFixed(1)} / 5
+                    <span className="ml-1 text-black/60">
+                      · {productAggregate.reviewCount} review
+                      {productAggregate.reviewCount === 1 ? "" : "s"}
+                    </span>
+                  </div>
+                </div>
+              ) : null}
+            </div>
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {productReviews.map((r) => (
+                <article
+                  key={r.id}
+                  className="flex flex-col border-2 border-black bg-[#faf9f6] p-6"
+                >
+                  <div className="mb-3 flex items-center gap-1 text-[#cc3d00]">
+                    {[1, 2, 3, 4, 5].map((i) => (
+                      <Star
+                        key={i}
+                        className={
+                          "h-4 w-4 " +
+                          (typeof r.ratingValue === "number" &&
+                          i <= Math.round(r.ratingValue)
+                            ? "fill-[#cc3d00]"
+                            : "opacity-30")
+                        }
+                      />
+                    ))}
+                    {typeof r.ratingValue === "number" ? (
+                      <span className="ml-1 text-xs font-black uppercase tracking-widest text-black/70">
+                        {r.ratingValue.toFixed(1)} / 5
+                      </span>
+                    ) : null}
+                  </div>
+                  <Quote className="mb-2 h-5 w-5 text-[#00c2ff]" />
+                  <p className="flex-1 text-base leading-relaxed text-black">
+                    {r.reviewBody}
+                  </p>
+                  <div className="mt-4 border-t-2 border-black/10 pt-3 text-xs font-black uppercase tracking-widest text-black/70">
+                    {r.author}
+                    {r.authorRole ? ` · ${r.authorRole}` : ""}
+                    <span className="ml-2 text-black/40">
+                      {r.datePublished}
+                    </span>
+                    {r.url ? (
+                      <a
+                        href={r.url}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        className="ml-2 text-[#00c2ff] underline"
+                      >
+                        Source ↗
+                      </a>
+                    ) : null}
+                  </div>
+                </article>
+              ))}
             </div>
           </div>
         </section>
