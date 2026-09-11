@@ -28,15 +28,22 @@ import { forEventsFaqJsonLd, genericServiceJsonLd } from "@/lib/json-ld-data";
 import { RelatedProducts } from "@/components/related-products";
 
 export const metadata = buildPageMetadata({
-    // 2026-09-11 (R15-P0-1): was 81 chars — Google truncates >60. Shortened to 55.
-    title: "Corporate Apparel Manufacturer | Employee Uniform Supplier",
-    description: "Custom corporate apparel manufacturer for companies, schools, clubs and organizations. Employee uniforms, branded work shirts, company polo shirts and team...",
-    keywords: ["corporate apparel manufacturer", "corporate apparel supplier", "company shirts supplier", "employee apparel", "company uniforms", "branded company shirts"],
+    // 2026-09-11 (R17-P3): was "Corporate Apparel Manufacturer | Employee
+    // Uniform Supplier" — this title was nearly identical to the
+    // /industries/corporate-employee-programs page ("Corporate Uniform &
+    // Employee Apparel Manufacturer"), causing keyword cannibalization
+    // (overlap=5 in audit). Reframed the solutions page around the
+    // *service/production* angle so Google can rank it for "corporate
+    // apparel service / production" queries while the industries page
+    // owns the "for employee programs" intent. 57 chars.
+    title: "Corporate Apparel Production Service | Custom Uniforms",
+    description: "Full-service corporate apparel production: design, sampling, bulk manufacturing, brand-color matching, DDP worldwide. From 50 pcs. Service-first approach, no middlemen.",
+    keywords: ["corporate apparel production service", "corporate apparel manufacturer service", "employee uniform service", "company uniform production", "branded company workwear service"],
     alternates: {
     canonical: "https://sublimapparel.com/corporate-organization-apparel/",
   },
-    ogTitle: "Custom Corporate Apparel Manufacturer | Employee Uniform Supplier",
-    ogDescription: "Employee uniforms, branded work shirts, company polo shirts, team clothing. Brand-color matching, flexible quantities, DDP w…",
+    ogTitle: "Corporate Apparel Production Service | Custom Uniforms",
+    ogDescription: "Full-service corporate apparel production. Design, sample, bulk manufacture, DDP worldwide. 50-pc MOQ.",
     // 2026-09-11 (Round 15 P0-1): was "https://sublimapparel.com/corporate-organization-apparel/"
     // — a page URL, not an image. Social crawlers would render a broken
     // share card. Industry pages use /og/og-industry.webp.
@@ -202,8 +209,16 @@ export default function ForCorporatePage() {
               For companies, HR, and brand teams
             </div>
 
+            {/* 2026-09-11 (R17-P3): was "Custom corporate apparel manufacturer for
+                companies & organizations." This H1 mirrored the industries
+                page's "Corporate Uniforms & Employee Apparel for Growing
+                Companies" too closely (overlap=5 in keyword audit).
+                Reframed around the *production service* angle to match
+                the new title. The H1 still leads with the company-and-org
+                audience for relevance, but the lead phrase now signals
+                "service" instead of "manufacturer". */}
             <h1 className="text-4xl font-black leading-[1.05] tracking-tight md:text-6xl">
-              Custom corporate apparel manufacturer
+              Corporate apparel production service
               <br />
               <span className="text-[#00c2ff]">for companies &amp; organizations.</span>
             </h1>

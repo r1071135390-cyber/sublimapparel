@@ -86,6 +86,14 @@ const ROUTES: SitemapRoute[] = [
   // lastModified because Round 13 added breadcrumb JSON-LD and expanded the
   // meta description.
   { path: "/get-a-quote-express", priority: 0.85, changeFrequency: "monthly", lastModified: TODAY },
+  // 2026-09-11 (Round 17 P2): /shop/ is a Stripe-powered self-serve sample /
+  // fabric / rush-order shop with full SEO metadata + CollectionPage JSON-LD,
+  // but it was missing from the sitemap entirely. Google could only discover
+  // it via internal footer/CTA links, with no priority signal — classic
+  // mixed-signal trap. Adding at 0.85 to match /get-a-quote-express (both
+  // are secondary conversion funnels; /get-a-quote at 0.95 stays the
+  // primary high-touch entry point).
+  { path: "/shop", priority: 0.85, changeFrequency: "monthly", lastModified: TODAY },
   { path: "/contact", priority: 0.7, changeFrequency: "monthly", lastModified: TODAY }, // 2026-09-11 push: rewritten title/H1/description
   { path: "/yiwu-factory-whatsapp", priority: 0.9, changeFrequency: "monthly", lastModified: TODAY }, // 2026-09-11 push: dedicated WhatsApp landing page for high-exposure "Yiwu factory WhatsApp" queries
 

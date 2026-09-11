@@ -30,15 +30,21 @@ import { forEventsServiceJsonLd, forEventsFaqJsonLd, genericServiceJsonLd } from
 import { RelatedProducts } from "@/components/related-products";
 
 export const metadata = buildPageMetadata({
-    // 2026-09-11 (R15-P0-1): was 80 chars — Google truncates >60. Shortened to 57.
-    title: "Event Apparel Manufacturer | Festival & Conference Shirts",
-    description: "Custom event apparel manufacturer for conferences, festivals, charity events, and community gatherings. Conference shirts, festival merchandise, volunteer...",
-    keywords: ["custom event apparel", "event apparel manufacturer", "event shirts supplier", "festival apparel", "event merchandise", "volunteer shirts"],
+    // 2026-09-11 (R17-P3): was "Event Apparel Manufacturer | Festival &
+    // Conference Shirts" — this title competed with
+    // /industries/events-conferences ("Event Apparel & Conference Shirts
+    // Manufacturer", overlap=5 in audit). Reframed around the
+    // *production service* angle so this page owns "event apparel
+    // production service" while the industries page owns "for
+    // conferences, festivals, and events". 57 chars.
+    title: "Event Apparel Production Service | Festival & Conference",
+    description: "Full-service event apparel production: design, sampling, bulk manufacture, deadline-locked delivery. Festival merchandise, conference shirts, volunteer apparel. DDP worldwide.",
+    keywords: ["event apparel production service", "event apparel manufacturer service", "festival shirt service", "conference shirt service", "event merchandise production"],
     alternates: {
     canonical: "https://sublimapparel.com/event-festivals-conferences/",
   },
-    ogTitle: "Custom Event Apparel Manufacturer | Festival & Conference Shirts",
-    ogDescription: "Conference shirts, festival merchandise, volunteer shirts, staff uniforms. Bulk production, deadline guarantee, DDP worldwid…",
+    ogTitle: "Event Apparel Production Service | Festival & Conference",
+    ogDescription: "Full-service event apparel production. Design, sample, bulk manufacture, deadline-locked delivery. DDP worldwide.",
     // 2026-09-11 (Round 15 P0-1): was "https://sublimapparel.com/event-festivals-conferences/"
     // — a page URL, not an image. Social crawlers would render a broken
     // share card. Industry pages use /og/og-industry.webp.
@@ -217,8 +223,14 @@ export default function ForEventsPage() {
               For race & event organizers
             </div>
 
+            {/* 2026-09-11 (R17-P3): was "Custom event apparel manufacturer for
+                large-scale events." This H1 mirrored the industries page
+                "Custom Event Apparel for Conferences, Activities & Special
+                Events" too closely (overlap=5 in keyword audit). Reframed
+                around the *production service* angle to match the new
+                title, but kept the event-organizer audience signal. */}
             <h1 className="text-4xl font-black leading-[1.05] tracking-tight md:text-6xl">
-              Custom event apparel manufacturer
+              Event apparel production service
               <br />
               <span className="text-[#ff4d00]">for large-scale events.</span>
             </h1>

@@ -20,11 +20,15 @@ export const dynamic = "force-static";
 
 const data: CustomerProfileData = {
   slug: "/industries/corporate-employee-programs/",
-  metaTitle: "Corporate Uniform & Employee Apparel Manufacturer",
-  // 2026-09-11 push (Round 5): tightened from 176 → 155 chars to fit Google's
-  // 160-char SERP cap.
+  // 2026-09-11 (R17-P3): was "Corporate Uniform & Employee Apparel
+  // Manufacturer" — this title competed directly with the
+  // /corporate-organization-apparel solutions page (overlap=5 in audit).
+  // Reframed around the *industry/use case* angle so this page owns
+  // "corporate uniforms for employee programs" while the solutions
+  // page owns "corporate apparel production service". 59 chars.
+  metaTitle: "Corporate Uniforms for Employee Programs | Company Apparel",
   metaDescription:
-    "Corporate uniform manufacturer for employee apparel and branded workwear. Custom polos, office apparel, and company uniforms. Reliable global DDP delivery.",
+    "Corporate uniforms tailored for employee programs: new-hire kits, branded polos, office apparel, and multi-department uniform runs. Reliable global DDP delivery for growing companies.",
   keywords: [
     "employee shirts",
     "company event shirts",

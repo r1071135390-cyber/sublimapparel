@@ -16,11 +16,15 @@ export const dynamic = "force-static";
 
 const data: CustomerProfileData = {
   slug: "/industries/sports-teams-leagues/",
-  metaTitle: "Custom Sports Team Apparel Manufacturer | Jerseys & Uniforms",
-  // 2026-09-11 push (Round 5): tightened from 169 → 152 chars to fit Google's
-  // 160-char SERP cap (truncated descriptions hurt CTR).
+  // 2026-09-11 (R17-P3): was "Custom Sports Team Apparel Manufacturer |
+  // Jerseys & Uniforms" — this title competed directly with
+  // /teams-sports-apparel (overlap=6 — the highest in the audit).
+  // Reframed around the *industry/use case* angle so this page owns
+  // "team apparel for clubs and leagues" while the solutions page owns
+  // "team sports apparel production service". 60 chars exactly.
+  metaTitle: "Team Apparel for Clubs & Leagues | Custom Sports Jerseys",
   metaDescription:
-    "Custom sports team apparel manufacturer for clubs, leagues, and athletes. Sublimated jerseys, uniforms, and training wear. Flexible MOQ and reliable production.",
+    "Custom team apparel for clubs, leagues, and federations: sublimated jerseys, uniforms, and training wear. Roster-locked production, sponsor panels, season-opener deadlines.",
   keywords: [
     "custom sports team apparel",
     "team jersey supplier",
@@ -28,7 +32,11 @@ const data: CustomerProfileData = {
   ],
   badge: "For Sports Teams & Leagues",
   hero: "/bowling-jersey-striker.webp",
-  h1: "Custom Sports Team Apparel Manufacturer for Clubs & Leagues",
+  // 2026-09-11 (R17-P3): was "Custom Sports Team Apparel Manufacturer
+  // for Clubs & Leagues" — this H1 mirrored the solutions page H1 too
+  // closely (overlap=6 in keyword audit — the highest pair). Reframed
+  // around the *industry/use case* angle to match the new metaTitle.
+  h1: "Team Apparel for Clubs, Leagues & Federations",
   heroTitle: "Create Team Apparel That Represents Your Identity",
   heroBody:
     "Every team needs apparel that looks professional, fits comfortably, and represents its unique identity.\n\nWe manufacture custom sublimation jerseys, uniforms, and training apparel for sports teams, clubs, and leagues worldwide.",

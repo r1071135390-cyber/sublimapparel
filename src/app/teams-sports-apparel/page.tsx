@@ -30,13 +30,20 @@ export const dynamic = "force-static";
 const siteUrl = "https://sublimapparel.com";
 
 export const metadata = buildPageMetadata({
-    // 2026-09-11 (R15-P0-1): was 88 chars ("Custom Team Sports Apparel Manufacturer | Sublimation Jerseys & Uniforms — SublimApparel") — Google's SERP limit is ~60 chars, so it was being truncated to "Custom Team Sports Apparel Manufacturer | Sublimatio…" in search results, losing the "Jerseys & Uniforms" tail. Shortened to 53 chars to fit fully.
-    title: "Team Sports Apparel Manufacturer | Sublimation Jerseys",
-    description: "Custom team sports apparel manufacturer for clubs, leagues and athletes. We produce sublimated soccer jerseys, basketball uniforms, cycling kits, running...",
-    keywords: ["custom team apparel", "custom sports apparel manufacturer", "team apparel manufacturer", "custom sportswear", "team uniforms supplier", "sports clothing manufacturer"],
+    // 2026-09-11 (R17-P3): was "Team Sports Apparel Manufacturer |
+    // Sublimation Jerseys" — this title competed with
+    // /industries/sports-teams-leagues ("Custom Sports Team Apparel
+    // Manufacturer | Jerseys & Uniforms", overlap=6 — the highest in the
+    // audit). Reframed around the *production service* angle so this
+    // page owns "team sports apparel production service" while the
+    // industries page owns "for clubs, leagues, and federations".
+    // 56 chars.
+    title: "Team Sports Apparel Production Service | Club Kits",
+    description: "Full-service team sports apparel production: roster-locked sublimation, sponsor panels, season-opener deadlines, DDP delivery. From 50 pcs. Clubs, leagues, federations.",
+    keywords: ["team sports apparel production service", "sports team apparel manufacturer service", "club kit production", "league uniform service", "custom team sportswear production"],
     alternates: { canonical: `${siteUrl}/teams-sports-apparel/` },
-    ogTitle: "Custom Team Sports Apparel Manufacturer | Sublimation Jerseys & Uniforms",
-    ogDescription: "Custom sublimated soccer jerseys, basketball uniforms, cycling kits, running shirts and training wear. Built for clubs, leag…",
+    ogTitle: "Team Sports Apparel Production Service | Club Kits",
+    ogDescription: "Full-service team sports apparel production. Roster-locked sublimation, sponsor panels, season-opener deadlines. 50-pc MOQ.",
     ogImage: "/og-default.jpg",
   });;
 
@@ -130,8 +137,14 @@ export default function RaceShirtsPage() {
           <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium uppercase tracking-wider text-white/80">
             <Trophy className="h-3.5 w-3.5 text-[#ff4d00]" /> Teams & Sports Apparel
           </p>
+          {/* 2026-09-11 (R17-P3): was "Custom team sports apparel manufacturer."
+              This H1 mirrored the industries page "Custom Sports Team
+              Apparel Manufacturer for Clubs & Leagues" too closely
+              (overlap=6 in keyword audit — the highest pair). Reframed
+              around the *production service* angle to match the new
+              title, but kept the team-sports audience signal. */}
           <h1 className="max-w-4xl text-4xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">
-            Custom team sports apparel manufacturer.
+            Team sports apparel production service.
           </h1>
           <p className="mt-4 max-w-2xl text-xl font-semibold text-white md:text-2xl">
             Custom sportswear built for teams that need reliable production.

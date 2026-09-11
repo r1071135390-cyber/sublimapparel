@@ -21,11 +21,15 @@ export const dynamic = "force-static";
 
 const data: CustomerProfileData = {
   slug: "/industries/events-conferences/",
-  metaTitle: "Event Apparel & Conference Shirts Manufacturer",
-  // 2026-09-11 push (Round 5): tightened from 170 → 155 chars to fit Google's
-  // 160-char SERP cap.
+  // 2026-09-11 (R17-P3): was "Event Apparel & Conference Shirts
+  // Manufacturer" — this title competed directly with
+  // /event-festivals-conferences (overlap=5 in audit). Reframed around
+  // the *industry/use case* angle so this page owns "event apparel for
+  // conferences and festivals" while the solutions page owns
+  // "event apparel production service". 58 chars.
+  metaTitle: "Event Apparel for Conferences & Festivals | Bulk Shirts",
   metaDescription:
-    "Event apparel for conferences, corporate events, and community activities. Bulk T-shirts, staff uniforms, and branded clothing. Reliable production worldwide.",
+    "Event apparel for conferences, festivals, and large-scale gatherings. Bulk T-shirts, staff uniforms, sponsor-branded clothing, race shirts. Reliable worldwide DDP production.",
   keywords: [
     "conference shirts",
     "event shirts",
