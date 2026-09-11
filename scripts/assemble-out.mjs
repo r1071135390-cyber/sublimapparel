@@ -6,6 +6,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { execSync } from "node:child_process";
+import { getLayoutGraph, getPageSchemas } from "./json-ld-registry.mjs";
 
 const ROOT = process.cwd();
 const NEXT_APP = path.join(ROOT, ".next/server/app");
@@ -157,6 +158,54 @@ try {
   console.log(`   ${fixCount} HTML files updated with fetchpriority="high"`);
 } catch (e) {
   console.warn("   fetchpriority fix failed (non-fatal):", e.message);
+}
+
+// 9. Inject JSON-LD <script type="application/ld+json"> blocks into every
+//    HTML page's </head> close tag. Next.js 16 App Router does not emit
+//    these from React <script> components into static-exported HTML, so we
+//    do it post-build to guarantee Google and other crawlers can read the
+//    schema.org structured data. See scripts/json-ld-registry.mjs for the
+//    data source of truth.
+console.log("\n[8/8] Injecting JSON-LD structured data into HTML <head>...");
+try {
+  const layoutGraph = getLayoutGraph();
+  const htmlFiles8 = execSync(`find ${OUT} -name "*.html"`)
+    .toString()
+    .trim()
+    .split("\n")
+    .filter(Boolean);
+  let injectedPages = 0;
+  for (const htmlPath of htmlFiles8) {
+    let html = fs.readFileSync(htmlPath, "utf-8");
+    // Skip if we already injected (idempotent guard — re-runs of this step
+    // should not double-inject).
+    if (html.includes("data-jsonld-injected=\"1\"")) continue;
+
+    const scripts = [];
+    // Layout @graph (6 schemas) — every page
+    scripts.push(
+      `<script type="application/ld+json" data-jsonld-injected="1" data-jsonld-source="layout">${JSON.stringify(layoutGraph)}</script>`
+    );
+    // Page-level schemas (BreadcrumbList, FAQ, Service, etc.)
+    const pageSchemas = getPageSchemas(path.relative(OUT, htmlPath));
+    if (pageSchemas.length > 0) {
+      scripts.push(
+        `<script type="application/ld+json" data-jsonld-injected="1" data-jsonld-source="page">${JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": pageSchemas,
+        })}</script>`
+      );
+    }
+    const injection = scripts.join("");
+    if (html.includes("</head>")) {
+      html = html.replace("</head>", `${injection}</head>`);
+      fs.writeFileSync(htmlPath, html);
+      injectedPages++;
+    }
+  }
+  console.log(`   ${injectedPages} HTML files got JSON-LD blocks`);
+} catch (e) {
+  console.warn("   JSON-LD injection failed (non-fatal):", e.message);
 }
 
 console.log("\n✅ out/ assembled");
