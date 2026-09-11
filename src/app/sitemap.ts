@@ -152,6 +152,14 @@ const ROUTES: SitemapRoute[] = [
 
   // ── L2  Tools & Resources hub ─────────────────
   { path: "/resources", priority: 0.85, changeFrequency: "weekly" },
+  // 2026-09-11 (Round 10): 5 resource sub-pages are linked from the navbar
+  // resources dropdown but were missing from the sitemap. Adding them so Google
+  // can discover these informational pages and surface them in relevant SERPs.
+  { path: "/event-timeline", priority: 0.65, changeFrequency: "monthly" }, // Event Timeline Calculator
+  { path: "/us-size-guide", priority: 0.65, changeFrequency: "monthly" }, // US Size Guide
+  { path: "/90-day-program", priority: 0.65, changeFrequency: "monthly" }, // 90-Day Production Program
+  { path: "/how-to-source", priority: 0.65, changeFrequency: "monthly" }, // How to Source guide
+  { path: "/quality-control", priority: 0.65, changeFrequency: "monthly", lastModified: TODAY }, // QC Process (2026-09-11: WebPage+FAQPage added)
 
   // ── L2 （ / ）─────────────────
   { path: "/blog", priority: 0.8, changeFrequency: "weekly", lastModified: TODAY }, // 2026-09-11 push: added WebPage JSON-LD
