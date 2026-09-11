@@ -500,6 +500,12 @@ export default function NewPIPage() {
 
   return (
     <div className="min-h-screen bg-neutral-100 dark:bg-neutral-950 py-8 px-4">
+      {/* 2026-09-11 push (R16-P2): admin/portal page had no <h1> at all — bad
+          for screen-reader accessibility (admin pages are noindex for Google,
+          but still need a semantic page title for SR users). Added a
+          visually-hidden h1 with the same text the page already exposes
+          via the document title. */}
+      <h1 className="sr-only">New Proforma Invoice — Manual Entry</h1>
       <div className="max-w-5xl mx-auto">
         {savedLink ? (
           <SuccessPanel

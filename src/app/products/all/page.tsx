@@ -122,7 +122,14 @@ export default function AllProductsPage() {
       </section>
 
       {/* CATALOG WITH 3-DIM FILTER */}
-      <ProductCatalog />
+      {/* 2026-09-11 push (R16-P3): the "Filter the catalog" CTA at
+          line 93 anchors to #catalog but the catalog component had no
+          matching id, so the click silently failed. Wrapping the
+          <ProductCatalog /> in a <div id="catalog"> gives the anchor
+          a real target without touching the reusable component. */}
+      <div id="catalog">
+        <ProductCatalog />
+      </div>
 
       {/* HOW IT WORKS — closed loop */}
       <section className="border-t-2 border-black bg-[#0A0A0A] text-white">

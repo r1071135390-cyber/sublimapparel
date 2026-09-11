@@ -381,7 +381,7 @@ export default function UploadPIClient() {
                       alt="PI preview"
                       width={300}
                       height={300}
-                      loading="eager"
+                      loading="lazy"
                       decoding="async"
                       className="mx-auto max-h-[300px] border border-black"
                     />
