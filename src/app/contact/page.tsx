@@ -55,6 +55,59 @@ export default function ContactPage() {
         { name: "Contact", path: "/contact" },
       ])} />
       <JsonLd data={faqJsonLd} />
+      {/* 2026-09-11 push (Round 8 part 1): add explicit ContactPage +
+          WebPage JSON-LD on /contact/. ContactPage is the schema.org
+          type dedicated to "how to reach this business" surfaces.
+          Linking it via mainEntity → #organization, primaryImageOfPage,
+          and `significantLink` to the WhatsApp landing page
+          (/yiwu-factory-whatsapp/) and the request-a-quote page
+          (/get-a-quote/) reinforces /contact/'s role as the canonical
+          conversion entry-point for high-intent B2B queries and gives
+          Google the cross-page entity graph to attach the
+          WhatsApp-tap-to-call affordance consistently. */}
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "ContactPage",
+          "@id": "https://sublimapparel.com/contact/#webpage",
+          url: "https://sublimapparel.com/contact/",
+          name: "Contact SublimApparel — Yiwu Factory Quote in 1 Business Day",
+          description:
+            "Get a custom sublimation or all-over cotton print quote directly from our Yiwu factory. MOQ 50 pcs, 15-25 day production, DDP shipping to 100+ countries, US warehouse in Fontana CA. WhatsApp +86-198-1793-0190, email info@sublimapparel.com. Replies within 1 business day, no signup required.",
+          inLanguage: "en",
+          isPartOf: { "@id": "https://sublimapparel.com/#website" },
+          about: { "@id": "https://sublimapparel.com/#organization" },
+          mainEntity: { "@id": "https://sublimapparel.com/#organization" },
+          primaryImageOfPage: {
+            "@type": "ImageObject",
+            url: "https://sublimapparel.com/contact-hero.webp",
+          },
+          // `significantLink` tells Google which outbound links from
+          // this page are the most semantically important for users.
+          // Both of these are direct conversion paths the user might
+          // prefer over the contact form.
+          significantLink: [
+            "https://sublimapparel.com/get-a-quote/",
+            "https://sublimapparel.com/yiwu-factory-whatsapp/",
+            "https://sublimapparel.com/shipping/us-warehouse/",
+          ],
+          // 2026-09-11 push (Round 8 part 1): WebPage.speakable marks
+          // which sections of the page are best-suited to voice-search
+          // / Google-Assistant read-aloud answers. Voice search
+          // optimization is a no-cost E-E-A-T win on contact pages
+          // because users frequently ask "what's the phone number for
+          // SublimApparel" or "how do I contact SublimApparel".
+          speakable: {
+            "@type": "SpeakableSpecification",
+            xpath: [
+              "/html/body//h1",
+              "/html/body//section[contains(@class,'hero')]//p",
+            ],
+          },
+          keywords:
+            "contact SublimApparel, Yiwu factory contact, get a quote, MOQ 50, DDP shipping quote, Yiwu factory WhatsApp, info@sublimapparel.com, custom apparel quote",
+        }}
+      />
       <main>
       <section className="relative overflow-hidden border-b-2 border-black bg-[#0a0a0a] text-white">
         {/* Background image — full bleed */}

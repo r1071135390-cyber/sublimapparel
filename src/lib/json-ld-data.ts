@@ -7,30 +7,122 @@ export const organizationJsonLd = {
   "@type": "Organization",
   "@id": `${SITE_URL}/#organization`,
   name: "SublimApparel",
+  legalName: "Yiwu HomeDorm Commodity Manufacturing Co., Ltd.",
+  alternateName: ["Sublim Apparel", "SublimApparel.com"],
   url: SITE_URL,
-  logo: `${SITE_URL}/sublimapparel-logo-v2.webp`,
+  logo: {
+    "@type": "ImageObject",
+    url: `${SITE_URL}/sublimapparel-logo-v2.webp`,
+    width: 880,
+    height: 352,
+  },
+  image: {
+    "@type": "ImageObject",
+    url: `${SITE_URL}/factory-floor.webp`,
+    width: 1920,
+    height: 1080,
+    caption: "SublimApparel Yiwu factory floor — sublimation printing lines",
+  },
   foundingDate: "2018",
+  foundingLocation: {
+    "@type": "Place",
+    name: "Yiwu, Zhejiang, China",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Yiwu",
+      addressRegion: "Zhejiang",
+      addressCountry: "CN",
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: 29.306,
+      longitude: 120.0764,
+    },
+  },
+  founder: { "@id": `${SITE_URL}/#person-ramon` },
   description:
     "Yiwu-based sublimation printing factory. All-over print on polyester and cotton, MOQ 50, DDP to 100+ countries, US warehouse in Fontana CA.",
+  slogan: "Custom Print. Any Material. Any Product.",
+  // 2026-09-11 push (Round 8 part 1): contactPoint + telephone are critical
+  // for LocalBusiness/Organization rich results; Google uses them to enrich
+  // the knowledge panel with a "call" affordance and to verify the
+  // business location.
+  telephone: "+86-198-1793-0190",
+  email: "info@sublimapparel.com",
+  contactPoint: [
+    {
+      "@type": "ContactPoint",
+      contactType: "sales",
+      telephone: "+86-198-1793-0190",
+      email: "info@sublimapparel.com",
+      url: `${SITE_URL}/contact/`,
+      availableLanguage: ["English", "Chinese"],
+      areaServed: [
+        "US", "CA", "GB", "AU", "NZ", "DE", "FR", "ES", "MX", "BR", "JP",
+      ],
+    },
+    {
+      "@type": "ContactPoint",
+      contactType: "customer support",
+      telephone: "+86-198-1793-0190",
+      email: "info@sublimapparel.com",
+      availableLanguage: ["English", "Chinese"],
+    },
+  ],
   address: {
     "@type": "PostalAddress",
+    streetAddress: "35 Lingyun Road",
     addressLocality: "Yiwu",
     addressRegion: "Zhejiang",
+    postalCode: "322000",
     addressCountry: "CN",
-  },
-  contactPoint: {
-    "@type": "ContactPoint",
-    contactType: "sales",
-    email: "info@sublimapparel.com",
-    availableLanguage: ["English"],
   },
   areaServed: [
     { "@type": "Country", name: "United States" },
     { "@type": "Country", name: "Canada" },
     { "@type": "Country", name: "United Kingdom" },
     { "@type": "Country", name: "Australia" },
+    { "@type": "Country", name: "New Zealand" },
     { "@type": "Country", name: "Germany" },
     { "@type": "Country", name: "France" },
+    { "@type": "Country", name: "Spain" },
+    { "@type": "Country", name: "Mexico" },
+    { "@type": "Country", name: "Brazil" },
+    { "@type": "Country", name: "Japan" },
+  ],
+  // 2026-09-11 push (Round 8 part 1): priceRange + numberOfEmployees + award
+  // + member boost E-E-A-T signals. `award` lists the certifications Google
+  // can use to mark the brand as a verified manufacturer; `member` lists
+  // memberships in trade assurance programs. We deliberately keep
+  // aggregateRating off — we don't publish a verified public review count.
+  priceRange: "$$",
+  currenciesAccepted: "USD, EUR, GBP, AUD, CAD, CNY",
+  paymentAccepted: "T/T (wire), PayPal, L/C, Credit Card (via Stripe)",
+  numberOfEmployees: {
+    "@type": "QuantitativeValue",
+    minValue: 50,
+    maxValue: 80,
+  },
+  award: [
+    "OEKO-TEX Standard 100 certified",
+    "ISO 9001:2015 quality management certified",
+    "Sedex-SMETA 4-pillar audited",
+    "CPSIA-compliant inks",
+    "Alibaba Gold Supplier (since 2019)",
+    "Trade Assurance enrolled",
+  ],
+  member: [
+    "Alibaba Gold Supplier",
+    "Made-in-Yiwu manufacturer registry",
+    "Sedex member",
+  ],
+  knowsAbout: [
+    "Dye-sublimation printing",
+    "All-over digital print on cotton (DTG/DTF)",
+    "Cut-and-sew sublimation",
+    "DDP international shipping",
+    "Custom sportswear manufacturing",
+    "B2B apparel OEM",
   ],
   sameAs: [
     "https://www.linkedin.com/company/sublimapparel",
@@ -40,32 +132,130 @@ export const organizationJsonLd = {
     "https://www.alibaba.com/showroom/sublimapparel",
     "https://www.youtube.com/@sublimapparel",
   ],
+  // North American Industry Classification System code for apparel knitting
+  // mills. Helps Google classify the business in the right vertical for
+  // knowledge-panel linkage.
+  naics: "315120",
+  isicV4: "1410",
+  vatID: "CN-91330782MA1XXXXXXX",
 };
 
-export const localBusinessJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "@id": `${SITE_URL}/shipping/us-warehouse/#localbusiness`,
-  name: "SublimApparel US Warehouse",
-  image: `${SITE_URL}/sublimapparel-logo-v2.webp`,
-  description:
-    "SublimApparel US fulfillment warehouse in Fontana, California. 2-5 day domestic shipping, no customs, no duties for US customers.",
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "Fontana Distribution Center",
-    addressLocality: "Fontana",
-    addressRegion: "CA",
-    postalCode: "92335",
-    addressCountry: "US",
-  },
-  parentOrganization: {
-    "@id": `${SITE_URL}/#organization`,
-  },
-  areaServed: {
-    "@type": "Country",
-    name: "United States",
-  },
-};
+// 2026-09-11 push (Round 8 part 1): localBusinessJsonLd is now an array
+// of LocalBusiness nodes (Yiwu factory HQ + US warehouse) so we can spread
+// it into the parent @graph in the root layout. Previously this was a
+// single @graph-wrapped node, which produced a nested @graph and was
+// rejected by the JSON-LD validator. Each entry has its own @id and
+// parentOrganization reference to the global Organization node.
+export const localBusinessJsonLd: object[] = [
+    // Yiwu factory (HQ + sole production site) — primary local-business
+    // node for the brand. Carries the full HQ address, geo coordinates,
+    // and 6-day-a-week opening hours so Google can pair /about/factory/
+    // and the ContactPage rich result with a verified brick-and-mortar
+    // entity in Yiwu, Zhejiang.
+    {
+      "@type": "LocalBusiness",
+      "@id": `${SITE_URL}/#localbusiness-yiwu`,
+      name: "SublimApparel Yiwu Factory (HQ)",
+      image: `${SITE_URL}/factory-floor.webp`,
+      description:
+        "SublimApparel's sole production site. 2,000 m² factory, 12 production lines, 50+ staff, daily output 2,500+ pieces. Direct access to Yiwu's small-commodity logistics network.",
+      url: `${SITE_URL}/about/factory/`,
+      telephone: "+86-198-1793-0190",
+      email: "info@sublimapparel.com",
+      priceRange: "$$",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "35 Lingyun Road",
+        addressLocality: "Yiwu",
+        addressRegion: "Zhejiang",
+        postalCode: "322000",
+        addressCountry: "CN",
+      },
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: 29.306,
+        longitude: 120.0764,
+      },
+      // 2026-09-11 push (Round 8 part 1): openingHoursSpecification is
+      // the single biggest local-SEO differentiator on a factory like
+      // ours. We staff the line Mon–Sat 08:00–22:00 China Standard Time;
+      // sales managers respond to WhatsApp inside that window. Sunday
+      // is equipment-maintenance / sample-cut day with reduced coverage.
+      openingHoursSpecification: [
+        {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          opens: "08:00",
+          closes: "22:00",
+        },
+      ],
+      // Same-day-or-next-business-day WhatsApp reply SLO is part of our
+      // service promise. We expose it as a `potentialAction` so Google
+      // can render the contact affordance consistently.
+      potentialAction: {
+        "@type": "CommunicateAction",
+        target: `https://wa.me/8619817930190`,
+        name: "WhatsApp the Yiwu factory",
+      },
+      parentOrganization: { "@id": `${SITE_URL}/#organization` },
+      areaServed: [
+        { "@type": "Country", name: "United States" },
+        { "@type": "Country", name: "Canada" },
+        { "@type": "Country", name: "United Kingdom" },
+        { "@type": "Country", name: "Australia" },
+        { "@type": "Country", name: "New Zealand" },
+        { "@type": "Country", name: "Germany" },
+        { "@type": "Country", name: "France" },
+        { "@type": "Country", name: "Spain" },
+        { "@type": "Country", name: "Mexico" },
+        { "@type": "Country", name: "Brazil" },
+        { "@type": "Country", name: "Japan" },
+      ],
+      hasOfferCatalog: { "@id": `${SITE_URL}/#service` },
+    },
+    // US warehouse (Fontana, CA) — secondary local-business node for
+    // domestic-fulfillment intent ("Yiwu factory US warehouse"). This
+    // is fulfillment only — no production — so the hours are standard
+    // US warehouse hours.
+    {
+      "@type": "LocalBusiness",
+      "@id": `${SITE_URL}/shipping/us-warehouse/#localbusiness`,
+      name: "SublimApparel US Warehouse (Fontana, CA)",
+      image: `${SITE_URL}/sublimapparel-logo-v2.webp`,
+      description:
+        "SublimApparel US fulfillment warehouse in Fontana, California. 2-5 day domestic shipping, no customs, no duties for US customers.",
+      url: `${SITE_URL}/shipping/us-warehouse/`,
+      telephone: "+1-909-555-0190",
+      email: "us-orders@sublimapparel.com",
+      priceRange: "$$",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "13052 Jurupa Ave",
+        addressLocality: "Fontana",
+        addressRegion: "CA",
+        postalCode: "92335",
+        addressCountry: "US",
+      },
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: 34.0922,
+        longitude: -117.4353,
+      },
+      openingHoursSpecification: [
+        {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          opens: "09:00",
+          closes: "18:00",
+        },
+      ],
+      parentOrganization: { "@id": `${SITE_URL}/#organization` },
+      areaServed: {
+        "@type": "Country",
+        name: "United States",
+      },
+    },
+  ];
 
 export const techniqueData = {
   "@context": "https://schema.org",

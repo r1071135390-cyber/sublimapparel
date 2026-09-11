@@ -153,7 +153,12 @@ export default function RootLayout({
             "@graph": [
               organizationJsonLd,
               websiteJsonLd,
-              localBusinessJsonLd,
+              // 2026-09-11 push (Round 8 part 1): localBusinessJsonLd is
+              // now an array of LocalBusiness nodes (Yiwu factory HQ +
+              // US warehouse). Spread it into the parent @graph so we
+              // get a single script tag with all entities cross-linked
+              // via @id in one parse pass.
+              ...localBusinessJsonLd,
               personJsonLd,
               faqPageJsonLd,
               aboutArticleJsonLd,

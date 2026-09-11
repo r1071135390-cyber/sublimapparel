@@ -54,32 +54,42 @@ export default async function BlogPostPage({
   if (!post) notFound();
   const related = getRelatedPosts(slug, 3);
 
+  // 2026-09-11 push (Round 8 part 1): upgrade Article → BlogPosting +
+  // link the post to the global entity graph via @id. BlogPosting is
+  // a more specific @type than Article — it tells Google the page is
+  // a "blog post inside a blog" rather than a stand-alone article, so
+  // the post becomes eligible for the blog carousel rich result and
+  // joins the same entity chain (publisher → #organization, author →
+  // #person-ramon) that all other content on the site uses.
   const articleSchema = {
     "@context": "https://schema.org",
-    "@type": "Article",
+    "@type": "BlogPosting",
+    "@id": `https://sublimapparel.com/blog/${post.slug}/#article`,
     headline: post.title,
     description: post.excerpt,
     image: post.coverImage,
     datePublished: post.date,
     dateModified: post.date,
-    author: {
-      "@type": "Organization",
-      name: post.author,
-    },
-    publisher: {
-      "@type": "Organization",
-      name: "SublimApparel",
-      logo: {
-        "@type": "ImageObject",
-        url: "/sublimapparel-logo-v2.webp",
-      },
-    },
+    inLanguage: "en",
+    // Link to the global entities instead of duplicating them so the
+    // post joins the same @graph as the rest of the site.
+    author: { "@id": "https://sublimapparel.com/#person-ramon" },
+    publisher: { "@id": "https://sublimapparel.com/#organization" },
+    isPartOf: { "@id": "https://sublimapparel.com/blog/#blog" },
+    about: { "@id": "https://sublimapparel.com/#organization" },
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `/blog/${post.slug}/`,
+      "@id": `https://sublimapparel.com/blog/${post.slug}/`,
     },
     keywords: post.tags.join(", "),
     articleSection: post.category,
+    url: `https://sublimapparel.com/blog/${post.slug}/`,
+    // wordCount + timeRequired help Google surface the post for
+    // "long-read" / "how to" queries that have a length intent.
+    wordCount: post.content
+      ? post.content.replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length
+      : undefined,
+    timeRequired: post.readTime,
   };
 
   const breadcrumbSchema = {

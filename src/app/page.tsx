@@ -48,6 +48,79 @@ const homeJsonLd = {
         "@type": "ImageObject",
         url: "https://sublimapparel.com/product-hero-products.webp",
       },
+      // 2026-09-11 push (Round 8 part 1): speakable marks the H1
+      // and hero paragraph as the sections best suited for voice
+      // search / Google Assistant read-aloud. Voice queries like
+      // "what is SublimApparel" or "where is the Yiwu factory
+      // located" then get a direct verbatim answer from the home
+      // page rather than a generic snippet.
+      speakable: {
+        "@type": "SpeakableSpecification",
+        xpath: [
+          "/html/body//h1",
+          "/html/body//section[contains(@class,'hero')]//p",
+        ],
+      },
+      video: { "@id": "https://sublimapparel.com/#video" },
+    },
+    // 2026-09-11 push (Round 8 part 1): explicit VideoObject for the
+    // 40-second factory walk-through on the home page. Before this
+    // round the <video> element had no structured data, so Google
+    // could only discover it via the page's visible text. With
+    // VideoObject, the video becomes eligible for the "Video" rich
+    // result and Google Images / Google Video can index individual
+    // scenes from the poster frame. We also expose `contentUrl` (the
+    // raw .mp4), `thumbnailUrl` (the factory-floor poster), and a
+    // `clip` array of 2 named key moments the user can scrub to.
+    {
+      "@type": "VideoObject",
+      "@id": "https://sublimapparel.com/#video",
+      name: "SublimApparel Yiwu Factory Walk-Through — 40 Seconds",
+      description:
+        "A 40-second walk-through of the SublimApparel Yiwu factory: 12 production lines, large-format sublimation printers, cut-and-sew assembly, quality control, packing, DDP shipping prep. Filmed on the production floor in 4K.",
+      thumbnailUrl: [
+        "https://sublimapparel.com/factory-floor.webp",
+        "https://sublimapparel.com/factory-floor.avif",
+      ],
+      contentUrl: "https://sublimapparel.com/videos/sublimapparel-intro-v2.mp4",
+      embedUrl: "https://sublimapparel.com/videos/sublimapparel-intro-v2.mp4",
+      uploadDate: "2025-01-15",
+      duration: "PT40S",
+      inLanguage: "en",
+      isFamilyFriendly: true,
+      // 2026-09-11 push (Round 8 part 1): 2 named clips inside the
+      // 40-second video. Google Video uses `clip` to render
+      // "key moments" in the search snippet, which boosts CTR on
+      // video-rich SERPs and lets users jump straight to the part
+      // they care about.
+      clip: [
+        {
+          "@type": "Clip",
+          name: "Sublimation printing line",
+          startOffset: 0,
+          endOffset: 15,
+          url: "https://sublimapparel.com/videos/sublimapparel-intro-v2.mp4#t=0,15",
+        },
+        {
+          "@type": "Clip",
+          name: "Cut-and-sew assembly",
+          startOffset: 15,
+          endOffset: 32,
+          url: "https://sublimapparel.com/videos/sublimapparel-intro-v2.mp4#t=15,32",
+        },
+        {
+          "@type": "Clip",
+          name: "Quality control + packing",
+          startOffset: 32,
+          endOffset: 40,
+          url: "https://sublimapparel.com/videos/sublimapparel-intro-v2.mp4#t=32,40",
+        },
+      ],
+      publisher: { "@id": "https://sublimapparel.com/#organization" },
+      // The video is embedded on the home page, not a standalone watch
+      // page, so we point `url` to the home page where it lives.
+      url: "https://sublimapparel.com/",
+      mainEntityOfPage: { "@id": "https://sublimapparel.com/#webpage" },
     },
     // 2026-09-11 push (Round 7 part 3): add explicit Service + hasOfferCatalog
     // to the home @graph. The previous WebPage.about already had a Service
