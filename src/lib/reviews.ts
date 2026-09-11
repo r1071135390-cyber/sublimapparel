@@ -70,6 +70,23 @@ export type VerifiedReview = {
   url?: string;
   /** Source type — required for the review to be auditable later. */
   source: ReviewSource;
+  /**
+   * 2026-09-11 (R28): optional link to a specific case study
+   * (matches `CaseStudy.id` in src/lib/cases.ts). When set, this review
+   * shows up on /cases/[slug]/[caseId]/ (or on the industry hub if
+   * relatedIndustrySlug is also set). When unset, the review is
+   * industry-level only and shows up on /about/ + the matching
+   * /cases/[slug]/ hub.
+   */
+  relatedCaseId?: string;
+  /**
+   * 2026-09-11 (R28): optional link to an industry slug (matches
+   * `IndustryCase.slug` in src/lib/cases.ts). Lets an industry-level
+   * review (e.g. "SublimApparel handled our entire 14,000-piece festival
+   * run") be surfaced on the matching /cases/[slug]/ hub without
+   * binding to one specific case study.
+   */
+  relatedIndustrySlug?: string;
 };
 
 /**
@@ -92,6 +109,54 @@ export function hasAggregateableReviews(
       r.ratingValue >= 1 &&
       r.ratingValue <= 5
   );
+}
+
+/**
+ * 2026-09-11 (R28): returns the subset of reviews attached to a given
+ * industry slug — i.e. reviews whose `relatedIndustrySlug` matches
+ * the supplied slug. Used by /cases/[slug]/ (industry hub) to surface
+ * industry-level buyer feedback. Pass the full industry slugs list
+ * (from src/lib/cases.ts) and an explicit case-id set; a review matches
+ * when its industry slug matches OR when its case id is in the set.
+ */
+export function filterReviewsForIndustry(
+  industrySlug: string,
+  caseIdsInIndustry: string[],
+  reviews: VerifiedReview[] = verifiedReviews
+): VerifiedReview[] {
+  const caseIdSet = new Set(caseIdsInIndustry);
+  return reviews.filter(
+    (r) =>
+      r.relatedIndustrySlug === industrySlug ||
+      (typeof r.relatedCaseId === "string" && caseIdSet.has(r.relatedCaseId))
+  );
+}
+
+/**
+ * 2026-09-11 (R28): returns the subset of reviews attached to a single
+ * case study. Used by future /cases/[slug]/[caseId]/ pages. Today those
+ * pages do not exist (the gallery links to a route that is not yet
+ * implemented), so this helper is exported for forward compatibility
+ * and unit tests.
+ */
+export function filterReviewsForCase(
+  caseId: string,
+  reviews: VerifiedReview[] = verifiedReviews
+): VerifiedReview[] {
+  return reviews.filter((r) => r.relatedCaseId === caseId);
+}
+
+/**
+ * 2026-09-11 (R28): convenience for /about/. Today every review is
+ * surfaced on /about/ — there is no negative-targeting — so this
+ * simply returns the whole list. Kept as a function so future
+ * review-segmentation work (e.g. "only show reviews older than 6
+ * months on /about/") has a single hook to extend.
+ */
+export function filterReviewsForAbout(
+  reviews: VerifiedReview[] = verifiedReviews
+): VerifiedReview[] {
+  return reviews;
 }
 
 /**

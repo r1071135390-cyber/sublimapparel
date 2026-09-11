@@ -20,6 +20,8 @@ import {
   ArrowLeft,
   Camera,
   ImageOff,
+  Star,
+  Quote,
 } from "lucide-react";
 import { industries, getIndustryBySlug } from "@/lib/cases";
 import { products, type Product } from "@/lib/products-data";
@@ -27,6 +29,12 @@ import { tagArchiveLink } from "@/lib/tag-utils";
 import { getProductImages } from "@/lib/product-images";
 import { JsonLd } from "@/components/json-ld";
 import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
+import {
+  filterReviewsForIndustry,
+  hasAggregateableReviews,
+  computeAggregateRating,
+  toSchemaReview,
+} from "@/lib/reviews";
 
 const iconMap: Record<string, typeof CalendarDays> = {
   CalendarDays,
@@ -153,9 +161,55 @@ export default async function CaseCategoryPage({ params }: Props) {
     },
   ]);
 
+  // 2026-09-11 (R28): per-industry review aggregation. We pull the
+  // subset of verifiedReviews that are linked to this industry
+  // (either via relatedIndustrySlug or via relatedCaseId matching one
+  // of the case studies in this industry). When the subset is non-empty
+  // we emit a separate JSON-LD block carrying review + aggregateRating
+  // for the industry service. This gives Google another path into the
+  // site entity graph: /cases/[slug]/ becomes a reviewable Surface, not
+  // just an informational page. When the subset is empty, the block is
+  // a no-op minimal Organization node — same pattern as /about/.
+  //
+  // Mirrors the R27 contract exactly so that the day a real public
+  // review feed (Trustpilot, Google Business Profile, Alibaba) is
+  // wired up, the schema on this page lights up automatically with
+  // no additional code change.
+  const caseIdsInIndustry = ind.cases.map((c) => c.id);
+  const industryReviews = filterReviewsForIndustry(
+    ind.slug,
+    caseIdsInIndustry
+  );
+  const industryAggregate = hasAggregateableReviews(industryReviews)
+    ? computeAggregateRating(industryReviews)
+    : null;
+  const industryReviewJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `https://sublimapparel.com/cases/${ind.slug}/#service-reviews`,
+    url: `https://sublimapparel.com/cases/${ind.slug}/`,
+    name: `${ind.title} — buyer review surface`,
+    serviceType: `Custom apparel manufacturing review aggregation for the ${ind.title} vertical`,
+    provider: { "@id": "https://sublimapparel.com/#organization" },
+    ...(industryReviews.length > 0
+      ? { review: industryReviews.map(toSchemaReview) }
+      : {}),
+    ...(industryAggregate
+      ? {
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: industryAggregate.ratingValue,
+            reviewCount: industryAggregate.reviewCount,
+            bestRating: industryAggregate.bestRating,
+            worstRating: industryAggregate.worstRating,
+          },
+        }
+      : {}),
+  };
+
   return (
     <>
-      <JsonLd data={[breadcrumbJsonLd, webPageJsonLd, itemListJsonLd, casesFaq]} />
+      <JsonLd data={[breadcrumbJsonLd, webPageJsonLd, itemListJsonLd, casesFaq, industryReviewJsonLd]} />
       {/* Top utility bar */}
       <div className="border-b-2 border-black bg-black text-white">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-6 py-2.5 text-[11px] font-bold uppercase tracking-wider">
@@ -387,6 +441,96 @@ export default async function CaseCategoryPage({ params }: Props) {
           )}
         </div>
       </section>
+
+      {/* Buyer feedback — per-industry review surface.
+          2026-09-11 (R28): mirrors the /about/ "Trusted by buyers"
+          section but scoped to the current industry. Same data source
+          (`verifiedReviews` via `filterReviewsForIndustry`), same
+          gating, same star-render. Renders only when at least one
+          review is attached to this industry — when empty (today's
+          state), the entire section is omitted to keep the page
+          focused on the case-study content. The /about/ page already
+          shows the global "Reviews coming soon" placeholder; repeating
+          it on every /cases/[slug]/ page would be visual noise. */}
+      {industryReviews.length > 0 && (
+        <section className="border-b-2 border-black bg-white">
+          <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
+            <div className="mb-10 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+              <div>
+                <div className="mb-3 inline-block bg-[#00c2ff] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
+                  Buyer feedback
+                </div>
+                <h2 className="text-3xl font-black leading-tight text-black md:text-5xl">
+                  What {ind.title.toLowerCase()} buyers say.
+                </h2>
+              </div>
+              {industryAggregate ? (
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-1 text-[#cc3d00]">
+                    {[1, 2, 3, 4, 5].map((i) => (
+                      <Star
+                        key={i}
+                        className={
+                          "h-5 w-5 " +
+                          (i <= Math.round(industryAggregate.ratingValue)
+                            ? "fill-[#cc3d00]"
+                            : "opacity-30")
+                        }
+                      />
+                    ))}
+                  </div>
+                  <div className="text-sm font-black uppercase tracking-widest text-black">
+                    {industryAggregate.ratingValue.toFixed(1)} / 5
+                    <span className="ml-1 text-black/60">
+                      · {industryAggregate.reviewCount} review
+                      {industryAggregate.reviewCount === 1 ? "" : "s"}
+                    </span>
+                  </div>
+                </div>
+              ) : null}
+            </div>
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {industryReviews.map((r) => (
+                <article
+                  key={r.id}
+                  className="flex flex-col border-2 border-black bg-[#faf9f6] p-6"
+                >
+                  <div className="mb-3 flex items-center gap-1 text-[#cc3d00]">
+                    {[1, 2, 3, 4, 5].map((i) => (
+                      <Star
+                        key={i}
+                        className={
+                          "h-4 w-4 " +
+                          (typeof r.ratingValue === "number" &&
+                          i <= Math.round(r.ratingValue)
+                            ? "fill-[#cc3d00]"
+                            : "opacity-30")
+                        }
+                      />
+                    ))}
+                    {typeof r.ratingValue === "number" ? (
+                      <span className="ml-1 text-xs font-black uppercase tracking-widest text-black/70">
+                        {r.ratingValue.toFixed(1)} / 5
+                      </span>
+                    ) : null}
+                  </div>
+                  <Quote className="mb-2 h-5 w-5 text-[#00c2ff]" />
+                  <p className="flex-1 text-base leading-relaxed text-black">
+                    {r.reviewBody}
+                  </p>
+                  <div className="mt-4 border-t-2 border-black/10 pt-3 text-xs font-black uppercase tracking-widest text-black/70">
+                    {r.author}
+                    {r.authorRole ? ` · ${r.authorRole}` : ""}
+                    <span className="ml-2 text-black/40">
+                      {r.datePublished}
+                    </span>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Related industries */}
       <section className="border-b-2 border-black bg-[#faf9f6]">
