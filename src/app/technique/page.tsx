@@ -4,8 +4,7 @@ import Link from"next/link";
 import Image from"next/image";
 import { CheckCircle2, Sparkles, Plus } from"lucide-react";
 import { JsonLd } from"@/components/json-ld";
-import { buildBreadcrumbJsonLd } from"@/lib/breadcrumb";
-import { techniqueData } from"@/lib/json-ld-data";
+import { buildTechniqueHubGraph } from"@/lib/breadcrumb";
 
 export const metadata = buildPageMetadata({
     // 2026-09-11 (R15-P0-1): was 77 chars and explicitly truncated. Rewrote to 58 chars.
@@ -270,48 +269,56 @@ const faqs = [
   },
 ];
 
-// 2026-09-11 fix (Round 4 follow-up): wire up buildBreadcrumbJsonLd that was
-// imported but never invoked — Next.js 16 strict ESLint fails build on
-// unused imports, which was killing the Cloudflare Pages deploy.
-const breadcrumbJsonLd = buildBreadcrumbJsonLd([
-  { name: "Home", path: "/" },
-  { name: "Technique", path: "/technique/" },
-]);
-
-// 2026-09-11 (Round 9): add CollectionPage + ItemList JSON-LD for the 20
-// techniques. This tells Google the page is a curated hub listing all 20
-// decoration techniques with stable ordering, mirroring the /industries/ hub
-// pattern. Each ItemListElement.url points to /technique/{slug}/.
-const techniqueCollection = {
-  "@context": "https://schema.org",
-  "@type": "CollectionPage",
-  "@id": "https://sublimapparel.com/technique/#collection",
-  url: "https://sublimapparel.com/technique/",
-  name: "Which Print Technique Fits Your Design? — 20 Methods Compared",
-  description:
-    "Compare 20 apparel decoration techniques — sublimation, screen printing, DTG, DTF, embroidery, 3D puff, rhinestone and more. We run all 20 in-house.",
-  inLanguage: "en",
-  isPartOf: { "@id": "https://sublimapparel.com/#website" },
-  about: { "@id": "https://sublimapparel.com/#organization" },
-  mainEntity: {
-    "@type": "ItemList",
-    itemListOrder: "https://schema.org/ItemListOrderAscending",
-    numberOfItems: techniques.length,
-    itemListElement: techniques.map((t, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      name: t.name,
-      url: `https://sublimapparel.com/technique/${t.slug}/`,
-    })),
+// 2026-09-12 (R36): consolidate the 3 independent JSON-LD <script> tags
+// (BreadcrumbList + HowTo + CollectionPage+ItemList) and the inline 7-FAQ
+// block into a single @graph payload via buildTechniqueHubGraph. The new
+// graph also adds a WebPage #webpage node with isPartOf #website + about
+// #organization + speakable, wires every node together via @id so Google
+// parses the entire entity surface in one pass, and gives the HowTo a
+// proper @id so it joins the brand entity graph (the pre-R36 HowTo was
+// a flat node with no @id, no isPartOf, no about — Google could not link
+// it to the publisher). The 7 inline FAQs (R8) are now first-class via
+// the FAQPage #faq node with WebPage.mainEntity round-trip.
+const techniqueGraph = buildTechniqueHubGraph({
+  items: techniques.map((t) => ({ slug: t.slug, name: t.name })),
+  howTo: {
+    name: "Sublimation Printing Process at SublimApparel",
+    description:
+      "How we dye-sublimate polyester and 100% cotton apparel in 6 steps: artwork separation, wide-format print, cut & assemble, heat-press transfer, cut & sew, quality check.",
+    steps: [
+      {
+        name: "Artwork separation",
+        text: "CMYK + 8 extended spot colors are pre-flighted. Underbase white added automatically for polyester.",
+      },
+      {
+        name: "Wide-format print",
+        text: "1.9m wide roll-to-roll sublimation printer lays the design onto transfer paper at 4,800 × 1,200 DPI.",
+      },
+      {
+        name: "Cut & assemble",
+        text: "Printed paper is cut to garment panel size. Front, back, sleeves kept aligned.",
+      },
+      {
+        name: "Heat-press transfer",
+        text: "200°C / 30 sec cycle on an 80 × 100 cm platen. Dye sublimates from solid to gas, bonds with polyester fibers.",
+      },
+      {
+        name: "Cut & sew",
+        text: "Each garment is cut, assembled and sewn on the same floor. Panels match perfectly because printed together.",
+      },
+      {
+        name: "Quality check",
+        text: "Every piece inspected. Colors verified against your proof. Defects removed before poly-bagging.",
+      },
+    ],
   },
-};
+  faq: faqs,
+});
 
 export default function TechniquePage() {
   return (
     <>
-      <JsonLd data={breadcrumbJsonLd} />
-      <JsonLd data={techniqueData} />
-      <JsonLd data={techniqueCollection} />
+      <JsonLd data={techniqueGraph} />
 
       {/* HERO — same split pattern as homepage: dark text on left, clear image on right */}
       <section className="relative overflow-hidden border-b-2 border-black bg-[#0a0a0a] text-white">

@@ -843,6 +843,177 @@ export function buildBlogPostGraph(input: BlogPostInput) {
   };
 }
 
+// 2026-09-12 (R36): unified @graph payload for the
+// /technique/ hub page. Pre-R36, the page emitted 3
+// independent JSON-LD <script> tags:
+//   (1) BreadcrumbList (Home → Technique)
+//   (2) HowTo (sublimation process steps)
+//   (3) CollectionPage + mainEntity ItemList (20 techniques)
+//   (4) FAQPage (7 inline FAQs - was a 4th script not even
+//       in the original set, was a logical extension but
+//       never wired up to schema)
+// The HowTo and CollectionPage had no @id, no isPartOf, no
+// about join to the brand entity graph, and the ItemList
+// mainEntity was packed inline instead of a sibling @id
+// Google could re-walk. R36 promotes all three (plus the
+// optional FAQPage) to a single @graph block:
+//   - WebPage   #webpage (isPartOf #website + about
+//               #organization + speakable)
+//   - CollectionPage #collection (with @id, mainEntity
+//               round-trip to the ItemList)
+//   - ItemList  #itemlist (20 techniques, itemListOrder
+//               Ascending - Google supports <=50 items
+//               before ItemList is ignored, so 20 is safe)
+//   - HowTo     #howto (the 6-step sublimation process,
+//               with @id and sameAs round-trip so the
+//               HowTo node joins the brand entity graph)
+//   - BreadcrumbList #breadcrumb
+//   - FAQPage   #faq (when faq[] is non-empty)
+//
+// Same shared pattern as buildCollectionPageGraph so every
+// list-hub page on the site (products, technique, blog) has
+// the same JSON-LD shape.
+export type TechniqueHubItem = {
+  slug: string;
+  name: string;
+};
+
+export type TechniqueHubHowToStep = {
+  name: string;
+  text: string;
+};
+
+export type TechniqueHubInput = {
+  /** The 20 techniques to enumerate inside the ItemList. */
+  items: TechniqueHubItem[];
+  /** 6 HowTo steps for the sublimation process. Omit to
+   *  skip the HowTo node. */
+  howTo?: {
+    name: string;
+    description: string;
+    steps: TechniqueHubHowToStep[];
+  };
+  /** Optional FAQ for the page. The /technique/ page has
+   *  7 inline FAQs (R8). Omit to skip FAQPage. */
+  faq?: FaqItem[];
+};
+
+export function buildTechniqueHubGraph(input: TechniqueHubInput) {
+  const url = `${SITE_URL}/technique/`;
+  const webpageId = `${url}#webpage`;
+  const collectionId = `${url}#collection`;
+  const itemListId = `${url}#itemlist`;
+  const howToId = input.howTo ? `${url}#howto` : null;
+  const breadcrumbId = `${url}#breadcrumb`;
+  const faqId = input.faq && input.faq.length > 0 ? `${url}#faq` : null;
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": webpageId,
+        url,
+        name: "Which Print Technique Fits Your Design? — 20 Methods Compared",
+        description:
+          "Compare 20 apparel decoration techniques — sublimation, screen printing, DTG, DTF, embroidery, 3D puff, rhinestone and more. We run all 20 in-house.",
+        inLanguage: "en",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        about: { "@id": `${SITE_URL}/#organization` },
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: `${SITE_URL}/technique-hero.webp`,
+        },
+        speakable: {
+          "@type": "SpeakableSpecification",
+          xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+        },
+        ...(faqId ? { mainEntity: { "@id": faqId } } : {}),
+      },
+      {
+        "@type": "CollectionPage",
+        "@id": collectionId,
+        url,
+        name: "Which Print Technique Fits Your Design? — 20 Methods Compared",
+        description:
+          "Compare 20 apparel decoration techniques — sublimation, screen printing, DTG, DTF, embroidery, 3D puff, rhinestone and more. We run all 20 in-house.",
+        inLanguage: "en",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        about: { "@id": `${SITE_URL}/#organization` },
+        provider: { "@id": `${SITE_URL}/#organization` },
+        mainEntity: { "@id": itemListId },
+      },
+      {
+        "@type": "ItemList",
+        "@id": itemListId,
+        name: "20 Sublimation Apparel Print Techniques",
+        description:
+          "All 20 decoration techniques we run in-house at our Yiwu factory, ordered by print-process family.",
+        numberOfItems: input.items.length,
+        itemListOrder: "https://schema.org/ItemListOrderAscending",
+        itemListElement: input.items.map((p, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          name: p.name,
+          url: `${SITE_URL}/technique/${p.slug}/`,
+        })),
+        isPartOf: { "@id": collectionId },
+      },
+      ...(input.howTo && howToId
+        ? [
+            {
+              "@type": "HowTo",
+              "@id": howToId,
+              name: input.howTo.name,
+              description: input.howTo.description,
+              step: input.howTo.steps.map((s, i) => ({
+                "@type": "HowToStep",
+                position: i + 1,
+                name: s.name,
+                text: s.text,
+              })),
+              isPartOf: { "@id": webpageId },
+            },
+          ]
+        : []),
+      {
+        "@type": "BreadcrumbList",
+        "@id": breadcrumbId,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${SITE_URL}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Technique",
+            item: url,
+          },
+        ],
+      },
+      ...(input.faq && faqId
+        ? [
+            {
+              "@type": "FAQPage",
+              "@id": faqId,
+              mainEntity: input.faq.map((it) => ({
+                "@type": "Question",
+                name: it.q,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: it.a,
+                },
+              })),
+            },
+          ]
+        : []),
+    ],
+  };
+}
+
 export function buildCategoryProductGraph(input: CategoryPageInput) {
   const url = `${SITE_URL}${input.path}`;
   const webpageId = `${url}#webpage`;
