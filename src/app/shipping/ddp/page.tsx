@@ -86,6 +86,62 @@ const ddpFaqs = [
   },
 ];
 
+// 2026-09-12 (R53): DDP shipping process as a 9-step HowTo. Each
+// step is one phase of the real buyer journey from initial
+// quote request through delivery and post-delivery support.
+//  - Mirrors the 4 transit options in the Service node
+//    (express / air / sea / rail) so the HowTo and Service
+//    graphs cross-link cleanly in Google's entity graph.
+//  - Each step has a short name (lands in the HowTo rich
+//    result step title) and a longer text body (lands in
+//    the step subtitle / AI Overview extraction).
+//  - 9 steps falls comfortably in Google's recommended
+//    HowTo range (3-10 steps ideal, up to ~25 supported).
+const ddpHowTo = {
+  name: "How DDP Shipping from China to Your Door Works — Step by Step",
+  description:
+    "The 9-step DDP (Delivered Duty Paid) shipping process for custom apparel from our Yiwu factory to 100+ countries: quote, production, QC, export customs, freight, import customs, duty payment, last-mile delivery, and post-delivery support.",
+  totalTime: "P30D",
+  steps: [
+    {
+      name: "Request a DDP quote with your destination",
+      text: "Send us the destination country, postal code, product type, and total weight or piece count. We confirm DDP availability for the destination and return a single landed price — freight, customs clearance, import duties, VAT/GST, and last-mile all included. No surprise bills.",
+    },
+    {
+      name: "Approve the sample or art proof",
+      text: "For new designs we send a pre-production sample (3-7 days) so you can confirm hand-feel, color vibrancy, and fit before bulk production. Existing customers can skip this step if the design and fabric are already on file.",
+    },
+    {
+      name: "Production at our Yiwu factory",
+      text: "Bulk production runs 10-20 days depending on technique (sublimation 10-15 days, screen-print 12-18 days, embroidery 8-12 days, DTF 7-10 days). Production is on-site at our 2,000 m² Yiwu facility with daily status updates.",
+    },
+    {
+      name: "100% final QC and AQL inspection",
+      text: "Every garment is individually inspected against the AQL 2.5 sampling plan. Defect rate must be below 2.5% (or below 1.0% for critical defects) before the order can ship. Photos of any defects are shared for transparency.",
+    },
+    {
+      name: "Export customs clearance in China",
+      text: "We file the export declaration, classify HS codes, prepare the commercial invoice and packing list, and arrange pickup from our Yiwu warehouse to the origin port or airport. Standard export from China is 1-2 business days.",
+    },
+    {
+      name: "International freight (express, air, sea, or rail)",
+      text: "Express (DHL/FedEx, 3-5 days), Air freight (5-10 days), Sea LCL/FCL (18-40 days), or Rail to EU (18-22 days) — chosen at quote time based on your deadline and unit-cost tolerance. Each shipment is fully insured and tracked end-to-end.",
+    },
+    {
+      name: "Import customs clearance + duty + tax payment",
+      text: "Our in-house broker (or local IOR partner) clears the shipment through destination customs, classifies under the local tariff schedule, and pays all import duties, VAT, GST, and brokerage fees upfront. You never see a separate customs bill.",
+    },
+    {
+      name: "Last-mile delivery to your door with tracking",
+      text: "From the destination port or airport, the shipment is dispatched to your shipping address via ground courier (USPS, Royal Mail, DHL local, AusPost, etc.). One tracking number, one invoice, one signature on delivery. Real-time milestone updates.",
+    },
+    {
+      name: "Post-delivery support and re-orders",
+      text: "Defect claims and replacements are handled within 14 days of delivery (photo evidence required). Re-orders from the same design are quoted in 24 hours with the same DDP terms locked in. We keep your spec on file for 24 months.",
+    },
+  ],
+};
+
 export default function DdpPage() {
   // 2026-09-12 (R40): consolidate the 3 separate JSON-LD nodes
   // (BreadcrumbList + WebPage + FAQPage — passed as a flat array
@@ -101,6 +157,16 @@ export default function DdpPage() {
   //     knowledge panel enrichment
   //   - WebPage + mainEntity → Service round-trip so Google
   //     knows this page IS the authoritative DDP service page
+  //
+  // 2026-09-12 (R53): extend the @graph with a 9-step HowTo
+  // node for the DDP shipping process. The HowTo is gated on
+  // ddpHowTo being present, so removing it (or passing
+  // undefined) drops the HowTo node entirely and the schema
+  // stays byte-equivalent to the R40 baseline. The HowTo
+  // targets "how does DDP shipping from China work" / "DDP
+  // shipping process steps" buyer-intent queries that Google
+  // surfaces as HowTo rich results — a separate rich-result
+  // surface from the FAQ.
   const ddpGraph = buildDdpShippingPageGraph({
     breadcrumb: [
       { name: "Home", path: "/" },
@@ -108,6 +174,7 @@ export default function DdpPage() {
       { name: "DDP", path: "/shipping/ddp/" },
     ],
     faq: ddpFaqs,
+    howto: ddpHowTo,
   });
   return (
     <main>

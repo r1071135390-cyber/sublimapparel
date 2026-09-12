@@ -126,6 +126,61 @@ const faqs = [
   },
 ];
 
+// 2026-09-12 (R53): Worldwide shipping process as a 9-step HowTo.
+// Each step is one phase of the international shipping flow from
+// our Yiwu factory to 100+ countries. The HowTo covers all 5
+// shipping modes (sea, air, express, rail, DDP) and emphasizes
+// the customs + duty + last-mile bundle that the page's Service
+// node promises. Targets "how international shipping from China
+// works" / "shipping from China process" type buyer queries that
+// Google surfaces as HowTo rich results — a separate rich-result
+// surface from the FAQ. 9 steps falls comfortably in Google's
+// recommended HowTo range (3-10 ideal, up to ~25 supported).
+const globalHowTo = {
+  name: "How International Shipping from China to 100+ Countries Works — Step by Step",
+  description:
+    "The 9-step worldwide shipping process for custom apparel from our Yiwu factory to 100+ countries: mode selection, quote, production, QC, export customs, international freight, import customs, duty payment, last-mile delivery, and post-delivery support.",
+  totalTime: "P25D",
+  steps: [
+    {
+      name: "Pick your shipping mode (sea, air, express, rail, or DDP)",
+      text: "Choose the mode that matches your deadline and unit cost: sea (cheapest, 15-35 days), air (mid-cost, 5-9 days), express (premium, 3-7 days), rail to EU (eco, 18-22 days), or DDP (all-in delivered duty paid to your door). We help you decide if you are not sure which mode fits your order.",
+    },
+    {
+      name: "Request a worldwide shipping quote with destination",
+      text: "Send destination country, postal code, product type, total weight or piece count, and your preferred mode. We return a single all-in landed price including freight, customs clearance, duties, and last-mile — for sea, air, express, rail, or DDP. No hidden fees.",
+    },
+    {
+      name: "Production at our Yiwu factory",
+      text: "Bulk production runs 10-20 days at our 2,000 m² Yiwu facility depending on technique (sublimation 10-15 days, screen-print 12-18 days, embroidery 8-12 days, DTF 7-10 days). Daily status updates and milestone photos for full transparency.",
+    },
+    {
+      name: "100% final QC and AQL inspection",
+      text: "Every garment is individually inspected against the AQL 2.5 sampling plan. Defect rate must be below 2.5% (or below 1.0% for critical defects) before the order can ship. Defect photos are shared with the buyer for transparency.",
+    },
+    {
+      name: "Export customs clearance in China",
+      text: "We file the export declaration, classify HS codes, prepare the commercial invoice and packing list, and arrange pickup from our Yiwu warehouse to the origin port, airport, or rail terminal. Standard export from China is 1-2 business days.",
+    },
+    {
+      name: "International freight in your chosen mode",
+      text: "Sea FCL/LCL (15-40 days), air freight (5-9 days), express via DHL/FedEx (3-7 days), or rail China-Europe (18-22 days). Every shipment is fully insured and tracked end-to-end with milestone updates. We consolidate multiple orders in the same container when shipping windows align.",
+    },
+    {
+      name: "Import customs clearance at destination",
+      text: "Our in-house broker (or local IOR partner) clears the shipment through destination customs, classifies under the local tariff schedule (HTS for US, TARIC for EU, HS for AU, etc.), and files all required paperwork. Section 321 de minimis for US orders under $800 — no formal entry needed.",
+    },
+    {
+      name: "Duty + tax payment (DDP) or handoff (FOB/CIF)",
+      text: "Under DDP we pay all import duties, VAT, GST, and brokerage fees upfront — you see one landed cost. Under FOB/CIF your forwarder handles this step. Either way, no surprise bills at your door under DDP — one of the most common reasons international buyers choose DDP for the first time.",
+    },
+    {
+      name: "Last-mile delivery to your door + post-delivery support",
+      text: "From the destination port, airport, or rail terminal, the shipment is dispatched to your shipping address via ground courier (USPS, Royal Mail, DHL local, AusPost, etc.). One tracking number, one invoice, one signature on delivery. Re-orders from the same design are quoted in 24 hours with the same shipping terms locked in.",
+    },
+  ],
+};
+
 export default function GlobalShippingPage() {
   // 2026-09-12 (R46): merge 3 separate JsonLd calls (array of 3
   // nodes was producing 3 scripts) into a single @graph. Adds a
@@ -207,6 +262,34 @@ export default function GlobalShippingPage() {
             "Buyer-intent FAQs about DDP / FOB / CIF / EXW incoterms, customs duties, Section 321 de minimis, freight modes, and our Yiwu-to-100+ countries shipping operation.",
         }
       ),
+      // 5 · HowTo — worldwide shipping process (R53)
+      // 2026-09-12 (R53): 9-step buyer journey for shipping apparel
+      // from our Yiwu factory to 100+ countries. Targets "how
+      // international shipping from China works" / "shipping from
+      // China process" buyer-intent queries that Google surfaces as
+      // HowTo rich results — a separate rich-result surface from
+      // the FAQ. Same cross-link fields as the FAQ (inLanguage,
+      // isPartOf → #webpage, about → #organization) so it joins the
+      // brand entity graph. WebPage mainEntity stays on the FAQ to
+      // preserve the R46 intent; the HowTo is a discoverable
+      // secondary node, not the main subject.
+      {
+        "@type": "HowTo",
+        "@id": `${globalUrl}#howto`,
+        url: globalUrl,
+        name: globalHowTo.name,
+        description: globalHowTo.description,
+        inLanguage: "en",
+        isPartOf: { "@id": `${globalUrl}#webpage` },
+        about: { "@id": "https://sublimapparel.com/#organization" },
+        totalTime: globalHowTo.totalTime,
+        step: globalHowTo.steps.map((s, i) => ({
+          "@type": "HowToStep",
+          position: i + 1,
+          name: s.name,
+          text: s.text,
+        })),
+      },
     ],
   };
   return (

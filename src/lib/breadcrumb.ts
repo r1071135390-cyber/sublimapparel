@@ -1208,6 +1208,32 @@ export type DdpShippingInput = {
   breadcrumb: { name: string; path: string }[];
   /** Optional FAQ items rendered inline. Omit to skip FAQPage node. */
   faq?: FaqItem[];
+  /** 2026-09-12 (R53): optional DDP shipping HowTo (the
+   *  9-step buyer journey from quote to delivery). When
+   *  supplied, the @graph also emits a HowTo node anchored
+   *  to this page (idempotent with the rest of the
+   *  entity graph). Omit (or pass undefined) to drop the
+   *  HowTo node entirely so the schema stays byte-
+   *  equivalent to the R40 baseline. */
+  howto?: {
+    /** Display name of the procedure. Lands in the
+     *  Google HowTo rich result title. */
+    name: string;
+    /** One-line description. Lands in the HowTo
+     *  rich result subtitle and AI Overview
+     *  extraction. */
+    description: string;
+    /** Ordered list of 6-10 sequential steps
+     *  covering the full DDP journey (request
+     *  quote -> production -> QC -> export customs
+     *  -> freight -> import customs -> duties
+     *  paid -> last-mile -> delivery). */
+    steps: Array<{ name: string; text: string }>;
+    /** Optional ISO 8601 duration for the whole
+     *  procedure, e.g. "P30D" (30 days) for
+     *  the typical DDP end-to-end flow. */
+    totalTime?: string;
+  };
 };
 
 export function buildDdpShippingPageGraph(input: DdpShippingInput) {
@@ -1216,6 +1242,14 @@ export function buildDdpShippingPageGraph(input: DdpShippingInput) {
   const serviceId = `${url}#service`;
   const breadcrumbId = `${url}#breadcrumb`;
   const faqId = input.faq && input.faq.length > 0 ? `${url}#faq` : null;
+  // 2026-09-12 (R53): R53 emits an optional HowTo node for
+  // the DDP shipping process. Gated on input.howto so
+  // pages that don't opt in stay byte-equivalent to the
+  // R40 schema. See R48 (buildHowToNode design) for the
+  // cross-link fields (inLanguage, isPartOf -> #webpage,
+  // about -> #organization) we mirror here.
+  const howtoId = input.howto ? `${url}#howto` : null;
+
 
   return {
     "@context": "https://schema.org",
@@ -1322,6 +1356,40 @@ export function buildDdpShippingPageGraph(input: DdpShippingInput) {
       ...(faqId
         ? [
             buildFaqPageNode(faqId, webpageId, input.faq!),
+          ]
+        : []),
+      // 2026-09-12 (R53): DDP shipping process HowTo. Same
+      // shape as buildHowToNode() but emitted in-graph so the
+      // page only ships a single <script> tag (R40 contract).
+      // Targets the "how does DDP shipping from China work"
+      // / "DDP shipping process steps" buyer-intent queries
+      // that Google surfaces as HowTo rich results. The
+      // WebPage mainEntity still points at the Service node
+      // (the service is the page's primary subject); the
+      // HowTo is surfaced as a discoverable secondary node
+      // - a richer AI Overview extraction target than the
+      // FAQ alone.
+      ...(howtoId && input.howto
+        ? [
+            {
+              "@type": "HowTo",
+              "@id": howtoId,
+              url,
+              name: input.howto.name,
+              description: input.howto.description,
+              inLanguage: "en",
+              isPartOf: { "@id": webpageId },
+              about: { "@id": `${SITE_URL}/#organization` },
+              ...(input.howto.totalTime
+                ? { totalTime: input.howto.totalTime }
+                : {}),
+              step: input.howto.steps.map((s, i) => ({
+                "@type": "HowToStep",
+                position: i + 1,
+                name: s.name,
+                text: s.text,
+              })),
+            },
           ]
         : []),
     ],
