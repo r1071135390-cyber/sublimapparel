@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd, buildHowToJsonLd } from "@/lib/breadcrumb";
+import { buildAboutSubPageGraph } from "@/lib/breadcrumb";
 
 export const metadata = buildPageMetadata({
     title: "How to Source Custom Apparel from China | 5-Step Process",
@@ -32,11 +32,6 @@ export const metadata = buildPageMetadata({
     // share card. Resource/guide pages fall back to /og-default.jpg.
     ogImage: "/og-default.jpg",
   });;
-
-const breadcrumb = buildBreadcrumbJsonLd([
-  { name: "Home", path: "/" },
-  { name: "How to Source Custom Apparel", path: "/how-to-source/" },
-]);
 
 // 2026-09-11 push (Round 8 part 2): pulled up to a constant so the
 // inline FAQ section can map the same items into the body and we can
@@ -199,48 +194,34 @@ const shippingOptions = [
 ];
 
 export default function HowToSourcePage() {
-  // 2026-09-11 push (Round 8 part 2): add WebPage + FAQPage JSON-LD
-  // to the existing breadcrumb so the page is eligible for PAA rich
-  // results and joins the brand entity graph.
-  const webPageJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": "https://sublimapparel.com/how-to-source/#webpage",
-    url: "https://sublimapparel.com/how-to-source/",
+  // R43: consolidated to single @graph — 4 independent nodes
+  // (WebPage + BreadcrumbList + FAQPage + HowTo) merged into one @graph
+  // with all @id anchors so Google joins them to the brand entity graph.
+  const howToGraph = buildAboutSubPageGraph({
+    subPage: "",
+    urlPrefix: "/how-to-source/",
+    sectionName: "How to Source Custom Apparel",
+    parentUrl: null,
     name: "How to Source Custom Apparel from China | SublimApparel",
     description:
       "5-step process from inquiry to delivery. Quoting, sample, production, QC, and shipping for custom apparel.",
-    inLanguage: "en",
-    isPartOf: { "@id": "https://sublimapparel.com/#website" },
-    about: { "@id": "https://sublimapparel.com/#organization" },
-    primaryImageOfPage: {
-      "@type": "ImageObject",
-      url: "https://sublimapparel.com/og/og-home.webp",
+    breadcrumb: [{ name: "How to Source Custom Apparel", path: "/how-to-source/" }],
+    faq: sourceFaqs,
+    howTo: {
+      name: "How to source custom apparel from China",
+      description:
+        "5-step process from first inquiry to delivered boxes. Refined over 8 years and 1,200+ orders.",
+      totalTime: "P75D",
+      steps: steps.map((s) => ({
+        name: `Step ${s.n}: ${s.title}`,
+        text: `${s.summary} ${s.details.join(" ")}`,
+      })),
     },
-    speakable: {
-      "@type": "SpeakableSpecification",
-      xpath: ["/html/body//h1", "/html/body//section[1]//p"],
-    },
-  };
-
-  const faqJsonLd = buildFaqJsonLd(sourceFaqs);
-  // 2026-09-11 (R22-C): add HowTo schema for the 5-step sourcing
-  // process. Google has begun surfacing HowTo steps as rich results
-  // for "how to ..." queries. The totalTime covers the full inquiry
-  // → delivery window (60-90 days per the steps array).
-  const howToJsonLd = buildHowToJsonLd({
-    name: "How to source custom apparel from China",
-    description:
-      "5-step process from first inquiry to delivered boxes. Refined over 8 years and 1,200+ orders.",
-    totalTime: "P75D",
-    steps: steps.map((s) => ({
-      name: `Step ${s.n}: ${s.title}`,
-      text: `${s.summary} ${s.details.join(" ")}`,
-    })),
   });
+
   return (
     <>
-      <JsonLd data={[breadcrumb, webPageJsonLd, faqJsonLd, howToJsonLd]} />
+      <JsonLd data={howToGraph} />
 
       {/* HERO */}
       <section className="border-b border-black/10 bg-[#0a0a0a] py-16 text-white md:py-20">

@@ -1313,27 +1313,52 @@ export type AboutInput = {
 // R42: Shared helper for all /about/ sub-pages (cases / factory / faq /
 // production / quality). All share the same 2–3 node pattern:
 //   WebPage + BreadcrumbList [+ optional FAQPage]
+// R43: Extended with urlPrefix (for non-/about/ pages like /how-to-source/)
+// and optional howTo support for guide pages.
 // The helper anchors every node via @id so Google can join them to the
 // global #organization + #website entity graph in a single parse pass.
 // ---------------------------------------------------------------------------
 export type AboutSubPageInput = {
   /** e.g. "Cases" or "Factory" — used to derive the page URL. */
   subPage: string;
+  /** URL path prefix. Defaults to "/about/". Override for pages outside
+   *  the /about/ directory (e.g. "/how-to-source/"). */
+  urlPrefix?: string;
+  /** Name for the section parent crumb (position 2). Defaults to "About".
+   *  E.g. "How to Source" for /how-to-source/ pages. */
+  sectionName?: string;
+  /** URL for the section parent crumb (position 2). Defaults to
+   *  SITE_URL + prefix's directory. Set null to skip parent crumb. */
+  parentUrl?: string | null;
   /** Canonical page title from the page's <title> tag. */
   name: string;
   /** Meta description from the page. */
   description: string;
-  /** Breadcrumb trail (excluding Home which is handled by the helper). */
+  /** Breadcrumb trail (excluding Home + section parent). */
   breadcrumb: { name: string; path: string }[];
   /** Optional FAQ items rendered inline on the page. Omit to skip FAQPage. */
   faq?: FaqItem[];
+  /** Optional HowTo steps for guide/educational pages. Omit to skip HowTo.
+   *  WebPage links via mainEntity (FAQ) or mentions (HowTo). */
+  howTo?: {
+    name: string;
+    description: string;
+    totalTime?: string;
+    steps: { name: string; text: string }[];
+  };
 };
 
 export function buildAboutSubPageGraph(input: AboutSubPageInput) {
-  const url = `${SITE_URL}/about/${input.subPage}/`;
+  const prefix = input.urlPrefix ?? "/about/";
+  const url = `${SITE_URL}${prefix}${input.subPage}/`;
   const webpageId = `${url}#webpage`;
   const breadcrumbId = `${url}#breadcrumb`;
   const faqId = input.faq && input.faq.length > 0 ? `${url}#faq` : null;
+  const howToId = input.howTo ? `${url}#how-to` : null;
+
+  // Build WebPage.mainEntity — prefer FAQPage; if no FAQ but has HowTo,
+  // the HowTo appears as a normal @graph node (not mainEntity).
+  const mainEntityEntry = faqId ? { mainEntity: { "@id": faqId } } : {};
 
   return {
     "@context": "https://schema.org",
@@ -1348,14 +1373,15 @@ export function buildAboutSubPageGraph(input: AboutSubPageInput) {
         inLanguage: "en",
         isPartOf: { "@id": `${SITE_URL}/#website` },
         about: { "@id": `${SITE_URL}/#organization` },
-        ...(faqId
-          ? { mainEntity: { "@id": faqId } }
-          : {
+        ...mainEntityEntry,
+        ...(!faqId && !howToId
+          ? {
               speakable: {
                 "@type": "SpeakableSpecification",
                 xpath: ["/html/body//h1", "/html/body//section[1]//p"],
               },
-            }),
+            }
+          : {}),
       },
       // 2 · BreadcrumbList
       {
@@ -1363,16 +1389,44 @@ export function buildAboutSubPageGraph(input: AboutSubPageInput) {
         "@id": breadcrumbId,
         itemListElement: [
           { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
-          { "@type": "ListItem", position: 2, name: "About", item: `${SITE_URL}/about/` },
+          ...(input.parentUrl !== null
+            ? [
+                {
+                  "@type": "ListItem",
+                  position: 2,
+                  name: input.sectionName ?? "About",
+                  item:
+                    input.parentUrl ??
+                    `${SITE_URL}${prefix.replace(/\/[^/]+\/$/, "/")}`,
+                },
+              ]
+            : []),
           ...input.breadcrumb.map((crumb, i) => ({
             "@type": "ListItem",
-            position: i + 3,
+            position: i + (input.parentUrl === null ? 2 : 3),
             name: crumb.name,
             item: `${SITE_URL}${crumb.path.replace(/^\//, "")}`,
           })),
         ],
       },
-      // 3 · FAQPage (conditional)
+      // 3 · HowTo (conditional) — used by guide/educational pages
+      ...(howToId
+        ? [
+            {
+              "@type": "HowTo",
+              "@id": howToId,
+              name: input.howTo!.name,
+              description: input.howTo!.description,
+              ...(input.howTo!.totalTime ? { totalTime: input.howTo!.totalTime } : {}),
+              step: input.howTo!.steps.map((s) => ({
+                "@type": "HowToStep",
+                name: s.name,
+                text: s.text,
+              })),
+            },
+          ]
+        : []),
+      // 4 · FAQPage (conditional)
       ...(faqId
         ? [
             {
