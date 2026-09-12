@@ -16,7 +16,6 @@ import {
 } from "@/lib/tag-archive";
 import { KeywordCloud } from "@/components/keyword-cloud";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://sublimapparel.com";
 
@@ -147,39 +146,62 @@ export default async function TagArchivePage({ params }: PageProps) {
     .filter(([v]) => v !== tag.value)
     .slice(0, 18);
 
-  const breadcrumb = buildBreadcrumbJsonLd([
-    { name: "Home", path: "/" },
-    { name: "Products", path: "/products" },
-    { name: tag.label, path: `/tag/${dim}/${slug}` },
-  ]);
+  const tagPageUrl = `${SITE_URL}/tag/${dim}/${slug}/`;
+  const breadcrumbId = `${tagPageUrl}#breadcrumb`;
+  const itemListId = `${tagPageUrl}#itemlist`;
 
-  const itemListJsonLd = {
+  // 2026-09-12 (R45): merge 3 separate JsonLd calls into a single @graph.
+  // Adds proper @id anchoring and entity cross-links to the brand graph.
+  // ItemList capped at 20 products per Google carousel rich-result rules.
+  const tagGraph = {
     "@context": "https://schema.org",
-    "@type": "ItemList",
-    name: `${tag.label} sublimation products`,
-    itemListElement: matches.slice(0, 20).map((p, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      url: `${SITE_URL}/products/all/${p.slug}/`,
-      name: p.name,
-    })),
+    "@graph": [
+      // 1 · BreadcrumbList
+      {
+        "@type": "BreadcrumbList",
+        "@id": breadcrumbId,
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+          { "@type": "ListItem", position: 2, name: "Products", item: `${SITE_URL}/products` },
+          { "@type": "ListItem", position: 3, name: tag.label, item: tagPageUrl },
+        ],
+      },
+      // 2 · ItemList (capped at 20 per Google carousel rules)
+      {
+        "@type": "ItemList",
+        "@id": itemListId,
+        name: `${tag.label} sublimation products`,
+        itemListElement: matches.slice(0, 20).map((p, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          url: `${SITE_URL}/products/all/${p.slug}/`,
+          name: p.name,
+        })),
+      },
+      // 3 · WebPage — anchors brand entity graph, with speakable
+      {
+        "@type": "WebPage",
+        "@id": `${tagPageUrl}#webpage`,
+        url: tagPageUrl,
+        name: seoForTag(dim, tag.label).title,
+        description: seoForTag(dim, tag.label).description,
+        keywords: seoForTag(dim, tag.label).keywords.join(", "),
+        inLanguage: "en",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        about: { "@id": `${SITE_URL}/#organization` },
+        mainEntity: { "@id": itemListId },
+        speakable: {
+          "@type": "SpeakableSpecification",
+          xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+        },
+      },
+    ],
   };
 
   return (
     <>
-      <JsonLd data={breadcrumb} />
-      <JsonLd data={itemListJsonLd} />
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "WebPage",
-          name: seoForTag(dim, tag.label).title,
-          description: seoForTag(dim, tag.label).description,
-          url: `${SITE_URL}/tag/${dim}/${slug}/`,
-          keywords: seoForTag(dim, tag.label).keywords.join(", "),
-          inLanguage: "en",
-        }}
-      />
+      {/* 2026-09-12 (R45): single @graph — BreadcrumbList + ItemList + WebPage */}
+      <JsonLd data={tagGraph} />
 
       <main className="min-h-screen bg-background">
         {/* Hero */}

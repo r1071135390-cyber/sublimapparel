@@ -1,7 +1,6 @@
 import { ArrowLeft, Mail, Truck, Warehouse, Globe, Package } from "lucide-react";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 import Link from "next/link";
 
 export const metadata = buildPageMetadata({
@@ -10,7 +9,7 @@ export const metadata = buildPageMetadata({
     // tracking keywords that match buyer search intent.
     title: "Shipping Policy — DDP, Lead Times & Tracking",
     description: "How we ship, the difference between FOB / CIF / DDP, US warehouse fulfillment from Fontana CA, production lead times, tracking, and what to do if a shipment is…",
-  });;
+  });
 
 const INCOTERMS = [
   {
@@ -85,33 +84,41 @@ const REGION_LEAD_TIMES = [
 ];
 
 export default function ShippingPolicyPage() {
-  // 2026-09-11 (R15-P3): /shipping-policy/ had no structured data. Adding
-  // WebPage + BreadcrumbList so Google can identify the page as a
-  // legal/policy page and surface the breadcrumb trail in SERPs.
-  const shippingPolicySchema = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": "https://sublimapparel.com/shipping-policy/#webpage",
-    url: "https://sublimapparel.com/shipping-policy/",
-    name: "Shipping Policy — DDP, Lead Times & Tracking | SublimApparel",
-    description:
-      "How we ship, the difference between FOB / CIF / DDP, US warehouse fulfillment from Fontana CA, production lead times, tracking, and what to do if a shipment is delayed.",
-    inLanguage: "en",
-    isPartOf: { "@id": "https://sublimapparel.com/#website" },
-    about: { "@id": "https://sublimapparel.com/#organization" },
-    provider: { "@id": "https://sublimapparel.com/#organization" },
-    lastReviewed: "2026-08-01",
-  };
+  // 2026-09-12 (R45): merge two separate JsonLd calls into a single @graph.
+// BreadcrumbList + WebPage share @id anchoring; WebPage carries
+// mainEntity link to the breadcrumb so Google associates them.
+const shippingPolicyGraph = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://sublimapparel.com/shipping-policy/#breadcrumb",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://sublimapparel.com/" },
+        { "@type": "ListItem", position: 2, name: "Shipping Policy", item: "https://sublimapparel.com/shipping-policy/" },
+      ],
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://sublimapparel.com/shipping-policy/#webpage",
+      url: "https://sublimapparel.com/shipping-policy/",
+      name: "Shipping Policy — DDP, Lead Times & Tracking | SublimApparel",
+      description:
+        "How we ship, the difference between FOB / CIF / DDP, US warehouse fulfillment from Fontana CA, production lead times, tracking, and what to do if a shipment is delayed.",
+      inLanguage: "en",
+      isPartOf: { "@id": "https://sublimapparel.com/#website" },
+      about: { "@id": "https://sublimapparel.com/#organization" },
+      provider: { "@id": "https://sublimapparel.com/#organization" },
+      mainEntity: { "@id": "https://sublimapparel.com/shipping-policy/#breadcrumb" },
+      lastReviewed: "2026-08-01",
+    },
+  ],
+};
 
   return (
     <main className="min-h-screen bg-[#faf9f6] text-[#0a0a0a]">
-      <JsonLd
-        data={buildBreadcrumbJsonLd([
-          { name: "Home", path: "/" },
-          { name: "Shipping Policy", path: "/shipping-policy" },
-        ])}
-      />
-      <JsonLd data={shippingPolicySchema} />
+      {/* 2026-09-12 (R45): single @graph — BreadcrumbList + WebPage */}
+      <JsonLd data={shippingPolicyGraph} />
       {/* Hero */}
       <section className="border-b-2 border-[#0a0a0a] bg-white">
         <div className="mx-auto max-w-4xl px-6 py-16 md:py-24">

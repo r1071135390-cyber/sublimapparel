@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildFaqJsonLd } from "@/lib/breadcrumb";
 import Link from "next/link";
 import { RequestQuoteLink } from "@/components/request-quote-link";
 import {
@@ -81,66 +81,78 @@ export default function CasesPage() {
     },
   ]);
 
-  // 2026-09-11 push (Round 7): add CollectionPage + ItemList JSON-LD on
-  // /cases/. Mirrors the structure of /products/ — the page is a hub of
-  // industry-specific case-study landing pages, but Google would otherwise
-  // see only an unannotated grid of <a> tags. With CollectionPage +
-  // ItemList, the hub → industry hub → case detail relationship is
-  // explicit in structured data, and each industry URL gets a clear
-  // position in the index.
-  const caseCollection = {
+  // 2026-09-12 (R45): merge 2 separate JsonLd calls into a single @graph.
+  // All 4 nodes (BreadcrumbList + WebPage + CollectionPage/ItemList + FAQPage)
+  // cross-linked via @id to the global #website + #organization entity graph.
+  const casesGraph = {
     "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    "@id": "https://sublimapparel.com/cases/#collection",
-    url: "https://sublimapparel.com/cases/",
-    name: "Custom Apparel Case Studies — 12 Industries, 6,000+ Projects",
-    description:
-      "Browse sublimation and all-over-print apparel case studies by industry. Real custom apparel, DDP shipping and full-bleed cotton prints shipped to 50+ countries. Sports teams, events, brands, music festivals, e-commerce, and more.",
-    inLanguage: "en",
-    isPartOf: { "@id": "https://sublimapparel.com/#website" },
-    provider: { "@id": "https://sublimapparel.com/#organization" },
-    mainEntity: {
-      "@type": "ItemList",
-      numberOfItems: industries.length,
-      itemListOrder: "https://schema.org/ItemListOrderAscending",
-      itemListElement: industries.map((ind, i) => ({
-        "@type": "ListItem",
-        position: i + 1,
-        url: `https://sublimapparel.com/cases/${ind.slug}/`,
-        name: ind.title,
-      })),
-    },
-  };
-
-  // 2026-09-11 (Round 10): the page had FAQPage + CollectionPage + ItemList +
-  // breadcrumb but no WebPage. Adding WebPage so it joins the brand entity
-  // graph with isPartOf → #website and about → #organization cross-links.
-  const webPageJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": "https://sublimapparel.com/cases/#webpage",
-    url: "https://sublimapparel.com/cases/",
-    name: "Custom Apparel Case Studies: Sports, Events & Brands | SublimApparel",
-    description:
-      "Browse sublimation printing case studies by industry. See real examples of custom apparel, DDP shipping and full-bleed cotton prints we shipped to 50+ countries.",
-    inLanguage: "en",
-    isPartOf: { "@id": "https://sublimapparel.com/#website" },
-    about: { "@id": "https://sublimapparel.com/#organization" },
-    speakable: {
-      "@type": "SpeakableSpecification",
-      xpath: ["/html/body//h1", "/html/body//section[1]//p"],
-    },
+    "@graph": [
+      // 1 · BreadcrumbList
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://sublimapparel.com/cases/#breadcrumb",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: "https://sublimapparel.com/" },
+          { "@type": "ListItem", position: 2, name: "Case Studies", item: "https://sublimapparel.com/cases/" },
+        ],
+      },
+      // 2 · WebPage
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/cases/#webpage",
+        url: "https://sublimapparel.com/cases/",
+        name: "Custom Apparel Case Studies: Sports, Events & Brands | SublimApparel",
+        description:
+          "Browse sublimation printing case studies by industry. See real examples of custom apparel, DDP shipping and full-bleed cotton prints we shipped to 50+ countries.",
+        inLanguage: "en",
+        isPartOf: { "@id": "https://sublimapparel.com/#website" },
+        about: { "@id": "https://sublimapparel.com/#organization" },
+        mainEntity: { "@id": "https://sublimapparel.com/cases/#faq" },
+        speakable: {
+          "@type": "SpeakableSpecification",
+          xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+        },
+      },
+      // 3 · CollectionPage + ItemList (12 industry verticals)
+      {
+        "@type": "CollectionPage",
+        "@id": "https://sublimapparel.com/cases/#collection",
+        url: "https://sublimapparel.com/cases/",
+        name: "Custom Apparel Case Studies — 12 Industries, 6,000+ Projects",
+        description:
+          "Browse sublimation and all-over-print apparel case studies by industry. Real custom apparel, DDP shipping and full-bleed cotton prints shipped to 50+ countries.",
+        inLanguage: "en",
+        isPartOf: { "@id": "https://sublimapparel.com/#website" },
+        provider: { "@id": "https://sublimapparel.com/#organization" },
+        mainEntity: {
+          "@type": "ItemList",
+          numberOfItems: industries.length,
+          itemListOrder: "https://schema.org/ItemListOrderAscending",
+          itemListElement: industries.map((ind, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            url: `https://sublimapparel.com/cases/${ind.slug}/`,
+            name: ind.title,
+          })),
+        },
+      },
+      // 4 · FAQPage
+      {
+        "@type": "FAQPage",
+        "@id": "https://sublimapparel.com/cases/#faq",
+        mainEntity: faqItems.map((it) => ({
+          "@type": "Question",
+          name: it.q,
+          acceptedAnswer: { "@type": "Answer", text: it.a },
+        })),
+      },
+    ],
   };
 
   return (
     <>
-      <JsonLd
-        data={buildBreadcrumbJsonLd([
-          { name: "Home", path: "/" },
-          { name: "Case Studies", path: "/cases" },
-        ])}
-      />
-      <JsonLd data={[faqJsonLd, webPageJsonLd, caseCollection]} />
+      {/* 2026-09-12 (R45): single @graph — BreadcrumbList + WebPage + CollectionPage + FAQPage */}
+      <JsonLd data={casesGraph} />
       {/* Top utility bar */}
       <div className="border-b-2 border-black bg-black text-white">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-6 py-2.5 text-[11px] font-bold uppercase tracking-wider">

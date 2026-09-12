@@ -7,7 +7,6 @@ import { RequestQuoteLink } from "@/components/request-quote-link";
 import { products } from "@/lib/products-data";
 import { getProductImages } from "@/lib/product-images";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 import {
   filterReviewsForCase,
   hasAggregateableReviews,
@@ -133,67 +132,89 @@ export default async function CaseDetailPage({ params }: Props) {
       : {}),
   };
 
+  const caseUrl = `https://sublimapparel.com/cases/${ind.slug}/${c.id}/`;
+  const breadcrumbId = `${caseUrl}#breadcrumb`;
+  const serviceId = `${caseUrl}#service-reviews`;
+  const articleId = `${caseUrl}#article`;
+
+  // 2026-09-12 (R45): merge 3 separate JsonLd calls into a single @graph.
+  // BreadcrumbList + Service (review surface) + Article — all cross-linked
+  // via @id to the global #website + #organization entity graph.
+  const caseGraph = {
+    "@context": "https://schema.org",
+    "@graph": [
+      // 1 · BreadcrumbList (4-item path)
+      {
+        "@type": "BreadcrumbList",
+        "@id": breadcrumbId,
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: "https://sublimapparel.com/" },
+          { "@type": "ListItem", position: 2, name: "Case Studies", item: "https://sublimapparel.com/cases/" },
+          { "@type": "ListItem", position: 3, name: ind.title, item: `https://sublimapparel.com/cases/${ind.slug}/` },
+          { "@type": "ListItem", position: 4, name: c.title, item: caseUrl },
+        ],
+      },
+      // 2 · Service (review surface for this case study) — gated: review +
+      // aggregateRating only emitted when verifiedReviews contain entries with
+      // relatedCaseId matching this case, matching R27/R28/R42/R33 pattern.
+      {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "@id": serviceId,
+        url: caseUrl,
+        name: `${c.title} — buyer review surface`,
+        description: `Aggregated buyer feedback for the "${c.title}" case study (${c.client}, ${c.year}).`,
+        serviceType: "Custom apparel manufacturing case study review aggregation",
+        provider: { "@id": "https://sublimapparel.com/#organization" },
+        ...(caseReviews.length > 0
+          ? { review: caseReviews.map(toSchemaReview) }
+          : {}),
+        ...(caseAggregate
+          ? {
+              aggregateRating: {
+                "@type": "AggregateRating",
+                ratingValue: caseAggregate.ratingValue,
+                reviewCount: caseAggregate.reviewCount,
+                bestRating: caseAggregate.bestRating,
+                worstRating: caseAggregate.worstRating,
+              },
+            }
+          : {}),
+      },
+      // 3 · Article (case study content node)
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "@id": articleId,
+        headline: c.title,
+        description: c.summary,
+        datePublished: `${c.year}-01-01`,
+        dateModified: `${c.year}-01-01`,
+        inLanguage: "en",
+        author: { "@id": "https://sublimapparel.com/#person" },
+        publisher: { "@id": "https://sublimapparel.com/#organization" },
+        isPartOf: { "@id": `https://sublimapparel.com/cases/${ind.slug}/#collection` },
+        about: { "@id": "https://sublimapparel.com/#organization" },
+        keywords: [
+          "case study",
+          "sublimation case study",
+          "custom apparel case",
+          "B2B sublimation project",
+          "full-coverage print",
+          "DDP shipping case",
+          ind.title.toLowerCase(),
+          ...c.products.map((p) => p.toLowerCase()),
+        ].join(", "),
+        articleSection: ind.title,
+        url: caseUrl,
+      },
+    ],
+  };
+
   return (
     <main>
-      <JsonLd
-        data={buildBreadcrumbJsonLd([
-          { name: "Home", path: "/" },
-          { name: "Case Studies", path: "/cases" },
-          { name: ind.title, path: `/cases/${ind.slug}` },
-          { name: c.title, path: `/cases/${ind.slug}/${c.id}` },
-        ])}
-      />
-      {/* 2026-09-11 (R29): also emit the per-case review-surface Service
-          node in the same JsonLd list, alongside BreadcrumbList /
-          Article. The Service block is a no-op minimal node today
-          (verifiedReviews is still empty) and lights up with review +
-          aggregateRating automatically once a real review is added
-          to verifiedReviews with `relatedCaseId: "${c.id}"`. Same
-          contract as R27 (/about/) and R28 (/cases/[slug]/) — three
-          pages, one reviews.ts single source of truth. */}
-      <JsonLd
-        data={caseReviewJsonLd}
-      />
-      {/* 2026-09-11 push (Round 7): add Article + BreadcrumbList JSON-LD
-          on each case study detail page. Before this round the only
-          structured data on these pages was the BreadcrumbList, so
-          Google had to infer from the H1 + body copy that the page was
-          a case study. With @type: Article, the page becomes eligible
-          for article rich snippets (date, author, publisher) and the
-          publisher chain (Organization in the root @graph → Person
-          who wrote the case → Article) joins cleanly via @id. We also
-          drop the FAQPage JSON-LD inline (a few cases have an FAQ
-          section in their body) so the case-study pages can earn PAA
-          placements on the same query space the hub /cases/ already
-          captures. */}
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "Article",
-          "@id": `https://sublimapparel.com/cases/${ind.slug}/${c.id}/#article`,
-          headline: c.title,
-          description: c.summary,
-          datePublished: `${c.year}-01-01`,
-          dateModified: `${c.year}-01-01`,
-          inLanguage: "en",
-          author: { "@id": "https://sublimapparel.com/#person" },
-          publisher: { "@id": "https://sublimapparel.com/#organization" },
-          isPartOf: { "@id": `https://sublimapparel.com/cases/${ind.slug}/#collection` },
-          about: { "@id": "https://sublimapparel.com/#organization" },
-          keywords: [
-            "case study",
-            "sublimation case study",
-            "custom apparel case",
-            "B2B sublimation project",
-            "full-coverage print",
-            "DDP shipping case",
-            ind.title.toLowerCase(),
-            ...c.products.map((p) => p.toLowerCase()),
-          ].join(", "),
-          articleSection: ind.title,
-          url: `https://sublimapparel.com/cases/${ind.slug}/${c.id}/`,
-        }}
-      />
+      {/* 2026-09-12 (R45): single @graph — BreadcrumbList + Service + Article */}
+      <JsonLd data={caseGraph} />
       {/* Hero */}
       <section className="border-b-2 border-black bg-[#0a0a0a] text-white">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">

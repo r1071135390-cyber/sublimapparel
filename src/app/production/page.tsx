@@ -261,11 +261,12 @@ export default function ProductionPage() {
         </section>
       </main>
       <Footer />
-      {/* 2026-09-11 push (Round 8 part 2): consolidate the two
-          separate schema outputs (raw FAQPage script + JsonLd
-          breadcrumb) into a single JsonLd with breadcrumb +
-          WebPage + FAQPage. */}
-      <JsonLd data={[breadcrumb, webPageJsonLd, faqJsonLd, productionHowToJsonLd]} />
+      {/* 2026-09-12 (R45): Fixed — productionHowToJsonLd was a leftover reference
+      // from a copy-paste error (quality-control page has howToJsonLd; this page
+      // never defined it). Removed the undefined variable. The page retains its
+      // 12-step production timeline as editorial UI content; HowTo rich-result
+      // qualification is a future enhancement opportunity. */}
+      <JsonLd data={[breadcrumb, webPageJsonLd, faqJsonLd]} />
     </>
   );
 }
