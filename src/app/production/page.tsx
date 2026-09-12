@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { RequestQuoteLink } from "@/components/request-quote-link";
-import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
+import { buildBreadcrumbJsonLd, buildHowToNode } from "@/lib/breadcrumb";
 import { buildPageMetadata } from "@/lib/page-metadata";
 
 // 2026-09-11 push (Round 4): switch from raw `Metadata` to `buildPageMetadata` so the
@@ -71,10 +71,18 @@ const faqItems = [
 // was producing 3 scripts) into a single @graph. WebPage anchors
 // the brand entity graph and mainEntity → FAQPage. Production is
 // a process/editorial page — no Service node (would dilute the
-// publisher signal). The 12-step production timeline is editorial
-// UI content; future enhancement opportunity for HowTo schema.
+// publisher signal).
+// 2026-09-12 (R48): promote the 12-step production timeline into
+// a real HowTo schema node. The page is the canonical answer for
+// "how long does custom apparel take" / "sublimation production
+// timeline" type queries — Google's HowTo rich result type
+// surfaces step-by-step timelines like this in AI Overviews and
+// PAA boxes. We add it as a 4th node in the @graph alongside the
+// existing FAQPage so the FAQ cross-links back to the HowTo via
+// the brand entity graph.
 const productionUrl = "https://sublimapparel.com/production/";
 const productionFaqId = `${productionUrl}#faq`;
+const productionHowToId = `${productionUrl}#howto`;
 
 const productionGraph = {
   "@context": "https://schema.org",
@@ -106,7 +114,85 @@ const productionGraph = {
         xpath: ["/html/body//h1", "/html/body//section[1]//p"],
       },
     },
-    // 3 · FAQPage
+    // 3 · HowTo — 12-step production timeline (R48)
+    // The page is the canonical buyer answer for "how long does
+    // custom apparel take" — HowTo rich result eligibility is
+    // unlocked by emitting the steps as a sibling HowTo node in
+    // the @graph with explicit position + name + text fields.
+    // totalTime = P50D (matches the standard 35-50 day door-to-door
+    // lead time stated on the page itself).
+    buildHowToNode({
+      howToId: productionHowToId,
+      webpageId: `${productionUrl}#webpage`,
+      name: "How we produce a custom sublimated apparel order (PO to door)",
+      description:
+        "Day-by-day production timeline for a 500-piece sublimation order: artwork finalization, fabric procurement, printing, cut & sew, QC, export clearance, and DDP delivery. Standard 35-50 days door-to-door.",
+      totalTime: "P50D",
+      tools: [
+        "Heat press calendar",
+        "Sublimation printer",
+        "Cut & sew line",
+        "AQL 2.5 inspection kit",
+        "Container loading equipment",
+      ],
+      supplies: [
+        "100% polyester blank fabric",
+        "Sublimation transfer paper",
+        "Disperse dye inks (CMYK)",
+        "Poly-bag export packaging",
+      ],
+      steps: [
+        {
+          name: "Day 0: PO & deposit",
+          text: "Order confirmed and 30% deposit received. Production slot reserved on the schedule.",
+        },
+        {
+          name: "Day 1–2: Artwork finalization",
+          text: "Mock-up, color proof, and size spec sheet approved by the buyer.",
+        },
+        {
+          name: "Day 2–3: Fabric & trim procurement",
+          text: "Polyester or cotton blank sourced from stock; custom labels ordered if applicable.",
+        },
+        {
+          name: "Day 3–5: Sublimation printing",
+          text: "Design printed on transfer paper, then heat-pressed onto fabric at 200°C.",
+        },
+        {
+          name: "Day 5–8: Cut & sew",
+          text: "Printed fabric cut to pattern, panels sewn, decorations attached.",
+        },
+        {
+          name: "Day 8–10: QC & pressing",
+          text: "Each piece inspected against AQL 2.5 sampling, steamed, folded, poly-bagged.",
+        },
+        {
+          name: "Day 10–12: Carton packing",
+          text: "Export cartons packed, shipping marks and labels applied.",
+        },
+        {
+          name: "Day 12–14: Export clearance",
+          text: "Customs declaration filed; container loaded at Yiwu port.",
+        },
+        {
+          name: "Day 14–18: Pre-shipment sample (optional)",
+          text: "Finished sample shipped to the buyer for approval before vessel departure.",
+        },
+        {
+          name: "Day 18: Vessel departure",
+          text: "Ocean freight departs Yiwu → Long Beach / Hamburg / Sydney.",
+        },
+        {
+          name: "Day 18–45: Ocean transit",
+          text: "22–27 days depending on destination port.",
+        },
+        {
+          name: "Day 45–55: DDP delivery",
+          text: "Customs cleared by our DDP broker, last-mile delivery to the buyer's warehouse.",
+        },
+      ],
+    }),
+    // 4 · FAQPage
     {
       "@type": "FAQPage",
       "@id": productionFaqId,

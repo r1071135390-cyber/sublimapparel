@@ -18,7 +18,10 @@ import {
 } from "lucide-react";
 import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
+import {
+  buildBreadcrumbJsonLd,
+  buildHowToNode,
+} from "@/lib/breadcrumb";
 
 export const metadata = buildPageMetadata({
     title: "90-Day Custom Apparel Production Program | 2-Phase Model",
@@ -152,8 +155,16 @@ const comparisonRows = [
 // node — the 90-day program page is editorial/program content,
 // not a commercial landing, so a Service node would dilute the
 // publisher signal.
+// 2026-09-12 (R48): also add a HowTo node covering the 2-phase
+// production model. The page is the canonical answer for "how
+// does the 90-day production program work" / "what is the 2-phase
+// custom apparel model" type PAA queries — HowTo rich result
+// eligibility is unlocked by emitting the two phases as a sibling
+// HowTo node in the @graph with explicit position + name + text.
+// totalTime = P90D matches the program length stated in the H1.
 const programUrl = "https://sublimapparel.com/90-day-program/";
 const programFaqId = `${programUrl}#faq`;
+const programHowToId = `${programUrl}#howto`;
 
 const programGraph = {
   "@context": "https://schema.org",
@@ -195,6 +206,62 @@ const programGraph = {
         acceptedAnswer: { "@type": "Answer", text: it.a },
       })),
     },
+    // 4 · HowTo — 2-phase 90-day production program (R48)
+    buildHowToNode({
+      howToId: programHowToId,
+      webpageId: `${programUrl}#webpage`,
+      name: "How the 90-day custom apparel production program works (2-phase model)",
+      description:
+        "Reserve early, lock late. Phase 1 (T-90 to T-30) locks capacity, design, and Pantone without forcing a final count. Phase 2 (T-30 to T-0) cuts, prints, sews, QCs, and ships to your door via DDP. ±5% count buffer, no penalty, 96% on-time delivery in 2024.",
+      totalTime: "P90D",
+      tools: [
+        "Digital mockup tool",
+        "Sublimation heat press",
+        "Cut & sew line",
+        "AQL 2.5 inspection kit",
+        "DDP freight booking system",
+      ],
+      supplies: [
+        "100% polyester blank fabric",
+        "Sublimation transfer paper",
+        "Pantone-matched disperse inks",
+        "Poly-bag export packaging",
+      ],
+      steps: [
+        {
+          name: "T-90: Submit inquiry and reserve production capacity",
+          text: "Send us your event date and estimated quantity. We reserve a production slot in our schedule — you do not owe us a final number at this stage.",
+        },
+        {
+          name: "T-75: Free digital mockup of your design",
+          text: "We produce a free digital mockup of your design on the production fabric so you can confirm colors, placement, and scale before committing.",
+        },
+        {
+          name: "T-60: Physical sample on production fabric",
+          text: "We produce a paid physical sample on the actual production fabric and heat press. The sample fee is refunded against your bulk order. Sample sign-off is the contract.",
+        },
+        {
+          name: "T-45: Lock Pantone, sizing, and placement",
+          text: "We lock the Pantone reference, sizing spec, and print placement. Your estimated count is updated monthly — we hold the production line open for you without forcing a final number.",
+        },
+        {
+          name: "T-30: Final count locked",
+          text: "By T-30, your real registration numbers (or staff list, or member count) are in. We adjust production to your actual headcount within ±5% of your estimate. No penalty for the buffer zone.",
+        },
+        {
+          name: "T-30 to T-15: Production cut, printed, sewn, and inspected",
+          text: "We cut the polyester blanks, sublimate the print, sew the garment, and run an AQL 2.5 inspection. 15 business days of work, 4-stage quality control with photo evidence at each stage.",
+        },
+        {
+          name: "T-15 to T-5: Pack-out and DDP shipping arranged",
+          text: "We pack-out, poly-bag, and label cartons. DDP shipping is arranged via ocean, air, or US warehouse domestic — your choice. You receive the tracking and a delivery ETA.",
+        },
+        {
+          name: "T-0: On-time delivery to your door",
+          text: "The order arrives at your door on or before your event date. In 2024, 96% of 90-day program orders shipped on time. We pay the over/under count buffer — you only pay for the real number produced.",
+        },
+      ],
+    }),
   ],
 };
 

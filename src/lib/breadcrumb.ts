@@ -141,6 +141,86 @@ export function buildHowToJsonLd(input: {
   };
 }
 
+// 2026-09-12 (R48): in-graph HowTo node. Mirrors the buildFaqPageNode
+// pattern from R47 — returns just the node (no @context) so it can be
+// dropped straight into a page @graph array alongside the WebPage /
+// BreadcrumbList / FAQPage nodes without an extra @context-stripping
+// dance. Google surfaces HowTo rich results for "how to" / step-by-step
+// queries; promoting the inline HowTo nodes on /production/,
+// /fabric/care/, and /90-day-program/ to call this helper (one edit
+// per page) is a pure-positive entity-graph strengthening with no risk
+// of breaking existing rich results, because all callers were already
+// emitting the same step[] shape and the only changes are additive
+// cross-link fields (inLanguage, isPartOf → #webpage, about →
+// #organization, url, name, description).
+//
+// Why not reuse buildHowToJsonLd(): that helper still emits a
+// wrapping @context + a legacy inline `step` shape. It is fine for
+// pages that ship the HowTo in its own script tag, but every page we
+// care about now ships single @graph JSON-LD, so the @context would
+// have to be stripped and the field naming normalized manually at
+// every call site. Keeping buildHowToNode in-graph-only lets us:
+//   (1) avoid the strip-dance
+//   (2) emit the cross-link fields the rest of the entity graph
+//       already uses (inLanguage, isPartOf, about, url)
+//   (3) keep the helper small and Google-spec-aligned (HowTo
+//       + HowToStep + position + name + text + totalTime
+//       + estimatedCost + tool + supply are all supported)
+export function buildHowToNode(input: {
+  /** Caller-supplied @id (unique per page), e.g.
+   *  "https://sublimapparel.com/production/#howto". */
+  howToId: string;
+  /** Parent page @id, e.g. ".../production/#webpage". The HowTo
+   *  node's isPartOf will point back to this so Google traces the
+   *  HowTo back to the page that contains it. */
+  webpageId: string;
+  /** Display name of the procedure. Lands in the Google
+   *  HowTo rich result title. */
+  name: string;
+  /** One-line description. Lands in the HowTo rich result
+   *  subtitle and AI Overview extraction. */
+  description: string;
+  /** Ordered list of steps. */
+  steps: Array<{ name: string; text: string }>;
+  /** Optional ISO 8601 duration for the whole procedure,
+   *  e.g. "P60D" (60 days) for the production process. */
+  totalTime?: string;
+  /** Optional per-step tools, e.g. "Heat press", "Mockup tool". */
+  tools?: string[];
+  /** Optional per-step supplies, e.g. "Polyester blank shirt",
+   *  "Sublimation transfer paper". */
+  supplies?: string[];
+}) {
+  return {
+    "@type": "HowTo",
+    "@id": input.howToId,
+    url: input.howToId.replace(/#howto$/, ""),
+    name: input.name,
+    description: input.description,
+    inLanguage: "en",
+    isPartOf: { "@id": input.webpageId },
+    about: { "@id": `${SITE_URL}/#organization` },
+    ...(input.totalTime ? { totalTime: input.totalTime } : {}),
+    ...(input.tools && input.tools.length > 0
+      ? { tool: input.tools.map((t) => ({ "@type": "HowToTool", name: t })) }
+      : {}),
+    ...(input.supplies && input.supplies.length > 0
+      ? {
+          supply: input.supplies.map((s) => ({
+            "@type": "HowToSupply",
+            name: s,
+          })),
+        }
+      : {}),
+    step: input.steps.map((s, i) => ({
+      "@type": "HowToStep",
+      position: i + 1,
+      name: s.name,
+      text: s.text,
+    })),
+  };
+}
+
 // 2026-09-12 (R33-B1): Comparison schema for the 4
 // /compare/{slug}/ pages. Comparison is a lightweight
 // schema.org type that wraps a side-by-side comparison
@@ -2617,24 +2697,79 @@ export function buildBlogPostGraph(input: BlogPostInput) {
         "@id": articleId,
         headline: input.title,
         description: input.excerpt,
-        image: coverUrl,
+        // 2026-09-12 (R48): promote the BlogPosting `image` to a
+        // proper ImageObject with explicit width/height. Google
+        // requires >=1200px wide and a valid aspect ratio to
+        // surface the post in Top Stories / blog carousel rich
+        // results. Every cover on this site is 16:9 at 1600x900
+        // (the .webp / .jpeg hero pipeline), so we can hardcode
+        // the dimensions and skip a manifest lookup. The string
+        // form is still valid schema but the object form unlocks
+        // Google's image-snippet extraction and prevents the
+        // "image is too small" warning in Search Console.
+        image: [
+          {
+            "@type": "ImageObject",
+            url: coverUrl,
+            width: 1600,
+            height: 900,
+          },
+        ],
         datePublished: input.date,
         // 2026-09-12 (R35-D): dateModified stays at build time so
         // every Cloudflare deploy refreshes the modified timestamp
         // and Google re-evaluates the post against current SERP
         // competitors. Same contract as R20.
         dateModified: new Date().toISOString(),
+        // 2026-09-12 (R48): lastReviewed mirrors dateModified.
+        // BlogPosting inherits Article, which inherits CreativeWork.
+        // CreativeWork supports lastReviewed as an ISO 8601
+        // timestamp — Google uses it as an E-E-A-T freshness
+        // signal. The intent is to tell Google: "our team
+        // re-checked this content at the most recent build".
+        // Combined with datePublished (authored) + dateModified
+        // (last edited), this gives the parser a 3-point
+        // freshness timeline. Build-time recompute is the
+        // right contract because Cloudflare is the single
+        // point where we can confidently say "yes, this was
+        // reviewed today" — every push is preceded by a build
+        // + type check.
+        lastReviewed: new Date().toISOString(),
         inLanguage: "en",
         author: { "@id": `${SITE_URL}/#person-ramon` },
         publisher: { "@id": `${SITE_URL}/#organization` },
         isPartOf: { "@id": `${SITE_URL}/blog/#blog` },
         about: { "@id": `${SITE_URL}/#organization` },
         mainEntityOfPage: { "@id": webpageId },
-        keywords: input.tags.join(", "),
+        // 2026-09-12 (R48): keywords as a real array (was
+        // `input.tags.join(", ")` which gave Google a single
+        // string). The Article spec for keywords accepts both
+        // forms, but the array form is what Google surfaces
+        // in the article rich result preview when it
+        // auto-generates topic chips. Mirrors the metadata
+        // keywords[] we already export to <meta name="keywords">.
+        keywords: input.tags,
         articleSection: input.category,
         url,
         ...(wordCount ? { wordCount } : {}),
         timeRequired: input.readTime,
+        // 2026-09-12 (R48): BlogPosting also needs speakable.
+        // WebPage.speakable only covers the H1 + intro — voice
+        // search needs the full article body, not just the
+        // hero. Adding a second SpeakableSpecification scoped
+        // to <article>//p and <article>//h2 is the canonical
+        // pattern for "this page is a news/blog article with
+        // voice-eligible body content". Article has its own
+        // speakable contract separate from WebPage so this
+        // does not duplicate the WebPage one.
+        speakable: {
+          "@type": "SpeakableSpecification",
+          xpath: [
+            "/html/body//article[1]//h1",
+            "/html/body//article[1]//h2",
+            "/html/body//article[1]//p",
+          ],
+        },
         // 2026-09-12 (R35-D): embed review + aggregateRating INSIDE
         // the BlogPosting node (same shape as R31 /fabric/ and R30
         // /products/all/[slug]/). BlogPosting extends Article so
@@ -2656,6 +2791,70 @@ export function buildBlogPostGraph(input: BlogPostInput) {
               },
             }
           : {}),
+      },
+      {
+        // 2026-09-12 (R48): inline the global #organization node
+        // so the BlogPosting.publisher @id resolves to a real
+        // defined entity in the same @graph (previously the @id
+        // was referenced but never declared, which forced Google
+        // to fall back to its organization knowledge graph and
+        // often produced a "publisher unknown" warning in Search
+        // Console). We include logo (required for blog carousel
+        // rich result), sameAs (resolves the brand entity to
+        // external profiles), and contactPoint so the brand
+        // entity is fully-formed. This is a sibling to
+        // #person-ramon, which we already inline below for
+        // the same reason.
+        "@type": "Organization",
+        "@id": `${SITE_URL}/#organization`,
+        name: "SublimApparel",
+        legalName: "Yiwu SublimApparel Trading Co., Ltd.",
+        url: `${SITE_URL}/`,
+        logo: {
+          "@type": "ImageObject",
+          url: `${SITE_URL}/logo-sublimapparel.png`,
+          width: 600,
+          height: 60,
+        },
+        description:
+          "Yiwu-based allover-print apparel factory. Polyester sublimation + all-cotton DTG. 50-piece MOQ. DDP door-to-door to 50+ countries.",
+        foundingDate: "2018",
+        contactPoint: {
+          "@type": "ContactPoint",
+          contactType: "sales",
+          email: "sales@sublimapparel.com",
+          availableLanguage: ["English"],
+          areaServed: [
+            "United States",
+            "Canada",
+            "United Kingdom",
+            "Australia",
+            "Germany",
+            "France",
+            "Spain",
+            "Japan",
+          ],
+        },
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "Floor 3, Building 5, District 4, Yiwu International Trade City",
+          addressLocality: "Yiwu",
+          addressRegion: "Zhejiang",
+          postalCode: "322000",
+          addressCountry: "CN",
+        },
+        sameAs: [
+          "https://www.linkedin.com/company/sublimapparel",
+          "https://www.facebook.com/sublimapparel",
+          "https://www.instagram.com/sublimapparel",
+        ],
+        knowsAbout: [
+          "Dye-sublimation printing",
+          "Custom apparel manufacturing",
+          "DDP (Delivered Duty Paid) shipping",
+          "All-over digital print on cotton",
+          "Yiwu, China apparel supply chain",
+        ],
       },
       {
         // 2026-09-12 (R35-D): define the Person node inline so

@@ -9,7 +9,7 @@ import Link from "next/link";
 import { ArrowRight, Droplets, Sun, ThermometerSun, Shirt, ShieldCheck, AlertTriangle, Sparkles } from "lucide-react";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd, buildFaqPageNode } from "@/lib/breadcrumb";
+import { buildBreadcrumbJsonLd, buildFaqPageNode, buildHowToNode } from "@/lib/breadcrumb";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "How to Care for Sublimated Apparel — Wash, Dry, Iron, Store",
@@ -160,6 +160,13 @@ export default function FabricCarePage() {
   // of its @context + merged back into the @graph manually — the helper
   // now produces the same shape with inLanguage + isPartOf + about
   // cross-link fields, so the strip dance is gone).
+  // 2026-09-12 (R48): also add a HowTo node covering the wash/dry/
+  // iron/avoid routine. The page is the canonical answer for "how
+  // to wash sublimated shirts" / "can you tumble dry sublimation" /
+  // "do sublimated shirts fade" type PAA queries — HowTo rich
+  // result eligibility is unlocked by emitting the care routine
+  // as a sibling HowTo node in the @graph.
+  const howToId = "https://sublimapparel.com/fabric/care/#howto";
   const { "@context": _bc, ...breadcrumbStripped } = breadcrumbJsonLd;
   const { "@context": _wp, ...webPageStripped } = webPageJsonLd;
   const pageGraph = {
@@ -167,6 +174,42 @@ export default function FabricCarePage() {
     "@graph": [
       breadcrumbStripped,
       { ...webPageStripped },
+      buildHowToNode({
+        howToId,
+        webpageId: webPageId,
+        name: "How to wash, dry, iron, and store sublimated apparel",
+        description:
+          "Step-by-step care routine for sublimated polyester apparel: cold-water wash inside-out, mild detergent, low-heat tumble or line dry, low-heat iron inside-out, and storage away from UV. With this routine, prints last 100+ wash cycles.",
+        totalTime: "PT30M",
+        tools: ["Standard washing machine", "Mild liquid detergent", "Clothes dryer (optional)", "Iron (low-polyester setting)"],
+        supplies: ["Sublimated polyester garment", "Mild liquid detergent (no bleach)", "Thin cotton cloth (for ironing barrier)"],
+        steps: [
+          {
+            name: "Wash inside-out in cold or warm water",
+            text: "Turn the garment inside-out. Wash in cold or warm water (max 30°C / 86°F). Use a mild liquid detergent — no chlorine bleach, no oxygen bleach, no fabric softener.",
+          },
+          {
+            name: "Wash with similar colors",
+            text: "Group sublimated garments with similar colors. Loose cotton fibers from other garments can stick to the print surface.",
+          },
+          {
+            name: "Tumble dry on low or line dry",
+            text: "Best: line dry away from direct sunlight (UV is the #1 cause of sublimation fade). If using a dryer, set to low heat (60–70°C / 140–158°F) only — never high heat.",
+          },
+          {
+            name: "Remove promptly after cycle",
+            text: "Take the garment out of the washer or dryer as soon as the cycle ends. Leaving a damp sublimated shirt crumpled can cause dye migration from dark areas into white polyester.",
+          },
+          {
+            name: "Iron inside-out on lowest polyester setting",
+            text: "Iron at the lowest polyester setting (~110°C / 230°F). Turn inside-out or place a thin cotton cloth between the iron and the print. Never iron directly on the sublimated surface.",
+          },
+          {
+            name: "Store away from direct sunlight",
+            text: "Keep sublimated apparel in a drawer, closet, or opaque garment bag. UV exposure over years causes the only real fade sublimated prints experience.",
+          },
+        ],
+      }),
       buildFaqPageNode(faqId, webPageId, faqs),
     ],
   };
