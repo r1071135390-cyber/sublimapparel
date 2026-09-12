@@ -14,6 +14,7 @@ import {
 import { techniques, getTechniqueBySlug, getRelatedTechniques } from "@/lib/techniques";
 import { InquiryCTA } from "@/components/inquiry-cta";
 import { JsonLd } from "@/components/json-ld";
+import { buildHowToNode } from "@/lib/breadcrumb";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -65,10 +66,39 @@ export default async function TechniqueDetailPage({ params }: PageProps) {
   const breadcrumbId = `${techUrl}#breadcrumb`;
   const articleId = `${techUrl}#article`;
   const faqId = `${techUrl}#faq`;
+  // 2026-09-12 (R49): every technique page already exposes a visible
+  // numbered step list under the "How {shortName} Works" section
+  // (t.process: { step, title, description }[]). That makes the page
+  // a perfect match for Google's HowTo rich result — surfacing the
+  // step list directly in SERPs and feeding step bullets into AI
+  // Overviews for "how does {technique} work" queries. Map t.process
+  // straight into buildHowToNode's { name, text } shape and drop the
+  // returned node into the existing single @graph. 20 techniques
+  // share this template so one change unlocks HowTo on every
+  // /technique/[slug]/ page in the same build.
+  const howToId = `${techUrl}#howto`;
+  const howToNode = buildHowToNode({
+    howToId,
+    webpageId,
+    name: `How ${t.shortName.toLowerCase()} works on custom apparel`,
+    description: `Step-by-step ${t.shortName.toLowerCase()} process we use at SublimApparel: ${t.process
+      .slice(0, 3)
+      .map((s) => s.title.toLowerCase())
+      .join(", ")} and final finishing. ${t.process.length} steps total.`,
+    steps: t.process.map((s) => ({
+      name: `Step ${s.step}: ${s.title}`,
+      text: s.description,
+    })),
+  });
 
   // 2026-09-12 (R46): merge 3 separate JsonLd calls into a single @graph.
   // Article + BreadcrumbList + FAQPage all cross-linked via @id, with
   // WebPage anchoring the brand entity graph and mainEntity → FAQPage.
+  // 2026-09-12 (R49): add HowTo as a 5th sibling node so the visible
+  // step list is parseable as a Google HowTo rich result. mainEntity
+  // stays on FAQPage to preserve the R46 contract; HowTo joins the
+  // graph via its @id so Google can pick it up for how-to queries
+  // without forcing a primary-entity reshuffle.
   const techniqueGraph = {
     "@context": "https://schema.org",
     "@graph": [
@@ -122,12 +152,19 @@ export default async function TechniqueDetailPage({ params }: PageProps) {
           acceptedAnswer: { "@type": "Answer", text: f.a },
         })),
       },
+      // 5 · HowTo (R49) — visible step list rendered as a Google
+      // HowTo rich result candidate. Joins the entity graph via
+      // isPartOf → #webpage + about → #organization from inside
+      // buildHowToNode, so the step list is traceable back to the
+      // page that hosts it.
+      howToNode,
     ],
   };
 
   return (
     <>
       {/* 2026-09-12 (R46): single @graph — WebPage + Article + BreadcrumbList + FAQPage */}
+      {/* 2026-09-12 (R49): + HowTo (visible step list as Google HowTo rich result) */}
       <JsonLd data={techniqueGraph} />
 
       <main className="bg-background text-foreground">

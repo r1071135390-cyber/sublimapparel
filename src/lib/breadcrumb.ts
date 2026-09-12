@@ -2413,6 +2413,36 @@ export type FabricDetailInput = {
     bestRating: number;
     worstRating: number;
   };
+  /** 2026-09-12 (R49): citations — external sources the post
+   *  references. Each entry is a CreativeWork (typically a
+   *  WebPage or Article) that supports the post's claims. This
+   *  is one of the strongest E-E-A-T signals Google uses to
+   *  qualify a blog post for YMYL/buying-intent topics. We
+   *  pass through the same shape Google expects: an array of
+   *  CreativeWork nodes (each already has @type / @id / name
+   *  / url from the upstream library). Omit (or pass []) to
+   *  drop the field — preserves R35 byte-equivalence for
+   *  posts that don't have a citation manifest yet. */
+  citations?: Array<{
+    "@type": string;
+    "@id"?: string;
+    name: string;
+    url: string;
+  }>;
+  /** 2026-09-12 (R49): isBasedOn — the resource(s) the post
+   *  is derived from. Typically an internal SublimApparel
+   *  source page (e.g. the /technique/sublimation/ page that
+   *  a how-to post summarizes) or a primary industry
+   *  reference. The relationship is the inverse of citation:
+   *  the post is *based on* this source, whereas the source
+   *  is *cited by* the post. Both are surfaced so Google can
+   *  build a 2-way provenance link in its entity graph. */
+  isBasedOn?: Array<{
+    "@type": string;
+    "@id"?: string;
+    name: string;
+    url: string;
+  }>;
 };
 
 export function buildFabricDetailGraph(input: FabricDetailInput) {
@@ -2770,6 +2800,24 @@ export function buildBlogPostGraph(input: BlogPostInput) {
             "/html/body//article[1]//p",
           ],
         },
+        // 2026-09-12 (R49): citation + isBasedOn for E-E-A-T.
+        // Google uses the `citation` field on CreativeWork
+        // (inherited by BlogPosting) as a primary-source signal
+        // when qualifying a post for buying-intent / YMYL
+        // queries. isBasedOn is the inverse relationship and
+        // rounds out the provenance chain. Both are optional
+        // — strip when the input manifest is empty so the
+        // R35/R48 byte-equivalence contract holds for posts
+        // that don't carry a citation manifest yet. When a
+        // post opts in, the entries are spread inline so the
+        // JSON-LD stays single-pass and Google can resolve
+        // the @id back to the brand entity graph.
+        ...(input.citations && input.citations.length > 0
+          ? { citation: input.citations }
+          : {}),
+        ...(input.isBasedOn && input.isBasedOn.length > 0
+          ? { isBasedOn: input.isBasedOn }
+          : {}),
         // 2026-09-12 (R35-D): embed review + aggregateRating INSIDE
         // the BlogPosting node (same shape as R31 /fabric/ and R30
         // /products/all/[slug]/). BlogPosting extends Article so

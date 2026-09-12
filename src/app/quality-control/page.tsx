@@ -158,20 +158,26 @@ const qcFaqPayload = {
   })),
 };
 
-const qcHowToPayload = {
-  "@type": "HowTo",
-  "@id": qcHowToId,
+// 2026-09-12 (R49): replace the manually constructed HowTo node with
+// buildHowToNode so the same entity-graph cross-linking fields the
+// rest of the site ships (inLanguage: "en", isPartOf → #webpage,
+// about → #organization, url) are added. Pre-R49 the manual node
+// was valid for the HowTo rich result spec but missed the
+// cross-link fields, so Google couldn't trace the HowTo back to
+// the page that hosts it. The visible UI rendering of the 4
+// inspection stages is unchanged — this is a JSON-LD-only upgrade.
+const qcHowToPayload = buildHowToNode({
+  howToId: qcHowToId,
+  webpageId: `${qcUrl}#webpage`,
   name: "How we quality-control custom apparel orders",
   description:
     "4-stage quality control with AQL 2.5 standard: pre-production sample, in-line inspection, final random inspection, pre-shipment photo evidence.",
   totalTime: "P60D",
-  step: steps.map((s, i) => ({
-    "@type": "HowToStep",
-    position: i + 1,
+  steps: steps.map((s, i) => ({
     name: `Stage ${s.n}: ${s.title}`,
     text: `${s.summary} ${s.details.join(" ")}`,
   })),
-};
+});
 
 // 2026-09-12 (R46): convert breadcrumb (legacy { @context, @type }) to
 // a graph-only entry — drop the @context since it lives in the
