@@ -10,9 +10,15 @@ import {
   Truck,
   ArrowRight,
 } from "lucide-react";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 import { JsonLd } from "@/components/json-ld";
 import { buildPageMetadata } from "@/lib/page-metadata";
+
+const SITE_URL = "https://sublimapparel.com";
+const solutionsUrl = `${SITE_URL}/solutions/`;
+const collectionId = `${solutionsUrl}#collection`;
+const webPageId = `${solutionsUrl}#webpage`;
+const breadcrumbId = `${solutionsUrl}#breadcrumb`;
+const faqId = `${solutionsUrl}#faq`;
 
 export const metadata = buildPageMetadata({
   title: "Custom Apparel Solutions for Every B2B Buyer | SublimApparel",
@@ -92,11 +98,9 @@ const solutions = [
   },
 ];
 
-// 2026-09-11 push (Round 5): add FAQPage JSON-LD on /solutions/ so the page
-// can earn PAA-style rich results. Each Q/A mirrors a real buyer question
-// we'd otherwise have to answer in chat — surfacing them in SERPs captures
-// informational-intent clicks and shortens the pre-quote education loop.
-const solutionsFaq = [
+// R43: single @graph — BreadcrumbList + WebPage + CollectionPage/ItemList + FAQPage
+// all cross-linked via @id to the global #website + #organization entity graph.
+const solutionsFaqs = [
   {
     q: "Which solution should I pick if I sell across multiple buyer types?",
     a: "Most multi-channel buyers start with the Apparel Brands & Agencies solution (white-label, NDA-friendly, your brand on every label), then add E-commerce Fulfillment for DDP-to-door or blind-shipping. You can run both workflows in parallel without re-onboarding — the production line, fabric library, and account manager stay the same.",
@@ -123,67 +127,76 @@ const solutionsFaq = [
   },
 ];
 
-const solutionsFaqJsonLd = buildFaqJsonLd(solutionsFaq);
-
-export default function SolutionsPage() {
-  // 2026-09-11 push (Round 7): add CollectionPage + ItemList JSON-LD on
-  // /solutions/. The page is the master hub for 6 solution landing pages
-  // (teams, events, corporate, promotional, brands, e-commerce). Same
-  // reason as /products/, /cases/, and /industries/ — without structured
-  // data, the hub → child relationship is invisible to Google.
-  const solutionsCollection = {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    "@id": "https://sublimapparel.com/solutions/#collection",
-    url: "https://sublimapparel.com/solutions/",
-    name: "Custom Apparel Solutions — 6 B2B Buyer Workflows",
-    description:
-      "Six apparel solutions built for specific B2B buyers: sports teams, events, corporate, promotional, brands, and e-commerce. Each solution has its own fabric, MOQ, lead time, and case studies.",
-    inLanguage: "en",
-    isPartOf: { "@id": "https://sublimapparel.com/#website" },
-    provider: { "@id": "https://sublimapparel.com/#organization" },
-    mainEntity: {
-      "@type": "ItemList",
-      numberOfItems: solutions.length,
-      itemListOrder: "https://schema.org/ItemListOrderAscending",
-      itemListElement: solutions.map((s, i) => ({
-        "@type": "ListItem",
-        position: i + 1,
-        url: `https://sublimapparel.com/${s.slug}/`,
-        name: s.title,
+const solutionsGraph = {
+  "@context": "https://schema.org",
+  "@graph": [
+    // 1 · BreadcrumbList
+    {
+      "@type": "BreadcrumbList",
+      "@id": breadcrumbId,
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+        { "@type": "ListItem", position: 2, name: "Solutions", item: solutionsUrl },
+      ],
+    },
+    // 2 · WebPage — anchors the page to the brand entity graph
+    {
+      "@type": "WebPage",
+      "@id": webPageId,
+      url: solutionsUrl,
+      name: "Custom Apparel Solutions for Every B2B Buyer | SublimApparel",
+      description:
+        "Six apparel solutions built for specific B2B buyers: sports teams, events, corporate, promotional, brands, and e-commerce. Pick yours, get a quote in 24 hours.",
+      inLanguage: "en",
+      isPartOf: { "@id": `${SITE_URL}/#website` },
+      about: { "@id": `${SITE_URL}/#organization` },
+      mainEntity: { "@id": faqId },
+      speakable: {
+        "@type": "SpeakableSpecification",
+        xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+      },
+    },
+    // 3 · CollectionPage + ItemList (6 solution verticals)
+    {
+      "@type": "CollectionPage",
+      "@id": collectionId,
+      url: solutionsUrl,
+      name: "Custom Apparel Solutions — 6 B2B Buyer Workflows",
+      description:
+        "Six apparel solutions built for specific B2B buyers: sports teams, events, corporate, promotional, brands, and e-commerce. Each solution has its own fabric, MOQ, lead time, and case studies.",
+      inLanguage: "en",
+      isPartOf: { "@id": `${SITE_URL}/#website` },
+      provider: { "@id": `${SITE_URL}/#organization` },
+      mainEntity: {
+        "@type": "ItemList",
+        numberOfItems: solutions.length,
+        itemListOrder: "https://schema.org/ItemListOrderAscending",
+        itemListElement: solutions.map((s, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          url: `${SITE_URL}/${s.slug}/`,
+          name: s.title,
+        })),
+      },
+    },
+    // 4 · FAQPage
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "@id": faqId,
+      mainEntity: solutionsFaqs.map((it) => ({
+        "@type": "Question",
+        name: it.q,
+        acceptedAnswer: { "@type": "Answer", text: it.a },
       })),
     },
-  };
+  ],
+};
 
-  // 2026-09-11 (Round 10): the page had FAQPage + CollectionPage + ItemList
-  // + breadcrumb but no WebPage. Adding WebPage so it joins the brand entity
-  // graph with isPartOf → #website and about → #organization cross-links.
-  const webPageJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": "https://sublimapparel.com/solutions/#webpage",
-    url: "https://sublimapparel.com/solutions/",
-    name: "Custom Apparel Solutions for Every B2B Buyer | SublimApparel",
-    description:
-      "Six apparel solutions built for specific B2B buyers: sports teams, events, corporate, promotional, brands, and e-commerce. Pick yours, get a quote in 24 hours.",
-    inLanguage: "en",
-    isPartOf: { "@id": "https://sublimapparel.com/#website" },
-    about: { "@id": "https://sublimapparel.com/#organization" },
-    speakable: {
-      "@type": "SpeakableSpecification",
-      xpath: ["/html/body//h1", "/html/body//section[1]//p"],
-    },
-  };
-
+export default function SolutionsPage() {
   return (
     <>
-      <JsonLd
-        data={buildBreadcrumbJsonLd([
-          { name: "Home", path: "/" },
-          { name: "Solutions", path: "/solutions" },
-        ])}
-      />
-      <JsonLd data={[solutionsFaqJsonLd, webPageJsonLd, solutionsCollection]} />
+      <JsonLd data={solutionsGraph} />
       <main>
         {/* HERO — dark industrial style */}
         <section className="relative overflow-hidden bg-[#0a0a0a] text-white">
