@@ -124,15 +124,19 @@ const faqs = [
 ];
 
 export default function FabricCarePage() {
+  const faqId = "https://sublimapparel.com/fabric/care/#faq";
+  const webPageId = "https://sublimapparel.com/fabric/care/#webpage";
+
   const breadcrumbJsonLd = buildBreadcrumbJsonLd([
     { name: "Home", path: "/" },
     { name: "Fabric", path: "/fabric/" },
     { name: "Care & washing", path: "/fabric/care/" },
   ]);
+
   const webPageJsonLd = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "@id": "https://sublimapparel.com/fabric/care/#webpage",
+    "@id": webPageId,
     url: "https://sublimapparel.com/fabric/care/",
     name: "How to Care for Sublimated Apparel — Wash, Dry, Iron, Store | SublimApparel",
     description:
@@ -140,6 +144,7 @@ export default function FabricCarePage() {
     inLanguage: "en",
     isPartOf: { "@id": "https://sublimapparel.com/#website" },
     about: { "@id": "https://sublimapparel.com/#organization" },
+    mainEntity: { "@id": faqId },
     primaryImageOfPage: {
       "@type": "ImageObject",
       url: "https://sublimapparel.com/og/og-home.webp",
@@ -149,10 +154,23 @@ export default function FabricCarePage() {
       xpath: ["/html/body//h1", "/html/body//section[1]//p"],
     },
   };
+
   const faqJsonLd = buildFaqJsonLd(faqs);
+  const { "@context": _bc, ...breadcrumbStripped } = breadcrumbJsonLd;
+  const { "@context": _wp, ...webPageStripped } = webPageJsonLd;
+  const { "@context": _faq, ...faqStripped } = faqJsonLd;
+  const pageGraph = {
+    "@context": "https://schema.org",
+    "@graph": [
+      breadcrumbStripped,
+      { ...webPageStripped },
+      { ...faqStripped, "@id": faqId },
+    ],
+  };
+
   return (
     <main>
-      <JsonLd data={[breadcrumbJsonLd, webPageJsonLd, faqJsonLd]} />
+      <JsonLd data={pageGraph} />
 
       {/* HERO */}
       <section className="border-b-2 border-black bg-[#0a0a0a] text-white">

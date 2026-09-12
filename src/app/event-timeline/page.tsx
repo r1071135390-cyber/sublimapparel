@@ -50,13 +50,16 @@ const timelineFaqs = [
 ];
 
 export default function EventTimelinePage() {
+  const faqId = "https://sublimapparel.com/event-timeline/#faq";
+  const webPageId = "https://sublimapparel.com/event-timeline/#webpage";
+
   // 2026-09-11 push (Round 8 part 2): add WebPage + FAQPage JSON-LD
   // to the existing breadcrumb so the page is eligible for PAA rich
   // results and joins the brand entity graph.
   const webPageJsonLd = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "@id": "https://sublimapparel.com/event-timeline/#webpage",
+    "@id": webPageId,
     url: "https://sublimapparel.com/event-timeline/",
     name: "Event Apparel Timeline Calculator | SublimApparel",
     description:
@@ -64,6 +67,7 @@ export default function EventTimelinePage() {
     inLanguage: "en",
     isPartOf: { "@id": "https://sublimapparel.com/#website" },
     about: { "@id": "https://sublimapparel.com/#organization" },
+    mainEntity: { "@id": faqId },
     primaryImageOfPage: {
       "@type": "ImageObject",
       url: "https://sublimapparel.com/og/og-home.webp",
@@ -75,9 +79,21 @@ export default function EventTimelinePage() {
   };
 
   const faqJsonLd = buildFaqJsonLd(timelineFaqs);
+  const { "@context": _bc, ...breadcrumbStripped } = breadcrumb;
+  const { "@context": _wp, ...webPageStripped } = webPageJsonLd;
+  const { "@context": _faq, ...faqStripped } = faqJsonLd;
+  const pageGraph = {
+    "@context": "https://schema.org",
+    "@graph": [
+      breadcrumbStripped,
+      { ...webPageStripped },
+      { ...faqStripped, "@id": faqId },
+    ],
+  };
+
   return (
     <>
-      <JsonLd data={[breadcrumb, webPageJsonLd, faqJsonLd]} />
+      <JsonLd data={pageGraph} />
 
       {/* HERO */}
       <section className="border-b border-black/10 bg-[#0a0a0a] py-16 text-white md:py-20">

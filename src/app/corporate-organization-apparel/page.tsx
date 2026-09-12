@@ -23,9 +23,9 @@ import {
 } from "lucide-react";
 import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
-import { forEventsFaqJsonLd, genericServiceJsonLd } from "@/lib/json-ld-data";
 import { RelatedProducts } from "@/components/related-products";
+
+const SITE_URL = "https://sublimapparel.com";
 
 export const metadata = buildPageMetadata({
     // 2026-09-11 (R17-P3): was "Corporate Apparel Manufacturer | Employee
@@ -170,23 +170,72 @@ const faqs = [
 ];
 
 export default function ForCorporatePage() {
-  const breadcrumb = buildBreadcrumbJsonLd([
-    { name: "Home", path: "/" },
-    {
-      name: "Custom Apparel for Corporate",
-      path: "/corporate-organization-apparel/",
-    },
-  ]);
+  const pageUrl = `${SITE_URL}/corporate-organization-apparel/`;
+  const pageGraph = {
+    "@context": "https://schema.org",
+    "@graph": [
+      // BreadcrumbList
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${pageUrl}#breadcrumb`,
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
+          { "@type": "ListItem", position: 2, name: "Custom Apparel for Corporate", item: pageUrl },
+        ],
+      },
+      // WebPage
+      {
+        "@type": "WebPage",
+        "@id": `${pageUrl}#webpage`,
+        url: pageUrl,
+        name: "Corporate Apparel Production Service | Custom Uniforms",
+        description: "Full-service corporate apparel production: design, sampling, bulk manufacturing, brand-color matching, DDP worldwide. From 50 pcs. Service-first approach, no middlemen.",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        mainEntity: { "@id": `${pageUrl}#faq` },
+      },
+      // Service
+      {
+        "@type": "Service",
+        "@id": `${pageUrl}#service`,
+        name: "Custom Apparel for Corporate",
+        serviceType: "Custom sublimation apparel manufacturing",
+        provider: { "@id": `${SITE_URL}/#organization` },
+        areaServed: [
+          { "@type": "Country", name: "United States" },
+          { "@type": "Country", name: "Canada" },
+          { "@type": "Country", name: "United Kingdom" },
+          { "@type": "Country", name: "Australia" },
+          { "@type": "Country", name: "Germany" },
+          { "@type": "Country", name: "France" },
+          { "@type": "Country", name: "Spain" },
+          { "@type": "Country", name: "Japan" },
+        ],
+        description: "Made-to-order custom apparel manufacturing from Yiwu, China. DDP shipping to USA, EU, UK, AU, CA. MOQ 50 pcs, full sublimation, all-over print, embroidery and cut-and-sew.",
+        offers: {
+          "@type": "Offer",
+          priceCurrency: "USD",
+          priceRange: "$$",
+          availability: "https://schema.org/InStock",
+        },
+        url: pageUrl,
+      },
+      // FAQPage
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "@id": `${pageUrl}#faq`,
+        mainEntity: faqs.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
+      },
+    ],
+  };
 
   return (
     <>
-      <JsonLd data={breadcrumb} />
-      <JsonLd data={genericServiceJsonLd({
-        slug: "/corporate-organization-apparel/",
-        metaTitle: "Custom Apparel for Corporate", metaDescription: "Made-to-order custom apparel manufacturing from Yiwu, China. DDP shipping to USA, EU, UK, AU, CA. MOQ 50 pcs, full sublimation, all-over print, embroidery and cut-and-sew.",
-        faqs: useCases.map(x => ({ q: x.title, a: x.desc })),
-      })} />
-      <JsonLd data={forEventsFaqJsonLd(faqs)} />
+      <JsonLd data={pageGraph} />
 
       {/* HERO */}
       <section className="relative overflow-hidden bg-[#0a0a0a] text-white">

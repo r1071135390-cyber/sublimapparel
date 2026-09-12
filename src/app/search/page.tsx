@@ -126,16 +126,33 @@ const searchFaqJsonLd = buildFaqJsonLd([
 export default async function SearchPage({ searchParams }: Props) {
   const sp = await searchParams;
   const initialQuery = (sp?.q || "").trim();
+  const faqId = "https://sublimapparel.com/search/#faq";
+  const webPageId = "https://sublimapparel.com/search/#webpage";
+
+  const pageGraph = {
+    "@context": "https://schema.org",
+    "@graph": [
+      (() => {
+        const { "@context": _c, ...rest } = breadcrumbJsonLd;
+        return rest;
+      })(),
+      (() => {
+        return {
+          ...webPageJsonLd,
+          "@id": webPageId,
+          mainEntity: { "@id": faqId },
+        };
+      })(),
+      (() => {
+        const { "@context": _c, ...rest } = searchFaqJsonLd;
+        return { ...rest, "@id": faqId };
+      })(),
+    ],
+  };
 
   return (
     <>
-      <JsonLd
-        data={[
-          breadcrumbJsonLd,
-          webPageJsonLd,
-          searchFaqJsonLd,
-        ]}
-      />
+      <JsonLd data={pageGraph} />
 
       <main className="min-h-screen bg-white text-[#0a0a0a]">
         {/* HERO */}

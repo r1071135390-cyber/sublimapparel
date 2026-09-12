@@ -18,21 +18,19 @@ import {
   PackageCheck,
   Users,
 } from "lucide-react";
-import { forEventsFaqJsonLd, genericServiceJsonLd } from "@/lib/json-ld-data";
-import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 import { Contact } from "@/components/contact";
 import { RelatedProducts } from "@/components/related-products";
 
 export const dynamic = "force-static";
 
-const siteUrl = "https://sublimapparel.com";
+const SITE_URL = "https://sublimapparel.com";
 
 export const metadata = buildPageMetadata({
     // 2026-09-11 (R15-P0-1): was 88 chars — Google SERP limit is ~60, was being truncated losing "Marketing Merchandise" tail. Shortened to 59 chars.
     title: "Promotional Apparel Manufacturer | Marketing Merch Supplier",
     description: "Custom promotional apparel manufacturer for trade shows, marketing campaigns, giveaways and brand activations. Promotional t-shirts, branded merchandise and...",
     keywords: ["promotional apparel supplier", "promotional t shirt manufacturer", "bulk promotional shirts", "giveaway shirts", "branded merchandise", "marketing apparel"],
-    alternates: { canonical: `${siteUrl}/promotional-marketing-apparel/` },
+    alternates: { canonical: `${SITE_URL}/promotional-marketing-apparel/` },
     ogTitle: "Custom Promotional Apparel Manufacturer | Marketing Merchandise Supplier",
     ogDescription: "Promotional t-shirts, branded merchandise and marketing apparel for trade shows, giveaways and brand activations. Flexible M…",
     ogImage: "/og-default.jpg",
@@ -94,22 +92,73 @@ const faqs = [
 ];
 
 export default function CustomEventTShirtsPage() {
-  const breadcrumb = buildBreadcrumbJsonLd([
-    { name: "Home", path: "/" },
-    { name: "Solutions", path: "/" },
-    { name: "Promotional & Marketing Apparel", path: "/promotional-marketing-apparel/" },
-  ]);
-  const faqJsonLd = forEventsFaqJsonLd(faqs);
+  const pageUrl = `${SITE_URL}/promotional-marketing-apparel/`;
+  const pageGraph = {
+    "@context": "https://schema.org",
+    "@graph": [
+      // BreadcrumbList
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${pageUrl}#breadcrumb`,
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
+          { "@type": "ListItem", position: 2, name: "Solutions", item: `${SITE_URL}/` },
+          { "@type": "ListItem", position: 3, name: "Promotional & Marketing Apparel", item: pageUrl },
+        ],
+      },
+      // WebPage
+      {
+        "@type": "WebPage",
+        "@id": `${pageUrl}#webpage`,
+        url: pageUrl,
+        name: "Promotional Apparel Manufacturer | Marketing Merch Supplier",
+        description: "Custom promotional apparel manufacturer for trade shows, marketing campaigns, giveaways and brand activations. Promotional t-shirts, branded merchandise and...",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        mainEntity: { "@id": `${pageUrl}#faq` },
+      },
+      // Service
+      {
+        "@type": "Service",
+        "@id": `${pageUrl}#service`,
+        name: "Promotional & Marketing Apparel",
+        serviceType: "Custom sublimation apparel manufacturing",
+        provider: { "@id": `${SITE_URL}/#organization` },
+        areaServed: [
+          { "@type": "Country", name: "United States" },
+          { "@type": "Country", name: "Canada" },
+          { "@type": "Country", name: "United Kingdom" },
+          { "@type": "Country", name: "Australia" },
+          { "@type": "Country", name: "Germany" },
+          { "@type": "Country", name: "France" },
+          { "@type": "Country", name: "Spain" },
+          { "@type": "Country", name: "Japan" },
+        ],
+        description: "Custom promotional apparel manufacturer for trade shows, marketing campaigns, giveaways and brand activations. Promotional t-shirts, branded merchandise and marketing apparel with flexible MOQ, fast p...",
+        offers: {
+          "@type": "Offer",
+          priceCurrency: "USD",
+          priceRange: "$$",
+          availability: "https://schema.org/InStock",
+        },
+        url: pageUrl,
+      },
+      // FAQPage (from pains)
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "@id": `${pageUrl}#faq`,
+        mainEntity: pains.map((p) => ({
+          "@type": "Question",
+          name: p.title,
+          acceptedAnswer: { "@type": "Answer", text: p.body },
+        })),
+      },
+    ],
+  };
 
   return (
     <main className="min-h-screen bg-white text-neutral-900">
-            <JsonLd data={breadcrumb} />
-      <JsonLd data={genericServiceJsonLd({
-        slug: "/promotional-marketing-apparel/",
-        metaTitle: "Promotional & Marketing Apparel", metaDescription: "Custom promotional apparel manufacturer for trade shows, marketing campaigns, giveaways and brand activations. Promotional t-shirts, branded merchandise and marketing apparel with flexible MOQ, fast p",
-        faqs: pains.map(p => ({ q: p.title, a: p.body })),
-      })} />
-            <JsonLd data={forEventsFaqJsonLd(pains.map(p => ({ q: p.title, a: p.body })))} />
+      <JsonLd data={pageGraph} />
 
       {/* HERO */}
       <section className="relative overflow-hidden bg-[#0a0a0a] text-white">

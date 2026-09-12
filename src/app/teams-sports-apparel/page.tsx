@@ -20,14 +20,12 @@ import {
   Timer,
   Trophy,
 } from "lucide-react";
-import { forEventsFaqJsonLd, genericServiceJsonLd } from "@/lib/json-ld-data";
-import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 import { Contact } from "@/components/contact";
 import { RelatedProducts } from "@/components/related-products";
 
 export const dynamic = "force-static";
 
-const siteUrl = "https://sublimapparel.com";
+const SITE_URL = "https://sublimapparel.com";
 
 export const metadata = buildPageMetadata({
     // 2026-09-11 (R17-P3): was "Team Sports Apparel Manufacturer |
@@ -41,7 +39,7 @@ export const metadata = buildPageMetadata({
     title: "Team Sports Apparel Production Service | Club Kits",
     description: "Full-service team sports apparel production: roster-locked sublimation, sponsor panels, season-opener deadlines, DDP delivery. From 50 pcs. Clubs, leagues, federations.",
     keywords: ["team sports apparel production service", "sports team apparel manufacturer service", "club kit production", "league uniform service", "custom team sportswear production"],
-    alternates: { canonical: `${siteUrl}/teams-sports-apparel/` },
+    alternates: { canonical: `${SITE_URL}/teams-sports-apparel/` },
     ogTitle: "Team Sports Apparel Production Service | Club Kits",
     ogDescription: "Full-service team sports apparel production. Roster-locked sublimation, sponsor panels, season-opener deadlines. 50-pc MOQ.",
     ogImage: "/og-default.jpg",
@@ -112,22 +110,73 @@ const faqs = [
 ];
 
 export default function RaceShirtsPage() {
-  const breadcrumb = buildBreadcrumbJsonLd([
-    { name: "Home", path: "/" },
-    { name: "Event Apparel", path: "/event-festivals-conferences/" },
-    { name: "Race Shirts", path: "/teams-sports-apparel/" },
-  ]);
-  const faqJsonLd = forEventsFaqJsonLd(faqs);
+  const pageUrl = `${SITE_URL}/teams-sports-apparel/`;
+  const pageGraph = {
+    "@context": "https://schema.org",
+    "@graph": [
+      // BreadcrumbList
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${pageUrl}#breadcrumb`,
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
+          { "@type": "ListItem", position: 2, name: "Event Apparel", item: `${SITE_URL}/event-festivals-conferences/` },
+          { "@type": "ListItem", position: 3, name: "Race Shirts", item: pageUrl },
+        ],
+      },
+      // WebPage
+      {
+        "@type": "WebPage",
+        "@id": `${pageUrl}#webpage`,
+        url: pageUrl,
+        name: "Team Sports Apparel Production Service | Club Kits",
+        description: "Full-service team sports apparel production: roster-locked sublimation, sponsor panels, season-opener deadlines, DDP delivery. From 50 pcs. Clubs, leagues, federations.",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        mainEntity: { "@id": `${pageUrl}#faq` },
+      },
+      // Service
+      {
+        "@type": "Service",
+        "@id": `${pageUrl}#service`,
+        name: "Custom Team Sports Apparel Manufacturing",
+        serviceType: "Custom sublimation apparel manufacturing",
+        provider: { "@id": `${SITE_URL}/#organization` },
+        areaServed: [
+          { "@type": "Country", name: "United States" },
+          { "@type": "Country", name: "Canada" },
+          { "@type": "Country", name: "United Kingdom" },
+          { "@type": "Country", name: "Australia" },
+          { "@type": "Country", name: "Germany" },
+          { "@type": "Country", name: "France" },
+          { "@type": "Country", name: "Spain" },
+          { "@type": "Country", name: "Japan" },
+        ],
+        description: "Custom team sports apparel manufacturer for clubs, leagues and athletes. We produce sublimated soccer jerseys, basketball uniforms, cycling kits, running...",
+        offers: {
+          "@type": "Offer",
+          priceCurrency: "USD",
+          priceRange: "$$",
+          availability: "https://schema.org/InStock",
+        },
+        url: pageUrl,
+      },
+      // FAQPage (from pains)
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "@id": `${pageUrl}#faq`,
+        mainEntity: pains.map((p) => ({
+          "@type": "Question",
+          name: p.title,
+          acceptedAnswer: { "@type": "Answer", text: p.body },
+        })),
+      },
+    ],
+  };
 
   return (
     <main className="min-h-screen bg-white text-neutral-900">
-            <JsonLd data={breadcrumb} />
-      <JsonLd data={genericServiceJsonLd({
-        slug: "/teams-sports-apparel/",
-        metaTitle: "Custom Team Sports Apparel Manufacturing", metaDescription: "Custom team sports apparel manufacturer for clubs, leagues and athletes. We produce sublimated soccer jerseys, basketball uniforms, cycling kits, running...",
-        faqs: pains.map(p => ({ q: p.title, a: p.body })),
-      })} />
-            <JsonLd data={forEventsFaqJsonLd(pains.map(p => ({ q: p.title, a: p.body })))} />
+      <JsonLd data={pageGraph} />
 
       {/* HERO */}
       <section className="relative overflow-hidden bg-[#0a0a0a] text-white">

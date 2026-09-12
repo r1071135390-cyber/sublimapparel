@@ -3,8 +3,7 @@ import type { Metadata } from "next";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { RequestQuoteLink } from "@/components/request-quote-link";
-import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
-import { buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildBreadcrumbJsonLd, buildFaqJsonLd, buildComparisonJsonLd } from "@/lib/breadcrumb";
 import { buildPageMetadata } from "@/lib/page-metadata";
 
 // 2026-09-11 push (Round 4): same fix as /production/ — switch to buildPageMetadata
@@ -115,6 +114,12 @@ const comparisonJsonLd = buildComparisonJsonLd({
   sharedContent:
     "International shipping term (incoterm) selection for B2B apparel orders",
 });
+
+// 2026-09-12 (R35): consolidate all JSON-LD into a single @graph block
+const pageGraph = {
+  "@context": "https://schema.org",
+  "@graph": [breadcrumb, webPageJsonLd, faqJsonLd, comparisonJsonLd],
+};
 
 const rows = [
   {
@@ -357,14 +362,8 @@ export default function DdpVsFobPage() {
         </section>
       </main>
       <Footer />
-      {/* 2026-09-11 push (Round 8 part 2): was a raw <script> tag
-          for FAQPage + a separate JsonLd for breadcrumb (two separate
-          JSON-LD outputs that Google may parse inconsistently).
-          Consolidate to a single JsonLd with breadcrumb + WebPage +
-          FAQPage and drop the raw script tag. 2026-09-12 (R33-B1):
-          add the Comparison node so the incoterm side-by-side
-          joins the entity graph. */}
-      <JsonLd data={[breadcrumb, webPageJsonLd, faqJsonLd, comparisonJsonLd]} />
+      {/* 2026-09-12 (R35): consolidated to single @graph block */}
+      <JsonLd data={pageGraph} />
     </>
   );
 }

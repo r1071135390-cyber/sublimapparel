@@ -25,9 +25,9 @@ import {
 } from "lucide-react";
 import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
-import { forEventsFaqJsonLd, genericServiceJsonLd } from "@/lib/json-ld-data";
 import { RelatedProducts } from "@/components/related-products";
+
+const SITE_URL = "https://sublimapparel.com";
 
 export const metadata = buildPageMetadata({
     // 2026-09-11 (R15-P0-1): was 87 chars — Google truncates >60. Shortened to 53.
@@ -175,23 +175,72 @@ const faqs = [
 ];
 
 export default function ForBrandsPage() {
-  const breadcrumb = buildBreadcrumbJsonLd([
-    { name: "Home", path: "/" },
-    {
-      name: "Private Label & OEM Apparel Manufacturing",
-      path: "/apparel-brands-agencies/",
-    },
-  ]);
+  const pageUrl = `${SITE_URL}/apparel-brands-agencies/`;
+  const pageGraph = {
+    "@context": "https://schema.org",
+    "@graph": [
+      // BreadcrumbList
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${pageUrl}#breadcrumb`,
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
+          { "@type": "ListItem", position: 2, name: "Private Label & OEM Apparel Manufacturing", item: pageUrl },
+        ],
+      },
+      // WebPage
+      {
+        "@type": "WebPage",
+        "@id": `${pageUrl}#webpage`,
+        url: pageUrl,
+        name: "Private Label Apparel Manufacturer | Custom Production",
+        description: "Private label apparel manufacturer and custom clothing production partner for growing brands and creative agencies. Custom labels, hang tags, retail...",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        mainEntity: { "@id": `${pageUrl}#faq` },
+      },
+      // Service
+      {
+        "@type": "Service",
+        "@id": `${pageUrl}#service`,
+        name: "Private Label & OEM Apparel Manufacturing",
+        serviceType: "Custom sublimation apparel manufacturing",
+        provider: { "@id": `${SITE_URL}/#organization` },
+        areaServed: [
+          { "@type": "Country", name: "United States" },
+          { "@type": "Country", name: "Canada" },
+          { "@type": "Country", name: "United Kingdom" },
+          { "@type": "Country", name: "Australia" },
+          { "@type": "Country", name: "Germany" },
+          { "@type": "Country", name: "France" },
+          { "@type": "Country", name: "Spain" },
+          { "@type": "Country", name: "Japan" },
+        ],
+        description: "Made-to-order custom apparel manufacturing from Yiwu, China. DDP shipping to USA, EU, UK, AU, CA. MOQ 50 pcs, full sublimation, all-over print, embroidery and cut-and-sew.",
+        offers: {
+          "@type": "Offer",
+          priceCurrency: "USD",
+          priceRange: "$$",
+          availability: "https://schema.org/InStock",
+        },
+        url: pageUrl,
+      },
+      // FAQPage
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "@id": `${pageUrl}#faq`,
+        mainEntity: faqs.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
+      },
+    ],
+  };
 
   return (
     <>
-      <JsonLd data={breadcrumb} />
-      <JsonLd data={genericServiceJsonLd({
-        slug: "/apparel-brands-agencies/",
-        metaTitle: "Private Label & OEM Apparel Manufacturing", metaDescription: "Made-to-order custom apparel manufacturing from Yiwu, China. DDP shipping to USA, EU, UK, AU, CA. MOQ 50 pcs, full sublimation, all-over print, embroidery and cut-and-sew.",
-        faqs: brandSegments.map(x => ({ q: x.title, a: x.desc })),
-      })} />
-      <JsonLd data={forEventsFaqJsonLd(faqs)} />
+      <JsonLd data={pageGraph} />
 
       {/* HERO */}
       <section className="relative overflow-hidden bg-[#0a0a0a] text-white">

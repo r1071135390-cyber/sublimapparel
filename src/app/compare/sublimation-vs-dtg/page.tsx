@@ -3,9 +3,7 @@ import type { Metadata } from "next";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { RequestQuoteLink } from "@/components/request-quote-link";
-import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
-import { buildFaqJsonLd } from "@/lib/breadcrumb";
-import { buildComparisonJsonLd } from "@/lib/breadcrumb";
+import { buildBreadcrumbJsonLd, buildFaqJsonLd, buildComparisonJsonLd } from "@/lib/breadcrumb";
 import { buildPageMetadata } from "@/lib/page-metadata";
 
 // 2026-09-11 push (Round 4): same fix as /production/ — switch to buildPageMetadata
@@ -110,6 +108,12 @@ const comparisonJsonLd = buildComparisonJsonLd({
   sharedContent:
     "Print method selection for custom apparel B2B orders",
 });
+
+// 2026-09-12 (R35): consolidate all JSON-LD into a single @graph block
+const pageGraph = {
+  "@context": "https://schema.org",
+  "@graph": [breadcrumb, webPageJsonLd, comparisonJsonLd, faqJsonLd],
+};
 
 const comparisonRows: Array<{ label: string; sub: string; dtg: string; sublimation: string }> = [
   {
@@ -381,11 +385,8 @@ export default function SublimationVsDtgPage() {
         </section>
       </main>
       <Footer />
-      {/* 2026-09-11 push (Round 8 part 2): consolidate the two
-          separate schema outputs (raw FAQPage script + JsonLd
-          breadcrumb) into a single JsonLd with breadcrumb +
-          WebPage + FAQPage. */}
-      <JsonLd data={[breadcrumb, webPageJsonLd, comparisonJsonLd, faqJsonLd]} />
+      {/* 2026-09-12 (R35): consolidated to single @graph block */}
+      <JsonLd data={pageGraph} />
     </>
   );
 }

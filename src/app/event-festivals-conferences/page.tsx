@@ -25,9 +25,9 @@ import {
 } from "lucide-react";
 import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
-import { forEventsServiceJsonLd, forEventsFaqJsonLd, genericServiceJsonLd } from "@/lib/json-ld-data";
 import { RelatedProducts } from "@/components/related-products";
+
+const SITE_URL = "https://sublimapparel.com";
 
 export const metadata = buildPageMetadata({
     // 2026-09-11 (R17-P3): was "Event Apparel Manufacturer | Festival &
@@ -182,25 +182,72 @@ const faqs = [
 ];
 
 export default function ForEventsPage() {
-  const breadcrumb = buildBreadcrumbJsonLd([
-    { name: "Home", path: "/" },
-    {
-      name: "Custom Apparel for Events",
-      path: "/event-festivals-conferences/",
-    },
-  ]);
+  const pageUrl = `${SITE_URL}/event-festivals-conferences/`;
+  const pageGraph = {
+    "@context": "https://schema.org",
+    "@graph": [
+      // BreadcrumbList
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${pageUrl}#breadcrumb`,
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
+          { "@type": "ListItem", position: 2, name: "Custom Apparel for Events", item: pageUrl },
+        ],
+      },
+      // WebPage
+      {
+        "@type": "WebPage",
+        "@id": `${pageUrl}#webpage`,
+        url: pageUrl,
+        name: "Event Apparel Production Service | Festival & Conference",
+        description: "Full-service event apparel production: design, sampling, bulk manufacture, deadline-locked delivery. Festival merchandise, conference shirts, volunteer apparel. DDP worldwide.",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        mainEntity: { "@id": `${pageUrl}#faq` },
+      },
+      // Service
+      {
+        "@type": "Service",
+        "@id": `${pageUrl}#service`,
+        name: "Yiwu Custom Events & Conference Apparel",
+        serviceType: "Custom sublimation apparel manufacturing",
+        provider: { "@id": `${SITE_URL}/#organization` },
+        areaServed: [
+          { "@type": "Country", name: "United States" },
+          { "@type": "Country", name: "Canada" },
+          { "@type": "Country", name: "United Kingdom" },
+          { "@type": "Country", name: "Australia" },
+          { "@type": "Country", name: "Germany" },
+          { "@type": "Country", name: "France" },
+          { "@type": "Country", name: "Spain" },
+          { "@type": "Country", name: "Japan" },
+        ],
+        description: "Custom event apparel manufacturer for music festivals, conferences, trade shows and corporate events. Full sublimation, all-over print, embroidery and DDP shipping from Yiwu, China. MOQ 50 pcs.",
+        offers: {
+          "@type": "Offer",
+          priceCurrency: "USD",
+          priceRange: "$$",
+          availability: "https://schema.org/InStock",
+        },
+        url: pageUrl,
+      },
+      // FAQPage
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "@id": `${pageUrl}#faq`,
+        mainEntity: faqs.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
+      },
+    ],
+  };
 
   return (
     <>
-      <JsonLd data={breadcrumb} />
-      <JsonLd
-        data={genericServiceJsonLd({
-          slug: "/event-festivals-conferences/",
-          metaTitle: "Yiwu Custom Events & Conference Apparel",
-          metaDescription: "Custom event apparel manufacturer for music festivals, conferences, trade shows and corporate events. Full sublimation, all-over print, embroidery and DDP shipping from Yiwu, China. MOQ 50 pcs.",
-        })}
-      />
-      <JsonLd data={forEventsFaqJsonLd(faqs)} />
+      <JsonLd data={pageGraph} />
 
       {/* HERO */}
       <section className="relative overflow-hidden bg-[#0a0a0a] text-white">

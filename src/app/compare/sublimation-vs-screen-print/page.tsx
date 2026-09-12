@@ -3,7 +3,8 @@ import type { Metadata } from "next";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { RequestQuoteLink } from "@/components/request-quote-link";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd, buildComparisonJsonLd } from "@/lib/breadcrumb";
+import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildComparisonJsonLd } from "@/lib/breadcrumb";
 import { buildPageMetadata } from "@/lib/page-metadata";
 
 // 2026-09-11 (R26-D): the /compare/ directory already covers
@@ -129,6 +130,12 @@ const comparisonJsonLd = buildComparisonJsonLd({
     "Print method selection for custom apparel B2B orders",
 });
 
+// 2026-09-12 (R35): consolidate all JSON-LD into a single @graph block
+const pageGraph = {
+  "@context": "https://schema.org",
+  "@graph": [breadcrumb, webPageJsonLd, faqJsonLd, comparisonJsonLd],
+};
+
 const comparisonRows: Array<{ label: string; sub: string; screen: string; sublimation: string }> = [
   {
     label: "Best fabric",
@@ -243,9 +250,7 @@ export default function SublimationVsScreenPrintPage() {
   return (
     <>
       <Navbar />
-      <JsonLd data={breadcrumb} />
-      <JsonLd data={webPageJsonLd} />
-      <JsonLd data={faqJsonLd} />
+      <JsonLd data={pageGraph} />
 
       <main className="min-h-screen bg-white text-[#0a0a0a]">
         {/* HERO */}

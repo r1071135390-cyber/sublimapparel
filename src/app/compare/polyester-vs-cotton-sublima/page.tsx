@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Check, X, Sparkles, Shirt, Layers, Droplets, ThermometerSun, ShieldCheck, Truck, Quote } from "lucide-react";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildBreadcrumbJsonLd, buildFaqJsonLd, buildComparisonJsonLd } from "@/lib/breadcrumb";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { RequestQuoteLink } from "@/components/request-quote-link";
 
@@ -120,10 +120,17 @@ const comparisonJsonLd = buildComparisonJsonLd({
     "Substrate selection for all-over digital print on custom apparel",
 });
 
+// 2026-09-12 (R35): consolidate all JSON-LD into a single @graph block
+const pageGraph = {
+  "@context": "https://schema.org",
+  "@graph": [breadcrumb, webPageJsonLd, faq, comparisonJsonLd],
+};
+
 export default function PolyVsCottonPage() {
   return (
     <main className="min-h-screen bg-white">
-      <JsonLd data={[breadcrumb, webPageJsonLd, faq, comparisonJsonLd]} />
+      {/* 2026-09-12 (R35): consolidated to single @graph block */}
+      <JsonLd data={pageGraph} />
 
       {/* Hero */}
       <section className="border-b-2 border-black bg-[#0a0a0a] text-white">
