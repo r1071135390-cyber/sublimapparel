@@ -20,6 +20,31 @@ export interface BlogPost {
   sections: { heading: string; paragraphs: string[] }[];
   keyTakeaways?: string[];
   faqs?: { q: string; a: string }[];
+  // 2026-09-12 (R52): citations — external authoritative sources the
+  // post references. Surface as Schema.org `citation` on the
+  // BlogPosting node so Google can ground the post in established
+  // industry references. Each entry is a CreativeWork shape that the
+  // buildBlogPostGraph helper accepts. Examples per post:
+  //  - DDP shipping post → ICC Incoterms 2020 reference
+  //  - AQL quality post → ISO 2859-1 standard reference
+  //  - sublimation post → OEKO-TEX Standard 100 reference
+  citations?: Array<{
+    "@type": string;
+    "@id"?: string;
+    name: string;
+    url: string;
+  }>;
+  // 2026-09-12 (R52): isBasedOn — the resource(s) the post is
+  // derived from. Typically an internal SublimApparel source page
+  // (e.g. the /technique/sublimation/ page that a how-to post
+  // summarizes) or a primary industry reference. Inverse of
+  // citation — together they form a 2-way provenance chain.
+  isBasedOn?: Array<{
+    "@type": string;
+    "@id"?: string;
+    name: string;
+    url: string;
+  }>;
 }
 
 export const blogPosts: BlogPost[] = [
@@ -106,6 +131,42 @@ export const blogPosts: BlogPost[] = [
       {
         q: "What is the minimum order quantity for sublimation printing?",
         a: "Our minimum order quantity for custom sublimated apparel is 50 pieces per design, per size run. This is the industry-standard MOQ that allows us to set up the printer, calibrate colors, and run production economically. We can do smaller runs (sample or rush) at a higher per-piece price — contact us for a quote.",
+      },
+    ],
+    // 2026-09-12 (R52): cite the textile-safety standard that
+    // governs the polyester we sublimate on, and the canonical
+    // reference for the sublimation printing process. Both
+    // anchor the post in established, Google-resolvable
+    // sources for E-E-A-T.
+    citations: [
+      {
+        "@type": "WebPage",
+        "@id": "https://www.oeko-tex.com/en/our-standards/standard-100-by-oeko-tex",
+        name: "OEKO-TEX Standard 100 — Textile Safety Certification",
+        url: "https://www.oeko-tex.com/en/our-standards/standard-100-by-oeko-tex",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://en.wikipedia.org/wiki/Dye-sublimation_printer",
+        name: "Dye-sublimation printer — Wikipedia",
+        url: "https://en.wikipedia.org/wiki/Dye-sublimation_printer",
+      },
+    ],
+    // 2026-09-12 (R52): post is a long-form summary of our
+    // internal technique hub + a sibling blog post. Linking
+    // both makes the provenance chain explicit for Google.
+    isBasedOn: [
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/technique/sublimation/",
+        name: "Sublimation Printing Process — SublimApparel Technique Hub",
+        url: "https://sublimapparel.com/technique/sublimation/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/blog/what-is-sublimation-fabric/",
+        name: "What Is Sublimation Fabric? A Factory Guide",
+        url: "https://sublimapparel.com/blog/what-is-sublimation-fabric/",
       },
     ],
 
@@ -201,6 +262,42 @@ export const blogPosts: BlogPost[] = [
         a: "Per-piece cost is similar at small volumes, but DTF is usually cheaper at scale because pre-printed transfers can be applied quickly with a heat press. DTG requires more time per garment (pre-treatment + printing + curing). For runs over 100 pieces, DTF is typically 20-40% cheaper per piece.",
       },
     ],
+    // 2026-09-12 (R52): cite the OEKO-TEX textile safety
+    // standard (applies to all digitally-printed apparel we
+    // ship) and the canonical reference for digital textile
+    // printing processes.
+    citations: [
+      {
+        "@type": "WebPage",
+        "@id": "https://www.oeko-tex.com/en/our-standards/standard-100-by-oeko-tex",
+        name: "OEKO-TEX Standard 100 — Textile Safety Certification",
+        url: "https://www.oeko-tex.com/en/our-standards/standard-100-by-oeko-tex",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://en.wikipedia.org/wiki/Digital_textile_printing",
+        name: "Digital textile printing — Wikipedia",
+        url: "https://en.wikipedia.org/wiki/Digital_textile_printing",
+      },
+    ],
+    // 2026-09-12 (R52): the post compares two of our
+    // technique hubs. Linking both lets Google join the
+    // comparison post to each individual technique page in
+    // its entity graph.
+    isBasedOn: [
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/technique/dtf/",
+        name: "DTF (Direct-to-Film) Printing — SublimApparel Technique Hub",
+        url: "https://sublimapparel.com/technique/dtf/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/technique/dtg/",
+        name: "DTG (Direct-to-Garment) Printing — SublimApparel Technique Hub",
+        url: "https://sublimapparel.com/technique/dtg/",
+      },
+    ],
 
   },
   {
@@ -286,6 +383,42 @@ export const blogPosts: BlogPost[] = [
       {
         q: "Is DDP better than FOB for small orders?",
         a: "For most small and mid-size B2B orders (under 5,000 pieces), DDP is significantly easier. With FOB, you are responsible for arranging the freight forwarder, customs broker, and final-mile delivery — which usually means hiring a 3PL in the destination country. DDP bundles all of that into one price, which is much simpler when you do not have a US/EU logistics partner yet.",
+      },
+    ],
+    // 2026-09-12 (R52): DDP is defined by the ICC's Incoterms
+    // 2020 rules — that is THE primary source. Pair it with
+    // the Wikipedia Incoterms page for general background.
+    // These two are the most important citations on the post.
+    citations: [
+      {
+        "@type": "WebPage",
+        "@id": "https://iccwbo.org/business-solutions/incoterms-rules/incoterms-2020/",
+        name: "Incoterms 2020 — International Chamber of Commerce (ICC)",
+        url: "https://iccwbo.org/business-solutions/incoterms-rules/incoterms-2020/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://en.wikipedia.org/wiki/Incoterms",
+        name: "Incoterms — Wikipedia",
+        url: "https://en.wikipedia.org/wiki/Incoterms",
+      },
+    ],
+    // 2026-09-12 (R52): the post is a long-form explainer
+    // for our /shipping/ddp/ hub and the /shipping-policy/
+    // page. Linking both makes the entity graph 2-way
+    // navigable.
+    isBasedOn: [
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/shipping/ddp/",
+        name: "DDP Shipping to the US, EU, UK, AU — SublimApparel",
+        url: "https://sublimapparel.com/shipping/ddp/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/shipping-policy/",
+        name: "Shipping Policy — DDP, Lead Times & Tracking | SublimApparel",
+        url: "https://sublimapparel.com/shipping-policy/",
       },
     ],
 
@@ -382,6 +515,35 @@ export const blogPosts: BlogPost[] = [
         a: "Our monthly capacity is 50,000-80,000 pieces depending on style complexity. A typical 500-piece sublimated jersey order takes 15-20 days from approved sample to bulk delivery. For larger 5,000+ piece orders, expect 25-35 days. Rush orders (7-10 days) are available at a premium — contact us to confirm capacity for tight deadlines.",
       },
     ],
+    // 2026-09-12 (R52): cite the Yiwu Wikipedia article
+    // (background on the manufacturing hub) and the China
+    // Customs General Administration export data portal
+    // (authoritative source on apparel export volumes).
+    citations: [
+      {
+        "@type": "WebPage",
+        "@id": "https://en.wikipedia.org/wiki/Yiwu",
+        name: "Yiwu — Wikipedia",
+        url: "https://en.wikipedia.org/wiki/Yiwu",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "http://english.customs.gov.cn/",
+        name: "China General Administration of Customs — Export Statistics",
+        url: "http://english.customs.gov.cn/",
+      },
+    ],
+    // 2026-09-12 (R52): the post expands on our /about/
+    // hub. Linking keeps the About page reachable from the
+    // blog entity graph.
+    isBasedOn: [
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/about/",
+        name: "About SublimApparel — 10+ Years in Yiwu",
+        url: "https://sublimapparel.com/about/",
+      },
+    ],
 
   },
   {
@@ -468,6 +630,42 @@ export const blogPosts: BlogPost[] = [
         a: "Yes. Recycled polyester (rPET) from post-consumer plastic bottles is increasingly popular for esports jerseys, especially for brands with sustainability commitments. The print quality, feel, and durability are nearly identical to virgin polyester. Minimum order quantities for rPET are usually 100-200 pieces per design — slightly higher than our standard 50-piece MOQ for virgin polyester.",
       },
     ],
+    // 2026-09-12 (R52): cite ASTM D737 (the standard
+    // permeability test we reference for breathability) and
+    // the OEKO-TEX Standard 100 (the textile-safety standard
+    // we comply with for all polyester).
+    citations: [
+      {
+        "@type": "WebPage",
+        "@id": "https://www.astm.org/d0737-18.html",
+        name: "ASTM D737 — Standard Test Method for Air Permeability of Textile Fabrics",
+        url: "https://www.astm.org/d0737-18.html",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://www.oeko-tex.com/en/our-standards/standard-100-by-oeko-tex",
+        name: "OEKO-TEX Standard 100 — Textile Safety Certification",
+        url: "https://www.oeko-tex.com/en/our-standards/standard-100-by-oeko-tex",
+      },
+    ],
+    // 2026-09-12 (R52): the post is a fabric-selection
+    // guide for our /products/esports/ line, and builds on
+    // the /fabric/polyester/ hub. Both joins matter for
+    // E-E-A-T.
+    isBasedOn: [
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/fabric/polyester/",
+        name: "Polyester Fabric — SublimApparel Fabric Hub",
+        url: "https://sublimapparel.com/fabric/polyester/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/products/esports/",
+        name: "Esports Jerseys — SublimApparel Product Hub",
+        url: "https://sublimapparel.com/products/esports/",
+      },
+    ],
 
   },
   {
@@ -546,6 +744,34 @@ export const blogPosts: BlogPost[] = [
         a: "The absolute smallest custom order is a 1-piece sample (for fit and print approval), but it costs almost as much as a 5-piece sample because the setup is the same. For bulk production, our realistic minimum is 50 pieces per design. If you need a smaller bulk run, we can sometimes arrange 30 pieces with a 20-30% upcharge on the per-piece price.",
       },
     ],
+    // 2026-09-12 (R52): cite the WTO (provides the global
+    // apparel trade data that frames the MOQ discussion) and
+    // the Wikipedia MOQ reference (the standard business-
+    // school definition of MOQ in manufacturing).
+    citations: [
+      {
+        "@type": "WebPage",
+        "@id": "https://www.wto.org/english/res_e/statis_e/wts2024_e/wts2024_e.pdf",
+        name: "World Trade Organization — World Trade Statistical Review",
+        url: "https://www.wto.org/english/res_e/statis_e/wts2024_e/wts2024_e.pdf",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://en.wikipedia.org/wiki/Minimum_order_quantity",
+        name: "Minimum order quantity — Wikipedia",
+        url: "https://en.wikipedia.org/wiki/Minimum_order_quantity",
+      },
+    ],
+    // 2026-09-12 (R52): the post expands on /pricing/ and
+    // our global quote workflow.
+    isBasedOn: [
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/pricing/",
+        name: "Pricing & MOQ — SublimApparel",
+        url: "https://sublimapparel.com/pricing/",
+      },
+    ],
 
   },
   {
@@ -621,6 +847,39 @@ export const blogPosts: BlogPost[] = [
       {
         q: "How do I make a custom cycling jersey?",
         a: "Five steps: (1) Send us your design (any format — even a sketch); (2) We create a digital mockup and fabric swatches for your approval; (3) We produce a strike-off sample (1-3 pieces) in 7-10 days; (4) After sample approval, bulk production takes 15-20 days; (5) DDP shipping to your door takes another 7-12 days by air or 30-40 days by sea. Total: 30-60 days door-to-door.",
+      },
+    ],
+    // 2026-09-12 (R52): cite the AS/NZS 4399 standard
+    // (governs the UPF 50+ rating we cite) and the
+    // OEKO-TEX Standard 100 (textile-safety compliance).
+    citations: [
+      {
+        "@type": "WebPage",
+        "@id": "https://www.standards.org.au/standards-productivity-standards/as-nzs-4399-2020",
+        name: "AS/NZS 4399:2020 — Sun Protective Clothing — Evaluation and Classification",
+        url: "https://www.standards.org.au/standards-productivity-standards/as-nzs-4399-2020",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://www.oeko-tex.com/en/our-standards/standard-100-by-oeko-tex",
+        name: "OEKO-TEX Standard 100 — Textile Safety Certification",
+        url: "https://www.oeko-tex.com/en/our-standards/standard-100-by-oeko-tex",
+      },
+    ],
+    // 2026-09-12 (R52): the post expands on the
+    // /products/cycling/ hub and fabric/polyester/ hub.
+    isBasedOn: [
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/products/cycling/",
+        name: "Custom Cycling Jerseys — SublimApparel Product Hub",
+        url: "https://sublimapparel.com/products/cycling/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/fabric/polyester/",
+        name: "Polyester Fabric — SublimApparel Fabric Hub",
+        url: "https://sublimapparel.com/fabric/polyester/",
       },
     ],
 
@@ -701,6 +960,41 @@ export const blogPosts: BlogPost[] = [
       {
         q: "Can you do both screen print and embroidery on the same garment?",
         a: "Yes — and it's very common. A typical setup: embroidered left chest logo (small, premium feel) + screen printed large back design (brand or event graphic). We do this for most of our corporate uniform and event merchandise orders. The pricing is straightforward: embroidery cost per piece + screen print cost per piece, no extra setup fee for combining.",
+      },
+    ],
+    // 2026-09-12 (R52): cite the Pantone Matching System
+    // (used for both screen-print ink mixing and embroidery
+    // thread color matching) and the Wikipedia reference for
+    // screen printing history.
+    citations: [
+      {
+        "@type": "WebPage",
+        "@id": "https://www.pantone.com/articles/color-fundamentals/the-pantone-matching-system",
+        name: "Pantone Matching System — Pantone Color Institute",
+        url: "https://www.pantone.com/articles/color-fundamentals/the-pantone-matching-system",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://en.wikipedia.org/wiki/Screen_printing",
+        name: "Screen printing — Wikipedia",
+        url: "https://en.wikipedia.org/wiki/Screen_printing",
+      },
+    ],
+    // 2026-09-12 (R52): the post is a comparison of two
+    // technique hubs. Both must be in the entity graph so
+    // Google can resolve the post → technique relationship.
+    isBasedOn: [
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/technique/screen-printing/",
+        name: "Screen Printing — SublimApparel Technique Hub",
+        url: "https://sublimapparel.com/technique/screen-printing/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/technique/embroidery/",
+        name: "Embroidery — SublimApparel Technique Hub",
+        url: "https://sublimapparel.com/technique/embroidery/",
       },
     ],
 
@@ -812,6 +1106,35 @@ export const blogPosts: BlogPost[] = [
         a: "Vector files are strongly recommended for any text, logo, or sharp-edged design element, because they stay crisp at any print size. Photo or gradient backgrounds can be raster (PNG, PSD, TIFF) at 150-300 DPI. If you only have a low-res raster file, send it anyway — we can assess whether the quality is workable or whether we need to re-create part of the design.",
       },
     ],
+    // 2026-09-12 (R52): cite Adobe's PDF/X-4 spec
+    // (the production standard we recommend) and the
+    // ISO 12647-2 color-management standard (the
+    // authoritative reference for CMYK color reproduction
+    // on fabric).
+    citations: [
+      {
+        "@type": "WebPage",
+        "@id": "https://www.adobe.com/content/dam/acom/en/devnet/pdf/pdf_reference_archive/pdfx-4/PDFX-4_guide.pdf",
+        name: "Adobe PDF/X-4 — Implementation Reference",
+        url: "https://www.adobe.com/content/dam/acom/en/devnet/pdf/pdf_reference_archive/pdfx-4/PDFX-4_guide.pdf",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://www.iso.org/standard/74437.html",
+        name: "ISO 12647-2:2013 — Graphic technology — Process control for the production of half-tone colour separations, proof and production prints",
+        url: "https://www.iso.org/standard/74437.html",
+      },
+    ],
+    // 2026-09-12 (R52): the post is the production
+    // pre-flight guide for our sublimation process.
+    isBasedOn: [
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/technique/sublimation/",
+        name: "Sublimation Printing Process — SublimApparel Technique Hub",
+        url: "https://sublimapparel.com/technique/sublimation/",
+      },
+    ],
 
   },
   {
@@ -916,6 +1239,41 @@ export const blogPosts: BlogPost[] = [
       {
         q: "Where can I buy sublimation fabric by the yard?",
         a: "You can buy sublimation fabric by the yard from our factory for bulk wholesale orders (typically 100+ yards per color/style). For smaller quantities (under 100 yards), we recommend our sister platform or Alibaba. We supply sublimation fabric in rolls to apparel brands, DIY crafters, and small manufacturers worldwide — contact us with your spec for a quote.",
+      },
+    ],
+    // 2026-09-12 (R52): cite the OEKO-TEX textile-safety
+    // standard (every polyester we ship is certified) and
+    // the Wikipedia reference for polyester (the polymer
+    // chemistry that makes sublimation possible).
+    citations: [
+      {
+        "@type": "WebPage",
+        "@id": "https://www.oeko-tex.com/en/our-standards/standard-100-by-oeko-tex",
+        name: "OEKO-TEX Standard 100 — Textile Safety Certification",
+        url: "https://www.oeko-tex.com/en/our-standards/standard-100-by-oeko-tex",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://en.wikipedia.org/wiki/Polyester",
+        name: "Polyester — Wikipedia",
+        url: "https://en.wikipedia.org/wiki/Polyester",
+      },
+    ],
+    // 2026-09-12 (R52): the post is the factory guide
+    // version of the /fabric/ hub + the sublimation
+    // technique hub. Both must link back.
+    isBasedOn: [
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/fabric/",
+        name: "Fabric Index — SublimApparel",
+        url: "https://sublimapparel.com/fabric/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/technique/sublimation/",
+        name: "Sublimation Printing Process — SublimApparel Technique Hub",
+        url: "https://sublimapparel.com/technique/sublimation/",
       },
     ],
 
@@ -1030,6 +1388,42 @@ export const blogPosts: BlogPost[] = [
       {
         q: "Is polyester bad for your skin?",
         a: "Modern performance polyester is safe and widely used in athletic, medical, and everyday apparel. The 'polyester is uncomfortable' reputation comes from cheap, low-quality polyester used in fast fashion in the 1970s-90s. Today's polyester knit fabrics (especially bird-eye mesh and brushed polyester) are breathable, moisture-wicking, and softer than many natural fibers. For sensitive skin, look for higher GSM and brushed-finish polyester.",
+      },
+    ],
+    // 2026-09-12 (R52): cite the OEKO-TEX Standard 100
+    // (textile-safety compliance for our polyester) and
+    // the GOTS standard (the equivalent standard for
+    // organic cotton, which is the comparison side of this
+    // post).
+    citations: [
+      {
+        "@type": "WebPage",
+        "@id": "https://www.oeko-tex.com/en/our-standards/standard-100-by-oeko-tex",
+        name: "OEKO-TEX Standard 100 — Textile Safety Certification",
+        url: "https://www.oeko-tex.com/en/our-standards/standard-100-by-oeko-tex",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://global-standard.org/the-standard",
+        name: "GOTS — Global Organic Textile Standard",
+        url: "https://global-standard.org/the-standard",
+      },
+    ],
+    // 2026-09-12 (R52): the post compares our two main
+    // fabric hubs. Both must be linked from the entity
+    // graph.
+    isBasedOn: [
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/fabric/polyester/",
+        name: "Polyester Fabric — SublimApparel Fabric Hub",
+        url: "https://sublimapparel.com/fabric/polyester/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/fabric/cotton/",
+        name: "Cotton Fabric — SublimApparel Fabric Hub",
+        url: "https://sublimapparel.com/fabric/cotton/",
       },
     ],
 

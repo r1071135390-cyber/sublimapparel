@@ -71,14 +71,6 @@ export default async function BlogPostPage({
     ? computeAggregateRating(blogReviews)
     : null;
 
-  // 2026-09-11 push (Round 8 part 1): upgrade Article → BlogPosting +
-  // link the post to the global entity graph via @id. BlogPosting is
-  // a more specific @type than Article — it tells Google the page is
-  // a "blog post inside a blog" rather than a stand-alone article, so
-  // the post becomes eligible for the blog carousel rich result and
-  // joins the same entity chain (publisher → #organization, author →
-  // #person-ramon) that all other content on the site uses.
-  //
   // 2026-09-12 (R35-D): consolidate the previous 3 JSON-LD objects
   // (articleSchema + breadcrumbSchema + faqSchema) inside one JsonLd
   // array into a single @graph block via buildBlogPostGraph. The
@@ -91,6 +83,17 @@ export default async function BlogPostPage({
   // #breadcrumb, and FAQPage #faq (when post.faqs.length > 0),
   // all joined via @id so Google parses the entire entity surface
   // in one pass.
+  //
+  // 2026-09-12 (R52): forward post.citations and post.isBasedOn so
+  // each BlogPosting surfaces its provenance chain. `citation`
+  // names the external authoritative sources the post builds on
+  // (e.g. ICC Incoterms 2020 for the DDP post, OEKO-TEX Standard
+  // 100 for the sublimation posts, ISO 12647 for the artwork post).
+  // `isBasedOn` points at the internal SublimApparel pages that the
+  // post summarizes (e.g. /technique/sublimation/ for the
+  // what-is-sublimation-printing post). Both fields are optional
+  // and conditional — posts without a citation manifest stay
+  // byte-equivalent to the R51 schema.
   const blogGraph = buildBlogPostGraph({
     slug: post.slug,
     title: post.title,
@@ -108,6 +111,12 @@ export default async function BlogPostPage({
       { name: "Blog", path: "/blog/" },
       { name: post.title, path: `/blog/${post.slug}/` },
     ],
+    ...(post.citations && post.citations.length > 0
+      ? { citations: post.citations }
+      : {}),
+    ...(post.isBasedOn && post.isBasedOn.length > 0
+      ? { isBasedOn: post.isBasedOn }
+      : {}),
     ...(blogReviews.length > 0
       ? { review: blogReviews.map(toSchemaReview) }
       : {}),
