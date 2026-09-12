@@ -279,39 +279,168 @@ const faqs = [
 // a flat node with no @id, no isPartOf, no about — Google could not link
 // it to the publisher). The 7 inline FAQs (R8) are now first-class via
 // the FAQPage #faq node with WebPage.mainEntity round-trip.
+//
+// 2026-09-12 (R51): extended the HowTo surface from a single hardcoded
+// sublimation HowTo to 5 separate HowTo nodes — one per top-requested
+// technique (sublimation, screen-printing, embroidery, DTG, DTF). Each
+// HowTo has a unique @id (`/technique/#howto-{slug}`) and a `url`
+// pointing to the matching /technique/[slug]/ detail page where the
+// canonical, fully-documented procedure lives (R49 added HowTo to all
+// 20 detail pages). This unlocks 5 separate HowTo rich result
+// opportunities from the hub, vs 1 before — Google now has 5 entry
+// points for "how is X printed on apparel" queries from a single page
+// that already ranks for the head term "apparel printing techniques".
+// The legacy single `howTo:` shape was removed because it was
+// superseded by the multi-HowTo array.
 const techniqueGraph = buildTechniqueHubGraph({
   items: techniques.map((t) => ({ slug: t.slug, name: t.name })),
-  howTo: {
-    name: "Sublimation Printing Process at SublimApparel",
-    description:
-      "How we dye-sublimate polyester and 100% cotton apparel in 6 steps: artwork separation, wide-format print, cut & assemble, heat-press transfer, cut & sew, quality check.",
-    steps: [
-      {
-        name: "Artwork separation",
-        text: "CMYK + 8 extended spot colors are pre-flighted. Underbase white added automatically for polyester.",
-      },
-      {
-        name: "Wide-format print",
-        text: "1.9m wide roll-to-roll sublimation printer lays the design onto transfer paper at 4,800 × 1,200 DPI.",
-      },
-      {
-        name: "Cut & assemble",
-        text: "Printed paper is cut to garment panel size. Front, back, sleeves kept aligned.",
-      },
-      {
-        name: "Heat-press transfer",
-        text: "200°C / 30 sec cycle on an 80 × 100 cm platen. Dye sublimates from solid to gas, bonds with polyester fibers.",
-      },
-      {
-        name: "Cut & sew",
-        text: "Each garment is cut, assembled and sewn on the same floor. Panels match perfectly because printed together.",
-      },
-      {
-        name: "Quality check",
-        text: "Every piece inspected. Colors verified against your proof. Defects removed before poly-bagging.",
-      },
-    ],
-  },
+  howTos: [
+    {
+      slug: "sublimation",
+      name: "How we dye-sublimate polyester apparel at SublimApparel",
+      description:
+        "End-to-end 5-step polyester sublimation workflow run on our Yiwu production floor: artwork separation, wide-format print, heat-press transfer, cut & sew, AQL inspection.",
+      totalTime: "P5D",
+      steps: [
+        {
+          name: "Artwork separation",
+          text: "CMYK + extended spot colors are pre-flighted. Underbase white added automatically for polyester and performance fabrics. Pantone references documented on the spec sheet.",
+        },
+        {
+          name: "Wide-format print",
+          text: "1.9 m roll-to-roll sublimation printer lays the design onto transfer paper at 4,800 × 1,200 DPI. Front, back and sleeve panels printed together to keep alignment tight.",
+        },
+        {
+          name: "Heat-press transfer",
+          text: "200 °C / 30 s cycle on an 80 × 100 cm platen. Dye sublimates from solid to gas and bonds with polyester fibers — the print becomes part of the fabric, never cracks or peels.",
+        },
+        {
+          name: "Cut & sew",
+          text: "Each garment is cut, assembled and sewn on the same production floor. Panels match perfectly because they were printed together as one set.",
+        },
+        {
+          name: "AQL 2.5 quality check",
+          text: "Every piece inspected. Color verified against buyer-approved proof. Defects graded Critical / Major / Minor per ISO 2859-1 before poly-bagging.",
+        },
+      ],
+    },
+    {
+      slug: "screen-printing",
+      name: "How we screen-print custom apparel at SublimApparel",
+      description:
+        "5-step screen printing process for bold, durable graphics: artwork → screen exposure, color-set registration, print run, conveyor cure, AQL inspection.",
+      totalTime: "P7D",
+      steps: [
+        {
+          name: "Artwork → screen exposure",
+          text: "One screen per Pantone color. Artwork output to positive film, exposed onto a mesh + emulsion screen under UV, then washed out to leave the open stencil.",
+        },
+        {
+          name: "Color registration",
+          text: "Screens mounted on the press and aligned to a micro-adjustable registration system. Each color gets its own screen and its own flash-cure station so the print lays flat.",
+        },
+        {
+          name: "Print run",
+          text: "Garments loaded onto platens, ink pushed through the screen with a squeegee, one color at a time. Plastisol or water-based ink chosen per fabric and buyer spec.",
+        },
+        {
+          name: "Conveyor cure",
+          text: "Printed pieces travel through a 160 °C tunnel dryer to fully cure the ink. Under-cured ink is the #1 cause of screen-print wash failure — we verify cure temp with a contact pyrometer every batch.",
+        },
+        {
+          name: "AQL 2.5 quality check",
+          text: "Final inspection for registration, opacity, hand-feel, and any scuffs or pinholes. Defective pieces removed before pack-out; bulk passes only at AQL 2.5 or better.",
+        },
+      ],
+    },
+    {
+      slug: "embroidery",
+      name: "How we embroider custom logos at SublimApparel",
+      description:
+        "5-step computerized embroidery workflow: logo digitization, fabric hooping, stitch run, trim & finish, AQL inspection.",
+      totalTime: "P5D",
+      steps: [
+        {
+          name: "Logo digitization",
+          text: "Vector artwork converted to a stitch file (PES / DST) with thread-color mapping. Stitch direction, density and underlay tuned for the target fabric and placement size.",
+        },
+        {
+          name: "Hooping the blank",
+          text: "Garment or panel mounted in a magnetic / tubular hoop. Placement is the single biggest quality factor — we mark the centerline and stitch a test run on the first piece of every new order.",
+        },
+        {
+          name: "Stitch run",
+          text: "Computerized 12- and 15-needle machines run the file. Thread breaks are flagged by the machine and the operator ties off manually to keep the logo continuous.",
+        },
+        {
+          name: "Trim & finish",
+          text: "Loose threads trimmed, backing scoured if requested (for skin-contact applications like infant wear), and any 3D puff / appliqué elements set in place.",
+        },
+        {
+          name: "AQL 2.5 quality check",
+          text: "Each embroidered piece inspected for thread coverage, alignment, color match, and clean back. Defective logos pulled, re-stitched, or scrapped per AQL 2.5 sample.",
+        },
+      ],
+    },
+    {
+      slug: "dtg",
+      name: "How we DTG-print on cotton apparel at SublimApparel",
+      description:
+        "5-step direct-to-garment digital print workflow on 100% cotton: pre-treatment, platen load, CMYK + white underbase print, heat cure, AQL inspection.",
+      totalTime: "P5D",
+      steps: [
+        {
+          name: "Pre-treatment",
+          text: "Cotton blank pre-coated with a PT solution that bonds pigment ink to the fiber. Pre-treatment coverage is the single biggest lever on DTG wash fastness — we apply it with calibrated spray heads, not hand spray.",
+        },
+        {
+          name: "Platen load",
+          text: "Garment loaded onto the correct-size platen, fibers brushed flat. Wrinkles and folds at this step show up as white streaks in the final print — every platen is checked before printing.",
+        },
+        {
+          name: "CMYK + white underbase print",
+          text: "Industrial DTG printer lays a white underbase on dark garments, then full-color CMYK on top. Resolution up to 1,200 × 1,200 DPI for photo-level detail and unlimited colors with no per-color setup.",
+        },
+        {
+          name: "Heat cure",
+          text: "Printed garment cured in a conveyor heat press at 180 °C to set the pigment ink into the cotton fiber. Under-cured ink is the #1 wash-fail cause — we log cure temp per batch.",
+        },
+        {
+          name: "AQL 2.5 quality check",
+          text: "Final inspection for color, hand-feel, pre-treatment uniformity, and any banding. Defective pieces removed before pack-out per AQL 2.5 sample.",
+        },
+      ],
+    },
+    {
+      slug: "dtf",
+      name: "How we DTF-print custom apparel at SublimApparel",
+      description:
+        "5-step DTF (direct-to-film) workflow that prints on virtually any fabric: PET film print, hot-melt powder, cure, heat-press transfer, AQL inspection.",
+      totalTime: "P4D",
+      steps: [
+        {
+          name: "Print on PET film",
+          text: "Design printed in reverse on a PET film with a CMYK + white top layer. White sits on top so the colors pop on dark or colored garments. Works on cotton, poly, blends and most synthetics.",
+        },
+        {
+          name: "Apply hot-melt powder",
+          text: "Adhesive powder shaken over the wet ink. Excess powder shaken off and recycled. Powder coverage is the biggest quality lever — too little delaminates, too much stiffens the hand-feel.",
+        },
+        {
+          name: "Cure the adhesive",
+          text: "Powder melted and cured at 130 °C to a smooth, glossy film. The cured transfer is now a peelable sticker that can be stored, shipped, and heat-pressed later — DTF is the only decoration method that lets you decouple printing from pressing.",
+        },
+        {
+          name: "Heat-press transfer",
+          text: "Transfer placed on the garment and pressed at 160 °C for 15 s with a Teflon sheet. Cold peel (or hot peel, depending on the powder spec) reveals a flexible, vibrant print with no fabric feel lost.",
+        },
+        {
+          name: "AQL 2.5 quality check",
+          text: "Final inspection for adhesion, color, hand-feel, and any powder contamination. Defective pieces re-pressed or scrapped per AQL 2.5 sample before pack-out.",
+        },
+      ],
+    },
+  ],
   faq: faqs,
 });
 

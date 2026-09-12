@@ -2986,8 +2986,22 @@ export type TechniqueHubHowToStep = {
 export type TechniqueHubInput = {
   /** The 20 techniques to enumerate inside the ItemList. */
   items: TechniqueHubItem[];
-  /** 6 HowTo steps for the sublimation process. Omit to
-   *  skip the HowTo node. */
+  /** 2026-09-12 (R51): multi-HowTo support on the /technique/
+   *  hub. Each entry maps to one HowTo node in the @graph,
+   *  keyed by the technique slug so the @id is unique
+   *  (e.g. `${url}#howto-screen-printing`). Lets the
+   *  overview page surface one process-rich HowTo per top
+   *  technique instead of a single hardcoded HowTo. The
+   *  number of steps is intentionally not capped — most
+   *  real decoration techniques have 4-7 visible steps.
+   *  Omit to skip HowTo nodes. The legacy single-object
+   *  `howTo` field is preserved below for callers that
+   *  still pass the old shape. */
+  howTos?: TechniqueHubHowTo[];
+  /** @deprecated R51 — use `howTos` (array) instead. Kept
+   *  for backward compatibility with any caller that
+   *  still passes the single-object shape. When both are
+   *  present, `howTos` wins. */
   howTo?: {
     name: string;
     description: string;
@@ -2998,14 +3012,65 @@ export type TechniqueHubInput = {
   faq?: FaqItem[];
 };
 
+/** 2026-09-12 (R51): per-technique HowTo entry on the
+ *  /technique/ hub. The `slug` keys the @id so each node
+ *  has a unique anchor in the entity graph
+ *  (e.g. `${url}#howto-screen-printing`). */
+export type TechniqueHubHowTo = {
+  /** Slug of the technique — e.g. "sublimation",
+   *  "screen-printing". Used to key the @id and to
+   *  address the matching /technique/[slug]/ detail
+   *  page from the HowTo node. */
+  slug: string;
+  name: string;
+  description: string;
+  totalTime?: string;
+  steps: TechniqueHubHowToStep[];
+};
+
 export function buildTechniqueHubGraph(input: TechniqueHubInput) {
   const url = `${SITE_URL}/technique/`;
   const webpageId = `${url}#webpage`;
   const collectionId = `${url}#collection`;
   const itemListId = `${url}#itemlist`;
-  const howToId = input.howTo ? `${url}#howto` : null;
   const breadcrumbId = `${url}#breadcrumb`;
   const faqId = input.faq && input.faq.length > 0 ? `${url}#faq` : null;
+  // 2026-09-12 (R51): multi-HowTo support on the /technique/ hub.
+  // Each entry in `input.howTos` produces one HowTo node in the
+  // @graph with a unique @id keyed by the technique slug
+  // (e.g. `${url}#howto-sublimation`). The `url` field on each
+  // node points to the matching /technique/[slug]/ detail page
+  // — that's where the canonical, fully-documented procedure
+  // lives (R49 added HowTo to every detail page). The @id is
+  // anchored on the hub URL because the node is part of the
+  // hub's @graph payload; `url` is the canonical procedure URL.
+  // The legacy single-object `input.howTo` shape is preserved
+  // for backward compatibility — emits a single HowTo with @id
+  // `${url}#howto` matching the pre-R51 schema.
+  const multiHowTos = input.howTos && input.howTos.length > 0
+    ? input.howTos.map((h) => ({
+        "@type": "HowTo",
+        "@id": `${url}#howto-${h.slug}`,
+        // Detail page is where the full procedure lives — point
+        // the canonical `url` there so Google can find the rich
+        // procedure page (not the hub summary page) when surfacing
+        // the HowTo rich result.
+        url: `${SITE_URL}/technique/${h.slug}/`,
+        name: h.name,
+        description: h.description,
+        inLanguage: "en",
+        isPartOf: { "@id": webpageId },
+        about: { "@id": `${SITE_URL}/#organization` },
+        ...(h.totalTime ? { totalTime: h.totalTime } : {}),
+        step: h.steps.map((s, i) => ({
+          "@type": "HowToStep",
+          position: i + 1,
+          name: s.name,
+          text: s.text,
+        })),
+      }))
+    : [];
+  const legacyHowToId = input.howTo && !input.howTos ? `${url}#howto` : null;
 
   return {
     "@context": "https://schema.org",
@@ -3059,11 +3124,11 @@ export function buildTechniqueHubGraph(input: TechniqueHubInput) {
         })),
         isPartOf: { "@id": collectionId },
       },
-      ...(input.howTo && howToId
+      ...(input.howTo && legacyHowToId
         ? [
             {
               "@type": "HowTo",
-              "@id": howToId,
+              "@id": legacyHowToId,
               name: input.howTo.name,
               description: input.howTo.description,
               step: input.howTo.steps.map((s, i) => ({
@@ -3076,6 +3141,14 @@ export function buildTechniqueHubGraph(input: TechniqueHubInput) {
             },
           ]
         : []),
+      // 2026-09-12 (R51): spread the multi-HowTo array after the
+      // legacy single-HowTo so callers that pass both shapes get
+      // both rendered. The two paths are mutually exclusive in
+      // practice — most callers will pass either `howTo` (legacy)
+      // or `howTos` (new) but not both — and the render order
+      // doesn't matter to Google since each HowTo has a unique
+      // @id.
+      ...multiHowTos,
       {
         "@type": "BreadcrumbList",
         "@id": breadcrumbId,
