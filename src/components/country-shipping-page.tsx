@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, MapPin, ShieldCheck, Truck, Plane, Ship, Warehouse, Package, DollarSign, Clock } from "lucide-react";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildBreadcrumbJsonLd, buildFaqPageNode } from "@/lib/breadcrumb";
 import { COUNTRY_SHIPPING, type CountryShipping } from "@/lib/shipping-countries";
 import { RequestQuoteLink } from "@/components/request-quote-link";
 
@@ -58,7 +58,14 @@ export function CountryShippingPage({ slug }: { slug: CountryShipping["slug"] })
       xpath: ["/html/body//h1", "/html/body//section[1]//p"],
     },
   };
-  const faqJsonLd = buildFaqJsonLd(data.faqs);
+  // 2026-09-12 (R47): FAQ inlined into the page @graph via buildFaqPageNode
+  // (was previously emitted as a standalone buildFaqJsonLd wrapper that
+  // sat in a separate JSON-LD script tag — the helper now produces the
+  // same shape with inLanguage + isPartOf → #webpage + about → #organization
+  // cross-link fields, so the FAQ joins the brand entity graph alongside
+  // every other @graph node on the page).
+  const faqId = `https://sublimapparel.com/shipping/${slug}/#faq`;
+  const faqWebpageId = `https://sublimapparel.com/shipping/${slug}/#webpage`;
 
   // 2026-09-12 (R33-A2): country + Service schema nodes so each
   // /shipping/{slug}/ page joins the brand entity graph with a
@@ -190,18 +197,30 @@ export function CountryShippingPage({ slug }: { slug: CountryShipping["slug"] })
       ? "DDP shipping from Yiwu to Australia: 10% GST + 5% import duty pre-paid, customs cleared at the port of entry, delivered to your door in 12–22 days. We also ship to New Zealand (GST 15%) on the same DDP lane with no importer-of-record requirement on your end."
       : "DDP shipping from China to Canada: customs cleared, GST (5%) + HST/QST/PST + 17–18% import duty all pre-paid. Delivered to your door in 10–20 days from Yiwu. We file customs under our own Business Number — you don't need a Canadian BN to import.";
 
+  // 2026-09-12 (R47): consolidate all JSON-LD into a single @graph block
+  // (this template was emitting 6 separate JSON-LD scripts — one each
+  // for breadcrumb, WebPage, Country, ServiceArea, Service, FAQ). All
+  // inner @context keys are stripped so only the outer @graph carries it,
+  // matching the R46 pattern used on every other page.
+  const stripContext = <T extends Record<string, unknown>>(node: T) => {
+    const { "@context": _c, ...rest } = node as Record<string, unknown>;
+    return rest as T;
+  };
+  const pageGraph = {
+    "@context": "https://schema.org",
+    "@graph": [
+      stripContext(breadcrumbJsonLd),
+      stripContext(webPageJsonLd),
+      stripContext(countryNode),
+      stripContext(serviceAreaNode),
+      stripContext(serviceNode),
+      buildFaqPageNode(faqId, faqWebpageId, data.faqs),
+    ],
+  };
+
   return (
     <main>
-      <JsonLd
-        data={[
-          breadcrumbJsonLd,
-          webPageJsonLd,
-          countryNode,
-          serviceAreaNode,
-          serviceNode,
-          faqJsonLd,
-        ]}
-      />
+      <JsonLd data={pageGraph} />
 
       {/* HERO */}
       <section className="border-b-2 border-black bg-[#0a0a0a] text-white">

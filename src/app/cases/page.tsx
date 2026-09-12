@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { JsonLd } from "@/components/json-ld";
-import { buildFaqJsonLd } from "@/lib/breadcrumb";
 import Link from "next/link";
 import { RequestQuoteLink } from "@/components/request-quote-link";
 import {
@@ -54,7 +53,20 @@ export default function CasesPage() {
   // PAA placements for the buyer-intent queries that already associate
   // with case-study pages — "what kind of apparel projects can a Yiwu
   // factory do", "real custom apparel examples", etc.
-  const faqJsonLd = buildFaqJsonLd([
+  //
+  // 2026-09-12 (R47): lifted the 6 FAQ items to a top-level `faqItems`
+  // array (instead of piping them through buildFaqJsonLd) so they feed
+  // straight into the single @graph casesGraph below as the FAQPage
+  // #faq node. Pre-R47 this file emitted 2 separate <script> tags
+  // (one for the @graph, one for the standalone FAQPage) and the
+  // casesGraph.@graph was referencing an undefined `faqItems`
+  // identifier — i.e. the build was already broken in R45. R47 fixes
+  // it by removing the buildFaqJsonLd helper call, removing the unused
+  // import, and inlining the FAQPage node directly into the same
+  // @graph as WebPage / CollectionPage so Google parses the entire
+  // entity surface for /cases/ in one pass and the WebPage.mainEntity
+  // #faq reference resolves.
+  const faqItems = [
     {
       q: "What kind of custom apparel projects has SublimApparel done?",
       a: "We produce custom sublimation and all-over-print apparel for 12 verticals: sports teams and leagues (cycling kits, race jerseys, basketball uniforms, esports jerseys), events and conferences (staff shirts, attendee merch, swag bundles), corporate programs (employee polos, hospitality wear, branded outerwear), music festivals and tour merch, schools and Greek life, breweries and coffee shops, promotional and marketing agencies, trade shows and retail displays, apparel brands and agencies (private label, white label, dropship), political campaigns, e-commerce fulfillment, and more.",
@@ -79,7 +91,7 @@ export default function CasesPage() {
       q: "Can I get a quote based on a project similar to a case study?",
       a: "Yes. Pick the case study closest to your project, send us the link plus your quantity / deadline / destination, and we'll send a landed DDP quote within 1 business day. If you have a tech pack or reference photo, attach it on the first message so we can match fabric weight, print method, and panel layout exactly.",
     },
-  ]);
+  ];
 
   // 2026-09-12 (R45): merge 2 separate JsonLd calls into a single @graph.
   // All 4 nodes (BreadcrumbList + WebPage + CollectionPage/ItemList + FAQPage)
@@ -123,6 +135,7 @@ export default function CasesPage() {
           "Browse sublimation and all-over-print apparel case studies by industry. Real custom apparel, DDP shipping and full-bleed cotton prints shipped to 50+ countries.",
         inLanguage: "en",
         isPartOf: { "@id": "https://sublimapparel.com/#website" },
+        about: { "@id": "https://sublimapparel.com/#organization" },
         provider: { "@id": "https://sublimapparel.com/#organization" },
         mainEntity: {
           "@type": "ItemList",
@@ -140,6 +153,13 @@ export default function CasesPage() {
       {
         "@type": "FAQPage",
         "@id": "https://sublimapparel.com/cases/#faq",
+        url: "https://sublimapparel.com/cases/#faq",
+        name: "Case Studies — Frequently Asked Questions",
+        description:
+          "Buyer-intent FAQs about custom apparel case studies: project types, MOQ, timelines, NDA, and quote turnaround.",
+        inLanguage: "en",
+        isPartOf: { "@id": "https://sublimapparel.com/cases/#webpage" },
+        about: { "@id": "https://sublimapparel.com/#organization" },
         mainEntity: faqItems.map((it) => ({
           "@type": "Question",
           name: it.q,

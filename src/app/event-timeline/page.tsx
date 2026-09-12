@@ -3,7 +3,7 @@ import { buildPageMetadata } from "@/lib/page-metadata";
 import { ArrowRight, AlertTriangle, Calendar, CheckCircle2, Clock, Plane } from "lucide-react";
 import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildBreadcrumbJsonLd, buildFaqPageNode } from "@/lib/breadcrumb";
 import { TimelineCalculator } from "./timeline-calculator";
 
 export const metadata = buildPageMetadata({
@@ -78,16 +78,19 @@ export default function EventTimelinePage() {
     },
   };
 
-  const faqJsonLd = buildFaqJsonLd(timelineFaqs);
+  // 2026-09-12 (R47): FAQ inlined into the @graph via buildFaqPageNode
+  // (was previously a standalone buildFaqJsonLd that had to be stripped
+  // of its @context + merged back into the @graph manually — the helper
+  // now produces the same shape with inLanguage + isPartOf + about
+  // cross-link fields, so the strip dance is gone).
   const { "@context": _bc, ...breadcrumbStripped } = breadcrumb;
   const { "@context": _wp, ...webPageStripped } = webPageJsonLd;
-  const { "@context": _faq, ...faqStripped } = faqJsonLd;
   const pageGraph = {
     "@context": "https://schema.org",
     "@graph": [
       breadcrumbStripped,
       { ...webPageStripped },
-      { ...faqStripped, "@id": faqId },
+      buildFaqPageNode(faqId, webPageId, timelineFaqs),
     ],
   };
 

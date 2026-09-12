@@ -52,6 +52,60 @@ export function buildFaqJsonLd(items: FaqItem[]) {
 }
 
 /**
+ * 2026-09-12 (R47): build a single FAQPage node for use inside an
+ * @graph block. Returns a fully-formed node with every field Google's
+ * FAQPage rich result spec + the site's entity-graph cross-linking
+ * pattern want:
+ *   - @id        (caller-supplied, unique per page)
+ *   - url        (mirror of @id so Google can resolve the node directly)
+ *   - name       (Google surfaces this as the FAQ section title in some
+ *                 PAA / AI Overview contexts)
+ *   - description (mirrors the page's buyer-intent promise)
+ *   - inLanguage (site is en-only so always "en" — strong language
+ *                 signal for the lang-detection filter)
+ *   - isPartOf   → parent WebPage @id (so Google traces the FAQ back
+ *                 to the page that contains it instead of treating it
+ *                 as a floating node)
+ *   - about      → #organization (so the FAQ joins the brand entity
+ *                 graph alongside the rest of the @graph)
+ *   - mainEntity → array of Question / Answer pairs
+ *
+ * Pre-R47 every inline FAQPage node on the site only had
+ * { @type, @id, mainEntity } — Google still parsed it, but the
+ * language signal and the entity cross-link back to the parent
+ * WebPage + brand graph were missing. Promoting the 17 inline
+ * FAQPage nodes to call this helper (one edit per helper) is a
+ * pure-positive entity-graph strengthening with no risk of
+ * breaking existing rich results, because all 17 callers were
+ * already emitting the same `mainEntity` shape and the only
+ * changes are additive fields.
+ */
+export function buildFaqPageNode(
+  faqId: string,
+  webpageId: string,
+  items: FaqItem[],
+  options?: { name?: string; description?: string }
+) {
+  return {
+    "@type": "FAQPage",
+    "@id": faqId,
+    url: faqId,
+    name: options?.name ?? "Frequently Asked Questions",
+    description:
+      options?.description ??
+      "Buyer-intent FAQs about this page topic. Eligible for Google People Also Ask placements and AI Overview extraction.",
+    inLanguage: "en",
+    isPartOf: { "@id": webpageId },
+    about: { "@id": `${SITE_URL}/#organization` },
+    mainEntity: items.map((it) => ({
+      "@type": "Question",
+      name: it.q,
+      acceptedAnswer: { "@type": "Answer", text: it.a },
+    })),
+  };
+}
+
+/**
  * Build a HowTo schema from an ordered list of steps.
  * Used on step-by-step process pages to make them eligible for
  * "How to ..." rich results and AI-overview extraction.
@@ -369,18 +423,7 @@ export function buildCollectionPageGraph(input: {
       },
       ...(input.faq && faqId
         ? [
-            {
-              "@type": "FAQPage",
-              "@id": faqId,
-              mainEntity: input.faq.map((it) => ({
-                "@type": "Question",
-                name: it.q,
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: it.a,
-                },
-              })),
-            },
+            buildFaqPageNode(faqId, webpageId, input.faq),
           ]
         : []),
     ],
@@ -504,18 +547,7 @@ export function buildGetAQuoteGraph(input: GetAQuoteInput) {
       },
       ...(faqId
         ? [
-            {
-              "@type": "FAQPage",
-              "@id": faqId,
-              mainEntity: input.faq!.map((it) => ({
-                "@type": "Question",
-                name: it.q,
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: it.a,
-                },
-              })),
-            },
+            buildFaqPageNode(faqId, webpageId, input.faq!),
           ]
         : []),
     ],
@@ -647,18 +679,7 @@ export function buildSamplesHubGraph(input: SamplesHubInput) {
       },
       ...(faqId
         ? [
-            {
-              "@type": "FAQPage",
-              "@id": faqId,
-              mainEntity: input.faq!.map((it) => ({
-                "@type": "Question",
-                name: it.q,
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: it.a,
-                },
-              })),
-            },
+            buildFaqPageNode(faqId, webpageId, input.faq!),
           ]
         : []),
     ],
@@ -795,18 +816,7 @@ export function buildYiwuWhatsappGraph(input: YiwuWhatsappInput) {
       },
       ...(faqId
         ? [
-            {
-              "@type": "FAQPage",
-              "@id": faqId,
-              mainEntity: input.faq!.map((it) => ({
-                "@type": "Question",
-                name: it.q,
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: it.a,
-                },
-              })),
-            },
+            buildFaqPageNode(faqId, webpageId, input.faq!),
           ]
         : []),
     ],
@@ -1076,18 +1086,7 @@ export function buildShippingHubGraph(input: ShippingHubInput) {
       },
       ...(faqId
         ? [
-            {
-              "@type": "FAQPage",
-              "@id": faqId,
-              mainEntity: input.faq!.map((it) => ({
-                "@type": "Question",
-                name: it.q,
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: it.a,
-                },
-              })),
-            },
+            buildFaqPageNode(faqId, webpageId, input.faq!),
           ]
         : []),
     ],
@@ -1242,18 +1241,7 @@ export function buildDdpShippingPageGraph(input: DdpShippingInput) {
       },
       ...(faqId
         ? [
-            {
-              "@type": "FAQPage",
-              "@id": faqId,
-              mainEntity: input.faq!.map((it) => ({
-                "@type": "Question",
-                name: it.q,
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: it.a,
-                },
-              })),
-            },
+            buildFaqPageNode(faqId, webpageId, input.faq!),
           ]
         : []),
     ],
@@ -1429,18 +1417,7 @@ export function buildAboutSubPageGraph(input: AboutSubPageInput) {
       // 4 · FAQPage (conditional)
       ...(faqId
         ? [
-            {
-              "@type": "FAQPage",
-              "@id": faqId,
-              mainEntity: input.faq!.map((it) => ({
-                "@type": "Question",
-                name: it.q,
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: it.a,
-                },
-              })),
-            },
+            buildFaqPageNode(faqId, webpageId, input.faq!),
           ]
         : []),
     ],
@@ -1588,18 +1565,7 @@ export function buildAboutGraph(input: AboutInput) {
       },
       ...(faqId
         ? [
-            {
-              "@type": "FAQPage",
-              "@id": faqId,
-              mainEntity: input.faq!.map((it) => ({
-                "@type": "Question",
-                name: it.q,
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: it.a,
-                },
-              })),
-            },
+            buildFaqPageNode(faqId, webpageId, input.faq!),
           ]
         : []),
       ...(subPageListId
@@ -1767,18 +1733,7 @@ export function buildResourcesHubGraph(input: ResourcesHubInput) {
       },
       ...(faqId
         ? [
-            {
-              "@type": "FAQPage",
-              "@id": faqId,
-              mainEntity: input.faq!.map((it) => ({
-                "@type": "Question",
-                name: it.q,
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: it.a,
-                },
-              })),
-            },
+            buildFaqPageNode(faqId, webpageId, input.faq!),
           ]
         : []),
     ],
@@ -1929,18 +1884,7 @@ export function buildContactGraph(input: ContactInput) {
       },
       ...(faqId
         ? [
-            {
-              "@type": "FAQPage",
-              "@id": faqId,
-              mainEntity: input.faq!.map((it) => ({
-                "@type": "Question",
-                name: it.q,
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: it.a,
-                },
-              })),
-            },
+            buildFaqPageNode(faqId, webpageId, input.faq!),
           ]
         : []),
       ...(nextStepListId
@@ -2118,18 +2062,7 @@ export function buildBlogHubGraph(input: BlogHubInput) {
       },
       ...(input.faq && faqId
         ? [
-            {
-              "@type": "FAQPage",
-              "@id": faqId,
-              mainEntity: input.faq.map((it) => ({
-                "@type": "Question",
-                name: it.q,
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: it.a,
-                },
-              })),
-            },
+            buildFaqPageNode(faqId, webpageId, input.faq),
           ]
         : []),
     ],
@@ -2322,18 +2255,7 @@ export function buildFabricHubGraph(input: FabricHubInput) {
       },
       ...(input.faq && faqId
         ? [
-            {
-              "@type": "FAQPage",
-              "@id": faqId,
-              mainEntity: input.faq.map((it) => ({
-                "@type": "Question",
-                name: it.q,
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: it.a,
-                },
-              })),
-            },
+            buildFaqPageNode(faqId, webpageId, input.faq),
           ]
         : []),
     ],
@@ -2575,18 +2497,7 @@ export function buildFabricDetailGraph(input: FabricDetailInput) {
       },
       ...(input.faq && faqId
         ? [
-            {
-              "@type": "FAQPage",
-              "@id": faqId,
-              mainEntity: input.faq.map((it) => ({
-                "@type": "Question",
-                name: it.q,
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: it.a,
-                },
-              })),
-            },
+            buildFaqPageNode(faqId, webpageId, input.faq),
           ]
         : []),
     ],
@@ -2778,18 +2689,7 @@ export function buildBlogPostGraph(input: BlogPostInput) {
       },
       ...(input.faqs && input.faqs.length > 0 && faqId
         ? [
-            {
-              "@type": "FAQPage",
-              "@id": faqId,
-              mainEntity: input.faqs.map((it) => ({
-                "@type": "Question",
-                name: it.q,
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: it.a,
-                },
-              })),
-            },
+            buildFaqPageNode(faqId, webpageId, input.faqs),
           ]
         : []),
     ],
@@ -2949,18 +2849,7 @@ export function buildTechniqueHubGraph(input: TechniqueHubInput) {
       },
       ...(input.faq && faqId
         ? [
-            {
-              "@type": "FAQPage",
-              "@id": faqId,
-              mainEntity: input.faq.map((it) => ({
-                "@type": "Question",
-                name: it.q,
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: it.a,
-                },
-              })),
-            },
+            buildFaqPageNode(faqId, webpageId, input.faq),
           ]
         : []),
     ],
@@ -3117,18 +3006,7 @@ export function buildCategoryProductGraph(input: CategoryPageInput) {
       },
       ...(input.faq && faqId
         ? [
-            {
-              "@type": "FAQPage",
-              "@id": faqId,
-              mainEntity: input.faq.map((it) => ({
-                "@type": "Question",
-                name: it.q,
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: it.a,
-                },
-              })),
-            },
+            buildFaqPageNode(faqId, webpageId, input.faq),
           ]
         : []),
     ],
@@ -3345,18 +3223,7 @@ export function buildProductDetailGraph(input: ProductDetailInput) {
       },
       ...(input.faq && faqId
         ? [
-            {
-              "@type": "FAQPage",
-              "@id": faqId,
-              mainEntity: input.faq.map((it) => ({
-                "@type": "Question",
-                name: it.q,
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: it.a,
-                },
-              })),
-            },
+            buildFaqPageNode(faqId, webpageId, input.faq),
           ]
         : []),
     ],

@@ -28,6 +28,7 @@ import { products, type Product } from "@/lib/products-data";
 import { tagArchiveLink } from "@/lib/tag-utils";
 import { getProductImages } from "@/lib/product-images";
 import { JsonLd } from "@/components/json-ld";
+import { buildBreadcrumbJsonLd, buildFaqPageNode } from "@/lib/breadcrumb";
 import {
   filterReviewsForIndustry,
   hasAggregateableReviews,
@@ -137,7 +138,13 @@ export default async function CaseCategoryPage({ params }: Props) {
   // informational query space ("how long does production take for [industry]
   // custom apparel", "what MOQ for team uniforms", "can I get samples") that
   // buyers ask before they reach the inquiry form.
-  const casesFaq = buildFaqJsonLd([
+  //
+  // 2026-09-12 (R47): the items are now kept as a raw array so they can be
+  // inlined into the page @graph block via buildFaqPageNode — the previous
+  // buildFaqJsonLd wrapper emitted a separate JSON-LD document (missing the
+  // inLanguage + isPartOf + about cross-link fields the rest of the site
+  // @graph now uses).
+  const casesFaqItems = [
     {
       q: `How long does it take to produce custom ${ind.title.toLowerCase()} apparel?`,
       a: `Standard bulk production for ${ind.title.toLowerCase()} custom apparel is 15–25 business days after you approve the pre-production sample. Sample lead time is 5–7 days. Rush bulk production (7–10 days) is available for select product types at an additional 20% surcharge.`,
@@ -158,7 +165,9 @@ export default async function CaseCategoryPage({ params }: Props) {
       q: `Can you match our existing design style or replicate a competitor's ${ind.title.toLowerCase()} look?`,
       a: `Yes. Send us your existing artwork or a reference photo and we can either match the style directly or use it as a starting point for something better. We free-check every design for printability and will flag any artwork issues — such as low resolution, color space mismatches, or bleed problems — before we commit to production.`,
     },
-  ]);
+  ];
+  const casesFaqId = `https://sublimapparel.com/cases/${ind.slug}/#faq`;
+  const casesWebpageId = `https://sublimapparel.com/cases/${ind.slug}/#webpage`;
 
   // 2026-09-11 (R28): per-industry review aggregation. We pull the
   // subset of verifiedReviews that are linked to this industry
@@ -206,9 +215,37 @@ export default async function CaseCategoryPage({ params }: Props) {
       : {}),
   };
 
+  // 2026-09-12 (R47): consolidate all JSON-LD into a single @graph block
+  // (this page was the last one still emitting 5 separate JSON-LD scripts
+  // — one each for breadcrumb, WebPage, ItemList, FAQPage, Service). All
+  // inner @context keys are stripped so only the outer @graph carries it,
+  // matching the R46 pattern used on every other page.
+  //
+  // We also point the WebPage node at the FAQ via mainEntity so the FAQ
+  // is the primary content surface of the page (PAA intent), and the
+  // buildFaqPageNode helper adds inLanguage + isPartOf → #webpage +
+  // about → #organization so the FAQ joins the brand entity graph.
+  const stripContext = <T extends Record<string, unknown>>(node: T) => {
+    const { "@context": _c, ...rest } = node as Record<string, unknown>;
+    return rest as T;
+  };
+  const pageGraph = {
+    "@context": "https://schema.org",
+    "@graph": [
+      stripContext(breadcrumbJsonLd),
+      {
+        ...webPageJsonLd,
+        mainEntity: { "@id": casesFaqId },
+      },
+      stripContext(itemListJsonLd),
+      buildFaqPageNode(casesFaqId, casesWebpageId, casesFaqItems),
+      stripContext(industryReviewJsonLd),
+    ],
+  };
+
   return (
     <>
-      <JsonLd data={[breadcrumbJsonLd, webPageJsonLd, itemListJsonLd, casesFaq, industryReviewJsonLd]} />
+      <JsonLd data={pageGraph} />
       {/* Top utility bar */}
       <div className="border-b-2 border-black bg-black text-white">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-6 py-2.5 text-[11px] font-bold uppercase tracking-wider">

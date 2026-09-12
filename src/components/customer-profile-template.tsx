@@ -44,7 +44,7 @@ import {
   Star,
   Quote,
 } from "lucide-react";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildBreadcrumbJsonLd, buildFaqPageNode } from "@/lib/breadcrumb";
 import { genericServiceJsonLd } from "@/lib/json-ld-data";
 import {
   filterReviewsForIndustry,
@@ -109,20 +109,14 @@ export function CustomerProfilePage({ data }: { data: CustomerProfileData }) {
 
   // 2026-09-11 push (Round 8 part 2): every industry page already has
   // FAQs in the body (driven by data.faqs), but the JSON-LD layer was
-  // missing. We add two new nodes to the shared component so all 12
-  // industry pages get them in a single edit:
-  //   1. FAQPage   — mirrors data.faqs verbatim so PAA-style rich
-  //                   results show for high-intent queries
-  //                   ("custom sports team apparel MOQ" etc).
-  //   2. WebPage   — adds @id, canonical URL, isPartOf → #website,
-  //                   about → #organization, and `speakable` for voice
-  //                   search / Google Assistant read-aloud.
-  // Without these, Google treats each industry page as an unannotated
-  // HTML list and can't tie the page to the brand entity graph.
-  const faqJsonLd = useMemo(
-    () => buildFaqJsonLd(data.faqs),
-    [data.faqs]
-  );
+  // missing. R47 (2026-09-12): inlined into the page @graph via
+  // buildFaqPageNode (was previously emitted as a standalone
+  // buildFaqJsonLd wrapper that sat in a separate JSON-LD script —
+  // the helper now produces the same shape with inLanguage +
+  // isPartOf → #webpage + about → #organization cross-link fields, so
+  // the FAQ joins the brand entity graph like every other page).
+  const faqId = `https://sublimapparel.com${data.slug.replace(/\/+$/, "")}/#faq`;
+  const webPageIdLocal = `https://sublimapparel.com${data.slug.replace(/\/+$/, "")}/#webpage`;
   const webPageJsonLd = useMemo(
     () => ({
       "@context": "https://schema.org",
@@ -203,13 +197,38 @@ export function CustomerProfilePage({ data }: { data: CustomerProfileData }) {
     [data.slug, data.h1, industryReviews, industryAggregate]
   );
 
+  // 2026-09-12 (R47): consolidate all JSON-LD into a single @graph block
+  // (this template was emitting 5 separate JSON-LD scripts — one each
+  // for breadcrumb, Service, WebPage, FAQPage, Service-reviews). All
+  // inner @context keys are stripped so only the outer @graph carries
+  // it, matching the R46 pattern used on every other page).
+  const stripContext = <T extends Record<string, unknown>>(node: T) => {
+    const { "@context": _c, ...rest } = node as Record<string, unknown>;
+    return rest as T;
+  };
+  const pageGraph = {
+    "@context": "https://schema.org",
+    "@graph": [
+      stripContext(breadcrumb),
+      stripContext(
+        genericServiceJsonLd({
+          slug: data.slug,
+          metaTitle: data.h1,
+          metaDescription: data.metaDescription,
+        })
+      ),
+      {
+        ...webPageJsonLd,
+        mainEntity: { "@id": faqId },
+      },
+      buildFaqPageNode(faqId, webPageIdLocal, data.faqs),
+      stripContext(industryReviewJsonLd),
+    ],
+  };
+
   return (
     <main className="bg-white text-black">
-      <JsonLd data={[breadcrumb, genericServiceJsonLd({
-        slug: data.slug,
-        metaTitle: data.h1,
-        metaDescription: data.metaDescription,
-      }), webPageJsonLd, faqJsonLd, industryReviewJsonLd]} />
+      <JsonLd data={pageGraph} />
 
       {/* HERO */}
       <section className="bg-[#0a0a0a] text-white">

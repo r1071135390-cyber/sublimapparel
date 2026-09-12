@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { RequestQuoteLink } from "@/components/request-quote-link";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd, buildComparisonJsonLd } from "@/lib/breadcrumb";
+import { buildBreadcrumbJsonLd, buildFaqPageNode, buildComparisonJsonLd } from "@/lib/breadcrumb";
 import { buildPageMetadata } from "@/lib/page-metadata";
 
 // 2026-09-11 push (Round 4): same fix as /production/ — switch to buildPageMetadata
@@ -62,7 +62,12 @@ const faqItems = [
   },
 ];
 
-const faqJsonLd = buildFaqJsonLd(faqItems);
+// 2026-09-12 (R47): FAQ inlined into the page @graph via buildFaqPageNode
+// (additive cross-link fields: inLanguage, isPartOf → #webpage, about →
+// #organization) so the FAQ joins the brand entity graph like every
+// other page on the site.
+const faqId = "https://sublimapparel.com/compare/ddp-vs-fob/#faq";
+const webpageId = "https://sublimapparel.com/compare/ddp-vs-fob/#webpage";
 
 // 2026-09-11 push (Round 8 part 2): add a proper WebPage entry so
 // this comparison page joins the brand entity graph. The page is
@@ -115,10 +120,16 @@ const comparisonJsonLd = buildComparisonJsonLd({
     "International shipping term (incoterm) selection for B2B apparel orders",
 });
 
-// 2026-09-12 (R35): consolidate all JSON-LD into a single @graph block
+// 2026-09-12 (R35): consolidate all JSON-LD into a single @graph block.
+// R47: FAQ now inlined via buildFaqPageNode.
 const pageGraph = {
   "@context": "https://schema.org",
-  "@graph": [breadcrumb, webPageJsonLd, faqJsonLd, comparisonJsonLd],
+  "@graph": [
+    breadcrumb,
+    webPageJsonLd,
+    buildFaqPageNode(faqId, webpageId, faqItems),
+    comparisonJsonLd,
+  ],
 };
 
 const rows = [

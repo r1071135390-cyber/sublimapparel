@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildBreadcrumbJsonLd, buildFaqPageNode } from "@/lib/breadcrumb";
 import { SearchClient } from "@/components/search-client";
 import { Search, FileText } from "lucide-react";
 
@@ -96,7 +96,13 @@ const webPageJsonLd = {
   // resolve the round trip.
 };
 
-const searchFaqJsonLd = buildFaqJsonLd([
+// 2026-09-12 (R47): search FAQs are now kept as a raw items array and
+// inlined into the page @graph via buildFaqPageNode at render time
+// (was previously emitted as a standalone buildFaqJsonLd wrapper that
+// had to be stripped and merged back into the @graph — the helper now
+// produces the same shape with the inLanguage + isPartOf + about
+// cross-link fields, so the strip dance is gone).
+const searchFaqItems = [
   {
     q: "How do I search the SublimApparel site?",
     a: "Type any word (e.g. 'sublimation', 'cotton', 'cycling jersey', 'DDP', 'polyester 220gsm') in the search bar at the top of /search/. Results filter live as you type across products, fabric types, print techniques, blog posts, and the 12 industry verticals we serve. No signup is required.",
@@ -121,7 +127,7 @@ const searchFaqJsonLd = buildFaqJsonLd([
     q: "Do I need an account to search the site?",
     a: "No. The /search/ page is fully public. There is no login, no signup, and no paywall — we want buyers to find the right product, fabric, or technique as fast as possible. To request a quote you can move directly from a result card to /get-a-quote/.",
   },
-]);
+];
 
 export default async function SearchPage({ searchParams }: Props) {
   const sp = await searchParams;
@@ -129,6 +135,11 @@ export default async function SearchPage({ searchParams }: Props) {
   const faqId = "https://sublimapparel.com/search/#faq";
   const webPageId = "https://sublimapparel.com/search/#webpage";
 
+  // 2026-09-12 (R47): FAQ inlined into the @graph via buildFaqPageNode
+  // (was previously a standalone buildFaqJsonLd that had to be stripped
+  // of its @context + merged back into the @graph manually — the helper
+  // now produces the same shape with inLanguage + isPartOf + about
+  // cross-link fields, so the strip dance is gone).
   const pageGraph = {
     "@context": "https://schema.org",
     "@graph": [
@@ -136,17 +147,12 @@ export default async function SearchPage({ searchParams }: Props) {
         const { "@context": _c, ...rest } = breadcrumbJsonLd;
         return rest;
       })(),
-      (() => {
-        return {
-          ...webPageJsonLd,
-          "@id": webPageId,
-          mainEntity: { "@id": faqId },
-        };
-      })(),
-      (() => {
-        const { "@context": _c, ...rest } = searchFaqJsonLd;
-        return { ...rest, "@id": faqId };
-      })(),
+      {
+        ...webPageJsonLd,
+        "@id": webPageId,
+        mainEntity: { "@id": faqId },
+      },
+      buildFaqPageNode(faqId, webPageId, searchFaqItems),
     ],
   };
 

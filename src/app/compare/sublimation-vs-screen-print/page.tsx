@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { RequestQuoteLink } from "@/components/request-quote-link";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildBreadcrumbJsonLd, buildFaqPageNode } from "@/lib/breadcrumb";
 import { buildComparisonJsonLd } from "@/lib/breadcrumb";
 import { buildPageMetadata } from "@/lib/page-metadata";
 
@@ -81,7 +81,12 @@ const faqItems = [
   },
 ];
 
-const faqJsonLd = buildFaqJsonLd(faqItems);
+// 2026-09-12 (R47): FAQ inlined into the page @graph via buildFaqPageNode
+// (additive cross-link fields: inLanguage, isPartOf → #webpage, about →
+// #organization) so the FAQ joins the brand entity graph like every
+// other page on the site.
+const faqId = "https://sublimapparel.com/compare/sublimation-vs-screen-print/#faq";
+const webpageId = "https://sublimapparel.com/compare/sublimation-vs-screen-print/#webpage";
 
 const webPageJsonLd = {
   "@context": "https://schema.org",
@@ -130,10 +135,16 @@ const comparisonJsonLd = buildComparisonJsonLd({
     "Print method selection for custom apparel B2B orders",
 });
 
-// 2026-09-12 (R35): consolidate all JSON-LD into a single @graph block
+// 2026-09-12 (R35): consolidate all JSON-LD into a single @graph block.
+// R47: FAQ now inlined via buildFaqPageNode.
 const pageGraph = {
   "@context": "https://schema.org",
-  "@graph": [breadcrumb, webPageJsonLd, faqJsonLd, comparisonJsonLd],
+  "@graph": [
+    breadcrumb,
+    webPageJsonLd,
+    buildFaqPageNode(faqId, webpageId, faqItems),
+    comparisonJsonLd,
+  ],
 };
 
 const comparisonRows: Array<{ label: string; sub: string; screen: string; sublimation: string }> = [

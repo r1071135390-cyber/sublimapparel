@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Check, X, Sparkles, Shirt, Layers, Droplets, ThermometerSun, ShieldCheck, Truck, Quote } from "lucide-react";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd, buildComparisonJsonLd } from "@/lib/breadcrumb";
+import { buildBreadcrumbJsonLd, buildFaqPageNode, buildComparisonJsonLd } from "@/lib/breadcrumb";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { RequestQuoteLink } from "@/components/request-quote-link";
 
@@ -28,7 +28,11 @@ const breadcrumb = buildBreadcrumbJsonLd([
   { name: "Polyester vs Cotton", path: "/compare/polyester-vs-cotton-sublima/" },
 ]);
 
-const faq = buildFaqJsonLd([
+// 2026-09-12 (R47): FAQ inlined into the page @graph via buildFaqPageNode
+// (additive cross-link fields: inLanguage, isPartOf → #webpage, about →
+// #organization) so the FAQ joins the brand entity graph like every
+// other page on the site.
+const faqItems = [
   {
     q: "Can you sublimate on 100% cotton?",
     a:
@@ -54,7 +58,10 @@ const faq = buildFaqJsonLd([
     a:
       "No. Our DTG/DTF on cotton uses water-based ink that soaks into the cotton fiber, leaving a soft hand feel close to screen printing. The print is breathable and gets softer with washing. Classic sublimation on polyester can feel slightly waxy if ink coverage is very heavy; on cotton, this is not an issue.",
   },
-]);
+];
+
+const faqId = "https://sublimapparel.com/compare/polyester-vs-cotton-sublima/#faq";
+const webpageId = "https://sublimapparel.com/compare/polyester-vs-cotton-sublima/#webpage";
 
 const comparisonRows = [
   { feature: "Print process", poly: "Heat-transfer sublimation (dye → fiber)", cotton: "DTG / DTF all-over digital print" },
@@ -120,10 +127,19 @@ const comparisonJsonLd = buildComparisonJsonLd({
     "Substrate selection for all-over digital print on custom apparel",
 });
 
-// 2026-09-12 (R35): consolidate all JSON-LD into a single @graph block
+// 2026-09-12 (R35): consolidate all JSON-LD into a single @graph block.
+// R47: FAQ now inlined via buildFaqPageNode (was previously a standalone
+// buildFaqJsonLd call inside the @graph array, which lacked the
+// inLanguage + isPartOf + about cross-link fields the rest of the site
+// @graph now uses).
 const pageGraph = {
   "@context": "https://schema.org",
-  "@graph": [breadcrumb, webPageJsonLd, faq, comparisonJsonLd],
+  "@graph": [
+    breadcrumb,
+    webPageJsonLd,
+    buildFaqPageNode(faqId, webpageId, faqItems),
+    comparisonJsonLd,
+  ],
 };
 
 export default function PolyVsCottonPage() {

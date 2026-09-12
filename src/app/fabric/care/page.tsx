@@ -9,7 +9,7 @@ import Link from "next/link";
 import { ArrowRight, Droplets, Sun, ThermometerSun, Shirt, ShieldCheck, AlertTriangle, Sparkles } from "lucide-react";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildBreadcrumbJsonLd, buildFaqPageNode } from "@/lib/breadcrumb";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "How to Care for Sublimated Apparel — Wash, Dry, Iron, Store",
@@ -155,16 +155,19 @@ export default function FabricCarePage() {
     },
   };
 
-  const faqJsonLd = buildFaqJsonLd(faqs);
+  // 2026-09-12 (R47): FAQ inlined into the @graph via buildFaqPageNode
+  // (was previously a standalone buildFaqJsonLd that had to be stripped
+  // of its @context + merged back into the @graph manually — the helper
+  // now produces the same shape with inLanguage + isPartOf + about
+  // cross-link fields, so the strip dance is gone).
   const { "@context": _bc, ...breadcrumbStripped } = breadcrumbJsonLd;
   const { "@context": _wp, ...webPageStripped } = webPageJsonLd;
-  const { "@context": _faq, ...faqStripped } = faqJsonLd;
   const pageGraph = {
     "@context": "https://schema.org",
     "@graph": [
       breadcrumbStripped,
       { ...webPageStripped },
-      { ...faqStripped, "@id": faqId },
+      buildFaqPageNode(faqId, webPageId, faqs),
     ],
   };
 

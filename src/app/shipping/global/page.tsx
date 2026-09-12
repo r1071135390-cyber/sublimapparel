@@ -3,7 +3,7 @@ import { buildPageMetadata } from "@/lib/page-metadata";
 import Link from "next/link";
 import { Globe, Plane, Ship, Truck, Package, Shield, Clock, DollarSign } from "lucide-react";
 import { JsonLd } from "@/components/json-ld";
-import { buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildFaqPageNode } from "@/lib/breadcrumb";
 
 export const metadata = buildPageMetadata({
     title: "Worldwide Shipping · DDP to 100+ Countries from Yiwu Factory",
@@ -191,11 +191,22 @@ export default function GlobalShippingPage() {
         ],
       },
       // 4 · FAQPage
-      {
-        "@type": "FAQPage",
-        "@id": globalFaqId,
-        mainEntity: buildFaqJsonLd(faqs).mainEntity,
-      },
+      // 2026-09-12 (R47): promote to buildFaqPageNode so the FAQ node
+      // joins the brand entity graph with the additive cross-link
+      // fields (inLanguage, isPartOf → #webpage, about → #organization,
+      // url, name, description) instead of the bare {@type, @id,
+      // mainEntity} shape buildFaqJsonLd returned. Stronger entity
+      // signal for Google's PAA / AI Overview extraction.
+      buildFaqPageNode(
+        globalFaqId,
+        `${globalUrl}#webpage`,
+        faqs,
+        {
+          name: "Worldwide Shipping FAQs · DDP, FOB, Customs, Freight",
+          description:
+            "Buyer-intent FAQs about DDP / FOB / CIF / EXW incoterms, customs duties, Section 321 de minimis, freight modes, and our Yiwu-to-100+ countries shipping operation.",
+        }
+      ),
     ],
   };
   return (
