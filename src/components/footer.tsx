@@ -253,7 +253,7 @@ export function Footer() {
               Contact
             </h3>
             <Link
-              href="mailto:info@sublimapparel.com"
+              href="mailto:info@sublimapparel.com,chris@sublimapparel.com"
               className="text-sm text-black/80 transition-colors hover:text-[#cc3d00]"
             >
               info@sublimapparel.com

@@ -270,7 +270,7 @@ function Newsletter() {
     const body = encodeURIComponent(
       `Hi SublimApparel,\n\nPlease add this email to the B2B newsletter:\n\n${email}\n\nThanks!`
     );
-    window.location.href = `mailto:info@sublimapparel.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:info@sublimapparel.com,chris@sublimapparel.com?subject=${subject}&body=${body}`;
     setSubmitted(true);
     setTimeout(() => setSubmitted(false), 5000);
   };

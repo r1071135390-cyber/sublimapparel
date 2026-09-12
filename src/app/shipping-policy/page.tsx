@@ -394,7 +394,7 @@ const shippingPolicyGraph = {
               reply with DDP / FOB / CIF options within one business day.
             </p>
             <a
-              href="mailto:info@sublimapparel.com?subject=Shipping%20quote%20request"
+              href="mailto:info@sublimapparel.com,chris@sublimapparel.com?subject=Shipping%20quote%20request"
               className="mt-5 inline-flex items-center gap-2 bg-[#ff4d00] px-5 py-3 text-sm font-bold text-black transition-colors hover:bg-[#e64500]"
             >
               <Mail className="h-4 w-4" />

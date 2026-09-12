@@ -294,7 +294,7 @@ export default function YiwuFactoryWhatsappPage() {
               </Link>
             </div>
             <p className="mt-6 text-xs text-white/50">
-              Or email <a href="mailto:info@sublimapparel.com" className="underline hover:text-white/80">info@sublimapparel.com</a> · Mon-Fri 09:00-18:00 China time (UTC+8)
+              Or email <a href="mailto:info@sublimapparel.com,chris@sublimapparel.com" className="underline hover:text-white/80">info@sublimapparel.com</a> · Mon-Fri 09:00-18:00 China time (UTC+8)
             </p>
           </div>
         </section>

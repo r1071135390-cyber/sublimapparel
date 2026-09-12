@@ -285,7 +285,7 @@ export default function PrivacyPage() {
               We respond to privacy &amp; data requests within 30 days.
             </p>
             <a
-              href="mailto:info@sublimapparel.com?subject=Privacy%20request"
+              href="mailto:info@sublimapparel.com,chris@sublimapparel.com?subject=Privacy%20request"
               className="mt-5 inline-flex items-center gap-2 bg-[#ff4d00] px-5 py-3 text-sm font-bold text-black transition-colors hover:bg-[#e64500]"
             >
               <Mail className="h-4 w-4" />

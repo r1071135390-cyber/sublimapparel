@@ -6,7 +6,28 @@ const SMTP_USER = process.env.SMTP_USER ?? "info@sublimapparel.com";
 const SMTP_PASS = process.env.SMTP_PASS ?? "";
 const MAIL_FROM_NAME = process.env.MAIL_FROM_NAME ?? "SublimApparel Site";
 const MAIL_FROM = process.env.MAIL_FROM ?? SMTP_USER;
-const MAIL_TO = process.env.MAIL_TO ?? SMTP_USER;
+// 2026-09-12: customer-facing brand email stays info@sublimapparel.com
+// (the page text and the JSON-LD `email` field both surface only
+// info@ as the canonical contact), but every server-side
+// notification (chat-message, contact form) is delivered to BOTH
+// info@ and chris@. The internal list is hard-coded as a fallback
+// so even if MAIL_TO is unset the team still gets the message in
+// two inboxes. MAIL_TO can override the list at deploy time
+// (e.g. if you want to point staging at a single address).
+const DEFAULT_INTERNAL_RECIPIENTS = [
+  "info@sublimapparel.com",
+  "chris@sublimapparel.com",
+] as const;
+function resolveRecipients(): string[] {
+  if (process.env.MAIL_TO && process.env.MAIL_TO.trim().length > 0) {
+    // Split on comma so MAIL_TO can carry a single address or a list.
+    return process.env.MAIL_TO
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
+  }
+  return [...DEFAULT_INTERNAL_RECIPIENTS];
+}
 
 const transporter = nodemailer.createTransport({
   host: SMTP_HOST,
@@ -86,7 +107,7 @@ export async function sendChatNotificationEmail(
   try {
     await transporter.sendMail({
       from: `"${MAIL_FROM_NAME}" <${MAIL_FROM}>`,
-      to: MAIL_TO,
+      to: resolveRecipients().join(", "),
       replyTo: msg.email,
       subject,
       text,

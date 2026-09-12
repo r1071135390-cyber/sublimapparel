@@ -220,7 +220,9 @@ export function RequestQuoteModal() {
     ].filter(Boolean) as string[];
 
     const subject = `Inquiry: ${form.product} — ${form.quantity || "TBD"} pcs — ${form.name}`;
-    const mailto = `mailto:info@sublimapparel.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join("\n"))}`;
+    // 2026-09-12: page displays info@ as the canonical contact email,
+    // but the actual inquiry is delivered to BOTH info@ and chris@.
+    const mailto = `mailto:info@sublimapparel.com,chris@sublimapparel.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join("\n"))}`;
 
     await new Promise((r) => setTimeout(r, 300));
     window.location.href = mailto;
