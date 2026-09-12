@@ -10,7 +10,7 @@ import { ArrowRight, Globe, ShieldCheck, Truck, Warehouse, MapPin, Package } fro
 // Adding the imports + a proper WebPage (speakable) entry + consolidating
 // the raw FAQPage <script> into a single JsonLd output.
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildDdpShippingPageGraph } from "@/lib/breadcrumb";
 
 export const metadata = buildPageMetadata({
     title: "DDP Shipping — Duties Paid, Delivered to Your Door",
@@ -87,38 +87,31 @@ const ddpFaqs = [
 ];
 
 export default function DdpPage() {
-  // 2026-09-11 push (Round 8 part 2): upgrade the breadcrumb-only
-  // schema to breadcrumb + WebPage (speakable) + FAQPage (from the
-  // ddpFaqs constant above) in a single consolidated JsonLd output.
-  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
-    { name: "Home", path: "/" },
-    { name: "Shipping", path: "/shipping/" },
-    { name: "DDP", path: "/shipping/ddp/" },
-  ]);
-  const webPageJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": "https://sublimapparel.com/shipping/ddp/#webpage",
-    url: "https://sublimapparel.com/shipping/ddp/",
-    name: "DDP Shipping — Duties Paid, Delivered to Your Door | SublimApparel",
-    description:
-      "DDP (Delivered Duty Paid) shipping from Yiwu to 100+ countries. Customs, duties, and last-mile included. One invoice, no surprise fees. US, UK, EU, AU, CA, JP, KR, MX, BR.",
-    inLanguage: "en",
-    isPartOf: { "@id": "https://sublimapparel.com/#website" },
-    about: { "@id": "https://sublimapparel.com/#organization" },
-    primaryImageOfPage: {
-      "@type": "ImageObject",
-      url: "https://sublimapparel.com/og/og-home.webp",
-    },
-    speakable: {
-      "@type": "SpeakableSpecification",
-      xpath: ["/html/body//h1", "/html/body//section[1]//p"],
-    },
-  };
-  const faqJsonLd = buildFaqJsonLd(ddpFaqs);
+  // 2026-09-12 (R40): consolidate the 3 separate JSON-LD nodes
+  // (BreadcrumbList + WebPage + FAQPage — passed as a flat array
+  // to a single <JsonLd> call) into a single @graph payload via
+  // buildDdpShippingPageGraph. The new graph:
+  //   - joins WebPage #webpage (mainEntity round-trip to Service
+  //     #service), Service #service (areaServed for 8 core
+  //     countries + OfferCatalog with 4 transit options),
+  //     FAQPage #faq, and BreadcrumbList into a single @graph
+  //     with all @id cross-linking
+  //   - The Service node targets "DDP shipping from China" /
+  //     "delivered duty paid" intent queries for Google's DDP
+  //     knowledge panel enrichment
+  //   - WebPage + mainEntity → Service round-trip so Google
+  //     knows this page IS the authoritative DDP service page
+  const ddpGraph = buildDdpShippingPageGraph({
+    breadcrumb: [
+      { name: "Home", path: "/" },
+      { name: "Shipping", path: "/shipping/" },
+      { name: "DDP", path: "/shipping/ddp/" },
+    ],
+    faq: ddpFaqs,
+  });
   return (
     <main>
-      <JsonLd data={[breadcrumbJsonLd, webPageJsonLd, faqJsonLd]} />
+      <JsonLd data={ddpGraph} />
       {/* HERO */}
       <section className="border-b-2 border-black bg-[#0a0a0a] text-white">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">

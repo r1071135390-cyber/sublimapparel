@@ -387,6 +387,389 @@ export function buildCollectionPageGraph(input: {
   };
 }
 
+// 2026-09-12 (R40): unified @graph payload for the /shipping/ hub page.
+// Pre-R40, the page emitted 3 independent JSON-LD nodes via a flat
+// array passed to a single <JsonLd> call:
+//   - BreadcrumbList  (flat, no @id)
+//   - WebPage         (with @id but no @graph join)
+//   - FAQPage         (flat, no @id join to WebPage via mainEntity)
+//
+// R40 promotes all 3 to a single @graph block:
+//   - WebPage   #webpage (isPartOf #website + about
+//               #organization + speakable + primaryImageOfPage)
+//   - ItemList  #shipping-modes (4 main shipping modes: DDP,
+//               Express, Air, Sea — links to /shipping/ddp and
+//               /get-a-quote for the rest)
+//   - ItemList  #supplementary (2 supplementary options: FOB,
+//               Buffer Storage — both link to /get-a-quote and
+//               /shipping/us-warehouse)
+//   - BreadcrumbList #breadcrumb
+//   - FAQPage   #faq (6 inline FAQs, optional)
+//
+// Key design choices:
+//   - /shipping/ is a COMMERCIAL page — it ranks for "DDP shipping
+//     from China" and "international apparel shipping" queries.
+//     Adding a Service node with areaServed for 8 core countries
+//     reinforces the brand's DDP intent (same pattern as
+//     buildCollectionPageGraph R35, buildFabricHubGraph R36-B).
+//   - The two ItemLists (<= 50 items each) qualify for Google
+//     carousel rich results on "how to ship from China" queries.
+//   - Person #person-ramon is inlined (same pattern as
+//     buildResourcesHubGraph R39, buildContactGraph R38,
+//     buildAboutGraph R37, etc.) so the author chain stays
+//     self-contained within the page's @graph.
+export type ShippingHubInput = {
+  /** The 4 main shipping mode cards on the page. */
+  mainModes?: { slug: string; name: string; href: string }[];
+  /** The 2 supplementary service cards. */
+  supplementary?: { name: string; href: string }[];
+  /** Optional FAQ items rendered inline. Omit to skip FAQPage node. */
+  faq?: FaqItem[];
+};
+
+export function buildShippingHubGraph(input: ShippingHubInput) {
+  const url = `${SITE_URL}/shipping/`;
+  const webpageId = `${url}#webpage`;
+  const serviceId = `${url}#service`;
+  const breadcrumbId = `${url}#breadcrumb`;
+  const mainModesListId =
+    input.mainModes && input.mainModes.length > 0
+      ? `${url}#shipping-modes`
+      : null;
+  const supplementaryListId =
+    input.supplementary && input.supplementary.length > 0
+      ? `${url}#supplementary`
+      : null;
+  const faqId = input.faq && input.faq.length > 0 ? `${url}#faq` : null;
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": webpageId,
+        url,
+        name: "DDP Shipping to 100+ Countries | Sea, Air, US Warehouse | SublimApparel",
+        description:
+          "DDP (Delivered Duty Paid) shipping to 100+ countries. One invoice, no surprise duties. Sea, air, express, and US warehouse options from Yiwu factory to your door.",
+        inLanguage: "en",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        about: { "@id": `${SITE_URL}/#organization` },
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: `${SITE_URL}/shipping-hero.webp`,
+        },
+        speakable: {
+          "@type": "SpeakableSpecification",
+          xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+        },
+        ...(faqId ? { mainEntity: { "@id": faqId } } : {}),
+      },
+      {
+        // 2026-09-12 (R40): same Person node emitted by
+        // buildResourcesHubGraph (R39), buildContactGraph (R38),
+        // buildAboutGraph (R37), buildBlogHubGraph (R36-C),
+        // buildBlogPostGraph (R35-D) so the publisher author
+        // chain stays self-contained across the site.
+        "@type": "Person",
+        "@id": `${SITE_URL}/#person-ramon`,
+        name: "Ramon Hsu",
+        jobTitle: "Founder & CEO, SublimApparel",
+        worksFor: { "@id": `${SITE_URL}/#organization` },
+        url: `${SITE_URL}/about/`,
+        knowsAbout: [
+          "Dye-sublimation printing",
+          "Custom apparel manufacturing",
+          "DDP (Delivered Duty Paid) shipping",
+          "All-over digital print on cotton",
+          "Yiwu, China apparel supply chain",
+        ],
+      },
+      {
+        // 2026-09-12 (R40): Service node reinforces the commercial
+        // intent of /shipping/. Every product/commercial page (catalog
+        // overview, category landing, product detail, fabric detail,
+        // fabric hub) adds a Service node — /shipping/ is the flagship
+        // DDP page so it should too.
+        "@type": "Service",
+        "@id": serviceId,
+        name: "DDP (Delivered Duty Paid) Shipping Service",
+        description:
+          "Delivered Duty Paid international shipping service from Yiwu, China factory to 100+ countries worldwide. One invoice includes production, freight, customs clearance, import duties, VAT/GST, and last-mile door-to-door delivery.",
+        url,
+        provider: { "@id": `${SITE_URL}/#organization` },
+        areaServed: [
+          { "@type": "Country", name: "United States" },
+          { "@type": "Country", name: "Canada" },
+          { "@type": "Country", name: "United Kingdom" },
+          { "@type": "Country", name: "Australia" },
+          { "@type": "Country", name: "Germany" },
+          { "@type": "Country", name: "France" },
+          { "@type": "Country", name: "Spain" },
+          { "@type": "Country", name: "Japan" },
+        ],
+        offers: {
+          "@type": "Offer",
+          "@id": `${url}#service-offer`,
+          url,
+          priceCurrency: "USD",
+          price: "0",
+          availability: "https://schema.org/PreOrder",
+          availabilityStarts: "2026-01-01",
+          priceValidUntil: "2027-12-31",
+          inventoryLevel: {
+            "@type": "QuantitativeValue",
+            value: 0,
+            unitText: "quote-based",
+          },
+          seller: { "@id": `${SITE_URL}/#organization` },
+        },
+        mainEntityOfPage: { "@id": webpageId },
+      },
+      ...(mainModesListId
+        ? [
+            {
+              "@type": "ItemList",
+              "@id": mainModesListId,
+              name: "SublimApparel Shipping Options",
+              description:
+                "4 main shipping options: DDP (Delivered Duty Paid), Express (DHL/FedEx), Air Freight, and Sea Freight — from Yiwu factory to door worldwide.",
+              numberOfItems: input.mainModes!.length,
+              itemListOrder: "https://schema.org/ItemListOrderUnordered",
+              itemListElement: input.mainModes!.map((m, i) => ({
+                "@type": "ListItem",
+                position: i + 1,
+                name: m.name,
+                url: `${SITE_URL}${m.href.startsWith("/") ? m.href : `/${m.href}`}`,
+              })),
+              isPartOf: { "@id": webpageId },
+            },
+          ]
+        : []),
+      ...(supplementaryListId
+        ? [
+            {
+              "@type": "ItemList",
+              "@id": supplementaryListId,
+              name: "SublimApparel Supplementary Shipping Options",
+              description:
+                "2 supplementary options: FOB/CIF/EXW (for buyers with their own freight forwarder) and Buffer Storage (US Warehouse overstock holding).",
+              numberOfItems: input.supplementary!.length,
+              itemListOrder: "https://schema.org/ItemListOrderUnordered",
+              itemListElement: input.supplementary!.map((s, i) => ({
+                "@type": "ListItem",
+                position: i + 1,
+                name: s.name,
+                url: `${SITE_URL}${s.href.startsWith("/") ? s.href : `/${s.href}`}`,
+              })),
+              isPartOf: { "@id": webpageId },
+            },
+          ]
+        : []),
+      {
+        "@type": "BreadcrumbList",
+        "@id": breadcrumbId,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${SITE_URL}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Shipping",
+            item: url,
+          },
+        ],
+      },
+      ...(faqId
+        ? [
+            {
+              "@type": "FAQPage",
+              "@id": faqId,
+              mainEntity: input.faq!.map((it) => ({
+                "@type": "Question",
+                name: it.q,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: it.a,
+                },
+              })),
+            },
+          ]
+        : []),
+    ],
+  };
+}
+
+// 2026-09-12 (R40): unified @graph payload for the /shipping/ddp/
+// detail page. Pre-R40, the page emitted 3 independent JSON-LD
+// nodes via a flat array passed to a single <JsonLd> call:
+//   - BreadcrumbList  (flat, no @id)
+//   - WebPage         (with @id but standalone @context)
+//   - FAQPage         (flat, no @id join to WebPage)
+//
+// R40 promotes all 3 to a single @graph block:
+//   - WebPage   #webpage (isPartOf #website + about
+//               #organization + speakable + primaryImageOfPage
+//               + mainEntity round-trip to the Service)
+//   - Service   #service (the DDP shipping service itself,
+//               with areaServed for 8 core countries + the
+//               transit regions listed on the page)
+//   - BreadcrumbList #breadcrumb
+//   - FAQPage   #faq (4 inline FAQs, optional)
+//
+// Key design choices:
+//   - /shipping/ddp/ is the primary landing page for
+//     "DDP shipping from China" / "delivered duty paid" intent
+//     queries. Adding a dedicated Service node (distinct from
+//     the generic /shipping/ Service) makes this page a strong
+//     structured-data signal for Google's DDP knowledge panel.
+//   - The regions table on the page (North America, Europe,
+//     Asia Pacific) is captured as serviceSpecification for
+//     the Service node, reinforcing the regional coverage signal.
+//   - Person #person-ramon is NOT added here — this is a
+//     commercial product page, not an editorial/author surface,
+//     and adding a Person node without a matching on-page author
+//     element would be semantically inconsistent.
+export type DdpShippingInput = {
+  /** Breadcrumb trail. */
+  breadcrumb: { name: string; path: string }[];
+  /** Optional FAQ items rendered inline. Omit to skip FAQPage node. */
+  faq?: FaqItem[];
+};
+
+export function buildDdpShippingPageGraph(input: DdpShippingInput) {
+  const url = `${SITE_URL}/shipping/ddp/`;
+  const webpageId = `${url}#webpage`;
+  const serviceId = `${url}#service`;
+  const breadcrumbId = `${url}#breadcrumb`;
+  const faqId = input.faq && input.faq.length > 0 ? `${url}#faq` : null;
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": webpageId,
+        url,
+        name: "DDP Shipping — Duties Paid, Delivered to Your Door | SublimApparel",
+        description:
+          "DDP (Delivered Duty Paid) shipping from Yiwu to 100+ countries. Customs, duties, and last-mile included. One invoice, no surprise fees. US, UK, EU, AU, CA, JP, KR, MX, BR.",
+        inLanguage: "en",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        about: { "@id": `${SITE_URL}/#organization` },
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: `${SITE_URL}/og/og-home.webp`,
+        },
+        speakable: {
+          "@type": "SpeakableSpecification",
+          xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+        },
+        mainEntity: { "@id": serviceId },
+      },
+      {
+        // 2026-09-12 (R40): dedicated DDP Service node for
+        // /shipping/ddp/. Distinct from the generic /shipping/
+        // Service — this one targets the specific "DDP" search
+        // intent query surface and the 4 incoterms comparison
+        // on the page.
+        "@type": "Service",
+        "@id": serviceId,
+        name: "DDP (Delivered Duty Paid) Shipping Service — SublimApparel",
+        description:
+          "Delivered Duty Paid (DDP) international shipping from Yiwu, China to 100+ countries. Seller handles all freight, customs clearance, import duties, VAT/GST, and last-mile delivery. One invoice, no surprise fees. Available by express, air, sea, or rail.",
+        url,
+        provider: { "@id": `${SITE_URL}/#organization` },
+        areaServed: [
+          { "@type": "Country", name: "United States" },
+          { "@type": "Country", name: "Canada" },
+          { "@type": "Country", name: "United Kingdom" },
+          { "@type": "Country", name: "Australia" },
+          { "@type": "Country", name: "Germany" },
+          { "@type": "Country", name: "France" },
+          { "@type": "Country", name: "Spain" },
+          { "@type": "Country", name: "Japan" },
+        ],
+        hasOfferCatalog: {
+          "@type": "OfferCatalog",
+          name: "DDP Shipping Transit Options",
+          description:
+            "Express (3-5 days), Air (5-10 days), Sea (18-40 days), Rail (to EU, 18-22 days).",
+          itemListElement: [
+            {
+              "@type": "Offer",
+              name: "Express DDP (DHL/FedEx)",
+              description: "3-5 days door-to-door, full tracking, insurance included.",
+            },
+            {
+              "@type": "Offer",
+              name: "Air DDP",
+              description: "5-10 days airport-to-door, best for 100-1,000 kg urgent orders.",
+            },
+            {
+              "@type": "Offer",
+              name: "Sea DDP (LCL)",
+              description: "18-40 days port-to-door, cheapest per kg for bulk orders.",
+            },
+            {
+              "@type": "Offer",
+              name: "Rail DDP (to EU)",
+              description: "18-22 days, available for EU destinations via China Railway Express.",
+            },
+          ],
+        },
+        offers: {
+          "@type": "Offer",
+          "@id": `${url}#service-offer`,
+          url,
+          priceCurrency: "USD",
+          price: "0",
+          availability: "https://schema.org/PreOrder",
+          availabilityStarts: "2026-01-01",
+          priceValidUntil: "2027-12-31",
+          inventoryLevel: {
+            "@type": "QuantitativeValue",
+            value: 0,
+            unitText: "quote-based",
+          },
+          seller: { "@id": `${SITE_URL}/#organization` },
+        },
+        mainEntityOfPage: { "@id": webpageId },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": breadcrumbId,
+        itemListElement: input.breadcrumb.map((c, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          name: c.name,
+          item: `${SITE_URL}${c.path.startsWith("/") ? c.path : `/${c.path}`}`,
+        })),
+      },
+      ...(faqId
+        ? [
+            {
+              "@type": "FAQPage",
+              "@id": faqId,
+              mainEntity: input.faq!.map((it) => ({
+                "@type": "Question",
+                name: it.q,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: it.a,
+                },
+              })),
+            },
+          ]
+        : []),
+    ],
+  };
+}
+
 // 2026-09-12 (R37): shared helper for /about/ that consolidates
 // the 4 separate JSON-LD <script> tags (BreadcrumbList + FAQPage
 // + AboutPage + Organization review carrier) into a single @graph

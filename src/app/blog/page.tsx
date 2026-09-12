@@ -1,7 +1,7 @@
 import type { Metadata } from"next";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildBlogHubGraph } from "@/lib/breadcrumb";
 import Link from"next/link";
 import Image from"next/image";
 import { ArrowRight, Clock, Calendar } from"lucide-react";
@@ -32,97 +32,65 @@ export const metadata = buildPageMetadata({
     ogImage: "/og/og-default.jpg",
   });;
 
+// 2026-09-12 (R36-C): the 5 blog-index FAQs lifted to a top-level
+// const so we can hand them straight to buildBlogHubGraph as the
+// FAQPage #faq node (was previously a flat FAQPage <script> with
+// no @id join to the WebPage via mainEntity round-trip).
+const blogHubFaqs = [
+  {
+    q: "What is dye-sublimation and why does it matter for custom apparel?",
+    a: "Dye-sublimation transfer bonds ink into polyester fibers under high heat, producing full-coverage prints that won't fade, peel, or crack — even after hundreds of washes. The result is true all-over print (edge-to-edge) on polyester performance fabrics, which is why it's the dominant process for custom sportswear, cycling kits, and esports jerseys.",
+  },
+  {
+    q: "DDP or FOB — which shipping method should I choose for custom apparel from China?",
+    a: "DDP (Delivered Duty Paid) means the supplier handles freight, customs clearance, import duties, taxes, and last-mile delivery — you receive the goods at your door with no surprise costs. FOB (Free on Board) is cheaper upfront but you pay separately for freight, customs brokerage, duties, and delivery, which can add 15–35% on top of the quoted price and requires more logistical coordination on your end.",
+  },
+  {
+    q: "Can you do all-over print on 100% cotton apparel?",
+    a: "Most sublimation factories only print on polyester. We run an allover digital print (DTG/DTF) workflow on 100% cotton in-house, producing true edge-to-edge cut-and-sew cotton apparel with vivid color and a soft natural cotton hand-feel. MOQ is 50 pieces per design. This is a genuine differentiator — ask us to compare samples before you commit.",
+  },
+  {
+    q: "What file formats do apparel manufacturers accept for custom printing?",
+    a: "Vector files (AI, EPS, PDF) are preferred for sublimation on polyester because they scale to any print size without quality loss. High-resolution raster images (300 DPI PNG, PSD, JPG) work for DTG on cotton and for allover print workflows. We free-check every artwork submission and will tell you exactly what's wrong and how to fix it before you commit to production.",
+  },
+  {
+    q: "How do I avoid common quality issues when ordering custom apparel from a China factory?",
+    a: "The three most common issues are: (1) color shifts from CMYK-to-RGB conversion — always confirm color space and request a printed color card before bulk; (2) size grading errors — request a pre-production fit sample in every size you need; (3) print registration misalignment — our team marks every seam line on your artwork proof before sublimation, which is why we insist on sample approval before bulk runs start.",
+  },
+];
+
+// 2026-09-12 (R36-C): consolidate the 4 separate JSON-LD nodes
+// (BreadcrumbList + Blog + ItemList + WebPage + FAQPage — 2 of
+// which were inlined inside `blogList.mainEntity`) and the 5
+// inline FAQs into a single @graph payload via buildBlogHubGraph.
+// The new graph also adds the canonical Blog @type (instead of
+// CollectionPage) so Google recognizes the page as a publisher
+// blog index, gives every node an @id, and joins the post
+// ItemList back to the Blog via mainEntity round-trip. The
+// Person #person-ramon node is also defined inline so future
+// blog posts (R35-D) can use the same author @id and the Blog
+// entity graph stays self-contained.
+//
+// Note: this helper does NOT include a Service #service
+// sibling — the /blog/ index is an editorial content hub, not
+// a service surface, and adding a service node would dilute the
+// content / publisher signal that the Blog @type is meant to
+// carry. Commercial DDP intent is already captured by the
+// homepage, the /shipping/ pages, and the product / fabric
+// surfaces elsewhere in the site.
+const blogGraph = buildBlogHubGraph({
+  posts: blogPosts.map((p) => ({ slug: p.slug, title: p.title })),
+  faq: blogHubFaqs,
+});
+
 export default function BlogIndexPage() {
   const featured = getFeaturedPost()!;
   const rest = blogPosts.filter((p) => p.slug !== featured.slug);
   const categories = getAllCategories();
 
-  // 2026-09-11 push (Round 7): add Blog + ItemList JSON-LD on /blog/.
-  // Google treats /blog/ as a flat archive of <a> links by default, which
-  // misses the fact that each link is a distinct Article. With Blog as the
-  // @type and an ItemList enumerating the actual blog post URLs, Google's
-  // crawler can map the index → individual posts without re-walking
-  // internal links, and the index itself becomes eligible for "Articles
-  // from this site" rich-result groups in the SERP carousel.
-  const blogList = {
-    "@context": "https://schema.org",
-    "@type": "Blog",
-    "@id": "https://sublimapparel.com/blog/#blog",
-    url: "https://sublimapparel.com/blog/",
-    name: "SublimApparel Blog — Apparel Manufacturing Insights",
-    description:
-      "Industry guides, factory stories, and B2B apparel manufacturing insights from a 2,000 m² Yiwu sublimation factory. Sublimation vs DTG, DDP shipping, fabric guides, esports jersey fabric, and more.",
-    inLanguage: "en",
-    publisher: { "@id": "https://sublimapparel.com/#organization" },
-    mainEntity: {
-      "@type": "ItemList",
-      numberOfItems: blogPosts.length,
-      itemListOrder: "https://schema.org/ItemListOrderDescending",
-      itemListElement: blogPosts.map((p, i) => ({
-        "@type": "ListItem",
-        position: i + 1,
-        url: `https://sublimapparel.com/blog/${p.slug}/`,
-        name: p.title,
-      })),
-    },
-  };
-
-  // 2026-09-11 (Round 10): the page had Blog + ItemList + BreadcrumbList but
-  // no WebPage. Adding WebPage so the index joins the brand entity graph
-  // with @id cross-links (isPartOf → #website, about → #organization).
-  const webPageJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": "https://sublimapparel.com/blog/#webpage",
-    url: "https://sublimapparel.com/blog/",
-    name: "Blog | Sublimation Apparel Insights & Factory Stories | SublimApparel",
-    description:
-      "Industry guides, factory stories, and B2B apparel manufacturing insights from a 2,000 m² Yiwu sublimation factory. Sublimation vs DTG, DDP shipping, fabric guides, esports jersey fabric, and more.",
-    inLanguage: "en",
-    isPartOf: { "@id": "https://sublimapparel.com/#website" },
-    about: { "@id": "https://sublimapparel.com/#organization" },
-    speakable: {
-      "@type": "SpeakableSpecification",
-      xpath: ["/html/body//h1", "/html/body//section[1]//p"],
-    },
-  };
-
-  // 2026-09-11 (R19): add FAQPage JSON-LD on /blog/. The index has 621
-  // words of genuine editorial content but was missing FAQPage, which means
-  // Google has no structured signal that the page also answers B2B buyer
-  // questions. Adding 5 Q&A entries targets the informational query space
-  // ("what is sublimation MOQ", "DDP vs FOB shipping", "DTG vs sublimation")
-  // that matches readers who land on the blog from industry searches.
-  const blogFaq = buildFaqJsonLd([
-    {
-      q: "What is dye-sublimation and why does it matter for custom apparel?",
-      a: "Dye-sublimation transfer bonds ink into polyester fibers under high heat, producing full-coverage prints that won't fade, peel, or crack — even after hundreds of washes. The result is true all-over print (edge-to-edge) on polyester performance fabrics, which is why it's the dominant process for custom sportswear, cycling kits, and esports jerseys.",
-    },
-    {
-      q: "DDP or FOB — which shipping method should I choose for custom apparel from China?",
-      a: "DDP (Delivered Duty Paid) means the supplier handles freight, customs clearance, import duties, taxes, and last-mile delivery — you receive the goods at your door with no surprise costs. FOB (Free on Board) is cheaper upfront but you pay separately for freight, customs brokerage, duties, and delivery, which can add 15–35% on top of the quoted price and requires more logistical coordination on your end.",
-    },
-    {
-      q: "Can you do all-over print on 100% cotton apparel?",
-      a: "Most sublimation factories only print on polyester. We run an allover digital print (DTG/DTF) workflow on 100% cotton in-house, producing true edge-to-edge cut-and-sew cotton apparel with vivid color and a soft natural cotton hand-feel. MOQ is 50 pieces per design. This is a genuine differentiator — ask us to compare samples before you commit.",
-    },
-    {
-      q: "What file formats do apparel manufacturers accept for custom printing?",
-      a: "Vector files (AI, EPS, PDF) are preferred for sublimation on polyester because they scale to any print size without quality loss. High-resolution raster images (300 DPI PNG, PSD, JPG) work for DTG on cotton and for allover print workflows. We free-check every artwork submission and will tell you exactly what's wrong and how to fix it before you commit to production.",
-    },
-    {
-      q: "How do I avoid common quality issues when ordering custom apparel from a China factory?",
-      a: "The three most common issues are: (1) color shifts from CMYK-to-RGB conversion — always confirm color space and request a printed color card before bulk; (2) size grading errors — request a pre-production fit sample in every size you need; (3) print registration misalignment — our team marks every seam line on your artwork proof before sublimation, which is why we insist on sample approval before bulk runs start.",
-    },
-  ]);
-
   return (
     <>
-      <JsonLd data={buildBreadcrumbJsonLd([
-        { name: "Home", path: "/" },
-        { name: "Blog", path: "/blog" },
-      ])} />
-      <JsonLd data={[blogList, webPageJsonLd, blogFaq]} />
+      <JsonLd data={blogGraph} />
       <main>
       {/* HERO */}
       <section className="border-b-2 border-black bg-[#faf9f6]">

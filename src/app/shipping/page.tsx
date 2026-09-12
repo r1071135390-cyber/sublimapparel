@@ -25,7 +25,7 @@ import {
 } from"lucide-react";
 import { RequestQuoteLink } from "@/components/request-quote-link";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildShippingHubGraph } from "@/lib/breadcrumb";
 
 export const metadata = buildPageMetadata({
     // 2026-09-11 (R15-P0-1): was 71 chars — Google SERP limit ~60. Shortened to 56.
@@ -309,44 +309,29 @@ const faqs = [
 ];
 
 export default function ShippingPage() {
-  // 2026-09-11 push (Round 4): add BreadcrumbList so Google can show
-  // crumbs in SERP for /shipping/. Boosts CTR vs URL-only snippet.
-  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
-    { name: "Home", path: "/" },
-    { name: "Shipping", path: "/shipping/" },
-  ]);
-
-  // 2026-09-11 push (Round 8 part 2): /shipping/ previously had only
-  // a breadcrumb. Add WebPage (speakable) + FAQPage so the existing
-  // 6 inline FAQs are eligible for PAA rich results, and so the page
-  // joins the brand entity graph. The /shipping/ page is the canonical
-  // answer for "DDP shipping from China" / "shipping to 100+ countries"
-  // type queries, so it deserves full structured data.
-  const webPageJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": "https://sublimapparel.com/shipping/#webpage",
-    url: "https://sublimapparel.com/shipping/",
-    name: "How We Ship DDP to 100+ Countries | SublimApparel",
-    description:
-      "DDP (Delivered Duty Paid) shipping to 100+ countries. One invoice, no surprise duties. Sea, air, express, and US warehouse options from Yiwu factory to your door.",
-    inLanguage: "en",
-    isPartOf: { "@id": "https://sublimapparel.com/#website" },
-    about: { "@id": "https://sublimapparel.com/#organization" },
-    primaryImageOfPage: {
-      "@type": "ImageObject",
-      url: "https://sublimapparel.com/shipping-hero.webp",
-    },
-    speakable: {
-      "@type": "SpeakableSpecification",
-      xpath: ["/html/body//h1", "/html/body//section[1]//p"],
-    },
-  };
-
-  const faqJsonLd = buildFaqJsonLd(faqs);
+  // 2026-09-12 (R40): consolidate the 3 separate JSON-LD nodes
+  // (BreadcrumbList + WebPage + FAQPage — passed as a flat array
+  // to a single <JsonLd> call) into a single @graph payload via
+  // buildShippingHubGraph. The new graph:
+  //   - joins WebPage #webpage, Person #person-ramon, Service
+  //     #service (areaServed for 8 core countries), ItemList
+  //     #shipping-modes (4 main shipping modes), ItemList
+  //     #supplementary (2 supplementary options), FAQPage #faq,
+  //     and BreadcrumbList into a single @graph with all @id
+  //     cross-linking
+  //   - Both ItemLists are <= 50 items, so Google keeps them
+  //     eligible for carousel rich results
+  //   - WebPage + mainEntity round-trip to FAQPage so the
+  //     PAA-style rich results on "DDP shipping from China"
+  //     queries still resolve
+  const shippingGraph = buildShippingHubGraph({
+    mainModes: options.map((o) => ({ slug: o.slug, name: o.name, href: o.href })),
+    supplementary: supplementary.map((s) => ({ name: s.name, href: s.href })),
+    faq: faqs,
+  });
   return (
     <main>
-      <JsonLd data={[breadcrumbJsonLd, webPageJsonLd, faqJsonLd]} />
+      <JsonLd data={shippingGraph} />
       {/* HERO */}
       {/* HERO — dark text on left, warehouse image on right (same pattern as home page) */}
       <section className="relative overflow-hidden border-b-2 border-black bg-[#0a0a0a] text-white">
