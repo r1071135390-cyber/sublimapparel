@@ -3,7 +3,7 @@ import { buildPageMetadata } from "@/lib/page-metadata";
 import Link from "next/link";
 import { Globe, Plane, Ship, Truck, Package, Shield, Clock, DollarSign } from "lucide-react";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildFaqJsonLd } from "@/lib/breadcrumb";
 
 export const metadata = buildPageMetadata({
     title: "Worldwide Shipping · DDP to 100+ Countries from Yiwu Factory",
@@ -127,40 +127,80 @@ const faqs = [
 ];
 
 export default function GlobalShippingPage() {
-  // 2026-09-11 push (Round 8 part 2): add WebPage (speakable) +
-  // FAQPage to the existing breadcrumb so the page is eligible for
-  // PAA rich results and joins the brand entity graph. The page is
-  // the canonical answer for "international shipping from China" /
-  // "DDP to 100+ countries" type queries.
-  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
-    { name: "Home", path: "/" },
-    { name: "Shipping", path: "/shipping/" },
-    { name: "Worldwide", path: "/shipping/global/" },
-  ]);
-  const webPageJsonLd = {
+  // 2026-09-12 (R46): merge 3 separate JsonLd calls (array of 3
+  // nodes was producing 3 scripts) into a single @graph. Adds a
+  // new Service node with areaServed 8 core DDP countries to
+  // reinforce the worldwide DDP shipping commercial intent. The
+  // page is the canonical answer for "international shipping from
+  // China" / "DDP to 100+ countries" type queries.
+  const globalUrl = "https://sublimapparel.com/shipping/global/";
+  const globalFaqId = `${globalUrl}#faq`;
+  const globalGraph = {
     "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": "https://sublimapparel.com/shipping/global/#webpage",
-    url: "https://sublimapparel.com/shipping/global/",
-    name: "Worldwide Shipping · DDP to 100+ Countries from Yiwu | SublimApparel",
-    description:
-      "Sea, air, express, rail, and truck from Yiwu to 100+ countries. DDP delivered duty paid to US, UK, EU, AU, CA. Incoterms FOB, CIF, DDP, EXW. End-to-end tracking.",
-    inLanguage: "en",
-    isPartOf: { "@id": "https://sublimapparel.com/#website" },
-    about: { "@id": "https://sublimapparel.com/#organization" },
-    primaryImageOfPage: {
-      "@type": "ImageObject",
-      url: "https://sublimapparel.com/og/og-home.webp",
-    },
-    speakable: {
-      "@type": "SpeakableSpecification",
-      xpath: ["/html/body//h1", "/html/body//section[1]//p"],
-    },
+    "@graph": [
+      // 1 · BreadcrumbList
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${globalUrl}#breadcrumb`,
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: "https://sublimapparel.com/" },
+          { "@type": "ListItem", position: 2, name: "Shipping", item: "https://sublimapparel.com/shipping/" },
+          { "@type": "ListItem", position: 3, name: "Worldwide", item: globalUrl },
+        ],
+      },
+      // 2 · WebPage — anchors the page to the brand entity graph
+      {
+        "@type": "WebPage",
+        "@id": `${globalUrl}#webpage`,
+        url: globalUrl,
+        name: "Worldwide Shipping · DDP to 100+ Countries from Yiwu | SublimApparel",
+        description:
+          "Sea, air, express, rail, and truck from Yiwu to 100+ countries. DDP delivered duty paid to US, UK, EU, AU, CA. Incoterms FOB, CIF, DDP, EXW. End-to-end tracking.",
+        inLanguage: "en",
+        isPartOf: { "@id": "https://sublimapparel.com/#website" },
+        about: { "@id": "https://sublimapparel.com/#organization" },
+        mainEntity: { "@id": globalFaqId },
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: "https://sublimapparel.com/og/og-home.webp",
+        },
+        speakable: {
+          "@type": "SpeakableSpecification",
+          xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+        },
+      },
+      // 3 · Service — worldwide DDP shipping
+      {
+        "@type": "Service",
+        "@id": `${globalUrl}#service`,
+        name: "Worldwide DDP Shipping from Yiwu Factory",
+        description:
+          "Sea, air, express, rail, and truck from our Yiwu factory to 100+ countries. DDP (Delivered Duty Paid) to US, UK, EU, AU, CA, JP, KR, MX, BR and 90+ more — customs, duties, and last-mile included.",
+        serviceType: "International DDP apparel logistics & customs clearance",
+        url: globalUrl,
+        provider: { "@id": "https://sublimapparel.com/#organization" },
+        areaServed: [
+          { "@type": "Country", name: "United States" },
+          { "@type": "Country", name: "Canada" },
+          { "@type": "Country", name: "United Kingdom" },
+          { "@type": "Country", name: "Australia" },
+          { "@type": "Country", name: "Germany" },
+          { "@type": "Country", name: "France" },
+          { "@type": "Country", name: "Spain" },
+          { "@type": "Country", name: "Japan" },
+        ],
+      },
+      // 4 · FAQPage
+      {
+        "@type": "FAQPage",
+        "@id": globalFaqId,
+        mainEntity: buildFaqJsonLd(faqs).mainEntity,
+      },
+    ],
   };
-  const faqJsonLd = buildFaqJsonLd(faqs);
   return (
     <main className="min-h-screen bg-[#faf9f6] text-[#0a0a0a]">
-      <JsonLd data={[breadcrumbJsonLd, webPageJsonLd, faqJsonLd]} />
+      <JsonLd data={globalGraph} />
       {/* 1 · HERO */}
       <section className="border-b-2 border-[#0a0a0a] bg-[#0a0a0a] text-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">

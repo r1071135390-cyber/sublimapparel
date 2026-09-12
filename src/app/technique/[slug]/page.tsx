@@ -60,73 +60,75 @@ export default async function TechniqueDetailPage({ params }: PageProps) {
 
   const related = getRelatedTechniques(t.related);
 
-  const articleJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: `${t.name} — SublimApparel`,
-    description: t.metaDescription,
-    image: `https://sublimapparel.com${t.heroImage}`,
-    author: {
-      "@type": "Organization",
-      name: "SublimApparel",
-    },
-    publisher: {
-      "@type": "Organization",
-      name: "SublimApparel",
-      logo: {
-        "@type": "ImageObject",
-        url: "https://sublimapparel.com/sublimapparel-logo-v2.webp",
-      },
-    },
-    mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": `https://sublimapparel.com/technique/${t.slug}/`,
-    },
-  };
+  const techUrl = `https://sublimapparel.com/technique/${t.slug}/`;
+  const webpageId = `${techUrl}#webpage`;
+  const breadcrumbId = `${techUrl}#breadcrumb`;
+  const articleId = `${techUrl}#article`;
+  const faqId = `${techUrl}#faq`;
 
-  const breadcrumbJsonLd = {
+  // 2026-09-12 (R46): merge 3 separate JsonLd calls into a single @graph.
+  // Article + BreadcrumbList + FAQPage all cross-linked via @id, with
+  // WebPage anchoring the brand entity graph and mainEntity → FAQPage.
+  const techniqueGraph = {
     "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
+    "@graph": [
+      // 1 · WebPage — anchors the page to the brand entity graph
       {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: "https://sublimapparel.com/",
+        "@type": "WebPage",
+        "@id": webpageId,
+        url: techUrl,
+        name: `${t.name} — SublimApparel`,
+        description: t.metaDescription,
+        inLanguage: "en",
+        isPartOf: { "@id": "https://sublimapparel.com/#website" },
+        about: { "@id": "https://sublimapparel.com/#organization" },
+        mainEntity: { "@id": faqId },
+        speakable: {
+          "@type": "SpeakableSpecification",
+          xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+        },
       },
+      // 2 · Article (the technique guide content node)
       {
-        "@type": "ListItem",
-        position: 2,
-        name: "Technique",
-        item: "https://sublimapparel.com/technique/",
+        "@type": "Article",
+        "@id": articleId,
+        headline: `${t.name} — SublimApparel`,
+        description: t.metaDescription,
+        image: `https://sublimapparel.com${t.heroImage}`,
+        inLanguage: "en",
+        isPartOf: { "@id": webpageId },
+        author: { "@id": "https://sublimapparel.com/#organization" },
+        publisher: { "@id": "https://sublimapparel.com/#organization" },
+        keywords: t.keywords.join(", "),
+        url: techUrl,
       },
+      // 3 · BreadcrumbList
       {
-        "@type": "ListItem",
-        position: 3,
-        name: t.name,
-        item: `https://sublimapparel.com/technique/${t.slug}/`,
+        "@type": "BreadcrumbList",
+        "@id": breadcrumbId,
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: "https://sublimapparel.com/" },
+          { "@type": "ListItem", position: 2, name: "Technique", item: "https://sublimapparel.com/technique/" },
+          { "@type": "ListItem", position: 3, name: t.name, item: techUrl },
+        ],
+      },
+      // 4 · FAQPage
+      {
+        "@type": "FAQPage",
+        "@id": faqId,
+        mainEntity: t.faq.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
       },
     ],
   };
 
-  const faqJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: t.faq.map((f) => ({
-      "@type": "Question",
-      name: f.q,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: f.a,
-      },
-    })),
-  };
-
   return (
     <>
-      <JsonLd data={articleJsonLd} />
-      <JsonLd data={breadcrumbJsonLd} />
-      <JsonLd data={faqJsonLd} />
+      {/* 2026-09-12 (R46): single @graph — WebPage + Article + BreadcrumbList + FAQPage */}
+      <JsonLd data={techniqueGraph} />
 
       <main className="bg-background text-foreground">
         {/* Breadcrumb */}

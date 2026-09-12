@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 
 export const metadata = buildPageMetadata({
     // 2026-09-11 (R15-P0-1): was 68 chars — Google SERP limit ~60. Shortened to 50.
@@ -36,10 +36,6 @@ const breadcrumb = buildBreadcrumbJsonLd([
   { name: "Home", path: "/" },
   { name: "Quality Control Process", path: "/quality-control/" },
 ]);
-
-// 2026-09-11 push (Round 8 part 2): inline FAQ items below are
-// already shown in the FAQ section. We pull them up here so we can
-// generate a matching FAQPage JSON-LD alongside the breadcrumb.
 const qcFaqs = [
   {
     q: "Can I do my own inspection?",
@@ -141,48 +137,84 @@ const defectCategories = [
   },
 ];
 
-export default function QualityControlPage() {
-  // 2026-09-11 push (Round 8 part 2): add WebPage + FAQPage to the
-  // existing breadcrumb so the page is eligible for PAA rich
-  // results and joins the brand entity graph.
-  const webPageJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": "https://sublimapparel.com/quality-control/#webpage",
-    url: "https://sublimapparel.com/quality-control/",
-    name: "4-Step Quality Control Process | SublimApparel",
-    description:
-      "4-stage quality control with AQL 2.5 standard. Pre-production sample, in-line inspection, final random inspection, pre-shipment photo evidence.",
-    inLanguage: "en",
-    isPartOf: { "@id": "https://sublimapparel.com/#website" },
-    about: { "@id": "https://sublimapparel.com/#organization" },
-    primaryImageOfPage: {
-      "@type": "ImageObject",
-      url: "https://sublimapparel.com/about-process-qc.webp",
-    },
-    speakable: {
-      "@type": "SpeakableSpecification",
-      xpath: ["/html/body//h1", "/html/body//section[1]//p"],
-    },
-  };
+// 2026-09-12 (R46): merge 4 separate JsonLd nodes (array of 4
+// was producing 4 scripts) into a single @graph. WebPage anchors
+// the brand entity graph and mainEntity → HowTo (the primary
+// entity on the page). FAQPage + BreadcrumbList cross-link via
+// @id. No Service node — quality control is an editorial/process
+// guide, not a commercial landing, so a Service node would
+// dilute the publisher signal.
+const qcUrl = "https://sublimapparel.com/quality-control/";
+const qcFaqId = `${qcUrl}#faq`;
+const qcHowToId = `${qcUrl}#howto`;
 
-  const faqJsonLd = buildFaqJsonLd(qcFaqs);
-  // 2026-09-11 (R22-C): add HowTo schema for the 4-step QC process.
-  // Each step is timed (T-60, T-30 to T-15, T-7, T-3) so the
-  // totalTime is the production window where these checks happen.
-  const howToJsonLd = buildHowToJsonLd({
-    name: "How we quality-control custom apparel orders",
-    description:
-      "4-stage quality control with AQL 2.5 standard: pre-production sample, in-line inspection, final random inspection, pre-shipment photo evidence.",
-    totalTime: "P60D",
-    steps: steps.map((s) => ({
-      name: `Stage ${s.n}: ${s.title}`,
-      text: `${s.summary} ${s.details.join(" ")}`,
-    })),
-  });
+const qcFaqPayload = {
+  "@type": "FAQPage",
+  "@id": qcFaqId,
+  mainEntity: qcFaqs.map((it) => ({
+    "@type": "Question",
+    name: it.q,
+    acceptedAnswer: { "@type": "Answer", text: it.a },
+  })),
+};
+
+const qcHowToPayload = {
+  "@type": "HowTo",
+  "@id": qcHowToId,
+  name: "How we quality-control custom apparel orders",
+  description:
+    "4-stage quality control with AQL 2.5 standard: pre-production sample, in-line inspection, final random inspection, pre-shipment photo evidence.",
+  totalTime: "P60D",
+  step: steps.map((s, i) => ({
+    "@type": "HowToStep",
+    position: i + 1,
+    name: `Stage ${s.n}: ${s.title}`,
+    text: `${s.summary} ${s.details.join(" ")}`,
+  })),
+};
+
+// 2026-09-12 (R46): convert breadcrumb (legacy { @context, @type }) to
+// a graph-only entry — drop the @context since it lives in the
+// wrapping @graph now.
+const qcBreadcrumbPayload = {
+  "@type": "BreadcrumbList",
+  "@id": `${qcUrl}#breadcrumb`,
+  itemListElement: breadcrumb.itemListElement,
+};
+
+const qcGraph = {
+  "@context": "https://schema.org",
+  "@graph": [
+    qcBreadcrumbPayload,
+    {
+      "@type": "WebPage",
+      "@id": `${qcUrl}#webpage`,
+      url: qcUrl,
+      name: "4-Step Quality Control Process | SublimApparel",
+      description:
+        "4-stage quality control with AQL 2.5 standard. Pre-production sample, in-line inspection, final random inspection, pre-shipment photo evidence.",
+      inLanguage: "en",
+      isPartOf: { "@id": "https://sublimapparel.com/#website" },
+      about: { "@id": "https://sublimapparel.com/#organization" },
+      mainEntity: { "@id": qcHowToId },
+      primaryImageOfPage: {
+        "@type": "ImageObject",
+        url: "https://sublimapparel.com/about-process-qc.webp",
+      },
+      speakable: {
+        "@type": "SpeakableSpecification",
+        xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+      },
+    },
+    qcHowToPayload,
+    qcFaqPayload,
+  ],
+};
+
+export default function QualityControlPage() {
   return (
     <>
-      <JsonLd data={[breadcrumb, webPageJsonLd, faqJsonLd, howToJsonLd]} />
+      <JsonLd data={qcGraph} />
 
       {/* HERO */}
       <section className="relative overflow-hidden border-b border-black/10 bg-[#0a0a0a] py-16 text-white md:py-20">

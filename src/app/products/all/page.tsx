@@ -7,7 +7,7 @@ import { ProductCatalog } from "@/components/product-catalog";
 import { HeroGallery } from "@/components/hero-gallery";
 import { products, allSports, allScenarios } from "@/lib/products-data";
 import { pickHeroImagesWithAlts } from "@/lib/product-images";
-import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
+import { JsonLd } from "@/components/json-ld";
 
 export const metadata = buildPageMetadata({
     title: "100 All-Over Print Products | Apparel by Garment, Sport",
@@ -26,57 +26,88 @@ export const metadata = buildPageMetadata({
     ogImage: "/og/og-products.webp",
   });;
 
-const breadcrumbLd = buildBreadcrumbJsonLd([
-  { name: "Home", path: "/" },
-  { name: "Products", path: "/products/" },
-  { name: "All Products", path: "/products/all/" },
-]);
-
-// 2026-09-11 (R23): add WebPage + ItemList JSON-LD on /products/all/ so
-// the master catalog joins the brand entity graph and Google can render
-// the product grid as an ItemList rich result. The ItemList limits to the
-// first 50 products to keep payload within Google's recommended budget
-// for ItemList rich results (50 entries cap).
-const webPageJsonLd = {
+// 2026-09-12 (R46): merge 3 separate JsonLd calls (array of 3 nodes
+// was producing 3 scripts) into a single @graph. Adds a new Service
+// node for the master catalog with areaServed 8 core DDP countries to
+// reinforce the commercial intent on the top-of-catalog page.
+const productsAllGraph = {
   "@context": "https://schema.org",
-  "@type": "WebPage",
-  "@id": "https://sublimapparel.com/products/all/#webpage",
-  url: "https://sublimapparel.com/products/all/",
-  name: "100 All-Over Print Products | Apparel by Garment, Sport, Scenario",
-  description:
-    "100 all-over print apparel products, cross-filtered by garment type (29), sport (42) and scenario (27). From polyester sublimation to all-over digital print on cotton.",
-  inLanguage: "en",
-  isPartOf: { "@id": "https://sublimapparel.com/#website" },
-  about: { "@id": "https://sublimapparel.com/#organization" },
-  primaryImageOfPage: {
-    "@type": "ImageObject",
-    url: "https://sublimapparel.com/og/og-products.webp",
-  },
-  speakable: {
-    "@type": "SpeakableSpecification",
-    xpath: ["/html/body//h1", "/html/body//section[1]//p"],
-  },
-};
-const itemListJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "ItemList",
-  "@id": "https://sublimapparel.com/products/all/#itemlist",
-  name: "All-Over Print Apparel Catalog",
-  description: `${products.length} all-over print apparel products from SublimApparel.`,
-  numberOfItems: products.length,
-  itemListOrder: "https://schema.org/ItemListUnordered",
-  itemListElement: products.slice(0, 50).map((p, i) => ({
-    "@type": "ListItem",
-    position: i + 1,
-    url: `https://sublimapparel.com/products/all/${p.slug}/`,
-    name: p.name,
-  })),
+  "@graph": [
+    // 1 · BreadcrumbList
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://sublimapparel.com/products/all/#breadcrumb",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://sublimapparel.com/" },
+        { "@type": "ListItem", position: 2, name: "Products", item: "https://sublimapparel.com/products/" },
+        { "@type": "ListItem", position: 3, name: "All Products", item: "https://sublimapparel.com/products/all/" },
+      ],
+    },
+    // 2 · WebPage — anchors the page to the brand entity graph
+    {
+      "@type": "WebPage",
+      "@id": "https://sublimapparel.com/products/all/#webpage",
+      url: "https://sublimapparel.com/products/all/",
+      name: "100 All-Over Print Products | Apparel by Garment, Sport, Scenario",
+      description:
+        "100 all-over print apparel products, cross-filtered by garment type (29), sport (42) and scenario (27). From polyester sublimation to all-over digital print on cotton.",
+      inLanguage: "en",
+      isPartOf: { "@id": "https://sublimapparel.com/#website" },
+      about: { "@id": "https://sublimapparel.com/#organization" },
+      mainEntity: { "@id": "https://sublimapparel.com/products/all/#itemlist" },
+      primaryImageOfPage: {
+        "@type": "ImageObject",
+        url: "https://sublimapparel.com/og/og-products.webp",
+      },
+      speakable: {
+        "@type": "SpeakableSpecification",
+        xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+      },
+    },
+    // 3 · ItemList (capped at 50 per Google carousel rules)
+    {
+      "@type": "ItemList",
+      "@id": "https://sublimapparel.com/products/all/#itemlist",
+      name: "All-Over Print Apparel Catalog",
+      description: `${products.length} all-over print apparel products from SublimApparel.`,
+      numberOfItems: products.length,
+      itemListOrder: "https://schema.org/ItemListUnordered",
+      itemListElement: products.slice(0, 50).map((p, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        url: `https://sublimapparel.com/products/all/${p.slug}/`,
+        name: p.name,
+      })),
+    },
+    // 4 · Service — master catalog B2B service
+    {
+      "@type": "Service",
+      "@id": "https://sublimapparel.com/products/all/#service",
+      name: "SublimApparel Master Catalog — 100 All-Over Print Products",
+      description:
+        "Master product catalog: 100 all-over print apparel products, cross-filtered by garment type, sport, and use case. Polyester sublimation + all-over digital print on cotton. MOQ 50, DDP worldwide.",
+      serviceType: "Custom all-over print apparel manufacturing",
+      url: "https://sublimapparel.com/products/all/",
+      provider: { "@id": "https://sublimapparel.com/#organization" },
+      areaServed: [
+        { "@type": "Country", name: "United States" },
+        { "@type": "Country", name: "Canada" },
+        { "@type": "Country", name: "United Kingdom" },
+        { "@type": "Country", name: "Australia" },
+        { "@type": "Country", name: "Germany" },
+        { "@type": "Country", name: "France" },
+        { "@type": "Country", name: "Spain" },
+        { "@type": "Country", name: "Japan" },
+      ],
+    },
+  ],
 };
 
 export default function AllProductsPage() {
   return (
     <>
-      <JsonLd data={[breadcrumbLd, webPageJsonLd, itemListJsonLd]} />
+      {/* 2026-09-12 (R46): single @graph — BreadcrumbList + WebPage + ItemList + Service */}
+      <JsonLd data={productsAllGraph} />
 
       {/* HERO */}
       <section className="relative overflow-hidden border-b-2 border-black bg-[#0A0A0A] text-white">

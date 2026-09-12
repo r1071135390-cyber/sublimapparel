@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { RequestQuoteLink } from "@/components/request-quote-link";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 import { buildPageMetadata } from "@/lib/page-metadata";
 
 // 2026-09-11 push (Round 4): same fix as /production/ — switch to buildPageMetadata
@@ -28,10 +27,13 @@ export const metadata: Metadata = buildPageMetadata({
   ],
 });
 
-const breadcrumb = buildBreadcrumbJsonLd([
-  { name: "Home", path: "https://sublimapparel.com/" },
-  { name: "Pricing & MOQ", path: "https://sublimapparel.com/pricing/" },
-]);
+// 2026-09-12 (R46): merge 3 separate JsonLd calls (array of 3 nodes
+// was producing 3 scripts) into a single @graph. Adds a new Service
+// node with areaServed 8 core DDP countries to reinforce the
+// commercial intent of the pricing page. Pricing is a key conversion
+// path so the Service + WebPage anchors the brand entity graph.
+const pricingUrl = "https://sublimapparel.com/pricing/";
+const pricingFaqId = `${pricingUrl}#faq`;
 
 const faqItems = [
   {
@@ -66,29 +68,72 @@ const faqItems = [
   },
 ];
 
-const faqJsonLd = buildFaqJsonLd(faqItems);
-
-// 2026-09-11 push (Round 8 part 2): add a WebPage entry so this
-// pricing page joins the brand entity graph.
-const webPageJsonLd = {
+// 2026-09-12 (R46): complete the @graph — BreadcrumbList + WebPage + Service + FAQPage.
+const pricingGraph = {
   "@context": "https://schema.org",
-  "@type": "WebPage",
-  "@id": "https://sublimapparel.com/pricing/#webpage",
-  url: "https://sublimapparel.com/pricing/",
-  name: "Pricing & Cost Calculator for Custom Apparel | SublimApparel",
-  description:
-    "Per-piece price ranges for sublimation, DTG, DTF and embroidery, plus a free cost calculator. MOQ, decoration method, fabric, and quantity all impact the final landed cost.",
-  inLanguage: "en",
-  isPartOf: { "@id": "https://sublimapparel.com/#website" },
-  about: { "@id": "https://sublimapparel.com/#organization" },
-  primaryImageOfPage: {
-    "@type": "ImageObject",
-    url: "https://sublimapparel.com/og/og-home.webp",
-  },
-  speakable: {
-    "@type": "SpeakableSpecification",
-    xpath: ["/html/body//h1", "/html/body//section[1]//p"],
-  },
+  "@graph": [
+    // 1 · BreadcrumbList
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${pricingUrl}#breadcrumb`,
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://sublimapparel.com/" },
+        { "@type": "ListItem", position: 2, name: "Pricing & MOQ", item: pricingUrl },
+      ],
+    },
+    // 2 · WebPage — anchors the page to the brand entity graph
+    {
+      "@type": "WebPage",
+      "@id": `${pricingUrl}#webpage`,
+      url: pricingUrl,
+      name: "Pricing & Cost Calculator for Custom Apparel | SublimApparel",
+      description:
+        "Per-piece price ranges for sublimation, DTG, DTF and embroidery, plus a free cost calculator. MOQ, decoration method, fabric, and quantity all impact the final landed cost.",
+      inLanguage: "en",
+      isPartOf: { "@id": "https://sublimapparel.com/#website" },
+      about: { "@id": "https://sublimapparel.com/#organization" },
+      mainEntity: { "@id": pricingFaqId },
+      primaryImageOfPage: {
+        "@type": "ImageObject",
+        url: "https://sublimapparel.com/og/og-home.webp",
+      },
+      speakable: {
+        "@type": "SpeakableSpecification",
+        xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+      },
+    },
+    // 3 · Service — pricing & quote commercial intent
+    {
+      "@type": "Service",
+      "@id": `${pricingUrl}#service`,
+      name: "Custom Apparel Pricing & MOQ Calculator",
+      description:
+        "Per-unit pricing tiers, MOQ by fabric, what's included in the DDP quote, and what's extra. Per-piece price ranges for sublimation, DTG, DTF and embroidery. MOQ 50 standard.",
+      serviceType: "Custom apparel pricing consultation & DDP quote",
+      url: pricingUrl,
+      provider: { "@id": "https://sublimapparel.com/#organization" },
+      areaServed: [
+        { "@type": "Country", name: "United States" },
+        { "@type": "Country", name: "Canada" },
+        { "@type": "Country", name: "United Kingdom" },
+        { "@type": "Country", name: "Australia" },
+        { "@type": "Country", name: "Germany" },
+        { "@type": "Country", name: "France" },
+        { "@type": "Country", name: "Spain" },
+        { "@type": "Country", name: "Japan" },
+      ],
+    },
+    // 4 · FAQPage
+    {
+      "@type": "FAQPage",
+      "@id": pricingFaqId,
+      mainEntity: faqItems.map((it) => ({
+        "@type": "Question",
+        name: it.q,
+        acceptedAnswer: { "@type": "Answer", text: it.a },
+      })),
+    },
+  ],
 };
 
 const tiers = [
@@ -299,11 +344,8 @@ export default function PricingPage() {
         </section>
       </main>
       <Footer />
-      {/* 2026-09-11 push (Round 8 part 2): consolidate the two
-          separate schema outputs (raw FAQPage script + JsonLd
-          breadcrumb) into a single JsonLd with breadcrumb +
-          WebPage + FAQPage. */}
-      <JsonLd data={[breadcrumb, webPageJsonLd, faqJsonLd]} />
+      {/* 2026-09-12 (R46): single @graph — BreadcrumbList + WebPage + Service + FAQPage. */}
+      <JsonLd data={pricingGraph} />
     </>
   );
 }

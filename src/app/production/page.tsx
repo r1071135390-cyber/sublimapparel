@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { RequestQuoteLink } from "@/components/request-quote-link";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 import { buildPageMetadata } from "@/lib/page-metadata";
 
 // 2026-09-11 push (Round 4): switch from raw `Metadata` to `buildPageMetadata` so the
@@ -33,29 +33,6 @@ const breadcrumb = buildBreadcrumbJsonLd([
   { name: "Home", path: "https://sublimapparel.com/" },
   { name: "Production & lead times", path: "https://sublimapparel.com/production/" },
 ]);
-
-// 2026-09-11 push (Round 8 part 2): add a WebPage entry so this
-// core production page joins the brand entity graph.
-const webPageJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "@id": "https://sublimapparel.com/production/#webpage",
-  url: "https://sublimapparel.com/production/",
-  name: "Production & Lead Times: Calendar, Rush, Holidays | SublimApparel",
-  description:
-    "How long custom apparel takes to produce at SublimApparel: standard lead time, rush options, the PO-to-delivery calendar, and Chinese holiday slowdowns.",
-  inLanguage: "en",
-  isPartOf: { "@id": "https://sublimapparel.com/#website" },
-  about: { "@id": "https://sublimapparel.com/#organization" },
-  primaryImageOfPage: {
-    "@type": "ImageObject",
-    url: "https://sublimapparel.com/og/og-home.webp",
-  },
-  speakable: {
-    "@type": "SpeakableSpecification",
-    xpath: ["/html/body//h1", "/html/body//section[1]//p"],
-  },
-};
 
 const faqItems = [
   {
@@ -90,7 +67,57 @@ const faqItems = [
   },
 ];
 
-const faqJsonLd = buildFaqJsonLd(faqItems);
+// 2026-09-12 (R46): merge 3 separate JsonLd nodes (array of 3
+// was producing 3 scripts) into a single @graph. WebPage anchors
+// the brand entity graph and mainEntity → FAQPage. Production is
+// a process/editorial page — no Service node (would dilute the
+// publisher signal). The 12-step production timeline is editorial
+// UI content; future enhancement opportunity for HowTo schema.
+const productionUrl = "https://sublimapparel.com/production/";
+const productionFaqId = `${productionUrl}#faq`;
+
+const productionGraph = {
+  "@context": "https://schema.org",
+  "@graph": [
+    // 1 · BreadcrumbList (legacy breadcrumb had @context/@type; drop @context since @graph owns it)
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${productionUrl}#breadcrumb`,
+      itemListElement: breadcrumb.itemListElement,
+    },
+    // 2 · WebPage — anchors the page to the brand entity graph
+    {
+      "@type": "WebPage",
+      "@id": `${productionUrl}#webpage`,
+      url: productionUrl,
+      name: "Production & Lead Times: Calendar, Rush, Holidays | SublimApparel",
+      description:
+        "How long custom apparel takes to produce at SublimApparel: standard lead time, rush options, the PO-to-delivery calendar, and Chinese holiday slowdowns.",
+      inLanguage: "en",
+      isPartOf: { "@id": "https://sublimapparel.com/#website" },
+      about: { "@id": "https://sublimapparel.com/#organization" },
+      mainEntity: { "@id": productionFaqId },
+      primaryImageOfPage: {
+        "@type": "ImageObject",
+        url: "https://sublimapparel.com/og/og-home.webp",
+      },
+      speakable: {
+        "@type": "SpeakableSpecification",
+        xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+      },
+    },
+    // 3 · FAQPage
+    {
+      "@type": "FAQPage",
+      "@id": productionFaqId,
+      mainEntity: faqItems.map((it) => ({
+        "@type": "Question",
+        name: it.q,
+        acceptedAnswer: { "@type": "Answer", text: it.a },
+      })),
+    },
+  ],
+};
 
 const steps = [
   { day: "Day 0", title: "PO & deposit", desc: "Order confirmed, 30% deposit received" },
@@ -261,12 +288,8 @@ export default function ProductionPage() {
         </section>
       </main>
       <Footer />
-      {/* 2026-09-12 (R45): Fixed — productionHowToJsonLd was a leftover reference
-      // from a copy-paste error (quality-control page has howToJsonLd; this page
-      // never defined it). Removed the undefined variable. The page retains its
-      // 12-step production timeline as editorial UI content; HowTo rich-result
-      // qualification is a future enhancement opportunity. */}
-      <JsonLd data={[breadcrumb, webPageJsonLd, faqJsonLd]} />
+      {/* 2026-09-12 (R46): single @graph — BreadcrumbList + WebPage + FAQPage. */}
+      <JsonLd data={productionGraph} />
     </>
   );
 }

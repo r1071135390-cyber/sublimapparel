@@ -4,7 +4,6 @@ import { ArrowRight, Shirt, Trophy, Briefcase } from "lucide-react";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { ALL_TAGS, getAllTagSlugs, type TagDimension } from "@/lib/tag-archive";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 
 export const dynamic = "force-static";
 
@@ -78,35 +77,81 @@ export default function TagIndexPage() {
     if (tagItems.length >= 50) break;
   }
 
-  const collectionPage = {
+  // 2026-09-12 (R46): merge 2 separate JsonLd calls into a single @graph.
+  // Adds BreadcrumbList + CollectionPage + WebPage + Service (catalog
+  // browse service) with proper @id anchoring to the brand entity graph.
+  const tagGraph = {
     "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    "@id": "https://sublimapparel.com/tag/#collection",
-    url: "https://sublimapparel.com/tag/",
-    name: "Browse Custom Apparel by Tag",
-    description:
-      "Browse our custom sublimation and all-over-print apparel by category, sport, and use case. T-shirts, hoodies, race jerseys, esports, team kits, and more.",
-    inLanguage: "en",
-    isPartOf: { "@id": "https://sublimapparel.com/#website" },
-    about: { "@id": "https://sublimapparel.com/#organization" },
-    provider: { "@id": "https://sublimapparel.com/#organization" },
-    mainEntity: {
-      "@type": "ItemList",
-      numberOfItems: totalTags,
-      itemListOrder: "https://schema.org/ItemListOrderAscending",
-      itemListElement: tagItems,
-    },
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://sublimapparel.com/tag/#breadcrumb",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: "https://sublimapparel.com/" },
+          { "@type": "ListItem", position: 2, name: "Browse by Tag", item: "https://sublimapparel.com/tag/" },
+        ],
+      },
+      {
+        "@type": "CollectionPage",
+        "@id": "https://sublimapparel.com/tag/#collection",
+        url: "https://sublimapparel.com/tag/",
+        name: "Browse Custom Apparel by Tag",
+        description:
+          "Browse our custom sublimation and all-over-print apparel by category, sport, and use case. T-shirts, hoodies, race jerseys, esports, team kits, and more.",
+        inLanguage: "en",
+        isPartOf: { "@id": "https://sublimapparel.com/#website" },
+        about: { "@id": "https://sublimapparel.com/#organization" },
+        provider: { "@id": "https://sublimapparel.com/#organization" },
+        mainEntity: {
+          "@type": "ItemList",
+          numberOfItems: totalTags,
+          itemListOrder: "https://schema.org/ItemListOrderAscending",
+          itemListElement: tagItems,
+        },
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/tag/#webpage",
+        url: "https://sublimapparel.com/tag/",
+        name: "Browse Custom Apparel by Tag | SublimApparel",
+        description:
+          "Browse our custom sublimation and all-over-print apparel by category, sport, and use case.",
+        inLanguage: "en",
+        isPartOf: { "@id": "https://sublimapparel.com/#website" },
+        about: { "@id": "https://sublimapparel.com/#organization" },
+        mainEntity: { "@id": "https://sublimapparel.com/tag/#collection" },
+        speakable: {
+          "@type": "SpeakableSpecification",
+          xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+        },
+      },
+      {
+        "@type": "Service",
+        "@id": "https://sublimapparel.com/tag/#service",
+        name: "Browse Custom Apparel Catalog by Tag",
+        description:
+          "B2B custom apparel catalog browser. Browse by garment type, sport, or use case to find the right sublimation or all-over-print product for your project.",
+        serviceType: "Custom apparel catalog browsing & discovery",
+        url: "https://sublimapparel.com/tag/",
+        provider: { "@id": "https://sublimapparel.com/#organization" },
+        areaServed: [
+          { "@type": "Country", name: "United States" },
+          { "@type": "Country", name: "Canada" },
+          { "@type": "Country", name: "United Kingdom" },
+          { "@type": "Country", name: "Australia" },
+          { "@type": "Country", name: "Germany" },
+          { "@type": "Country", name: "France" },
+          { "@type": "Country", name: "Spain" },
+          { "@type": "Country", name: "Japan" },
+        ],
+      },
+    ],
   };
 
   return (
     <main className="bg-background text-foreground">
-      <JsonLd
-        data={buildBreadcrumbJsonLd([
-          { name: "Home", path: "/" },
-          { name: "Browse by Tag", path: "/tag" },
-        ])}
-      />
-      <JsonLd data={collectionPage} />
+      {/* 2026-09-12 (R46): single @graph — BreadcrumbList + CollectionPage + WebPage + Service */}
+      <JsonLd data={tagGraph} />
       <section className="border-b border-border bg-muted/30 py-16 md:py-24">
         <div className="mx-auto max-w-6xl px-6">
           <p className="text-sm font-semibold uppercase tracking-wider text-primary">

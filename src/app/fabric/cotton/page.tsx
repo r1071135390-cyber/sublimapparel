@@ -5,7 +5,6 @@ import Link from "next/link";
 import { ArrowRight, Check, Leaf, Droplets, Shirt, Sparkles, Layers, Recycle, ScanLine, Scissors, Palette, Ruler } from "lucide-react";
 import { cottonFabrics } from "@/lib/fabric-data";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 
 // 2026-09-11 push (Round 4): add BreadcrumbList JSON-LD so Google can render
 // rich breadcrumb crumbs in SERP for /fabric/cotton/ — improves CTR vs the
@@ -96,7 +95,8 @@ const products = [
 export default function CottonPage() {
   return (
     <>
-      <JsonLd data={[breadcrumbJsonLd, webPageJsonLd]} />
+      {/* 2026-09-12 (R46): single @graph — BreadcrumbList + WebPage + Service */}
+      <JsonLd data={cottonGraph} />
       <main>
       {/* HERO */}
       <section className="border-b-2 border-black bg-white">

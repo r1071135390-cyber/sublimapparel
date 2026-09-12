@@ -28,7 +28,6 @@ import { products, type Product } from "@/lib/products-data";
 import { tagArchiveLink } from "@/lib/tag-utils";
 import { getProductImages } from "@/lib/product-images";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
 import {
   filterReviewsForIndustry,
   hasAggregateableReviews,

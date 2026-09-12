@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 
 export const metadata = buildPageMetadata({
     title: "90-Day Custom Apparel Production Program | 2-Phase Model",
@@ -39,10 +39,6 @@ const breadcrumb = buildBreadcrumbJsonLd([
   { name: "Home", path: "/" },
   { name: "90-Day Production Program", path: "/90-day-program/" },
 ]);
-
-// 2026-09-11 push (Round 8 part 2): pulled up to a constant so the
-// inline FAQ section can map the same items into the body and we can
-// emit a matching FAQPage JSON-LD.
 const programFaqs = [
   {
     q: "What if I'm under 60 days out?",
@@ -150,35 +146,62 @@ const comparisonRows = [
   },
 ];
 
-export default function NinetyDayProgramPage() {
-  // 2026-09-11 push (Round 8 part 2): add WebPage + FAQPage JSON-LD
-  // to the existing breadcrumb so the page is eligible for PAA rich
-  // results and joins the brand entity graph.
-  const webPageJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": "https://sublimapparel.com/90-day-program/#webpage",
-    url: "https://sublimapparel.com/90-day-program/",
-    name: "90-Day Custom Apparel Production Program | SublimApparel",
-    description:
-      "Reserve early, lock late. 2-Phase Production Model designed for events, corporate, and brand apparel with deadlines.",
-    inLanguage: "en",
-    isPartOf: { "@id": "https://sublimapparel.com/#website" },
-    about: { "@id": "https://sublimapparel.com/#organization" },
-    primaryImageOfPage: {
-      "@type": "ImageObject",
-      url: "https://sublimapparel.com/og/og-home.webp",
-    },
-    speakable: {
-      "@type": "SpeakableSpecification",
-      xpath: ["/html/body//h1", "/html/body//section[1]//p"],
-    },
-  };
+// 2026-09-12 (R46): merge 3 separate JsonLd nodes (array of 3
+// was producing 3 scripts) into a single @graph. WebPage anchors
+// the brand entity graph and mainEntity → FAQPage. No Service
+// node — the 90-day program page is editorial/program content,
+// not a commercial landing, so a Service node would dilute the
+// publisher signal.
+const programUrl = "https://sublimapparel.com/90-day-program/";
+const programFaqId = `${programUrl}#faq`;
 
-  const faqJsonLd = buildFaqJsonLd(programFaqs);
+const programGraph = {
+  "@context": "https://schema.org",
+  "@graph": [
+    // 1 · BreadcrumbList
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${programUrl}#breadcrumb`,
+      itemListElement: breadcrumb.itemListElement,
+    },
+    // 2 · WebPage — anchors the page to the brand entity graph
+    {
+      "@type": "WebPage",
+      "@id": `${programUrl}#webpage`,
+      url: programUrl,
+      name: "90-Day Custom Apparel Production Program | SublimApparel",
+      description:
+        "Reserve early, lock late. 2-Phase Production Model designed for events, corporate, and brand apparel with deadlines.",
+      inLanguage: "en",
+      isPartOf: { "@id": "https://sublimapparel.com/#website" },
+      about: { "@id": "https://sublimapparel.com/#organization" },
+      mainEntity: { "@id": programFaqId },
+      primaryImageOfPage: {
+        "@type": "ImageObject",
+        url: "https://sublimapparel.com/og/og-home.webp",
+      },
+      speakable: {
+        "@type": "SpeakableSpecification",
+        xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+      },
+    },
+    // 3 · FAQPage
+    {
+      "@type": "FAQPage",
+      "@id": programFaqId,
+      mainEntity: programFaqs.map((it) => ({
+        "@type": "Question",
+        name: it.q,
+        acceptedAnswer: { "@type": "Answer", text: it.a },
+      })),
+    },
+  ],
+};
+
+export default function NinetyDayProgramPage() {
   return (
     <>
-      <JsonLd data={[breadcrumb, webPageJsonLd, faqJsonLd]} />
+      <JsonLd data={programGraph} />
 
       {/* HERO */}
       <section className="border-b border-black/10 bg-[#0a0a0a] py-16 text-white md:py-20">

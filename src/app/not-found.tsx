@@ -31,50 +31,71 @@ const breadcrumbJsonLd = buildBreadcrumbJsonLd([
   { name: "Page Not Found", path: "/404" },
 ]);
 
-const webPageJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "@id": "https://sublimapparel.com/404/#webpage",
-  url: "https://sublimapparel.com/404/",
-  name: "Page Not Found — SublimApparel",
-  description:
-    "The page you were looking for has moved or no longer exists. Browse our catalog, fabric library, or contact us.",
-  inLanguage: "en",
-  isPartOf: { "@id": "https://sublimapparel.com/#website" },
-  about: { "@id": "https://sublimapparel.com/#organization" },
-  speakable: {
-    "@type": "SpeakableSpecification",
-    xpath: ["/html/body//h1", "/html/body//section[1]//p"],
-  },
-};
+// 2026-09-12 (R46): merge 3 separate JsonLd nodes (array of 3
+// was producing 3 scripts) into a single @graph. WebPage anchors
+// the brand entity graph and mainEntity → FAQPage. The 404 page
+// is noindex, follow but emits complete structured data as a
+// defensive measure (prevents Google soft-404 penalty if it crawls
+// here).
+const notFoundUrl = "https://sublimapparel.com/404/";
+const notFoundFaqId = `${notFoundUrl}#faq`;
 
-const notFoundFaqJsonLd = {
+const notFoundGraph = {
   "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: [
+  "@graph": [
+    // 1 · BreadcrumbList
     {
-      "@type": "Question",
-      name: "What happened to the page I was looking for?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "The page may have been moved, renamed, or is no longer in our catalog. Our most-visited sections are below — try one of those, or contact us if you need a specific product or quote.",
+      "@type": "BreadcrumbList",
+      "@id": `${notFoundUrl}#breadcrumb`,
+      itemListElement: breadcrumbJsonLd.itemListElement,
+    },
+    // 2 · WebPage — anchors the page to the brand entity graph
+    {
+      "@type": "WebPage",
+      "@id": `${notFoundUrl}#webpage`,
+      url: notFoundUrl,
+      name: "Page Not Found — SublimApparel",
+      description:
+        "The page you were looking for has moved or no longer exists. Browse our catalog, fabric library, or contact us.",
+      inLanguage: "en",
+      isPartOf: { "@id": "https://sublimapparel.com/#website" },
+      about: { "@id": "https://sublimapparel.com/#organization" },
+      mainEntity: { "@id": notFoundFaqId },
+      speakable: {
+        "@type": "SpeakableSpecification",
+        xpath: ["/html/body//h1", "/html/body//section[1]//p"],
       },
     },
+    // 3 · FAQPage
     {
-      "@type": "Question",
-      name: "How do I find a specific product on SublimApparel?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Use the Products menu in the top navigation to browse 100+ all-over-print apparel items by garment, sport, or scenario. The Fabric menu has 60+ fabric types with detailed specs. For a custom quote, the Get a Quote page collects everything we need in 2 minutes.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Can I still contact the factory about an old order or quote?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Yes. Email sales@sublimapparel.com or use the WhatsApp button (US/UK/EU/AU/CA numbers on /contact/) with your PO number, inquiry date, or design file. We respond within 1 business day.",
-      },
+      "@type": "FAQPage",
+      "@id": notFoundFaqId,
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "What happened to the page I was looking for?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "The page may have been moved, renamed, or is no longer in our catalog. Our most-visited sections are below — try one of those, or contact us if you need a specific product or quote.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How do I find a specific product on SublimApparel?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Use the Products menu in the top navigation to browse 100+ all-over-print apparel items by garment, sport, or scenario. The Fabric menu has 60+ fabric types with detailed specs. For a custom quote, the Get a Quote page collects everything we need in 2 minutes.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Can I still contact the factory about an old order or quote?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes. Email sales@sublimapparel.com or use the WhatsApp button (US/UK/EU/AU/CA numbers on /contact/) with your PO number, inquiry date, or design file. We respond within 1 business day.",
+          },
+        },
+      ],
     },
   ],
 };
@@ -82,7 +103,7 @@ const notFoundFaqJsonLd = {
 export default function NotFound() {
   return (
     <>
-      <JsonLd data={[breadcrumbJsonLd, webPageJsonLd, notFoundFaqJsonLd]} />
+      <JsonLd data={notFoundGraph} />
       <main className="min-h-screen bg-[#faf9f6] text-[#0a0a0a]">
         {/* HERO */}
         <section className="border-b-2 border-[#0a0a0a] bg-[#0a0a0a] text-[#faf9f6]">
