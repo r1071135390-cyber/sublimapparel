@@ -1309,6 +1309,90 @@ export type AboutInput = {
   };
 };
 
+// ---------------------------------------------------------------------------
+// R42: Shared helper for all /about/ sub-pages (cases / factory / faq /
+// production / quality). All share the same 2–3 node pattern:
+//   WebPage + BreadcrumbList [+ optional FAQPage]
+// The helper anchors every node via @id so Google can join them to the
+// global #organization + #website entity graph in a single parse pass.
+// ---------------------------------------------------------------------------
+export type AboutSubPageInput = {
+  /** e.g. "Cases" or "Factory" — used to derive the page URL. */
+  subPage: string;
+  /** Canonical page title from the page's <title> tag. */
+  name: string;
+  /** Meta description from the page. */
+  description: string;
+  /** Breadcrumb trail (excluding Home which is handled by the helper). */
+  breadcrumb: { name: string; path: string }[];
+  /** Optional FAQ items rendered inline on the page. Omit to skip FAQPage. */
+  faq?: FaqItem[];
+};
+
+export function buildAboutSubPageGraph(input: AboutSubPageInput) {
+  const url = `${SITE_URL}/about/${input.subPage}/`;
+  const webpageId = `${url}#webpage`;
+  const breadcrumbId = `${url}#breadcrumb`;
+  const faqId = input.faq && input.faq.length > 0 ? `${url}#faq` : null;
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      // 1 · WebPage — anchors all other entities to this page
+      {
+        "@type": "WebPage",
+        "@id": webpageId,
+        url,
+        name: input.name,
+        description: input.description,
+        inLanguage: "en",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        about: { "@id": `${SITE_URL}/#organization` },
+        ...(faqId
+          ? { mainEntity: { "@id": faqId } }
+          : {
+              speakable: {
+                "@type": "SpeakableSpecification",
+                xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+              },
+            }),
+      },
+      // 2 · BreadcrumbList
+      {
+        "@type": "BreadcrumbList",
+        "@id": breadcrumbId,
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+          { "@type": "ListItem", position: 2, name: "About", item: `${SITE_URL}/about/` },
+          ...input.breadcrumb.map((crumb, i) => ({
+            "@type": "ListItem",
+            position: i + 3,
+            name: crumb.name,
+            item: `${SITE_URL}${crumb.path.replace(/^\//, "")}`,
+          })),
+        ],
+      },
+      // 3 · FAQPage (conditional)
+      ...(faqId
+        ? [
+            {
+              "@type": "FAQPage",
+              "@id": faqId,
+              mainEntity: input.faq!.map((it) => ({
+                "@type": "Question",
+                name: it.q,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: it.a,
+                },
+              })),
+            },
+          ]
+        : []),
+    ],
+  };
+}
+
 export function buildAboutGraph(input: AboutInput) {
   const url = `${SITE_URL}/about/`;
   const webpageId = `${url}#webpage`;

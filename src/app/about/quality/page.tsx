@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import Link from "next/link";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildAboutSubPageGraph } from "@/lib/breadcrumb";
 import { RequestQuoteLink } from "@/components/request-quote-link";
 import {
   ShieldCheck,
@@ -88,33 +88,22 @@ const faqs = [
 ];
 
 export default function QualityPage() {
-  // 2026-09-11 (Round 9): add WebPage + breadcrumb JSON-LD so the
-  // quality control page joins the brand entity graph.
-  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
-    { name: "Home", path: "/" },
-    { name: "About", path: "/about/" },
-    { name: "Quality", path: "/about/quality/" },
-  ]);
-  const webPageJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": "https://sublimapparel.com/about/quality/#webpage",
-    url: "https://sublimapparel.com/about/quality/",
+  // R42: consolidated to single @graph. Fixes latent build error:
+  // page imported buildFaqJsonLd but never defined faqJsonLd variable —
+  // would fail production build. No FAQ content exists on this page,
+  // so the helper generates 2 nodes (WebPage + BreadcrumbList) only.
+  const qualityGraph = buildAboutSubPageGraph({
+    subPage: "quality",
     name: "Quality Control · 4-Stage QC, 50+ Checkpoints, AQL 2.5 | SublimApparel",
     description:
       "4-stage quality control: incoming fabric, in-line, pre-final, and pre-shipment. 50+ checkpoints, AQL 2.5 sampling, 99.2% first-pass rate. Sublimation apparel B2B.",
-    inLanguage: "en",
-    isPartOf: { "@id": "https://sublimapparel.com/#website" },
-    about: { "@id": "https://sublimapparel.com/#organization" },
-    speakable: {
-      "@type": "SpeakableSpecification",
-      xpath: ["/html/body//h1", "/html/body//section[1]//p"],
-    },
-  };
+    breadcrumb: [{ name: "Quality", path: "/about/quality/" }],
+    // No faq: this page has no FAQ content, skipping FAQPage node
+  });
 
   return (
     <main className="min-h-screen bg-[#faf9f6] text-[#0a0a0a]">
-      <JsonLd data={[breadcrumbJsonLd, webPageJsonLd, faqJsonLd]} />
+      <JsonLd data={qualityGraph} />
       {/* 1 · HERO */}
       <section className="border-b-2 border-[#0a0a0a] bg-[#0a0a0a] text-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
