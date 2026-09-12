@@ -3,7 +3,7 @@ import { buildPageMetadata } from "@/lib/page-metadata";
 import Link from "next/link";
 import { ArrowRight, MapPin } from "lucide-react";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
+import { buildUsWarehouseGraph } from "@/lib/breadcrumb";
 
 export const metadata = buildPageMetadata({
     // 2026-09-11 push (Round 5): expanded description from 64 → 152 chars so it
@@ -18,28 +18,25 @@ export const metadata = buildPageMetadata({
     robots: { index: true, follow: true },
   });;
 
-const usWarehouseData = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  name: "US Buffer-Storage Address · Honest Note",
-  description:
-    "An honest note about our US warehouse address in Fontana, CA. It's a placeholder service for occasional overstock buffer storage — not a standard feature.",
-};
-
-// 2026-09-11 fix (Round 4 follow-up): wire up buildBreadcrumbJsonLd that was
-// imported but never invoked — Next.js 16 strict ESLint fails build on
-// unused imports, which was killing the Cloudflare Pages deploy.
-const breadcrumbJsonLd = buildBreadcrumbJsonLd([
-  { name: "Home", path: "/" },
-  { name: "Shipping", path: "/shipping/" },
-  { name: "US Warehouse", path: "/shipping/us-warehouse/" },
-]);
-
 export default function UsWarehousePage() {
+  // 2026-09-12 (R41): consolidate the 2 separate <JsonLd> calls
+  // (BreadcrumbList + bare WebPage with no @context/@id/isPartOf)
+  // into a single @graph via buildUsWarehouseGraph. The new graph:
+  //   - fixes the WebPage node to include @context, @id, isPartOf
+  //     #website, and about #organization (the pre-R41 usWarehouseData
+  //     was missing all three — Google couldn't join it to the
+  //     brand entity graph at all)
+  //   - Both nodes properly @id-anchored in a single @graph
+  const warehouseGraph = buildUsWarehouseGraph({
+    breadcrumb: [
+      { name: "Home", path: "/" },
+      { name: "Shipping", path: "/shipping/" },
+      { name: "US Warehouse", path: "/shipping/us-warehouse/" },
+    ],
+  });
   return (
     <main className="bg-white text-[#0a0a0a]">
-      <JsonLd data={breadcrumbJsonLd} />
-      <JsonLd data={usWarehouseData} />
+      <JsonLd data={warehouseGraph} />
 
       {/* HERO — brutally honest */}
       <section className="border-b-2 border-black bg-[#0a0a0a] text-white">

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ChevronRight, MessageCircle, Clock, Package, Truck, Shield } from "lucide-react";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildYiwuWhatsappGraph } from "@/lib/breadcrumb";
 
 export const metadata = buildPageMetadata({
   title: "Yiwu Factory WhatsApp — +86-198-1793-0190 | 1-Day Reply",
@@ -31,138 +31,51 @@ const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER.replace(/\D/g, "")}?text=
 )}`;
 
 export default function YiwuFactoryWhatsappPage() {
-  const breadcrumb = buildBreadcrumbJsonLd([
-    { name: "Home", path: "/" },
-    { name: "Contact", path: "/contact" },
-    { name: "Yiwu Factory WhatsApp", path: "/yiwu-factory-whatsapp" },
-  ]);
-
-  // 2026-09-11 push (Round 8 part 1): upgrade Service to a richer node
-  // with @id, hasOfferCatalog, and areaServed as Country array, plus
-  // add a WebPage JSON-LD so the page is eligible for sitelinks +
-  // speakable + cross-page entity linking. The previous Service was
-  // minimal (no @id, areaServed as a string, no offers catalog) which
-  // meant Google couldn't tie it back to the global Organization
-  // entity. Now the page is a real, queryable contact surface.
-  const serviceJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "@id": "https://sublimapparel.com/yiwu-factory-whatsapp/#service",
-    name: "Direct WhatsApp Line to the Yiwu Factory",
-    serviceType: "Direct WhatsApp contact with the Yiwu production team for custom sublimated and all-over print apparel, MOQ 50 pcs, DDP shipping to 100+ countries",
-    category: "B2B Apparel Manufacturing — Direct Factory Contact",
-    provider: { "@id": "https://sublimapparel.com/#organization" },
-    // Link to the actual brick-and-mortar LocalBusiness so Google can
-    // match "Yiwu factory WhatsApp" queries to a verified location
-    // and surface the tap-to-call affordance in the knowledge panel.
-    areaServed: [
-      { "@type": "Country", name: "United States" },
-      { "@type": "Country", name: "Canada" },
-      { "@type": "Country", name: "United Kingdom" },
-      { "@type": "Country", name: "Australia" },
-      { "@type": "Country", name: "New Zealand" },
-      { "@type": "Country", name: "Germany" },
-      { "@type": "Country", name: "France" },
-      { "@type": "Country", name: "Spain" },
-      { "@type": "Country", name: "Mexico" },
-      { "@type": "Country", name: "Brazil" },
-      { "@type": "Country", name: "Japan" },
+  // 2026-09-12 (R41): consolidate the 4 separate <JsonLd> calls
+  // (BreadcrumbList + Service + WebPage + FAQPage) into a single
+  // @graph payload via buildYiwuWhatsappGraph. The new graph:
+  //   - joins WebPage #webpage (mainEntity round-trip to Service
+  //     #service), Service #service (areaServed 11 countries +
+  //     CommunicateAction for tap-to-call affordance), FAQPage
+  //     #faq, and BreadcrumbList into a single @graph with all
+  //     @id cross-linking
+  //   - All 4 pre-R41 <JsonLd> calls replaced by 1 single call
+  const whatsappGraph = buildYiwuWhatsappGraph({
+    breadcrumb: [
+      { name: "Home", path: "/" },
+      { name: "Contact", path: "/contact" },
+      { name: "Yiwu Factory WhatsApp", path: "/yiwu-factory-whatsapp" },
     ],
-    description:
-      "Direct WhatsApp line (+86 198 1793 0190) to the SublimApparel production team in Yiwu, China. Custom sublimated and all-over print apparel, MOQ 50 pcs, DDP shipping to 100+ countries, average reply under 1 business day.",
-    offers: {
-      "@type": "AggregateOffer",
-      priceCurrency: "USD",
-      lowPrice: 6,
-      highPrice: 55,
-      priceRange: "$6–$55",
-      offerCount: 6,
-      availability: "https://schema.org/InStock",
-    },
-    url: "https://sublimapparel.com/yiwu-factory-whatsapp/",
-    // Same-day-or-next-business-day WhatsApp reply SLO as a
-    // `potentialAction` so Google can render the contact affordance
-    // consistently with the Yiwu LocalBusiness node.
-    potentialAction: {
-      "@type": "CommunicateAction",
-      target: "https://wa.me/8619817930190",
-      name: "Message the Yiwu factory on WhatsApp",
-    },
-  };
-
-  // 2026-09-11 push (Round 8 part 1): WebPage JSON-LD for the
-  // WhatsApp landing page. Adds the page into the site entity graph
-  // and exposes `speakable` so voice-search "what is the SublimApparel
-  // WhatsApp number" gets a direct verbatim answer from the page's
-  // hero copy.
-  const webPageJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": "https://sublimapparel.com/yiwu-factory-whatsapp/#webpage",
-    url: "https://sublimapparel.com/yiwu-factory-whatsapp/",
-    name: "Yiwu Factory WhatsApp — +86-198-1793-0190 | SublimApparel",
-    description:
-      "Message the SublimApparel Yiwu factory direct on WhatsApp +86 198 1793 0190. Custom sublimated apparel, MOQ 50 pcs, DDP shipping to 100+ countries, US warehouse in Fontana CA. Real production managers reply within 1 business day.",
-    inLanguage: "en",
-    isPartOf: { "@id": "https://sublimapparel.com/#website" },
-    about: { "@id": "https://sublimapparel.com/#organization" },
-    mainEntity: { "@id": "https://sublimapparel.com/yiwu-factory-whatsapp/#service" },
-    primaryImageOfPage: {
-      "@type": "ImageObject",
-      url: "https://sublimapparel.com/contact-hero.webp",
-    },
-    significantLink: [
-      "https://sublimapparel.com/contact/",
-      "https://sublimapparel.com/get-a-quote/",
-      "https://sublimapparel.com/shipping/us-warehouse/",
+    faq: [
+      {
+        q: "Is +86-198-1793-0190 a real Yiwu factory WhatsApp number?",
+        a: "Yes. +86 198 1793 0190 is the direct WhatsApp line of SublimApparel's Yiwu production team. The number is registered on a corporate account, the line is monitored Monday–Saturday 08:00–22:00 China Standard Time, and a real production manager (not a chatbot) replies. You can also email info@sublimapparel.com or use the form on /contact/.",
+      },
+      {
+        q: "Can I message the factory direct without signing up?",
+        a: "Yes. No account, no form, no portal — send a WhatsApp with your product type, quantity, target delivery country, and deadline. The first reply usually comes within 1 business day with a mockup + landed DDP quote. If you already have tech packs or reference photos, attach them on the first message to save a round-trip.",
+      },
+      {
+        q: "What's the minimum order quantity (MOQ) for sublimated apparel?",
+        a: "MOQ is 50 pieces per design for cut-and-sew sublimation on polyester, and 30 pieces per design on re-orders. For DTG on 100% cotton, MOQ is 30 pieces per design. We can do trial runs of 5–10 pieces for samples before committing to bulk.",
+      },
+      {
+        q: "Do you ship DDP (delivered duty paid) to my country?",
+        a: "Yes — DDP to 100+ countries including US, UK, EU, AU, CA, LATAM, MENA, and most of SE Asia. The quote you receive is the landed cost at your door: production, freight, duties, customs clearance, and last-mile. The only thing not included is local sales tax / VAT on the commercial invoice.",
+      },
+      {
+        q: "How long does a Yiwu-to-USA shipment take?",
+        a: "Standard ocean DDP to US: 18–25 days door-to-door including production (15 days) + ocean + customs + last-mile. Air DDP upgrade: 10–14 days. For urgent restocks we also offer 2–5 day domestic shipping from our Fontana, CA warehouse if we hold buffer stock for your design.",
+      },
+      {
+        q: "What payment terms do you accept for a first order?",
+        a: "First order: 30% T/T deposit on order confirmation, 70% balance before shipment. After 3 successful orders we offer Net 30 for buyers in the US, UK, EU, AU, and CA. We accept T/T (wire), PayPal for small orders (under $5,000), and L/C for orders over $50,000.",
+      },
     ],
-    speakable: {
-      "@type": "SpeakableSpecification",
-      xpath: [
-        "/html/body//h1",
-        "/html/body//section[contains(@class,'hero')]//p",
-      ],
-    },
-    keywords:
-      "Yiwu factory WhatsApp, Yiwu factory contact WhatsApp, sublimation factory WhatsApp number, China apparel factory WhatsApp, +86 198 1793 0190, SublimApparel WhatsApp",
-  };
-
-  // 2026-09-11 push (Round 6): add FAQPage JSON-LD on /yiwu-factory-whatsapp/
-  // to capture PAA-style rich results for the high-exposure query
-  // "Yiwu factory WhatsApp". Each Q is the exact phrasing buyers search.
-  const faqJsonLd = buildFaqJsonLd([
-    {
-      q: "Is +86-198-1793-0190 a real Yiwu factory WhatsApp number?",
-      a: "Yes. +86 198 1793 0190 is the direct WhatsApp line of SublimApparel's Yiwu production team. The number is registered on a corporate account, the line is monitored Monday–Saturday 08:00–22:00 China Standard Time, and a real production manager (not a chatbot) replies. You can also email info@sublimapparel.com or use the form on /contact/.",
-    },
-    {
-      q: "Can I message the factory direct without signing up?",
-      a: "Yes. No account, no form, no portal — send a WhatsApp with your product type, quantity, target delivery country, and deadline. The first reply usually comes within 1 business day with a mockup + landed DDP quote. If you already have tech packs or reference photos, attach them on the first message to save a round-trip.",
-    },
-    {
-      q: "What's the minimum order quantity (MOQ) for sublimated apparel?",
-      a: "MOQ is 50 pieces per design for cut-and-sew sublimation on polyester, and 30 pieces per design on re-orders. For DTG on 100% cotton, MOQ is 30 pieces per design. We can do trial runs of 5–10 pieces for samples before committing to bulk.",
-    },
-    {
-      q: "Do you ship DDP (delivered duty paid) to my country?",
-      a: "Yes — DDP to 100+ countries including US, UK, EU, AU, CA, LATAM, MENA, and most of SE Asia. The quote you receive is the landed cost at your door: production, freight, duties, customs clearance, and last-mile. The only thing not included is local sales tax / VAT on the commercial invoice.",
-    },
-    {
-      q: "How long does a Yiwu-to-USA shipment take?",
-      a: "Standard ocean DDP to US: 18–25 days door-to-door including production (15 days) + ocean + customs + last-mile. Air DDP upgrade: 10–14 days. For urgent restocks we also offer 2–5 day domestic shipping from our Fontana, CA warehouse if we hold buffer stock for your design.",
-    },
-    {
-      q: "What payment terms do you accept for a first order?",
-      a: "First order: 30% T/T deposit on order confirmation, 70% balance before shipment. After 3 successful orders we offer Net 30 for buyers in the US, UK, EU, AU, and CA. We accept T/T (wire), PayPal for small orders (under $5,000), and L/C for orders over $50,000.",
-    },
-  ]);
-
+  });
   return (
     <>
-      <JsonLd data={breadcrumb} />
-      <JsonLd data={serviceJsonLd} />
-      <JsonLd data={webPageJsonLd} />
-      <JsonLd data={faqJsonLd} />
+      <JsonLd data={whatsappGraph} />
 
       <main>
         {/* Hero — WhatsApp CTA front and center */}

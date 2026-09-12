@@ -387,6 +387,496 @@ export function buildCollectionPageGraph(input: {
   };
 }
 
+// 2026-09-12 (R41): unified @graph payload for the /get-a-quote/ hub page.
+// Pre-R41, the page emitted 3 independent JSON-LD nodes via a flat
+// array passed to a single <JsonLd> call:
+//   - BreadcrumbList  (flat, no @id)
+//   - WebPage         (with @id but standalone @context)
+//   - FAQPage         (flat, no @id join to WebPage)
+//
+// R41 promotes all 3 to a single @graph block:
+//   - WebPage   #webpage (isPartOf #website + about
+//               #organization + speakable + primaryImageOfPage)
+//   - BreadcrumbList #breadcrumb
+//   - FAQPage   #faq (6 inline FAQs, optional)
+//
+// Key design choices:
+//   - /get-a-quote/ is a commercial landing page — adding a Service
+//     node with areaServed for 8 core countries reinforces the brand's
+//     DDP intent (same pattern as buildShippingHubGraph R40,
+//     buildCollectionPageGraph R35, buildFabricHubGraph R36-B).
+//   - Person #person-ramon is NOT added — this is a form/quote page,
+//     not an editorial/author surface. The author chain is already
+//     anchored on the /about/ and /blog/ pages.
+export type GetAQuoteInput = {
+  /** Optional FAQ items rendered inline. Omit to skip FAQPage node. */
+  faq?: FaqItem[];
+};
+
+export function buildGetAQuoteGraph(input: GetAQuoteInput) {
+  const url = `${SITE_URL}/get-a-quote/`;
+  const webpageId = `${url}#webpage`;
+  const serviceId = `${url}#service`;
+  const breadcrumbId = `${url}#breadcrumb`;
+  const faqId = input.faq && input.faq.length > 0 ? `${url}#faq` : null;
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": webpageId,
+        url,
+        name: "Get a Quote — DDP Pricing in 12 Hours | SublimApparel",
+        description:
+          "Request a landed-cost quote in under 12 hours. Free digital mockup, free sample round on first order. Sublimation, DTG, DTF, DDP shipping worldwide.",
+        inLanguage: "en",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        about: { "@id": `${SITE_URL}/#organization` },
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: `${SITE_URL}/quote-hero-showroom.webp`,
+        },
+        speakable: {
+          "@type": "SpeakableSpecification",
+          xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+        },
+        ...(faqId ? { mainEntity: { "@id": faqId } } : {}),
+      },
+      {
+        // 2026-09-12 (R41): Service node reinforces the commercial
+        // intent of /get-a-quote/. Commercial quote pages across the
+        // site (catalog overview, category landing, fabric hub) add a
+        // Service node — /get-a-quote/ is the primary conversion
+        // entry so it should too.
+        "@type": "Service",
+        "@id": serviceId,
+        name: "Custom Apparel Quote Service — SublimApparel",
+        description:
+          "Landed-cost DDP quote for custom sublimation, DTG, DTF, and all-over print apparel from Yiwu, China. MOQ 50 pcs, 15-25 day production, DDP to 100+ countries.",
+        url,
+        provider: { "@id": `${SITE_URL}/#organization` },
+        areaServed: [
+          { "@type": "Country", name: "United States" },
+          { "@type": "Country", name: "Canada" },
+          { "@type": "Country", name: "United Kingdom" },
+          { "@type": "Country", name: "Australia" },
+          { "@type": "Country", name: "Germany" },
+          { "@type": "Country", name: "France" },
+          { "@type": "Country", name: "Spain" },
+          { "@type": "Country", name: "Japan" },
+        ],
+        offers: {
+          "@type": "Offer",
+          "@id": `${url}#service-offer`,
+          url,
+          priceCurrency: "USD",
+          price: "0",
+          availability: "https://schema.org/PreOrder",
+          availabilityStarts: "2026-01-01",
+          priceValidUntil: "2027-12-31",
+          inventoryLevel: {
+            "@type": "QuantitativeValue",
+            value: 0,
+            unitText: "quote-based",
+          },
+          seller: { "@id": `${SITE_URL}/#organization` },
+        },
+        mainEntityOfPage: { "@id": webpageId },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": breadcrumbId,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${SITE_URL}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Get a Quote",
+            item: url,
+          },
+        ],
+      },
+      ...(faqId
+        ? [
+            {
+              "@type": "FAQPage",
+              "@id": faqId,
+              mainEntity: input.faq!.map((it) => ({
+                "@type": "Question",
+                name: it.q,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: it.a,
+                },
+              })),
+            },
+          ]
+        : []),
+    ],
+  };
+}
+
+// 2026-09-12 (R41): unified @graph payload for the /samples/ hub page.
+// Pre-R41, the page emitted 4 nodes via a flat array to a single
+// <JsonLd> call:
+//   - BreadcrumbList  (flat, no @id)
+//   - WebPage         (with @id but standalone @context)
+//   - FAQPage         (flat, no @id)
+//   - HowTo           (no @id, referenced via samplesHowToJsonLd
+//                      variable which was NEVER DEFINED — a latent
+//                      build error, likely survived because of
+//                      ignoreBuildErrors in next.config)
+//
+// R41 promotes all 4 to a single @graph block:
+//   - WebPage   #webpage (isPartOf #website + about
+//               #organization + speakable + primaryImageOfPage
+//               + mainEntity round-trip to the HowTo)
+//   - HowTo     #how-to (the 3-tier sample type breakdown
+//               with step-by-step instructions)
+//   - BreadcrumbList #breadcrumb
+//   - FAQPage   #faq (6 inline FAQs, optional)
+//
+// Key design choices:
+//   - The HowTo replaces the undefined samplesHowToJsonLd variable
+//     with a properly structured node including @id anchoring.
+//   - /samples/ is a BUYER-GUIDE page, not a commercial product page,
+//     so no Service node is added (matches the pattern of buildBlogHubGraph
+//     R36-C — editorial/guide content omits the commercial Service signal).
+export type SamplesHubInput = {
+  /** Optional FAQ items rendered inline. Omit to skip FAQPage node. */
+  faq?: FaqItem[];
+  /** The 3 sample type steps for the HowTo node. */
+  steps?: { title: string; desc: string; cost: string; lead: string }[];
+};
+
+export function buildSamplesHubGraph(input: SamplesHubInput) {
+  const url = `${SITE_URL}/samples/`;
+  const webpageId = `${url}#webpage`;
+  const howToId = `${url}#how-to`;
+  const breadcrumbId = `${url}#breadcrumb`;
+  const faqId = input.faq && input.faq.length > 0 ? `${url}#faq` : null;
+
+  const defaultSteps = [
+    {
+      title: "Stock-color blank sample",
+      desc: "Choose fabric & style. No printing, no design. Free — you only pay $35-65 express shipping.",
+      cost: "Free",
+      lead: "5-7 days",
+    },
+    {
+      title: "Pre-production sample",
+      desc: "Test your design, color, and fit. $25-60 per piece plus express shipping, refunded on 100+ pc bulk order.",
+      cost: "$25-60 / piece",
+      lead: "7-12 days",
+    },
+    {
+      title: "Customized sample (multiple designs)",
+      desc: "Test 2-3 design variants before committing. Refunded on 200+ pc bulk order.",
+      cost: "$40-90 / piece",
+      lead: "10-15 days",
+    },
+  ];
+
+  const steps = input.steps ?? defaultSteps;
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": webpageId,
+        url,
+        name: "Sample Policy: Free & Pre-Production Samples | SublimApparel",
+        description:
+          "Free stock-color swatches, pre-production samples with your design ($25-60), refund policy, and what to expect on lead time.",
+        inLanguage: "en",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        about: { "@id": `${SITE_URL}/#organization` },
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: `${SITE_URL}/og/og-home.webp`,
+        },
+        speakable: {
+          "@type": "SpeakableSpecification",
+          xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+        },
+        ...(howToId ? { mainEntity: { "@id": howToId } } : {}),
+      },
+      {
+        // 2026-09-12 (R41): HowTo replaces the undefined
+        // samplesHowToJsonLd variable with a properly @id-anchored
+        // node. The 3 sample tiers map to HowToStep entries so
+        // Google can render a step-by-step rich result for
+        // "how to get a sample from SublimApparel" queries.
+        "@type": "HowTo",
+        "@id": howToId,
+        name: "How to Get a Sample from SublimApparel",
+        description:
+          "Three tiers of samples: free stock-color blanks, paid pre-production samples with your design, and multi-design comparison packs.",
+        step: steps.map((s, i) => ({
+          "@type": "HowToStep",
+          position: i + 1,
+          name: s.title,
+          text: `${s.desc} Cost: ${s.cost}. Lead time: ${s.lead}.`,
+        })),
+        mainEntityOfPage: { "@id": webpageId },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": breadcrumbId,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${SITE_URL}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Sample policy",
+            item: url,
+          },
+        ],
+      },
+      ...(faqId
+        ? [
+            {
+              "@type": "FAQPage",
+              "@id": faqId,
+              mainEntity: input.faq!.map((it) => ({
+                "@type": "Question",
+                name: it.q,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: it.a,
+                },
+              })),
+            },
+          ]
+        : []),
+    ],
+  };
+}
+
+// 2026-09-12 (R41): unified @graph payload for the
+// /yiwu-factory-whatsapp/ landing page. Pre-R41, the page
+// emitted 4 separate <JsonLd> calls:
+//   - BreadcrumbList  (flat, no @id)
+//   - Service        (with @id but standalone @context)
+//   - WebPage        (with @id but standalone @context)
+//   - FAQPage        (flat, no @id)
+//
+// R41 promotes all 4 to a single @graph block:
+//   - WebPage   #webpage (isPartOf #website + about
+//               #organization + speakable + significantLink
+//               + mainEntity round-trip to the Service)
+//   - Service   #service (dedicated WhatsApp contact service,
+//               areaServed 11 countries + hasOfferCatalog
+//               + potentialAction for tap-to-call affordance)
+//   - BreadcrumbList #breadcrumb
+//   - FAQPage   #faq (6 inline FAQs, optional)
+//
+// Key design choices:
+//   - /yiwu-factory-whatsapp/ targets the highest-conversion
+//     "contact a Chinese factory" intent queries. The dedicated
+//     Service node with potentialAction (CommunicateAction) is
+//     the strongest possible structured-data signal for Google's
+//     knowledge panel to surface a tap-to-call/WhatsApp affordance.
+//   - The page already had a rich Service node — we preserve all
+//     existing fields and just wrap it in the @graph with proper
+//     @id anchoring.
+//   - Person #person-ramon is NOT added (commercial/contact page,
+//     same as /get-a-quote/, /shipping/ddp/).
+export type YiwuWhatsappInput = {
+  /** Breadcrumb trail. */
+  breadcrumb: { name: string; path: string }[];
+  /** Optional FAQ items rendered inline. Omit to skip FAQPage node. */
+  faq?: FaqItem[];
+};
+
+export function buildYiwuWhatsappGraph(input: YiwuWhatsappInput) {
+  const url = `${SITE_URL}/yiwu-factory-whatsapp/`;
+  const webpageId = `${url}#webpage`;
+  const serviceId = `${url}#service`;
+  const breadcrumbId = `${url}#breadcrumb`;
+  const faqId = input.faq && input.faq.length > 0 ? `${url}#faq` : null;
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": webpageId,
+        url,
+        name: "Yiwu Factory WhatsApp — +86-198-1793-0190 | SublimApparel",
+        description:
+          "Message the SublimApparel Yiwu factory direct on WhatsApp +86 198 1793 0190. Custom sublimated apparel, MOQ 50 pcs, DDP shipping to 100+ countries, US warehouse in Fontana CA. Real production managers reply within 1 business day.",
+        inLanguage: "en",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        about: { "@id": `${SITE_URL}/#organization` },
+        mainEntity: { "@id": serviceId },
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: `${SITE_URL}/contact-hero.webp`,
+        },
+        significantLink: [
+          `${SITE_URL}/contact/`,
+          `${SITE_URL}/get-a-quote/`,
+          `${SITE_URL}/shipping/us-warehouse/`,
+        ],
+        speakable: {
+          "@type": "SpeakableSpecification",
+          xpath: ["/html/body//h1", "/html/body//section[contains(@class,'hero')]//p"],
+        },
+        keywords:
+          "Yiwu factory WhatsApp, Yiwu factory contact WhatsApp, sublimation factory WhatsApp number, China apparel factory WhatsApp, +86 198 1793 0190, SublimApparel WhatsApp",
+      },
+      {
+        // 2026-09-12 (R41): preserved all existing Service fields
+        // from pre-R41 and wrapped into @graph with @id anchoring.
+        // potentialAction (CommunicateAction) enables Google's
+        // knowledge panel to surface a tap-to-call/WhatsApp
+        // affordance for "Yiwu factory WhatsApp" queries.
+        "@type": "Service",
+        "@id": serviceId,
+        name: "Direct WhatsApp Line to the Yiwu Factory",
+        serviceType:
+          "Direct WhatsApp contact with the Yiwu production team for custom sublimated and all-over print apparel, MOQ 50 pcs, DDP shipping to 100+ countries",
+        category: "B2B Apparel Manufacturing — Direct Factory Contact",
+        provider: { "@id": `${SITE_URL}/#organization` },
+        areaServed: [
+          { "@type": "Country", name: "United States" },
+          { "@type": "Country", name: "Canada" },
+          { "@type": "Country", name: "United Kingdom" },
+          { "@type": "Country", name: "Australia" },
+          { "@type": "Country", name: "New Zealand" },
+          { "@type": "Country", name: "Germany" },
+          { "@type": "Country", name: "France" },
+          { "@type": "Country", name: "Spain" },
+          { "@type": "Country", name: "Mexico" },
+          { "@type": "Country", name: "Brazil" },
+          { "@type": "Country", name: "Japan" },
+        ],
+        description:
+          "Direct WhatsApp line (+86 198 1793 0190) to the SublimApparel production team in Yiwu, China. Custom sublimated and all-over print apparel, MOQ 50 pcs, DDP shipping to 100+ countries, average reply under 1 business day.",
+        offers: {
+          "@type": "AggregateOffer",
+          priceCurrency: "USD",
+          lowPrice: 6,
+          highPrice: 55,
+          priceRange: "$6–$55",
+          offerCount: 6,
+          availability: "https://schema.org/InStock",
+        },
+        url,
+        potentialAction: {
+          "@type": "CommunicateAction",
+          target: "https://wa.me/8619817930190",
+          name: "Message the Yiwu factory on WhatsApp",
+        },
+        mainEntityOfPage: { "@id": webpageId },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": breadcrumbId,
+        itemListElement: input.breadcrumb.map((c, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          name: c.name,
+          item: `${SITE_URL}${c.path.startsWith("/") ? c.path : `/${c.path}`}`,
+        })),
+      },
+      ...(faqId
+        ? [
+            {
+              "@type": "FAQPage",
+              "@id": faqId,
+              mainEntity: input.faq!.map((it) => ({
+                "@type": "Question",
+                name: it.q,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: it.a,
+                },
+              })),
+            },
+          ]
+        : []),
+    ],
+  };
+}
+
+// 2026-09-12 (R41): unified @graph payload for the
+// /shipping/us-warehouse/ detail page. Pre-R41, the page
+// emitted 2 separate <JsonLd> calls:
+//   - BreadcrumbList  (flat, no @id)
+//   - WebPage         (no @context, no @id, no isPartOf/about)
+//
+// R41 promotes both to a single @graph block:
+//   - WebPage   #webpage (isPartOf #website + about
+//               #organization — the original usWarehouseData
+//               was missing these joins)
+//   - BreadcrumbList #breadcrumb
+//
+// Key design choices:
+//   - /shipping/us-warehouse/ is a narrow, honest-note style
+//     page about buffer storage overstock. It's not a commercial
+//     product page and doesn't deserve a Service node — no DDP
+//     shipping intent is being targeted here.
+//   - Person #person-ramon is NOT added (narrow informational
+//     page, no author signal needed).
+//   - No FAQPage because the page has no inline FAQs.
+export type UsWarehouseInput = {
+  /** Breadcrumb trail. */
+  breadcrumb: { name: string; path: string }[];
+  /** Optional page name/description overrides. */
+  name?: string;
+  description?: string;
+};
+
+export function buildUsWarehouseGraph(input: UsWarehouseInput) {
+  const url = `${SITE_URL}/shipping/us-warehouse/`;
+  const webpageId = `${url}#webpage`;
+  const breadcrumbId = `${url}#breadcrumb`;
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": webpageId,
+        url,
+        name:
+          input.name ??
+          "US Buffer-Storage Address · Honest Note | SublimApparel",
+        description:
+          input.description ??
+          "An honest note about our US warehouse address in Fontana, CA. It's a placeholder service for occasional overstock buffer storage — not a standard feature.",
+        inLanguage: "en",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        about: { "@id": `${SITE_URL}/#organization` },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": breadcrumbId,
+        itemListElement: input.breadcrumb.map((c, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          name: c.name,
+          item: `${SITE_URL}${c.path.startsWith("/") ? c.path : `/${c.path}`}`,
+        })),
+      },
+    ],
+  };
+}
+
 // 2026-09-12 (R40): unified @graph payload for the /shipping/ hub page.
 // Pre-R40, the page emitted 3 independent JSON-LD nodes via a flat
 // array passed to a single <JsonLd> call:

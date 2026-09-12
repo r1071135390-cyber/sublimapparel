@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { RequestQuoteLink } from "@/components/request-quote-link";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildSamplesHubGraph } from "@/lib/breadcrumb";
 import { buildPageMetadata } from "@/lib/page-metadata";
 
 // 2026-09-11 push (Round 4): same fix as /production/ — switch to buildPageMetadata
@@ -25,11 +25,6 @@ export const metadata: Metadata = buildPageMetadata({
     "sample lead time",
   ],
 });
-
-const breadcrumb = buildBreadcrumbJsonLd([
-  { name: "Home", path: "https://sublimapparel.com/" },
-  { name: "Sample policy", path: "https://sublimapparel.com/samples/" },
-]);
 
 const faqItems = [
   {
@@ -64,8 +59,6 @@ const faqItems = [
   },
 ];
 
-const faqJsonLd = buildFaqJsonLd(faqItems);
-
 const sampleTypes = [
   {
     title: "Stock-color blank",
@@ -98,36 +91,24 @@ const sampleTypes = [
 ];
 
 export default function SamplesPage() {
-  // 2026-09-11 push (Round 8 part 2): the page already had a FAQPage
-  // raw script + a separate JsonLd breadcrumb, which meant two
-  // BreadcrumbList nodes emitted (Google may ignore one of them).
-  // Consolidate to a single JsonLd with breadcrumb + WebPage +
-  // FAQPage, and drop the raw <script> tag.
-  const webPageJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": "https://sublimapparel.com/samples/#webpage",
-    url: "https://sublimapparel.com/samples/",
-    name: "Sample Policy: Free & Pre-Production Samples | SublimApparel",
-    description:
-      "Free stock-color swatches, pre-production samples with your design ($25-60), refund policy, and what to expect on lead time.",
-    inLanguage: "en",
-    isPartOf: { "@id": "https://sublimapparel.com/#website" },
-    about: { "@id": "https://sublimapparel.com/#organization" },
-    primaryImageOfPage: {
-      "@type": "ImageObject",
-      url: "https://sublimapparel.com/og/og-home.webp",
-    },
-    speakable: {
-      "@type": "SpeakableSpecification",
-      xpath: ["/html/body//h1", "/html/body//section[1]//p"],
-    },
-  };
-
+  // 2026-09-12 (R41): consolidate the 4 nodes (BreadcrumbList +
+  // WebPage + FAQPage + undefined samplesHowToJsonLd — a latent
+  // build error) into a single @graph via buildSamplesHubGraph.
+  // The new graph:
+  //   - joins WebPage #webpage (mainEntity round-trip to HowTo
+  //     #how-to), HowTo #how-to (3 sample tier steps),
+  //     FAQPage #faq, and BreadcrumbList into a single @graph
+  //     with all @id cross-linking
+  //   - HowTo replaces the undefined samplesHowToJsonLd variable
+  //     so the build error is fixed
+  //   - WebPage + mainEntity round-trip to HowTo so Google can
+  //     render a step-by-step rich result for "how to get a
+  //     sample from SublimApparel" queries
+  const samplesGraph = buildSamplesHubGraph({ faq: faqItems });
   return (
     <>
       <Navbar />
-      <JsonLd data={[breadcrumb, webPageJsonLd, faqJsonLd, samplesHowToJsonLd]} />
+      <JsonLd data={samplesGraph} />
       <main className="min-h-screen bg-white text-black">
         <section className="border-b-4 border-black bg-[#f5f5f5] py-20">
           <div className="mx-auto max-w-5xl px-6">

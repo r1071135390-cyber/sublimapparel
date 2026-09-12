@@ -3,7 +3,7 @@ import { buildPageMetadata } from "@/lib/page-metadata";
 import Image from "next/image";
 import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/breadcrumb";
+import { buildGetAQuoteGraph } from "@/lib/breadcrumb";
 import { Check, Clock, FileText, MessageCircle, ArrowRight, Zap } from "lucide-react";
 
 export const metadata = buildPageMetadata({
@@ -85,43 +85,20 @@ const quoteFaqs = [
 ];
 
 export default function GetAQuotePage() {
-  // 2026-09-11 push (Round 8 part 2): add WebPage (speakable) +
-  // FAQPage to the existing breadcrumb so the page is eligible for
-  // PAA rich results and joins the brand entity graph.
-  const webPageJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": "https://sublimapparel.com/get-a-quote/#webpage",
-    url: "https://sublimapparel.com/get-a-quote/",
-    name: "Get a Quote — DDP Pricing in 12 Hours | SublimApparel",
-    description:
-      "Request a landed-cost quote in under 12 hours. Free digital mockup, free sample round on first order. Sublimation, DTG, DTF, DDP shipping worldwide.",
-    inLanguage: "en",
-    isPartOf: { "@id": "https://sublimapparel.com/#website" },
-    about: { "@id": "https://sublimapparel.com/#organization" },
-    primaryImageOfPage: {
-      "@type": "ImageObject",
-      url: "https://sublimapparel.com/quote-hero-showroom.webp",
-    },
-    speakable: {
-      "@type": "SpeakableSpecification",
-      xpath: ["/html/body//h1", "/html/body//section[1]//p"],
-    },
-  };
-
-  const faqJsonLd = buildFaqJsonLd(quoteFaqs);
+  // 2026-09-12 (R41): consolidate the 3 separate JSON-LD nodes
+  // (BreadcrumbList + WebPage + FAQPage — passed as a flat array
+  // to a single <JsonLd> call) into a single @graph payload via
+  // buildGetAQuoteGraph. The new graph:
+  //   - joins WebPage #webpage, Service #service (areaServed 8
+  //     core countries), FAQPage #faq, and BreadcrumbList into
+  //     a single @graph with all @id cross-linking
+  //   - WebPage + mainEntity round-trip to FAQPage so the
+  //     PAA-style rich results on "custom apparel quote" queries
+  //     still resolve
+  const quoteGraph = buildGetAQuoteGraph({ faq: quoteFaqs });
   return (
     <>
-      <JsonLd
-        data={[
-          buildBreadcrumbJsonLd([
-            { name: "Home", path: "/" },
-            { name: "Get a Quote", path: "/get-a-quote" },
-          ]),
-          webPageJsonLd,
-          faqJsonLd,
-        ]}
-      />
+      <JsonLd data={quoteGraph} />
       <main>
       {/* HERO — matches home page hero style: dark background, full-bleed image, gradient overlay, text on top */}
       <section
