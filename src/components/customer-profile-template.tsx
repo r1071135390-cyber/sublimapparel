@@ -53,6 +53,7 @@ import {
   toSchemaReview,
 } from "@/lib/reviews";
 import { Contact } from "@/components/contact";
+import { UnifiedContactCta } from "@/components/unified-contact-cta";
 import type { CustomerProfileData } from "@/lib/customer-profile-data";
 
 import { RelatedProducts } from "@/components/related-products";
@@ -766,6 +767,33 @@ export function CustomerProfilePage({ data }: { data: CustomerProfileData }) {
           </div>
         </section>
       )}
+
+      {/* 2026-09-13 (R61): unified 3-channel CTA inserted
+          before the full <Contact /> form on every
+          /industries/[slug]/ page (the CustomerProfilePage
+          template is shared by all 12 industry pages, so a
+          single edit lights up the same quote-modal /
+          WhatsApp / contact-form trio that /contact/,
+          /pricing/, /samples/, /yiwu-factory-whatsapp/, the
+          shipping hub, the fabric hub, the comparison
+          pages, /cases/, /blog/, the 4 content/FAQ pages,
+          and the rest of the high-intent B2B surfaces now
+          use. This gives industry visitors the same
+          conversion pattern they see on every other page
+          right above the long-form contact form. The
+          industry-specific dark CTA section above is kept
+          — it carries the per-industry ctaTitle / ctaBody /
+          ctaButton copy and remains the primary CTA for
+          buyers who scroll that far. The UnifiedContactCta
+          below adds the canonical /get-a-quote/ +
+          /yiwu-factory-whatsapp/ + /contact/ trio so the
+          conversion path is consistent regardless of which
+          page the visitor lands on. */}
+      <UnifiedContactCta
+        variant="full"
+        sourceLabel={`Industry page — ${industrySlug}`}
+        className="border-t-4 border-black"
+      />
 
       <Contact />
     </main>

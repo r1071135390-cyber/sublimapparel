@@ -417,6 +417,15 @@ export default function QualityControlPage() {
         </div>
       </section>
 
+      {/* 2026-09-13 (R61): unified 3-channel CTA. Sits between the
+          FAQ section and the full <Contact /> form so QC-checklist
+          visitors see the same quote/WhatsApp/form trio as the rest
+          of the high-intent B2B pages. */}
+      <UnifiedContactCta
+        variant="full"
+        sourceLabel="Quality control checklist"
+        className="border-t-4 border-black"
+      />
       <Contact />
     </>
   );

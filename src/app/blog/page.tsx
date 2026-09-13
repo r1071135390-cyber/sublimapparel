@@ -5,7 +5,8 @@ import { buildBlogHubGraph } from "@/lib/breadcrumb";
 import Link from"next/link";
 import Image from"next/image";
 import { ArrowRight, Clock, Calendar } from"lucide-react";
-import { blogPosts, getFeaturedPost, getAllCategories } from"@/lib/blog";
+import { blogPosts, getFeaturedPost, getAllCategories } from "@/lib/blog";
+import { UnifiedContactCta } from "@/components/unified-contact-cta";
 
 export const metadata = buildPageMetadata({
     title: "Blog | Sublimation Apparel Insights & Factory Stories",
@@ -348,24 +349,18 @@ export default function BlogIndexPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="bg-[#ff4d00] text-black">
-        <div className="mx-auto max-w-4xl px-4 py-12 text-center md:px-8 md:py-16">
-          <h2 className="mb-3 text-2xl font-black uppercase leading-tight md:mb-4 md:text-4xl">
-            Have a project in mind?
-          </h2>
-          <p className="mb-6 text-sm md:mb-8 md:text-base">
-            Send us your design and quantity. We will recommend the right
-            technique and quote within 24 hours.
-          </p>
-          <Link
-            href="/get-a-quote/"
-            className="inline-flex items-center gap-2 border-2 border-white bg-transparent px-6 py-3 text-sm font-bold uppercase tracking-wide transition-colors hover:bg-white hover:text-[#cc3d00] md:px-8 md:py-4 md:text-base"
-          >
-            Get a Free Quote →
-          </Link>
-        </div>
-      </section>
+      {/* 2026-09-13 (R61): unified 3-channel CTA. Replaces the
+          brand-colored "Have a project in mind?" section so /blog/
+          shows the same quote-modal / WhatsApp / contact-form trio
+          as every other high-intent B2B page on the site. Blog
+          readers who scroll past the post grid to the bottom get
+          a consistent conversion surface. */}
+      <UnifiedContactCta
+        variant="full"
+        sourceLabel="Blog index"
+        onDark
+        className="border-t-4 border-black"
+      />
     </main>
     </>
   );

@@ -17,6 +17,7 @@ import {
   Users,
 } from "lucide-react";
 import { Contact } from "@/components/contact";
+import { UnifiedContactCta } from "@/components/unified-contact-cta";
 import { JsonLd } from "@/components/json-ld";
 import {
   buildBreadcrumbJsonLd,
@@ -521,6 +522,15 @@ export default function NinetyDayProgramPage() {
         </div>
       </section>
 
+      {/* 2026-09-13 (R61): unified 3-channel CTA. Sits between the
+          FAQ section and the full <Contact /> form so 90-day-program
+          roadmap visitors see the same quote/WhatsApp/form trio as
+          the rest of the high-intent B2B pages. */}
+      <UnifiedContactCta
+        variant="full"
+        sourceLabel="90-day new program roadmap"
+        className="border-t-4 border-black"
+      />
       <Contact />
     </>
   );

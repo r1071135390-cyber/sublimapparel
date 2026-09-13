@@ -20,6 +20,7 @@ import {
   Camera,
 } from "lucide-react";
 import { industries } from "@/lib/cases";
+import { UnifiedContactCta } from "@/components/unified-contact-cta";
 
 export const metadata = buildPageMetadata({
     // 2026-09-11 push (Round 4): was just "Case Studies" (13 chars) — far too short,
@@ -342,22 +343,17 @@ export default function CasesPage() {
         </div>
       </section>
 
-      {/* Bottom CTA */}
-      <section className="border-b-2 border-black bg-black text-white">
-        <div className="mx-auto max-w-7xl px-6 py-16 text-center md:py-20">
-          <div className="mb-3 text-xs font-black uppercase tracking-widest text-[#29b6f6]">
-            [ Your project next? ]
-          </div>
-          <h2 className="mx-auto mb-6 max-w-3xl text-4xl font-black uppercase leading-none tracking-tight md:text-6xl">
-            Add your story to the gallery.
-          </h2>
-          <p className="mx-auto mb-8 max-w-2xl text-base font-bold leading-relaxed text-white/80 md:text-lg">
-            Send us your artwork, quantity and delivery deadline. We&apos;ll send a free mockup and a landed, duty-paid quote within 1 business day.
-          </p>
-          <RequestQuoteLink label="Cases / page / Get a quote" className="inline-flex items-center gap-2 border-2 border-white bg-[#ff4d00] px-8 py-4 text-base font-black uppercase tracking-wider transition-all hover:bg-white hover:text-black hover:shadow-[6px_6px_0_0_#00c2ff] hover:-translate-x-1 hover:-translate-y-1">Get a quote
-            <ArrowRight size={18} strokeWidth={3} /></RequestQuoteLink>
-        </div>
-      </section>
+      {/* Bottom CTA — 2026-09-13 (R61): replaced the legacy single
+          "Add your story to the gallery" CTA with UnifiedContactCta.
+          The cases index is the gateway to all 12 industry verticals,
+          so every visitor who reaches the bottom should see the same
+          quote/WhatsApp/form trio as /pricing/, /samples/, /contact/
+          and the rest of the high-intent B2B pages. */}
+      <UnifiedContactCta
+        variant="full"
+        sourceLabel="Case studies index"
+        className="border-t-4 border-black"
+      />
     </>
   );
 }

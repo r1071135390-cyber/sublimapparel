@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowRight, Check, Leaf, Droplets, Shirt, Sparkles, Layers, Recycle, ScanLine, Scissors, Palette, Ruler } from "lucide-react";
 import { cottonFabrics } from "@/lib/fabric-data";
 import { JsonLd } from "@/components/json-ld";
+import { UnifiedContactCta } from "@/components/unified-contact-cta";
 
 // 2026-09-11 push (Round 4): add BreadcrumbList JSON-LD so Google can render
 // rich breadcrumb crumbs in SERP for /fabric/cotton/ — improves CTR vs the
@@ -413,25 +414,18 @@ export default function CottonPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="bg-[#ff4d00] text-black">
-        <div className="mx-auto max-w-7xl px-6 py-16 text-center md:py-20">
-          <h2 className="text-4xl font-black leading-[0.95] tracking-tight md:text-6xl">
-            Ready to print on cotton?
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-base text-white/90 md:text-lg">
-            Tell us the product, fabric weight, and quantity.
-            We&apos;ll recommend DTG vs DTF and send a landed quote.
-          </p>
-          <Link
-            href="/get-a-quote/"
-            className="mt-8 inline-flex items-center gap-2 bg-white px-8 py-4 text-sm font-black uppercase tracking-widest text-black transition-all hover:bg-black hover:text-white"
-          >
-            Get a Cotton Quote
-            <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
-          </Link>
-        </div>
-      </section>
+      {/* 2026-09-13 (R61): unified 3-channel CTA. Replaces the
+          legacy brand-colored "Ready to print on cotton?" CTA so
+          /fabric/cotton/ (king SEO page for allover cotton prints)
+          shows the same quote-modal / WhatsApp / contact-form trio
+          as every other high-intent B2B page. The /get-a-quote/
+          anchor stays accessible through the modal + form. */}
+      <UnifiedContactCta
+        variant="full"
+        sourceLabel="Allover cotton print page"
+        onDark
+        className="border-t-4 border-black"
+      />
     </main>
     </>
   );

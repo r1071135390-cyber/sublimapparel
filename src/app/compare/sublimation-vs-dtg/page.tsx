@@ -5,6 +5,7 @@ import { Footer } from "@/components/footer";
 import { RequestQuoteLink } from "@/components/request-quote-link";
 import { buildBreadcrumbJsonLd, buildFaqPageNode, buildComparisonJsonLd } from "@/lib/breadcrumb";
 import { buildPageMetadata } from "@/lib/page-metadata";
+import { UnifiedContactCta } from "@/components/unified-contact-cta";
 
 // 2026-09-11 push (Round 4): same fix as /production/ — switch to buildPageMetadata
 // so the title doesn't pick up a duplicate "| SublimApparel" suffix from the
@@ -370,32 +371,18 @@ export default function SublimationVsDtgPage() {
           </div>
         </section>
 
-        <section className="border-t-4 border-black bg-[#f5f5f5] py-20">
-          <div className="mx-auto max-w-3xl px-6 text-center">
-            <h2 className="text-3xl font-extrabold tracking-tight md:text-4xl">
-              Not sure which method fits your order?
-            </h2>
-            <p className="mt-4 text-lg text-[#3a3a3a]">
-              Send us your design, fabric preference, and quantity. We&apos;ll quote
-              both methods side-by-side so you can pick the cheaper one.
-            </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-              <RequestQuoteLink
-                label="Get a quote"
-                className="inline-flex items-center gap-2 bg-[#ff4d00] px-8 py-4 text-base font-bold uppercase tracking-widest text-black hover:bg-[#ff5d1a]"
-              >
-                Request a quote
-              </RequestQuoteLink>
-              <a
-                href="/all-over-print/"
-                className="inline-flex items-center gap-2 border-2 border-black bg-white px-8 py-4 text-base font-bold uppercase tracking-widest text-black hover:bg-black hover:text-white"
-              >
-                See all-over print
-              </a>
-            </div>
-          </div>
-        </section>
+        {/* 2026-09-13 (R61): unified 3-channel CTA. Replaces the
+            legacy "Not sure which method fits your order?" section
+            so /compare/sublimation-vs-dtg/ shows the same quote/
+            WhatsApp/form trio as the other high-intent B2B comparison
+            pages. The /all-over-print/ learn-more anchor stays in the
+            page body. */}
       </main>
+      <UnifiedContactCta
+        variant="full"
+        sourceLabel="Sublimation vs DTG comparison"
+        className="border-t-4 border-black"
+      />
       <Footer />
       {/* 2026-09-12 (R35): consolidated to single @graph block */}
       <JsonLd data={pageGraph} />

@@ -422,6 +422,15 @@ export default function HowToSourcePage() {
         </div>
       </section>
 
+      {/* 2026-09-13 (R61): unified 3-channel CTA. Sits between the
+          FAQ section and the full <Contact /> form so sourcing-playbook
+          visitors see the same quote/WhatsApp/form trio as the rest
+          of the high-intent B2B pages. */}
+      <UnifiedContactCta
+        variant="full"
+        sourceLabel="How-to-source playbook"
+        className="border-t-4 border-black"
+      />
       <Contact />
     </>
   );

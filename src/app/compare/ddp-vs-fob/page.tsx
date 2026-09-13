@@ -5,6 +5,7 @@ import { Footer } from "@/components/footer";
 import { RequestQuoteLink } from "@/components/request-quote-link";
 import { buildBreadcrumbJsonLd, buildFaqPageNode, buildComparisonJsonLd } from "@/lib/breadcrumb";
 import { buildPageMetadata } from "@/lib/page-metadata";
+import { UnifiedContactCta } from "@/components/unified-contact-cta";
 
 // 2026-09-11 push (Round 4): same fix as /production/ — switch to buildPageMetadata
 // so the title doesn't pick up a duplicate "| SublimApparel" suffix from the
@@ -411,32 +412,19 @@ export default function DdpVsFobPage() {
           </div>
         </section>
 
-        <section className="border-t-4 border-black bg-[#f5f5f5] py-20">
-          <div className="mx-auto max-w-3xl px-6 text-center">
-            <h2 className="text-3xl font-extrabold tracking-tight md:text-4xl">
-              Want a DDP quote with all duties included?
-            </h2>
-            <p className="mt-4 text-lg text-[#3a3a3a]">
-              Send us your delivery ZIP / postal code. We&apos;ll quote factory price,
-              freight, duties, and last-mile delivery as one delivered number.
-            </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-              <RequestQuoteLink
-                label="Get a DDP quote"
-                className="inline-flex items-center gap-2 bg-[#ff4d00] px-8 py-4 text-base font-bold uppercase tracking-widest text-black hover:bg-[#ff5d1a]"
-              >
-                Request a DDP quote
-              </RequestQuoteLink>
-              <a
-                href="/shipping/ddp/"
-                className="inline-flex items-center gap-2 border-2 border-black bg-white px-8 py-4 text-base font-bold uppercase tracking-widest text-black hover:bg-black hover:text-white"
-              >
-                How DDP works
-              </a>
-            </div>
-          </div>
-        </section>
+        {/* 2026-09-13 (R61): unified 3-channel CTA. Replaces the
+            legacy "Want a DDP quote with all duties included?" section
+            so /compare/ddp-vs-fob/ shows the same quote-modal /
+            WhatsApp / contact-form trio as the shipping hub and the
+            other high-intent B2B comparison pages. The /shipping/ddp/
+            learn-more anchor stays as an explicit link inside the
+            quote card via the existing /shipping/ddp/ cross-link. */}
       </main>
+      <UnifiedContactCta
+        variant="full"
+        sourceLabel="DDP vs FOB comparison"
+        className="border-t-4 border-black"
+      />
       <Footer />
       {/* 2026-09-12 (R35): consolidated to single @graph block */}
       <JsonLd data={pageGraph} />

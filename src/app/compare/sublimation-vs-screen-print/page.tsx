@@ -5,6 +5,7 @@ import { Footer } from "@/components/footer";
 import { RequestQuoteLink } from "@/components/request-quote-link";
 import { buildBreadcrumbJsonLd, buildFaqPageNode } from "@/lib/breadcrumb";
 import { buildComparisonJsonLd } from "@/lib/breadcrumb";
+import { UnifiedContactCta } from "@/components/unified-contact-cta";
 import { buildPageMetadata } from "@/lib/page-metadata";
 
 // 2026-09-11 (R26-D): the /compare/ directory already covers
@@ -448,33 +449,19 @@ export default function SublimationVsScreenPrintPage() {
           </div>
         </section>
 
-        {/* CTA */}
-        <section className="bg-[#0a0a0a] text-[#faf9f6]">
-          <div className="mx-auto max-w-5xl px-4 py-12 md:px-8 md:py-16">
-            <h2 className="text-3xl font-black leading-tight md:text-4xl">
-              Not sure which method fits your design?
-            </h2>
-            <p className="mt-3 max-w-2xl text-base leading-relaxed text-[#a0a0a0] md:text-lg">
-              Send us your artwork, your garment spec, and your order
-              size. We will tell you the right method — even if it is
-              not sublimation. Reply within 1 business day, in English
-              or Chinese.
-            </p>
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-              <RequestQuoteLink className="inline-flex items-center justify-center gap-2 border-2 border-[#ff4d00] bg-[#ff4d00] px-6 py-3 text-sm font-bold uppercase tracking-wide text-black transition-colors hover:bg-[#e64400]">
-                Get a quote in 24 hours
-              </RequestQuoteLink>
-              <a
-                href="/yiwu-factory-whatsapp/"
-                className="inline-flex items-center justify-center gap-2 border-2 border-[#faf9f6] px-6 py-3 text-sm font-bold uppercase tracking-wide text-[#faf9f6] transition-colors hover:bg-[#faf9f6] hover:text-[#0a0a0a]"
-              >
-                Chat with the Yiwu factory
-              </a>
-            </div>
-          </div>
-        </section>
+        {/* 2026-09-13 (R61): unified 3-channel CTA. Replaces the
+            legacy dark "Not sure which method fits your design?" CTA
+            so /compare/sublimation-vs-screen-print/ shows the same
+            quote-modal / WhatsApp / contact-form trio as the other
+            comparison pages. onDark=true keeps the dark section
+            styling + contrast validated for the rest of the site. */}
       </main>
-
+      <UnifiedContactCta
+        variant="full"
+        sourceLabel="Sublimation vs screen print comparison"
+        onDark
+        className="border-t-4 border-black"
+      />
       <Footer />
     </>
   );

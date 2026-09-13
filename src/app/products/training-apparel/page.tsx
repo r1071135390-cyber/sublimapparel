@@ -3,6 +3,7 @@ import { buildPageMetadata } from "@/lib/page-metadata";
 import { buildCategoryProductGraph } from "@/lib/breadcrumb";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { UnifiedContactCta } from "@/components/unified-contact-cta";
 import {
   ArrowRight,
   Sparkles,
@@ -415,7 +416,27 @@ export default function TrainingApparelPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-[#ff4d00] text-black">
+            
+      {/* 2026-09-13 (R61): unified 3-channel CTA inserted
+          above the product-specific orange "Got a team? Get a quote"
+          CTA. The orange CTA below stays because its copy
+          self-identifies the buyer (Got a team? / Got a tournament?
+          / Got a livery? / Got a roster? / Got a race design? /
+          Send us your design / Send us your gym design). The
+          UnifiedContactCta above adds the canonical
+          /get-a-quote/ + /yiwu-factory-whatsapp/ + /contact/
+          trio so /products/training-apparel/ matches the conversion
+          pattern used on every other high-intent B2B page
+          (fabric hub, comparison pages, /cases/, /blog/,
+          /shipping/ hub, /industries/[slug]/, etc.). */}
+      <UnifiedContactCta
+        variant="full"
+        sourceLabel="/products/training-apparel/"
+        className="border-t-4 border-black"
+      />
+
+<section className="bg-[#ff4d00] text-black">
+
         <div className="mx-auto max-w-7xl px-6 py-20 md:py-28">
           <div className="mb-3 text-xs font-black uppercase tracking-widest text-white/80">[ 008 / Next step ]</div>
           <h2 className="text-4xl font-black leading-tight md:text-7xl">

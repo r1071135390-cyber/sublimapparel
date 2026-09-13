@@ -5,6 +5,7 @@ import { JsonLd } from "@/components/json-ld";
 import { buildBreadcrumbJsonLd, buildFaqPageNode, buildComparisonJsonLd } from "@/lib/breadcrumb";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { RequestQuoteLink } from "@/components/request-quote-link";
+import { UnifiedContactCta } from "@/components/unified-contact-cta";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Polyester vs Cotton Sublimation: Which Fabric to Choose?",
@@ -393,29 +394,18 @@ export default function PolyVsCottonPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="bg-[#ff4d00] text-black">
-        <div className="mx-auto max-w-7xl px-6 py-16 text-center">
-          <h2 className="text-3xl font-black uppercase leading-none tracking-tight md:text-5xl">
-            Not sure which fabric fits your project?
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-white/90">
-            Send us your design and quantity. We&apos;ll send back a fabric recommendation with pricing, sample
-            options, and a DDP quote to your country.
-          </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <RequestQuoteLink label="Get a quote" className="inline-flex items-center gap-2 bg-black px-8 py-4 text-base font-bold uppercase tracking-widest text-white hover:bg-[#1a1a1a]">
-              <Quote size={20} /> Get a quote
-            </RequestQuoteLink>
-            <Link
-              href="/contact/"
-              className="inline-flex items-center gap-2 border-2 border-white px-8 py-4 text-base font-bold uppercase tracking-widest text-white hover:bg-white hover:text-[#ff4d00]"
-            >
-              Contact us <ArrowRight size={20} />
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* 2026-09-13 (R61): unified 3-channel CTA. Replaces the
+          brand-colored "Not sure which fabric fits your project?" CTA
+          so /compare/polyester-vs-cotton-sublima/ shows the same
+          quote-modal / WhatsApp / contact-form trio as the other
+          comparison pages. onDark=true keeps the dark section
+          styling + contrast validated for the rest of the site. */}
     </main>
+    <UnifiedContactCta
+      variant="full"
+      sourceLabel="Polyester vs cotton sublimation comparison"
+      onDark
+      className="border-t-4 border-black"
+    />
   );
 }
