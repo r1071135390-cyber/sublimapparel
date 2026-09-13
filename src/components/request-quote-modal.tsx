@@ -28,18 +28,14 @@ const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024;
 const ACCEPTED = [".jpg", ".jpeg", ".png", ".pdf", ".ai", ".eps", ".psd", ".svg", ".tif", ".tiff"];
 const ACCEPT_ATTR = ACCEPTED.join(",");
 
-// Min delivery date: 7 days from module load (stable across renders)
-const MIN_DELIVERY_DATE = (() => {
-  const d = new Date();
-  d.setDate(d.getDate() + 7);
-  return d.toISOString().split("T")[0];
-})();
-const MIN_DELIVERY_DATE_OBJ = (() => {
-  const d = new Date();
-  d.setDate(d.getDate() + 7);
-  d.setHours(0, 0, 0, 0);
-  return d;
-})();
+// 2026-09-13 (R62): the min delivery date used to be computed at
+// module load via IIFEs (`new Date()` runs once per process), which
+// is fine when the modal is client-only, but to keep server / client
+// behavior identical and to guard against future SSR changes (e.g.
+// inline-rendering the modal) we now compute the min date inside
+// the component using useState + useEffect. Initial render on both
+// server and client is `null`; the actual date is set on the client
+// immediately after mount.
 
 type Attached = {
   file: File;
@@ -78,6 +74,18 @@ export function RequestQuoteModal() {
   });
   const [sizeRows, setSizeRows] = React.useState<SizeRow[]>(DEFAULT_SIZES);
   const [files, setFiles] = React.useState<Attached[]>([]);
+
+  // 2026-09-13 (R62): min delivery date is now per-component state,
+  // initialized to null on first render and populated on the client
+  // only. Keeps the DatePickerEn year dropdown stable between SSR
+  // and the first client render.
+  const [minDeliveryDate, setMinDeliveryDate] = React.useState<Date | null>(null);
+  React.useEffect(() => {
+    const d = new Date();
+    d.setDate(d.getDate() + 7);
+    d.setHours(0, 0, 0, 0);
+    setMinDeliveryDate(d);
+  }, []);
 
 
   // Prefill product from source (e.g., product detail page)
@@ -484,7 +492,7 @@ export function RequestQuoteModal() {
                 <DatePickerEn
                   name="deadline"
                   required
-                  minDate={MIN_DELIVERY_DATE_OBJ}
+                  minDate={minDeliveryDate ?? undefined}
                   value={form.deadline}
                   onChange={(v) => onChange({ target: { name: "deadline", value: v } } as React.ChangeEvent<HTMLInputElement>)}
                 />

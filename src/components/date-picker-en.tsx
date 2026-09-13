@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useMemo } from "react";
+import { useEffect, useId, useState } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -63,20 +63,31 @@ export function DatePickerEn({
   const baseId = `dp-${reactId.replace(/[:]/g, "")}`;
   const { y, m, d } = parseYMD(value);
 
-  // Year options: from minDate (or today) to +3 years
-  const yearOptions = useMemo(() => {
+  // 2026-09-13 (R62): Year options depend on minDate which may differ
+  // between server (build time) and client (hydration time) when the
+  // parent computes it at module load. We render an empty year list
+  // on the server and the initial client render (identical), then
+  // populate it in useEffect on the client. This eliminates the
+  // React #418 text-content hydration mismatch that came from
+  // `<option>{new Date().getFullYear()}</option>` differing between
+  // SSR and client.
+  const [yearOptions, setYearOptions] = useState<number[]>([]);
+  const [dayCount, setDayCount] = useState(31);
+
+  useEffect(() => {
+    // Compute on the client only — values are stable within a session
+    // so re-running on minDate changes is safe.
     const start = minDate ? minDate.getFullYear() : new Date().getFullYear();
     const end = start + 3;
     const years: number[] = [];
     for (let yy = start; yy <= end; yy++) years.push(yy);
-    return years;
+    setYearOptions(years);
   }, [minDate]);
 
-  // Day options: depends on selected year/month
-  const dayCount = useMemo(() => {
+  useEffect(() => {
     const yy = Number(y) || (minDate ? minDate.getFullYear() : new Date().getFullYear());
     const mm = Number(m) || 1;
-    return maxDayForMonth(yy, mm);
+    setDayCount(maxDayForMonth(yy, mm));
   }, [y, m, minDate]);
 
   const handleY = (yy: string) => {

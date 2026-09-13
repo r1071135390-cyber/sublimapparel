@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Plus, Minus, X } from "lucide-react";
 import { DatePickerEn } from "@/components/date-picker-en";
 
@@ -10,18 +10,13 @@ const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024;
 const ACCEPTED = [".jpg", ".jpeg", ".png", ".pdf", ".ai", ".eps", ".psd", ".svg", ".tif", ".tiff"];
 const ACCEPT_ATTR = ACCEPTED.join(",");
 
-// Min delivery date: 7 days from module load (stable across renders)
-const MIN_DELIVERY_DATE = (() => {
-  const d = new Date();
-  d.setDate(d.getDate() + 7);
-  return d.toISOString().split("T")[0];
-})();
-const MIN_DELIVERY_DATE_OBJ = (() => {
-  const d = new Date();
-  d.setDate(d.getDate() + 7);
-  d.setHours(0, 0, 0, 0);
-  return d;
-})();
+// 2026-09-13 (R62): min delivery date used to be computed at module
+// load via an IIFE, which produced a different value on the server
+// (build time) vs the client (hydration time) and caused React
+// minified error #418 (text content mismatch) in /contact/. The
+// date is now stored in component state, initialized to null on
+// both server and client (identical first render), and populated
+// on the client only via useEffect after hydration.
 
 type Attached = {
   file: File;
@@ -75,6 +70,20 @@ export function Contact() {
   const [status, setStatus] = useState<"idle" | "sending" | "ok" | "err">("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // 2026-09-13 (R62): min delivery date is now per-component state so
+  // it stays null during SSR + the initial client render (identical),
+  // then is set on the client only. This prevents the DatePickerEn
+  // year options from diverging between server build time and client
+  // hydration time, which is what caused the React #418 mismatch on
+  // /contact/.
+  const [minDeliveryDate, setMinDeliveryDate] = useState<Date | null>(null);
+  useEffect(() => {
+    const d = new Date();
+    d.setDate(d.getDate() + 7);
+    d.setHours(0, 0, 0, 0);
+    setMinDeliveryDate(d);
+  }, []);
 
   const onChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -488,7 +497,7 @@ export function Contact() {
                   <DatePickerEn
                     name="deadline"
                     required
-                    minDate={MIN_DELIVERY_DATE_OBJ}
+                    minDate={minDeliveryDate ?? undefined}
                     value={form.deadline}
                     onChange={(v) => onChange({ target: { name: "deadline", value: v } } as React.ChangeEvent<HTMLInputElement>)}
                   />
