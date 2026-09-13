@@ -1,0 +1,20 @@
+# sublimapparel.com — Cloudflare Pages redirects
+# https://developers.cloudflare.com/pages/configuration/redirects/
+#
+# ============================================================================
+# LLM-friendly files moved off the public root to avoid the
+# Cloudflare auto-managed robots.txt feature from auto-injecting a
+# "Sitemap: https://sublimapparel.com/llms.txt" line into the served
+# /robots.txt (Cloudflare's auto-robots only sees files in public/ at
+# the build step; hidden subdirectories are not auto-indexed).
+#
+# 200-status internal rewrites preserve the original URLs so AI
+# crawlers (GPTBot, ClaudeBot, etc.) and the HTTP `Link: </llms.txt>;
+# rel="describedby"` headers we emit still resolve correctly.
+# ============================================================================
+
+# /llms.txt is a small AEO card of the site for LLM discovery.
+/llms.txt                 /llms/llms.txt                 200
+
+# /llms-full.txt is the long-form version of the same AEO content.
+/llms-full.txt            /llms/llms-full.txt            200

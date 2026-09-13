@@ -37,12 +37,17 @@
 /*.webm
   Cache-Control: public, max-age=604800, s-maxage=2592000, stale-while-revalidate=31536000
 
-# Sitemap & robots — short edge cache so updates propagate
+# ===========================================================================
+# Sitemap & robots — no-store so any push to GitHub main is picked up
+# immediately by every edge, even when the Cloudflare "auto-managed
+# robots.txt" feature is in play. The previous 1-hour s-maxage
+# staled the edge long after we pushed the drop-Sitemap fix in R64.
+# ===========================================================================
 /sitemap.xml
-  Cache-Control: public, max-age=0, must-revalidate, s-maxage=3600
+  Cache-Control: no-store, max-age=0, must-revalidate
   Content-Type: application/xml; charset=utf-8
 /robots.txt
-  Cache-Control: public, max-age=0, must-revalidate, s-maxage=3600
+  Cache-Control: no-store, max-age=0, must-revalidate
   Content-Type: text/plain; charset=utf-8
 
 # Markdown alternates — point AI crawlers at plain-text versions of every page
@@ -50,12 +55,17 @@
   Cache-Control: public, max-age=0, must-revalidate, s-maxage=3600
   Content-Type: text/markdown; charset=utf-8
 
-# LLM-friendly files — explicit content types
+# LLM-friendly files — explicit content types. NOTE: the actual files
+# live under /llms/ (public/llms/llms.txt, public/llms/llms-full.txt)
+# to keep the Cloudflare auto-managed robots.txt feature from
+# auto-injecting Sitemap: /llms.txt. The public /llms.txt and
+# /llms-full.txt URLs are preserved by /public/_redirects 200
+# rewrites so AI crawlers see the same content at the same URLs.
 /llms.txt
-  Cache-Control: public, max-age=0, must-revalidate, s-maxage=3600
+  Cache-Control: no-store, max-age=0, must-revalidate
   Content-Type: text/markdown; charset=utf-8
 /llms-full.txt
-  Cache-Control: public, max-age=0, must-revalidate, s-maxage=3600
+  Cache-Control: no-store, max-age=0, must-revalidate
   Content-Type: text/markdown; charset=utf-8
 
 # HTTP Link header — discover markdown alternates for every HTML page
