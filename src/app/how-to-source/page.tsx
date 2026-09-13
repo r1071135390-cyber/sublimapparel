@@ -16,6 +16,14 @@ import {
 } from "lucide-react";
 import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
+// 2026-09-14 (R64 build fix, round 4): R59 rollout of the unified
+// 3-channel contact widget (quote modal / WhatsApp / contact form)
+// added `<UnifiedContactCta variant="full" ... />` to the bottom of
+// this page (line 429) but the import line was never added. R61 did
+// the same to 21 other pages, all of which got the import — this
+// one was missed. Re-add the import so the build resolves the
+// identifier.
+import { UnifiedContactCta } from "@/components/unified-contact-cta";
 import { buildAboutSubPageGraph } from "@/lib/breadcrumb";
 
 export const metadata = buildPageMetadata({
