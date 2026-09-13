@@ -118,6 +118,26 @@ const comparisonJsonLd = buildComparisonJsonLd({
   },
   sharedContent:
     "International shipping term (incoterm) selection for B2B apparel orders",
+  // 2026-09-12 (R54): cross-link the Comparison node to the two
+  // related HowTo nodes (/shipping/ddp/ and /shipping/fob/).
+  // Each entry is emitted as a `hasPart` HowTo on the
+  // Comparison node so Google's entity graph knows the
+  // comparison page points at the DDP and FOB detail HowTos.
+  // Backward-compat: dropping these two entries reverts the
+  // schema to the pre-R54 baseline (no `hasPart` on the
+  // Comparison node).
+  hasPart: [
+    {
+      id: "https://sublimapparel.com/shipping/ddp/#howto",
+      name: "How DDP Shipping from China to Your Door Works — Step by Step",
+      url: "https://sublimapparel.com/shipping/ddp/",
+    },
+    {
+      id: "https://sublimapparel.com/shipping/fob/#howto",
+      name: "How FOB Shipping from China to Your Port Works — Step by Step",
+      url: "https://sublimapparel.com/shipping/fob/",
+    },
+  ],
 });
 
 // 2026-09-12 (R35): consolidate all JSON-LD into a single @graph block.

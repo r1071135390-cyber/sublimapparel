@@ -92,7 +92,13 @@ const supplementary = [
     tagline:"For buyers with their own freight forwarder.",
     icon: Container,
     desc:"If you already have a US/EU freight forwarder and prefer to arrange your own shipping, we can quote FOB Yiwu, CIF your-port, or EXW factory-gate terms. We hand over the goods at the agreed point; you take it from there.",
-    href:"/get-a-quote",
+    // 2026-09-12 (R54): FOB / CIF / EXW now has its own dedicated
+    // landing page at /shipping/fob/ with a 9-step buyer-controlled
+    // HowTo, a dedicated Service node, and a cross-linked
+    // Comparison node on /compare/ddp-vs-fob/. Point the
+    // supplementary card at that page so the card and the FOB
+    // page mutually reinforce each other in the brand entity graph.
+    href:"/shipping/fob/",
     note:"Useful when you have negotiated freight rates, an in-house customs broker, or a bonded warehouse network.",
   },
   {
@@ -327,6 +333,20 @@ export default function ShippingPage() {
   const shippingGraph = buildShippingHubGraph({
     mainModes: options.map((o) => ({ slug: o.slug, name: o.name, href: o.href })),
     supplementary: supplementary.map((s) => ({ name: s.name, href: s.href })),
+    // 2026-09-12 (R54): pass the 5 country-specific DDP shipping
+    // landing pages as a dedicated ItemList so the /shipping/ hub
+    // becomes a true overview of both *shipping modes* (DDP /
+    // express / air / sea) and *country destinations* (USA, UK,
+    // EU, Australia, Canada). Each country page targets PAA-style
+    // queries like "DDP shipping to USA from China" and cross-
+    // links back to the hub.
+    countryPages: [
+      { slug: "usa", name: "DDP Shipping to USA", href: "/shipping/usa/" },
+      { slug: "uk", name: "DDP Shipping to UK", href: "/shipping/uk/" },
+      { slug: "eu", name: "DDP Shipping to EU", href: "/shipping/eu/" },
+      { slug: "au", name: "DDP Shipping to Australia", href: "/shipping/au/" },
+      { slug: "canada", name: "DDP Shipping to Canada", href: "/shipping/canada/" },
+    ],
     faq: faqs,
   });
   return (

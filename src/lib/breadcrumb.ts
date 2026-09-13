@@ -250,6 +250,15 @@ export function buildComparisonJsonLd(input: {
    *  are being compared *on* (e.g. "Print method selection
    *  for custom apparel"). Lands in `sharedContent`. */
   sharedContent?: string;
+  /** 2026-09-12 (R54): optional cross-link to related HowTo
+   *  nodes (e.g. the DDP and FOB shipping HowTos). When
+   *  present, each entry is emitted as a `hasPart` HowTo
+   *  reference on the returned Comparison node so Google's
+   *  entity graph knows the comparison page references the
+   *  two detail HowTo guides. Omitted / undefined = no
+   *  `hasPart` key on the output, byte-equivalent to the
+   *  pre-R54 baseline. */
+  hasPart?: { id: string; name: string; url: string }[];
 }) {
   return {
     "@context": "https://schema.org",
@@ -281,6 +290,21 @@ export function buildComparisonJsonLd(input: {
         }
       : {}),
     mainEntityOfPage: { "@id": `${SITE_URL}/compare/${input.slug}/#webpage` },
+    // 2026-09-12 (R54): optional `hasPart` cross-link to related
+    // HowTo nodes. The key is only emitted on the output object
+    // when the caller passes a non-empty array, so existing pages
+    // that don't pass `hasPart` are byte-equivalent to the pre-R54
+    // baseline.
+    ...(input.hasPart && input.hasPart.length > 0
+      ? {
+          hasPart: input.hasPart.map((h) => ({
+            "@type": "HowTo",
+            "@id": h.id,
+            url: h.url,
+            name: h.name,
+          })),
+        }
+      : {}),
   };
 }
 
@@ -1003,6 +1027,19 @@ export type ShippingHubInput = {
   mainModes?: { slug: string; name: string; href: string }[];
   /** The 2 supplementary service cards. */
   supplementary?: { name: string; href: string }[];
+  /** 2026-09-12 (R54): optional list of country-specific DDP
+   *  shipping landing pages. When supplied, the @graph also
+   *  emits a dedicated ItemList node (id `${url}#country-pages`)
+   *  that lists the country destinations, with each ListItem
+   *  optionally cross-linking its page's #howto node via
+   *  `mainEntity` (when `howtoId` is set on the entry).
+   *  This makes /shipping/ a true overview of the full
+   *  shipping cluster (modes + supplementary + destinations)
+   *  and helps Google discover the country pages from a
+   *  single @graph emission. Omitted / undefined = no
+   *  country ItemList emitted, byte-equivalent to the
+   *  pre-R54 baseline. */
+  countryPages?: { slug: string; name: string; href: string; howtoId?: string }[];
   /** Optional FAQ items rendered inline. Omit to skip FAQPage node. */
   faq?: FaqItem[];
 };
@@ -1141,6 +1178,33 @@ export function buildShippingHubGraph(input: ShippingHubInput) {
                 position: i + 1,
                 name: s.name,
                 url: `${SITE_URL}${s.href.startsWith("/") ? s.href : `/${s.href}`}`,
+              })),
+              isPartOf: { "@id": webpageId },
+            },
+          ]
+        : []),
+      // 2026-09-12 (R54): country-specific DDP shipping landing
+      // pages emitted as a dedicated ItemList so the /shipping/
+      // hub cross-links the country pages back to itself in a
+      // single @graph. Gated on input.countryPages — when omitted
+      // the ItemList is not emitted and the schema is byte-
+      // equivalent to the pre-R54 baseline.
+      ...(input.countryPages && input.countryPages.length > 0
+        ? [
+            {
+              "@type": "ItemList",
+              "@id": `${url}#country-pages`,
+              name: "SublimApparel DDP Shipping by Destination Country",
+              description:
+                "Country-specific DDP shipping landing pages — one per major destination market. Each page targets the PAA-style queries for DDP shipping to that destination (e.g. 'DDP shipping to USA from China') and cross-links back to the /shipping/ hub.",
+              numberOfItems: input.countryPages.length,
+              itemListOrder: "https://schema.org/ItemListOrderUnordered",
+              itemListElement: input.countryPages.map((c, i) => ({
+                "@type": "ListItem",
+                position: i + 1,
+                name: c.name,
+                url: `${SITE_URL}${c.href.startsWith("/") ? c.href : `/${c.href}`}`,
+                ...(c.howtoId ? { mainEntity: { "@id": c.howtoId } } : {}),
               })),
               isPartOf: { "@id": webpageId },
             },
@@ -1395,6 +1459,187 @@ export function buildDdpShippingPageGraph(input: DdpShippingInput) {
     ],
   };
 }
+
+// 2026-09-12 (R54): Mirror of buildDdpShippingPageGraph for the
+// /shipping/fob/ page. FOB / CIF / EXW are the buyer-arranged
+// incoterms — the factory hands off at the gate (EXW), origin
+// port (FOB), or destination port (CIF), and the buyer controls
+// freight, customs, duties, and last-mile. The HowTo step order
+// differs from DDP at step 5/6 (factory pickup + FOB hand-off
+// instead of DDP customs bundle) and step 7/8 (buyer-arranged
+// freight + buyer-arranged import customs instead of DDP broker).
+//
+// Backward-compat contract (same as R53 DDP): `howto` is optional.
+// Omit / pass undefined and the @graph is byte-equivalent to the
+// no-HowTo baseline.
+export type FobShippingInput = {
+  /** Breadcrumb trail. */
+  breadcrumb: { name: string; path: string }[];
+  /** Optional FAQ items rendered inline. Omit to skip FAQPage node. */
+  faq?: FaqItem[];
+  /** 2026-09-12 (R54): optional FOB shipping HowTo (the
+   *  9-step buyer-controlled journey from PO to last-mile).
+   *  When supplied, the @graph also emits a HowTo node
+   *  anchored to this page. Omit (or pass undefined) to drop
+   *  the HowTo node entirely so the schema stays byte-
+   *  equivalent to the no-HowTo baseline. */
+  howto?: {
+    name: string;
+    description: string;
+    steps: Array<{ name: string; text: string }>;
+    totalTime?: string;
+  };
+};
+
+export function buildFobShippingPageGraph(input: FobShippingInput) {
+  const url = `${SITE_URL}/shipping/fob/`;
+  const webpageId = `${url}#webpage`;
+  const serviceId = `${url}#service`;
+  const breadcrumbId = `${url}#breadcrumb`;
+  const faqId = input.faq && input.faq.length > 0 ? `${url}#faq` : null;
+  // 2026-09-12 (R54): R54 emits an optional HowTo node for the
+  // FOB shipping process. Gated on input.howto — pages that
+  // don't opt in stay byte-equivalent to the no-HowTo schema.
+  const howtoId = input.howto ? `${url}#howto` : null;
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": webpageId,
+        url,
+        name: "FOB Shipping from China — Free On Board, CIF, EXW Terms | SublimApparel",
+        description:
+          "FOB (Free On Board), CIF (Cost Insurance Freight), and EXW (Ex Works) shipping terms from our Yiwu factory for buyers with their own US/EU customs broker and freight forwarder. Hand off at the gate, origin port, or destination port.",
+        inLanguage: "en",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        about: { "@id": `${SITE_URL}/#organization` },
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: `${SITE_URL}/og/og-home.webp`,
+        },
+        speakable: {
+          "@type": "SpeakableSpecification",
+          xpath: ["/html/body//h1", "/html/body//section[1]//p"],
+        },
+        mainEntity: { "@id": serviceId },
+      },
+      {
+        // 2026-09-12 (R54): dedicated FOB Service node for
+        // /shipping/fob/. Sibling to the DDP /shipping/ddp/
+        // Service — this one targets the "FOB shipping from
+        // China" / "buyer-arranged freight" intent query surface
+        // and the 3 incoterms comparison on the page.
+        "@type": "Service",
+        "@id": serviceId,
+        name: "FOB / CIF / EXW Shipping Service — SublimApparel",
+        description:
+          "Buyer-arranged freight shipping from Yiwu, China. FOB (Free On Board): factory hands off at the origin port and buyer takes ownership from the ship's rail. CIF (Cost, Insurance, Freight): factory pays ocean freight + insurance to buyer's destination port. EXW (Ex Works): buyer picks up cartons at our Yiwu factory gate. Suitable for importers with their own customs broker and freight forwarder.",
+        url,
+        provider: { "@id": `${SITE_URL}/#organization` },
+        areaServed: [
+          { "@type": "Country", name: "United States" },
+          { "@type": "Country", name: "Canada" },
+          { "@type": "Country", name: "United Kingdom" },
+          { "@type": "Country", name: "Australia" },
+          { "@type": "Country", name: "Germany" },
+          { "@type": "Country", name: "France" },
+          { "@type": "Country", name: "Spain" },
+          { "@type": "Country", name: "Japan" },
+        ],
+        hasOfferCatalog: {
+          "@type": "OfferCatalog",
+          name: "Buyer-Arranged Incoterm Options",
+          description:
+            "FOB Yiwu / Ningbo (origin port hand-off), CIF (destination port hand-off), EXW (factory gate hand-off).",
+          itemListElement: [
+            {
+              "@type": "Offer",
+              name: "FOB Yiwu / FOB Ningbo (Free On Board)",
+              description:
+                "Factory delivers cargo across the ship's rail at the origin port. Bill of Lading in buyer's name. Buyer arranges ocean freight, customs, duties, and last-mile.",
+            },
+            {
+              "@type": "Offer",
+              name: "CIF (Cost, Insurance & Freight)",
+              description:
+                "Factory pays ocean freight + insurance to the buyer's destination port. Buyer still handles customs clearance, duties, and last-mile delivery.",
+            },
+            {
+              "@type": "Offer",
+              name: "EXW (Ex Works)",
+              description:
+                "Maximum buyer control. Buyer picks up cartons at our 2,000 m² Yiwu factory gate and arranges everything from the factory floor onwards.",
+            },
+          ],
+        },
+        offers: {
+          "@type": "Offer",
+          "@id": `${url}#service-offer`,
+          url,
+          priceCurrency: "USD",
+          price: "0",
+          availability: "https://schema.org/PreOrder",
+          availabilityStarts: "2026-01-01",
+          priceValidUntil: "2027-12-31",
+          inventoryLevel: {
+            "@type": "QuantitativeValue",
+            value: 0,
+            unitText: "quote-based",
+          },
+          seller: { "@id": `${SITE_URL}/#organization` },
+        },
+        mainEntityOfPage: { "@id": webpageId },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": breadcrumbId,
+        itemListElement: input.breadcrumb.map((c, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          name: c.name,
+          item: `${SITE_URL}${c.path.startsWith("/") ? c.path : `/${c.path}`}`,
+        })),
+      },
+      ...(faqId
+        ? [
+            buildFaqPageNode(faqId, webpageId, input.faq!),
+          ]
+        : []),
+      // 2026-09-12 (R54): FOB shipping process HowTo. Same
+      // shape as the DDP R53 emission — in-graph, gated on
+      // input.howto, single <script> tag output. Targets the
+      // "how does FOB shipping from China work" / "FOB
+      // shipping process steps" buyer-intent queries that
+      // Google surfaces as HowTo rich results.
+      ...(howtoId && input.howto
+        ? [
+            {
+              "@type": "HowTo",
+              "@id": howtoId,
+              url,
+              name: input.howto.name,
+              description: input.howto.description,
+              inLanguage: "en",
+              isPartOf: { "@id": webpageId },
+              about: { "@id": `${SITE_URL}/#organization` },
+              ...(input.howto.totalTime
+                ? { totalTime: input.howto.totalTime }
+                : {}),
+              step: input.howto.steps.map((s, i) => ({
+                "@type": "HowToStep",
+                position: i + 1,
+                name: s.name,
+                text: s.text,
+              })),
+            },
+          ]
+        : []),
+    ],
+  };
+}
+
 
 // 2026-09-12 (R37): shared helper for /about/ that consolidates
 // the 4 separate JSON-LD <script> tags (BreadcrumbList + FAQPage
