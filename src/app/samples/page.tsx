@@ -94,6 +94,39 @@ const sampleTypes = [
   },
 ];
 
+// 2026-09-14 (R64 build fix, round 7): line 172 references
+// `sampleSteps` but the constant was never defined — only
+// `sampleTypes` is. The page-side "How a sample order flows"
+// section was added in a refactor that introduced the JSX
+// map but the data array never landed, so the production
+// build has been failing on this since the refactor. The
+// shape has to be a tuple array (the JSX uses `step[0]` for
+// the title and `step[1]` for the description), so we
+// declare it as `[title, body][]`. The 4 steps mirror the
+// order flow already described in the FAQ (mockup → sample
+// → sign-off → bulk refund) and align with the 3-tier
+// HowTo JSON-LD node in buildSamplesHubGraph (which only
+// models the 3 sample tiers, not the order flow). No
+// existing data to re-use — this is a fresh constant.
+const sampleSteps: [string, string][] = [
+  [
+    "Send your design + specs",
+    "Email your artwork (vector .ai / .eps / .svg, or 300+ DPI raster), fabric choice, and quantity range. We respond within 24 business hours with tier recommendation and per-piece pricing.",
+  ],
+  [
+    "Approve the digital mockup",
+    "We lay up your design on the production fabric digitally — front, back, sleeve prints at correct scale. You sign off on the mockup before we cut any physical sample. Mockups are free and unlimited revisions.",
+  ],
+  [
+    "Pre-production sample made + shipped",
+    "Sample is produced on the same fabric lot as bulk will be cut from. Photos emailed for review, then the physical piece is shipped DHL / FedEx to your door in 7-12 business days from artwork approval.",
+  ],
+  [
+    "Sign off + sample cost refunded on bulk",
+    "Once you approve the physical sample, bulk production starts. The $25-60 sample fee is refunded as credit on your bulk order (100+ pieces for pre-production samples, 200+ for multi-design comparison packs).",
+  ],
+];
+
 export default function SamplesPage() {
   // 2026-09-12 (R41): consolidate the 4 nodes (BreadcrumbList +
   // WebPage + FAQPage + undefined samplesHowToJsonLd — a latent
