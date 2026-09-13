@@ -27,46 +27,39 @@ import { Search, FileText } from "lucide-react";
 // unbounded set of search-result pages (only the canonical /search/
 // stays in the index).
 
-type Props = {
-  searchParams: Promise<{ q?: string }>;
-};
+// 2026-09-14 (R64 follow-up): the page is now a fully static shell.
+// Previously the server component did `await searchParams` to read
+// `?q=` server-side, but `output: "export"` forbids any dynamic
+// function in route handlers — Next.js treats `await searchParams`
+// as making the route dynamic and the build dies with
+//   "Route /search with `dynamic = "error"` couldn't be rendered
+//    statically because it used `await searchParams`".
+// The actual search logic was already client-side (SearchClient reads
+// the URL via useSearchParams), so the server-side `?q=` extraction
+// was redundant. Removing it turns the page into a 100% static
+// renderable shell; the SearchClient now derives its initial query
+// from useSearchParams() on the client. The indexable /search/ page
+// keeps its static metadata; the SearchClient adds a noindex meta
+// tag on the client when ?q= is present (so Google still doesn't
+// index unbounded search-result variants).
 
-export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
-  const sp = await searchParams;
-  const q = (sp?.q || "").trim();
-  if (q) {
-    // When ?q= is present, this is a dynamic search-results page and
-    // we don't want Google indexing every variant. The /search/
-    // landing page (no ?q=) is the only one we want indexed.
-    return buildPageMetadata({
-      title: `Search results for "${q}" | SublimApparel`,
-      description: `Live results across products, fabric, techniques and the SublimApparel blog for the query "${q}".`,
-      robots: {
-        index: false,
-        follow: true,
-        googleBot: { index: false, follow: true, "max-snippet": -1 },
-      },
-      alternates: { canonical: "https://sublimapparel.com/search/" },
-    });
-  }
-  return buildPageMetadata({
-    title: "Site Search | SublimApparel Products, Fabric, Blog",
-    description: "Search the full SublimApparel site — 100+ products, 60+ fabrics, 20 techniques, blog & guides. Live full-text results, instant filter, no signup needed.",
-    keywords: [
-      "SublimApparel search",
-      "site search",
-      "product lookup",
-      "fabric search",
-      "apparel search",
-      "search sublimation factory",
-    ],
-    alternates: { canonical: "https://sublimapparel.com/search/" },
-    ogTitle: "SublimApparel Site Search — Products, Fabric, Blog",
-    ogDescription:
-      "Search the full SublimApparel site. Live full-text search across 100+ products, 60+ fabrics, 20 techniques, and our blog.",
-    ogImage: "/og/og-default.jpg",
-  });
-}
+export const metadata: Metadata = buildPageMetadata({
+  title: "Site Search | SublimApparel Products, Fabric, Blog",
+  description: "Search the full SublimApparel site — 100+ products, 60+ fabrics, 20 techniques, blog & guides. Live full-text results, instant filter, no signup needed.",
+  keywords: [
+    "SublimApparel search",
+    "site search",
+    "product lookup",
+    "fabric search",
+    "apparel search",
+    "search sublimation factory",
+  ],
+  alternates: { canonical: "https://sublimapparel.com/search/" },
+  ogTitle: "SublimApparel Site Search — Products, Fabric, Blog",
+  ogDescription:
+    "Search the full SublimApparel site. Live full-text search across 100+ products, 60+ fabrics, 20 techniques, and our blog.",
+  ogImage: "/og/og-default.jpg",
+});
 
 const breadcrumbJsonLd = buildBreadcrumbJsonLd([
   { name: "Home", path: "/" },
@@ -129,9 +122,14 @@ const searchFaqItems = [
   },
 ];
 
-export default async function SearchPage({ searchParams }: Props) {
-  const sp = await searchParams;
-  const initialQuery = (sp?.q || "").trim();
+export default function SearchPage() {
+  // 2026-09-14 (R64 follow-up): the page is now fully static. The
+  // previous version did `await searchParams` to extract `initialQuery`
+  // and pass it to SearchClient, but `output: "export"` rejects any
+  // dynamic function in route code (searchParams counts as dynamic).
+  // The SearchClient component already reads the URL `?q=` via
+  // useSearchParams() on the client, so the prop was redundant. We
+  // just pass nothing now and the client derives everything itself.
   const faqId = "https://sublimapparel.com/search/#faq";
   const webPageId = "https://sublimapparel.com/search/#webpage";
 
@@ -203,7 +201,7 @@ export default async function SearchPage({ searchParams }: Props) {
               </div>
             }
           >
-            <SearchClient initialQuery={initialQuery} />
+            <SearchClient />
           </Suspense>
         </section>
       </main>

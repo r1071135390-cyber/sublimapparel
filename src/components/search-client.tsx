@@ -152,10 +152,19 @@ function ResultCard({ result, q }: { result: SearchResult; q: string }) {
   );
 }
 
-export function SearchClient({ initialQuery }: { initialQuery: string }) {
+export function SearchClient() {
   const router = useRouter();
   const searchParamsHook = useSearchParams();
-  const [q, setQ] = useState(initialQuery);
+  // 2026-09-14 (R64 follow-up): derive the initial query directly from
+  // useSearchParams() instead of from a server-passed `initialQuery`
+  // prop. The /search page is now a fully static shell (no await
+  // searchParams in the server component, because output: "export"
+  // rejects any dynamic function), and useSearchParams() is available
+  // on the client at first render. This also lets the SearchClient
+  // stay a single self-contained component — no server-side prop
+  // threading required.
+  const initialUrlQ = (searchParamsHook?.get("q") || "").trim();
+  const [q, setQ] = useState(initialUrlQ);
   const [activeType, setActiveType] = useState<"all" | SearchResultType>("all");
   const inputRef = useRef<HTMLInputElement>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -165,11 +174,46 @@ export function SearchClient({ initialQuery }: { initialQuery: string }) {
     inputRef.current?.focus();
   }, []);
 
+  // 2026-09-14 (R64 follow-up): when ?q= is present, this is a
+  // search-results variant and we don't want Google indexing every
+  // one of them. The /search/ static page itself is indexable (its
+  // metadata is set statically in the page.tsx export const metadata),
+  // so on the client we inject a noindex,follow meta tag at runtime
+  // only when a query is active. This is the same behavior the
+  // server component used to do via generateMetadata, but works under
+  // output: "export" where server-side conditional metadata is not
+  // possible. We restore the static meta tag on cleanup so back-
+  // navigation to a query-less /search/ doesn't keep the noindex.
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    const hasQuery = q.trim().length > 0;
+    const existing = document.head.querySelector(
+      'meta[name="robots"][data-search-noindex="1"]',
+    );
+    if (hasQuery && !existing) {
+      const meta = document.createElement("meta");
+      meta.setAttribute("name", "robots");
+      meta.setAttribute("content", "noindex, follow, max-snippet:-1");
+      meta.setAttribute("data-search-noindex", "1");
+      document.head.appendChild(meta);
+    } else if (!hasQuery && existing) {
+      existing.remove();
+    }
+    return () => {
+      // Don't remove on every q change — only on full unmount, so
+      // switching back to the empty state keeps the noindex removal
+      // path working (the !hasQuery branch above handles it).
+    };
+  }, [q]);
+
   // Push query to URL (debounced) so the URL is shareable and Google can
   // index /search/?q=... result pages. We avoid push on initial mount
-  // (initialQuery already matches the URL) to keep history clean.
+  // (the URL already has the same query, or there's no query yet) by
+  // comparing against the current URL's ?q= value rather than a
+  // server-passed initialQuery prop (which we no longer have).
   useEffect(() => {
-    if (q === initialQuery) return;
+    const currentUrlQ = (searchParamsHook?.get("q") || "").trim();
+    if (q === currentUrlQ) return;
     if (debounceRef.current) clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(() => {
       const sp = new URLSearchParams(searchParamsHook?.toString() || "");
