@@ -14,6 +14,15 @@ import {
 } from "lucide-react";
 import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
+// 2026-09-14 (R64 build fix, round 6): R61 (the unified 3-channel
+// contact widget rollout) added `<UnifiedContactCta variant="full"
+// sourceLabel="Quality control checklist" />` at line 435 but the
+// import was never wired in. R59/R61 hit 21 other high-intent B2B
+// pages — this one was missed. Without the import, the production
+// build fails with `Cannot find name 'UnifiedContactCta'` on
+// line 435. Re-add the import next to the other component imports
+// so the build resolves the identifier.
+import { UnifiedContactCta } from "@/components/unified-contact-cta";
 // 2026-09-14 (R64 build fix, round 5): R48 added the 4-stage
 // inspection HowTo JSON-LD node to /quality-control/ via
 // `buildHowToNode({...})` on line 169, but the import line was
