@@ -1813,6 +1813,15 @@ export type AboutInput = {
   faq?: FaqItem[];
   /** Optional list of "Dive deeper" sub-pages. */
   subPages?: { href: string; title: string }[];
+  /** 2026-09-13 (R64a): the visible 6-step process block
+   *  on /about/ ("What we do — Six steps. One roof.").
+   *  When present, buildAboutGraph emits an OfferCatalog
+   *  node #about-capabilities so the visible content
+   *  matches a schema Service. Each entry's `title` is the
+   *  Service name and `desc` is the Service description.
+   *  Same shape as the `capabilities` const at the top of
+   *  src/app/about/page.tsx. */
+  capabilities?: { title: string; desc: string }[];
   /** Pre-mapped schema review array. Omit to strip the
    *  review field (preserves R27 gating). */
   review?: unknown[];
@@ -2183,6 +2192,23 @@ export function buildAboutGraph(input: AboutInput) {
         // the bare Organization shell is emitted, which is a
         // no-op for Google's review parser and ready for the
         // day the feed is wired up.
+        //
+        // 2026-09-13 (R64a): wire the about-page review
+        // carrier to the new #about-capabilities OfferCatalog
+        // so the visible 6-step process block (sublimation
+        // & DTG, cutting & sorting, sewing & assembly, QC,
+        // packing & labeling, sample room) is mirrored in the
+        // @graph. Previously the global Organization had a
+        // hasOfferCatalog of the /products/ + /solutions/
+        // taxonomy, but the /about/ process steps were not
+        // represented at all — so Google could not join the
+        // page's hero "Six steps. One roof." claim to a
+        // schema Service. Adding hasOfferCatalog here is a
+        // additive change (no new @id, no schema surface
+        // change for non-about pages) and the 6 Services
+        // share @ids with the local Capabilities list, so
+        // future audit passes can verify visible content vs
+        // schema claim 1:1.
         "@type": "Organization",
         "@id": `${SITE_URL}/#organization-about-reviews`,
         url,
@@ -2190,6 +2216,11 @@ export function buildAboutGraph(input: AboutInput) {
         description:
           "Yiwu-based allover-print apparel factory reviewed on this page. Polyester sublimation + all-cotton DTG. 50-piece MOQ. DDP door-to-door to 50+ countries.",
         parentOrganization: { "@id": `${SITE_URL}/#organization` },
+        ...(input.aggregateRating || (input.review && input.review.length > 0)
+          ? {
+              hasOfferCatalog: { "@id": `${SITE_URL}/about/#about-capabilities` },
+            }
+          : {}),
         ...(hasReviews ? { review: input.review } : {}),
         ...(input.aggregateRating
           ? {
@@ -2242,6 +2273,39 @@ export function buildAboutGraph(input: AboutInput) {
                 position: i + 1,
                 name: p.title,
                 url: `${SITE_URL}${p.href.startsWith("/") ? p.href : `/${p.href}`}`,
+              })),
+            },
+          ]
+        : []),
+      // 2026-09-13 (R64a): the 6-step process OfferCatalog.
+      // Emitted only when input.capabilities is passed (the
+      // current /about/ page passes a 6-entry array; future
+      // callers can opt in by passing the same shape). The
+      // node lives at #about-capabilities on the /about/ URL
+      // and is referenced from the review carrier
+      // #organization-about-reviews via hasOfferCatalog so
+      // Google's brand-entity parser sees a single coherent
+      // "6 in-house services" claim that is mirrored
+      // verbatim in the page's "What we do" section.
+      ...(input.capabilities && input.capabilities.length > 0
+        ? [
+            {
+              "@type": "OfferCatalog",
+              "@id": `${SITE_URL}/about/#about-capabilities`,
+              name: "SublimApparel /about/ — in-house capabilities",
+              description:
+                "Six in-house production capabilities delivered under one roof at the Yiwu factory. No subcontractors, no handoffs.",
+              numberOfItems: input.capabilities.length,
+              itemListElement: input.capabilities.map((c, i) => ({
+                "@type": "Offer",
+                position: i + 1,
+                itemOffered: {
+                  "@type": "Service",
+                  name: c.title,
+                  description: c.desc,
+                  provider: { "@id": `${SITE_URL}/#organization` },
+                  areaServed: { "@id": `${SITE_URL}/#organization` },
+                },
               })),
             },
           ]

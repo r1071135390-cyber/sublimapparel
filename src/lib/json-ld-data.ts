@@ -124,6 +124,42 @@ export const organizationJsonLd = {
     "Custom sportswear manufacturing",
     "B2B apparel OEM",
   ],
+  // 2026-09-13 (R64a): E-E-A-T enrichment — surface the
+  // named leadership and the brand's physical locations as
+  // first-class schema relationships instead of only
+  // unidirectional Person.worksFor / LocalBusiness.parentOrganization
+  // pointers. Google's Quality Rater Guidelines explicitly look
+  // for "named experts" and "verifiable location" signals on
+  // brand-authority pages; adding the reverse-direction links
+  // here lets the same @id graph be traversed in both
+  // directions without a second parse.
+  //
+  // - `employee` points to the two Person nodes in
+  //   buildAboutGraph (Ramon Hsu, Mark Liu) so Google can join
+  //   "SublimApparel" → "Ramon Hsu (Founder & CEO)" → bio
+  //   and "SublimApparel" → "Mark Liu (Production & Quality
+  //   Director)" → bio. The Person @ids are stable across
+  //   /about/, /blog/[slug]/, and the global @graph in
+  //   layout.tsx, so this single edit propagates the named
+  //   leadership to every page on the site.
+  // - `subOrganization` points at the two LocalBusiness
+  //   nodes (Yiwu factory HQ + US warehouse) so the global
+  //   Organization node now carries a verified physical
+  //   footprint (foundingDate + 2 sub-orgs) for the brand
+  //   knowledge panel.
+  // - `knowsLanguage` mirrors the visible "3 languages" claim
+  //   on /about/ (English / Spanish / Mandarin) and the
+  //   Person #person-ramon.knowsLanguage array, keeping
+  //   schema + visible content in lockstep.
+  employee: [
+    { "@id": `${SITE_URL}/#person-ramon` },
+    { "@id": `${SITE_URL}/#person-mark` },
+  ],
+  subOrganization: [
+    { "@id": `${SITE_URL}/#localbusiness-yiwu` },
+    { "@id": `${SITE_URL}/shipping/us-warehouse/#localbusiness` },
+  ],
+  knowsLanguage: ["en", "es", "zh-CN"],
   // 2026-09-11 (R25): hasOfferCatalog gives Google an at-a-glance view
   // of every product/service category the brand offers. Combined with
   // makesOffer on the LocalBusiness nodes, this lets Google render a

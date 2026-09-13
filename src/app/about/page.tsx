@@ -142,6 +142,16 @@ export default function AboutPage() {
   const aboutGraph = buildAboutGraph({
     faq: aboutFaqs,
     subPages: aboutSubPages,
+    // 2026-09-13 (R64a): pass the visible 6-step process
+    // block ("What we do — Six steps. One roof.") into the
+    // @graph as a single OfferCatalog. This keeps schema
+    // and visible content 1:1 in lockstep and adds a
+    // verified "Service" claim per capability that Google
+    // can use for service-area rich results. The shape
+    // matches the AboutInput.capabilities type; the page's
+    // local `capabilities` const is the single source of
+    // truth for both the visible cards and the schema.
+    capabilities,
     review: aboutReviews,
     aggregateRating: aboutAggregateRating,
   });
