@@ -18,3 +18,15 @@
 
 # /llms-full.txt is the long-form version of the same AEO content.
 /llms-full.txt            /llms/llms-full.txt            200
+
+# ============================================================================
+# Blog RSS feed — canonical URL is /blog/feed.xml (no trailing slash) so
+# the blog page's <link rel="alternate"> and the feed's own <atom:link
+# rel="self"> can both reference the same path. With `trailingSlash: true`
+# Next.js writes the file to out/blog/feed.xml/index.html, which
+# Cloudflare Pages serves at /blog/feed.xml/. Redirect the no-slash
+# canonical to the with-slash served path. The Content-Type override
+# lives in /public/_headers (the redirect destination is what gets
+# served, so the headers on /blog/feed.xml/* apply after the 301).
+# ============================================================================
+/blog/feed.xml            /blog/feed.xml/                301

@@ -17,6 +17,21 @@
 
 import { blogPosts } from "@/lib/blog";
 
+// 2026-09-14 (R64 follow-up): Next.js `output: "export"` only works
+// for routes that can be statically rendered at build time. Without an
+// explicit `dynamic` export, the App Router treats this route as
+// dynamic (because GET is a Request handler and the response is
+// generated on demand) and the build dies with
+// "Failed to collect page data for /blog/feed.xml".
+// Marking it `force-static` tells the compiler to call GET() exactly
+// once during the build and inline the resulting Response body into
+// the static export, so visitors (and RSS aggregators) get a real
+// feed.xml file at /blog/feed.xml/ without any runtime cost.
+// Cloudflare Pages serves the file with text/html by default — we
+// override the Content-Type in public/_headers below so the file
+// is served as application/rss+xml as RSS readers expect.
+export const dynamic = "force-static";
+
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://sublimapparel.com";
 
 const escapeXml = (raw: string): string =>

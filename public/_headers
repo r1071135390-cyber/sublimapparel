@@ -50,6 +50,25 @@
   Cache-Control: no-store, max-age=0, must-revalidate
   Content-Type: text/plain; charset=utf-8
 
+# ===========================================================================
+# Blog RSS feed — force-static API route at src/app/blog/feed.xml/route.ts.
+# With `trailingSlash: true`, Next.js writes the pre-rendered response to
+# out/blog/feed.xml/index.html, so Cloudflare Pages serves the file at
+# /blog/feed.xml/ with text/html by default. The /blog/feed.xml (no slash)
+# URL is preserved via a 301 redirect in _redirects. The headers below
+# override the Content-Type so RSS aggregators see the file as
+# application/rss+xml — without this, Feedly / Inoreader reject the feed
+# as malformed. Cache-Control mirrors the in-route Cache-Control header
+# (1 h edge, 24 h stale-while-revalidate) so the feed re-validates on
+# every Cloudflare deploy.
+# ===========================================================================
+/blog/feed.xml/*
+  Content-Type: application/rss+xml; charset=utf-8
+  Cache-Control: public, s-maxage=3600, stale-while-revalidate=86400
+/blog/feed.xml
+  Content-Type: application/rss+xml; charset=utf-8
+  Cache-Control: public, s-maxage=3600, stale-while-revalidate=86400
+
 # Markdown alternates — point AI crawlers at plain-text versions of every page
 /*.html.md
   Cache-Control: public, max-age=0, must-revalidate, s-maxage=3600
