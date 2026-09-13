@@ -5,6 +5,7 @@ import Image from"next/image";
 import { CheckCircle2, Sparkles, Plus } from"lucide-react";
 import { JsonLd } from"@/components/json-ld";
 import { buildTechniqueHubGraph } from"@/lib/breadcrumb";
+import { UnifiedContactCta } from "@/components/unified-contact-cta";
 
 export const metadata = buildPageMetadata({
     // 2026-09-11 (R15-P0-1): was 77 chars and explicitly truncated. Rewrote to 58 chars.
@@ -784,6 +785,17 @@ export default function TechniquePage() {
           </Link>
         </div>
       </section>
+
+      {/* 2026-09-13 (R60): unified 3-channel CTA. Sits between the
+          legacy brand-colored "Not sure which technique" final CTA
+          and the E-E-A-T footer so technique-hub visitors see the
+          same quote-modal / WhatsApp / contact-form pattern used on
+          every other high-intent B2B page. */}
+      <UnifiedContactCta
+        variant="full"
+        sourceLabel="Technique hub"
+        className="border-t-4 border-black"
+      />
 
       {/* E-E-A-T author + last-updated footer */}
       <section className="border-t border-black/10 bg-white">

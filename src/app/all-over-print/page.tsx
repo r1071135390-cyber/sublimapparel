@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { buildPageMetadata } from "@/lib/page-metadata";
+import { UnifiedContactCta } from "@/components/unified-contact-cta";
 import Image from "next/image";
 import Link from "next/link";
 import { JsonLd } from "@/components/json-ld";
@@ -647,40 +648,18 @@ export default function AllOverPrintPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="bg-[#0a0a0a] text-white">
-        <div className="mx-auto max-w-5xl px-6 py-20 text-center md:py-24">
-          <div className="mb-4 inline-flex items-center gap-2 bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
-            <Zap className="h-3.5 w-3.5" /> Reply within 1 business day
-          </div>
-          <h2 className="text-4xl font-black leading-tight md:text-6xl">
-            Send us your design.
-            <br />
-            Get a landed, duty-paid quote.
-          </h2>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-neutral-300">
-            We will reply with a single line item — unit price + shipping +
-            duties — no hidden fees, no surprise add-ons. If your deadline is
-            not achievable, we will say so in the same reply.
-          </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Link
-              href="/get-a-quote/"
-              className="inline-flex items-center gap-2 bg-[#ff4d00] px-8 py-4 text-base font-black uppercase tracking-widest text-black transition hover:bg-[#ff5d1a]"
-            >
-              Get a quote
-              <ArrowRight className="h-5 w-5" />
-            </Link>
-            <Link
-              href="/products/all/"
-              className="inline-flex items-center gap-2 border-2 border-white px-8 py-4 text-base font-black uppercase tracking-widest text-white transition hover:bg-white hover:text-black"
-            >
-              Browse all products
-              <ArrowRight className="h-5 w-5" />
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* 2026-09-13 (R60): unified 3-channel CTA. Replaces the legacy
+          dark "Send us your design" single-CTA block so the 3 highest-
+          intent B2B intent pages (AOP, pricing, samples) all show the
+          same quote-modal / WhatsApp / contact-form trio in the same
+          visual treatment. onDark=true keeps the dark section styling
+          and the contrast/accessibility we already validated. */}
+      <UnifiedContactCta
+        variant="full"
+        sourceLabel="All-over print page"
+        onDark
+        className="border-t-4 border-black"
+      />
     </main>
   );
 }

@@ -26,6 +26,7 @@ import {
 import { RequestQuoteLink } from "@/components/request-quote-link";
 import { JsonLd } from "@/components/json-ld";
 import { buildShippingHubGraph } from "@/lib/breadcrumb";
+import { UnifiedContactCta } from "@/components/unified-contact-cta";
 
 export const metadata = buildPageMetadata({
     // 2026-09-11 (R15-P0-1): was 71 chars — Google SERP limit ~60. Shortened to 56.
@@ -965,6 +966,20 @@ export default function ShippingPage() {
           </div>
         </div>
       </section>
+
+      {/* 2026-09-13 (R60): unified 3-channel CTA. Sits between the
+          legacy brand-colored "Get a shipping quote" final CTA and the
+          E-E-A-T footer so visitors who scroll to the bottom of the
+          shipping hub see the same quote/WhatsApp/form trio as
+          /contact/, /yiwu-factory-whatsapp/, /pricing/, /samples/ and
+          /all-over-print/. The E-E-A-T block stays as-is so we keep
+          the human authorship + last-updated signal Google already
+          credits. */}
+      <UnifiedContactCta
+        variant="full"
+        sourceLabel="Shipping hub"
+        className="border-t-4 border-black"
+      />
 
       {/* E-E-A-T author + last-updated footer */}
       <section className="border-t border-black/10 bg-white">

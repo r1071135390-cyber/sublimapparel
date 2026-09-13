@@ -2,13 +2,17 @@ import { JsonLd } from "@/components/json-ld";
 import type { Metadata } from "next";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import { RequestQuoteLink } from "@/components/request-quote-link";
 import { buildPageMetadata } from "@/lib/page-metadata";
+import { UnifiedContactCta } from "@/components/unified-contact-cta";
 
 // 2026-09-11 push (Round 4): same fix as /production/ — switch to buildPageMetadata
 // so the title doesn't pick up a duplicate "| SublimApparel" suffix from the
 // layout's title template. Title becomes keyword-rich; brand signals come from
 // canonical + OG siteName.
+// 2026-09-13 (R60): replace the legacy single-CTA ("Request a quote" link) with
+// UnifiedContactCta (full variant, light bg) so /pricing/ shows the same 3-channel
+// contact pattern as /contact/, /yiwu-factory-whatsapp/, and /about/. R59 created
+// the component; R60 is the site-wide rollout to high-intent B2B pages.
 export const metadata: Metadata = buildPageMetadata({
   title: "Pricing & MOQ: How Quotes Are Built",
   // 2026-09-11 push (Round 5): tightened from 165 → 152 chars to fit Google's
@@ -323,26 +327,15 @@ export default function PricingPage() {
           </div>
         </section>
 
-        <section className="border-t-4 border-black bg-[#f5f5f5] py-20">
-          <div className="mx-auto max-w-3xl px-6 text-center">
-            <h2 className="text-3xl font-extrabold tracking-tight md:text-4xl">
-              Get an exact DDP quote
-            </h2>
-            <p className="mt-4 text-lg text-[#3a3a3a]">
-              Send us your design, fabric choice, quantity, and delivery zip. We&apos;ll
-              reply with one all-in number within 24 hours.
-            </p>
-            <div className="mt-8">
-              <RequestQuoteLink
-                label="Request a quote"
-                className="inline-flex items-center gap-2 bg-[#ff4d00] px-8 py-4 text-base font-bold uppercase tracking-widest text-black hover:bg-[#ff5d1a]"
-              >
-                Request a quote
-              </RequestQuoteLink>
-            </div>
-          </div>
-        </section>
       </main>
+      {/* 2026-09-13 (R60): unified 3-channel CTA. Replaces the legacy single
+          "Get an exact DDP quote" section that was removed above so every
+          high-intent B2B page now shows the same quote/WhatsApp/form trio. */}
+      <UnifiedContactCta
+        variant="full"
+        sourceLabel="Pricing page"
+        className="border-t-4 border-black"
+      />
       <Footer />
       {/* 2026-09-12 (R46): single @graph — BreadcrumbList + WebPage + Service + FAQPage. */}
       <JsonLd data={pricingGraph} />

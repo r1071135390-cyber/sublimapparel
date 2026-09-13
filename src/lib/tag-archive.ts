@@ -26,9 +26,11 @@ export interface TagInfo {
    * tag pages. Most tag pages share product cards with /products, /fabric and
    * the tag hub itself, which Google treats as near-duplicate thin content.
    * We noindex the long tail so crawl budget flows into the canonical product
-   * pages. Only tags with proven clicks (boxing / dance / golf / lacrosse in
-   * Sep 2026 GSC) plus the obvious B2B winners (t-shirt, jersey, soccer,
-   * basketball, team-and-club, corporate-and-branding) stay indexed.
+   * pages. Only the 10 proven B2B winners stay indexed (verified R60):
+   *   categories: T-Shirt, Jersey
+   *   sports:     Basketball, Boxing, Dance, Golf, Lacrosse, Soccer
+   *   scenarios:  Team & Club, Corporate & Branding
+   * Project memory hard constraint: "only 10 high-value tags are kept".
    */
   indexable?: boolean;
 }
@@ -771,6 +773,20 @@ export const SPORT_TAGS: Record<string, Omit<TagInfo, "slug" | "dimension">> = {
 // ------------------------------------------------------------
 
 export const SCENARIO_TAGS: Record<string, Omit<TagInfo, "slug" | "dimension">> = {
+  // 2026-09-13 (R60): removed `indexable: true` from Promotional Swag.
+  // Pre-R60 the site had 11 indexable tag pages, but the project's hard
+  // SEO constraint (project memory: "35 out of 45 /tag/* archive pages must
+  // have noindex, follow attributes; only 10 high-value tags are kept")
+  // caps the indexable budget at 10. We keep the 10 proven B2B winners:
+  //   - 2 category-level: T-Shirt, Jersey (top-of-funnel garment searches)
+  //   - 6 sport-level: Basketball, Boxing, Dance, Golf, Lacrosse, Soccer
+  //     (the Sep-2026 GSC winners + the obvious B2B sport queries)
+  //   - 2 scenario-level: Team & Club, Corporate & Branding
+  //     (the two highest-intent commercial buyer profiles)
+  // Promotional Swag is a strong commercial term but it overlaps heavily
+  // with /solutions/promotional-marketing-apparel/ and the homepage's
+  // Promotional & Marketing card, so dropping it from the index saves one
+  // crawl slot while still letting it flow link equity (follow: true).
   "Promotional Swag": {
     label: "Promotional Swag",
     description: "Custom promotional swag — full-print tees, hoodies, hats, and totes for brand giveaways, customer gifts, and event drops. Low MOQ 50 pcs per design with DDP shipping to US/EU/UK/AU door-to-door.",
@@ -781,7 +797,6 @@ export const SCENARIO_TAGS: Record<string, Omit<TagInfo, "slug" | "dimension">> 
     ],
     process: "Sublimation on Polyester",
     icon: "🎁",
-    indexable: true,
   },
   "Event & Festival": {
     label: "Event & Festival",

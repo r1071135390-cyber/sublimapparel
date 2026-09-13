@@ -4,6 +4,7 @@ import { ArrowRight, AlertTriangle, Calendar, CheckCircle2, Clock, Plane } from 
 import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
 import { buildBreadcrumbJsonLd, buildFaqPageNode } from "@/lib/breadcrumb";
+import { UnifiedContactCta } from "@/components/unified-contact-cta";
 import { TimelineCalculator } from "./timeline-calculator";
 
 export const metadata = buildPageMetadata({
@@ -239,6 +240,17 @@ export default function EventTimelinePage() {
           </div>
         </div>
       </section>
+
+      {/* 2026-09-13 (R60): unified 3-channel CTA. Sits between the
+          FAQ section and the full <Contact /> form so event-timeline
+          calculator visitors see the same quote-modal / WhatsApp /
+          contact-form pattern used on every other high-intent B2B
+          page. */}
+      <UnifiedContactCta
+        variant="full"
+        sourceLabel="Event timeline"
+        className="border-t-4 border-black"
+      />
 
       <Contact />
     </>

@@ -2,14 +2,18 @@ import { JsonLd } from "@/components/json-ld";
 import type { Metadata } from "next";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import { RequestQuoteLink } from "@/components/request-quote-link";
 import { buildSamplesHubGraph } from "@/lib/breadcrumb";
 import { buildPageMetadata } from "@/lib/page-metadata";
+import { UnifiedContactCta } from "@/components/unified-contact-cta";
 
 // 2026-09-11 push (Round 4): same fix as /production/ — switch to buildPageMetadata
 // so the title doesn't pick up a duplicate "| SublimApparel" suffix from the
 // layout's title template (was 80 chars rendered, would never fit Google's 60-char
 // SERP cap). Keyword-rich headline + brand via OG/Twitter meta.
+// 2026-09-13 (R60): swap the legacy single "Request a sample" CTA for
+// UnifiedContactCta (full) so the same 3-channel pattern (quote modal /
+// WhatsApp / contact form) shows on /samples/, /pricing/, /contact/, and
+// /yiwu-factory-whatsapp/ — the 4 highest-intent B2B pages on the site.
 export const metadata: Metadata = buildPageMetadata({
   title: "Sample Policy: Free & Pre-Production Samples",
   description:
@@ -225,26 +229,17 @@ export default function SamplesPage() {
           </div>
         </section>
 
-        <section className="border-t-4 border-black bg-[#f5f5f5] py-20">
-          <div className="mx-auto max-w-3xl px-6 text-center">
-            <h2 className="text-3xl font-extrabold tracking-tight md:text-4xl">
-              Ready to request a sample?
-            </h2>
-            <p className="mt-4 text-lg text-[#3a3a3a]">
-              Send us the fabric, style, decoration method, and your delivery address.
-              We&apos;ll confirm cost and lead time within 4 hours.
-            </p>
-            <div className="mt-8">
-              <RequestQuoteLink
-                label="Request a sample"
-                className="inline-flex items-center gap-2 bg-[#ff4d00] px-8 py-4 text-base font-bold uppercase tracking-widest text-black hover:bg-[#ff5d1a]"
-              >
-                Request a sample
-              </RequestQuoteLink>
-            </div>
-          </div>
-        </section>
       </main>
+      {/* 2026-09-13 (R60): unified 3-channel CTA. Replaces the legacy
+          "Ready to request a sample?" single-CTA block. The new component
+          shows the quote modal (most detail), WhatsApp the floor
+          (fastest), and contact form (most formal) so a sample request
+          can flow through any of the three channels. */}
+      <UnifiedContactCta
+        variant="full"
+        sourceLabel="Samples page"
+        className="border-t-4 border-black"
+      />
       <Footer />
       {/* 2026-09-11 cleanup: the old raw <script> FAQPage + duplicate
           breadcrumb JsonLd were left over from before the

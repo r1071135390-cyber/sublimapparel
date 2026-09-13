@@ -26,6 +26,7 @@ import {
 import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
 import { RelatedProducts } from "@/components/related-products";
+import { UnifiedContactCta } from "@/components/unified-contact-cta";
 
 const SITE_URL = "https://sublimapparel.com";
 
@@ -650,6 +651,17 @@ export default function ForEventsPage() {
           </div>
         </div>
       </section>
+
+      {/* 2026-09-13 (R60): unified 3-channel CTA. Sits between the
+          FAQ section and the full <Contact /> form so event/festival/
+          conference visitors see the same quote-modal / WhatsApp /
+          contact-form pattern used on every other high-intent B2B
+          page. */}
+      <UnifiedContactCta
+        variant="full"
+        sourceLabel="Event & festival page"
+        className="border-t-4 border-black"
+      />
 
       {/* CTA */}
       <Contact />

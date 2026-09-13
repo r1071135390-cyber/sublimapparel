@@ -3,6 +3,7 @@ import { buildPageMetadata } from "@/lib/page-metadata";
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
 import { buildFabricHubGraph } from "@/lib/breadcrumb";
+import { UnifiedContactCta } from "@/components/unified-contact-cta";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Download, Droplets, Leaf } from "lucide-react";
@@ -363,6 +364,22 @@ export default function FabricPage() {
           </Link>
         </div>
       </section>
+
+      {/* 2026-09-13 (R60): unified 3-channel CTA. Sits between the
+          legacy dark "Need help choosing fabric and process?" section
+          and the E-E-A-T footer so fabric-hub visitors see the same
+          quote-modal / WhatsApp / contact-form pattern used on
+          /contact/, /yiwu-factory-whatsapp/, /pricing/, /samples/,
+          /all-over-print/ and /shipping/. The dark legacy CTA stays
+          above it (it's part of the "fabric decision" content), the
+          unified 3-channel block adds the always-on conversion
+          safety net. */}
+      <UnifiedContactCta
+        variant="full"
+        sourceLabel="Fabric library"
+        onDark
+        className="border-t-4 border-black"
+      />
 
       {/* E-E-A-T author + last-updated footer (visible to crawlers and humans) */}
       <section className="border-t border-black/10 bg-white">

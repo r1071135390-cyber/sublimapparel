@@ -18,6 +18,7 @@ import Link from "next/link";
 import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
 import { buildResourcesHubGraph } from "@/lib/breadcrumb";
+import { UnifiedContactCta } from "@/components/unified-contact-cta";
 
 export const metadata = buildPageMetadata({
     title: "Tools & Resources for Custom Apparel Buyers | Sublimapparel",
@@ -386,6 +387,16 @@ export default function ResourcesPage() {
           </div>
         </div>
       </section>
+
+      {/* 2026-09-13 (R60): unified 3-channel CTA. Sits between the
+          tools grid and the full <Contact /> form so resources-hub
+          visitors see the same quote-modal / WhatsApp / contact-form
+          pattern used on every other high-intent B2B page. */}
+      <UnifiedContactCta
+        variant="full"
+        sourceLabel="Resources hub"
+        className="border-t-4 border-black"
+      />
 
       <Contact />
     </>

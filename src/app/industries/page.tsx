@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight, Trophy, Shirt, Briefcase, Calendar, Ruler, MessageCircle, Megaphone, GraduationCap, Coffee, ShoppingCart, Building2, Mic2 } from "lucide-react";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { JsonLd } from "@/components/json-ld";
+import { UnifiedContactCta } from "@/components/unified-contact-cta";
 
 const SITE_URL = "https://sublimapparel.com";
 const industriesUrl = `${SITE_URL}/industries/`;
@@ -382,6 +383,17 @@ export default function IndustriesIndexPage() {
           </div>
         </div>
       </section>
+
+      {/* 2026-09-13 (R60): unified 3-channel CTA. Sits below the
+          "Don't see your industry?" final CTA so industry-hub visitors
+          who didn't find their vertical in the 12 above see the same
+          quote-modal / WhatsApp / contact-form pattern used on every
+          other high-intent B2B page. */}
+      <UnifiedContactCta
+        variant="full"
+        sourceLabel="Industries hub"
+        className="border-t-4 border-black"
+      />
       </main>
     </>
   );

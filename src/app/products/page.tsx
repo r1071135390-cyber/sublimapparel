@@ -3,6 +3,7 @@ import { buildPageMetadata } from "@/lib/page-metadata";
 import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
 import { buildCollectionPageGraph } from "@/lib/breadcrumb";
+import { UnifiedContactCta } from "@/components/unified-contact-cta";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Sparkles } from "lucide-react";
@@ -626,6 +627,17 @@ export default function ProductsPage() {
         </div>
       </section>
 
+      {/* 2026-09-13 (R60): unified 3-channel CTA sits between the
+          solutions/case-studies navigation block and the full Contact
+          form. Visitors who scan the catalog and want a quote see the
+          3 options (modal / WhatsApp / form) immediately; visitors who
+          already know they want the detailed form can still scroll
+          down to <Contact /> below. */}
+      <UnifiedContactCta
+        variant="full"
+        sourceLabel="Products catalog"
+        className="border-t-4 border-black"
+      />
       <Contact />
     </main>
   );
