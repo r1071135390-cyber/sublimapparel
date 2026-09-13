@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import Link from "next/link";
 import { Sparkles, ArrowRight, Truck, BadgeCheck } from "lucide-react";
-import { JsonLd } from "@/components/json-ld";
 import { ProductCatalog } from "@/components/product-catalog";
 import { HeroGallery } from "@/components/hero-gallery";
 import { products, allSports, allScenarios } from "@/lib/products-data";

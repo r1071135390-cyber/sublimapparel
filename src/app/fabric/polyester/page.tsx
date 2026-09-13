@@ -152,6 +152,7 @@ export default function PolyesterPage() {
     ],
   };
   return (
+    <>
     <main>
       {/* 2026-09-12 (R46): single @graph — BreadcrumbList + WebPage + Service + FAQPage */}
       <JsonLd data={polyGraph} />
@@ -475,3 +476,7 @@ export default function PolyesterPage() {
         onDark
         className="border-t-4 border-black"
       />
+    </main>
+    </>
+  );
+}

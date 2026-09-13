@@ -145,6 +145,7 @@ const pageGraph = {
 
 export default function PolyVsCottonPage() {
   return (
+    <>
     <main className="min-h-screen bg-white">
       {/* 2026-09-12 (R35): consolidated to single @graph block */}
       <JsonLd data={pageGraph} />
@@ -400,12 +401,13 @@ export default function PolyVsCottonPage() {
           quote-modal / WhatsApp / contact-form trio as the other
           comparison pages. onDark=true keeps the dark section
           styling + contrast validated for the rest of the site. */}
+      <UnifiedContactCta
+        variant="full"
+        sourceLabel="Polyester vs cotton sublimation comparison"
+        onDark
+        className="border-t-4 border-black"
+      />
     </main>
-    <UnifiedContactCta
-      variant="full"
-      sourceLabel="Polyester vs cotton sublimation comparison"
-      onDark
-      className="border-t-4 border-black"
-    />
+    </>
   );
 }
