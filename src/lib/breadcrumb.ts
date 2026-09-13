@@ -1826,6 +1826,21 @@ export type CountryDdpHowToInput = {
   dutyVatLine: string;
   /** Transit options, e.g. "express, air, or sea (Pacific)". */
   transitMode: string;
+  /** 2026-09-13 (R58): optional per-kg DDP cost range
+   *  (e.g. "USD 2–15 per kg (transit mode dependent)").
+   *  Rendered as a typed MonetaryAmount.estimatedCost in
+   *  the HowTo node so Google's HowTo rich-result can show
+   *  a structured "Cost" card. Omitted when not supplied —
+   *  pre-R58 callers stay byte-equivalent. */
+  estimatedCost?: string;
+  /** 2026-09-14 (R64c): optional typical DDP order volume
+   *  yielded by this country-route procedure (e.g.
+   *  "1,000-30,000+ pieces per year" for a typical US
+   *  DDP-importer client, or "50-5,000+ pieces per year"
+   *  for an EU/UK boutique brand). Rendered as a
+   *  text HowTo.yield field. Omitted when not supplied —
+   *  pre-R64c callers stay byte-equivalent. */
+  yield?: string;
 };
 
 export function buildCountryDdpHowToNode(input: CountryDdpHowToInput) {
@@ -1908,6 +1923,15 @@ export function buildCountryDdpHowToNode(input: CountryDdpHowToInput) {
           },
         }
       : {}),
+    // 2026-09-14 (R64c): optional yield block. Schema.org HowTo.yield
+    // accepts a text value describing the typical volume produced by
+    // following this procedure. For a country DDP route this is
+    // "X,000-30,000+ pieces per year" (typical importer) — matches
+    // the FOB page's yield field pattern so Google's HowTo card
+    // renders the same "How much does this yield?" panel across
+    // both DDP and FOB surfaces. Emitted only when the caller
+    // passes a value — pre-R64c callers see no behavior change.
+    ...(input.yield ? { yield: input.yield } : {}),
   };
 }
 
