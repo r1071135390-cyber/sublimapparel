@@ -204,6 +204,26 @@ const fobFaqs = [
     q: "How much does FOB shipping from China cost per kg?",
     a: "FOB cost has two components: the factory's FOB price (per piece) and the ocean freight (per kg or per CBM) you book separately. Ocean freight for a 20' FCL from Yiwu to the US West Coast runs $1,200-2,200 (about $0.30-0.55/kg for a full container); to the US East Coast $2,500-4,500; to UK / EU $1,800-3,500; to Australia $1,500-2,800. LCL is more expensive per kg ($0.80-1.50/kg) but lets you ship under one container. We quote FOB Yiwu / FOB Ningbo on every inquiry — the freight portion is yours to book with your own forwarder or our recommended NVOCC partner.",
   },
+  // 2026-09-13 (R57): 2 new PAA questions added. Q8 targets the
+  // dedicated "FOB vs EXW" intent — Q2 covered the three
+  // incoterms in one pass, but Google's PAA shows the EXW-vs-FOB
+  // pair as its own distinct box (high search volume from
+  // first-time importers weighing the two buyer-controlled
+  // options). Q9 targets the "FOB shipping documents" intent —
+  // a routine pre-shipment question from a buyer's compliance
+  // team that wants to know which paperwork the factory
+  // prepares vs which the buyer arranges. Both fit cleanly
+  // alongside the existing 7 FAQs and keep the FAQPage node
+  // at 9 entries, which is within Google's recommended
+  // 3-10 range for PAA extraction.
+  {
+    q: "What is the difference between FOB and EXW shipping?",
+    a: "FOB (Free On Board) and EXW (Ex Works) are both buyer-controlled incoterms — the seller does not arrange ocean freight or customs — but the hand-off point and the buyer's responsibility differ. Under FOB Yiwu or FOB Ningbo, the factory delivers the goods to the origin port and loads them across the ship's rail; the seller still handles export clearance from China and inland trucking to the port. Under EXW (Ex Works), the buyer takes ownership at our 2,000 m² Yiwu factory floor — the buyer is responsible for pickup at our gate, inland trucking, export clearance from China, ocean freight, and import customs. EXW gives the buyer maximum control and the lowest FOB price (we do not bill for trucking or export clearance), but it requires the buyer to coordinate factory pickup, which is impractical for first-time importers. FOB is the most common compromise: the factory still handles the China-side logistics, and the buyer takes over once the goods cross the ship's rail.",
+  },
+  {
+    q: "What documents are required for FOB shipping from China?",
+    a: "Under FOB terms the factory prepares five China-side documents: (1) Commercial Invoice — the buyer's named invoice with the agreed FOB unit price, total, currency, and incoterm code; (2) Packing List — per-carton weight, dimensions, and SKU breakdown; (3) Bill of Lading (B/L) — issued in the buyer's name (or their forwarder's) once the goods cross the ship's rail; (4) Certificate of Origin (C/O) — China-issued, may be required for tariff preference in the destination country; (5) Customs Export Declaration — China-side, filed by us or our export agent. The buyer (or the buyer's customs broker) prepares the import-side paperwork: import entry, HTS / TARIC / Schedule B classification, duty payment, and any destination-country certificates (e.g. FCC for electronics, FDA for food-contact items). Fumigation Certificate and ISPM-15 wood-pallet treatment are only required if the cargo is packed on raw-wood pallets — most apparel shipments use plastic pallets or carton-only packing and skip this step.",
+  },
 ];
 
 export default function FobPage() {

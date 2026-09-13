@@ -126,6 +126,19 @@ const comparisonJsonLd = buildComparisonJsonLd({
   // Backward-compat: dropping these two entries reverts the
   // schema to the pre-R54 baseline (no `hasPart` on the
   // Comparison node).
+  //
+  // 2026-09-13 (R57): extend the `hasPart` list with the 5
+  // country-specific DDP shipping HowTos (R55) so the
+  // comparison node surfaces a complete 7-entry provenance
+  // chain: DDP + FOB (the two incoterms being compared) and
+  // the 5 country destinations buyers actually ship to. Each
+  // entry resolves to a #howto @id that already lives on the
+  // country landing pages' @graph, so the cross-link is
+  // single-pass — Google parses the comparison page, sees the
+  // 7 @id references, and joins all 7 HowTos in one go.
+  // Gating: when the 5 country entries are dropped, the
+  // schema reverts to the R56 baseline (2 hasPart entries
+  // only), so this change is purely additive.
   hasPart: [
     {
       id: "https://sublimapparel.com/shipping/ddp/#howto",
@@ -136,6 +149,38 @@ const comparisonJsonLd = buildComparisonJsonLd({
       id: "https://sublimapparel.com/shipping/fob/#howto",
       name: "How FOB Shipping from China to Your Port Works — Step by Step",
       url: "https://sublimapparel.com/shipping/fob/",
+    },
+    // 2026-09-13 (R57): 5 country destination HowTos (USA /
+    // UK / EU / AU / Canada). Each @id resolves to a #howto
+    // node emitted by buildCountryDdpHowToNode in
+    // /shipping/{slug}/. Names follow the helper's
+    // `How DDP Shipping from China to <country> Works — Step
+    // by Step` convention so Google can match the human-
+    // readable title to the structured-data title.
+    {
+      id: "https://sublimapparel.com/shipping/usa/#howto",
+      name: "How DDP Shipping from China to United States Works — Step by Step",
+      url: "https://sublimapparel.com/shipping/usa/",
+    },
+    {
+      id: "https://sublimapparel.com/shipping/uk/#howto",
+      name: "How DDP Shipping from China to United Kingdom Works — Step by Step",
+      url: "https://sublimapparel.com/shipping/uk/",
+    },
+    {
+      id: "https://sublimapparel.com/shipping/eu/#howto",
+      name: "How DDP Shipping from China to European Union Works — Step by Step",
+      url: "https://sublimapparel.com/shipping/eu/",
+    },
+    {
+      id: "https://sublimapparel.com/shipping/au/#howto",
+      name: "How DDP Shipping from China to Australia Works — Step by Step",
+      url: "https://sublimapparel.com/shipping/au/",
+    },
+    {
+      id: "https://sublimapparel.com/shipping/canada/#howto",
+      name: "How DDP Shipping from China to Canada Works — Step by Step",
+      url: "https://sublimapparel.com/shipping/canada/",
     },
   ],
 });

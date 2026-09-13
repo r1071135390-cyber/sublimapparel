@@ -28,22 +28,41 @@ export interface BlogPost {
   //  - DDP shipping post → ICC Incoterms 2020 reference
   //  - AQL quality post → ISO 2859-1 standard reference
   //  - sublimation post → OEKO-TEX Standard 100 reference
+  // 2026-09-13 (R57): added optional `sameAs` (string or string[]) so
+  // each citation node can declare its own canonical-identity URL(s)
+  // alongside `url`. Per Schema.org, `sameAs` is "URL of a reference
+  // Web page that unambiguously indicates the item's identity" — when
+  // a citation's `url` IS the authoritative source (e.g. ICC's
+  // Incoterms 2020 page, Wikipedia article, OEKO-TEX standard page),
+  // setting `sameAs: url` resolves the citation as a Thing in its own
+  // right and lets Google's entity resolver match the citation to its
+  // own knowledge graph entry. Accepts a single string (most common
+  // case) or an array of mirror URLs (Wikipedia articles often have
+  // language mirrors). Omitted from the JSON-LD when undefined so
+  // posts that don't opt in stay byte-equivalent to the R52 baseline.
   citations?: Array<{
     "@type": string;
     "@id"?: string;
     name: string;
     url: string;
+    sameAs?: string | string[];
   }>;
   // 2026-09-12 (R52): isBasedOn — the resource(s) the post is
   // derived from. Typically an internal SublimApparel source page
   // (e.g. the /technique/sublimation/ page that a how-to post
   // summarizes) or a primary industry reference. Inverse of
   // citation — together they form a 2-way provenance chain.
+  // 2026-09-13 (R57): same optional `sameAs` support as
+  // `citations` — internal SublimApparel pages don't need it
+  // (the page URL is self-referential), but external references
+  // inside `isBasedOn` (e.g. another Wikipedia or spec page)
+  // benefit from the same canonical-identity declaration.
   isBasedOn?: Array<{
     "@type": string;
     "@id"?: string;
     name: string;
     url: string;
+    sameAs?: string | string[];
   }>;
 }
 
@@ -144,14 +163,17 @@ export const blogPosts: BlogPost[] = [
         "@id": "https://www.oeko-tex.com/en/our-standards/standard-100-by-oeko-tex",
         name: "OEKO-TEX Standard 100 — Textile Safety Certification",
         url: "https://www.oeko-tex.com/en/our-standards/standard-100-by-oeko-tex",
+        sameAs: "https://www.oeko-tex.com/en/our-standards/standard-100-by-oeko-tex",
       },
       {
         "@type": "WebPage",
         "@id": "https://en.wikipedia.org/wiki/Dye-sublimation_printer",
         name: "Dye-sublimation printer — Wikipedia",
         url: "https://en.wikipedia.org/wiki/Dye-sublimation_printer",
+        sameAs: "https://en.wikipedia.org/wiki/Dye-sublimation_printer",
       },
     ],
+
     // 2026-09-12 (R52): post is a long-form summary of our
     // internal technique hub + a sibling blog post. Linking
     // both makes the provenance chain explicit for Google.
@@ -161,14 +183,17 @@ export const blogPosts: BlogPost[] = [
         "@id": "https://sublimapparel.com/technique/sublimation/",
         name: "Sublimation Printing Process — SublimApparel Technique Hub",
         url: "https://sublimapparel.com/technique/sublimation/",
+        sameAs: "https://sublimapparel.com/technique/sublimation/",
       },
       {
         "@type": "WebPage",
         "@id": "https://sublimapparel.com/blog/what-is-sublimation-fabric/",
         name: "What Is Sublimation Fabric? A Factory Guide",
         url: "https://sublimapparel.com/blog/what-is-sublimation-fabric/",
+        sameAs: "https://sublimapparel.com/blog/what-is-sublimation-fabric/",
       },
     ],
+
 
   },
   {
@@ -272,14 +297,17 @@ export const blogPosts: BlogPost[] = [
         "@id": "https://www.oeko-tex.com/en/our-standards/standard-100-by-oeko-tex",
         name: "OEKO-TEX Standard 100 — Textile Safety Certification",
         url: "https://www.oeko-tex.com/en/our-standards/standard-100-by-oeko-tex",
+        sameAs: "https://www.oeko-tex.com/en/our-standards/standard-100-by-oeko-tex",
       },
       {
         "@type": "WebPage",
         "@id": "https://en.wikipedia.org/wiki/Digital_textile_printing",
         name: "Digital textile printing — Wikipedia",
         url: "https://en.wikipedia.org/wiki/Digital_textile_printing",
+        sameAs: "https://en.wikipedia.org/wiki/Digital_textile_printing",
       },
     ],
+
     // 2026-09-12 (R52): the post compares two of our
     // technique hubs. Linking both lets Google join the
     // comparison post to each individual technique page in
@@ -290,14 +318,17 @@ export const blogPosts: BlogPost[] = [
         "@id": "https://sublimapparel.com/technique/dtf/",
         name: "DTF (Direct-to-Film) Printing — SublimApparel Technique Hub",
         url: "https://sublimapparel.com/technique/dtf/",
+        sameAs: "https://sublimapparel.com/technique/dtf/",
       },
       {
         "@type": "WebPage",
         "@id": "https://sublimapparel.com/technique/dtg/",
         name: "DTG (Direct-to-Garment) Printing — SublimApparel Technique Hub",
         url: "https://sublimapparel.com/technique/dtg/",
+        sameAs: "https://sublimapparel.com/technique/dtg/",
       },
     ],
+
 
   },
   {
@@ -395,14 +426,17 @@ export const blogPosts: BlogPost[] = [
         "@id": "https://iccwbo.org/business-solutions/incoterms-rules/incoterms-2020/",
         name: "Incoterms 2020 — International Chamber of Commerce (ICC)",
         url: "https://iccwbo.org/business-solutions/incoterms-rules/incoterms-2020/",
+        sameAs: "https://iccwbo.org/business-solutions/incoterms-rules/incoterms-2020/",
       },
       {
         "@type": "WebPage",
         "@id": "https://en.wikipedia.org/wiki/Incoterms",
         name: "Incoterms — Wikipedia",
         url: "https://en.wikipedia.org/wiki/Incoterms",
+        sameAs: "https://en.wikipedia.org/wiki/Incoterms",
       },
     ],
+
     // 2026-09-12 (R52): the post is a long-form explainer
     // for our /shipping/ddp/ hub and the /shipping-policy/
     // page. Linking both makes the entity graph 2-way
@@ -413,14 +447,17 @@ export const blogPosts: BlogPost[] = [
         "@id": "https://sublimapparel.com/shipping/ddp/",
         name: "DDP Shipping to the US, EU, UK, AU — SublimApparel",
         url: "https://sublimapparel.com/shipping/ddp/",
+        sameAs: "https://sublimapparel.com/shipping/ddp/",
       },
       {
         "@type": "WebPage",
         "@id": "https://sublimapparel.com/shipping-policy/",
         name: "Shipping Policy — DDP, Lead Times & Tracking | SublimApparel",
         url: "https://sublimapparel.com/shipping-policy/",
+        sameAs: "https://sublimapparel.com/shipping-policy/",
       },
     ],
+
 
   },
   {
@@ -525,14 +562,17 @@ export const blogPosts: BlogPost[] = [
         "@id": "https://en.wikipedia.org/wiki/Yiwu",
         name: "Yiwu — Wikipedia",
         url: "https://en.wikipedia.org/wiki/Yiwu",
+        sameAs: "https://en.wikipedia.org/wiki/Yiwu",
       },
       {
         "@type": "WebPage",
         "@id": "http://english.customs.gov.cn/",
         name: "China General Administration of Customs — Export Statistics",
         url: "http://english.customs.gov.cn/",
+        sameAs: "http://english.customs.gov.cn/",
       },
     ],
+
     // 2026-09-12 (R52): the post expands on our /about/
     // hub. Linking keeps the About page reachable from the
     // blog entity graph.
@@ -542,8 +582,10 @@ export const blogPosts: BlogPost[] = [
         "@id": "https://sublimapparel.com/about/",
         name: "About SublimApparel — 10+ Years in Yiwu",
         url: "https://sublimapparel.com/about/",
+        sameAs: "https://sublimapparel.com/about/",
       },
     ],
+
 
   },
   {
@@ -640,14 +682,17 @@ export const blogPosts: BlogPost[] = [
         "@id": "https://www.astm.org/d0737-18.html",
         name: "ASTM D737 — Standard Test Method for Air Permeability of Textile Fabrics",
         url: "https://www.astm.org/d0737-18.html",
+        sameAs: "https://www.astm.org/d0737-18.html",
       },
       {
         "@type": "WebPage",
         "@id": "https://www.oeko-tex.com/en/our-standards/standard-100-by-oeko-tex",
         name: "OEKO-TEX Standard 100 — Textile Safety Certification",
         url: "https://www.oeko-tex.com/en/our-standards/standard-100-by-oeko-tex",
+        sameAs: "https://www.oeko-tex.com/en/our-standards/standard-100-by-oeko-tex",
       },
     ],
+
     // 2026-09-12 (R52): the post is a fabric-selection
     // guide for our /products/esports/ line, and builds on
     // the /fabric/polyester/ hub. Both joins matter for
@@ -658,14 +703,17 @@ export const blogPosts: BlogPost[] = [
         "@id": "https://sublimapparel.com/fabric/polyester/",
         name: "Polyester Fabric — SublimApparel Fabric Hub",
         url: "https://sublimapparel.com/fabric/polyester/",
+        sameAs: "https://sublimapparel.com/fabric/polyester/",
       },
       {
         "@type": "WebPage",
         "@id": "https://sublimapparel.com/products/esports/",
         name: "Esports Jerseys — SublimApparel Product Hub",
         url: "https://sublimapparel.com/products/esports/",
+        sameAs: "https://sublimapparel.com/products/esports/",
       },
     ],
+
 
   },
   {
@@ -754,14 +802,17 @@ export const blogPosts: BlogPost[] = [
         "@id": "https://www.wto.org/english/res_e/statis_e/wts2024_e/wts2024_e.pdf",
         name: "World Trade Organization — World Trade Statistical Review",
         url: "https://www.wto.org/english/res_e/statis_e/wts2024_e/wts2024_e.pdf",
+        sameAs: "https://www.wto.org/english/res_e/statis_e/wts2024_e/wts2024_e.pdf",
       },
       {
         "@type": "WebPage",
         "@id": "https://en.wikipedia.org/wiki/Minimum_order_quantity",
         name: "Minimum order quantity — Wikipedia",
         url: "https://en.wikipedia.org/wiki/Minimum_order_quantity",
+        sameAs: "https://en.wikipedia.org/wiki/Minimum_order_quantity",
       },
     ],
+
     // 2026-09-12 (R52): the post expands on /pricing/ and
     // our global quote workflow.
     isBasedOn: [
@@ -770,8 +821,10 @@ export const blogPosts: BlogPost[] = [
         "@id": "https://sublimapparel.com/pricing/",
         name: "Pricing & MOQ — SublimApparel",
         url: "https://sublimapparel.com/pricing/",
+        sameAs: "https://sublimapparel.com/pricing/",
       },
     ],
+
 
   },
   {
@@ -858,14 +911,17 @@ export const blogPosts: BlogPost[] = [
         "@id": "https://www.standards.org.au/standards-productivity-standards/as-nzs-4399-2020",
         name: "AS/NZS 4399:2020 — Sun Protective Clothing — Evaluation and Classification",
         url: "https://www.standards.org.au/standards-productivity-standards/as-nzs-4399-2020",
+        sameAs: "https://www.standards.org.au/standards-productivity-standards/as-nzs-4399-2020",
       },
       {
         "@type": "WebPage",
         "@id": "https://www.oeko-tex.com/en/our-standards/standard-100-by-oeko-tex",
         name: "OEKO-TEX Standard 100 — Textile Safety Certification",
         url: "https://www.oeko-tex.com/en/our-standards/standard-100-by-oeko-tex",
+        sameAs: "https://www.oeko-tex.com/en/our-standards/standard-100-by-oeko-tex",
       },
     ],
+
     // 2026-09-12 (R52): the post expands on the
     // /products/cycling/ hub and fabric/polyester/ hub.
     isBasedOn: [
@@ -874,14 +930,17 @@ export const blogPosts: BlogPost[] = [
         "@id": "https://sublimapparel.com/products/cycling/",
         name: "Custom Cycling Jerseys — SublimApparel Product Hub",
         url: "https://sublimapparel.com/products/cycling/",
+        sameAs: "https://sublimapparel.com/products/cycling/",
       },
       {
         "@type": "WebPage",
         "@id": "https://sublimapparel.com/fabric/polyester/",
         name: "Polyester Fabric — SublimApparel Fabric Hub",
         url: "https://sublimapparel.com/fabric/polyester/",
+        sameAs: "https://sublimapparel.com/fabric/polyester/",
       },
     ],
+
 
   },
   {
@@ -972,14 +1031,17 @@ export const blogPosts: BlogPost[] = [
         "@id": "https://www.pantone.com/articles/color-fundamentals/the-pantone-matching-system",
         name: "Pantone Matching System — Pantone Color Institute",
         url: "https://www.pantone.com/articles/color-fundamentals/the-pantone-matching-system",
+        sameAs: "https://www.pantone.com/articles/color-fundamentals/the-pantone-matching-system",
       },
       {
         "@type": "WebPage",
         "@id": "https://en.wikipedia.org/wiki/Screen_printing",
         name: "Screen printing — Wikipedia",
         url: "https://en.wikipedia.org/wiki/Screen_printing",
+        sameAs: "https://en.wikipedia.org/wiki/Screen_printing",
       },
     ],
+
     // 2026-09-12 (R52): the post is a comparison of two
     // technique hubs. Both must be in the entity graph so
     // Google can resolve the post → technique relationship.
@@ -989,14 +1051,17 @@ export const blogPosts: BlogPost[] = [
         "@id": "https://sublimapparel.com/technique/screen-printing/",
         name: "Screen Printing — SublimApparel Technique Hub",
         url: "https://sublimapparel.com/technique/screen-printing/",
+        sameAs: "https://sublimapparel.com/technique/screen-printing/",
       },
       {
         "@type": "WebPage",
         "@id": "https://sublimapparel.com/technique/embroidery/",
         name: "Embroidery — SublimApparel Technique Hub",
         url: "https://sublimapparel.com/technique/embroidery/",
+        sameAs: "https://sublimapparel.com/technique/embroidery/",
       },
     ],
+
 
   },
   {
@@ -1117,14 +1182,17 @@ export const blogPosts: BlogPost[] = [
         "@id": "https://www.adobe.com/content/dam/acom/en/devnet/pdf/pdf_reference_archive/pdfx-4/PDFX-4_guide.pdf",
         name: "Adobe PDF/X-4 — Implementation Reference",
         url: "https://www.adobe.com/content/dam/acom/en/devnet/pdf/pdf_reference_archive/pdfx-4/PDFX-4_guide.pdf",
+        sameAs: "https://www.adobe.com/content/dam/acom/en/devnet/pdf/pdf_reference_archive/pdfx-4/PDFX-4_guide.pdf",
       },
       {
         "@type": "WebPage",
         "@id": "https://www.iso.org/standard/74437.html",
         name: "ISO 12647-2:2013 — Graphic technology — Process control for the production of half-tone colour separations, proof and production prints",
         url: "https://www.iso.org/standard/74437.html",
+        sameAs: "https://www.iso.org/standard/74437.html",
       },
     ],
+
     // 2026-09-12 (R52): the post is the production
     // pre-flight guide for our sublimation process.
     isBasedOn: [
@@ -1133,8 +1201,10 @@ export const blogPosts: BlogPost[] = [
         "@id": "https://sublimapparel.com/technique/sublimation/",
         name: "Sublimation Printing Process — SublimApparel Technique Hub",
         url: "https://sublimapparel.com/technique/sublimation/",
+        sameAs: "https://sublimapparel.com/technique/sublimation/",
       },
     ],
+
 
   },
   {
@@ -1251,14 +1321,17 @@ export const blogPosts: BlogPost[] = [
         "@id": "https://www.oeko-tex.com/en/our-standards/standard-100-by-oeko-tex",
         name: "OEKO-TEX Standard 100 — Textile Safety Certification",
         url: "https://www.oeko-tex.com/en/our-standards/standard-100-by-oeko-tex",
+        sameAs: "https://www.oeko-tex.com/en/our-standards/standard-100-by-oeko-tex",
       },
       {
         "@type": "WebPage",
         "@id": "https://en.wikipedia.org/wiki/Polyester",
         name: "Polyester — Wikipedia",
         url: "https://en.wikipedia.org/wiki/Polyester",
+        sameAs: "https://en.wikipedia.org/wiki/Polyester",
       },
     ],
+
     // 2026-09-12 (R52): the post is the factory guide
     // version of the /fabric/ hub + the sublimation
     // technique hub. Both must link back.
@@ -1268,14 +1341,17 @@ export const blogPosts: BlogPost[] = [
         "@id": "https://sublimapparel.com/fabric/",
         name: "Fabric Index — SublimApparel",
         url: "https://sublimapparel.com/fabric/",
+        sameAs: "https://sublimapparel.com/fabric/",
       },
       {
         "@type": "WebPage",
         "@id": "https://sublimapparel.com/technique/sublimation/",
         name: "Sublimation Printing Process — SublimApparel Technique Hub",
         url: "https://sublimapparel.com/technique/sublimation/",
+        sameAs: "https://sublimapparel.com/technique/sublimation/",
       },
     ],
+
 
   },
   {
@@ -1319,7 +1395,7 @@ export const blogPosts: BlogPost[] = [
 "On 100% polyester interlock at 180 GSM, sublimation produces: bright, saturated colors that match the design file within 90-95%; smooth gradients with no banding; sharp text down to 6pt at 1:1 print scale; full edge-to-edge coverage with no print area limit. After 50 wash cycles, the print is visually identical to day one.",
 "On 100% cotton at 180 GSM with sublimation attempted, you get: faded, washed-out colors that look 30-50% lighter than the design file; visible banding on gradients; sharp text below 12pt starts to bleed; the print area is limited because the dye does not transfer well past 30x40 cm on most cotton weaves. After 5-10 washes, most of the print is gone.",
 "The same cotton garment, decorated with <a href='/technique/dtg/'>DTG</a> instead of sublimation, looks much closer to the polyester sublimation result on day one — bright, detailed, and accurate. After 30-50 washes, the DTG print still looks good but the hand-feel (the texture of the print on the fabric) is noticeably different from unprinted cotton. There is a thin ink layer sitting on the surface.",
-],
+    ],
       },
       {
         heading: "Hand-Feel and Comfort",
@@ -1401,14 +1477,17 @@ export const blogPosts: BlogPost[] = [
         "@id": "https://www.oeko-tex.com/en/our-standards/standard-100-by-oeko-tex",
         name: "OEKO-TEX Standard 100 — Textile Safety Certification",
         url: "https://www.oeko-tex.com/en/our-standards/standard-100-by-oeko-tex",
+        sameAs: "https://www.oeko-tex.com/en/our-standards/standard-100-by-oeko-tex",
       },
       {
         "@type": "WebPage",
         "@id": "https://global-standard.org/the-standard",
         name: "GOTS — Global Organic Textile Standard",
         url: "https://global-standard.org/the-standard",
+        sameAs: "https://global-standard.org/the-standard",
       },
     ],
+
     // 2026-09-12 (R52): the post compares our two main
     // fabric hubs. Both must be linked from the entity
     // graph.
@@ -1418,14 +1497,17 @@ export const blogPosts: BlogPost[] = [
         "@id": "https://sublimapparel.com/fabric/polyester/",
         name: "Polyester Fabric — SublimApparel Fabric Hub",
         url: "https://sublimapparel.com/fabric/polyester/",
+        sameAs: "https://sublimapparel.com/fabric/polyester/",
       },
       {
         "@type": "WebPage",
         "@id": "https://sublimapparel.com/fabric/cotton/",
         name: "Cotton Fabric — SublimApparel Fabric Hub",
         url: "https://sublimapparel.com/fabric/cotton/",
+        sameAs: "https://sublimapparel.com/fabric/cotton/",
       },
     ],
+
 
   },
 ];
