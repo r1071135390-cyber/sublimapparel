@@ -125,6 +125,25 @@ const solutionsFaqs = [
     q: "Is the E-commerce Fulfillment solution US-only?",
     a: "We hold buffer stock at our Fontana, CA warehouse for US-bound orders (2–5 day domestic) and route EU/UK/AU orders from our Yiwu hub via DDP. Shopify, Amazon FBA, and TikTok Shop integrations are live; for other platforms we provide CSV-based order feeds with daily auto-sync.",
   },
+  // 2026-09-13 (R58): two new solutions-only FAQs that
+  // distinctively position this page as the **buyer
+  // workflow** catalog (vs /products/ which is the **garment
+  // catalog**). The two PAA questions here are the ones a
+  // B2B buyer asks when they know their buyer profile but
+  // haven't picked a specific garment type yet. The
+  // /products/ page answers the "what can I customize"
+  // half of the funnel; /solutions/ now answers the
+  // "which workflow fits my business" half. Together the
+  // two pages cover the full pre-quote research funnel
+  // without overlap.
+  {
+    q: "Which solution is right for a first-time apparel brand with no manufacturing experience?",
+    a: "Apparel Brands & Agencies. We sign a mutual NDA, hold your patterns and grading files in escrow, run private-label production with your woven labels and packaging, and ship under your carton mark with no SublimApparel branding on the outward packaging. White-label invoicing and blind dropship are both included. The first PO is typically 100–300 pieces to validate fit and sell-through, scaling to 1,000+ pieces per drop once your collection is in market.",
+  },
+  {
+    q: "Do I have to pick just one solution, or can I run hybrid workflows?",
+    a: "Hybrid is the most common pattern. About 60% of our active buyers run two solutions in parallel: a team-sports buyer (Teams & Sports) plus event merchandise for the same league (Event & Festival), or an apparel brand (Apparel Brands) plus e-commerce fulfillment (E-commerce Fulfillment) for direct-to-consumer. Pricing stays per-piece, account management stays with one person, and the production line, fabric library, and color cards are shared. You can switch the active mix anytime without re-onboarding.",
+  },
 ];
 
 const solutionsGraph = {

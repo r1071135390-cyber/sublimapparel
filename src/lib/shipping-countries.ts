@@ -35,6 +35,11 @@ export type CountryShipping = {
   // HowTo in the @graph. The field is optional so older
   // callers that don't pass it stay byte-equivalent to the
   // pre-R55 baseline.
+  // 2026-09-13 (R58): added optional estimatedCost (per-kg
+  // DDP cost range) so the HowTo node can carry a typed
+  // MonetaryAmount.estimatedCost for rich-result eligibility.
+  // Omitted when undefined → no behavior change for callers
+  // that don't opt in.
   howto?: {
     /** Total DDP lead time as ISO 8601 duration, e.g. "P14D". */
     totalTime: string;
@@ -42,6 +47,8 @@ export type CountryShipping = {
     dutyVatLine: string;
     /** Transit options, e.g. "express, air, or sea (Pacific)". */
     transitMode: string;
+    /** Per-kg DDP cost range, e.g. "2–15". */
+    estimatedCost?: string;
   };
 
   // 2026-09-12 (R33-A1): region-level facts for ServiceArea + Country
@@ -119,13 +126,36 @@ export const COUNTRY_SHIPPING: Record<CountryShipping["slug"], CountryShipping> 
         q: "Can I ship to a US residential address instead of a commercial one?",
         a: "Yes. We can deliver to both. Residential deliveries sometimes add $4–8 per shipment in carrier surcharges, which we include in the DDP quote. If you have a loading dock or can accept LTL freight at a commercial address, sea freight on full pallets is significantly cheaper per kg.",
       },
+      // 2026-09-13 (R58): PAA expansion to 7 entries (was 4) — captures
+      // the three next-most-asked US DDP questions: Section 301 status
+      // (high-volume query from US apparel buyers), the Section 321
+      // $800 de minimis loophole for small dropshippers, and US
+      // warehouse stocking program timing. All three feed the
+      // FAQPage node without disturbing the existing 4 entries.
+      {
+        q: "Is the Section 301 tariff still applied to apparel from China?",
+        a: "For most apparel categories (HTS 6109, 6110, 6111, 6104) the 25% Section 301 tariff that applied 2018–2025 has been suspended through 2026. The current effective rate is 0% for the majority of sublimated apparel, plus the standard 0.3464% MPF and 0.125% HMF. We confirm the exact line-item rate in every quote based on the destination ZIP code and the HTS chapter your product falls under.",
+      },
+      {
+        q: "What is Section 321 de minimis and can I use it for small orders?",
+        a: "Section 321 allows shipments under $800 per consignee per day to enter the US duty-free with a single informal entry — this is what most dropshippers and small brands use. Once your shipment exceeds $800 (per consignee, per day), full customs clearance kicks in and DDP becomes the more efficient path. We support both models and route your order to the right lane based on size and destination.",
+      },
+      {
+        q: "How does the US warehouse stocking program work?",
+        a: "You pay for the production run upfront, we ship to our Fontana, CA 3PL warehouse, and we hold the inventory in your name. When you release an order, we pick, pack, and ship via FedEx Ground or UPS within 2–5 business days to any US address. Stocking terms are typically 6–12 months, with quarterly inventory reports. It's a good fit for brands doing $50K+ per year in re-orders.",
+      },
     ],
     // 2026-09-13 (R55): 7-step DDP HowTo spec for the
     // /shipping/usa/ page's #howto structured-data node.
+    // 2026-09-13 (R58): estimatedCost range per kg for DDP
+    // (added to the #howto node for Google's rich-result
+    // cost-range eligibility — bundled in the buildCountryDdpHowToNode
+    // helper as optional, omitted when not supplied).
     howto: {
       totalTime: "P14D",
       dutyVatLine: "Section 301 + import duty (currently 0% for most apparel)",
       transitMode: "express (DHL/FedEx), air, or sea to the US West Coast",
+      estimatedCost: "USD 2–15 per kg (transit mode dependent)",
     },
     regionFacts: {
       isoCountryCode: "US",
@@ -182,12 +212,33 @@ export const COUNTRY_SHIPPING: Record<CountryShipping["slug"], CountryShipping> 
         q: "Is there a UK customs broker fee on top of the DDP price?",
         a: "No. Our DDP quote is all-inclusive — customs broker fees, CDS filing, port handling, and last-mile delivery are all bundled. The price you receive is the price you pay. We don't add a customs clearance surcharge after the fact.",
       },
+      // 2026-09-13 (R58): PAA expansion to 7 entries (was 4) — covers
+      // the three next-most-asked UK DDP questions: VAT recovery on
+      // resale (every UK B2B buyer asks this once), the China Railway
+      // Express rail option (a PAA surface that grew through 2024 as
+      // sea freight rates fluctuated), and UK customs commodity code
+      // lookup (CN codes 6109/6110 are the high-volume apparel entries).
+      {
+        q: "Can I reclaim the UK VAT my DDP shipment paid?",
+        a: "Only if you switch from DDP to DAP/CIF and clear customs yourself under your own EORI. Under DDP we pay the 20% VAT upfront and don't reclaim it — the cost is bundled into your per-piece quote. If you're a VAT-registered UK business doing 6+ shipments a year, DAP may be cheaper overall because you recover the VAT on your next VAT return. We model both options in your quote if you ask.",
+      },
+      {
+        q: "What is the China Railway Express rail option to the UK?",
+        a: "The China Railway Express (also called YXE or CRE) runs Yiwu → Duisburg (Germany) by rail in 18–22 days, then trucks to UK via the Channel Tunnel or ferry. Total transit 22–28 days, priced between sea and air (typically $3–5/kg). It's a good middle option for 500–2,000 kg orders where sea is too slow and air is too expensive. We book space on the Yiwu → Duisburg block train and overland to Felixstowe or London.",
+      },
+      {
+        q: "What is the UK customs commodity code for sublimated apparel?",
+        a: "Most sublimated apparel enters the UK under commodity codes 6109 (T-shirts, singlets), 6110 (jerseys, pullovers, cardigans), or 6111 (babies' garments). 6109 attracts 12% import duty, 6110 attracts 12%, 6111 attracts 12%. We classify your product under the correct code based on fabric composition and garment construction, and we file CDS using that code so you don't have to.",
+      },
     ],
     // 2026-09-13 (R55): 7-step DDP HowTo spec for /shipping/uk/.
+    // 2026-09-13 (R58): estimatedCost range per kg for DDP — see
+    // usa entry for rationale on this optional field.
     howto: {
       totalTime: "P18D",
       dutyVatLine: "12% import duty + 20% VAT",
       transitMode: "express, air, sea, or rail (via the China Railway Express to Duisburg)",
+      estimatedCost: "USD 2–16 per kg (transit mode dependent)",
     },
     regionFacts: {
       isoCountryCode: "GB",
@@ -244,12 +295,33 @@ export const COUNTRY_SHIPPING: Record<CountryShipping["slug"], CountryShipping> 
         q: "Do I need an EU EORI number to import from China?",
         a: "If you use our DDP service, no. We file the customs declaration under our EORI number, so you don't need to register your own. If you want to clear customs yourself and reclaim VAT on resale, you'll need an EU EORI (free, issued by your national customs authority in 3–10 working days). Most EU buyers prefer DDP for the first 12 months while they scale.",
       },
+      // 2026-09-13 (R58): PAA expansion to 7 entries (was 4) — covers
+      // the three next-most-asked EU DDP questions: IOSS vs standard
+      // VAT (the €150 threshold is the most-clicked PAA), CBAM carbon
+      // levy (new 2026 — a forward-looking EU question every apparel
+      // importer is now asking), and reverse-charge VAT for B2B
+      // intra-EU transfers.
+      {
+        q: "What is IOSS and when does it apply to my EU shipment?",
+        a: "IOSS (Import One-Stop Shop) is an EU VAT scheme for consignments valued at €150 or less per shipment. The seller registers once with a single EU member state and collects VAT at point of sale — no customs paperwork at the border. For consignments above €150, the standard import procedure applies: customs declaration, duty + VAT at the border, then last-mile. We use IOSS automatically for sub-€150 orders and the standard channel above.",
+      },
+      {
+        q: "Does the EU CBAM carbon levy apply to apparel from China?",
+        a: "CBAM (Carbon Border Adjustment Mechanism) currently covers steel, aluminium, cement, fertilizers, electricity, and hydrogen — apparel is not in scope as of 2026. Future CBAM expansion is being discussed but no concrete timeline for textiles has been published. We monitor EU customs policy weekly and update DDP quotes the day any textile-relevant carbon levy is signed into law. For now, your EU apparel DDP quote includes 12% duty + 19–25% VAT and nothing else.",
+      },
+      {
+        q: "Can I use reverse-charge VAT for B2B EU deliveries?",
+        a: "Reverse-charge VAT only applies to intra-EU B2B transactions (one EU VAT-registered business selling to another). Goods imported from China are not eligible — the import VAT is always payable at the EU border by the importer of record (us, under DDP). The reverse-charge mechanism cannot be used to defer the import VAT on a China-origin shipment. If you need to recover the VAT, switch to DAP and self-clear under your own EORI.",
+      },
     ],
     // 2026-09-13 (R55): 7-step DDP HowTo spec for /shipping/eu/.
+    // 2026-09-13 (R58): estimatedCost range per kg for DDP — see
+    // usa entry for rationale on this optional field.
     howto: {
       totalTime: "P20D",
       dutyVatLine: "12% import duty + 19-25% VAT (IOSS pre-registered)",
       transitMode: "express, air, sea, or rail (China Railway Express to Duisburg)",
+      estimatedCost: "USD 2–16 per kg (transit mode dependent)",
     },
     regionFacts: {
       // EU isn't an ISO 3166-1 alpha-2 country (it's a supranational
@@ -312,12 +384,34 @@ export const COUNTRY_SHIPPING: Record<CountryShipping["slug"], CountryShipping> 
         q: "Is there a low-value threshold under AUD $1,000?",
         a: "Yes — shipments under AUD $1,000 to Australia are currently GST-free on entry. We can split orders into AUD $999 consignments for very small samples and rush orders, but for production runs above 50 kg the per-shipment overhead makes splitting uneconomical. The 10% GST on production orders is included in our DDP quote — you don't pay extra.",
       },
+      // 2026-09-13 (R58): PAA expansion to 7 entries (was 4) — covers
+      // the three next-most-asked AU DDP questions: ABF biosecurity
+      // inspection (every AU apparel shipment is potentially subject
+      // to this — high-volume PAA), the China-Australia FTA tariff
+      // schedule (often mis-quoted as 0% — actually still 5% for
+      // apparel), and Perth vs Sydney routing (Fremantle vs
+      // Port Botany transit difference).
+      {
+        q: "Does Australia inspect Chinese apparel for biosecurity?",
+        a: "Yes — the Australian Border Force (ABF) can request an inspection on any imported shipment under the Biosecurity Act 2015. Apparel is generally low-risk (no live plant material, no animal products), but wooden pallets (ISPM-15 stamp) and used garments can trigger holds. We ship on plastic pallets or heat-treated wooden pallets with the ISPM-15 mark, and we declare every shipment as new unworn garments to keep the inspection rate near zero. If your cargo is held, we pay the inspection fee and pass it through at-cost.",
+      },
+      {
+        q: "Is apparel from China duty-free under the China-Australia FTA?",
+        a: "No — most apparel (HS 6109, 6110, 6111) attracts 5% MFN duty regardless of origin. The China-Australia Free Trade Agreement (ChAFTA) has been in force since 2015 and has been reducing the rate annually, but as of 2026 the duty is still 5% for most apparel categories. We include the 5% duty + 10% GST in the DDP quote so you see one landed price.",
+      },
+      {
+        q: "Perth vs Sydney — which AU port is cheaper to ship to?",
+        a: "Perth (Fremantle) is 4–6 days faster from Yiwu via the Indian Ocean direct lane, but Sydney (Port Botany) and Melbourne have more frequent sailings and lower per-container rates because of higher volume. For 1–2 pallets (LCL), Sydney is typically $0.20–0.40/kg cheaper overall because of consolidation density. For full container (FCL) orders, the per-container rate is similar — pick by destination warehouse, not by port.",
+      },
     ],
     // 2026-09-13 (R55): 7-step DDP HowTo spec for /shipping/au/.
+    // 2026-09-13 (R58): estimatedCost range per kg for DDP — see
+    // usa entry for rationale on this optional field.
     howto: {
       totalTime: "P22D",
       dutyVatLine: "5% import duty + 10% GST",
       transitMode: "express, air, sea, or sea-air hybrid via Singapore",
+      estimatedCost: "USD 2–18 per kg (transit mode dependent)",
     },
     regionFacts: {
       isoCountryCode: "AU",
@@ -375,12 +469,34 @@ export const COUNTRY_SHIPPING: Record<CountryShipping["slug"], CountryShipping> 
         q: "Do I need a Canadian Business Number (BN) to import from China?",
         a: "If you use our DDP service, no. We file the customs declaration under our own Business Number, so you don't need to register for one. If you want to clear customs yourself and recover GST/HST on resale, you'll need a BN from CRA (free, 1–2 weeks by mail). Most Canadian buyers prefer DDP for the first year to keep import paperwork off their finance team's desk.",
       },
+      // 2026-09-13 (R58): PAA expansion to 7 entries (was 4) — covers
+      // the three next-most-asked CA DDP questions: CUSMA/USMCA
+      // preferential origin (every CA importer asks this once — the
+      // rules of origin are strict and don't apply to China-origin
+      // apparel), the CBSA Assessment and Revenue Management (CARM)
+      // system that went live in 2024, and Vancouver vs Toronto
+      // routing for the western/eastern warehouse split.
+      {
+        q: "Does the CUSMA / USMCA trade agreement apply to apparel from China?",
+        a: "No — CUSMA (Canada-United States-Mexico Agreement, formerly NAFTA) only applies to goods originating in Canada, the US, or Mexico. Apparel manufactured in China is not CUSMA-eligible regardless of the buyer or destination. You pay the full 17–18% MFN import duty. We don't flag shipments as CUSMA because China-origin apparel never qualifies. If you're sourcing from a US or Mexican cut-and-sew factory instead, the rules of origin are different and we can advise on the right tariff treatment.",
+      },
+      {
+        q: "What is CARM and how does it affect my import?",
+        a: "CARM (CBSA Assessment and Revenue Management) is the Canada Border Services Agency's new importer portal that went fully live in 2024. It replaces the old paper-based process with a digital Business Number (BN15) requirement, a 9-digit Business Account number, and a duty-payment bond for high-volume importers. We use our own CARM-registered BN for all DDP shipments, so you don't need to interact with the system. Self-clear importers must now register on the CARM portal before they can release a shipment.",
+      },
+      {
+        q: "Vancouver vs Toronto — which Canadian port is cheaper?",
+        a: "Vancouver is 5–7 days faster from Yiwu via the Pacific direct lane, but Toronto (via the CN or CP rail network) has more frequent sailings and lower per-container rates because of higher east-coast consolidation volume. For 1–2 pallets (LCL), Vancouver is typically $0.30–0.50/kg cheaper overall. For full container (FCL) orders, Toronto is similar in price. Pick by destination warehouse: ship to Vancouver if your 3PL is in BC/AB, and to Toronto if it's in ON/QE.",
+      },
     ],
     // 2026-09-13 (R55): 7-step DDP HowTo spec for /shipping/canada/.
+    // 2026-09-13 (R58): estimatedCost range per kg for DDP — see
+    // usa entry for rationale on this optional field.
     howto: {
       totalTime: "P20D",
       dutyVatLine: "17-18% import duty + 5% GST + provincial sales tax (HST/QST/PST)",
       transitMode: "express, air, sea, or sea-air hybrid via Vancouver",
+      estimatedCost: "USD 2–18 per kg (transit mode dependent)",
     },
     regionFacts: {
       isoCountryCode: "CA",

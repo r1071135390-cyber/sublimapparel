@@ -78,6 +78,21 @@ const resources = [
     label: "How to Source",
     desc: "5-step process from inquiry to delivery",
   },
+  // 2026-09-13 (R58): Yiwu factory WhatsApp landing page
+  // promoted into the resources dropdown so every navbar
+  // surface (desktop + mobile) carries an internal link to
+  // it. The orange WhatsApp button on the right has linked
+  // here since R6, but the project memory constraint
+  // requires a *text* link from the main nav so PageRank
+  // flows through every page. Adding to the resources array
+  // makes it appear in both the desktop dropdown and the
+  // mobile menu's resources section without restructuring
+  // the navbar component.
+  {
+    href: "/yiwu-factory-whatsapp/",
+    label: "Yiwu Factory WhatsApp",
+    desc: "Chat directly with our Yiwu factory floor",
+  },
 ];
 
 export function Navbar() {

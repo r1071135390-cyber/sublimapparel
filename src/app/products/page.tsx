@@ -175,6 +175,26 @@ const faq = [
     q: "What are the production lead times for custom apparel?",
     a: "Standard bulk production: 15–25 business days after sample sign-off. Sample lead time: 5–7 days. Rush bulk service (7–10 days) is available for select product types at an additional 20%. DDP ocean freight adds 18–25 days door-to-door from Yiwu to most countries.",
   },
+  // 2026-09-13 (R58): two new products-only FAQs that
+  // distinctively position this page as the **garment
+  // catalog** (vs /solutions/ which is the **buyer
+  // workflow** catalog). The two PAA questions here are the
+  // ones every buyer asks once they know what they want to
+  // make but haven't picked a garment yet — the missing
+  // middle of the buyer's research funnel. Solutions page
+  // does not answer these (it assumes the buyer already
+  // knows the garment type), so adding them here gives
+  // Google a clean differentiation signal: /products/
+  // answers "what can I customize" while /solutions/
+  // answers "which buyer workflow fits me".
+  {
+    q: "What's the difference between sublimation and DTG printing for custom apparel?",
+    a: "Dye-sublimation bonds ink into polyester fibers under heat and pressure — the print becomes part of the fabric, won't fade, peel, or crack, and runs true edge-to-edge (seam-to-seam) on cut-and-sew garments. DTG (direct-to-garment) sprays water-based ink onto the surface of the fabric, usually 100% cotton, and is best for chest-area prints up to A3 size — not full garment coverage. We use sublimation for sportswear, jerseys, cycling kits, and all-over polyester apparel; DTG for cotton tees, hoodies, and corporate polos with a chest logo. Both are run in-house at our Yiwu factory with the same MOQ of 50 pcs.",
+  },
+  {
+    q: "Can I order multiple garment types in a single purchase order?",
+    a: "Yes. A single PO can include t-shirts, hoodies, jerseys, and any other garment in the catalog, as long as the total per-design quantity meets the 50 pcs MOQ for that design. Pricing stays per-piece; we just route the production runs in parallel and consolidate into a single DDP shipment. For orders that mix polyester sublimation with cotton DTG, expect the polyester items to ship first (faster production line) and the cotton items to follow 5–7 days later under the same tracking number.",
+  },
 ];
 
 export default function ProductsPage() {

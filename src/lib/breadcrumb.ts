@@ -1757,6 +1757,21 @@ export function buildCountryDdpHowToNode(input: CountryDdpHowToInput) {
           "From the destination port or airport, the shipment is dispatched to your shipping address via ground courier (USPS, Royal Mail, DHL local, AusPost, Canada Post, etc.). One tracking number, one invoice, one signature on delivery. Real-time milestone updates.",
       },
     ],
+    // 2026-09-13 (R58): optional estimatedCost block. Schema.org
+    // HowTo.estimatedCost accepts a MonetaryAmount or a text value;
+    // we use a typed MonetaryAmount with currencyCode so Google can
+    // surface the per-kg range as a structured cost field on the
+    // rich-result card. Emitted only when the caller passes a value
+    // — pre-R58 callers see no behavior change.
+    ...(input.estimatedCost
+      ? {
+          estimatedCost: {
+            "@type": "MonetaryAmount",
+            currency: "USD",
+            value: input.estimatedCost,
+          },
+        }
+      : {}),
   };
 }
 
@@ -3231,7 +3246,27 @@ export function buildBlogPostGraph(input: BlogPostInput) {
         // + type check.
         lastReviewed: new Date().toISOString(),
         inLanguage: "en",
-        author: { "@id": `${SITE_URL}/#person-ramon` },
+        // 2026-09-13 (R58): E-E-A-T author strengthening — emit
+        // a fully-resolved Person reference (with @id + name + url
+        // + worksFor) as the BlogPosting author field. Schema.org
+        // accepts both the bare @id-pointer and the inline Person,
+        // and Google's E-E-A-T parser treats the inline form as a
+        // stronger signal: the post was written by a named person
+        // with a verifiable author page (the /about/ page where the
+        // full Person entity lives). The @id still resolves back
+        // to the inlined Person #person-ramon node already emitted
+        // in the same @graph, so Google deduplicates and the
+        // inline fields are consistent with the canonical Person
+        // node. This is the recommended pattern from Google's
+        // E-E-A-T documentation for "who is responsible for this
+        // content" attribution.
+        author: {
+          "@type": "Person",
+          "@id": `${SITE_URL}/#person-ramon`,
+          name: input.author,
+          url: `${SITE_URL}/about/`,
+          worksFor: { "@id": `${SITE_URL}/#organization` },
+        },
         publisher: { "@id": `${SITE_URL}/#organization` },
         isPartOf: { "@id": `${SITE_URL}/blog/#blog` },
         about: { "@id": `${SITE_URL}/#organization` },

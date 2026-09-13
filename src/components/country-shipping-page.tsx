@@ -225,6 +225,14 @@ export function CountryShippingPage({ slug }: { slug: CountryShipping["slug"] })
         totalTime: data.howto.totalTime,
         dutyVatLine: data.howto.dutyVatLine,
         transitMode: data.howto.transitMode,
+        // 2026-09-13 (R58): forward the per-kg DDP cost range
+        // from the country data so the #howto node gets a
+        // typed MonetaryAmount.estimatedCost block. Omitted when
+        // not supplied — pre-R58 data.howto entries without an
+        // estimatedCost still produce a byte-equivalent HowTo.
+        ...(data.howto.estimatedCost
+          ? { estimatedCost: data.howto.estimatedCost }
+          : {}),
       })
     : null;
 
