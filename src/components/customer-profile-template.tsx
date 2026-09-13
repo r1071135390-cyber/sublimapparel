@@ -44,7 +44,7 @@ import {
   Star,
   Quote,
 } from "lucide-react";
-import { buildBreadcrumbJsonLd, buildFaqPageNode, buildHowToNode } from "@/lib/breadcrumb";
+import { buildBreadcrumbJsonLd, buildFaqPageNode, buildHowToNode, buildIndustryItemLists } from "@/lib/breadcrumb";
 import { genericServiceJsonLd } from "@/lib/json-ld-data";
 import {
   filterReviewsForIndustry,
@@ -198,6 +198,27 @@ export function CustomerProfilePage({ data }: { data: CustomerProfileData }) {
     [data.slug, data.h1, industryReviews, industryAggregate]
   );
 
+  // 2026-09-13 (R64b): ItemList nodes for the visible solutions
+  // cards (data.solutionsSection.sections[].items[]) and the
+  // "Perfect for" buyer list (data.perfectFor.items[]). Both
+  // are promoted to standalone ItemList nodes in @graph via
+  // buildIndustryItemLists, with each ListItem.name mirroring
+  // the visible content 1:1 (no fabricated claims). The
+  // solutions items carry a "Section · Item" prefix so a single
+  // ItemList can hold all 12-15 cards without losing category
+  // context. Each ItemList is <= 50 (well within Google's cap)
+  // and points back to the parent WebPage via isPartOf.
+  const industryItemLists = useMemo(
+    () =>
+      buildIndustryItemLists({
+        slug: data.slug,
+        solutionsSection: data.solutionsSection,
+        perfectFor: data.perfectFor,
+        webpageId: webPageIdLocal,
+      }),
+    [data.slug, data.solutionsSection, data.perfectFor, webPageIdLocal]
+  );
+
   // 2026-09-12 (R47): consolidate all JSON-LD into a single @graph block
   // (this template was emitting 5 separate JSON-LD scripts — one each
   // for breadcrumb, Service, WebPage, FAQPage, Service-reviews). All
@@ -224,6 +245,15 @@ export function CustomerProfilePage({ data }: { data: CustomerProfileData }) {
       },
       buildFaqPageNode(faqId, webPageIdLocal, data.faqs),
       stripContext(industryReviewJsonLd),
+      // 2026-09-13 (R64b): ItemList nodes for the visible solutions
+      // cards + "Perfect for" buyer list. Always emitted (every
+      // /industries/[slug]/ page passes a solutionsSection + perfectFor,
+      // so the 12 pages share the same shape). The buildIndustryItemLists
+      // helper returns a flat array of 2 nodes — solutions-list
+      // (items flattened across sections) + perfect-for-list (1 per
+      // buyer type) — and both carry isPartOf → webPageIdLocal so the
+      // @graph joins the page anchor in a single parse pass.
+      ...industryItemLists,
       // 2026-09-13 (R59): optional per-industry HowTo node.
       // When data.howto is set, emit a HowTo node in-graph
       // using the same buildHowToNode helper that /production/

@@ -4249,3 +4249,124 @@ export function buildProductDetailGraph(input: ProductDetailInput) {
     ],
   };
 }
+
+// ===========================================================================
+// 2026-09-13 (R64b): ItemList helpers for the 12 /industries/[slug]/ pages.
+//
+// Before R64b, the customer-profile-template emitted BreadcrumbList +
+// Service + WebPage + FAQPage + Service-reviews (+ optional HowTo) in @graph,
+// but the visible content blocks were not represented as schema:
+//
+//   (a) data.solutionsSection.sections[*].items[*] — the 3 solution
+//       categories (Team Jerseys / Training Apparel / Club Merchandise for
+//       sports teams; similar shape for every other industry), each with
+//       3-5 cards (e.g. Soccer Jerseys, Basketball Uniforms, Volleyball
+//       Jerseys, ...). Visible to humans, invisible to crawlers.
+//
+//   (b) data.perfectFor.items[] — the 6-bullet "Perfect for" buyer list
+//       (e.g. "Local sports clubs / Amateur leagues / School teams / Youth
+//       programs / Travel teams / Recreational leagues"). Visible to humans,
+//       invisible to crawlers.
+//
+// R64b promotes both visible content blocks to standalone ItemList nodes
+// in the @graph so:
+//
+//   - Googlebot sees a structured list of every product / category this
+//     industry page sells (each ListItem.name mirrors the visible card
+//     title verbatim, so schema = content 1:1, no fabricated claims).
+//
+//   - Googlebot sees a structured list of buyer types the page is "for"
+//     (each ListItem.name mirrors the visible bullet verbatim).
+//
+// Both ItemLists carry isPartOf → input.webpageId so Google can join the
+// lists back to the parent WebPage in the brand entity graph (same pattern
+// as /fabric/#fabric-list, /shipping/#country-pages, /technique/#itemlist,
+// /blog/#post-list, /products/[category]/#[category]-items, etc.).
+//
+// Both ItemLists are <= 50 items each (solutions ~10-15 items, perfect-for
+// ~6 items), well within Google's "<= 50 ListItems per ItemList" cap before
+// the rich result is dropped.
+//
+// The helper returns a flat array of node objects (no @context, no @graph
+// wrapper) so the customer-profile-template can spread the result straight
+// into its existing pageGraph @graph via a conditional spread — when
+// solutionsSection or perfectFor is missing, the node is omitted entirely
+// (pure-positive additive change with byte-equivalent fallback for any
+// future caller that opts out).
+// ===========================================================================
+export type IndustryItemListsInput = {
+  /** Page slug ending in "/", e.g. "/industries/sports-teams-leagues/".
+   *  The trailing slash is normalized away inside the helper. */
+  slug: string;
+  /** The visible solutions block. The helper flattens
+   *  sections[].items[] into a single ordered ItemList so each
+   *  card has a 1:1 schema match. */
+  solutionsSection: {
+    /** Section heading used in the ItemList.name, e.g.
+     *  "Custom Apparel Solutions for Sports Teams". */
+    title: string;
+    /** 3 categories, each with 3-5 items. The order here is
+     *  preserved (same as the visible cards on the page) so
+     *  position 1:1 maps to the human reading order. */
+    sections: Array<{ title: string; items: Array<{ name: string }> }>;
+  };
+  /** The "Perfect for" buyer-type list. Each entry is a single
+   *  string (e.g. "Local sports clubs") — no separate URL, so
+   *  the resulting ListItems omit the `url` field to avoid
+   *  misleading Google into thinking each buyer type has its
+   *  own page. */
+  perfectFor: { items: string[] };
+  /** Parent WebPage @id (passed in so the call site can keep
+   *  the existing webPageIdLocal useMemo as the single source
+   *  of truth for the page anchor). Typically
+   *  `${SITE_URL}/industries/{slug}/#webpage`. */
+  webpageId: string;
+};
+
+export function buildIndustryItemLists(input: IndustryItemListsInput) {
+  const url = `${SITE_URL}${input.slug.replace(/\/+$/, "")}/`;
+  const solutionsListId = `${url}#solutions-list`;
+  const perfectForListId = `${url}#perfect-for-list`;
+  // Flatten sections[].items[] into a single ordered ListItem array.
+  // Order matters: each section's items are emitted in source order
+  // (same as the visible cards on the page), so the position index
+  // stays 1:1 with the human reading order. The ListItem.name uses
+  // "Section · Item" so a single ItemList can carry all 12-15 cards
+  // without losing the category context (Google parses the leading
+  // "Section ·" prefix as part of the human-readable name).
+  const solutionItems = input.solutionsSection.sections.flatMap((s) =>
+    s.items.map((it) => ({ name: it.name, sectionTitle: s.title })),
+  );
+  return [
+    {
+      "@type": "ItemList",
+      "@id": solutionsListId,
+      name: `${input.solutionsSection.title} — items`,
+      description:
+        "Every product / category item covered on this industry page, ordered as rendered in the solutions section. Each ListItem mirrors a visible card verbatim.",
+      numberOfItems: solutionItems.length,
+      itemListOrder: "https://schema.org/ItemListOrderAscending",
+      itemListElement: solutionItems.map((it, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: `${it.sectionTitle} · ${it.name}`,
+      })),
+      isPartOf: { "@id": input.webpageId },
+    },
+    {
+      "@type": "ItemList",
+      "@id": perfectForListId,
+      name: "Perfect for — buyer types this industry page serves",
+      description:
+        "Every buyer type listed under the 'Perfect for' block on this industry page. Each ListItem mirrors the visible bullet verbatim.",
+      numberOfItems: input.perfectFor.items.length,
+      itemListOrder: "https://schema.org/ItemListOrderUnordered",
+      itemListElement: input.perfectFor.items.map((it, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: it,
+      })),
+      isPartOf: { "@id": input.webpageId },
+    },
+  ];
+}
