@@ -211,3 +211,11 @@ Sitemap: https://sublimapparel.com/sitemap.xml
 # GitHub -> Cloudflare Pages webhook fires on the next
 # push. Look for commit 7cf7386 + this touch's commit
 # in Cloudflare Pages -> Deployments to confirm.
+#
+# 2026-09-14 14:58 (post-syntax-fix verify): After
+# fixing the 3 R61-introduced JSX syntax errors in
+# commit 98cdcc8, this touch confirms Cloudflare
+# Pages auto-deploy fires on push to main. If this
+# timestamp line appears on the live /robots.txt at
+# sublimapparel.com, the auto-deploy pipeline is
+# working end-to-end.
