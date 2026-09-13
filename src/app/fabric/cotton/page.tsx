@@ -6,6 +6,14 @@ import { ArrowRight, Check, Leaf, Droplets, Shirt, Sparkles, Layers, Recycle, Sc
 import { cottonFabrics } from "@/lib/fabric-data";
 import { JsonLd } from "@/components/json-ld";
 import { UnifiedContactCta } from "@/components/unified-contact-cta";
+// 2026-09-14 (R64 build fix, round 3): R46 (1665f3a) accidentally
+// dropped the `buildBreadcrumbJsonLd` import when it promoted the
+// two inline <JsonLd> tags into a single <JsonLd data={cottonGraph}>
+// but never defined `cottonGraph`. The reference compile-errors out
+// with "Cannot find name 'buildBreadcrumbJsonLd'". Re-import so the
+// top-level `breadcrumbJsonLd` const can be built, then assemble
+// `cottonGraph` (BreadcrumbList + WebPage + Service) below.
+import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 
 // 2026-09-11 push (Round 4): add BreadcrumbList JSON-LD so Google can render
 // rich breadcrumb crumbs in SERP for /fabric/cotton/ — improves CTR vs the
@@ -41,6 +49,50 @@ const webPageJsonLd = {
     "@type": "SpeakableSpecification",
     xpath: ["/html/body//h1", "/html/body//section[1]//p"],
   },
+};
+
+// 2026-09-14 (R64 build fix, round 3): assemble `cottonGraph` — the
+// consolidated @graph payload the page renders via a single
+// <JsonLd data={cottonGraph} />. R46 (1665f3a) introduced the
+// reference but never defined the constant, which is why the
+// production build has been broken since R46 (Cloudflare just kept
+// surfacing the most recent unrelated TS error first). We assemble
+// the three nodes R46 expected — BreadcrumbList (the existing
+// breadcrumbJsonLd), WebPage (the existing webPageJsonLd), and a
+// Service node that mirrors the polyester-page pattern (R46 also
+// consolidated /fabric/polyester/ to the same @graph shape).
+//
+// We deliberately skip FAQPage here — the page has no inline FAQ
+// content and emitting an empty FAQPage would violate Google's
+// thin-content quality bar. This matches the comment block above
+// and the polyester page, which gates its FAQ node on input.faq.
+const cottonGraph = {
+  "@context": "https://schema.org",
+  "@graph": [
+    breadcrumbJsonLd,
+    webPageJsonLd,
+    {
+      "@type": "Service",
+      "@id": "https://sublimapparel.com/fabric/cotton/#service",
+      url: "https://sublimapparel.com/fabric/cotton/",
+      name: "Allover digital print on 100% cotton + DTG + DTF | SublimApparel",
+      serviceType:
+        "Allover digital print on 100% cotton apparel + DTG (direct to garment) + DTF (heat transfer)",
+      description:
+        "Allover digital print on 100% cotton apparel — true full-body, edge-to-edge printing via our proprietary cotton digital workflow. DTG for light cotton, DTF for dark cotton, plus organic-cotton and cut-and-sew programs. MOQ 50 pcs, 20-25 day lead time, DDP shipping to 100+ countries.",
+      provider: { "@id": "https://sublimapparel.com/#organization" },
+      areaServed: [
+        { "@type": "Country", name: "United States" },
+        { "@type": "Country", name: "Canada" },
+        { "@type": "Country", name: "United Kingdom" },
+        { "@type": "Country", name: "Australia" },
+        { "@type": "Country", name: "Germany" },
+        { "@type": "Country", name: "France" },
+        { "@type": "Country", name: "Spain" },
+        { "@type": "Country", name: "Japan" },
+      ],
+    },
+  ],
 };
 
 const whyUs = [
