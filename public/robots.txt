@@ -192,4 +192,10 @@ Content-Signal: search=yes, ai-input=yes, ai-train=yes, prefer-text=FREE-FORM, m
 # SITEMAPS & LLMS
 # ===========================================================================
 Sitemap: https://sublimapparel.com/sitemap.xml
-Sitemap: https://sublimapparel.com/llms.txt
+# 2026-09-13 (R64-side-task): removed Sitemap pointer to
+# /llms.txt. The /llms.txt file is still served at
+# https://sublimapparel.com/llms.txt (LLMs discover it via
+# the implicit <a rel=alternate> convention or via the
+# /llms.txt convention itself), but the explicit Sitemap:
+# line is dropped to keep robots.txt free of any optional
+# pointer that could be misread as a duplicate Sitemap.
