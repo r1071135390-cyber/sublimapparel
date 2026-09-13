@@ -20,6 +20,13 @@ export interface BlogPost {
   sections: { heading: string; paragraphs: string[] }[];
   keyTakeaways?: string[];
   faqs?: { q: string; a: string }[];
+  // 2026-09-14 (R64 build fix): optional raw HTML/Markdown blob
+  // for the post. The /blog/[slug] page passes `post.content`
+  // into buildBlogPostGraph (Schema.org BlogPosting.wordCount
+  // computation). When undefined, page.tsx falls back to joining
+  // `intro` + all `sections[*].paragraphs` so wordCount still
+  // resolves without per-post data edits.
+  content?: string;
   // 2026-09-12 (R52): citations — external authoritative sources the
   // post references. Surface as Schema.org `citation` on the
   // BlogPosting node so Google can ground the post in established

@@ -104,7 +104,20 @@ export default async function BlogPostPage({
     category: post.category,
     tags: post.tags,
     readTime: post.readTime,
-    content: post.content,
+    // 2026-09-14 (R64 build fix): BlogPost.content is optional
+    // so most posts can omit it. When undefined, synthesize the
+    // raw HTML blob the Schema.org BlogPosting.wordCount
+    // computation needs by joining `intro` and every
+    // `sections[*].paragraphs` entry. The same string is then
+    // passed into buildBlogPostGraph, which strips tags and
+    // counts non-empty whitespace tokens — identical to the
+    // R20 wordCount logic that used to live on this page.
+    content:
+      post.content ??
+      [
+        ...post.intro,
+        ...post.sections.flatMap((s) => s.paragraphs),
+      ].join("\n"),
     faqs: post.faqs,
     breadcrumb: [
       { name: "Home", path: "/" },
