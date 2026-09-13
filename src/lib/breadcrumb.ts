@@ -1199,6 +1199,27 @@ export function buildShippingHubGraph(input: ShippingHubInput) {
                 "Country-specific DDP shipping landing pages — one per major destination market. Each page targets the PAA-style queries for DDP shipping to that destination (e.g. 'DDP shipping to USA from China') and cross-links back to the /shipping/ hub.",
               numberOfItems: input.countryPages.length,
               itemListOrder: "https://schema.org/ItemListOrderUnordered",
+              // 2026-09-13 (R56): ItemList-level mainEntity array
+              // binds every country page's #howto @id into the
+              // /shipping/ hub schema as a whole. Per-ListItem
+              // mainEntity (added in R54) gives Google a per-row
+              // join from the carrier URL; this ItemList-level
+              // mainEntity gives Google a single bulk join from
+              // the ItemList itself to all 5 country HowTos in
+              // one JSON.parse pass. Schema.org permits
+              // mainEntity to be a single Thing or an array of
+              // Things, so we emit an array filtered to entries
+              // that actually have a howtoId. Gated on
+              // `some((c) => c.howtoId)` so callers that pass
+              // countryPages without howtoId stay byte-equivalent
+              // to the pre-R56 baseline.
+              ...(input.countryPages.some((c) => c.howtoId)
+                ? {
+                    mainEntity: input.countryPages
+                      .filter((c) => c.howtoId)
+                      .map((c) => ({ "@id": c.howtoId })),
+                  }
+                : {}),
               itemListElement: input.countryPages.map((c, i) => ({
                 "@type": "ListItem",
                 position: i + 1,
