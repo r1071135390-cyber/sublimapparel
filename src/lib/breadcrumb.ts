@@ -1640,6 +1640,106 @@ export function buildFobShippingPageGraph(input: FobShippingInput) {
   };
 }
 
+// 2026-09-13 (R55): country-specific DDP shipping HowTo helper.
+// Emits a 7-step HowTo node for each of the 5 country landing
+// pages (/shipping/{usa,uk,eu,au,canada}/). Each step is the
+// real DDP buyer journey for that destination, with country-
+// specific duty/VAT context in step 6 (the import-side step).
+//
+// 7 steps falls in Google's recommended HowTo range (3-10 ideal,
+// up to ~25 supported). One step shorter than the DDP / FOB
+// 9-step HowTos because the country pages target narrower
+// "DDP shipping to <country>" intent — Google only needs 5-8
+// steps to qualify for a HowTo rich result.
+//
+// Used by country-shipping-page.tsx (the shared template for
+// all 5 country routes). The helper is gated on input — when
+// the caller passes an empty howto, the schema stays byte-
+// equivalent to the no-HowTo baseline.
+export type CountryDdpHowToInput = {
+  /** Country slug, e.g. "usa", "uk". */
+  slug: string;
+  /** Human-readable country name, e.g. "United States". */
+  countryName: string;
+  /** Region label used in the Service node, e.g. "United States of America". */
+  regionLabel: string;
+  /** Total DDP lead time as ISO 8601 duration, e.g. "P14D". */
+  totalTime: string;
+  /** Short duty/VAT context, e.g. "Section 301 + import duty". */
+  dutyVatLine: string;
+  /** Transit options, e.g. "express, air, or sea (Pacific)". */
+  transitMode: string;
+};
+
+export function buildCountryDdpHowToNode(input: CountryDdpHowToInput) {
+  const url = `${SITE_URL}/shipping/${input.slug}/`;
+  const webpageId = `${url}#webpage`;
+  return {
+    "@type": "HowTo",
+    "@id": `${url}#howto`,
+    url,
+    name: `How DDP Shipping from China to ${input.countryName} Works — Step by Step`,
+    description:
+      `The 7-step DDP (Delivered Duty Paid) shipping process for custom apparel from our Yiwu factory to ${input.countryName}: ${input.dutyVatLine} pre-paid, customs cleared, delivered to your door in one invoice.`,
+    inLanguage: "en",
+    isPartOf: { "@id": webpageId },
+    about: { "@id": `${SITE_URL}/#organization` },
+    totalTime: input.totalTime,
+    step: [
+      {
+        "@type": "HowToStep",
+        position: 1,
+        name: `Request a DDP quote with your ${input.countryName} destination`,
+        text:
+          `Send us the destination country, postal code, product type, and total weight or piece count. We confirm DDP availability for ${input.countryName} and return a single landed price — freight, ${input.dutyVatLine}, customs clearance, and last-mile all included. No surprise bills at the door.`,
+      },
+      {
+        "@type": "HowToStep",
+        position: 2,
+        name: "Approve the sample or art proof",
+        text:
+          "For new designs we send a pre-production sample (3-7 days) so you can confirm hand-feel, color vibrancy, and fit before bulk production. Existing customers with the design and fabric on file can skip this step and move directly to bulk.",
+      },
+      {
+        "@type": "HowToStep",
+        position: 3,
+        name: "Production at our Yiwu factory",
+        text:
+          "Bulk production runs 10-20 days at our 2,000 m² Yiwu facility depending on technique (sublimation 10-15 days, screen-print 12-18 days, embroidery 8-12 days, DTF 7-10 days). Daily status updates and milestone photos for full transparency.",
+      },
+      {
+        "@type": "HowToStep",
+        position: 4,
+        name: "100% final QC and AQL inspection",
+        text:
+          "Every garment is individually inspected against the AQL 2.5 sampling plan. Defect rate must be below 2.5% (or below 1.0% for critical defects) before the order can ship. Photos of any defects are shared for transparency.",
+      },
+      {
+        "@type": "HowToStep",
+        position: 5,
+        name: `International freight to ${input.regionLabel} (${input.transitMode})`,
+        text:
+          `Chosen at quote time based on your deadline and unit-cost tolerance: ${input.transitMode}. Each shipment is fully insured and tracked end-to-end with a single tracking number from the Yiwu origin.`,
+      },
+      {
+        "@type": "HowToStep",
+        position: 6,
+        name: `Import customs clearance + ${input.dutyVatLine} payment`,
+        text:
+          `Our in-house broker (or local IOR partner) clears the shipment through ${input.countryName} customs, classifies under the local tariff schedule, and pays all import duties, ${input.dutyVatLine} upfront. You never see a separate customs bill on delivery.`,
+      },
+      {
+        "@type": "HowToStep",
+        position: 7,
+        name: "Last-mile delivery to your door with tracking",
+        text:
+          "From the destination port or airport, the shipment is dispatched to your shipping address via ground courier (USPS, Royal Mail, DHL local, AusPost, Canada Post, etc.). One tracking number, one invoice, one signature on delivery. Real-time milestone updates.",
+      },
+    ],
+  };
+}
+
+
 
 // 2026-09-12 (R37): shared helper for /about/ that consolidates
 // the 4 separate JSON-LD <script> tags (BreadcrumbList + FAQPage

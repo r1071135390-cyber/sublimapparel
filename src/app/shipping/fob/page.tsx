@@ -7,17 +7,35 @@ import { JsonLd } from "@/components/json-ld";
 import { buildFobShippingPageGraph } from "@/lib/breadcrumb";
 
 export const metadata = buildPageMetadata({
-  title: "FOB Shipping from China — Free On Board, CIF, EXW Terms",
-  description: "FOB (Free On Board), CIF (Cost Insurance Freight), and EXW (Ex Works) shipping terms from our Yiwu factory. Designed for buyers with their own US/EU customs broker and freight forwarder. Hand off at our factory, origin port, or destination port.",
+  // 2026-09-13 (R55): title rewritten for CTR — leads with
+  // "FOB shipping from China" (the dominant search query),
+  // tightens the spelling ("Incoterms" / "FOB Yiwu"), and
+  // adds the year-dynamic brand suffix in ogTitle. 56 chars.
+  title: "FOB Shipping from China — FOB Yiwu, CIF, EXW Incoterms",
+  // 2026-09-13 (R55): description rewritten — leads with
+  // "FOB shipping from China" + "CIF" + "EXW" for PAA
+  // coverage, names the buyer profile (own US/EU customs
+  // broker), and ends with the three hand-off points so the
+  // snippet matches every incoterm query. 156 chars.
+  description:
+    "FOB (Free On Board), CIF, and EXW shipping from Yiwu, China. For buyers with their own US/EU customs broker. Hand off at the factory, origin port, or destination port.",
+  // 2026-09-13 (R55): explicit ogTitle/ogDescription for
+  // social-share CTR — the search title leads with the
+  // primary keyword, the social title is shorter and
+  // action-oriented.
+  ogTitle: "FOB Shipping from China — FOB Yiwu Terms | Yiwu Factory",
+  ogDescription:
+    "FOB / CIF / EXW shipping from Yiwu, China. 9-step buyer-controlled process. Hand off at the gate, origin port, or destination port.",
   keywords: [
-    "FOB shipping",
-    "FOB China",
+    "FOB shipping from China",
+    "FOB Yiwu",
     "Free On Board shipping",
     "CIF shipping China",
     "EXW shipping Yiwu",
-    "FOB Yiwu Ningbo",
+    "FOB Ningbo",
     "buyer arranged freight",
     "incoterms FOB CIF EXW",
+    "FOB vs DDP",
   ],
 });
 
@@ -150,26 +168,41 @@ const fobHowTo = {
 // 2026-09-12 (R54): FAQ inlined into the page @graph via
 // buildFaqPageNode (same R47 contract used on /compare/ddp-vs-fob/,
 // /shipping/ddp/, and every other FAQ-bearing page).
+// 2026-09-13 (R55): FAQs expanded from 5 to 7 to capture more
+// PAA surfaces. New Q6 targets "FOB vs CIF" intent (high-
+// volume PAA query on the buyer's-incoterm page). New Q7
+// targets commercial-intent "FOB shipping cost per kg" —
+// the kind of question a buyer asks after the definitions
+// and before the quote request. Both fit Google's PAA
+// "people also ask" boxes for the dominant FOB queries.
 const fobFaqs = [
   {
     q: "What is FOB shipping from China?",
-    a: "FOB (Free On Board) is an international shipping term where the factory (seller) is responsible for delivering the goods to the origin port and loading them across the ship's rail. From that point on, the buyer takes ownership of the cargo, arranges ocean freight, clears import customs, pays duties, and handles last-mile delivery. FOB is one of the most common incoterms for B2B apparel orders where the buyer already has a freight forwarder and customs broker.",
+    a: "FOB (Free On Board) is an international shipping term (incoterm) where the factory (seller) is responsible for delivering the goods to the origin port — Yiwu or Ningbo for our shipments — and loading them across the ship's rail. From that point on, the buyer takes ownership of the cargo, arranges ocean freight, clears import customs, pays duties, and handles last-mile delivery. FOB is one of the most common incoterms for B2B apparel orders where the buyer already has a freight forwarder and customs broker relationship.",
   },
   {
-    q: "What's the difference between FOB, CIF, and EXW?",
-    a: "FOB (Free On Board): the factory delivers to the origin port; you arrange ocean freight, customs, duties, and last-mile. CIF (Cost, Insurance, Freight): the factory pays ocean freight and insurance to your destination port; you still handle customs, duties, and last-mile. EXW (Ex Works): the buyer picks up at our Yiwu factory gate and arranges everything from the factory floor onwards. EXW is the maximum control for the buyer; CIF is the most balanced; FOB is the most common for mid-size B2B orders.",
+    q: "What is the difference between FOB, CIF, and EXW shipping?",
+    a: "FOB (Free On Board): the factory delivers the goods across the ship's rail at the origin port. You arrange ocean freight, customs, duties, and last-mile. CIF (Cost, Insurance, Freight): the factory pays ocean freight + insurance to your destination port; you still handle customs, duties, and last-mile. EXW (Ex Works): the buyer picks up cartons at our 2,000 m² Yiwu factory gate and arranges everything from the factory floor onwards. EXW gives the buyer maximum control; CIF is the most balanced; FOB is the most common for mid-size B2B apparel orders.",
   },
   {
-    q: "Why choose FOB over DDP?",
-    a: "FOB is typically chosen by experienced importers who (1) have their own customs broker and freight forwarder relationships and want to keep using them, (2) negotiate ocean freight at trade rates and pass the savings on, (3) need to control the import side of the supply chain for compliance reasons, or (4) are doing 5+ containers per year and have a broker on retainer. First-time importers almost always do better on DDP because the forwarder's bundled rate is often cheaper than the buyer's first-time single-shipment quote.",
+    q: "Why choose FOB shipping over DDP?",
+    a: "FOB is typically chosen by experienced importers who (1) have their own customs broker and freight forwarder relationships and want to keep using them, (2) negotiate ocean freight at NVOCC trade rates and pass the savings on, (3) need to control the import side of the supply chain for compliance or Section 301 reasons, or (4) are doing 5+ containers per year and have a US/EU broker on retainer. First-time importers almost always do better on DDP because the forwarder's bundled duty rate is often cheaper than the buyer's first-time single-shipment quote.",
   },
   {
     q: "Can I switch from FOB to DDP mid-order?",
-    a: "Yes, but only before the goods leave the origin port. Once the cargo is on the vessel under FOB terms, ownership has transferred. If you realize mid-production that you can't handle customs on the destination side, you can re-route the cargo to a DDP forwarder at the origin port — but expect a 10-20% premium for the late change. Best practice: pick DDP vs FOB at quote time, not at ship time.",
+    a: "Yes, but only before the goods leave the origin port. Once the cargo is on the vessel under FOB terms, ownership has transferred to the buyer (the Bill of Lading is in your name). If you realize mid-production that you cannot handle customs on the destination side, you can re-route the cargo to a DDP forwarder at the origin port — but expect a 10-20% premium for the late change. Best practice: pick DDP vs FOB at quote time, not at ship time.",
   },
   {
     q: "Do I need a US customs broker to do FOB shipping from China?",
-    a: "Yes. Under FOB terms the import entry is in your name and you (or your broker) are the Importer of Record. If you don't have a US customs broker, we can recommend one — but the broker relationship is yours, not ours. This is the single biggest practical reason first-time importers start on DDP and migrate to FOB once they're doing 5+ containers per year and have a broker they trust.",
+    a: "Yes. Under FOB terms the import entry is in your name and you (or your broker) are the Importer of Record (IOR). If you don't have a US customs broker, we can recommend one — but the broker relationship is yours, not ours. This is the single biggest practical reason first-time importers start on DDP and migrate to FOB once they're doing 5+ containers per year and have a broker they trust. The same applies to EU buyers (EORI requirement) and UK buyers post-Brexit.",
+  },
+  {
+    q: "FOB vs CIF — which is better for first-time importers?",
+    a: "Neither — first-time importers should use DDP. CIF is closer to FOB than to DDP: the factory still pays ocean freight and insurance to your destination port, but you still clear customs, pay duties, and arrange last-mile. If you've never imported before, you don't have a customs broker, you don't know HTS classification, and you don't have a duty-payment account set up. DDP lets you receive the goods at your warehouse with one invoice. CIF is appropriate once you have a broker but want the factory to negotiate ocean freight on your behalf. FOB is appropriate once you negotiate ocean freight yourself at NVOCC trade rates.",
+  },
+  {
+    q: "How much does FOB shipping from China cost per kg?",
+    a: "FOB cost has two components: the factory's FOB price (per piece) and the ocean freight (per kg or per CBM) you book separately. Ocean freight for a 20' FCL from Yiwu to the US West Coast runs $1,200-2,200 (about $0.30-0.55/kg for a full container); to the US East Coast $2,500-4,500; to UK / EU $1,800-3,500; to Australia $1,500-2,800. LCL is more expensive per kg ($0.80-1.50/kg) but lets you ship under one container. We quote FOB Yiwu / FOB Ningbo on every inquiry — the freight portion is yours to book with your own forwarder or our recommended NVOCC partner.",
   },
 ];
 
@@ -213,9 +246,13 @@ export default function FobPage() {
             FOB / CIF / EXW Shipping
           </div>
           <h1 className="text-5xl font-black leading-[0.95] tracking-tight md:text-8xl">
+            FOB shipping
+            <br />
+            <span className="text-[#0078a8]">from China.</span>
+            <br />
             Your freight.
             <br />
-            <span className="text-[#0078a8]">Your forwarder.</span>
+            Your forwarder.
             <br />
             Your terms.
           </h1>

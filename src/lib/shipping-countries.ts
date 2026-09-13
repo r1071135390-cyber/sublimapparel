@@ -28,6 +28,22 @@ export type CountryShipping = {
   /** 3–4 country-specific FAQs (PAA + featured snippet targeting). */
   faqs: { q: string; a: string }[];
 
+  // 2026-09-13 (R55): country-specific DDP HowTo spec for the
+  // page's #howto structured-data node. The shared template
+  // (country-shipping-page.tsx) calls buildCountryDdpHowToNode
+  // with this data to emit a 7-step DDP-shipping-to-<country>
+  // HowTo in the @graph. The field is optional so older
+  // callers that don't pass it stay byte-equivalent to the
+  // pre-R55 baseline.
+  howto?: {
+    /** Total DDP lead time as ISO 8601 duration, e.g. "P14D". */
+    totalTime: string;
+    /** Short duty/VAT context, e.g. "Section 301 + import duty". */
+    dutyVatLine: string;
+    /** Transit options, e.g. "express, air, or sea (Pacific)". */
+    transitMode: string;
+  };
+
   // 2026-09-12 (R33-A1): region-level facts for ServiceArea + Country
   // schema nodes. Drives areaServed / addressCountry / identifier in
   // the Service + Country JSON-LD nodes that the shared template now
@@ -104,6 +120,13 @@ export const COUNTRY_SHIPPING: Record<CountryShipping["slug"], CountryShipping> 
         a: "Yes. We can deliver to both. Residential deliveries sometimes add $4–8 per shipment in carrier surcharges, which we include in the DDP quote. If you have a loading dock or can accept LTL freight at a commercial address, sea freight on full pallets is significantly cheaper per kg.",
       },
     ],
+    // 2026-09-13 (R55): 7-step DDP HowTo spec for the
+    // /shipping/usa/ page's #howto structured-data node.
+    howto: {
+      totalTime: "P14D",
+      dutyVatLine: "Section 301 + import duty (currently 0% for most apparel)",
+      transitMode: "express (DHL/FedEx), air, or sea to the US West Coast",
+    },
     regionFacts: {
       isoCountryCode: "US",
       capital: "Washington, D.C.",
@@ -160,6 +183,12 @@ export const COUNTRY_SHIPPING: Record<CountryShipping["slug"], CountryShipping> 
         a: "No. Our DDP quote is all-inclusive — customs broker fees, CDS filing, port handling, and last-mile delivery are all bundled. The price you receive is the price you pay. We don't add a customs clearance surcharge after the fact.",
       },
     ],
+    // 2026-09-13 (R55): 7-step DDP HowTo spec for /shipping/uk/.
+    howto: {
+      totalTime: "P18D",
+      dutyVatLine: "12% import duty + 20% VAT",
+      transitMode: "express, air, sea, or rail (via the China Railway Express to Duisburg)",
+    },
     regionFacts: {
       isoCountryCode: "GB",
       capital: "London",
@@ -216,6 +245,12 @@ export const COUNTRY_SHIPPING: Record<CountryShipping["slug"], CountryShipping> 
         a: "If you use our DDP service, no. We file the customs declaration under our EORI number, so you don't need to register your own. If you want to clear customs yourself and reclaim VAT on resale, you'll need an EU EORI (free, issued by your national customs authority in 3–10 working days). Most EU buyers prefer DDP for the first 12 months while they scale.",
       },
     ],
+    // 2026-09-13 (R55): 7-step DDP HowTo spec for /shipping/eu/.
+    howto: {
+      totalTime: "P20D",
+      dutyVatLine: "12% import duty + 19-25% VAT (IOSS pre-registered)",
+      transitMode: "express, air, sea, or rail (China Railway Express to Duisburg)",
+    },
     regionFacts: {
       // EU isn't an ISO 3166-1 alpha-2 country (it's a supranational
       // region), so we use "EU" as the Country.identifier. Google
@@ -278,6 +313,12 @@ export const COUNTRY_SHIPPING: Record<CountryShipping["slug"], CountryShipping> 
         a: "Yes — shipments under AUD $1,000 to Australia are currently GST-free on entry. We can split orders into AUD $999 consignments for very small samples and rush orders, but for production runs above 50 kg the per-shipment overhead makes splitting uneconomical. The 10% GST on production orders is included in our DDP quote — you don't pay extra.",
       },
     ],
+    // 2026-09-13 (R55): 7-step DDP HowTo spec for /shipping/au/.
+    howto: {
+      totalTime: "P22D",
+      dutyVatLine: "5% import duty + 10% GST",
+      transitMode: "express, air, sea, or sea-air hybrid via Singapore",
+    },
     regionFacts: {
       isoCountryCode: "AU",
       capital: "Canberra",
@@ -335,6 +376,12 @@ export const COUNTRY_SHIPPING: Record<CountryShipping["slug"], CountryShipping> 
         a: "If you use our DDP service, no. We file the customs declaration under our own Business Number, so you don't need to register for one. If you want to clear customs yourself and recover GST/HST on resale, you'll need a BN from CRA (free, 1–2 weeks by mail). Most Canadian buyers prefer DDP for the first year to keep import paperwork off their finance team's desk.",
       },
     ],
+    // 2026-09-13 (R55): 7-step DDP HowTo spec for /shipping/canada/.
+    howto: {
+      totalTime: "P20D",
+      dutyVatLine: "17-18% import duty + 5% GST + provincial sales tax (HST/QST/PST)",
+      transitMode: "express, air, sea, or sea-air hybrid via Vancouver",
+    },
     regionFacts: {
       isoCountryCode: "CA",
       capital: "Ottawa",

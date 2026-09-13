@@ -341,11 +341,36 @@ export default function ShippingPage() {
     // queries like "DDP shipping to USA from China" and cross-
     // links back to the hub.
     countryPages: [
-      { slug: "usa", name: "DDP Shipping to USA", href: "/shipping/usa/" },
-      { slug: "uk", name: "DDP Shipping to UK", href: "/shipping/uk/" },
-      { slug: "eu", name: "DDP Shipping to EU", href: "/shipping/eu/" },
-      { slug: "au", name: "DDP Shipping to Australia", href: "/shipping/au/" },
-      { slug: "canada", name: "DDP Shipping to Canada", href: "/shipping/canada/" },
+      {
+        slug: "usa",
+        name: "DDP Shipping to USA",
+        href: "/shipping/usa/",
+        howtoId: "https://sublimapparel.com/shipping/usa/#howto",
+      },
+      {
+        slug: "uk",
+        name: "DDP Shipping to UK",
+        href: "/shipping/uk/",
+        howtoId: "https://sublimapparel.com/shipping/uk/#howto",
+      },
+      {
+        slug: "eu",
+        name: "DDP Shipping to EU",
+        href: "/shipping/eu/",
+        howtoId: "https://sublimapparel.com/shipping/eu/#howto",
+      },
+      {
+        slug: "au",
+        name: "DDP Shipping to Australia",
+        href: "/shipping/au/",
+        howtoId: "https://sublimapparel.com/shipping/au/#howto",
+      },
+      {
+        slug: "canada",
+        name: "DDP Shipping to Canada",
+        href: "/shipping/canada/",
+        howtoId: "https://sublimapparel.com/shipping/canada/#howto",
+      },
     ],
     faq: faqs,
   });

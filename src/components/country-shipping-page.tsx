@@ -1,7 +1,11 @@
 import Link from "next/link";
 import { ArrowRight, MapPin, ShieldCheck, Truck, Plane, Ship, Warehouse, Package, DollarSign, Clock } from "lucide-react";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd, buildFaqPageNode } from "@/lib/breadcrumb";
+import {
+  buildBreadcrumbJsonLd,
+  buildCountryDdpHowToNode,
+  buildFaqPageNode,
+} from "@/lib/breadcrumb";
 import { COUNTRY_SHIPPING, type CountryShipping } from "@/lib/shipping-countries";
 import { RequestQuoteLink } from "@/components/request-quote-link";
 
@@ -206,6 +210,24 @@ export function CountryShippingPage({ slug }: { slug: CountryShipping["slug"] })
     const { "@context": _c, ...rest } = node as Record<string, unknown>;
     return rest as T;
   };
+  // 2026-09-13 (R55): build the country-specific 7-step DDP
+  // HowTo node. Gated on data.howto so pages without a
+  // howto spec stay byte-equivalent to the pre-R55 baseline.
+  // The HowTo is appended to the @graph so all other nodes
+  // (breadcrumb, WebPage, Country, ServiceArea, Service,
+  // FAQPage) are emitted first, with the HowTo as the last
+  // child for clean ordering.
+  const howtoNode = data.howto
+    ? buildCountryDdpHowToNode({
+        slug,
+        countryName: data.countryName,
+        regionLabel: data.regionFacts.regionLabel,
+        totalTime: data.howto.totalTime,
+        dutyVatLine: data.howto.dutyVatLine,
+        transitMode: data.howto.transitMode,
+      })
+    : null;
+
   const pageGraph = {
     "@context": "https://schema.org",
     "@graph": [
@@ -215,6 +237,7 @@ export function CountryShippingPage({ slug }: { slug: CountryShipping["slug"] })
       stripContext(serviceAreaNode),
       stripContext(serviceNode),
       buildFaqPageNode(faqId, faqWebpageId, data.faqs),
+      ...(howtoNode ? [howtoNode] : []),
     ],
   };
 
