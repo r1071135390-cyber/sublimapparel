@@ -199,3 +199,8 @@ Sitemap: https://sublimapparel.com/sitemap.xml
 # /llms.txt convention itself), but the explicit Sitemap:
 # line is dropped to keep robots.txt free of any optional
 # pointer that could be misread as a duplicate Sitemap.
+#
+# 2026-09-13 (R64-side-task, deploy retry): touch-point
+# for the Cloudflare Pages rebuild — no semantic change
+# from the entry above; only this trailing timestamp
+# line varies.

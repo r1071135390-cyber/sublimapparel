@@ -97,11 +97,29 @@ const ddpFaqs = [
 //    the step subtitle / AI Overview extraction).
 //  - 9 steps falls comfortably in Google's recommended
 //    HowTo range (3-10 steps ideal, up to ~25 supported).
+//
+// 2026-09-13 (R64c): added estimatedCost (MonetaryAmount, USD,
+// landed duty-paid per order) + yield (typical B2B order
+// volume) fields. Both surface in the Google HowTo rich
+// result "Cost" + "Output" cards and match the visible body
+// text (MOQ 50, DDP 100+ countries, 5K-30K typical order).
 const ddpHowTo = {
   name: "How DDP Shipping from China to Your Door Works — Step by Step",
   description:
     "The 9-step DDP (Delivered Duty Paid) shipping process for custom apparel from our Yiwu factory to 100+ countries: quote, production, QC, export customs, freight, import customs, duty payment, last-mile delivery, and post-delivery support.",
   totalTime: "P30D",
+  estimatedCost: {
+    currency: "USD",
+    // Landed, duty-paid total per order. MOQ 50 sublimation
+    // tees at ~$10/piece DDP = ~$500 landed. A 30,000-piece
+    // full-team order at the same per-piece price lands
+    // around $300,000. We use the 500-300,000 band to
+    // cover small-event tees through marquee-league runs.
+    value: "500-300000",
+    minValue: 500,
+    maxValue: 300000,
+  },
+  yield: "50-30,000 pieces per order (MOQ 50 for sublimation cut & sew)",
   steps: [
     {
       name: "Request a DDP quote with your destination",

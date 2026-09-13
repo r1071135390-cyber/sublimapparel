@@ -120,11 +120,33 @@ const destinations = [
 //    shipment once it crosses the ship's rail).
 // 9 steps falls comfortably in Google's recommended HowTo
 // range (3-10 ideal, up to ~25 supported).
+//
+// 2026-09-13 (R64c): added estimatedCost (MonetaryAmount, USD,
+// factory FOB price per piece only — buyer-arranged ocean
+// freight is NOT included) + yield (typical FOB volume,
+// 1-50+ FCL per year for experienced importers). Both fields
+// surface in the Google HowTo rich result and match the
+// visible body text + FAQ "FOB shipping cost per kg" answer.
 const fobHowTo = {
   name: "How FOB Shipping from China to Your Port Works — Step by Step",
   description:
     "The 9-step FOB (Free On Board) shipping process for custom apparel from our Yiwu factory to a buyer-arranged destination port: PO, sample, production, QC, factory pickup, FOB origin-port hand-off, buyer ocean freight, buyer import customs + duties, and last-mile delivery.",
   totalTime: "P35D",
+  estimatedCost: {
+    currency: "USD",
+    // FOB Yiwu / FOB Ningbo per-piece factory price only.
+    // Buyer-arranged ocean freight is excluded — the buyer
+    // books it themselves. $2/piece (basic DTG blanks) to
+    // $80/piece (cut-and-sew kits with embroidery) covers
+    // the realistic B2B FOB range. Matches the FAQ
+    // "FOB shipping cost per kg" answer and the "FOB is
+    // appropriate once you negotiate ocean freight
+    // yourself" PAA card.
+    value: "2-80",
+    minValue: 2,
+    maxValue: 80,
+  },
+  yield: "1-50+ FCL per year (typical for experienced importers doing 5+ containers/year)",
   steps: [
     {
       name: "Issue the purchase order and confirm FOB terms",

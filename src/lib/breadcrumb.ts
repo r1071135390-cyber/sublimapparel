@@ -166,6 +166,30 @@ export function buildHowToJsonLd(input: {
 //   (3) keep the helper small and Google-spec-aligned (HowTo
 //       + HowToStep + position + name + text + totalTime
 //       + estimatedCost + tool + supply are all supported)
+// 2026-09-13 (R64c): extend buildHowToNode with the two
+// intent-surfacing fields we hadn't yet exposed on the
+// shipping hub HowTos.
+//
+//   - `estimatedCost` (MonetaryAmount with currency + value
+//     + minValue + maxValue) is a Google-supported HowTo
+//     Rich Result field. It surfaces in the "How much does
+//     this cost?" card and matches the "DDP shipping cost"
+//     / "FOB shipping cost per kg" PAA intent that we
+//     already answer in the FAQ + visible body. Without it,
+//     the HowTo is missing the most-asked-about field for
+//     a shipping-process HowTo. The helper accepts the raw
+//     shape so call sites can pass the same range they
+//     quote in the body text (e.g. 100-5000 USD per order
+//     for DDP).
+//   - `yield` is the typical output volume of the procedure.
+//     schema.org reserves `recipeYield` for Recipe only,
+//     but Google does not penalize an extra string field
+//     on HowTo; for our shipping hub it surfaces the
+//     "typical order volume" / "typical FCL/year" range
+//     directly in the HowTo card without forcing a separate
+//     FAQ question. Kept as a single short string per
+//     call site — when omitted, the key is dropped entirely
+//     (byte-equivalent to the pre-R64c baseline).
 export function buildHowToNode(input: {
   /** Caller-supplied @id (unique per page), e.g.
    *  "https://sublimapparel.com/production/#howto". */
@@ -190,6 +214,26 @@ export function buildHowToNode(input: {
   /** Optional per-step supplies, e.g. "Polyester blank shirt",
    *  "Sublimation transfer paper". */
   supplies?: string[];
+  /** 2026-09-13 (R64c): optional estimated cost range as a
+   *  schema.org MonetaryAmount. Lands in the "Cost" field of
+   *  the Google HowTo rich result when present. `currency`
+   *  is the ISO 4217 code (e.g. "USD"); `value` is the
+   *  human-readable range as it appears in the visible body
+   *  text (e.g. "100-5000"); `minValue` / `maxValue` are the
+   *  numeric endpoints so Google can render the cost chip. */
+  estimatedCost?: {
+    currency: string;
+    value: string;
+    minValue: number;
+    maxValue: number;
+  };
+  /** 2026-09-13 (R64c): optional yield / typical output of
+   *  the procedure. Single short string, e.g.
+   *  "50-30,000 pieces per order" or "1-50+ FCL per year".
+   *  Not a Google HowTo Rich Result field, but a useful
+   *  intent-surfacing claim that matches the visible body
+   *  text and joins the same entity graph via isPartOf. */
+  yield?: string;
 }) {
   return {
     "@type": "HowTo",
@@ -212,6 +256,18 @@ export function buildHowToNode(input: {
           })),
         }
       : {}),
+    ...(input.estimatedCost
+      ? {
+          estimatedCost: {
+            "@type": "MonetaryAmount",
+            currency: input.estimatedCost.currency,
+            value: input.estimatedCost.value,
+            minValue: input.estimatedCost.minValue,
+            maxValue: input.estimatedCost.maxValue,
+          },
+        }
+      : {}),
+    ...(input.yield ? { yield: input.yield } : {}),
     step: input.steps.map((s, i) => ({
       "@type": "HowToStep",
       position: i + 1,
@@ -1318,6 +1374,20 @@ export type DdpShippingInput = {
      *  procedure, e.g. "P30D" (30 days) for
      *  the typical DDP end-to-end flow. */
     totalTime?: string;
+    /** 2026-09-13 (R64c): optional estimated cost range
+     *  for the whole DDP procedure (landed duty-paid
+     *  per order). Renders in the Google HowTo
+     *  "Cost" card. Omit to drop the key. */
+    estimatedCost?: {
+      currency: string;
+      value: string;
+      minValue: number;
+      maxValue: number;
+    };
+    /** 2026-09-13 (R64c): optional typical order volume
+     *  yielded by the DDP procedure (e.g. "50-30,000
+     *  pieces per order"). Single short string. */
+    yield?: string;
   };
 };
 
@@ -1468,6 +1538,31 @@ export function buildDdpShippingPageGraph(input: DdpShippingInput) {
               ...(input.howto.totalTime
                 ? { totalTime: input.howto.totalTime }
                 : {}),
+              // 2026-09-13 (R64c): surface the landed duty-paid
+              // cost range (per order) as a Google-supported
+              // HowTo MonetaryAmount so the "How much does DDP
+              // shipping from China cost?" PAA card carries a
+              // number, not just body text. The range matches
+              // the FAQ "DDP shipping cost" answer and the
+              // MOQ 50 / 30,000+ pieces cited in the visible
+              // body. Dropped entirely when omitted so the
+              // pre-R64c baseline stays byte-equivalent.
+              ...(input.howto.estimatedCost
+                ? {
+                    estimatedCost: {
+                      "@type": "MonetaryAmount",
+                      currency: input.howto.estimatedCost.currency,
+                      value: input.howto.estimatedCost.value,
+                      minValue: input.howto.estimatedCost.minValue,
+                      maxValue: input.howto.estimatedCost.maxValue,
+                    },
+                  }
+                : {}),
+              // 2026-09-13 (R64c): typical DDP order volume.
+              // Matches the visible "MOQ 50 / up to 30,000+"
+              // claim in the page body so the HowTo card and
+              // the human reading order stay in lockstep.
+              ...(input.howto.yield ? { yield: input.howto.yield } : {}),
               step: input.howto.steps.map((s, i) => ({
                 "@type": "HowToStep",
                 position: i + 1,
@@ -1509,6 +1604,21 @@ export type FobShippingInput = {
     description: string;
     steps: Array<{ name: string; text: string }>;
     totalTime?: string;
+    /** 2026-09-13 (R64c): optional FOB per-piece cost range
+     *  (factory FOB price only — buyer-arranged ocean freight
+     *  is NOT included since the buyer books it themselves).
+     *  Renders in the Google HowTo "Cost" card. */
+    estimatedCost?: {
+      currency: string;
+      value: string;
+      minValue: number;
+      maxValue: number;
+    };
+    /** 2026-09-13 (R64c): optional typical volume yielded by
+     *  the FOB procedure (e.g. "1-50+ FCL per year" for
+     *  experienced FOB importers, or "5,000-500,000+ pieces
+     *  per year" for the unit-count equivalent). */
+    yield?: string;
   };
 };
 
@@ -1648,6 +1758,32 @@ export function buildFobShippingPageGraph(input: FobShippingInput) {
               ...(input.howto.totalTime
                 ? { totalTime: input.howto.totalTime }
                 : {}),
+              // 2026-09-13 (R64c): FOB per-piece cost range.
+              // The factory FOB price (per piece) is what
+              // this HowTo is responsible for; buyer-arranged
+              // ocean freight is intentionally excluded
+              // because the buyer books it themselves with
+              // their own NVOCC. The range matches the FAQ
+              // "FOB shipping cost per kg" answer and the
+              // "FOB cost" body text on the page.
+              ...(input.howto.estimatedCost
+                ? {
+                    estimatedCost: {
+                      "@type": "MonetaryAmount",
+                      currency: input.howto.estimatedCost.currency,
+                      value: input.howto.estimatedCost.value,
+                      minValue: input.howto.estimatedCost.minValue,
+                      maxValue: input.howto.estimatedCost.maxValue,
+                    },
+                  }
+                : {}),
+              // 2026-09-13 (R64c): typical FOB volume. FOB
+              // is the incoterm for high-volume importers
+              // (5+ containers per year). Matches the
+              // visible "experienced importer" body
+              // language and the "FOB is appropriate once
+              // you negotiate ocean freight yourself" FAQ.
+              ...(input.howto.yield ? { yield: input.howto.yield } : {}),
               step: input.howto.steps.map((s, i) => ({
                 "@type": "HowToStep",
                 position: i + 1,
