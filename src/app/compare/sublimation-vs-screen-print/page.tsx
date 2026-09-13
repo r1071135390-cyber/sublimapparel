@@ -288,7 +288,10 @@ export default function SublimationVsScreenPrintPage() {
               durability target. This page compares them side by side.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <RequestQuoteLink className="inline-flex items-center justify-center gap-2 border-2 border-[#ff4d00] bg-[#ff4d00] px-6 py-3 text-sm font-bold uppercase tracking-wide text-black transition-colors hover:bg-[#e64400]">
+              <RequestQuoteLink
+                label="compare / sublimation-vs-screen-print / Get a custom quote"
+                className="inline-flex items-center justify-center gap-2 border-2 border-[#ff4d00] bg-[#ff4d00] px-6 py-3 text-sm font-bold uppercase tracking-wide text-black transition-colors hover:bg-[#e64400]"
+              >
                 Get a custom quote
               </RequestQuoteLink>
               <a
