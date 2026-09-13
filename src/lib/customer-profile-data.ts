@@ -58,6 +58,29 @@ export interface CustomerProfileData {
    * The OG image is what LinkedIn/Twitter/FB/Slack show when the URL is shared.
    */
   ogImage?: string;
+  // 2026-09-13 (R59): per-industry HowTo block. When supplied,
+  // the customer-profile-template emits a HowTo node in the
+  // @graph so Google can surface the buyer journey as a HowTo
+  // rich result for "how to" / step-by-step queries (PAA
+  // cluster). The shape mirrors buildHowToNode() from
+  // breadcrumb.ts (name + description + ordered steps with
+  // name/text), so every industry page can opt in by adding
+  // a `howto` field. Omitted / undefined = the @graph stays
+  // byte-equivalent to the pre-R59 schema.
+  howto?: {
+    /** HowTo rich result title, e.g. "How we make custom
+     *  sublimation team jerseys for clubs and leagues". */
+    name: string;
+    /** One-line description. Lands in the HowTo rich
+     *  result subtitle and AI Overview extraction. */
+    description: string;
+    /** ISO 8601 total time for the whole procedure,
+     *  e.g. "P30D" (30 days) for a typical bulk run. */
+    totalTime?: string;
+    /** Ordered list of 4-7 steps. 5 is the sweet spot
+     *  per Google HowTo best practice (3-10 range). */
+    steps: Array<{ name: string; text: string }>;
+  };
 }
 
 export function buildMetadata(data: CustomerProfileData): Metadata {

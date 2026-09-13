@@ -154,6 +154,40 @@ const data: CustomerProfileData = {
     "Send your campaign details, apparel needs, and timeline. We will reply with a quote, sample plan, and a production timeline that hits your election window.",
   ctaButton: "Plan Your Campaign Apparel",
   ogImage: "/og/og-industry.webp",
+  // 2026-09-13 (R59): per-industry HowTo (5-step buyer journey for
+  // political campaign managers: from campaign timeline + design
+  // to rush DDP delivery at the campaign office or rally
+  // venue). Lifts the page to HowTo rich result eligibility for
+  // "how to order campaign shirts" / "how to make political merch"
+  // PAA queries.
+  howto: {
+    name: "How we produce custom political campaign apparel for elections, parties and PACs",
+    description:
+      "Election-calendar production: from the campaign manager's first quote request to rush DDP delivery of volunteer shirts, supporter merch, and rally apparel at the campaign office or rally venue.",
+    totalTime: "P18D",
+    steps: [
+      {
+        name: "Send campaign timeline + design",
+        text: "Provide the election date, total quantity, and a breakdown by role (volunteers, supporters, rally staff, donors). We free-check the print file and reply within 1 business day with a per-role quote and a rush timeline if needed.",
+      },
+      {
+        name: "Approve artwork + sample (optional)",
+        text: "We send a 3D mockup on the actual garment. Pre-production sample costs $25–60 per piece, 5–7 day turnaround, refundable on bulk orders of 100+ pieces. Most campaigns skip samples and go straight to bulk when colors match the brand guide.",
+      },
+      {
+        name: "Rush production (10–25 days)",
+        text: "Sublimation / DTG / screen print starts once artwork is locked. We cut, sew and print every piece in-house at our Yiwu factory — volunteer shirts, supporter merch, rally apparel, all under one production run. Rush available for tight election windows.",
+      },
+      {
+        name: "Confidential packing",
+        text: "AQL 2.5 inspection, then packed per your campaign plan: by state, by region, by campaign office, or by rally venue. We respect pre-launch confidentiality on every order — no public photos, no social media until you say so.",
+      },
+      {
+        name: "DDP delivery to multiple campaign offices",
+        text: "DDP shipping to 100+ countries (US, UK, EU, AU, CA). We can split shipments to multiple state offices, regional warehouses, or rally venues. Most campaigns have apparel in hand 7–14 days before the first rally or door-knock.",
+      },
+    ],
+  },
 };
 
 export const metadata: Metadata = buildMetadata(data);

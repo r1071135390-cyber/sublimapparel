@@ -158,6 +158,38 @@ const data: CustomerProfileData = {
     "Send your team design and a rough size count. We will reply with a production plan, lead time and a clear quote.",
   ctaButton: "Start Your Team Project",
   ogImage: "/og/og-industry.webp",
+  // 2026-09-13 (R59): per-industry HowTo (5-step buyer journey
+  // for custom sublimated team jerseys / kits). Lifts the page
+  // to HowTo rich result eligibility for "how to order custom
+  // team jerseys" PAA queries.
+  howto: {
+    name: "How we make custom sublimated team jerseys for clubs and leagues",
+    description:
+      "End-to-end 30-day process: from the team's first artwork submission to DDP delivery of finished jerseys at the club address.",
+    totalTime: "P30D",
+    steps: [
+      {
+        name: "Submit team design + roster",
+        text: "Send the club logo, color palette, sponsor logos, and a size breakdown (or rough headcount). We free-check the artwork and send back a 3D mockup on the actual jersey within 1 business day.",
+      },
+      {
+        name: "Approve sample (optional)",
+        text: "Pre-production sample costs $25–60 per piece and takes 5–7 days. We refund the sample cost on bulk orders of 100+ pieces. Most clubs skip samples and go straight to bulk when colors match the team brief.",
+      },
+      {
+        name: "Production run (15–25 days)",
+        text: "Bulk production starts once artwork is locked. We cut and sew each jersey in-house at our Yiwu factory — full sublimation, edge-to-edge, no color limits, every name and number sewn in.",
+      },
+      {
+        name: "Quality control + packing",
+        text: "AQL 2.5 inspection on every run, polybagged and tagged. Roster-locked packing — we ship each player's jersey in a labeled polybag so the team manager can hand them out in the locker room.",
+      },
+      {
+        name: "DDP delivery to your address",
+        text: "DDP shipping to 100+ countries (US, UK, EU, AU, CA) with duties, customs, and last-mile included. Transit adds 7–14 days on top of production. Most clubs have finished jerseys in hand 30–40 days after artwork approval.",
+      },
+    ],
+  },
 };
 
 export const metadata: Metadata = buildMetadata(data);

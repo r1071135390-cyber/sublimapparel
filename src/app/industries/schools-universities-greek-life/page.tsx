@@ -154,6 +154,40 @@ const data: CustomerProfileData = {
     "Send your design, quantity and event date. We will reply with a quote, sample plan and a clear production timeline.",
   ctaButton: "Start Your Project",
   ogImage: "/og/og-industry.webp",
+  // 2026-09-13 (R59): per-industry HowTo (5-step buyer journey for
+  // student org leaders, Greek chapters, and school admins: from
+  // chapter / school design + roster to DDP delivery at the
+  // campus or chapter house). Lifts the page to HowTo rich
+  // result eligibility for "how to order custom Greek life
+  // apparel" / "how to make school merch" PAA queries.
+  howto: {
+    name: "How we produce custom school and Greek life apparel for universities and student organizations",
+    description:
+      "Event-based production: from the chapter or org leader's first quote to DDP delivery of shirts, hoodies, and merch at the campus, chapter house, or event venue.",
+    totalTime: "P22D",
+    steps: [
+      {
+        name: "Send chapter / org design + size estimate",
+        text: "Provide your Greek letters, crest, or org logo (even a rough sketch works), a rough size breakdown, and the event date. We free-check the print file and reply within 1 business day with a per-SKU quote and a ship-by date that hits your event.",
+      },
+      {
+        name: "Approve mockup + sample (optional)",
+        text: "We send a 3D mockup on the actual garment. Pre-production samples cost $25–60 per piece, 5–7 day turnaround, refundable on bulk orders of 100+ pieces. Most student orgs skip samples once the design is straightforward.",
+      },
+      {
+        name: "Bulk production (15–25 days)",
+        text: "Sublimation / DTG / screen print starts once artwork is locked. We cut, sew and print every piece in-house at our Yiwu factory — Greek letters, custom crests, event-specific designs, all printed edge-to-edge in one run.",
+      },
+      {
+        name: "Size-sorted packing",
+        text: "AQL 2.5 inspection, then packed by size per your breakdown. Optional: per-name polybag for chapter exec boards, or per-event packing for multi-event semesters (rush, formal, philanthropy). Folded and tagged for chapter or event distribution.",
+      },
+      {
+        name: "DDP delivery to campus or chapter house",
+        text: "DDP shipping to 100+ countries (US, UK, EU, AU, CA). We can ship to a single campus address, multiple chapter houses, or a designated event venue. Most chapters and orgs have apparel in hand 7–14 days before the event.",
+      },
+    ],
+  },
 };
 
 export const metadata: Metadata = buildMetadata(data);

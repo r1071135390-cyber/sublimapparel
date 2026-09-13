@@ -154,6 +154,40 @@ const data: CustomerProfileData = {
     "Send your campaign details, client brand info, and rough quantity. We will reply with a quote, sample plan and production timeline.",
   ctaButton: "Plan Your Campaign",
   ogImage: "/og/og-industry.webp",
+  // 2026-09-13 (R59): per-industry HowTo (5-step buyer journey for
+  // marketing and promo agencies: from multiple client brand
+  // briefs to consolidated DDP delivery per client). Lifts the
+  // page to HowTo rich result eligibility for "how to manage
+  // multi-client branded apparel" / "how to source promo merch"
+  // PAA queries.
+  howto: {
+    name: "How agencies produce multi-client branded apparel with one factory",
+    description:
+      "Multi-client production: from the agency's batched client brief to per-client DDP delivery of campaign apparel, client gifts, and agency team merch.",
+    totalTime: "P28D",
+    steps: [
+      {
+        name: "Send batched client brief",
+        text: "Send one consolidated brief covering multiple client brands: per-client quantity, per-client artwork, per-client deadline. We free-check every print file and reply within 1 business day with a per-client quote and a unified production plan.",
+      },
+      {
+        name: "Approve per-client mockups",
+        text: "We send a 3D mockup per client, on the actual garment. Pre-production samples cost $25–60 per piece, 5–7 day turnaround, refundable on bulk orders of 100+ pieces. Most agencies approve one master sample and use it as the reference for all clients.",
+      },
+      {
+        name: "Parallel client production (20–30 days)",
+        text: "All client production runs in parallel under one factory schedule. Each brand has its own dedicated print line, color spec, and packaging spec — no cross-contamination. We cut, sew and print every piece in-house at our Yiwu factory.",
+      },
+      {
+        name: "Per-client packing",
+        text: "AQL 2.5 inspection, then packed per client: each client gets its own polybag, label, and pack-out spec. Optional: client-specific carton labels, custom packing lists, or hangers for retail-style client gifting.",
+      },
+      {
+        name: "DDP delivery to multiple client destinations",
+        text: "DDP shipping to 100+ countries (US, UK, EU, AU, CA). We can split shipments per client — agency warehouse, client HQ, campaign venue, or directly to a client 3PL. Most agencies have every client's apparel in hand on the same day.",
+      },
+    ],
+  },
 };
 
 export const metadata: Metadata = buildMetadata(data);

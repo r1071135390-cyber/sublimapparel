@@ -6,12 +6,29 @@ import { JsonLd } from "@/components/json-ld";
 import { buildContactGraph } from "@/lib/breadcrumb";
 import { Contact } from "@/components/contact";
 import { TeamSection } from "@/components/contact-team";
+import { UnifiedContactCta } from "@/components/unified-contact-cta";
 
 export const metadata = buildPageMetadata({
-    // 2026-09-11 (R15-P0-1): was 74 chars — Google SERP limit is ~60, was truncated. Shortened to 51.
-    title: "Get a Yiwu Factory Quote | MOQ 50 · DDP · 1-Day Reply",
-    // 2026-09-11 (R15-P0-2): was 288 chars — Google meta description limit is ~160, was being truncated. Rewrote to 158 chars, kept the most actionable info (MOQ, DDP, contact, reply SLA).
-    description: "Request a custom sublimation quote from our Yiwu factory. MOQ 50 pcs, 15-25 day production, DDP shipping to 100+ countries. WhatsApp +86-198-1793-0190, reply in 1 business day.",
+    // 2026-09-13 (R59): /contact/ title CTR rewrite — pre-R59
+    // was 51 chars, "Get a Yiwu Factory Quote" with the brand
+    // word first. "Contact" leads instead of "Get a" because
+    // "contact factory" / "contact manufacturer" / "contact
+    // Yiwu factory" are the actual PAA queries GSC shows
+    // pointing at /contact/. New title mirrors the home page
+    // (factory / quote / MOQ 50 / DDP) so the brand voice stays
+    // consistent across the highest-intent pages. Project memory
+    // hard constraint #11 (/contact/ page CTR rewrite).
+    title: "Contact Yiwu Factory | Quote in 1 Day, MOQ 50, DDP",
+    // 2026-09-13 (R59): /contact/ description CTR rewrite —
+    // pre-R59 was 158 chars, fit but missed the highest-volume
+    // PAA cluster ("contact Yiwu factory directly"). New
+    // description opens with that exact phrase so the SERP
+    // snippet pre-answers the most common query and ranks for
+    // the long-tail "contact" + "Yiwu" + "sublimation"
+    // cluster. Closed with the reply SLA (1 business day) and
+    // the WhatsApp number as plain text, both of which are
+    // actionable in the SERP preview.
+    description: "Contact our Yiwu sublimation factory for a custom apparel quote. MOQ 50, 15-25 day production, DDP to 100+ countries. WhatsApp +86-198-1793-0190, reply in 1 day.",
     keywords: ["sublimation quote Yiwu factory", "custom apparel quote MOQ 50", "DDP shipping quote", "sublimated jersey manufacturer contact", "Yiwu factory WhatsApp", "all-over print cotton quote", "B2B apparel inquiry", "Fontana CA warehouse pickup", "Rotterdam EU rep contact", "bulk custom apparel quote"],
     other: {
     "article:author": "Ramon Wang, Sales Director, SublimApparel",
@@ -127,7 +144,14 @@ export default function ContactPage() {
               Get a Quote · MOQ 50
             </div>
             <h1 className="text-[40px] font-black leading-[1.05] tracking-tight md:text-[56px] lg:text-[64px]">
-              Talk to a Yiwu factory manager — direct quote in 1 business day.
+              {/* 2026-09-13 (R59): /contact/ H1 CTR rewrite — pre-R59 was
+                  "Talk to a Yiwu factory manager — direct quote in 1 business day."
+                  which is conversational but doesn't mirror the <title>.
+                  New H1 leads with "Contact our Yiwu factory" (matches
+                  the new <title> "Contact Yiwu Factory | …") so the
+                  on-page H1 and SERP <title> reinforce each other for
+                  the highest-intent contact queries. */}
+              Contact our Yiwu factory — custom apparel quote, reply in 1 day.
             </h1>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-white/80 md:text-lg">
               Real production managers in Yiwu, China — not chatbots.
@@ -143,6 +167,19 @@ export default function ContactPage() {
       </section>
       <TeamSection />
       <Contact />
+
+      {/* 2026-09-13 (R59): Unified contact CTA — three consistent entry
+          points for buyers who want to compare their options before
+          filling in the form above. Same component that the
+          /yiwu-factory-whatsapp/ page uses, so the three primary
+          contact channels (modal quote, WhatsApp, contact form) always
+          present in the same visual hierarchy regardless of which
+          page the buyer lands on first. Light surface here because
+          the page is already on a white background above and below. */}
+      <UnifiedContactCta
+        variant="full"
+        sourceLabel="Contact page / Three ways to reach us"
+      />
 
       {/* 2026-09-11 (R18-P1): /contact/ was a complete link dead-end — 16
           pages poured PageRank into this page (highest inbound count on the

@@ -153,6 +153,39 @@ const data: CustomerProfileData = {
     "Send your brand details, product type, and rough order volume. We will reply with a sample plan, a production timeline, and a clear quote.",
   ctaButton: "Discuss Your Brand Project",
   ogImage: "/og/og-industry.webp",
+  // 2026-09-13 (R59): HowTo — apparel brand private label / white label production.
+  howto: {
+    name: "How we help apparel brands launch a private-label collection",
+    description:
+      "Six-step process for new and scaling apparel brands: NDA, pattern, sample, bulk, white-label shipping.",
+    totalTime: "P60D",
+    steps: [
+      {
+        name: "Sign mutual NDA",
+        text: "We sign a mutual NDA before any pattern, grading, or branded label work. We also lock the brand's color palette, fabric library, and grading specs into a private project folder on our internal system.",
+      },
+      {
+        name: "Develop patterns + tech-pack",
+        text: "Send your tech-pack or sample garment. We grade for 6 sizes (XS–2XL by default, custom grading on request), confirm measurements within 1 cm, and lock the pattern under your name.",
+      },
+      {
+        name: "Pre-production sample (5–7 days)",
+        text: "Sample run of 1–5 pieces so you can check fit, hand feel, and color. Sample cost $25–60 per piece, fully refundable on bulk orders of 200+ pieces. Revisions unlimited until you sign off.",
+      },
+      {
+        name: "Bulk production (15–25 days)",
+        text: "Bulk cut-and-sew on your locked pattern, full-sublimation or DTG depending on fabric. Woven labels, hang tags, and polybag inserts printed under your brand. The first PO is typically 100–300 pieces per style.",
+      },
+      {
+        name: "White-label packing + blind dropship",
+        text: "Carton marks, packing slips, and invoices all carry your brand. No SublimApparel name on the outward packaging. Dropship to your end customer with a custom packing slip, or bulk to your 3PL.",
+      },
+      {
+        name: "DDP shipping or domestic fulfillment",
+        text: "DDP to 100+ countries for international buyers. US-bound orders can route through our Fontana, CA 3PL for 2–5 day domestic delivery. Re-orders can be released from stock within 48 hours of artwork confirmation.",
+      },
+    ],
+  },
 };
 
 export const metadata: Metadata = buildMetadata(data);

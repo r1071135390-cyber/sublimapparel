@@ -158,6 +158,39 @@ const data: CustomerProfileData = {
     "Share your company details and rough order quantity. We will reply with a quote, a sample plan, and a clear production timeline.",
   ctaButton: "Get a Custom Quote",
   ogImage: "/og/og-industry.webp",
+  // 2026-09-13 (R59): HowTo — corporate employee apparel program.
+  howto: {
+    name: "How corporate buyers set up an employee apparel program",
+    description:
+      "Six-step workflow for HR, ops, and procurement teams: brand kit, garment selection, size splits, bulk production, repeat-order trigger.",
+    totalTime: "P30D",
+    steps: [
+      {
+        name: "Send the brand kit",
+        text: "Logo (AI/PDF), color codes, brand guidelines, and any required placement (left chest, full back, sleeve). We confirm printability within 1 business day and send a placement mockup on the actual garment.",
+      },
+      {
+        name: "Pick garments + fabric",
+        text: "Common corporate picks: cotton-poly polo (DTG or DTF chest logo), oxford shirts, quarter-zip pullovers, softshell jackets. We send free fabric swatches and printed color cards so you can feel the material before committing.",
+      },
+      {
+        name: "Collect employee size splits",
+        text: "We provide a free size-set sample service for HR teams — 1 piece of each size in each color, shipped to your office for fittings. Most teams collect size splits via a Google Form or HRIS export; we then bulk per size.",
+      },
+      {
+        name: "Sample run + lock spec",
+        text: "1–5 piece pre-production sample, 5–7 day lead time, $25–60 per piece. Lock the spec, color, and placement before bulk. We hold the spec on file for re-orders — re-orders can ship within 10–15 days of artwork confirmation.",
+      },
+      {
+        name: "Bulk production (15–25 days)",
+        text: "Polybagged, tagged, packed per department or location. Color consistency across re-orders is guaranteed because we hold your spec and use the same print profile and fabric source.",
+      },
+      {
+        name: "Re-order program",
+        text: "Once the initial bulk ships, new hires and replacement garments can be ordered under the same program. Re-orders over 50 pieces ship in 10–15 days; smaller re-orders are routed to our stock-and-release service for 2–5 day US delivery.",
+      },
+    ],
+  },
 };
 
 export const metadata: Metadata = buildMetadata(data);

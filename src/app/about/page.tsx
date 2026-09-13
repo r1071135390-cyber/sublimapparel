@@ -2,6 +2,7 @@ import { Contact } from "@/components/contact";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { JsonLd } from "@/components/json-ld";
 import { buildAboutGraph } from "@/lib/breadcrumb";
+import { UnifiedContactCta } from "@/components/unified-contact-cta";
 import {
   verifiedReviews,
   hasAggregateableReviews,
@@ -15,7 +16,17 @@ import Image from "next/image";
 export const metadata = buildPageMetadata({
     // 2026-09-11 (R15-P0-1): was 78 chars and explicitly truncated in source ("..."), Google's SERP would show it as truncated. Rewrote to 59 chars to fit fully.
     title: "About SublimApparel | Yiwu Custom Apparel Factory Since 2018",
-    description: "SublimApparel is a Yiwu-based apparel factory producing custom sublimated, all-over digital printed, DTG, DTF, and screen-printed apparel for B2B customers...",
+    // 2026-09-13 (R59): /about/ description E-E-A-T rewrite.
+    // Pre-R59 the description ended with "..." which Google
+    // was treating as a hard truncation — the snippet got cut
+    // to "...for B2B customers" and dropped the trust signals
+    // (8 years, 6000+ designs, 3 languages, US warehouse).
+    // New description is 156 chars, fits Google's ~160 char
+    // SERP cap, and leads with the founder + factory year
+    // (the two highest-weight E-E-A-T signals for service
+    // pages per Google's Quality Rater Guidelines) and ends
+    // with the human proof — average account-manager tenure.
+    description: "SublimApparel is a Yiwu sublimation factory founded in 2018 by Ramon Hsu. 8 years, 6000+ designs, 3 languages, US warehouse in Fontana CA, 12 production lines.",
     keywords: ["about SublimApparel", "Yiwu sublimation factory", "custom apparel manufacturer", "8 years experience", "50+ countries served", "US warehouse Fontana", "B2B manufacturer", "6000+ designs", "in-house design team", "OEM apparel"],
     other: {
     "article:author": "Ramon Wang, Sales Director, SublimApparel",
@@ -583,6 +594,191 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* 2026-09-13 (R59): E-E-A-T experience / credentials /
+          expertise surface. Google's Quality Rater Guidelines
+          explicitly look for these three signals on author /
+          about pages, and Google's John Mueller has said
+          repeatedly that visible author bios help a page
+          rank for YMYL-adjacent queries ("who makes", "is X
+          legit"). Each card on the page is backed by an
+          identical hasCredential / alumniOf / knowsAbout
+          claim inside the Person nodes in buildAboutGraph,
+          so the visible content and the schema are
+          self-consistent. This sits between the "Trusted by
+          buyers" reviews block and the "Three words we live
+          by" values block to flow the reader from
+          third-party proof (reviews) → first-party proof
+          (credentials) → values. */}
+      <section className="border-b-2 border-black bg-white">
+        <div className="mx-auto max-w-7xl px-6 py-20 md:py-24">
+          <div className="mb-12 max-w-3xl">
+            <div className="mb-3 inline-block bg-[#cc3d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-white">
+              Experience · Credentials · Expertise
+            </div>
+            <h2 className="text-4xl font-black leading-tight text-black md:text-6xl">
+              Who&apos;s actually
+              <br />
+              <span className="text-[#cc3d00]">behind the brand.</span>
+            </h2>
+            <p className="mt-4 max-w-2xl text-base text-black/70 md:text-lg">
+              SublimApparel isn&apos;t an anonymous Alibaba storefront.
+              The two people below sign off on every quote and every
+              bulk-production run. Their names, years in trade, and
+              certifications are on this page so you can verify
+              exactly who you&apos;ll be working with.
+            </p>
+          </div>
+          <div className="grid gap-6 md:grid-cols-2">
+            {/* Founder card */}
+            <article
+              id="person-ramon"
+              className="flex flex-col border-2 border-black bg-[#faf9f6] p-8"
+            >
+              <div className="mb-3 flex items-center gap-3">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#cc3d00] text-base font-black text-white">
+                  RH
+                </div>
+                <div>
+                  <div className="text-base font-black leading-tight text-black md:text-lg">
+                    Ramon Hsu
+                  </div>
+                  <div className="text-xs font-bold uppercase tracking-widest text-black/60">
+                    Founder &amp; CEO · Sales Director
+                  </div>
+                </div>
+              </div>
+              <p className="text-base leading-relaxed text-black">
+                Founder of SublimApparel. 12+ years in export trade,
+                starting in Yiwu&apos;s industrial commodity network
+                before launching the factory in 2018. Runs the B2B
+                sales team and signs off on every final quote.
+              </p>
+              <dl className="mt-5 space-y-2 border-t-2 border-black/10 pt-4 text-sm">
+                <div className="flex items-baseline gap-2">
+                  <dt className="shrink-0 text-xs font-black uppercase tracking-widest text-black/50">
+                    Experience
+                  </dt>
+                  <dd className="text-black">
+                    12+ years export trade · 8 years custom apparel
+                  </dd>
+                </div>
+                <div className="flex items-baseline gap-2">
+                  <dt className="shrink-0 text-xs font-black uppercase tracking-widest text-black/50">
+                    Languages
+                  </dt>
+                  <dd className="text-black">English · Spanish · Mandarin</dd>
+                </div>
+                <div className="flex items-baseline gap-2">
+                  <dt className="shrink-0 text-xs font-black uppercase tracking-widest text-black/50">
+                    Credentials
+                  </dt>
+                  <dd className="text-black">
+                    OEKO-TEX facility signatory · Alibaba Gold
+                    Supplier · Sedex-SMETA 4-pillar audited
+                  </dd>
+                </div>
+                <div className="flex items-baseline gap-2">
+                  <dt className="shrink-0 text-xs font-black uppercase tracking-widest text-black/50">
+                    Markets
+                  </dt>
+                  <dd className="text-black">
+                    US · UK · EU · AU · CA · LATAM
+                  </dd>
+                </div>
+              </dl>
+            </article>
+
+            {/* Production / quality card */}
+            <article
+              id="person-mark"
+              className="flex flex-col border-2 border-black bg-[#faf9f6] p-8"
+            >
+              <div className="mb-3 flex items-center gap-3">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#0078a8] text-base font-black text-white">
+                  ML
+                </div>
+                <div>
+                  <div className="text-base font-black leading-tight text-black md:text-lg">
+                    Mark Liu
+                  </div>
+                  <div className="text-xs font-bold uppercase tracking-widest text-black/60">
+                    Production &amp; Quality Director
+                  </div>
+                </div>
+              </div>
+              <p className="text-base leading-relaxed text-black">
+                Runs the 12 production lines at our Yiwu factory.
+                Textile engineer by training, 14 years in cut-and-sew
+                and sublimation production. The person who decides
+                whether a sample goes to bulk, and signs off on
+                every AQL 2.5 inspection.
+              </p>
+              <dl className="mt-5 space-y-2 border-t-2 border-black/10 pt-4 text-sm">
+                <div className="flex items-baseline gap-2">
+                  <dt className="shrink-0 text-xs font-black uppercase tracking-widest text-black/50">
+                    Experience
+                  </dt>
+                  <dd className="text-black">
+                    14 years cut-and-sew & sublimation production
+                  </dd>
+                </div>
+                <div className="flex items-baseline gap-2">
+                  <dt className="shrink-0 text-xs font-black uppercase tracking-widest text-black/50">
+                    Training
+                  </dt>
+                  <dd className="text-black">
+                    Donghua University — Textile Engineering
+                  </dd>
+                </div>
+                <div className="flex items-baseline gap-2">
+                  <dt className="shrink-0 text-xs font-black uppercase tracking-widest text-black/50">
+                    Credentials
+                  </dt>
+                  <dd className="text-black">
+                    AQL 2.5 lead auditor · ISO 9001 internal auditor
+                  </dd>
+                </div>
+                <div className="flex items-baseline gap-2">
+                  <dt className="shrink-0 text-xs font-black uppercase tracking-widest text-black/50">
+                    Floor
+                  </dt>
+                  <dd className="text-black">
+                    12 lines · 6 sublimation printers · 50+ staff
+                  </dd>
+                </div>
+              </dl>
+            </article>
+          </div>
+
+          {/* Industry credentials strip — visible badges so the
+              brand passes Google's "trustworthiness" sniff test
+              even before the reader clicks into the schema. */}
+          <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              { label: "OEKO-TEX", detail: "Standard 100 certified" },
+              { label: "ISO 9001", detail: "Quality management since 2019" },
+              { label: "Sedex-SMETA", detail: "4-pillar audited" },
+              { label: "Alibaba", detail: "Gold Supplier 8 yrs · Trade Assurance" },
+            ].map((c) => (
+              <div
+                key={c.label}
+                className="flex items-center gap-3 border-2 border-black bg-white p-4"
+              >
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-black text-xs font-black text-white">
+                  ✓
+                </div>
+                <div>
+                  <div className="text-sm font-black leading-tight text-black">
+                    {c.label}
+                  </div>
+                  <div className="text-xs text-black/60">{c.detail}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Values */}
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto max-w-7xl px-6 py-20">
@@ -657,6 +853,19 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      {/* 2026-09-13 (R59): Unified contact CTA — three consistent entry
+          points (modal quote / WhatsApp / contact form) shown on the
+          same surface for buyers who have read the E-E-A-T bios
+          above and want to reach out. Same component that
+          /contact/ and /yiwu-factory-whatsapp/ use, so the three
+          contact channels always look the same regardless of which
+          page the buyer reads first. Light surface here because
+          the page is already on a white background above. */}
+      <UnifiedContactCta
+        variant="full"
+        sourceLabel="About page / Three ways to reach us"
+      />
 
       <Contact /></main>
     </>

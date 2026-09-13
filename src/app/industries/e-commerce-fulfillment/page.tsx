@@ -153,6 +153,35 @@ const data: CustomerProfileData = {
     "Send your brand details, product type, and rough order volume. We will reply with a sample plan, a production timeline, and pricing for your store.",
   ctaButton: "Discuss Your E-commerce Brand",
   ogImage: "/og/og-industry.webp",
+  // 2026-09-13 (R59): HowTo — e-commerce dropship & bulk fulfillment.
+  howto: {
+    name: "How DTC e-commerce brands set up custom-apparel dropship fulfillment",
+    description:
+      "Five-step workflow for Shopify, Amazon, and TikTok Shop sellers: tech-pack, sample, bulk stocking at our US 3PL, automated order release, blind-shipping.",
+    totalTime: "P30D",
+    steps: [
+      {
+        name: "Send tech-pack + artwork",
+        text: "Send your tech-pack (or a competitor's garment you want to clone), logo, hang tag spec, and any required packaging inserts. We free-check the artwork and confirm printability within 1 business day.",
+      },
+      {
+        name: "Sample + lock spec",
+        text: "1–5 piece pre-production sample, 5–7 day lead time, $25–60 per piece. Lock the garment, color, and print placement. We hold the spec on file — re-orders and restocks can ship in 10–15 days.",
+      },
+      {
+        name: "Bulk production + ship to our US 3PL",
+        text: "Bulk run (typically 500–5,000 pieces per SKU) ships in 15–25 days. We then route the inventory to our Fontana, CA 3PL warehouse, labeled in your name. Buffer stock is held under your account.",
+      },
+      {
+        name: "Connect store (Shopify / Amazon / TikTok Shop)",
+        text: "Connect your store via direct integration, CSV feed, or our daily auto-sync. We pick, pack, and ship orders on the same day they hit our queue — most US orders deliver in 2–5 business days.",
+      },
+      {
+        name: "Blind ship + custom inserts",
+        text: "Outward packaging carries your brand. We add a custom packing slip, branded thank-you card, or promo insert per order. Returns handled at our 3PL or routed to a US address you provide.",
+      },
+    ],
+  },
 };
 
 export const metadata: Metadata = buildMetadata(data);

@@ -154,6 +154,40 @@ const data: CustomerProfileData = {
     "Send your show date, booth staff size, and giveaway quantity. We will reply with a quote, sample plan, and a production timeline that hits your show date.",
   ctaButton: "Plan Your Trade Show Apparel",
   ogImage: "/og/og-industry.webp",
+  // 2026-09-13 (R59): per-industry HowTo (5-step buyer journey for
+  // trade show exhibitors and event marketers: from show date +
+  // booth staff size to DDP delivery at the convention center or
+  // booth hotel). Lifts the page to HowTo rich result
+  // eligibility for "how to order trade show shirts" / "how to
+  // make booth apparel" PAA queries.
+  howto: {
+    name: "How we produce custom trade show apparel for exhibitors and booth staff",
+    description:
+      "Show-date production: from the exhibitor's first quote to DDP delivery of booth staff uniforms, giveaway apparel, and demo team clothing at the convention center or hotel.",
+    totalTime: "P20D",
+    steps: [
+      {
+        name: "Send show date + booth size",
+        text: "Provide the show date, booth staff count, giveaway quantity, and your brand artwork. We free-check the print file and reply within 1 business day with a per-SKU quote, a rush timeline if needed, and a ship-by date that hits show opening.",
+      },
+      {
+        name: "Approve mockup + sample (optional)",
+        text: "We send a 3D mockup on the actual garment. Pre-production samples cost $25–60 per piece, 5–7 day turnaround, refundable on bulk orders of 100+ pieces. Most exhibitors skip samples and go straight to bulk when colors match the brand guide.",
+      },
+      {
+        name: "Bulk production (15–25 days)",
+        text: "Sublimation / DTG / screen print starts once artwork is locked. We cut, sew and print every piece in-house at our Yiwu factory — booth staff shirts, demo team clothing, brand ambassador apparel, all under one production run.",
+      },
+      {
+        name: "Staff + giveaway split packing",
+        text: "AQL 2.5 inspection, then split-packed: staff uniforms in one carton, giveaway apparel in another, each with its own packing list. Optional: per-staff-name polybag, hanging pack for booth dressing, or pre-folded tees ready for lead-gift distribution.",
+      },
+      {
+        name: "DDP delivery to convention center or hotel",
+        text: "DDP shipping to 100+ countries (US, UK, EU, AU, CA). We can ship directly to a convention center (with your marshaling yard drayage), to your hotel, or to your event warehouse. Most shows have apparel in hand 3–7 days before show opening.",
+      },
+    ],
+  },
 };
 
 export const metadata: Metadata = buildMetadata(data);

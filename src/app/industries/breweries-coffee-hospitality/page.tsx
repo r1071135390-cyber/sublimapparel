@@ -154,6 +154,35 @@ const data: CustomerProfileData = {
     "Send your venue name, your apparel needs, and a rough quantity. We will reply with a quote, sample plan and production timeline.",
   ctaButton: "Get a Quote",
   ogImage: "/og/og-industry.webp",
+  // 2026-09-13 (R59): HowTo — brewery / coffee / hospitality branded apparel.
+  howto: {
+    name: "How breweries, coffee shops, and hospitality brands order custom apparel",
+    description:
+      "Five-step workflow for venue-branded apparel: staff uniforms, merch, retail co-packs. DDP to your address or each venue individually.",
+    totalTime: "P25D",
+    steps: [
+      {
+        name: "Share brand mark + venues list",
+        text: "Send the logo (AI/PDF preferred), color palette, and a list of venues if shipping to multiple addresses. We free-check the file and confirm it prints clean on cotton tees, hoodies, caps, and aprons.",
+      },
+      {
+        name: "Pick fabric + print method",
+        text: "Most brewery / coffee / hospitality buyers mix 100% cotton (DTG or DTF for chest-area logos) with 50/50 poly-cotton (full-color sublimation for richer logos). We send swatches and printed color cards for free.",
+      },
+      {
+        name: "Sample run (optional)",
+        text: "Optional 5–10 piece sample run so you can check hand feel and color on the actual garments. 5–7 day lead time, $25–60 per piece, refundable on bulk orders of 100+ pieces.",
+      },
+      {
+        name: "Bulk production + per-venue packing",
+        text: "15–25 day bulk run, polybagged and tagged. For multi-venue buyers we pack per-venue — each carton labeled with the venue name and the staff/merch breakdown — so the venues can unpack and distribute without sorting.",
+      },
+      {
+        name: "DDP shipping to one address or many",
+        text: "Ship to a single warehouse, or DDP each venue's address. US destinations route through our Fontana, CA 3PL for 2–5 day domestic delivery. International venues get DDP to 100+ countries with duties included.",
+      },
+    ],
+  },
 };
 
 export const metadata: Metadata = buildMetadata(data);

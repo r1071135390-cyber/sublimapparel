@@ -154,6 +154,40 @@ const data: CustomerProfileData = {
     "Send your design and tour dates. We will reply with a production plan, a clear quote, and options to fit your merch budget.",
   ctaButton: "Start Your Merch Project",
   ogImage: "/og/og-industry.webp",
+  // 2026-09-13 (R59): per-industry HowTo (5-step buyer journey for
+  // musicians, labels and festival producers: from tour dates +
+  // merch design to DDP delivery at the venue merch table or
+  // warehouse). Lifts the page to HowTo rich result eligibility
+  // for "how to order band merch" / "how to make tour t-shirts"
+  // PAA queries.
+  howto: {
+    name: "How we produce custom tour merch for musicians, bands and festivals",
+    description:
+      "Tour-date production: from the artist's first design to DDP delivery of finished merch at the venue merch table, warehouse, or fulfillment center.",
+    totalTime: "P28D",
+    steps: [
+      {
+        name: "Send tour dates + merch design",
+        text: "Provide the tour / festival dates, quantity per SKU, and your album artwork or merch design (even a sketch works). We free-check the print file and reply within 1 business day with a per-SKU quote and ship-by date.",
+      },
+      {
+        name: "Approve merch sample (recommended)",
+        text: "Merch drops live or die on hand-feel and print quality. Pre-production sample costs $25–60 per piece, 5–7 day turnaround, refundable on bulk orders of 100+ pieces. Most labels and artists approve samples before going to bulk.",
+      },
+      {
+        name: "Bulk production (20–30 days)",
+        text: "Sublimation / DTG / screen print (your choice) starts once artwork is locked. We cut, sew and print every piece in-house at our Yiwu factory — T-shirts, hoodies, tank tops, hats, totes, all under one production run.",
+      },
+      {
+        name: "Tour-ready packing",
+        text: "AQL 2.5 inspection, then packed per your tour plan: by venue, by city, or by SKU. Optional: polybag with sizing sticker, custom neck labels, fold-in card inserts, or hanging pack for retail-style merch tables.",
+      },
+      {
+        name: "DDP delivery to venue, warehouse or 3PL",
+        text: "DDP shipping to 100+ countries (US, UK, EU, AU, CA). We can ship to a single tour warehouse, multiple venue addresses, or directly to a 3PL fulfillment center. Most merch drops arrive 7–14 days before the first show.",
+      },
+    ],
+  },
 };
 
 export const metadata: Metadata = buildMetadata(data);

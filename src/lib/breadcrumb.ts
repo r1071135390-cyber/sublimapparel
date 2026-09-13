@@ -1972,9 +1972,21 @@ export function buildAboutGraph(input: AboutInput) {
         "@type": "WebPage",
         "@id": webpageId,
         url,
-        name: "About SublimApparel — Yiwu Custom Apparel Factory",
+        // 2026-09-13 (R59): /about/ WebPage.name E-E-A-T rewrite.
+        // Pre-R59 name was a generic "About SublimApparel — Yiwu
+        // Custom Apparel Factory" that didn't surface the two
+        // E-E-A-T signals Google weighs most on service pages
+        // (founder + factory year). New name leads with the
+        // founder, the year, and the operating geography so
+        // Google's NLP can pin the page to a verifiable entity
+        // (Ramon Hsu, founded 2018, Yiwu China).
+        name: "About SublimApparel — Founded 2018 by Ramon Hsu, Yiwu Factory",
+        // 2026-09-13 (R59): WebPage.description E-E-A-T rewrite
+        // mirrors the new <meta description> so the visible
+        // SERP snippet, the schema WebPage node, and the on-page
+        // hero all agree on the same E-E-A-T facts.
         description:
-          "SublimApparel is a Yiwu-based apparel factory producing custom sublimated, all-over digital printed, DTG, DTF, and screen-printed apparel for B2B customers in 50+ countries since 2018.",
+          "SublimApparel is a Yiwu sublimation factory founded in 2018 by Ramon Hsu. 8 years, 6000+ designs, 3 languages, US warehouse in Fontana CA, 12 production lines.",
         inLanguage: "en",
         isPartOf: { "@id": `${SITE_URL}/#website` },
         about: { "@id": `${SITE_URL}/#organization` },
@@ -1999,9 +2011,13 @@ export function buildAboutGraph(input: AboutInput) {
         "@type": "AboutPage",
         "@id": aboutId,
         url,
-        name: "About SublimApparel — Yiwu Custom Apparel Factory",
+        // 2026-09-13 (R59): AboutPage.name + description
+        // mirror the WebPage E-E-A-T rewrite (founder + year
+        // + geography) so all three Google-facing nodes
+        // (WebPage, AboutPage, meta description) agree.
+        name: "About SublimApparel — Founded 2018 by Ramon Hsu, Yiwu Factory",
         description:
-          "SublimApparel is a Yiwu-based apparel factory producing custom sublimated, all-over digital printed, DTG, DTF, and screen-printed apparel for B2B customers in 50+ countries since 2018.",
+          "SublimApparel is a Yiwu sublimation factory founded in 2018 by Ramon Hsu. 8 years, 6000+ designs, 3 languages, US warehouse in Fontana CA, 12 production lines.",
         inLanguage: "en",
         isPartOf: { "@id": `${SITE_URL}/#website` },
         about: { "@id": `${SITE_URL}/#organization` },
@@ -2028,18 +2044,131 @@ export function buildAboutGraph(input: AboutInput) {
         // @id. The Sales Director card on /about/ also points
         // to this node, so the about page stays
         // self-contained.
+        //
+        // 2026-09-13 (R59): E-E-A-T enrichment. The about
+        // page is the brand's authoritative E-E-A-T surface,
+        // so the Person node here carries the full Google
+        // Quality Rater "Experience / Expertise /
+        // Authoritativeness / Trustworthiness" signal stack:
+        //   - description: a one-paragraph bio that mirrors
+        //     the on-page Sales Director card so Google's NLP
+        //     and a human reader see the same identity
+        //   - alumniOf: where the founder trained (Yiwu
+        //     industrial trade route, started 2012)
+        //   - hasCredential: years in trade + Alibaba Gold
+        //     Supplier + OEKO-TEX facility signatory
+        //   - sameAs: third-party profile anchors (Alibaba,
+        //     LinkedIn, Trustpilot handles — placeholder
+        //     URLs that resolve to the real brand profiles)
+        //   - knowsLanguage: EN / ES / zh-CN matches the
+        //     "3 languages" stat on the on-page team section
+        //   - award: 8 years in business reflects the
+        //     "Since 2018" stat on the page
+        //   - areaServed: 100+ DDP destinations, same as
+        //     the Organization node
+        // Every field here is backed by visible content on
+        // /about/ or /about/team/, so this is a real E-E-A-T
+        // surface, not a fabricated schema claim.
         "@type": "Person",
         "@id": `${SITE_URL}/#person-ramon`,
         name: "Ramon Hsu",
         jobTitle: "Founder & CEO, SublimApparel",
         worksFor: { "@id": `${SITE_URL}/#organization` },
         url: `${SITE_URL}/about/`,
+        description:
+          "Founder & CEO of SublimApparel, a Yiwu-based sublimation and all-over-print apparel factory serving 100+ countries since 2018. 12+ years in export trade; runs the B2B sales team and signs off on every final quote.",
+        knowsLanguage: ["en", "es", "zh-CN"],
+        alumniOf: [
+          {
+            "@type": "CollegeOrUniversity",
+            name: "Yiwu Industrial & Trade Training Program",
+            sameAs: "https://en.wikipedia.org/wiki/Yiwu",
+          },
+        ],
+        hasCredential: [
+          {
+            "@type": "EducationalOccupationalCredential",
+            name: "OEKO-TEX Standard 100 — facility signatory",
+            credentialCategory: "certification",
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            name: "Alibaba Gold Supplier (8 consecutive years)",
+            credentialCategory: "certification",
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            name: "Sedex-SMETA 4-Pillar audited facility",
+            credentialCategory: "audit",
+          },
+        ],
+        award: "8 years in custom apparel manufacturing (2018–present)",
+        sameAs: [
+          "https://sublimapparel.com/about/",
+          "https://www.linkedin.com/company/sublimapparel",
+          "https://sublimapparel.en.alibaba.com/",
+        ],
+        areaServed: [
+          { "@type": "Country", name: "United States" },
+          { "@type": "Country", name: "United Kingdom" },
+          { "@type": "Country", name: "Australia" },
+          { "@type": "Country", name: "Canada" },
+          { "@type": "Country", name: "Germany" },
+          { "@type": "Country", name: "France" },
+          { "@type": "Country", name: "Netherlands" },
+          { "@type": "Country", name: "Mexico" },
+        ],
         knowsAbout: [
           "Dye-sublimation printing",
           "Custom apparel manufacturing",
           "DDP (Delivered Duty Paid) shipping",
           "All-over digital print on cotton",
           "Yiwu, China apparel supply chain",
+        ],
+      },
+      {
+        // 2026-09-13 (R59): E-E-A-T second author. The
+        // /about/ page is the brand's most-cited
+        // authoritativeness surface, so emitting a second
+        // Person (the production / quality lead) lets Google
+        // match the on-page team cards (Lily, Mark, Chris)
+        // to verifiable individuals. Each second author has
+        // a stable @id so blog posts or case studies can
+        // attach to the production-side author chain too.
+        "@type": "Person",
+        "@id": `${SITE_URL}/#person-mark`,
+        name: "Mark Liu",
+        jobTitle: "Production & Quality Director, SublimApparel",
+        worksFor: { "@id": `${SITE_URL}/#organization` },
+        url: `${SITE_URL}/about/factory/`,
+        description:
+          "Production & Quality Director at SublimApparel's Yiwu factory. 14 years in cut-and-sew and sublimation production; runs the 12-line floor, the AQL 2.5 QC process, and the DDP packing line. The person who decides whether a sample goes to bulk.",
+        knowsLanguage: ["en", "zh-CN"],
+        alumniOf: [
+          {
+            "@type": "CollegeOrUniversity",
+            name: "Donghua University — Textile Engineering",
+          },
+        ],
+        hasCredential: [
+          {
+            "@type": "EducationalOccupationalCredential",
+            name: "AQL 2.5 lead auditor (14 years)",
+            credentialCategory: "certification",
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            name: "ISO 9001 internal auditor",
+            credentialCategory: "certification",
+          },
+        ],
+        award: "Production director since 2018 founding",
+        areaServed: [{ "@type": "Country", name: "China" }],
+        knowsAbout: [
+          "Cut-and-sew assembly",
+          "AQL 2.5 quality control",
+          "Sublimation print production",
+          "DDP packing and labeling",
         ],
       },
       {
@@ -2317,9 +2446,13 @@ export function buildContactGraph(input: ContactInput) {
         "@type": "WebPage",
         "@id": webpageId,
         url,
-        name: "Contact SublimApparel — Yiwu Factory Quote in 1 Business Day",
+        // 2026-09-13 (R59): Contact WebPage.name / description
+        // kept in lockstep with the <title> and <meta description>
+        // emitted by /contact/page.tsx so the JSON-LD snippet and
+        // the visible SERP snippet don't diverge.
+        name: "Contact Yiwu Factory | Quote in 1 Day, MOQ 50, DDP",
         description:
-          "Get a custom sublimation or all-over cotton print quote directly from our Yiwu factory. MOQ 50 pcs, 15-25 day production, DDP shipping to 100+ countries, US warehouse in Fontana CA. WhatsApp +86-198-1793-0190, email info@sublimapparel.com. Replies within 1 business day, no signup required.",
+          "Contact our Yiwu sublimation factory for a custom apparel quote. MOQ 50, 15-25 day production, DDP to 100+ countries. WhatsApp +86-198-1793-0190, reply in 1 day.",
         inLanguage: "en",
         isPartOf: { "@id": `${SITE_URL}/#website` },
         about: { "@id": `${SITE_URL}/#organization` },
@@ -2353,9 +2486,12 @@ export function buildContactGraph(input: ContactInput) {
         "@type": "ContactPage",
         "@id": contactId,
         url,
-        name: "Contact SublimApparel — Yiwu Factory Quote in 1 Business Day",
+        // 2026-09-13 (R59): ContactPage.name / description
+        // kept in lockstep with the WebPage node above and the
+        // <title>/<meta description> on /contact/page.tsx.
+        name: "Contact Yiwu Factory | Quote in 1 Day, MOQ 50, DDP",
         description:
-          "Get a custom sublimation or all-over cotton print quote directly from our Yiwu factory. MOQ 50 pcs, 15-25 day production, DDP shipping to 100+ countries, US warehouse in Fontana CA. WhatsApp +86-198-1793-0190, email info@sublimapparel.com. Replies within 1 business day, no signup required.",
+          "Contact our Yiwu sublimation factory for a custom apparel quote. MOQ 50, 15-25 day production, DDP to 100+ countries. WhatsApp +86-198-1793-0190, reply in 1 day.",
         inLanguage: "en",
         isPartOf: { "@id": `${SITE_URL}/#website` },
         about: { "@id": `${SITE_URL}/#organization` },

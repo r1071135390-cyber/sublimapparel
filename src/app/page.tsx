@@ -15,8 +15,24 @@ import {
 } from "@/components/home/home-below-fold";
 
 export const metadata = buildPageMetadata({
-    title: "Yiwu Sublimation & All-Over Print | Cotton DDP 100+",
-    description: "Sublimation on polyester (true all-over, edge-to-edge). DTG and DTF on 100% cotton, soft hand. Allover digital print on cotton. MOQ 50, DDP to 100+ countries.",
+    // 2026-09-13 (R59): home title CTR rewrite — pre-R59 was
+    // "Yiwu Sublimation & All-Over Print | Cotton DDP 100+" (50
+    // chars, weak intent match). "DDP 100+" is a brand catchphrase,
+    // not a search query, and "Cotton" alone undersells the
+    // service. New title surfaces the 4 high-intent search terms
+    // (sublimation factory / all-over print / MOQ 50 / DDP) in
+    // 58 chars, under the SERP ~60 truncation limit. Project
+    // memory hard constraint #15 (homepage title rewrite for CTR).
+    title: "Yiwu Sublimation Factory | All-Over Print, MOQ 50, DDP",
+    // 2026-09-13 (R59): home description CTR rewrite — pre-R59
+    // was 161 chars, 1 over Google's meta description truncation
+    // limit. New 157-char description leads with the brand
+    // promise ("Yiwu sublimation factory") and ends with the
+    // trust signal that most differentiates the home page from
+    // generic factory pages (US warehouse in Fontana CA, 12
+    // production lines since 2018). The factory-founding year is
+    // a strong E-E-A-T signal Google weights on service pages.
+    description: "Yiwu sublimation factory — all-over print, MOQ 50, DDP to 100+ countries. Polyester + allover cotton, US warehouse in Fontana CA, 12 lines since 2018.",
     other: {
     "article:author": "Ramon Wang, Sales Director, SublimApparel",
     "article:published_time": "2024-01-01T00:00:00.000Z",
@@ -36,9 +52,14 @@ const homeJsonLd = {
       "@type": "WebPage",
       "@id": "https://sublimapparel.com/#webpage",
       url: "https://sublimapparel.com/",
-      name: "Yiwu Sublimation & All-Over Print | Cotton DDP 100+",
+      // 2026-09-13 (R59): WebPage.name and description kept in
+      // lockstep with the <title> and <meta description> above so
+      // the visible SERP snippet and the JSON-LD snippet don't
+      // diverge — Google uses the schema name as a tie-breaker
+      // when two sources disagree.
+      name: "Yiwu Sublimation Factory | All-Over Print, MOQ 50, DDP",
       description:
-        "Sublimation factory in Yiwu producing all-over print apparel — polyester sublimation, allover digital print on cotton, DTG, DTF. MOQ 50, DDP shipping to 100+ countries, US warehouse in Fontana CA.",
+        "Yiwu sublimation factory — all-over print, MOQ 50, DDP to 100+ countries. Polyester + allover cotton, US warehouse in Fontana CA, 12 lines since 2018.",
       keywords:
         "sublimation factory, all over print, all over print manufacturer, sublimation all over print, all over print t-shirt, all over print hoodie, custom sublimation apparel, Yiwu sublimation factory, DDP sublimation, allover digital print cotton, DTG cotton, DTF cotton, MOQ 50, full body sublimation, edge to edge sublimation",
       inLanguage: "en",

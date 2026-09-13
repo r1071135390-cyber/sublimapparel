@@ -159,6 +159,39 @@ const data: CustomerProfileData = {
     "Share your event date and quantity. We will help create a production plan and a clear quote for your event apparel.",
   ctaButton: "Start Your Event Project",
   ogImage: "/og/og-industry.webp",
+  // 2026-09-13 (R59): per-industry HowTo (5-step buyer journey for
+  // event organizers: from event date + role breakdown to DDP
+  // delivery at the conference or festival venue). Lifts the page
+  // to HowTo rich result eligibility for "how to order custom
+  // conference shirts" PAA queries.
+  howto: {
+    name: "How we produce custom event shirts for conferences, festivals and corporate events",
+    description:
+      "Event-date production: from the organizer's first quote request to DDP delivery of attendee, staff and volunteer shirts at the venue or hotel.",
+    totalTime: "P25D",
+    steps: [
+      {
+        name: "Send event date + role breakdown",
+        text: "Tell us the event date, total quantity, and a breakdown by role (attendees, staff, volunteers, speakers). We free-check your artwork and reply within 1 business day with a per-role quote and ship-by date.",
+      },
+      {
+        name: "Approve mockup + sample (optional)",
+        text: "We send a 3D mockup on the actual garment. Pre-production samples cost $25–60 per piece, 5–7 day turnaround, refundable on bulk orders of 100+ pieces. Most event organizers skip samples when the design is straightforward.",
+      },
+      {
+        name: "Bulk production (15–25 days)",
+        text: "Sublimation production starts once artwork is locked for every role. We cut and sew every shirt in-house at our Yiwu factory — sponsor logos, badges, session info, all printed edge-to-edge in one run.",
+      },
+      {
+        name: "Role-sorted packing",
+        text: "AQL 2.5 inspection, then packed by role per your breakdown (attendees, staff, volunteers). Optional: per-name polybag for VIPs, or per-table packing for gala-style events. Folded and tagged for venue distribution.",
+      },
+      {
+        name: "DDP delivery to venue or hotel",
+        text: "DDP shipping to 100+ countries (US, UK, EU, AU, CA). We can ship to a single venue, multiple hotels, or your event warehouse. Transit adds 7–14 days. Most events have shirts in hand 7–14 days before opening.",
+      },
+    ],
+  },
 };
 
 export const metadata: Metadata = buildMetadata(data);

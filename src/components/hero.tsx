@@ -116,11 +116,17 @@ export function Hero() {
           </span>
         </div>
 
-        {/* Headline — 2 lines: factory→manufacturer; tagline becomes solution partner positioning */}
+        {/* Headline — 2 lines: factory promise → 12 lines / 1-day reply
+            2026-09-13 (R59): home H1 CTR rewrite — pre-R59 line 1 was
+            "Yiwu custom sublimate apparel manufacturer" (no high-intent
+            keywords, no numbers). New line 1 mirrors the <title>
+            so the visible SERP snippet and the on-page H1 match
+            exactly — Google uses on-page H1 as a strong relevance
+            signal. Project memory hard constraint #15. */}
         <h1 className="mb-4 max-w-4xl text-2xl font-black leading-[1.22] tracking-tight md:mb-5 md:text-4xl lg:text-5xl xl:text-6xl">
-          <span className="block pb-2 text-white md:pb-2.5">Yiwu custom sublimate apparel manufacturer</span>
+          <span className="block pb-2 text-white md:pb-2.5">Yiwu sublimation factory — all-over print, MOQ 50, DDP worldwide.</span>
           <span className="block pb-2 text-[#cc3d00] md:pb-2.5">
-            Your trusted partner for custom apparel solutions for events, teams, organizations and promotional needs.
+            Polyester sublimation + allover cotton. 12 production lines. 1-day reply.
           </span>
         </h1>
 

@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { RequestQuoteLink } from "@/components/request-quote-link";
-import { MapPin, Mail, MessageCircle, Phone, Building2, Warehouse } from "lucide-react";
+import { UnifiedContactCta } from "@/components/unified-contact-cta";
+import { Mail, MessageCircle, Phone, Building2, Warehouse } from "lucide-react";
 import { FullKeywordCloud } from "@/components/keyword-cloud";
 
 const linkGroups = [
@@ -79,8 +79,13 @@ const linkGroups = [
   {
     title: "Quick order",
     items: [
-      { label: "Order a custom sample", href: "/samples" },
+      { label: "Get a quote (modal)", href: "/get-a-quote" },
+      // 2026-09-13 (R59): /yiwu-factory-whatsapp/ in the Quick order
+      // group so buyers who already know they want to chat on WhatsApp
+      // can find the dedicated landing page from any page on the site.
+      { label: "WhatsApp the factory", href: "/yiwu-factory-whatsapp" },
       { label: "Express quote (30 min)", href: "/get-a-quote-express" },
+      { label: "Order a custom sample", href: "/samples" },
       { label: "Pay bulk order deposit", href: "/bulk-deposit" },
     ],
   },
@@ -261,7 +266,9 @@ export function Footer() {
             <ul className="mt-3 space-y-2 text-sm text-black/70">
               <li className="flex items-center gap-2">
                 <MessageCircle size={14} />
-                WhatsApp
+                <Link href="/yiwu-factory-whatsapp/" className="hover:text-[#cc3d00]">
+                  WhatsApp +86 198 1793 0190
+                </Link>
               </li>
               <li className="flex items-center gap-2">
                 <MessageCircle size={14} />
@@ -274,7 +281,7 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Response Commitment */}
+          {/* Response Commitment + Unified Contact CTA */}
           <div>
             <h3 className="mb-4 text-xs font-black uppercase tracking-[0.18em] text-[#ff4d00]">
               Response commitment
@@ -284,12 +291,11 @@ export function Footer() {
               Pacific and UK business hours. Quotes are landed and duty paid,
               with any exclusions stated on the quote.
             </p>
-            <RequestQuoteLink
-              label="Footer / Get a quote"
-              className="mt-4 inline-flex items-center gap-2 border-2 border-black bg-[#ff4d00] px-4 py-2 text-xs font-black uppercase tracking-wider text-black transition-all hover:bg-black hover:border-black"
-            >
-              Get a quote →
-            </RequestQuoteLink>
+            <UnifiedContactCta
+              variant="compact"
+              sourceLabel="Footer / Three ways to reach us"
+              className="mt-4"
+            />
           </div>
         </div>
       </div>

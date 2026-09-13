@@ -165,6 +165,39 @@ const data: CustomerProfileData = {
     "Let us help you prepare event apparel on time. Share your event date, quantity and design — we will reply with a clear production plan.",
   ctaButton: "Plan Your Event Apparel",
   ogImage: "/og/og-industry.webp",
+  // 2026-09-13 (R59): per-industry HowTo (5-step buyer journey for
+  // race organizers: from event date + size matrix to DDP delivery
+  // at the race venue). Lifts the page to HowTo rich result
+  // eligibility for "how to order marathon race shirts" PAA
+  // queries.
+  howto: {
+    name: "How we produce custom race shirts for marathons and endurance events",
+    description:
+      "Fixed event-date production: from the race organizer's first quote request to DDP delivery of race shirts at the event venue or packet-pickup warehouse.",
+    totalTime: "P35D",
+    steps: [
+      {
+        name: "Send event date + size matrix",
+        text: "Provide the race date, total quantity by size, and at least a logo or last year's design. We reply within 1 business day with a per-size production plan, ship-by date, and full DDP landed cost.",
+      },
+      {
+        name: "Lock design + sample (optional)",
+        text: "Free design check + 3D mockup on the actual garment. Pre-production sample costs $25–60 per piece, 5–7 day turnaround, refundable on bulk orders of 100+ pieces. Most race organizers skip samples once colors match the brief.",
+      },
+      {
+        name: "Bulk production (20–30 days)",
+        text: "Bulk sublimation starts once artwork is locked. We cut and sew every shirt in-house at our Yiwu factory — full coverage print, sponsor logos, race bib zones, no color limits, every name optional at no extra setup cost.",
+      },
+      {
+        name: "Size-sorted packing",
+        text: "AQL 2.5 inspection on every run, then packed by size per the size matrix you sent. Optional: per-bib or per-participant polybag for packet pickup. Tags + folded presentation ready for venue distribution.",
+      },
+      {
+        name: "DDP delivery to race venue or warehouse",
+        text: "DDP shipping to 100+ countries (US, UK, EU, AU, CA). We can ship to a single race-venue address, multiple packet-pickup warehouses, or directly to your hotel. Most marathons have race shirts in hand 7–14 days before race day.",
+      },
+    ],
+  },
 };
 
 export const metadata: Metadata = buildMetadata(data);

@@ -1,9 +1,9 @@
 import Image from "next/image";
-import Link from "next/link";
-import { ChevronRight, MessageCircle, Clock, Package, Truck, Shield } from "lucide-react";
+import { MessageCircle, Clock, Package, Truck, Shield } from "lucide-react";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { JsonLd } from "@/components/json-ld";
 import { buildYiwuWhatsappGraph } from "@/lib/breadcrumb";
+import { UnifiedContactCta } from "@/components/unified-contact-cta";
 
 export const metadata = buildPageMetadata({
   title: "Yiwu Factory WhatsApp — +86-198-1793-0190 | 1-Day Reply",
@@ -263,41 +263,16 @@ export default function YiwuFactoryWhatsappPage() {
           </div>
         </section>
 
-        {/* Final CTA */}
-        <section className="border-b-2 border-black bg-[#0a0a0a] text-white">
-          <div className="mx-auto max-w-4xl px-6 py-16 text-center md:py-20">
-            <h2 className="text-3xl font-black leading-[1.05] tracking-tight md:text-5xl">
-              Ready to talk?
-              <br />
-              <span className="text-[#25D366]">WhatsApp us right now.</span>
-            </h2>
-            <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-white/70 md:text-lg">
-              One message, one senior account manager, one landed quote — usually
-              within 1 business day. No signup, no chatbot, no waiting.
-            </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-              <a
-                href={WHATSAPP_LINK}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 rounded-md bg-[#25D366] px-8 py-4 text-base font-black text-black transition-colors hover:bg-[#1ebd57] md:text-lg"
-              >
-                <MessageCircle className="h-6 w-6" />
-                Chat on WhatsApp · {WHATSAPP_NUMBER}
-              </a>
-              <Link
-                href="/contact/"
-                className="inline-flex items-center justify-center gap-2 rounded-md border border-white/30 bg-transparent px-6 py-3 text-sm font-semibold text-white hover:bg-white/10"
-              >
-                Or use the contact form
-                <ChevronRight className="h-4 w-4" />
-              </Link>
-            </div>
-            <p className="mt-6 text-xs text-white/50">
-              Or email <a href="mailto:info@sublimapparel.com,chris@sublimapparel.com" className="underline hover:text-white/80">info@sublimapparel.com</a> · Mon-Fri 09:00-18:00 China time (UTC+8)
-            </p>
-          </div>
-        </section>
+        {/* Final CTA — WhatsApp is the primary, but expose the other two
+            channels too so the buyer can switch if they want a written
+            record or a more detailed form. Same UnifiedContactCta
+            component the /contact/ page and footer use, so the three
+            contact channels always look the same across the site. */}
+        <UnifiedContactCta
+          variant="full"
+          sourceLabel="Yiwu WhatsApp page / Three ways to reach us"
+          onDark={false}
+        />
       </main>
     </>
   );

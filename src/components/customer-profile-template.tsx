@@ -44,7 +44,7 @@ import {
   Star,
   Quote,
 } from "lucide-react";
-import { buildBreadcrumbJsonLd, buildFaqPageNode } from "@/lib/breadcrumb";
+import { buildBreadcrumbJsonLd, buildFaqPageNode, buildHowToNode } from "@/lib/breadcrumb";
 import { genericServiceJsonLd } from "@/lib/json-ld-data";
 import {
   filterReviewsForIndustry,
@@ -223,6 +223,32 @@ export function CustomerProfilePage({ data }: { data: CustomerProfileData }) {
       },
       buildFaqPageNode(faqId, webPageIdLocal, data.faqs),
       stripContext(industryReviewJsonLd),
+      // 2026-09-13 (R59): optional per-industry HowTo node.
+      // When data.howto is set, emit a HowTo node in-graph
+      // using the same buildHowToNode helper that /production/
+      // /samples/, /shipping/ddp/, /shipping/fob/, and the 5
+      // country DDP pages already use. This lifts all 12
+      // /industries/[slug]/ pages to HowTo rich result
+      // eligibility for the "how to" / step-by-step PAA cluster.
+      // Conditional spread keeps the @graph byte-equivalent to
+      // the pre-R59 baseline for any page that doesn't supply
+      // data.howto.
+      ...(data.howto
+        ? [
+            stripContext(
+              buildHowToNode({
+                howToId: `https://sublimapparel.com${data.slug.replace(/\/+$/, "")}/#howto`,
+                webpageId: webPageIdLocal,
+                name: data.howto.name,
+                description: data.howto.description,
+                ...(data.howto.totalTime
+                  ? { totalTime: data.howto.totalTime }
+                  : {}),
+                steps: data.howto.steps,
+              })
+            ),
+          ]
+        : []),
     ],
   };
 
