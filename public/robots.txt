@@ -204,3 +204,10 @@ Sitemap: https://sublimapparel.com/sitemap.xml
 # for the Cloudflare Pages rebuild — no semantic change
 # from the entry above; only this trailing timestamp
 # line varies.
+#
+# 2026-09-13 23:50 (webhook verify): User enabled
+# "Auto-deploy on push to main" in Cloudflare Pages
+# dashboard. This touch point exists to verify the
+# GitHub -> Cloudflare Pages webhook fires on the next
+# push. Look for commit 7cf7386 + this touch's commit
+# in Cloudflare Pages -> Deployments to confirm.
