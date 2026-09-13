@@ -14,7 +14,18 @@ import {
 } from "lucide-react";
 import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
-import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
+// 2026-09-14 (R64 build fix, round 5): R48 added the 4-stage
+// inspection HowTo JSON-LD node to /quality-control/ via
+// `buildHowToNode({...})` on line 169, but the import line was
+// never added — only `buildBreadcrumbJsonLd` is imported. Other
+// R48-rollout pages (`/90-day-program/`, `/cases/[slug]/[caseId]/`,
+// `/production/`, `/technique/[slug]/`, `/fabric/care/`) all
+// already have the import (verified by grep) — this one was missed.
+// Re-add the import so the build resolves the identifier.
+import {
+  buildBreadcrumbJsonLd,
+  buildHowToNode,
+} from "@/lib/breadcrumb";
 
 export const metadata = buildPageMetadata({
     // 2026-09-11 (R15-P0-1): was 68 chars — Google SERP limit ~60. Shortened to 50.
