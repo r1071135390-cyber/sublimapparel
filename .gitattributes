@@ -1,0 +1,81 @@
+# Enforce LF line endings for all shell scripts so they execute correctly
+# on the Linux-based Cloudflare Pages build environment. The previous
+# 36143eb build failed because scripts/build.sh had CRLF line endings
+# (introduced by editing on Windows) — bash saw `pipefail\r` and
+# reported `set: pipefail: invalid option name`, aborting the build
+# before pnpm install even ran.
+#
+# Adding the rule here means: even if a future edit reintroduces CRLF
+# on disk, `git checkout` and `git diff` will normalize to LF, and CI
+# will see the file as LF via the `eol=lf` attribute. We also mark the
+# file as text (not binary) so git doesn't refuse to rewrite it.
+#
+# The `binary` rule is the safer fallback for any file we don't
+# explicitly opt into LF; we keep `* text=auto` so git applies its
+# built-in heuristic per file, and override with the explicit
+# `*.sh text eol=lf` rule below.
+
+# CRITICAL: pin .gitattributes itself to LF. The global
+# core.autocrlf=true on this Windows host would otherwise re-convert
+# this very file to CRLF on the next checkout, defeating the whole
+# point of the rules below. Apply BEFORE the wildcard `* text=auto`
+# rule so this file is matched by its explicit rule, not the wildcard.
+.gitattributes text eol=lf
+
+# Default: let git apply its built-in text/binary detection per file.
+* text=auto
+
+# Shell scripts: LF only, no CRLF, no conversion on checkout.
+*.sh text eol=lf
+
+# Build / CI entrypoint scripts we use in build.sh's pipeline
+scripts/build.sh text eol=lf
+scripts/dev.sh text eol=lf
+scripts/prepare.sh text eol=lf
+scripts/start.sh text eol=lf
+scripts/validate.sh text eol=lf
+
+# Patch + postinstall scripts (Node-based, but they may be invoked from
+# bash on Linux CI) — keep LF for consistency.
+*.mjs text eol=lf
+*.cjs text eol=lf
+*.js text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.jsx text eol=lf
+
+# Markdown, JSON, YAML, env — keep as text but don't enforce LF
+# (these are inert to bash parser).
+*.md text
+*.json text
+*.yaml text
+*.yml text
+*.env text
+*.toml text
+*.html text
+*.css text
+*.xml text
+
+# Binary files (images, video, audio, archives, etc.) — never let git
+# touch their bytes.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.avif binary
+*.gif binary
+*.svg binary
+*.ico binary
+*.mp4 binary
+*.mov binary
+*.webm binary
+*.mp3 binary
+*.wav binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.pdf binary
+*.zip binary
+*.gz binary
+*.tar binary
