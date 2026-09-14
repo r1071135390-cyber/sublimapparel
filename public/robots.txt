@@ -179,18 +179,42 @@ User-agent: BLEXBot
 Disallow: /
 
 # ===========================================================================
-# CATCH-ALL (Content-Signal) — explicit content signal for compliant crawlers
+# CATCH-ALL — explicit user-agent block. We deliberately omit a
+# `Content-Signal:` directive here: Cloudflare Pages treats any robots.txt
+# that contains a `Content-Signal:` line as "publisher opted in to
+# Cloudflare's content-signals program" and silently REPLACES our file
+# with an auto-generated template that strips our fine-grained AI-bot
+# Allow / Disallow rules and auto-injects `Sitemap: /llms.txt`. We
+# confirmed this on 2026-09-14: pushing a robots.txt that contained
+# `Content-Signal: ...` resulted in live /robots.txt being served from
+# Cloudflare's edge template (CF-Cache-Status: BYPASS, no
+# User-agent: GPTBot / ClaudeBot blocks present), with our local
+# fine-grained rules dropped and `Sitemap: /llms.txt` appended. The
+# AEO intent of Content-Signal is preserved at the HTML layer via the
+# `<meta name="robots" content="...">` and `<link rel="alternate" ...>`
+# tags we emit on every page, so removing the robots.txt-level signal
+# does NOT reduce AI-crawler discoverability. Per-bot Allow rules
+# below are honored by every compliant crawler (GPTBot, ClaudeBot,
+# Claude-Web, OAI-SearchBot, PerplexityBot, Google-Extended,
+# Applebot-Extended, Bytespider, etc. all read our robots.txt before
+# fetching).
 # ===========================================================================
 User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /_next/
 Disallow: /admin/
-Content-Signal: search=yes, ai-input=yes, ai-train=yes, prefer-text=FREE-FORM, max-input-tokens=100000
 
 # ===========================================================================
 # SITEMAPS & LLMS
 # ===========================================================================
+# Only the XML sitemap is declared as a Sitemap: — the /llms.txt and
+# /llms-full.txt files are intentionally NOT declared. Cloudflare's
+# auto-managed robots.txt feature auto-injects a Sitemap: line for any
+# llms*.txt file it finds at the site root, so to avoid the duplicate
+# Sitemap line on the live file we keep the LLM alternates OUT of this
+# list and rely on the per-page `<link rel="alternate" type="text/markdown">`
+# HTML tags we emit on every page for LLM discovery.
 Sitemap: https://sublimapparel.com/sitemap.xml
 # 2026-09-13 (R64-side-task): removed Sitemap pointer to
 # /llms.txt. The /llms.txt file is still served at

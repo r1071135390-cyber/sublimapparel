@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>SublimApparel Blog — Apparel Manufacturing Insights</title>
+    <link>https://sublimapparel.com/blog/</link>
+    <description>Industry guides, factory stories, and B2B apparel manufacturing insights from a 2,000 m² Yiwu sublimation factory. Sublimation vs DTG, DDP shipping, fabric guides, esports jersey fabric, and more.</description>
+    <language>en-US</language>
+    <copyright>Copyright © 2026 SublimApparel (Yiwu HomeDorm Commodity Manufacturing Co., Ltd.)</copyright>
+    <lastBuildDate>Sat, 05 Sep 2026 00:00:00 GMT</lastBuildDate>
+    <ttl>60</ttl>
+    <image>
+      <url>https://sublimapparel.com/sublimapparel-logo-v2.webp</url>
+      <title>SublimApparel</title>
+      <link>https://sublimapparel.com/</link>
+      <width>880</width>
+      <height>352</height>
+    </image>
+    <atom:link href="https://sublimapparel.com/blog/feed.xml" rel="self" type="application/rss+xml" />
+    <managingEditor>info@sublimapparel.com (Ramon Wang, SublimApparel)</managingEditor>
+    <webMaster>info@sublimapparel.com (SublimApparel Web Team)</webMaster>
+    <item>
+      <title>Polyester vs Cotton for Sublimation Printing: A Factory Comparison</title>
+      <link>https://sublimapparel.com/blog/polyester-vs-cotton-sublima-fabric/</link>
+      <guid isPermaLink="true">https://sublimapparel.com/blog/polyester-vs-cotton-sublima-fabric/</guid>
+      <pubDate>Sat, 05 Sep 2026 00:00:00 GMT</pubDate>
+      <author>info@sublimapparel.com (SublimApparel Team)</author>
+      <category>Product Guide</category>
+      <description>Polyester prints bright, durable, edge-to-edge. Cotton is comfortable, familiar, and totally incompatible with sublimation. Here is how to choose — and what to do when you need an all-over print on cotton.</description>
+      <content:encoded><![CDATA[This is the most common question we get from new B2B clients: can we sublimate on cotton? The short answer is no. The longer answer is: here is what cotton does instead, here is what polyester does, and here is what to order when your design brief says 100% cotton but you really want an all-over print.
+
+We run both polyester and cotton apparel in our Yiwu factory every week. This comparison is from production data, not marketing copy — including the actual wash-test results from our QC lab.]]></content:encoded>
+      <enclosure url="https://sublimapparel.com/blog/polyester-vs-cotton-comparison.jpeg" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>What Is Sublimation Fabric? A Factory Guide to How It Works</title>
+      <link>https://sublimapparel.com/blog/what-is-sublimation-fabric/</link>
+      <guid isPermaLink="true">https://sublimapparel.com/blog/what-is-sublimation-fabric/</guid>
+      <pubDate>Fri, 04 Sep 2026 00:00:00 GMT</pubDate>
+      <author>info@sublimapparel.com (SublimApparel Team)</author>
+      <category>Industry Guide</category>
+      <description>Sublimation fabric is a polyester (or polyester-blend) textile that has been engineered to bond with dye-sublimation ink at the molecular level. This guide explains what it is, why polyester is required, and how to choose the right one for your project.</description>
+      <content:encoded><![CDATA[If you have ever opened a sublimation catalog or landed on a factory&apos;s fabric page, you have seen the term sublimation fabric used a lot. It sounds like a specific textile — but it is actually a behavior that certain fabrics have, not a single material.
+
+In plain English: sublimation fabric is any fabric that bonds with dye-sublimation ink under heat and pressure. In practice, that means polyester and polyester-rich blends. Cotton does not qualify. This guide explains what sublimation fabric actually is, why polyester is non-negotiable, and how to pick the right knit, weight, and stretch for your project.]]></content:encoded>
+      <enclosure url="https://sublimapparel.com/blog/sublimation-printer-factory.jpeg" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>How to Prepare Artwork Files for Sublimation Printing (AI, EPS, PDF, PSD)</title>
+      <link>https://sublimapparel.com/blog/how-to-prepare-artwork-files-for-sublimation/</link>
+      <guid isPermaLink="true">https://sublimapparel.com/blog/how-to-prepare-artwork-files-for-sublimation/</guid>
+      <pubDate>Tue, 18 Aug 2026 00:00:00 GMT</pubDate>
+      <author>info@sublimapparel.com (SublimApparel Team)</author>
+      <category>Product Guide</category>
+      <description>Bad artwork files are the #1 reason sublimation prints come out wrong. Here is the exact file setup we ask every B2B client to follow — and the mistakes that delay 80% of first-time orders.</description>
+      <content:encoded><![CDATA[Sublimation printing rewards clean, well-built artwork and punishes sloppy files. Because the ink dyes the polyester fibers, every pixel of your file ends up on the fabric — there is no ink layer to hide behind, no thread to mask with, no plate to engrave differently. What you send is what you get.
+
+This guide walks you through the exact artwork specifications we ask every B2B client to follow. It is the same checklist our pre-press team uses when we review incoming files, and following it will cut your first-sample approval time in half.]]></content:encoded>
+      <enclosure url="https://sublimapparel.com/designer-workstation.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Screen Printing vs Embroidery: When to Use Each on Your Apparel</title>
+      <link>https://sublimapparel.com/blog/screen-printing-vs-embroidery/</link>
+      <guid isPermaLink="true">https://sublimapparel.com/blog/screen-printing-vs-embroidery/</guid>
+      <pubDate>Mon, 10 Aug 2026 00:00:00 GMT</pubDate>
+      <author>info@sublimapparel.com (SublimApparel Team)</author>
+      <category>Industry Guide</category>
+      <description>Screen printing and embroidery are the two workhorses of custom apparel decoration. They look different, cost different, and last different. Here is how to pick the right one for your project.</description>
+      <content:encoded><![CDATA[Screen printing and embroidery are the two most common decoration methods for custom apparel. Together, they cover 80% of all logo-decorated apparel in the world. They look different, cost different, and last different — and choosing the right one for your project can save you money and get you a better result.]]></content:encoded>
+      <enclosure url="https://sublimapparel.com/techniques/Embroidery07.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Cycling Jersey Fabric Guide: What Pro Teams Wear and Why</title>
+      <link>https://sublimapparel.com/blog/cycling-jersey-fabric-guide/</link>
+      <guid isPermaLink="true">https://sublimapparel.com/blog/cycling-jersey-fabric-guide/</guid>
+      <pubDate>Mon, 03 Aug 2026 00:00:00 GMT</pubDate>
+      <author>info@sublimapparel.com (SublimApparel Team)</author>
+      <category>Product Guide</category>
+      <description>Cycling jerseys are technical apparel — the wrong fabric choice leads to discomfort on a 100km ride. Here is what to look for, from GSM to weave structure to moisture management.</description>
+      <content:encoded><![CDATA[A cycling jersey is not a t-shirt with a zip. It is technical apparel engineered for 4-8 hours of sustained effort, sweat, sun exposure, and aerodynamic drag. The wrong fabric choice will leave the rider uncomfortable, sweaty, and chafed. Here is what the pros use, and how to spec the right fabric for your custom cycling jersey.]]></content:encoded>
+      <enclosure url="https://sublimapparel.com/golf-polo-navy.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Why MOQ Matters (and Why Our 50-Piece Minimum Is Real)</title>
+      <link>https://sublimapparel.com/blog/moq-explained-apparel-manufacturing/</link>
+      <guid isPermaLink="true">https://sublimapparel.com/blog/moq-explained-apparel-manufacturing/</guid>
+      <pubDate>Sat, 25 Jul 2026 00:00:00 GMT</pubDate>
+      <author>info@sublimapparel.com (SublimApparel Team)</author>
+      <category>Industry Guide</category>
+      <description>MOQ is the smallest order a factory will run. It exists for a reason — and a 50-piece MOQ is genuinely small for custom apparel. Here is how MOQ works and how to keep costs down at low quantities.</description>
+      <content:encoded><![CDATA[MOQ (Minimum Order Quantity) is the smallest order a factory will run for a custom design. If you have ever shopped for custom apparel and been told &apos;our MOQ is 500 pieces&apos; — that is the factory protecting itself from the setup cost of small runs. Our 50-piece MOQ is genuinely small for the industry. Here is why MOQ exists and how to make the most of low-volume orders.]]></content:encoded>
+      <enclosure url="https://sublimapparel.com/printer-closeup-v2.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>How to Choose the Right Fabric for Your Esports Jersey</title>
+      <link>https://sublimapparel.com/blog/how-to-choose-fabric-for-esports-jersey/</link>
+      <guid isPermaLink="true">https://sublimapparel.com/blog/how-to-choose-fabric-for-esports-jersey/</guid>
+      <pubDate>Wed, 15 Jul 2026 00:00:00 GMT</pubDate>
+      <author>info@sublimapparel.com (SublimApparel Team)</author>
+      <category>Product Guide</category>
+      <description>The wrong fabric choice can ruin an otherwise great esports jersey. Here is what pro teams and tournament organizers use — and what to avoid for performance, comfort, and print quality.</description>
+      <content:encoded><![CDATA[Esports jerseys are not just team merch — they are performance apparel. Players sit in climate-controlled studios for 8-12 hours straight, often under hot stage lights. The wrong fabric choice leads to discomfort, sweat stains, and a jersey that looks tired after one wash.
+
+This guide explains what fabric esports teams and tournament organizers should use, what GSM (grams per square meter) works best, and what to avoid. We have made jerseys for 100+ esports teams and tournaments — everything below is based on what actually performs.]]></content:encoded>
+      <enclosure url="https://sublimapparel.com/esports-jersey-prodigy.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Inside Our Yiwu Factory: 2,000 m² of Sublimation, Embroidery, and Quality Control</title>
+      <link>https://sublimapparel.com/blog/yiwu-factory-tour/</link>
+      <guid isPermaLink="true">https://sublimapparel.com/blog/yiwu-factory-tour/</guid>
+      <pubDate>Sun, 05 Jul 2026 00:00:00 GMT</pubDate>
+      <author>info@sublimapparel.com (SublimApparel Team)</author>
+      <category>Factory Stories</category>
+      <description>Take a tour of our 2,000 m² production facility in Yiwu — from fabric warehouse to 1.9m wide-format printers to 100% final QC. See how a real Chinese apparel factory operates.</description>
+      <content:encoded><![CDATA[Most B2B apparel websites show a stock photo of a &apos;factory&apos; and call it a day. We are going to do the opposite — give you a real, detailed walkthrough of our 2,000 m² production facility in Yiwu, China. From the fabric warehouse to the loading dock, here is what happens on our floor every day.
+
+Yiwu is the small-commodity capital of the world, located 1.5 hours south of Hangzhou on the high-speed rail. Our factory sits in the Yiwu Industrial Park, with 200+ skilled workers across printing, embroidery, cutting, sewing, and quality control.]]></content:encoded>
+      <enclosure url="https://sublimapparel.com/factory-floor.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>DDP Shipping Explained: How Chinese Factories Deliver to Your Door</title>
+      <link>https://sublimapparel.com/blog/what-is-ddp-shipping/</link>
+      <guid isPermaLink="true">https://sublimapparel.com/blog/what-is-ddp-shipping/</guid>
+      <pubDate>Sat, 20 Jun 2026 00:00:00 GMT</pubDate>
+      <author>info@sublimapparel.com (SublimApparel Team)</author>
+      <category>Logistics</category>
+      <description>DDP (Delivered Duty Paid) means the price you are quoted is the price you pay. No surprise customs fees, no last-mile surprises. Here is how it works and why it matters for B2B.</description>
+      <content:encoded><![CDATA[If you have ever imported from China and been hit with an unexpected customs bill two weeks after delivery — you understand why DDP exists. DDP (Delivered Duty Paid) is the only shipping term that guarantees the price you are quoted is the price you pay. No surprise fees, no last-mile headaches.
+
+This guide explains how DDP works, what it includes, what it costs, and when you should insist on it. We have been running DDP to the US, UK, EU, and Australia for over a decade from our Yiwu factory.]]></content:encoded>
+      <enclosure url="https://sublimapparel.com/delivery-door.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>DTG vs DTF Printing: Which Is Better for Your Custom Apparel?</title>
+      <link>https://sublimapparel.com/blog/dtg-vs-dtf-which-is-better/</link>
+      <guid isPermaLink="true">https://sublimapparel.com/blog/dtg-vs-dtf-which-is-better/</guid>
+      <pubDate>Wed, 10 Jun 2026 00:00:00 GMT</pubDate>
+      <author>info@sublimapparel.com (SublimApparel Team)</author>
+      <category>Industry Guide</category>
+      <description>DTG prints directly into fabric. DTF prints onto film first, then heat-presses. Both have their place. Here is how to choose — based on your fabric, design, and run size.</description>
+      <content:encoded><![CDATA[DTG (Direct to Garment) and DTF (Direct to Film) are the two most common digital decoration methods for short-run custom apparel. They look similar from the outside — both produce full-color, photographic-detail prints with no screens. But the underlying process, fabric compatibility, durability, and cost are very different.
+
+This guide breaks down the real-world differences between DTG and DTF, based on our production experience running both methods on the same factory floor. We will tell you when each one wins — and when neither is the right choice.]]></content:encoded>
+      <enclosure url="https://sublimapparel.com/techniques/DTGprinting03.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>What Is Sublimation Printing? The Complete Guide for B2B Apparel</title>
+      <link>https://sublimapparel.com/blog/what-is-sublimation-printing/</link>
+      <guid isPermaLink="true">https://sublimapparel.com/blog/what-is-sublimation-printing/</guid>
+      <pubDate>Mon, 01 Jun 2026 00:00:00 GMT</pubDate>
+      <author>info@sublimapparel.com (SublimApparel Team)</author>
+      <category>Industry Guide</category>
+      <description>Sublimation printing is the only decoration method that dyes fabric from the inside out. Learn how it works, when to use it, and why it&apos;s the gold standard for all-over print apparel.</description>
+      <content:encoded><![CDATA[If you&apos;ve ever bought a polyester jersey, a cycling kit, or an esports uniform with vivid edge-to-edge artwork that didn&apos;t peel after 50 washes, you were looking at sublimation printing. It is the gold-standard method for full-coverage apparel — and the only decoration technique that can print edge to edge with no print area limits.
+
+This guide explains exactly what sublimation printing is, how it works, when to use it (and when not to), and what it costs. We have been running industrial sublimation lines in our Yiwu factory for over a decade — everything below is from production experience, not textbook theory.]]></content:encoded>
+      <enclosure url="https://sublimapparel.com/techniques/Sublimationprinting02.webp" type="image/webp" length="0" />
+    </item>
+  </channel>
+</rss>

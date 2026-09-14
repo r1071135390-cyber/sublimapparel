@@ -8,6 +8,20 @@ cd "${COZE_WORKSPACE_PATH}"
 echo "Installing dependencies..."
 pnpm install --prefer-frozen-lockfile --prefer-offline --loglevel debug --reporter=append-only
 
+# 2026-09-14 (R64 follow-up): pre-generate the SublimApparel blog
+# RSS feed as a static XML file under public/blog/feed.xml/index.xml.
+# We can NOT use a Next.js `route.ts` handler for this — `output: export`
+# silently skips generating files for any URL path that contains a dot
+# extension like `.xml`, so /blog/feed.xml/ stays a 404 even after a
+# clean build. The script reads the same `blogPosts` source the route
+# handler used and emits a byte-equivalent body to public/blog/feed.xml/
+# which `next build` then copies verbatim into out/blog/feed.xml/index.xml
+# (Next.js copies everything under public/ to out/ at the start of every
+# build). Run this BEFORE next build so the file is in place when the
+# export step copies public/ → out/.
+echo "Generating static RSS feed..."
+node scripts/build-rss.mjs
+
 echo "Building the Next.js project (static export)..."
 pnpm next build
 
