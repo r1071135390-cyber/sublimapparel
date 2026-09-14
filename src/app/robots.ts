@@ -83,9 +83,18 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: "BLEXBot", disallow: "/" },
     ],
     sitemap: [
+      // R64 follow-up (2026-09-14): dropped the llms.txt entry. Cloudflare
+      // Pages' build-time auto-robots scanner treats any llms*.txt file
+      // in the build output as a signal to auto-inject
+      // `Sitemap: https://<host>/llms.txt` into the served robots.txt.
+      // Even with the Content-Signal directive removed, the auto-inject
+      // still happens when the file exists. We deleted the public/llms/
+      // files in the same commit, so this dynamic sitemap list now only
+      // declares the canonical XML sitemap.
       "https://sublimapparel.com/sitemap.xml",
-      "https://sublimapparel.com/llms.txt",
     ],
-    host: "https://sublimapparel.com",
+    // host: also removed (Cloudflare auto-injects a Yandex `Host:` directive
+    //  when an llms.txt is present; without the file, CF no longer adds it
+    //  and we don't need to declare it ourselves).
   };
 }

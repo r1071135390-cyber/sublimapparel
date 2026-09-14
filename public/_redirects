@@ -2,31 +2,56 @@
 # https://developers.cloudflare.com/pages/configuration/redirects/
 #
 # ============================================================================
-# LLM-friendly files moved off the public root to avoid the
-# Cloudflare auto-managed robots.txt feature from auto-injecting a
-# "Sitemap: https://sublimapparel.com/llms.txt" line into the served
-# /robots.txt (Cloudflare's auto-robots only sees files in public/ at
-# the build step; hidden subdirectories are not auto-indexed).
+# LLM-friendly files removed from the public root (2026-09-14 R64 follow-up).
 #
-# 200-status internal rewrites preserve the original URLs so AI
-# crawlers (GPTBot, ClaudeBot, etc.) and the HTTP `Link: </llms.txt>;
-# rel="describedby"` headers we emit still resolve correctly.
+# Why: Cloudflare Pages' build-time auto-robots scanner sees any file whose
+# path matches `/llms*.txt` in the build output and auto-injects
+# `Sitemap: https://<host>/llms.txt` plus a Yandex `Host:` directive into the
+# served /robots.txt. We confirmed this on 2026-09-14: the live
+# https://sublimapparel.com/robots.txt after the previous build returned the
+# local fine-grained AI-bot Allow / Disallow blocks followed by
+# `Host: https://sublimapparel.com` and `Sitemap: https://sublimapparel.com/llms.txt`
+# even though neither line was in the source file. Even with no
+# `Content-Signal:` directive present, CF still augments.
+#
+# The cleanest fix: drop the /llms.txt and /llms-full.txt URLs entirely.
+# LLM discoverability of the AEO content is preserved at the HTML layer via
+# the per-page `<link rel="alternate" type="text/markdown" href="<page>.html.md">`
+# tags + the per-page `Link: </llms.txt>; rel="describedby"` HTTP headers
+# (we keep the latter only for the per-page rules in _headers, even though
+# /llms.txt itself now 404s — this is intentional: crawlers will silently
+# skip the missing file but still see the markdown alternates). The
+# Markdown-converted AEO content itself moves to /aep/<page>.html.md and
+# is served as a real file. If we ever re-enable /llms.txt we must turn
+# off the auto-robots feature in the Cloudflare Pages dashboard.
 # ============================================================================
-
-# /llms.txt is a small AEO card of the site for LLM discovery.
-/llms.txt                 /llms/llms.txt                 200
-
-# /llms-full.txt is the long-form version of the same AEO content.
-/llms-full.txt            /llms/llms-full.txt            200
-
+# (llms.txt 200 rewrites removed; the actual files are also deleted from
+#  public/llms/ in the same commit to prevent the build-time scanner from
+#  matching the file path. See backup tag pre-r64-rss-redirect-2026-09-14.)
+#
 # ============================================================================
 # Blog RSS feed — canonical URL is /blog/feed.xml (no trailing slash) so
 # the blog page's <link rel="alternate"> and the feed's own <atom:link
-# rel="self"> can both reference the same path. With `trailingSlash: true`
-# Next.js writes the file to out/blog/feed.xml/index.html, which
-# Cloudflare Pages serves at /blog/feed.xml/. Redirect the no-slash
-# canonical to the with-slash served path. The Content-Type override
-# lives in /public/_headers (the redirect destination is what gets
-# served, so the headers on /blog/feed.xml/* apply after the 301).
+# rel="self"> can both reference the same path.
+#
+# IMPORTANT: Next.js `output: "export"` cannot produce a `index.xml` file
+# via `route.ts` (any URL path containing a dot extension is silently
+# skipped). We pre-render the RSS body to public/blog/feed.xml/index.xml
+# at build time via scripts/build-rss.mjs, then `next build` copies
+# public/ → out/ verbatim so the file lands at
+# out/blog/feed.xml/index.xml.
+#
+# Cloudflare Pages by default only recognizes `index.html` as a directory
+# index file — `index.xml` is NOT auto-served when the request is
+# `/blog/feed.xml/`. Without help, `/blog/feed.xml/` 404s (CF falls back
+# to the project 404 page) and only `/blog/feed.xml/index.xml` directly
+# works. We fix this with two 200 internal rewrites below so both the
+# canonical no-slash URL and the with-slash URL serve the same file.
+# The Content-Type override (`application/rss+xml; charset=utf-8`) is in
+# _headers and applies to both request paths via the `/blog/feed.xml/*`
+# header rule. The 200 status means CF internally rewrites and returns
+# 200 to the client (no client-visible 301 hop). RSS aggregators see a
+# single clean 200 response with the proper Content-Type.
 # ============================================================================
-/blog/feed.xml            /blog/feed.xml/                301
+/blog/feed.xml            /blog/feed.xml/index.xml       200
+/blog/feed.xml/*          /blog/feed.xml/index.xml       200

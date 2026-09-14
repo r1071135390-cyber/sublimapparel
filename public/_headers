@@ -39,9 +39,13 @@
 
 # ===========================================================================
 # Sitemap & robots — no-store so any push to GitHub main is picked up
-# immediately by every edge, even when the Cloudflare "auto-managed
-# robots.txt" feature is in play. The previous 1-hour s-maxage
-# staled the edge long after we pushed the drop-Sitemap fix in R64.
+# immediately by every edge. The robots.txt rule must be no-store because
+# Cloudflare Pages' build-time auto-robots feature can still augment our
+# file with `Sitemap: /llms.txt` + Yandex `Host:` lines if it finds an
+# llms*.txt file in the build output — we removed the trigger files in
+# R64 follow-up so this should be clean, but no-store makes sure any
+# cached augmented copy from a prior build is invalidated within seconds
+# of the next deploy.
 # ===========================================================================
 /sitemap.xml
   Cache-Control: no-store, max-age=0, must-revalidate
@@ -51,16 +55,17 @@
   Content-Type: text/plain; charset=utf-8
 
 # ===========================================================================
-# Blog RSS feed — force-static API route at src/app/blog/feed.xml/route.ts.
-# With `trailingSlash: true`, Next.js writes the pre-rendered response to
-# out/blog/feed.xml/index.html, so Cloudflare Pages serves the file at
-# /blog/feed.xml/ with text/html by default. The /blog/feed.xml (no slash)
-# URL is preserved via a 301 redirect in _redirects. The headers below
-# override the Content-Type so RSS aggregators see the file as
-# application/rss+xml — without this, Feedly / Inoreader reject the feed
-# as malformed. Cache-Control mirrors the in-route Cache-Control header
-# (1 h edge, 24 h stale-while-revalidate) so the feed re-validates on
-# every Cloudflare deploy.
+# Blog RSS feed — pre-rendered to out/blog/feed.xml/index.xml at build
+# time by scripts/build-rss.mjs. Cloudflare Pages does NOT recognize
+# `index.xml` as a directory index file, so we 200-internal-rewrite both
+# /blog/feed.xml and /blog/feed.xml/ to /blog/feed.xml/index.xml via
+# _redirects. The headers below override the Content-Type on ALL three
+# paths (the canonical no-slash URL via the exact rule, the with-slash
+# URL via the wildcard `/blog/feed.xml/*` rule) so RSS aggregators see
+# `application/rss+xml` — without this, Feedly / Inoreader reject the
+# feed as malformed. Cache-Control gives the feed a 1 h edge window with
+# 24 h stale-while-revalidate so the feed re-validates on every
+# Cloudflare deploy.
 # ===========================================================================
 /blog/feed.xml/*
   Content-Type: application/rss+xml; charset=utf-8
@@ -70,52 +75,39 @@
   Cache-Control: public, s-maxage=3600, stale-while-revalidate=86400
 
 # Markdown alternates — point AI crawlers at plain-text versions of every page
+# (R64 follow-up: removed the `Link: </llms.txt>; rel="describedby"`
+#  header on every page rule — we no longer serve /llms.txt because
+#  Cloudflare's auto-robots would auto-inject `Sitemap: /llms.txt` into
+#  robots.txt. Per-page markdown alternates are the primary LLM
+#  discovery path now. If you re-enable /llms.txt in the future, also
+#  turn off the Cloudflare Pages "Auto-generate llms.txt" feature in
+#  the dashboard, otherwise the Sitemap injection returns.)
 /*.html.md
   Cache-Control: public, max-age=0, must-revalidate, s-maxage=3600
   Content-Type: text/markdown; charset=utf-8
 
-# LLM-friendly files — explicit content types. NOTE: the actual files
-# live under /llms/ (public/llms/llms.txt, public/llms/llms-full.txt)
-# to keep the Cloudflare auto-managed robots.txt feature from
-# auto-injecting Sitemap: /llms.txt. The public /llms.txt and
-# /llms-full.txt URLs are preserved by /public/_redirects 200
-# rewrites so AI crawlers see the same content at the same URLs.
-/llms.txt
-  Cache-Control: no-store, max-age=0, must-revalidate
-  Content-Type: text/markdown; charset=utf-8
-/llms-full.txt
-  Cache-Control: no-store, max-age=0, must-revalidate
-  Content-Type: text/markdown; charset=utf-8
-
 # HTTP Link header — discover markdown alternates for every HTML page
 /
-  Link: </llms.txt>; rel="describedby"
   Link: </home.html.md>; rel="alternate"; type="text/markdown"
 /products
-  Link: </llms.txt>; rel="describedby"
   Link: </products.html.md>; rel="alternate"; type="text/markdown"
 /products/*
-  Link: </llms.txt>; rel="describedby"
+  Link: </products.html.md>; rel="alternate"; type="text/markdown"
 /fabric
-  Link: </llms.txt>; rel="describedby"
   Link: </fabric.html.md>; rel="alternate"; type="text/markdown"
 /fabric/*
-  Link: </llms.txt>; rel="describedby"
+  Link: </fabric.html.md>; rel="alternate"; type="text/markdown"
 /technique
-  Link: </llms.txt>; rel="describedby"
   Link: </technique.html.md>; rel="alternate"; type="text/markdown"
 /technique/*
-  Link: </llms.txt>; rel="describedby"
+  Link: </technique.html.md>; rel="alternate"; type="text/markdown"
 /shipping
-  Link: </llms.txt>; rel="describedby"
   Link: </shipping.html.md>; rel="alternate"; type="text/markdown"
 /shipping/*
-  Link: </llms.txt>; rel="describedby"
+  Link: </shipping.html.md>; rel="alternate"; type="text/markdown"
 /about
-  Link: </llms.txt>; rel="describedby"
   Link: </about.html.md>; rel="alternate"; type="text/markdown"
 /contact
-  Link: </llms.txt>; rel="describedby"
   Link: </contact.html.md>; rel="alternate"; type="text/markdown"
 /get-a-quote
-  Link: </llms.txt>; rel="describedby"
+  Link: </get-a-quote.html.md>; rel="alternate"; type="text/markdown"
