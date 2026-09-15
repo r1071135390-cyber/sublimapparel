@@ -39,7 +39,51 @@ export const metadata = buildPageMetadata({
     // owns the "for employee programs" intent. 57 chars.
     title: "Corporate Apparel Production Service | Custom Uniforms",
     description: "Full-service corporate apparel production: design, sampling, bulk manufacturing, brand-color matching, DDP worldwide. From 50 pcs. Service-first approach, no middlemen.",
-    keywords: ["corporate apparel production service", "corporate apparel manufacturer service", "employee uniform service", "company uniform production", "branded company workwear service"],
+    keywords: [
+    "corporate apparel production service",
+    "corporate apparel manufacturer service",
+    "employee uniform service",
+    "company uniform production",
+    "branded company workwear service",
+    "corporate apparel production",
+    "company uniform manufacturer",
+    "branded corporate apparel",
+    "employee uniform program",
+    "corporate uniform service",
+    "company branded workwear",
+    "office uniform supplier",
+    "staff uniform production",
+    "corporate gifts apparel",
+    "company merch production",
+    "team building apparel",
+    "company event shirts",
+    "corporate merch service",
+    "business apparel manufacturer",
+    "workwear custom",
+    "corporate organization apparel",
+    "corporate apparel program",
+    "company uniform program",
+    "B2B corporate apparel",
+    "company branded apparel",
+    "corporate team apparel",
+    "organization uniform supplier",
+    "corporate clothing program",
+    "employee branded apparel",
+    "company merchandise program",
+    "corporate apparel manufacturer",
+    "corporate clothing supplier",
+    "B2B corporate clothing",
+    "company uniform factory",
+    "corporate custom apparel",
+    "organization branded apparel",
+    "corporate identity apparel",
+    "company identity apparel",
+    "employee branded clothing",
+    "corporate workwear program",
+    "organization custom clothing",
+    "corporate uniform program",
+    "company employee apparel",
+  ],
     alternates: {
     canonical: "https://sublimapparel.com/corporate-organization-apparel/",
   },
@@ -49,7 +93,7 @@ export const metadata = buildPageMetadata({
     // — a page URL, not an image. Social crawlers would render a broken
     // share card. Industry pages use /og/og-industry.webp.
     ogImage: "/og/og-industry.webp",
-  });;
+  });
 
 const useCases = [
   {

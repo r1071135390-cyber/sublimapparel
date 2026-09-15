@@ -25,6 +25,52 @@ import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
 // H1 + lead paragraph. We deliberately skip FAQPage here because the
 // page has no inline FAQ content; emitting an empty FAQPage would
 // violate Google's thin-content quality bar.
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Cotton Sublimation & DTG Apparel | 100% Cotton Fabric',
+  description: 'Custom cotton apparel printing: allover digital print on 100% cotton via reactive dye chemistry, DTG, and DTF. Soft hand feel, MOQ 50, full-body edge-to-edge.',
+  keywords: [
+    "cotton sublimation",
+    "allover print on cotton",
+    "DTG cotton printing",
+    "DTF cotton printing",
+    "100% cotton apparel",
+    "reactive dye cotton",
+    "cotton t-shirt printing",
+    "custom cotton clothing",
+    "organic cotton apparel",
+    "cotton digital print",
+    "cotton sublimation shirts",
+    "DTG vs DTF cotton",
+    "cotton apparel manufacturer",
+    "custom printed cotton tees",
+    "cotton blanks bulk",
+    "100% cotton apparel fabric",
+    "cotton sublimation coating",
+    "all-over print cotton",
+    "cotton t-shirt fabric",
+    "ring-spun cotton fabric",
+    "combed cotton fabric",
+    "recycled cotton fabric",
+    "Pima cotton fabric",
+    "Egyptian cotton fabric",
+    "cotton spandex blend",
+    "cotton jersey fabric",
+    "cotton fleece fabric",
+    "cotton polo fabric",
+    "heavyweight cotton fabric",
+    "lightweight cotton fabric",
+    "pre-shrunk cotton fabric",
+    "DTG cotton fabric",
+    "DTF cotton fabric",
+    "cotton apparel supplier",
+    "cotton fabric manufacturer",
+    "B2B cotton fabric",
+    "cotton fabric wholesale",
+    "cotton fabric factory China",
+  ],
+});
+
 const breadcrumbJsonLd = buildBreadcrumbJsonLd([
   { name: "Home", path: "/" },
   { name: "Fabric", path: "/fabric/" },

@@ -23,7 +23,46 @@ import { UnifiedContactCta } from "@/components/unified-contact-cta";
 export const metadata = buildPageMetadata({
     title: "Tools & Resources for Custom Apparel Buyers | Sublimapparel",
     description: "Free tools, calculators, and guides for sourcing custom apparel: event timeline planner, US size chart, quality control checklist, 90-day new program roadmap,…",
-    keywords: ["custom apparel tools", "apparel sourcing guide", "event apparel timeline", "us size guide sublimation", "apparel quality control checklist", "how to source from china", "90 day apparel program"],
+    keywords: [
+    "custom apparel tools",
+    "apparel sourcing guide",
+    "event apparel timeline",
+    "us size guide sublimation",
+    "apparel quality control checklist",
+    "how to source from china",
+    "90 day apparel program",
+    "apparel manufacturing resources",
+    "B2B apparel tools",
+    "custom clothing calculators",
+    "apparel production planner",
+    "sublimation guides",
+    "apparel import resources",
+    "clothing factory guides",
+    "custom apparel resources",
+    "sublimation resources hub",
+    "apparel manufacturing tools",
+    "B2B apparel guides",
+    "sublimation learning center",
+    "apparel production guides",
+    "shipping guides apparel",
+    "pricing guides apparel",
+    "fabric guides",
+    "industry guides apparel",
+    "apparel sourcing tools",
+    "custom apparel calculators",
+    "production calculators",
+    "apparel cost guides",
+    "MOQ guides apparel",
+    "DDP shipping guides",
+    "tariff guides apparel",
+    "apparel business guides",
+    "apparel startup guides",
+    "small business apparel guides",
+    "custom clothing resources",
+    "apparel knowledge base",
+    "sublimation knowledge base",
+    "B2B apparel education",
+  ],
     alternates: {
     canonical: "/resources",
   },
@@ -33,7 +72,7 @@ export const metadata = buildPageMetadata({
     // image. Social crawlers would render a broken share card. Resource
     // hub falls back to /og-default.jpg.
     ogImage: "/og-default.jpg",
-  });;
+  });
 
 const tools = [
   {

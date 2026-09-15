@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Star, Quote } from "lucide-react";
 import { fabricTypes, fabricBySlug } from "@/lib/fabric-data";
+import { buildFabricKeywords } from "@/lib/fabric-keywords";
 import { JsonLd } from "@/components/json-ld";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
@@ -25,28 +26,23 @@ export async function generateMetadata(
   const { slug } = await params;
   const fabric = fabricBySlug(slug);
   if (!fabric) return { title: "Fabric not found" };
+  // 2026-09-15 (R68-P4): replaced the previous hardcoded 12-keyword
+  // join-comma block with buildFabricKeywords(), which expands each
+  // fabric's tags / composition / use / print methods into 50-90
+  // buyer-intent queries covering 5 axes (identity, tag verticals,
+  // print-method queries, use-case apparel, brand anchors). This
+  // closes the "69% of pages have zero buyer-vertical coverage" gap
+  // that GSC diagnosis report 20 flagged as the #1 cause of poor
+  // search performance on the 64 fabric detail pages.
   return {
     title: fabric.h1,
     description: fabric.metaDescription,
-    keywords: [
-      fabric.name,
-      fabric.comp,
-      fabric.use,
-      `${fabric.name} supplier`,
-      `${fabric.name} China factory`,
-      `${fabric.name} for sublimation`,
-      `${fabric.name} for ${fabric.tags.slice(0, 3).join(", ")}`,
-      "SublimApparel fabric",
-      "China fabric factory",
-      "Yiwu fabric supplier",
-      "DDP fabric shipping",
-      "B2B apparel fabric",
-    ].join(", "),
+    keywords: buildFabricKeywords(fabric),
     openGraph: {
       title: fabric.h1,
       description: fabric.metaDescription,
       type: "article",    images: ["/og/og-home.webp"],
-  
+
     },
   };
 }

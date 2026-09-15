@@ -11,12 +11,44 @@ export const metadata = buildPageMetadata({
     // page (placeholder US warehouse, occasional overstock buffer, not standard).
     title: "US Buffer-Storage Address · Honest Note",
     description: "An honest note about our US warehouse address in Fontana, CA. A placeholder service for occasional overstock buffer storage, not a standard feature.",
-    keywords: ["US warehouse", "Fontana CA warehouse", "US buffer storage", "US fulfillment", "occasional overstock storage", "US shipping address", "pre-positioned inventory", "American warehouse"],
+    keywords: [
+    "US warehouse",
+    "Fontana CA warehouse",
+    "US buffer storage",
+    "US fulfillment",
+    "occasional overstock storage",
+    "US shipping address",
+    "pre-positioned inventory",
+    "American warehouse",
+    "US warehouse apparel",
+    "US apparel fulfillment",
+    "US-based apparel inventory",
+    "US stock apparel",
+    "2-5 day US shipping",
+    "US dropship apparel",
+    "US bonded warehouse",
+    "US apparel 3PL",
+    "US apparel fulfillment center",
+    "US domestic apparel delivery",
+    "US apparel warehouse shipping",
+    "US fast shipping apparel",
+    "US in-stock apparel",
+    "US apparel distribution",
+    "US apparel logistics",
+    "US apparel supplier",
+    "US apparel inventory",
+    "US apparel dropshipping",
+    "US apparel wholesale",
+    "US-based clothing manufacturer",
+    "US-imported apparel",
+    "Yiwu to US warehouse",
+    "US ready-to-ship apparel",
+  ],
     alternates: {
     canonical: "https://sublimapparel.com/shipping/us-warehouse/",
   },
     robots: { index: true, follow: true },
-  });;
+  });
 
 export default function UsWarehousePage() {
   // 2026-09-12 (R41): consolidate the 2 separate <JsonLd> calls

@@ -16,7 +16,43 @@ export const metadata = buildPageMetadata({
     // 2026-09-11 (R15-P0-1): was 72 chars — Google SERP limit ~60. Shortened to 53.
     title: "Custom Apparel Catalog | 120+ Products, 14 Categories",
     description: "Custom sublimated apparel for B2B: t-shirts, jerseys, hoodies, cycling kits, golf polos, racing suits. No setup fees, MOQ 50 pcs, full color all-over print, sa…",
-    keywords: ["custom sublimation apparel", "all-over print manufacturer", "sublimated t-shirts", "custom jerseys", "sublimation hoodies", "cycling kits custom", "golf polos custom", "racing suits sublimation", "B2B apparel manufacturer", "MOQ 50 custom apparel", "all over print t-shirts", "sublimation factory China"],
+    keywords: [
+    "custom sublimation apparel",
+    "all-over print manufacturer",
+    "sublimated t-shirts",
+    "custom jerseys",
+    "sublimation hoodies",
+    "cycling kits custom",
+    "golf polos custom",
+    "racing suits sublimation",
+    "B2B apparel manufacturer",
+    "MOQ 50 custom apparel",
+    "all over print t-shirts",
+    "sublimation factory China",
+    "custom apparel catalog",
+    "sublimation product catalog",
+    "all-over print products",
+    "B2B apparel catalog",
+    "MOQ 50 apparel",
+    "sublimated jerseys",
+    "sublimated hoodies",
+    "cycling kits supplier",
+    "racing suit manufacturer",
+    "golf polo supplier",
+    "running shirts factory",
+    "esports jerseys custom",
+    "training apparel supplier",
+    "bowling jerseys custom",
+    "racing jerseys manufacturer",
+    "team sports apparel",
+    "custom sportswear catalog",
+    "apparel factory catalog",
+    "sublimation apparel products",
+    "all-over print apparel",
+    "custom uniform manufacturer",
+    "B2B clothing factory",
+    "sublimation product line",
+  ],
     other: {
     "article:author": "Ramon Wang, Sales Director, SublimApparel",
     "article:published_time": "2024-01-01T00:00:00.000Z",
@@ -24,7 +60,7 @@ export const metadata = buildPageMetadata({
   },
     ogTitle: "Which Custom Apparel Do You Need? — 120+ Products, 14 Categories",
     ogDescription: "120+ custom sublimated apparel products for B2B: t-shirts, jerseys, hoodies, cycling kits, golf polos, racing suits, plus all-over print on 100% cotton. MOQ 50, DDP worldwide.",
-  });;
+  });
 
 type CategoryItem = { name: string; category?: keyof typeof CATEGORY_TAGS };
 

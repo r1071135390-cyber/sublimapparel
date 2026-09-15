@@ -34,7 +34,49 @@ export const metadata = buildPageMetadata({
     // 2026-09-11 (R15-P0-1): was 87 chars — Google truncates >60. Shortened to 53.
     title: "Private Label Apparel Manufacturer | Custom Production",
     description: "Private label apparel manufacturer and custom clothing production partner for growing brands and creative agencies. Custom labels, hang tags, retail...",
-    keywords: ["custom apparel manufacturer", "private label apparel manufacturer", "clothing production partner", "small brand manufacturer", "apparel sourcing partner"],
+    keywords: [
+    "custom apparel manufacturer",
+    "private label apparel manufacturer",
+    "clothing production partner",
+    "small brand manufacturer",
+    "apparel sourcing partner",
+    "private label apparel",
+    "custom clothing production",
+    "apparel manufacturer for brands",
+    "clothing line manufacturer",
+    "custom fashion brand",
+    "apparel brand manufacturing",
+    "startup clothing manufacturer",
+    "boutique clothing production",
+    "white label apparel",
+    "apparel oem factory",
+    "fashion manufacturing",
+    "small batch clothing manufacturer",
+    "streetwear manufacturer",
+    "custom apparel program",
+    "apparel brand manufacturer",
+    "apparel agency supplier",
+    "apparel brand B2B",
+    "clothing brand manufacturer",
+    "clothing brand supplier",
+    "private label clothing",
+    "white label clothing",
+    "apparel brand factory",
+    "clothing brand factory",
+    "apparel brand fulfillment",
+    "clothing brand fulfillment",
+    "DTC apparel manufacturer",
+    "DTC clothing manufacturer",
+    "Shopify apparel supplier",
+    "Amazon FBA apparel supplier",
+    "e-commerce apparel manufacturer",
+    "e-commerce clothing manufacturer",
+    "apparel startup manufacturer",
+    "apparel brand production",
+    "apparel brand scaling",
+    "apparel brand growth partner",
+    "apparel brand co-packer",
+  ],
     alternates: {
     canonical: "https://sublimapparel.com/apparel-brands-agencies/",
   },
@@ -44,7 +86,7 @@ export const metadata = buildPageMetadata({
     // — a page URL, not an image. Social crawlers would render a broken
     // share card. Industry pages use /og/og-industry.webp.
     ogImage: "/og/og-industry.webp",
-  });;
+  });
 
 const brandSegments = [
   {

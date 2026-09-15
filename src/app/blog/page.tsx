@@ -11,7 +11,44 @@ import { UnifiedContactCta } from "@/components/unified-contact-cta";
 export const metadata = buildPageMetadata({
     title: "Blog | Sublimation Apparel Insights & Factory Stories",
     description: "Industry guides, factory stories, and B2B apparel manufacturing insights from a 2,000 m² Yiwu sublimation factory. Sublimation vs DTG, DDP shipping, fabric gui…",
-    keywords: ["sublimation printing blog", "apparel manufacturing insights", "Yiwu factory", "B2B apparel guide", "DTG vs DTF", "DDP shipping guide", "esports jersey fabric"],
+    keywords: [
+    "sublimation printing blog",
+    "apparel manufacturing insights",
+    "Yiwu factory",
+    "B2B apparel guide",
+    "DTG vs DTF",
+    "DDP shipping guide",
+    "esports jersey fabric",
+    "custom apparel blog",
+    "sublimation factory stories",
+    "apparel industry insights",
+    "B2B clothing blog",
+    "custom clothing manufacturing",
+    "sublimation industry news",
+    "Yiwu apparel factory",
+    "sublimation industry blog",
+    "B2B apparel blog",
+    "apparel manufacturing blog",
+    "custom clothing blog",
+    "apparel industry news",
+    "MOQ apparel blog",
+    "all-over print blog",
+    "DDP shipping blog",
+    "fabric sourcing blog",
+    "apparel production blog",
+    "apparel sourcing blog",
+    "Chinese factory blog",
+    "Yiwu apparel blog",
+    "private label blog",
+    "team uniform blog",
+    "race apparel blog",
+    "event apparel blog",
+    "corporate apparel blog",
+    "school apparel blog",
+    "promotional apparel blog",
+    "custom apparel resources",
+    "apparel education hub",
+  ],
     alternates: {
       canonical:"/blog/",
       // 2026-09-11 (R26-A): self-link the RSS feed so headless
@@ -31,7 +68,7 @@ export const metadata = buildPageMetadata({
     // Social crawlers (Facebook, Twitter, LinkedIn) cannot fetch directory
     // URLs as images. Fixed to the real OG image in /og/.
     ogImage: "/og/og-default.jpg",
-  });;
+  });
 
 // 2026-09-12 (R36-C): the 5 blog-index FAQs lifted to a top-level
 // const so we can hand them straight to buildBlogHubGraph as the

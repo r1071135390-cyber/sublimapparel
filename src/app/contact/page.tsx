@@ -29,13 +29,47 @@ export const metadata = buildPageMetadata({
     // the WhatsApp number as plain text, both of which are
     // actionable in the SERP preview.
     description: "Contact our Yiwu sublimation factory for a custom apparel quote. MOQ 50, 15-25 day production, DDP to 100+ countries. WhatsApp +86-198-1793-0190, reply in 1 day.",
-    keywords: ["sublimation quote Yiwu factory", "custom apparel quote MOQ 50", "DDP shipping quote", "sublimated jersey manufacturer contact", "Yiwu factory WhatsApp", "all-over print cotton quote", "B2B apparel inquiry", "Fontana CA warehouse pickup", "Rotterdam EU rep contact", "bulk custom apparel quote"],
+    keywords: [
+    "sublimation quote Yiwu factory",
+    "custom apparel quote MOQ 50",
+    "DDP shipping quote",
+    "sublimated jersey manufacturer contact",
+    "Yiwu factory WhatsApp",
+    "all-over print cotton quote",
+    "B2B apparel inquiry",
+    "Fontana CA warehouse pickup",
+    "Rotterdam EU rep contact",
+    "bulk custom apparel quote",
+    "contact Yiwu factory",
+    "contact sublimation factory",
+    "contact apparel manufacturer",
+    "factory quote contact",
+    "MOQ 50 quote contact",
+    "DDP shipping quote contact",
+    "custom apparel inquiry",
+    "B2B apparel contact",
+    "WhatsApp apparel factory",
+    "apparel factory phone number",
+    "apparel factory email",
+    "apparel factory contact form",
+    "talk to Yiwu factory manager",
+    "direct factory contact",
+    "sublimation factory inquiry",
+    "custom clothing inquiry",
+    "apparel manufacturer contact",
+    "factory direct contact",
+    "overseas apparel factory contact",
+    "apparel supplier contact",
+    "Yiwu contact phone",
+    "factory contact info",
+    "reach apparel factory",
+  ],
     other: {
     "article:author": "Ramon Wang, Sales Director, SublimApparel",
     "article:published_time": "2024-01-01T00:00:00.000Z",
     "article:modified_time": "2025-08-18T00:00:00.000Z",
   },
-  });;
+  });
 
 export default function ContactPage() {
   // 2026-09-11 push (Round 6): add FAQPage JSON-LD on /contact/ to capture

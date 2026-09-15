@@ -11,7 +11,53 @@ import { JsonLd } from "@/components/json-ld";
 export const metadata = buildPageMetadata({
     title: "100 All-Over Print Products | Apparel by Garment, Sport",
     description: "100 all-over print apparel products, cross-filtered by garment type (29), sport (42) and scenario (27). From polyester sublimation to all-over digital print on…",
-    keywords: ["all-over print catalog", "sublimation apparel wholesale", "all-over digital print on cotton", "custom jerseys China", "DDP apparel factory", "Yiwu apparel factory", "custom workwear China", "promotional apparel bulk"],
+    keywords: [
+    "all-over print catalog",
+    "sublimation apparel wholesale",
+    "all-over digital print on cotton",
+    "custom jerseys China",
+    "DDP apparel factory",
+    "Yiwu apparel factory",
+    "custom workwear China",
+    "promotional apparel bulk",
+    "all-over print apparel",
+    "sublimation products",
+    "custom sublimated apparel",
+    "all-over print clothing",
+    "sublimation clothing",
+    "custom printed apparel",
+    "B2B apparel catalog",
+    "sublimated t-shirts",
+    "sublimated hoodies",
+    "sublimated jerseys",
+    "custom apparel by garment",
+    "sublimated sportswear",
+    "custom athletic apparel",
+    "sublimation print apparel",
+    "apparel by sport",
+    "sublimation product catalog",
+    "all custom apparel products",
+    "all sublimation products",
+    "all-over print products",
+    "all products catalog",
+    "complete apparel catalog",
+    "sublimation catalog",
+    "B2B apparel products",
+    "custom apparel products",
+    "factory product catalog",
+    "MOQ 50 products",
+    "DDP products catalog",
+    "cycling kits products",
+    "racing suit products",
+    "golf polo products",
+    "running shirts products",
+    "esports jerseys products",
+    "training apparel products",
+    "bowling jerseys products",
+    "racing jerseys products",
+    "team sports products",
+    "athletic apparel products",
+  ],
     // 2026-09-11 (Round 15 P0-3): was `alternates: { canonical: "./" }` — implicit
     // self-referential. Switching to an explicit absolute path "/products/all/" so
     // the preferred URL is unambiguous to crawlers, matching the canonical pattern
@@ -23,7 +69,7 @@ export const metadata = buildPageMetadata({
     // image. Social crawlers would render a broken share card. Pointing to
     // /og/og-products.webp (the products OG card).
     ogImage: "/og/og-products.webp",
-  });;
+  });
 
 // 2026-09-12 (R46): merge 3 separate JsonLd calls (array of 3 nodes
 // was producing 3 scripts) into a single @graph. Adds a new Service

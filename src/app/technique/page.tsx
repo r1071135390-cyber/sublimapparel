@@ -11,7 +11,41 @@ export const metadata = buildPageMetadata({
     // 2026-09-11 (R15-P0-1): was 77 chars and explicitly truncated. Rewrote to 58 chars.
     title: "Print Technique Comparison | 20 Methods for Custom Apparel",
     description: "Compare 20 apparel decoration techniques — sublimation, screen printing, DTG, DTF, embroidery, 3D puff & rhinestone. We run all 20 in-house and accept custom t…",
-    keywords: ["sublimation printing", "screen printing techniques", "DTG vs DTF", "custom embroidery", "all-over printing", "3D puff printing", "rhinestone apparel", "Chinese apparel factory"],
+    keywords: [
+    "sublimation printing",
+    "screen printing techniques",
+    "DTG vs DTF",
+    "custom embroidery",
+    "all-over printing",
+    "3D puff printing",
+    "rhinestone apparel",
+    "Chinese apparel factory",
+    "apparel decoration techniques",
+    "print method comparison",
+    "DTG vs sublimation",
+    "screen print vs DTG",
+    "DTF heat transfer",
+    "applique embroidery",
+    "discharge printing",
+    "UV printing apparel",
+    "direct to garment printing",
+    "sublimation vs screen printing",
+    "sublimation vs DTG",
+    "sublimation vs DTF",
+    "DTF vs DTG",
+    "apparel printing methods",
+    "custom apparel decoration",
+    "print technique comparison",
+    "apparel print techniques",
+    "sublimation printing techniques",
+    "DTG vs DTF comparison",
+    "custom embroidery techniques",
+    "all-over printing techniques",
+    "3D puff printing apparel",
+    "Chinese apparel factory techniques",
+    "DTG vs sublimation comparison",
+    "discharge printing apparel",
+  ],
     // 2026-09-11 (Round 15 P0-3): was `alternates: { canonical:"./" }` — implicit
     // self-referential. Switching to an explicit absolute path "/technique/" so
     // the preferred URL is unambiguous to crawlers, matching the canonical pattern
@@ -28,7 +62,7 @@ export const metadata = buildPageMetadata({
   // image. Social crawlers would render a broken share card. Defaulting
   // to /og-default.jpg for the techniques hub.
   ogImage: "/og-default.jpg",
-});;
+});
 
 // Speed up static generation by skipping unnecessary work
 export const revalidate = false;

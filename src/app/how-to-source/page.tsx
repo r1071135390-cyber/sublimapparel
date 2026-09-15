@@ -29,7 +29,35 @@ import { buildAboutSubPageGraph } from "@/lib/breadcrumb";
 export const metadata = buildPageMetadata({
     title: "How to Source Custom Apparel from China | 5-Step Process",
     description: "How to source custom apparel from China: 5-step process from inquiry to delivery. Learn about quoting, sample, production, QC, and shipping for event, corporat…",
-    keywords: ["how to source custom apparel", "import apparel from China", "China apparel sourcing guide", "custom clothing manufacturing process", "apparel sourcing step by step", "sublimation apparel sourcing"],
+    keywords: [
+    "how to source custom apparel",
+    "import apparel from China",
+    "China apparel sourcing guide",
+    "custom clothing manufacturing process",
+    "apparel sourcing step by step",
+    "sublimation apparel sourcing",
+    "B2B apparel sourcing",
+    "China clothing factory guide",
+    "apparel import guide",
+    "custom apparel manufacturer guide",
+    "sourcing from China checklist",
+    "apparel RFQ process",
+    "clothing sourcing workflow",
+    "China factory vetting",
+    "how to source from China",
+    "custom apparel sourcing",
+    "China clothing factory sourcing",
+    "how to import apparel",
+    "sourcing custom clothing",
+    "5-step apparel sourcing",
+    "apparel inquiry to delivery",
+    "apparel quoting process",
+    "apparel sampling process",
+    "apparel production process",
+    "apparel QC process",
+    "apparel shipping process",
+    "apparel sourcing for startups",
+  ],
     alternates: {
     canonical: "https://sublimapparel.com/how-to-source/",
   },
@@ -39,7 +67,7 @@ export const metadata = buildPageMetadata({
     // — a page URL, not an image. Social crawlers would render a broken
     // share card. Resource/guide pages fall back to /og-default.jpg.
     ogImage: "/og-default.jpg",
-  });;
+  });
 
 // 2026-09-11 push (Round 8 part 2): pulled up to a constant so the
 // inline FAQ section can map the same items into the body and we can

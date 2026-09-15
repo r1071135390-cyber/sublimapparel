@@ -8,10 +8,51 @@ import { JsonLd } from "@/components/json-ld";
 export const dynamic = "force-static";
 
 export const metadata: Metadata = buildPageMetadata({
+  keywords: [
+    "custom apparel tags",
+    "sublimated t-shirts by category",
+    "sports team apparel",
+    "race shirts sublimation",
+    "event merchandise",
+    "corporate apparel",
+    "hoodies sublimation",
+    "polo shirts custom",
+    "jerseys by sport",
+    "esports apparel",
+    "cycling jerseys",
+    "running shirts",
+    "golf polos custom",
+    "music festival merch",
+    "campaign apparel",
+    "sublimation tag archive",
+    "custom apparel tag archive",
+    "B2B apparel tag archive",
+    "apparel manufacturer tag",
+    "fabric tag archive",
+    "garment type tag archive",
+    "all-over print tag",
+    "sublimation technique tag",
+    "industry tag archive",
+    "apparel process tag",
+    "use case tag archive",
+    "buyer intent tag archive",
+    "apparel SEO tag archive",
+    "sublimation guide tag",
+    "custom apparel articles",
+    "MOQ articles tag",
+    "production articles tag",
+    "shipping articles tag",
+    "pricing articles tag",
+    "team apparel articles",
+    "event apparel articles",
+    "corporate apparel articles",
+    "fabric articles tag",
+    "private label articles",
+  ],
   alternates: { canonical: "/tag/" },
   title: "Browse Custom Apparel by Tag | SublimApparel",
   description:
-    "Browse our custom sublimation and all-over-print apparel by category, sport, and use case. T-shirts, hoodies, race jerseys, esports, team kits, and more.",
+    "Browse our custom sublimation and all-over-print apparel by category, sport, and use case. T-shirts, hoodies, race jerseys, esports, team kits, and more."
 
 });
 

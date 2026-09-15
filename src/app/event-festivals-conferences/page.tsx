@@ -40,7 +40,50 @@ export const metadata = buildPageMetadata({
     // conferences, festivals, and events". 57 chars.
     title: "Event Apparel Production Service | Festival & Conference",
     description: "Full-service event apparel production: design, sampling, bulk manufacture, deadline-locked delivery. Festival merchandise, conference shirts, volunteer apparel. DDP worldwide.",
-    keywords: ["event apparel production service", "event apparel manufacturer service", "festival shirt service", "conference shirt service", "event merchandise production"],
+    keywords: [
+    "event apparel production service",
+    "event apparel manufacturer service",
+    "festival shirt service",
+    "conference shirt service",
+    "event merchandise production",
+    "event apparel production",
+    "festival shirt manufacturer",
+    "conference apparel production",
+    "event t-shirts bulk",
+    "festival merchandise supplier",
+    "event staff apparel",
+    "conference swag production",
+    "trade show apparel",
+    "event giveaways bulk",
+    "concert shirt manufacturer",
+    "music festival apparel",
+    "event uniform service",
+    "volunteer shirts bulk",
+    "speaker shirts custom",
+    "event festivals conferences apparel",
+    "festival merchandise apparel",
+    "conference apparel",
+    "event merchandise manufacturer",
+    "festival clothing supplier",
+    "conference clothing supplier",
+    "B2B event apparel",
+    "festival staff apparel",
+    "conference staff apparel",
+    "event volunteer apparel",
+    "festival volunteer apparel",
+    "conference volunteer apparel",
+    "event team apparel",
+    "festival merchandise clothing",
+    "conference merchandise clothing",
+    "event branded apparel",
+    "festival branded apparel",
+    "conference branded apparel",
+    "event merch supplier",
+    "event merchandise factory",
+    "conference merchandise factory",
+    "festival merchandise factory",
+    "event custom apparel",
+  ],
     alternates: {
     canonical: "https://sublimapparel.com/event-festivals-conferences/",
   },
@@ -50,7 +93,7 @@ export const metadata = buildPageMetadata({
     // — a page URL, not an image. Social crawlers would render a broken
     // share card. Industry pages use /og/og-industry.webp.
     ogImage: "/og/og-industry.webp",
-  });;
+  });
 
 const eventTypes = [
   {

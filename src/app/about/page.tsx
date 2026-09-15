@@ -27,13 +27,46 @@ export const metadata = buildPageMetadata({
     // pages per Google's Quality Rater Guidelines) and ends
     // with the human proof — average account-manager tenure.
     description: "SublimApparel is a Yiwu sublimation factory founded in 2018 by Ramon Hsu. 8 years, 6000+ designs, 3 languages, US warehouse in Fontana CA, 12 production lines.",
-    keywords: ["about SublimApparel", "Yiwu sublimation factory", "custom apparel manufacturer", "8 years experience", "50+ countries served", "US warehouse Fontana", "B2B manufacturer", "6000+ designs", "in-house design team", "OEM apparel"],
+    keywords: [
+    "about SublimApparel",
+    "Yiwu sublimation factory",
+    "custom apparel manufacturer",
+    "8 years experience",
+    "50+ countries served",
+    "US warehouse Fontana",
+    "B2B manufacturer",
+    "6000+ designs",
+    "in-house design team",
+    "OEM apparel",
+    "SublimApparel about",
+    "Yiwu factory founded 2018",
+    "Ramon Wang SublimApparel",
+    "12 production lines factory",
+    "8 years custom apparel experience",
+    "6000+ designs produced",
+    "B2B apparel manufacturer",
+    "OEM apparel factory",
+    "ODM apparel manufacturer",
+    "US warehouse Fontana CA",
+    "Rotterdam EU representative",
+    "100+ countries served",
+    "AQL 2.5 quality standard",
+    "99.2% first pass quality",
+    "4-stage quality control",
+    "apparel manufacturing since 2018",
+    "founder-led apparel company",
+    "long-term apparel partner",
+    "established Yiwu factory",
+    "trusted apparel supplier",
+    "certified apparel factory",
+    "B2B factory direct",
+  ],
     other: {
     "article:author": "Ramon Wang, Sales Director, SublimApparel",
     "article:published_time": "2018-01-01T00:00:00.000Z",
     "article:modified_time": "2025-08-18T00:00:00.000Z",
   },
-  });;
+  });
 
 const capabilities = [
   { title:"Sublimation & DTG printing", desc:"Large-format printers, full CMYK color, polyester and 100% cotton." },

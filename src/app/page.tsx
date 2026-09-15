@@ -33,12 +33,38 @@ export const metadata = buildPageMetadata({
     // production lines since 2018). The factory-founding year is
     // a strong E-E-A-T signal Google weights on service pages.
     description: "Yiwu sublimation factory — all-over print, MOQ 50, DDP to 100+ countries. Polyester + allover cotton, US warehouse in Fontana CA, 12 lines since 2018.",
-    other: {
+keywords: [
+        "custom sublimation apparel factory",
+        "all-over print manufacturer",
+        "China sublimation factory",
+        "Yiwu apparel manufacturer",
+        "MOQ 50 sublimation",
+        "DDP shipping apparel",
+        "custom team uniforms",
+        "event merchandise manufacturer",
+        "private label sportswear",
+        "B2B apparel supplier",
+        "sublimated t-shirts",
+        "sublimated jerseys",
+        "sublimated hoodies",
+        "cycling kits custom",
+        "racing suits custom",
+        "golf polos custom",
+        "corporate apparel",
+        "promotional apparel",
+        "school spirit wear",
+        "team uniforms",
+        "custom sportswear",
+        "custom athletic apparel",
+        "bulk apparel manufacturer",
+        "custom uniform factory",
+  ],
+      other: {
     "article:author": "Ramon Wang, Sales Director, SublimApparel",
     "article:published_time": "2024-01-01T00:00:00.000Z",
     "article:modified_time": "2025-08-18T00:00:00.000Z",
   },
-  });;
+  });
 
 // Home page structured data — single @graph wrapper.
 // Previously rendered as 2 separate <script> tags (WebPage + FAQPage).
