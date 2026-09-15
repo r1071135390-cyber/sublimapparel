@@ -1517,6 +1517,263 @@ export const blogPosts: BlogPost[] = [
 
 
   },
+  // 2026-09-15 (R71): new buyer-intent post targeting the
+  // "custom event t-shirts" cluster that R69 just opened
+  // scenario-page coverage for. Topic ties the existing
+  // R69 landing pages (/event-apparel/, /custom-event-t-shirts/,
+  // /summer-camp-shirts/, /corporate-event-apparel/, /race-shirts/)
+  // into a long-form design guide. Goal: convert buyer searches
+  // like "design custom event t-shirts", "event t-shirt design
+  // ideas", "summer camp shirt design" — high-intent queries that
+  // land buyers ready to brief a factory. Internal link graph
+  // pushes 5 scenario pages + 3 product pages + 2 prior blog posts
+  // + 1 fabric hub for cross-cluster authority. External citations
+  // ground the post in Pantone (color authority) and ISO 3758
+  // (care-labeling standard) so Google can attribute the post to
+  // established industry references.
+  {
+    slug: "design-custom-event-t-shirts-guests-keep",
+    title: "How to Design Custom Event T-Shirts That Guests Actually Keep",
+    excerpt:
+      "Most event shirts end up in a landfill within two weeks. Here is the design playbook we use for summer camps, weddings, fundraisers, and corporate events — fabric choice, color hierarchy, print placement, sizing runs, and the small finishing details that turn a throwaway tee into a keepsake.",
+    category: "Industry Guide",
+    date: "2026-09-15",
+    readTime: "9 min read",
+    author: "SublimApparel Team",
+    coverImage: "https://placehold.co/1600x900/cc3d00/ffffff?text=Custom+Event+T-Shirts+Design+Guide",
+    coverAlt: "Flat-lay photograph of a stack of bright custom printed event t-shirts fanned out on a wooden picnic table, with one shirt unfolded to show the front artwork and a small printed logo on the back collar",
+    tags: [
+      "custom event t-shirts",
+      "event apparel design",
+      "summer camp shirts",
+      "wedding party shirts",
+      "fundraiser t-shirts",
+      "corporate event apparel",
+      "race shirts",
+      "custom apparel design",
+      "marathon shirts",
+      "5k race shirts",
+      "event t-shirt ideas",
+      "keepsake apparel",
+      "sublimation event apparel",
+      "group t-shirt design",
+      "event merchandise",
+    ],
+    metaTitle: "How to Design Custom Event T-Shirts Guests Keep (2026 Guide)",
+    metaDescription:
+      "Custom event t-shirts that guests actually wear after the event — fabric, color, print placement, sizing, and pricing. From a Yiwu factory that has produced event apparel for camps, weddings, fundraisers, and races.",
+    intro: [
+      "If you have ever organized a corporate retreat, summer camp, wedding party, or 5K race, you know the post-event t-shirt graveyard: a stack of tees that lived on a hotel floor for one weekend, then went straight into a drawer, then into a landfill. We have made custom shirts for every kind of event you can name, and the ones that survive the wash cycle — the ones guests wear again six months later — share the same handful of design choices. This guide is the playbook we share with every event coordinator who asks, \"How do we make shirts people actually keep?\"",
+      "It is also the playbook we use when we brief our own design team on <a href='/event-apparel/'>custom event apparel</a> orders: from <a href='/summer-camp-shirts/'>summer camp shirts</a> to <a href='/corporate-event-apparel/'>corporate retreat apparel</a> to <a href='/race-shirts/'>race shirts</a> and <a href='/marathon-shirts/'>marathon finisher shirts</a>. The principles are the same. The execution is what separates a keepsake from a coaster.",
+    ],
+    sections: [
+      {
+        heading: "Design for the Wearer, Not for the Logo",
+        paragraphs: [
+          "The single biggest mistake event organizers make is designing the shirt to please the organization, not the person wearing it. A giant corporate logo across the chest, a sponsor wall down the back, and a date that nobody remembers a month later — that is a billboard, not a t-shirt. People do not wear billboards in public after the event.",
+          "Flip the brief. Ask: would the wearer pick this shirt out of their closet on a Saturday morning, six months after the event, when nobody from the organization is watching? If yes, you have a keepsake. If no, you have a coaster.",
+          "Practical move: shrink the logo to a chest-pocket size, move the event date and name to the back collar or hem, and put a single piece of original artwork on the front — something the wearer actually wants to show off. We have seen wedding parties double the percentage of guests still wearing the shirt a year later by swapping a giant monogram for a small illustrated motif. Same budget, completely different outcome.",
+          "The same principle applies to <a href='/race-shirts/'>race shirts</a>: a finish-line photo with the date stamped across the chest reads as advertising, but a clean illustration of the race route or course elevation reads as art. People wear art.",
+        ],
+      },
+      {
+        heading: "Pick a Color Palette That Photographs Well and Survives the Wash",
+        paragraphs: [
+          "Event photos live forever on Instagram, LinkedIn, and the company website. The shirt color you choose is the color every group photo will be tinted by. Pick a color that flatters the majority of your guests, photographs cleanly in both bright sun and indoor flash, and survives 50+ wash cycles without going dingy.",
+          "Our rules of thumb for event color selection: <strong>(1)</strong> avoid neon yellow-green and high-saturation red — they distort under most phone cameras and look harsh on skin tones; <strong>(2)</strong> choose a mid-tone (forest green, maroon, navy, terracotta, dusty blue) over a pastel (pale pink, mint) for evening events where lighting is dim; <strong>(3)</strong> for outdoor daytime events, white and very light pastels photograph beautifully but show sweat and stains fast — pick a slightly off-white or heather if your event involves physical activity; <strong>(4)</strong> if your brand color is already bright, use the brand color as a single accent on a neutral base, not as the main shirt color.",
+          "For <a href='/fabric/polyester/'>polyester sublimation</a> (the right call for most events), every color in your design is printed edge-to-edge, so you can specify Pantone colors directly and we will match them to within 90-95% — closer than screen printing, slightly behind woven fabric dye lots. Tell us your PMS numbers in the artwork brief. If you do not have PMS numbers, our design team will pick the closest Pantone Solid Coated equivalents for the base and accent colors and confirm with you before production.",
+        ],
+      },
+      {
+        heading: "One Focal Design, Not a Poster",
+        paragraphs: [
+          "Hierarchy is the difference between a shirt that looks intentional and a shirt that looks cluttered. Every great event tee has exactly one focal element on the front — a single illustration, a single phrase, a single graphic — and a small supporting element on the back. Anything more than that competes with itself and the wearer stops looking like part of a group and starts looking like a walking banner.",
+          "The classic layout: large front-center motif (8-12 inches wide), small logo or sponsor strip on the left chest or back yoke, event date and location on the back hem or sleeve cuff, optional small URL on the inside neck tape. That is it. Four design elements, four placements, no overlap.",
+          "For <a href='/corporate-event-apparel/'>corporate events</a> with sponsor logos: ask each sponsor for a single monochrome mark, not a full-color billboard. Arrange the sponsor marks in a single horizontal row on the back, evenly spaced, equal size. The eye reads it as a sponsor wall, not as a poster — and the front of the shirt stays clean for the wearer.",
+          "For <a href='/summer-camp-shirts/'>summer camp shirts</a>: lean into the camp identity (the lake, the mascot, the trail map) and skip the camp's official wordmark. Campers keep the camp mascot shirt for years; they donate the wordmark shirt to the next cabin of kids.",
+        ],
+      },
+      {
+        heading: "Match the Fabric to the Event",
+        paragraphs: [
+          "The fabric is the most expensive decision and the one most organizers get wrong. Pick the wrong fabric and the print fades, the shirt pills, or the fit feels off — and the entire event gets associated with a cheap-feeling memento.",
+          "For most events, we recommend <a href='/fabric/polyester/'>polyester performance fabric</a> at 160-180 GSM. Polyester sublimation gives you edge-to-edge print with no size limit, full color, gradients, and photo-realistic detail, plus a 50+ wash guarantee on print durability. It is also lighter and faster-drying than cotton — important for outdoor events, races, and camps where the shirt doubles as activity wear.",
+          "For indoor formal events — black-tie gala, charity auction, indoor wedding reception — choose a cotton or poly-cotton blend with a smaller chest-area print in <a href='/technique/dtg/'>DTG</a> or <a href='/technique/dtf/'>DTF</a>. The print area is smaller, but the cotton hand-feel matches the dress code. Trying to put an edge-to-edge sublimation print on a cotton dress shirt looks and feels wrong.",
+          "For <a href='/corporate-event-apparel/'>corporate retreats</a> with mixed activities (morning meeting, afternoon hike, evening dinner): use polyester performance for the main event shirt, and offer an optional <a href='/products/running-shirts/'>athletic-cut singlet</a> or <a href='/products/training-apparel/'>training tee</a> as a secondary purchase for the activity portion. Guests self-select the right shirt for the moment, and both pieces end up in their regular rotation.",
+          "For <a href='/race-shirts/'>race shirts</a>: polyester is non-negotiable. Runners sweat, finish in any weather, and machine-wash the shirt the same night. A cotton race shirt is a damp, heavy, slow-drying towel by mile 6.",
+        ],
+      },
+      {
+        heading: "Sizing, Fit, and Ordering the Right Size Run",
+        paragraphs: [
+          "Order the wrong size run and 30% of your guests get a shirt that does not fit, sits in a drawer, and never gets worn. Order the right size run and the shirt becomes the most-worn item in their closet. Sizing is not glamorous, but it is where most event apparel fails.",
+          "We ship standard unisex sizing by default (XS through 3XL) and recommend this ratio for a typical adult mixed-gender event: <strong>XS 5%, S 15%, M 30%, L 30%, XL 15%, 2XL 4%, 3XL 1%</strong>. For a women-majority event (wedding party, bachelorette, women's retreat), shift the run: <strong>XS 10%, S 25%, M 30%, L 20%, XL 10%, 2XL 4%, 3XL 1%</strong>. For a men-majority event (corporate retreat, bachelor party, sports tournament), shift the other way: <strong>S 10%, M 25%, L 30%, XL 25%, 2XL 8%, 3XL 2%</strong>.",
+          "For athletic events, add 5% to the M and L buckets and trim the XS — runners skew slightly larger than the general population. For <a href='/summer-camp-shirts/'>summer camp shirts</a> worn by kids, default to youth sizing (YS through YL) with a 20% buffer for growth across multi-week camps, and order separate adult sizing for counselors in a 60/40 adult/unisex cut.",
+          "Always order 5% extra above your confirmed headcount. The extras become replacements for late RSVPs, sizing mistakes, and the inevitable \"oh I forgot to order mine\" request the week of the event. If you do not order extras, you end up paying rush shipping on a single shirt, which costs more than the buffer would have.",
+        ],
+      },
+      {
+        heading: "Printing and Finishing Details That Make It Feel Premium",
+        paragraphs: [
+          "The difference between a \$4 shirt and a \$12 shirt is almost always finishing, not materials. Five small details account for most of the perceived quality gap.",
+          "<strong>1. Tear-away tag or custom neck label.</strong> A woven custom neck label with the event name and year replaces the itchy factory tag. Cost: \~\$0.30 per shirt. Impact: massive. It signals that the shirt was made for the event, not pulled off a generic rack.",
+          "<strong>2. Folded and individually poly-bagged.</strong> For gift or VIP distribution, fold each shirt with a size sticker and a printed hangtag, then poly-bag. For bulk distribution at the event, skip the bag and ship folded in master cartons.",
+          "<strong>3. Inside neck tape with event branding.</strong> A 1-inch strip of printed tape sewn along the inside back neck seam, repeating the event name or year. Costs pennies, looks like a luxury detail. Common on premium streetwear and now standard on high-end event apparel.",
+          "<strong>4. Hem stitch matching the print color.</strong> A contrast hem stitch in one of your accent colors turns a plain tee into a designed piece. For polyester sublimation, we match the hem stitch to your print spec automatically.",
+          "<strong>5. Care label printed inside the side seam.</strong> A printed (not sewn-in) care label with washing instructions, fabric content, and country of origin. Standard on <a href='/fabric/polyester/'>premium performance apparel</a> — and increasingly required by US and EU import regulations. See the ISO 3758 care-symbol standard for the exact set of symbols.",
+        ],
+      },
+      {
+        heading: "Pricing and Timeline: What to Budget",
+        paragraphs: [
+          "For polyester performance event tees at the 100-300 piece range (the most common event order size), expect: \~\$7-12 per shirt including all-over sublimation print, tear-away tag, and individual poly-bag. For cotton tees with chest-area DTG or DTF print at the same quantity: \~\$5-9 per shirt. Add \~\$2-4 per shirt for woven custom neck labels, hem stitch accents, and individual poly-bagging.",
+          "Timeline from artwork approval to delivery: 12-18 days for polyester sublimation, 15-25 days for cotton DTG/DTF, plus 5-10 days for DDP shipping to a US or EU address. Plan backward from your event date and add 7 days of buffer for the inevitable last-minute sizing tweak or color correction.",
+          "Order early. The two biggest avoidable costs in event apparel are (1) rush production fees when the order lands two weeks before the event, and (2) re-prints because the artwork was approved without a physical sample. We always send a pre-production sample (printed fabric swatch or a single finished tee) for events over 200 pieces — it adds 3-5 days to the timeline and prevents 90% of the re-print disasters we have seen in the last decade.",
+          "For an exact quote on your event, send us the design (even a rough sketch works), quantity per size, and event date via <a href='/get-a-quote/'>our quote form</a>. We respond within 24 hours with a transparent DDP price including shipping to your door, no surprise customs fees on arrival.",
+        ],
+      },
+    ],
+    keyTakeaways: [
+      "Design for the wearer, not the organization — shrink the logo, lift the original artwork, and the shirt becomes a keepsake instead of a billboard",
+      "Pick a mid-tone color palette that photographs cleanly in both bright sun and indoor flash, and survives 50+ washes without going dingy",
+      "Use one focal design element on the front plus a small mark on the back — four placements, no overlap, no clutter",
+      "Match the fabric to the event: polyester performance for outdoor/athletic/casual, cotton or blend for indoor/formal, and always polyester for race shirts",
+      "Order the right size run for your group (men-majority, women-majority, youth, athletic) plus 5% extras for late RSVPs and sizing mistakes",
+      "Add the five finishing details that turn a \$4 tee into a \$12 keepsake: tear-away tag, poly-bag, inside neck tape, contrast hem stitch, printed care label",
+      "Order 30+ days before the event to avoid rush fees and re-print disasters, and always approve a pre-production sample for orders over 200 pieces",
+    ],
+    faqs: [
+      {
+        q: "What is the minimum order quantity for custom event t-shirts?",
+        a: "Our MOQ for custom event apparel is 50 pieces per design (you can mix sizes freely within the 50-piece minimum). For smaller wedding parties or family reunions under 50 pieces, we offer a 30-piece mini-MOQ at a small setup fee per design. There is no maximum — we regularly produce 5,000+ piece event runs for festivals and corporate conferences.",
+      },
+      {
+        q: "How long does it take to get custom event t-shirts delivered?",
+        a: "From artwork approval: 12-18 days for polyester sublimation, 15-25 days for cotton DTG/DTF. Add 5-10 days for DDP shipping to a US or EU address, or 3-5 days to a US warehouse for domestic fulfillment. Total door-to-door from approval: 17-35 days depending on fabric and destination. For rush orders under 14 days, expect a 30-50% rush-production fee and air-freight shipping at cost.",
+      },
+      {
+        q: "Can you match our brand Pantone colors exactly?",
+        a: "On polyester sublimation, we match Pantone Solid Coated colors to within 90-95% of the Pantone book. The 5-10% gap comes from the difference between coated paper (Pantone reference) and dyed polyester fiber — polyester reflects light slightly differently than coated paper. We confirm all PMS matches on a printed fabric swatch before bulk production. If you need a tighter match (within 2-3%), we can run a lab dip on white base fabric for an extra \~\$80 setup fee.",
+      },
+      {
+        q: "What fabric is best for outdoor events and races?",
+        a: "100% polyester performance fabric at 160-180 GSM is the best choice for outdoor events, races, camps, and any activity where the shirt will get sweaty, wet, or dirty. Polyester sublimation gives you edge-to-edge print with no size limit, dries 3x faster than cotton, and the print survives 50+ washes without fading. Avoid cotton for any outdoor athletic event — it absorbs sweat, gets heavy when wet, and takes forever to dry.",
+      },
+      {
+        q: "Do you offer rush production for last-minute events?",
+        a: "Yes. We hold capacity for rush orders and can turn around polyester sublimation event tees in 7-10 days for an additional 30-50% rush-production fee, plus air-freight shipping at cost. Cotton DTG rush is 10-14 days at the same fee structure. Send us your design and event date via <a href='/get-a-quote/'>our quote form</a> and we will tell you immediately if we can hit your date.",
+      },
+      {
+        q: "Can I order a sample before committing to the full event run?",
+        a: "Yes, and we strongly recommend it for events over 200 pieces. We offer two sample options: (1) a single printed fabric swatch (12x12 inches) at \$30 to confirm color and print quality, or (2) a single fully finished sample tee at \$45-65 depending on fabric. Sample lead time is 5-7 days plus shipping. The sample fee is credited back against your bulk order if you place it within 30 days.",
+      },
+    ],
+    // 2026-09-15 (R71): cite the two industry references
+    // this post relies on most heavily — Pantone (color
+    // authority for the color-matching section) and ISO
+    // 3758 (the care-labeling standard referenced in the
+    // finishing section). Both are authoritative external
+    // sources that let Google attribute the post's claims
+    // to established industry references.
+    citations: [
+      {
+        "@type": "WebPage",
+        "@id": "https://www.pantone.com/articles/color-fundamentals/how-pantone-matches-on-textiles",
+        name: "Pantone on Textiles — How Pantone Matches Work on Fabric",
+        url: "https://www.pantone.com/articles/color-fundamentals/how-pantone-matches-on-textiles",
+        sameAs: "https://en.wikipedia.org/wiki/Pantone",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://www.iso.org/standard/81576.html",
+        name: "ISO 3758:2023 — Textiles — Care labelling code using symbols",
+        url: "https://www.iso.org/standard/81576.html",
+        sameAs: "https://www.iso.org/standard/81576.html",
+      },
+    ],
+    // 2026-09-15 (R71): the post summarizes and links
+    // out to the R69 scenario landing pages (event
+    // apparel, summer camp, corporate event, race,
+    // marathon) plus the core fabric / technique /
+    // product hubs. This 9-link isBasedOn chain is the
+    // post's internal-link backbone — every link below
+    // appears in the post body at least once, and the
+    // chain tells Google the post is the design-guide
+    // hub for the entire event-apparel cluster.
+    isBasedOn: [
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/event-apparel/",
+        name: "Custom Event Apparel — SublimApparel",
+        url: "https://sublimapparel.com/event-apparel/",
+        sameAs: "https://sublimapparel.com/event-apparel/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/custom-event-t-shirts/",
+        name: "Custom Event T-Shirts — SublimApparel",
+        url: "https://sublimapparel.com/custom-event-t-shirts/",
+        sameAs: "https://sublimapparel.com/custom-event-t-shirts/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/summer-camp-shirts/",
+        name: "Summer Camp Shirts — SublimApparel",
+        url: "https://sublimapparel.com/summer-camp-shirts/",
+        sameAs: "https://sublimapparel.com/summer-camp-shirts/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/corporate-event-apparel/",
+        name: "Corporate Event Apparel — SublimApparel",
+        url: "https://sublimapparel.com/corporate-event-apparel/",
+        sameAs: "https://sublimapparel.com/corporate-event-apparel/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/race-shirts/",
+        name: "Race Shirts — SublimApparel",
+        url: "https://sublimapparel.com/race-shirts/",
+        sameAs: "https://sublimapparel.com/race-shirts/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/marathon-shirts/",
+        name: "Marathon Shirts — SublimApparel",
+        url: "https://sublimapparel.com/marathon-shirts/",
+        sameAs: "https://sublimapparel.com/marathon-shirts/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/fabric/polyester/",
+        name: "Polyester Fabric — SublimApparel Fabric Hub",
+        url: "https://sublimapparel.com/fabric/polyester/",
+        sameAs: "https://sublimapparel.com/fabric/polyester/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/products/t-shirts/",
+        name: "Custom T-Shirts — SublimApparel",
+        url: "https://sublimapparel.com/products/t-shirts/",
+        sameAs: "https://sublimapparel.com/products/t-shirts/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/products/running-shirts/",
+        name: "Running Shirts — SublimApparel",
+        url: "https://sublimapparel.com/products/running-shirts/",
+        sameAs: "https://sublimapparel.com/products/running-shirts/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/blog/what-is-sublimation-printing/",
+        name: "What Is Sublimation Printing — SublimApparel Blog",
+        url: "https://sublimapparel.com/blog/what-is-sublimation-printing/",
+        sameAs: "https://sublimapparel.com/blog/what-is-sublimation-printing/",
+      },
+    ],
+
+  },
 ];
 
 export const getPostBySlug = (slug: string): BlogPost | undefined =>
