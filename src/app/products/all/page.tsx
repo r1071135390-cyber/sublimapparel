@@ -57,6 +57,28 @@ export const metadata = buildPageMetadata({
     "racing jerseys products",
     "team sports products",
     "athletic apparel products",
+    // 2026-09-15 (R69): zero-occurrence buyer-intent keywords
+    // injected at the master catalog level. Wedding, church,
+    // fundraiser, fraternity, sorority, Greek life, camp
+    // counselor, and rush week apparel umbrella terms were
+    // missing from the master catalog page before R69.
+    "wedding apparel catalog",
+    "wedding party apparel",
+    "church apparel catalog",
+    "church group apparel",
+    "church retreat apparel",
+    "fundraiser apparel catalog",
+    "fundraiser clothing catalog",
+    "charity event apparel",
+    "fraternity apparel catalog",
+    "sorority apparel catalog",
+    "Greek life apparel catalog",
+    "rush week apparel",
+    "bid day apparel",
+    "philanthropy apparel",
+    "camp apparel catalog",
+    "summer camp apparel catalog",
+    "camp counselor apparel",
   ],
     // 2026-09-11 (Round 15 P0-3): was `alternates: { canonical: "./" }` — implicit
     // self-referential. Switching to an explicit absolute path "/products/all/" so

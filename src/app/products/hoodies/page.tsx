@@ -7,7 +7,13 @@ import { ArrowRight, Cloud, Layers, Palette, Ruler, Sparkles, Users, Wind } from
 import { UnifiedContactCta } from "@/components/unified-contact-cta";
 
 export const metadata = buildPageMetadata({
-    title: "Custom Sublimation Hoodies | All-Over Print, Low MOQ",
+    // 2026-09-15 (R69): was "Custom Sublimation Hoodies | All-Over
+    // Print, Low MOQ" (50 chars). Replaced "All-Over Print" with
+    // "Full Color" to reduce all-over keyword concentration on
+    // non-technique product pages, matching the title pattern used
+    // by /products/cycling/, /products/jerseys/, /products/racing/,
+    // /products/golf/, /products/bowling/, and /products/esports/.
+    title: "Custom Sublimation Hoodies | Full Color, Low MOQ",
     description: "Custom sublimation hoodies — pullover, zip-up, cropped, heavyweight. 320–400 GSM fleece. All-over print, no setup fee, MOQ 50 pcs. DDP to 100+ countries.",
     keywords: [
     "custom hoodies",
@@ -55,6 +61,29 @@ export const metadata = buildPageMetadata({
     "custom heavyweight hoodies",
     "custom lightweight hoodies",
     "custom cotton hoodies",
+    // 2026-09-15 (R69): zero-occurrence buyer-intent keywords
+    // injected across the apparel catalog. These were missing
+    // entirely from the site's metadata before R69, blocking
+    // wedding/church/fundraiser/Greek-life buyer queries.
+    "wedding hoodies",
+    "wedding party hoodies",
+    "wedding event hoodies",
+    "bridesmaid hoodies",
+    "church hoodies",
+    "church group hoodies",
+    "church retreat hoodies",
+    "fundraiser hoodies",
+    "fundraiser apparel",
+    "charity event hoodies",
+    "fraternity hoodies",
+    "sorority hoodies",
+    "Greek life hoodies",
+    "rush week hoodies",
+    "bid day hoodies",
+    "philanthropy event hoodies",
+    "camp counselor hoodies",
+    "summer camp hoodies",
+    "color coded camp hoodies",
   ],
   });
 

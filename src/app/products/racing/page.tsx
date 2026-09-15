@@ -58,6 +58,22 @@ export const metadata = buildPageMetadata({
     "racing merchandise",
     "racing MOQ jerseys",
     "racing B2B jerseys",
+    // 2026-09-15 (R69): zero-occurrence buyer-intent keywords
+    // injected. Wedding racing apparel, church car-club racing
+    // shirts, fundraiser motorsport jerseys, fraternity racing
+    // teams, and Greek life racing apparel were missing entirely.
+    "wedding racing shirts",
+    "wedding getaway car shirts",
+    "church racing shirts",
+    "church car club racing",
+    "fundraiser racing shirts",
+    "charity motorsport jerseys",
+    "fraternity racing shirts",
+    "sorority racing shirts",
+    "Greek life racing apparel",
+    "rush week racing jerseys",
+    "camp counselor racing shirts",
+    "summer camp racing shirts",
   ],
   });
 

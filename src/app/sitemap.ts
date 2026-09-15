@@ -215,6 +215,24 @@ const ROUTES: SitemapRoute[] = [
   { path: "/apparel-brands-agencies", priority: 0.95, changeFrequency: "monthly" },
   { path: "/e-commerce-fulfillment", priority: 0.95, changeFrequency: "monthly" },
 
+  // ── L3  Scenario / use-case pages (7) — R69 buyer-intent SEO ──────
+  // 2026-09-15 (R69): these 7 use-case pages were created to fill the
+  // "buyer-intent long-tail" gap surfaced by the GSC audit (wedding /
+  // church / fundraiser / fraternity / sorority / camp / marathon were all
+  // at zero coverage across the site). Each targets a high-conversion
+  // search query cluster that's distinct from the broad 6 L2 solutions
+  // above and the 12 L2 industries below. Added at 0.95 priority (matching
+  // the L2 solutions) so Google treats them as primary conversion surfaces.
+  // lastModified pinned to TODAY so Googlebot re-crawls the URLs on next
+  // pass and picks up the new indexable content.
+  { path: "/event-apparel", priority: 0.95, changeFrequency: "monthly", lastModified: TODAY },
+  { path: "/custom-event-t-shirts", priority: 0.95, changeFrequency: "monthly", lastModified: TODAY },
+  { path: "/summer-camp-shirts", priority: 0.95, changeFrequency: "monthly", lastModified: TODAY },
+  { path: "/corporate-event-apparel", priority: 0.95, changeFrequency: "monthly", lastModified: TODAY },
+  { path: "/race-shirts", priority: 0.95, changeFrequency: "monthly", lastModified: TODAY },
+  { path: "/marathon-shirts", priority: 0.95, changeFrequency: "monthly", lastModified: TODAY },
+  { path: "/private-label-sportswear", priority: 0.95, changeFrequency: "monthly", lastModified: TODAY },
+
   // ── L2  Industry profile pages (12) — Phase 1 SEO focus ────────
   // 2026-09-11 (Round 14): was "weekly" — industry profile pages are stable.
   { path: "/industries/sports-teams-leagues", priority: 0.9, changeFrequency: "monthly" },

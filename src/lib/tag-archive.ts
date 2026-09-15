@@ -100,6 +100,31 @@ function seoForScenario(label: string): TagSEO {
       `promotional ${label} clothing`,
       `private label ${label} apparel`,
       `DDP shipping ${label} merch`,
+      // 2026-09-15 (R69): zero-occurrence buyer-intent umbrella
+      // terms appended to every scenario tag archive page. These
+      // were missing entirely from scenario tag pages before R69.
+      // Generic enough to be relevant to every scenario but
+      // narrow enough to surface in long-tail queries Google was
+      // sending to competitor sites (wedding merch, church
+      // apparel, fraternity / sorority uniforms, summer camp
+      // shirts, marathon finisher merch, etc.).
+      `wedding apparel`,
+      `wedding party apparel`,
+      `church apparel`,
+      `church group apparel`,
+      `fundraiser apparel`,
+      `fundraiser event apparel`,
+      `fraternity apparel`,
+      `sorority apparel`,
+      `Greek life apparel`,
+      `rush week apparel`,
+      `bid day apparel`,
+      `philanthropy apparel`,
+      `camp apparel`,
+      `summer camp apparel`,
+      `camp counselor apparel`,
+      `marathon apparel`,
+      `race day apparel`,
     ],
   };
 }

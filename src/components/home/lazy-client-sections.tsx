@@ -45,6 +45,15 @@ const Industries = dynamic(
   () => import("@/components/industries").then((m) => m.Industries),
   { loading: () => <SectionSkeleton aspect="wide" /> },
 );
+// 2026-09-15 (R69): "By Use Case" homepage section, dynamically
+// imported so the 7 new scenario pages get a dedicated above-fold
+// entry point on the home page without bloating the initial JS
+// bundle. Sits between Industries and HomeExtras for natural
+// narrative flow (broad verticals → narrow use-cases → extras).
+const UseCases = dynamic(
+  () => import("@/components/use-cases").then((m) => m.UseCases),
+  { loading: () => <SectionSkeleton aspect="wide" /> },
+);
 const HomeExtras = dynamic(
   () => import("@/components/home-extras").then((m) => m.HomeExtras),
   { loading: () => <SectionSkeleton aspect="narrow" /> },
@@ -77,6 +86,7 @@ export function LazyClientSections() {
       <RecentCaseStudies />
       <LogoWall />
       <Industries />
+      <UseCases />
       <HomeExtras />
       <Contact />
       <Newsletter />

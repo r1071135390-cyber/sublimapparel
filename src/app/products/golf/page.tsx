@@ -57,6 +57,25 @@ export const metadata = buildPageMetadata({
     "golf charity apparel",
     "golf outing apparel",
     "MOQ golf polos",
+    // 2026-09-15 (R69): zero-occurrence buyer-intent keywords
+    // injected. Wedding, church, fundraiser, fraternity, sorority,
+    // and Greek life golf polos were missing from the site's
+    // metadata before R69.
+    "wedding party golf polos",
+    "wedding golf polos",
+    "church golf polos",
+    "church golf outing apparel",
+    "church retreat golf shirts",
+    "fundraiser golf polos",
+    "fundraiser golf tournament apparel",
+    "charity golf polos",
+    "fraternity golf polos",
+    "sorority golf polos",
+    "Greek life golf apparel",
+    "rush week golf polos",
+    "bid day golf polos",
+    "philanthropy golf polos",
+    "camp counselor golf polos",
   ],
   });
 

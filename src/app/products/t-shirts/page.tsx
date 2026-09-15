@@ -17,7 +17,15 @@ import {
 } from "lucide-react";
 
 export const metadata = buildPageMetadata({
-    title: "Custom Sublimation T-Shirts | All-Over Print, Low MOQ",
+    // 2026-09-15 (R69): was "Custom Sublimation T-Shirts | All-Over Print,
+    // Low MOQ" (50 chars). Replaced "All-Over Print" with "Full Color"
+    // to reduce all-over concentration on non-technique product pages
+    // and to match the title pattern already used by /products/cycling/,
+    // /products/racing/, /products/golf/, /products/bowling/,
+    // /products/esports/, and /products/jerseys/ — which all use
+    // "Sublimation" / "Full Color" instead of "All-Over Print" in the
+    // title. Keeps MOQ 50 trust signal under 60-char Google SERP limit.
+    title: "Custom Sublimation T-Shirts | Full Color, Low MOQ",
     description: "Custom sublimation t-shirts — all-over print, no setup fee, MOQ 50 pcs. Polyester and 100% cotton. Men",
     keywords: [
     "custom t shirts manufacturer",
@@ -70,6 +78,33 @@ export const metadata = buildPageMetadata({
     "custom lightweight t-shirts",
     "custom blended t-shirts",
     "custom long sleeve t-shirts",
+    // 2026-09-15 (R69): zero-occurrence buyer-intent keywords
+    // injected. Wedding party, bridesmaid, church group, church
+    // retreat, fundraiser event, fraternity, sorority, Greek
+    // life, rush week, bid day, philanthropy, camp counselor,
+    // and summer camp t-shirts were missing from the site's
+    // metadata before R69.
+    "wedding party t-shirts",
+    "wedding event t-shirts",
+    "wedding rehearsal dinner shirts",
+    "bridesmaid t-shirts",
+    "bridesmaid getting ready shirts",
+    "church t-shirts",
+    "church group t-shirts",
+    "church retreat t-shirts",
+    "church youth group t-shirts",
+    "fundraiser t-shirts",
+    "fundraiser event t-shirts",
+    "charity event t-shirts",
+    "fraternity t-shirts",
+    "sorority t-shirts",
+    "Greek life t-shirts",
+    "rush week t-shirts",
+    "bid day t-shirts",
+    "philanthropy event t-shirts",
+    "camp counselor t-shirts",
+    "summer camp t-shirts",
+    "color coded camp t-shirts",
   ],
   });
 

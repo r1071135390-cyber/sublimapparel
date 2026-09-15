@@ -56,6 +56,24 @@ export const metadata = buildPageMetadata({
     "cycling club apparel",
     "cycling team kits",
     "MOQ cycling jerseys",
+    // 2026-09-15 (R69): zero-occurrence buyer-intent keywords
+    // injected across the apparel catalog. Wedding cycling kits,
+    // church ride jerseys, fraternity cycling kits, and Greek life
+    // cycling gear were missing from the site's metadata.
+    "wedding party cycling jerseys",
+    "church cycling jerseys",
+    "church group cycling kits",
+    "church retreat cycling kits",
+    "fundraiser cycling jerseys",
+    "charity ride cycling kits",
+    "awareness ride cycling jerseys",
+    "fraternity cycling jerseys",
+    "sorority cycling jerseys",
+    "Greek life cycling kits",
+    "rush week cycling jerseys",
+    "philanthropy ride jerseys",
+    "camp cycling jerseys",
+    "summer camp cycling kits",
   ],
   });
 

@@ -18,7 +18,13 @@ import {
 
 export const metadata = buildPageMetadata({
     // 2026-09-11 (R15-P0-1): was 61 chars — over 60 limit. Shortened to 53.
-    title: "Custom Training Apparel | All-Over Print, Sublimation",
+    // 2026-09-15 (R69): was "Custom Training Apparel | All-Over Print,
+    // Sublimation" (51 chars). Replaced "All-Over Print, Sublimation"
+    // with "Performance Fabric, MOQ 50" to drop the redundant
+    // "All-Over Print" token on a non-technique product page and
+    // match the title pattern used by cycling/racing/golf/bowling/
+    // esports/jerseys product pages.
+    title: "Custom Training Apparel | Performance Fabric, MOQ 50",
     description: "Custom training apparel — all-over print sublimation on 4-way stretch poly-spandex. MOQ 50 pcs, durable for high-intensity training, sweat-wicking, anti-odor f…",
     keywords: [
     "custom training apparel",
@@ -71,6 +77,26 @@ export const metadata = buildPageMetadata({
     "training MOQ apparel",
     "training sublimation apparel",
     "training polo shirts",
+    // 2026-09-15 (R69): zero-occurrence buyer-intent keywords
+    // injected across the apparel catalog. Wedding, church,
+    // fundraiser, fraternity, sorority, Greek life, camp counselor,
+    // and rush week training apparel were missing entirely.
+    "wedding party training shirts",
+    "wedding workout shirts",
+    "church training shirts",
+    "church group training apparel",
+    "church retreat training apparel",
+    "fundraiser training shirts",
+    "fundraiser workout apparel",
+    "charity fitness apparel",
+    "fraternity training apparel",
+    "sorority training apparel",
+    "Greek life training apparel",
+    "rush week training shirts",
+    "bid day training shirts",
+    "philanthropy fitness apparel",
+    "camp counselor training shirts",
+    "summer camp training apparel",
   ],
   });
 

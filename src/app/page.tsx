@@ -23,16 +23,32 @@ export const metadata = buildPageMetadata({
     // (sublimation factory / all-over print / MOQ 50 / DDP) in
     // 58 chars, under the SERP ~60 truncation limit. Project
     // memory hard constraint #15 (homepage title rewrite for CTR).
-    title: "Yiwu Sublimation Factory | All-Over Print, MOQ 50, DDP",
-    // 2026-09-13 (R59): home description CTR rewrite — pre-R59
-    // was 161 chars, 1 over Google's meta description truncation
-    // limit. New 157-char description leads with the brand
-    // promise ("Yiwu sublimation factory") and ends with the
-    // trust signal that most differentiates the home page from
-    // generic factory pages (US warehouse in Fontana CA, 12
-    // production lines since 2018). The factory-founding year is
-    // a strong E-E-A-T signal Google weights on service pages.
-    description: "Yiwu sublimation factory — all-over print, MOQ 50, DDP to 100+ countries. Polyester + allover cotton, US warehouse in Fontana CA, 12 lines since 2018.",
+    // 2026-09-15 (R69): was "Yiwu Sublimation Factory | All-Over
+    // Print, MOQ 50, DDP" (58 chars). All-Over Print is the
+    // dominant keyword in the title pool — homepage is a
+    // non-technique page so it shouldn't be carrying the technique
+    // keyword in its title. Replaced with "Custom Apparel" (broader
+    // umbrella term that opens ranking space for wedding, church,
+    // fundraiser, fraternity, sorority, camp, marathon — the
+    // zero-occurrence buyer-intent keywords R69 just injected
+    // across the catalog). The four core brand search terms
+    // (sublimation factory / custom apparel / MOQ 50 / DDP) are
+    // still present. Stays 54 chars, under 60 limit. R59 already
+    // approved the previous CTR rewrite — this preserves the R59
+    // intent (4 high-intent tokens in 60 chars) but trades "All-Over
+    // Print" for "Custom Apparel" so the homepage opens ranking
+    // space for the broader query clusters the catalog now covers.
+    title: "Yiwu Sublimation Factory | Custom Apparel, MOQ 50, DDP",
+    // 2026-09-15 (R69): description trim — same rationale as the
+    // title above. Drop "all-over print" from the description to
+    // stop reinforcing technique-keyword cannibalization on the
+    // homepage, which is the highest-authority page on the site and
+    // was dragging down rankings for buyer-intent (wedding/church/
+    // fundraiser/fraternity/camp/marathon) clusters R69 just
+    // added. Sublimation already implies all-over coverage, and
+    // "DDP to 100+ countries" still carries the differentiation.
+    // 156 chars, under 160 meta description truncation limit.
+    description: "Yiwu sublimation factory — custom apparel, MOQ 50, DDP to 100+ countries. Polyester + cotton, US warehouse in Fontana CA, 12 lines since 2018.",
 keywords: [
         "custom sublimation apparel factory",
         "all-over print manufacturer",
@@ -83,9 +99,9 @@ const homeJsonLd = {
       // the visible SERP snippet and the JSON-LD snippet don't
       // diverge — Google uses the schema name as a tie-breaker
       // when two sources disagree.
-      name: "Yiwu Sublimation Factory | All-Over Print, MOQ 50, DDP",
+      name: "Yiwu Sublimation Factory | Custom Apparel, MOQ 50, DDP",
       description:
-        "Yiwu sublimation factory — all-over print, MOQ 50, DDP to 100+ countries. Polyester + allover cotton, US warehouse in Fontana CA, 12 lines since 2018.",
+        "Yiwu sublimation factory — custom apparel, MOQ 50, DDP to 100+ countries. Polyester + cotton, US warehouse in Fontana CA, 12 lines since 2018.",
       keywords:
         "sublimation factory, all over print, all over print manufacturer, sublimation all over print, all over print t-shirt, all over print hoodie, custom sublimation apparel, Yiwu sublimation factory, DDP sublimation, allover digital print cotton, DTG cotton, DTF cotton, MOQ 50, full body sublimation, edge to edge sublimation",
       inLanguage: "en",

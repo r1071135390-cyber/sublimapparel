@@ -53,6 +53,25 @@ export const metadata = buildPageMetadata({
     "esports team kit",
     "esports sublimation jerseys",
     "esports uniform factory",
+    // 2026-09-15 (R69): zero-occurrence buyer-intent keywords
+    // injected. Wedding, church, fundraiser, fraternity, sorority,
+    // and Greek life esports jerseys were missing entirely from
+    // the site's metadata before R69.
+    "wedding esports jerseys",
+    "wedding party gaming jerseys",
+    "church esports jerseys",
+    "church youth group esports apparel",
+    "church league gaming shirts",
+    "fundraiser esports jerseys",
+    "charity gaming tournament apparel",
+    "fraternity esports jerseys",
+    "sorority esports jerseys",
+    "Greek life esports jerseys",
+    "rush week esports jerseys",
+    "bid day esports jerseys",
+    "philanthropy gaming jerseys",
+    "camp counselor esports jerseys",
+    "summer camp gaming jerseys",
   ],
   });
 

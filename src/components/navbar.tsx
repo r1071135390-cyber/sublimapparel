@@ -36,6 +36,52 @@ const solutions = [
   },
 ];
 
+// 2026-09-15 (R69): 7 use-case / scenario pages added so every page in
+// the site carries an internal link to the new buyer-intent landing pages
+// surfaced by the GSC audit (wedding / church / fundraiser / fraternity /
+// sorority / camp / marathon were at zero coverage). These were missing
+// from the navbar entirely, so Google had no priority signal flowing into
+// them. Adding them to the Solutions dropdown (grouped under their own
+// "By Use Case" sub-section) gives every navbar surface a text link,
+// which is the project-memory hard requirement for high-priority pages.
+const useCases = [
+  {
+    href: "/event-apparel/",
+    label: "Event Apparel",
+    desc: "Fundraiser, charity, community, awareness walks",
+  },
+  {
+    href: "/custom-event-t-shirts/",
+    label: "Custom Event T-Shirts",
+    desc: "Wedding & reunion shirts, event-day tees",
+  },
+  {
+    href: "/summer-camp-shirts/",
+    label: "Summer Camp Shirts",
+    desc: "Camp counselor, staff, color-coded groups",
+  },
+  {
+    href: "/corporate-event-apparel/",
+    label: "Corporate Event Apparel",
+    desc: "Retreats, trade shows, church & wedding events",
+  },
+  {
+    href: "/race-shirts/",
+    label: "Race Shirts",
+    desc: "5K, 10K, fun runs, charity races, club kits",
+  },
+  {
+    href: "/marathon-shirts/",
+    label: "Marathon Shirts",
+    desc: "Marathon, half-marathon, ultra finisher tees",
+  },
+  {
+    href: "/private-label-sportswear/",
+    label: "Private Label Sportswear",
+    desc: "Fraternity, sorority, Greek life, esports brands",
+  },
+];
+
 // Industries dropdown — 12 industry verticals (links to /industries/* pages that were orphaned before this change)
 const industries = [
   { href: "/industries/sports-teams-leagues/", label: "Sports Teams & Leagues" },
@@ -164,7 +210,7 @@ export function Navbar() {
                 strokeWidth={3}
               />
             </Link>
-            <div className="invisible absolute left-1/2 top-full z-20 w-72 -translate-x-1/2 border-2 border-black bg-white opacity-0 shadow-[6px_6px_0_0_rgba(10,10,10,1)] transition-all group-hover:visible group-hover:opacity-100">
+            <div className="invisible absolute left-1/2 top-full z-20 w-80 -translate-x-1/2 border-2 border-black bg-white opacity-0 shadow-[6px_6px_0_0_rgba(10,10,10,1)] transition-all group-hover:visible group-hover:opacity-100">
               <div className="border-b-2 border-black bg-[#ff4d00] px-4 py-2.5 text-[10px] font-black uppercase tracking-widest text-black">
                 <Briefcase className="mr-1 inline h-3 w-3" />
                 By Customer
@@ -175,7 +221,7 @@ export function Navbar() {
               >
                 <div className="text-sm font-black">All Solutions Overview</div>
                 <div className="mt-0.5 text-[11px] text-black/60 group-hover:text-white/70">
-                  See all 6 buyer profiles in one place
+                  See all 6 buyer profiles + 7 use cases
                 </div>
               </Link>
               {solutions.map((s) => (
@@ -187,6 +233,26 @@ export function Navbar() {
                   <div className="text-sm font-black">{s.label}</div>
                   <div className="mt-0.5 text-[11px] text-black/60 group-hover:text-white/70">
                     {s.desc}
+                  </div>
+                </Link>
+              ))}
+              {/* 2026-09-15 (R69): "By Use Case" sub-section so the 7 new
+                  scenario landing pages get a navbar text link from every
+                  page on the site (desktop + mobile). Grouped under their
+                  own header for scannability. */}
+              <div className="border-b-2 border-t-2 border-black bg-[#faf9f6] px-4 py-2.5 text-[10px] font-black uppercase tracking-widest text-[#cc3d00]">
+                <Shirt className="mr-1 inline h-3 w-3" />
+                By Use Case
+              </div>
+              {useCases.map((u) => (
+                <Link
+                  key={u.href}
+                  href={u.href}
+                  className="block border-b border-black/10 px-4 py-2.5 transition-colors last:border-0 hover:bg-[#0a0a0a] hover:text-white"
+                >
+                  <div className="text-sm font-black">{u.label}</div>
+                  <div className="mt-0.5 text-[11px] text-black/60 group-hover:text-white/70">
+                    {u.desc}
                   </div>
                 </Link>
               ))}

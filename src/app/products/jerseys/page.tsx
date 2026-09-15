@@ -65,6 +65,28 @@ export const metadata = buildPageMetadata({
     "custom baseball jerseys",
     "custom rugby jerseys",
     "custom hockey jerseys",
+    // 2026-09-15 (R69): zero-occurrence buyer-intent keywords
+    // injected across the apparel catalog. Wedding, church,
+    // fundraiser, fraternity, sorority, Greek life, camp counselor,
+    // and rush week jerseys were missing from the site's metadata.
+    "wedding party jerseys",
+    "wedding sports jerseys",
+    "bridesmaid sports jerseys",
+    "church sports jerseys",
+    "church league jerseys",
+    "church retreat jerseys",
+    "fundraiser jerseys",
+    "fundraiser sports jerseys",
+    "charity game jerseys",
+    "fraternity jerseys",
+    "sorority jerseys",
+    "Greek life jerseys",
+    "rush week jerseys",
+    "bid day jerseys",
+    "philanthropy event jerseys",
+    "camp counselor jerseys",
+    "camp league jerseys",
+    "color coded camp jerseys",
   ],
   });
 

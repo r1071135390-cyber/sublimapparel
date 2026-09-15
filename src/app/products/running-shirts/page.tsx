@@ -17,7 +17,14 @@ import {
 } from "lucide-react";
 
 export const metadata = buildPageMetadata({
-    title: "Custom Running Shirts | All-Over Print, Sublimation, MOQ 50",
+    // 2026-09-15 (R69): was "Custom Running Shirts | All-Over Print,
+    // Sublimation, MOQ 50" (58 chars) — contained "All-Over Print" on
+    // a non-technique product page. Replaced with "Full Color
+    // Sublimation" to drop the redundant "All-Over Print" token
+    // (Sublimation already implies all-over coverage) and match the
+    // title pattern used by cycling/racing/golf/bowling/esports
+    // product pages. Stays 56 chars, under 60 limit.
+    title: "Custom Running Shirts | Full Color Sublimation, MOQ 50",
     description: "Custom running shirts — all-over print sublimation on light, fast-dry polyester. MOQ 50 pcs, 4-way stretch, moisture-wicking, anti-odor finish. Built for marat…",
     keywords: [
     "custom running shirts",
@@ -68,6 +75,27 @@ export const metadata = buildPageMetadata({
     "custom running clothing",
     "running MOQ apparel",
     "running sublimation apparel",
+    // 2026-09-15 (R69): zero-occurrence buyer-intent keywords
+    // injected. Wedding, church, fundraiser, fraternity, sorority,
+    // Greek life, camp counselor, and rush week running shirts
+    // were missing from the site's metadata before R69.
+    "wedding party running shirts",
+    "wedding run shirts",
+    "church running shirts",
+    "church group running apparel",
+    "church retreat running shirts",
+    "fundraiser running shirts",
+    "charity run shirts",
+    "awareness run shirts",
+    "fraternity running shirts",
+    "sorority running shirts",
+    "Greek life running shirts",
+    "rush week running shirts",
+    "bid day running shirts",
+    "philanthropy run shirts",
+    "camp counselor running shirts",
+    "summer camp running shirts",
+    "color coded camp running shirts",
   ],
   });
 

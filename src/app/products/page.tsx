@@ -52,6 +52,30 @@ export const metadata = buildPageMetadata({
     "custom uniform manufacturer",
     "B2B clothing factory",
     "sublimation product line",
+    // 2026-09-15 (R69): zero-occurrence buyer-intent keywords
+    // injected at the catalog hub. Wedding, church, fundraiser,
+    // fraternity, sorority, Greek life, camp counselor, and rush
+    // week apparel are missing entirely from the catalog hub
+    // metadata before R69 — adding the umbrella terms here so
+    // the top-level /products/ page surfaces for the broader
+    // buyer-intent queries that don't fit a single garment type.
+    "wedding apparel",
+    "wedding party apparel",
+    "church apparel",
+    "church group apparel",
+    "church retreat apparel",
+    "fundraiser apparel",
+    "fundraiser clothing",
+    "charity event apparel",
+    "fraternity apparel",
+    "sorority apparel",
+    "Greek life apparel",
+    "rush week apparel",
+    "bid day apparel",
+    "philanthropy apparel",
+    "camp apparel",
+    "summer camp apparel",
+    "camp counselor apparel",
   ],
     other: {
     "article:author": "Ramon Wang, Sales Director, SublimApparel",

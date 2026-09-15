@@ -56,6 +56,23 @@ export const metadata = buildPageMetadata({
     "bowling shirts MOQ",
     "bowling shirts B2B",
     "bowling merchandise",
+    // 2026-09-15 (R69): zero-occurrence buyer-intent keywords
+    // injected. Wedding, church, fundraiser, fraternity, sorority,
+    // and Greek life bowling jerseys were missing entirely.
+    "wedding party bowling jerseys",
+    "wedding bowling shirts",
+    "church bowling jerseys",
+    "church group bowling apparel",
+    "church league bowling shirts",
+    "fundraiser bowling jerseys",
+    "charity bowling tournament shirts",
+    "fraternity bowling jerseys",
+    "sorority bowling jerseys",
+    "Greek life bowling apparel",
+    "rush week bowling jerseys",
+    "bid day bowling jerseys",
+    "philanthropy bowling jerseys",
+    "camp bowling jerseys",
   ],
   });
 
