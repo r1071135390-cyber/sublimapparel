@@ -10,15 +10,29 @@ const MAIL_FROM = process.env.MAIL_FROM ?? SMTP_USER;
 // (the page text and the JSON-LD `email` field both surface only
 // info@ as the canonical contact), but every server-side
 // notification (chat-message, contact form) is delivered to BOTH
-// info@ and chris@. The internal list is hard-coded as a fallback
-// so even if MAIL_TO is unset the team still gets the message in
-// two inboxes. MAIL_TO can override the list at deploy time
-// (e.g. if you want to point staging at a single address).
-const DEFAULT_INTERNAL_RECIPIENTS = [
+// info@ and chris@. 2026-09-15 (R65): chris@ is now sent via the
+// `cc` header (internal carbon copy) instead of being jammed into
+// `to`. This:
+//   1. Matches RFC 5322 etiquette — info@ is the primary recipient
+//      the team replies from, chris@ is internal monitoring.
+//   2. Prevents `Reply-All` storms if a customer ever hits "reply all"
+//      — only info@ + the original customer would be in the To/Cc set
+//      they see.
+//   3. Keeps chris@ clearly visible as a watcher in mail clients.
+// The internal list is hard-coded as a fallback so even if MAIL_TO
+// is unset the team still gets the message in two inboxes. MAIL_TO
+// overrides ONLY the primary recipient; the cc list stays as the
+// hard-coded monitor list so chris@ cannot be accidentally dropped by
+// a deploy-time override (deploys to a single address still get
+// chris@ mirrored).
+const DEFAULT_PRIMARY_RECIPIENTS = [
   "info@sublimapparel.com",
+] as const;
+const DEFAULT_CC_RECIPIENTS = [
   "chris@sublimapparel.com",
 ] as const;
-function resolveRecipients(): string[] {
+
+function resolvePrimaryRecipients(): string[] {
   if (process.env.MAIL_TO && process.env.MAIL_TO.trim().length > 0) {
     // Split on comma so MAIL_TO can carry a single address or a list.
     return process.env.MAIL_TO
@@ -26,7 +40,18 @@ function resolveRecipients(): string[] {
       .map((s) => s.trim())
       .filter(Boolean);
   }
-  return [...DEFAULT_INTERNAL_RECIPIENTS];
+  return [...DEFAULT_PRIMARY_RECIPIENTS];
+}
+
+function resolveCcRecipients(): string[] {
+  // The cc list is intentionally NOT overridable by env: chris@
+  // monitoring must always be on, regardless of where MAIL_TO points.
+  // If a deploy ever needs to disable the cc (e.g. testing a staging
+  // build without spamming chris@), set MAIL_CC=off.
+  if (process.env.MAIL_CC && process.env.MAIL_CC.trim().toLowerCase() === "off") {
+    return [];
+  }
+  return [...DEFAULT_CC_RECIPIENTS];
 }
 
 const transporter = nodemailer.createTransport({
@@ -105,9 +130,11 @@ export async function sendChatNotificationEmail(
   `;
 
   try {
+    const ccList = resolveCcRecipients();
     await transporter.sendMail({
       from: `"${MAIL_FROM_NAME}" <${MAIL_FROM}>`,
-      to: resolveRecipients().join(", "),
+      to: resolvePrimaryRecipients().join(", "),
+      ...(ccList.length > 0 ? { cc: ccList.join(", ") } : {}),
       replyTo: msg.email,
       subject,
       text,
