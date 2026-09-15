@@ -145,11 +145,22 @@ const ROUTES: SitemapRoute[] = [
   { path: "/production", priority: 0.8, changeFrequency: "monthly" },
   { path: "/samples", priority: 0.75, changeFrequency: "monthly" },
 
-  // ── （）──────────────────────────
-  { path: "/login", priority: 0.3, changeFrequency: "yearly" },
-  { path: "/register", priority: 0.3, changeFrequency: "yearly" },
+  // ── Auth pages intentionally omitted ───────────────────────────────
+  // 2026-09-15 (R70): /login and /register were previously listed in the
+  // sitemap at priority 0.3. Both pages set `robots: { index: false }`
+  // (see src/app/login/page.tsx:14 and src/app/register/page.tsx:13),
+  // so including them in the sitemap was a self-contradicting signal:
+  // sitemap inclusion = "please index this"; robots meta = "do not
+  // index this". Google Search Console was reporting a "Noindex URL
+  // submitted" warning that wasted crawl budget and risked soft-trust
+  // penalties. Removed both entries. The pages still render normally
+  // for human users via direct URL / navigation links; they just
+  // won't be surfaced to Googlebot through the sitemap. Existing
+  // `robots: { index: false }` on each page is the correct
+  // single-source-of-truth signal — no change needed to the page
+  // files themselves.
 
-  // ── L2  /  ────────────────────────────────────
+  // ── L2 Trust / about cluster ────────────────────────────────────────
   { path: "/about", priority: 0.7, changeFrequency: "monthly", lastModified: TODAY }, // 2026-09-11 push: added FAQPage JSON-LD
   { path: "/about/factory", priority: 0.75, changeFrequency: "monthly", lastModified: TODAY }, // 2026-09-11 push: added WebPage JSON-LD
   { path: "/about/production", priority: 0.75, changeFrequency: "monthly", lastModified: TODAY }, // 2026-09-11 push: added WebPage JSON-LD
