@@ -6,29 +6,19 @@ const SMTP_USER = process.env.SMTP_USER ?? "info@sublimapparel.com";
 const SMTP_PASS = process.env.SMTP_PASS ?? "";
 const MAIL_FROM_NAME = process.env.MAIL_FROM_NAME ?? "SublimApparel Site";
 const MAIL_FROM = process.env.MAIL_FROM ?? SMTP_USER;
-// 2026-09-12: customer-facing brand email stays info@sublimapparel.com
-// (the page text and the JSON-LD `email` field both surface only
-// info@ as the canonical contact), but every server-side
-// notification (chat-message, contact form) is delivered to BOTH
-// info@ and chris@. The internal list is hard-coded as a fallback
-// so even if MAIL_TO is unset the team still gets the message in
-// two inboxes. MAIL_TO can override the list at deploy time
-// (e.g. if you want to point staging at a single address).
-const DEFAULT_INTERNAL_RECIPIENTS = [
-  "info@sublimapparel.com",
-  "chris@sublimapparel.com",
-] as const;
-function resolveRecipients(): string[] {
-  if (process.env.MAIL_TO && process.env.MAIL_TO.trim().length > 0) {
-    // Split on comma so MAIL_TO can carry a single address or a list.
-    return process.env.MAIL_TO
-      .split(",")
-      .map((s) => s.trim())
-      .filter(Boolean);
-  }
-  return [...DEFAULT_INTERNAL_RECIPIENTS];
-}
-
+// 2026-09-15 (R67): the customer-facing brand email is info@sublimapparel.com. Every
+// server-side notification (FloatingChat, contact form, etc.) is sent ONLY to info@
+// -- chris@ is intentionally NOT included in the SMTP envelope so chris@ stays out of
+// the customer's To/Cc fields and out of the website UI.
+//
+// The Tencent Exmail inbox for info@ is configured with a server-side auto-forward
+// rule that mirrors every incoming message to chris@sublimapparel.com, so the team
+// still sees every inquiry in one inbox without the FloatingChat path ever producing
+// two deliveries to chris@ (one direct + one via the forward rule).
+//
+// MAIL_TO is preserved as an env override (handy for staging or testing -- e.g. set
+// MAIL_TO=dev@yourdomain.com on a preview deploy).
+const MAIL_TO = process.env.MAIL_TO ?? "info@sublimapparel.com";
 const transporter = nodemailer.createTransport({
   host: SMTP_HOST,
   port: SMTP_PORT,
@@ -107,7 +97,7 @@ export async function sendChatNotificationEmail(
   try {
     await transporter.sendMail({
       from: `"${MAIL_FROM_NAME}" <${MAIL_FROM}>`,
-      to: resolveRecipients().join(", "),
+      to: MAIL_TO,
       replyTo: msg.email,
       subject,
       text,
