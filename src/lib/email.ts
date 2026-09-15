@@ -10,24 +10,21 @@ const MAIL_FROM = process.env.MAIL_FROM ?? SMTP_USER;
 // (the page text and the JSON-LD `email` field both surface only
 // info@ as the canonical contact), but every server-side
 // notification (chat-message, contact form) is delivered to BOTH
-// info@ and chris@. 2026-09-15 (R65): chris@ is now sent as a
-// SEPARATE single-recipient email rather than being co-`to`'d with
-// info@. 2026-09-15 (R65b): chris@ is sent as its own dedicated
-// email (one SMTP call per recipient, two calls per chat message
-// total) — each inbox sees a clean single-recipient message, no cc
-// disclosure, no cc-list leakage on forward. The trade-off is two
-// SMTP connections per chat message instead of one, and the API
-// response now uses Promise.allSettled so a failure on one
-// recipient no longer masks delivery to the other.
-// R65 rationale (user request):
-//   "能不能从网站后台设置直接发送两封邮件，一个给info，一个给chris，
-//    现在是只发送一封"
+// info@ and chris@. 2026-09-15 (R65): chris@ is now sent via the
+// `cc` header (internal carbon copy) instead of being jammed into
+// `to`. This:
+//   1. Matches RFC 5322 etiquette — info@ is the primary recipient
+//      the team replies from, chris@ is internal monitoring.
+//   2. Prevents `Reply-All` storms if a customer ever hits "reply all"
+//      — only info@ + the original customer would be in the To/Cc set
+//      they see.
+//   3. Keeps chris@ clearly visible as a watcher in mail clients.
 // The internal list is hard-coded as a fallback so even if MAIL_TO
 // is unset the team still gets the message in two inboxes. MAIL_TO
-// overrides ONLY the primary recipient; the second-recipient list
-// stays as the hard-coded monitor list so chris@ cannot be
-// accidentally dropped by a deploy-time override (deploys to a
-// single address still get chris@ mirrored).
+// overrides ONLY the primary recipient; the cc list stays as the
+// hard-coded monitor list so chris@ cannot be accidentally dropped by
+// a deploy-time override (deploys to a single address still get
+// chris@ mirrored).
 const DEFAULT_PRIMARY_RECIPIENTS = [
   "info@sublimapparel.com",
 ] as const;
@@ -132,56 +129,23 @@ export async function sendChatNotificationEmail(
     </div>
   `;
 
-  // 2026-09-15 (R65b): Send TWO independent emails — one per recipient —
-  // instead of one email with `to: info@, cc: chris@`. Per user request:
-  //   "能不能从网站后台设置直接发送两封邮件，一个给info，一个给chris，
-  //    现在是只发送一封"
-  // Each recipient sees a clean single-recipient message in their inbox
-  // (no "Cc: chris@" disclosure, no cc-list leakage if either side
-  // forwards the email onward). The trade-off: we open two SMTP
-  // connections per chat message instead of one. We use Promise.allSettled
-  // so a failure to deliver to one recipient does NOT block the other —
-  // partial delivery is reported honestly to the API caller instead of
-  // being masked by a single throw.
-  const recipients = [
-    ...resolvePrimaryRecipients(),
-    ...resolveCcRecipients(),
-  ];
-
-  if (recipients.length === 0) {
-    // Pathological: MAIL_TO is empty AND MAIL_CC=off. Nothing to do.
-    return { ok: false, error: "No recipients configured (MAIL_TO empty and MAIL_CC=off)" };
+  try {
+    const ccList = resolveCcRecipients();
+    await transporter.sendMail({
+      from: `"${MAIL_FROM_NAME}" <${MAIL_FROM}>`,
+      to: resolvePrimaryRecipients().join(", "),
+      ...(ccList.length > 0 ? { cc: ccList.join(", ") } : {}),
+      replyTo: msg.email,
+      subject,
+      text,
+      html,
+    });
+    return { ok: true };
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error("[/lib/email] send failed:", message);
+    return { ok: false, error: message };
   }
-
-  const results = await Promise.allSettled(
-    recipients.map((recipient) =>
-      transporter.sendMail({
-        from: `"${MAIL_FROM_NAME}" <${MAIL_FROM}>`,
-        to: recipient,
-        replyTo: msg.email,
-        subject,
-        text,
-        html,
-      })
-    )
-  );
-
-  const failures: Array<{ recipient: string; reason: string }> = [];
-  results.forEach((r, i) => {
-    if (r.status === "rejected") {
-      const reason = r.reason instanceof Error ? r.reason.message : String(r.reason);
-      console.error(`[/lib/email] send to ${recipients[i]} failed:`, reason);
-      failures.push({ recipient: recipients[i], reason });
-    }
-  });
-
-  if (failures.length > 0) {
-    return {
-      ok: false,
-      error: `Partial delivery: ${failures.length}/${recipients.length} failed. First failure: ${failures[0].recipient} → ${failures[0].reason}`,
-    };
-  }
-  return { ok: true };
 }
 
 function escapeHtml(s: string): string {
