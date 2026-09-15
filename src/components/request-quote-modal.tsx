@@ -228,9 +228,19 @@ export function RequestQuoteModal() {
     ].filter(Boolean) as string[];
 
     const subject = `Inquiry: ${form.product} — ${form.quantity || "TBD"} pcs — ${form.name}`;
-    // 2026-09-12: page displays info@ as the canonical contact email,
-    // but the actual inquiry is delivered to BOTH info@ and chris@.
-    const mailto = `mailto:info@sublimapparel.com,chris@sublimapparel.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join("\n"))}`;
+    // 2026-09-15 (R66): the customer-facing mailto points ONLY at
+    // info@sublimapparel.com — chris@ is intentionally NOT in the
+    // mailto recipient list. Per user request: "客户在网站看到的邮件
+    // 地址是info". chris@ still receives every inquiry because:
+    //   1. the customer's email client sends the message addressed to
+    //      info@sublimapparel.com
+    //   2. QQ Exmail has an inbox rule on info@ that auto-forwards a
+    //      copy to chris@sublimapparel.com (server-side, transparent to
+    //      the customer)
+    //   3. chris@ must NEVER be exposed in customer-visible UI because
+    //      chris is the internal escalation contact, not a customer
+    //      contact
+    const mailto = `mailto:info@sublimapparel.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join("\n"))}`;
 
     await new Promise((r) => setTimeout(r, 300));
     window.location.href = mailto;
