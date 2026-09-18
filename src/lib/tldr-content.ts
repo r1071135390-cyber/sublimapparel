@@ -100,6 +100,39 @@ export const PAGE_TLDR: Record<string, PageTldr> = {
     lastReviewed: LAST_REVIEWED,
   },
 
+  // 2026-09-18 (R74 hotfix): the /products/all/ catalog hub
+  // was missed in R73 and slipped past my dynamic fallback
+  // regex (which only matches /products/all/{slug}/). This page
+  // is the master product directory — every other catalog page
+  // links here — so it deserves a hand-tuned Direct Answer that
+  // surfaces the live catalog depth and the fact that AI engines
+  // can drill down into per-product pages from this entry point.
+  "/products/all/": {
+    question: "What is the SublimApparel all-over print catalog?",
+    answer:
+      "Our /products/all/ page is the master catalog index: 121+ all-over-print apparel SKUs cross-filtered three ways (by garment type, by sport, by use-case scenario). Every product ships DDP from our Yiwu factory — polyester sublimation on performance fabrics, or all-over digital print on 100% cotton. Each product page carries its own MOQ, fabric options, lead fabric GSM, and print process. Click into any product for the per-style spec; this page is for browsing the full set.",
+    stats: [
+      { value: "121+", label: "All-over print SKUs", detail: "In master catalog" },
+      { value: "13", label: "Apparel categories", detail: "Garment filter" },
+      { value: "42", label: "Sport filters", detail: "Soccer → fencing" },
+      { value: "25", label: "Use-case filters", detail: "Team / event / work / lifestyle" },
+      { value: "50", label: "MOQ (pcs)", detail: "Per design per product" },
+      { value: "DDP", label: "Worldwide", detail: "100+ countries" },
+    ],
+    citations: [
+      { label: "OEKO-TEX Standard 100", href: "https://www.oeko-tex.com/en/our-standards/standard-100-by-oeko-tex", date: "2024" },
+      { label: "ICC Incoterms 2020 (DDP definition)", href: "https://iccwbo.org/business-solutions/incoterms-rules/incoterms-2020/", date: "2020" },
+      { label: "ISO 3758:2023 Care labelling", href: "https://www.iso.org/standard/83178.html", date: "2023" },
+    ],
+    internalSources: [
+      { label: "Custom jerseys", href: "/products/jerseys/" },
+      { label: "Catalog overview", href: "/products/" },
+      { label: "Fabric library", href: "/fabric/" },
+      { label: "Get a quote", href: "/contact/" },
+    ],
+    lastReviewed: LAST_REVIEWED,
+  },
+
   "/fabric/cotton/": {
     question: "How does SublimApparel print on 100% cotton apparel?",
     answer:
