@@ -309,6 +309,15 @@ export default function ProductsPage() {
   return (
     <main>
       <JsonLd data={collectionGraph} />
+      {/* 2026-09-18 (R74 hotfix): /products/ root hub had the
+          PageGeoAnswerBlock import (added in R73) but the JSX
+          invocation was missing, so the page rendered with no
+          Direct Answer block on top. Without a `data-speakable="true"`
+          target AI engines skipped the catalog summary entirely.
+          Adding the single-line call here matches the pattern used
+          on every other hub page (see products/jerseys/page.tsx,
+          products/all/page.tsx for reference). */}
+      <PageGeoAnswerBlock path="/products/" />
       <section className="relative overflow-hidden bg-white">
         {/* Full-bleed background image with floating text overlay */}
         <div className="relative h-[85vh] min-h-[640px] w-full">
