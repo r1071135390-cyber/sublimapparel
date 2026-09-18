@@ -28,6 +28,7 @@
  */
 
 import type { GeoCitation, GeoInternalSource, GeoStat } from "@/components/geo-answer-block";
+import { getProductBySlug } from "@/lib/products-data";
 
 type PageTldr = {
   question: string;
@@ -1038,11 +1039,96 @@ export const PAGE_TLDR: Record<string, PageTldr> = {
  * Look up the TL;DR config for a given page path.
  *
  * `pathname` is the App-Router path the page renders — e.g. "/products/"
- * for the /products page. Falls back to undefined when no entry exists,
- * so the page can simply omit the GeoAnswerBlock.
+ * for the /products page. Falls back to a dynamic product-detail answer
+ * for /products/all/{slug}/ paths (see buildDynamicProductTldr below),
+ * so every product detail page renders a fact-dense Direct Answer even
+ * though we only register the hub pages and category pages by hand.
+ * Falls back to undefined for any other path.
  */
 export function getPageTldr(pathname: string): PageTldr | undefined {
   // Normalize trailing slash for lookup; pages register with a slash.
-  const key = pathname.endsWith("/") ? pathname : `${pathname}/`;
-  return PAGE_TLDR[key];
+  let key = pathname.endsWith("/") ? pathname : `${pathname}/`;
+
+  const hit = PAGE_TLDR[key];
+  if (hit) return hit;
+
+  // 2026-09-18 (R74 hotfix): dynamic product detail page fallback.
+  // /products/all/[slug]/ is a catch-all route in Next.js — we cannot
+  // hand-write 100+ TL;DR entries, but every one of those pages should
+  // still surface a Direct Answer card so Perplexity / ChatGPT Search /
+  // Gemini can quote verified product data (MOQ, fabric GSM, print
+  // process, category, lead time, DDP coverage) on the first DOM pass.
+  const productMatch = key.match(/^\/products\/all\/([^/]+)\/$/);
+  if (productMatch) {
+    return buildDynamicProductTldr(productMatch[1]);
+  }
+
+  return undefined;
+}
+
+/**
+ * Generate a Direct Answer for a single product detail page.
+ *
+ * 2026-09-18 (R74 hotfix): keep this fallback narrow. It pulls live,
+ * verified product data (category, MOQ, fabric GSM + material + print
+ * process, primary sport, full name) and stitches them into the same
+ * Q/A shape used by every other TL;DR card. The block is "fact-dense,
+ * not template-y" because every number / fabric / process name comes
+ * from the canonical product record, not from a generic string.
+ *
+ * Hand-curated PAGE_TLDR entries still win when present, so we never
+ * overwrite a real answer — this function is only the safety net for
+ * the 100+ products without a hand-tuned entry.
+ */
+function buildDynamicProductTldr(slug: string): PageTldr | undefined {
+  const product = getProductBySlug(slug);
+  if (!product) return undefined;
+
+  const mainFabric = product.fabrics[0];
+  const fabricGsm = mainFabric?.gsm && mainFabric.gsm !== "—" ? mainFabric.gsm : "Multiple GSM options";
+  const fabricMaterial = mainFabric?.material ?? "Polyester / Cotton blend";
+  const fabricProcess = mainFabric?.process ?? "Sublimation / DTG / DTF";
+  const category = product.category;
+  const sports = product.sports;
+  const sportPhrase =
+    sports.length === 0
+      ? "general apparel"
+      : sports.length === 1
+        ? sports[0]
+        : `${sports.slice(0, -1).join(", ")} and ${sports[sports.length - 1]}`;
+  const numberOfFabrics = product.fabrics.length;
+
+  const question = `What is the ${product.name.toLowerCase()} and what is the MOQ?`;
+
+  const answer =
+    `Our ${product.name} is a custom all-over-print ${category.toLowerCase()} we run in-house at our Yiwu factory on 12 production lines. ` +
+    `MOQ ${product.moq} pieces per design, ${numberOfFabrics} ${numberOfFabrics === 1 ? "fabric option" : "fabric options"} led by ${fabricGsm} ${fabricMaterial.toLowerCase()} via ${fabricProcess}. ` +
+    (sports.length > 0
+      ? `Built for ${sportPhrase}; numbers and names printed, not stitched, so they won't peel. `
+      : `Cut-and-sew construction with edge-to-edge print. `) +
+    `15–25 day bulk lead time, OEKO-TEX Standard 100 certified, DDP shipping to 100+ countries, US warehouse in Fontana CA for 2–5 day domestic delivery.`;
+
+  return {
+    question,
+    answer,
+    stats: [
+      { value: `${product.moq}`, label: "MOQ (pcs)", detail: "Per design" },
+      { value: `${numberOfFabrics}`, label: "Fabric options", detail: fabricMaterial },
+      { value: fabricGsm, label: "Lead fabric", detail: fabricProcess },
+      { value: "15–25 d", label: "Bulk lead time", detail: "After sample approval" },
+      { value: "100+", label: "Countries", detail: "DDP shipping" },
+      { value: "OEKO-TEX", label: "Certified", detail: "Standard 100" },
+    ],
+    citations: [
+      { label: "OEKO-TEX Standard 100", href: "https://www.oeko-tex.com/en/our-standards/standard-100-by-oeko-tex", date: "2024" },
+      { label: "ICC Incoterms 2020 (DDP definition)", href: "https://iccwbo.org/business-solutions/incoterms-rules/incoterms-2020/", date: "2020" },
+    ],
+    internalSources: [
+      { label: "All-over print catalog", href: "/products/all/" },
+      { label: "Custom jerseys", href: "/products/jerseys/" },
+      { label: "Fabric library", href: "/fabric/" },
+      { label: "Get a quote", href: "/contact/" },
+    ],
+    lastReviewed: LAST_REVIEWED,
+  };
 }

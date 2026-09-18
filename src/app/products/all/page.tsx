@@ -7,6 +7,7 @@ import { HeroGallery } from "@/components/hero-gallery";
 import { products, allSports, allScenarios } from "@/lib/products-data";
 import { pickHeroImagesWithAlts } from "@/lib/product-images";
 import { JsonLd } from "@/components/json-ld";
+import { PageGeoAnswerBlock } from "@/components/geo-answer-block";
 
 export const metadata = buildPageMetadata({
     title: "100 All-Over Print Products | Apparel by Garment, Sport",
@@ -175,6 +176,11 @@ export default function AllProductsPage() {
     <>
       {/* 2026-09-12 (R46): single @graph — BreadcrumbList + WebPage + ItemList + Service */}
       <JsonLd data={productsAllGraph} />
+
+      {/* 2026-09-18 (R74 hotfix): the /products/all/ catalog hub
+          was missed in R73 — without this block the page had no
+          `data-speakable="true"` target and AI engines skipped it. */}
+      <PageGeoAnswerBlock path="/products/all/" />
 
       {/* HERO */}
       <section className="relative overflow-hidden border-b-2 border-black bg-[#0A0A0A] text-white">

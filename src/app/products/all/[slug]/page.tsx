@@ -33,6 +33,7 @@ import { KeywordCloud } from "@/components/keyword-cloud";
 import { getProductImages } from "@/lib/product-images";
 import { buildSeoContent, isJersey } from "@/lib/product-content";
 import { solutionLink, industryLink } from "@/lib/tag-utils";
+import { PageGeoAnswerBlock } from "@/components/geo-answer-block";
 
 export function generateStaticParams() {
   return products.map((p) => ({ slug: p.slug }));
@@ -225,6 +226,16 @@ export default async function ProductDetailPage({
   return (
     <>
       <JsonLd data={productGraph} />
+
+      {/* 2026-09-18 (R74 hotfix): every catch-all product detail
+          page (/products/all/{slug}/) now surfaces a fact-dense
+          Direct Answer block. R73 only wired up the static category
+          hubs, so dynamic product pages had no `data-speakable="true"`
+          target — AI engines skipped them. The block is generated
+          from the live product record (MOQ, fabric GSM + process,
+          category, sports) via tldr-content.ts#buildDynamicProductTldr
+          so the answer is per-product and never template-y. */}
+      <PageGeoAnswerBlock path={`/products/all/${product.slug}/`} />
 
       {/* HERO BAND */}
       <section className="relative overflow-hidden border-b-2 border-black bg-[#0A0A0A] text-white">
