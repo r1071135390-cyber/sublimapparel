@@ -185,6 +185,9 @@ export default function JerseysPage() {
   return (
     <main>
       <JsonLd data={categoryGraph} />
+      {/* 2026-09-18 (R73 GEO): Direct Answer block — AI engines
+          see "custom sublimation jerseys" in the first DOM pass. */}
+      <PageGeoAnswerBlock path="/products/jerseys/" />
 
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto grid max-w-7xl gap-0 px-6 md:grid-cols-12">

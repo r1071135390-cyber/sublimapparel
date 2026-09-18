@@ -6,6 +6,7 @@ import { buildBreadcrumbJsonLd, buildFaqPageNode, buildComparisonJsonLd } from "
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { RequestQuoteLink } from "@/components/request-quote-link";
 import { UnifiedContactCta } from "@/components/unified-contact-cta";
+import { PageGeoAnswerBlock } from "@/components/geo-answer-block";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Polyester vs Cotton Sublimation: Which Fabric to Choose?",
@@ -198,6 +199,12 @@ export default function PolyVsCottonPage() {
     <main className="min-h-screen bg-white">
       {/* 2026-09-12 (R35): consolidated to single @graph block */}
       <JsonLd data={pageGraph} />
+
+      {/* 2026-09-18 (R73 GEO): Direct Answer block for AI crawlers. Sits at
+          the very top of <main> right after the consolidated JSON-LD so
+          Perplexity, ChatGPT Search and Gemini can extract a 60-word
+          fabric-comparison answer in their first DOM pass. */}
+      <PageGeoAnswerBlock path="/compare/polyester-vs-cotton-sublima/" />
 
       {/* Hero */}
       <section className="border-b-2 border-black bg-[#0a0a0a] text-white">

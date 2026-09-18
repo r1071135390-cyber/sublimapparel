@@ -209,6 +209,9 @@ export default function TrainingApparelPage() {
   return (
     <main>
       <JsonLd data={categoryGraph} />
+      {/* 2026-09-18 (R73 GEO): Direct Answer block — AI engines
+          see "custom training apparel" in the first DOM pass. */}
+      <PageGeoAnswerBlock path="/products/training-apparel/" />
 
       {/* HERO */}
       <section className="border-b-2 border-black bg-white">

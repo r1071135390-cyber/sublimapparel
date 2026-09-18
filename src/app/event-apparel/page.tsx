@@ -32,6 +32,7 @@ import { Contact } from "@/components/contact";
 import { JsonLd } from "@/components/json-ld";
 import { RelatedProducts } from "@/components/related-products";
 import { UnifiedContactCta } from "@/components/unified-contact-cta";
+import { PageGeoAnswerBlock } from "@/components/geo-answer-block";
 
 const SITE_URL = "https://sublimapparel.com";
 const pageUrl = `${SITE_URL}/event-apparel/`;
@@ -249,6 +250,9 @@ export default function EventApparelPage() {
   return (
     <>
       <JsonLd data={pageGraph} />
+
+      {/* 2026-09-18 (R73 GEO): Direct Answer block for AI crawlers. */}
+      <PageGeoAnswerBlock path="/event-apparel/" />
 
       {/* HERO */}
       <section className="relative overflow-hidden bg-[#0a0a0a] text-white">

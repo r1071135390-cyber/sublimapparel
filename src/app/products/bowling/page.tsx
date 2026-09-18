@@ -5,6 +5,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Users, Palette, Ruler, Sparkles, Shirt, Trophy, Layers, Star } from "lucide-react";
 import { UnifiedContactCta } from "@/components/unified-contact-cta";
+// 2026-09-18 (R73 GEO): TL;DR / Direct Answer block — see /lib/tldr-content.ts.
+import { PageGeoAnswerBlock } from "@/components/geo-answer-block";
 
 export const metadata = buildPageMetadata({
     // 2026-09-11 (R15-P0-1): was 62 chars — over 60 limit. Shortened to 51.
@@ -167,6 +169,9 @@ export default function BowlingPage() {
   return (
     <main>
       <JsonLd data={categoryGraph} />
+      {/* 2026-09-18 (R73 GEO): Direct Answer block — AI engines
+          see "custom bowling jerseys" in the first DOM pass. */}
+      <PageGeoAnswerBlock path="/products/bowling/" />
 
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto grid max-w-7xl gap-0 px-6 md:grid-cols-12">

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowRight, MapPin } from "lucide-react";
 import { JsonLd } from "@/components/json-ld";
 import { buildUsWarehouseGraph } from "@/lib/breadcrumb";
+import { PageGeoAnswerBlock } from "@/components/geo-answer-block";
 
 export const metadata = buildPageMetadata({
     // 2026-09-11 push (Round 5): expanded description from 64 → 152 chars so it
@@ -69,6 +70,9 @@ export default function UsWarehousePage() {
   return (
     <main className="bg-white text-[#0a0a0a]">
       <JsonLd data={warehouseGraph} />
+
+      {/* 2026-09-18 (R73 GEO): Direct Answer block for AI crawlers. */}
+      <PageGeoAnswerBlock path="/shipping/us-warehouse/" />
 
       {/* HERO — brutally honest */}
       <section className="border-b-2 border-black bg-[#0a0a0a] text-white">

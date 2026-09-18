@@ -8,6 +8,7 @@ import {
 } from "@/lib/breadcrumb";
 import { COUNTRY_SHIPPING, type CountryShipping } from "@/lib/shipping-countries";
 import { RequestQuoteLink } from "@/components/request-quote-link";
+import { PageGeoAnswerBlock } from "@/components/geo-answer-block";
 
 // 2026-09-11 (R21-A): single server template reused by 5 country landing
 // pages (/shipping/{usa,uk,eu,au,canada}). All page-specific data lives in
@@ -252,6 +253,13 @@ export function CountryShippingPage({ slug }: { slug: CountryShipping["slug"] })
   return (
     <main>
       <JsonLd data={pageGraph} />
+
+      {/* 2026-09-18 (R73 GEO): Direct Answer block for AI crawlers.
+          One component renders 5 country TL;DRs because the tldr-content
+          lookup uses the per-slug path. Sits at the very top of <main>
+          so Perplexity / ChatGPT Search / Gemini can extract a 60-word
+          shipping-to-<country> answer in their first DOM pass. */}
+      <PageGeoAnswerBlock path={`/shipping/${slug}/`} />
 
       {/* HERO */}
       <section className="border-b-2 border-black bg-[#0a0a0a] text-white">

@@ -197,6 +197,10 @@ export default function CottonPage() {
       {/* 2026-09-12 (R46): single @graph — BreadcrumbList + WebPage + Service */}
       <JsonLd data={cottonGraph} />
       <main>
+      {/* 2026-09-18 (R73 GEO): Direct Answer block placed at the
+          top of the page so AI engines hit the cotton-printing
+          question + answer in the first DOM pass. */}
+      <PageGeoAnswerBlock path="/fabric/cotton/" />
       {/* HERO */}
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto grid max-w-7xl gap-0 px-6 md:grid-cols-12">

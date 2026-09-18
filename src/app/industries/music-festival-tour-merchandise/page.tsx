@@ -215,5 +215,10 @@ const data: CustomerProfileData = {
 export const metadata: Metadata = buildMetadata(data);
 
 export default function Page() {
-  return <CustomerProfilePage data={data} />;
+  return (
+    <>
+      <PageGeoAnswerBlock path="/industries/music-festival-tour-merchandise/" />
+      <CustomerProfilePage data={data} />
+    </>
+  );
 }

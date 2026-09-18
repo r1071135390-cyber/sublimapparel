@@ -6,6 +6,7 @@ import { RequestQuoteLink } from "@/components/request-quote-link";
 import { buildBreadcrumbJsonLd, buildFaqPageNode, buildComparisonJsonLd } from "@/lib/breadcrumb";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { UnifiedContactCta } from "@/components/unified-contact-cta";
+import { PageGeoAnswerBlock } from "@/components/geo-answer-block";
 
 // 2026-09-11 push (Round 4): same fix as /production/ — switch to buildPageMetadata
 // so the title doesn't pick up a duplicate "| SublimApparel" suffix from the
@@ -244,6 +245,11 @@ export default function SublimationVsDtgPage() {
     <>
       <Navbar />
       <main className="min-h-screen bg-white text-black">
+        {/* 2026-09-18 (R73 GEO): Direct Answer block for AI crawlers.
+            Sits at the very top of <main> so Perplexity / ChatGPT Search /
+            Gemini can lift a 60-word method-comparison answer in their
+            first DOM pass. */}
+        <PageGeoAnswerBlock path="/compare/sublimation-vs-dtg/" />
         <section className="border-b-4 border-black bg-[#f5f5f5] py-20">
           <div className="mx-auto max-w-5xl px-6">
             <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[#ff4d00]">

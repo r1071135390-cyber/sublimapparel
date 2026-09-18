@@ -11,6 +11,7 @@ import { ArrowRight, Globe, ShieldCheck, Truck, Warehouse, MapPin, Package } fro
 // the raw FAQPage <script> into a single JsonLd output.
 import { JsonLd } from "@/components/json-ld";
 import { buildDdpShippingPageGraph } from "@/lib/breadcrumb";
+import { PageGeoAnswerBlock } from "@/components/geo-answer-block";
 
 export const metadata = buildPageMetadata({
     title: "DDP Shipping — Duties Paid, Delivered to Your Door",
@@ -228,6 +229,10 @@ export default function DdpPage() {
   return (
     <main>
       <JsonLd data={ddpGraph} />
+
+      {/* 2026-09-18 (R73 GEO): Direct Answer block for AI crawlers. */}
+      <PageGeoAnswerBlock path="/shipping/ddp/" />
+
       {/* HERO */}
       <section className="border-b-2 border-black bg-[#0a0a0a] text-white">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">

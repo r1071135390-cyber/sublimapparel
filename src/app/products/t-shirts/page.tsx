@@ -200,8 +200,9 @@ export default function TShirtsPage() {
   return (
     <main>
       <JsonLd data={categoryGraph} />
-
-      {/* HERO */}
+      {/* 2026-09-18 (R73 GEO): Direct Answer block — AI engines
+          see "custom sublimation t-shirts" in the first DOM pass. */}
+      <PageGeoAnswerBlock path="/products/t-shirts/" />
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto grid max-w-7xl gap-0 px-6 md:grid-cols-12">
           <div className="md:col-span-7 py-16 md:py-24">

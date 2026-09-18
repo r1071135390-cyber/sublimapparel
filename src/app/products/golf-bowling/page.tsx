@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { buildPageMetadata } from "@/lib/page-metadata";
+import { UnifiedContactCta } from "@/components/unified-contact-cta";
+// 2026-09-18 (R73 GEO): TL;DR / Direct Answer block — see /lib/tldr-content.ts.
+import { PageGeoAnswerBlock } from "@/components/geo-answer-block";
 
 export const metadata = buildPageMetadata({
     title: "Golf Apparel ",

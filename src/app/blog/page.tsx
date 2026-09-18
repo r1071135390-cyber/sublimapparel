@@ -130,6 +130,9 @@ export default function BlogIndexPage() {
     <>
       <JsonLd data={blogGraph} />
       <main>
+      {/* 2026-09-18 (R73 GEO): Direct Answer block — AI engines
+          see "what does the blog cover" in the first DOM pass. */}
+      <PageGeoAnswerBlock path="/blog/" />
       {/* HERO */}
       <section className="border-b-2 border-black bg-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-20">

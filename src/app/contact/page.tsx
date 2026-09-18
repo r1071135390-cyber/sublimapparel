@@ -148,6 +148,11 @@ export default function ContactPage() {
     <>
       <JsonLd data={contactGraph} />
       <main>
+      {/* 2026-09-18 (R73 GEO): Direct Answer block on /contact/
+          so the three contact channels + reply SLA are visible to
+          AI engines in the first DOM pass (dark variant to match
+          the dark hero right below). */}
+      <PageGeoAnswerBlock path="/contact/" />
       <section className="relative overflow-hidden border-b-2 border-black bg-[#0a0a0a] text-white">
         {/* Background image — full bleed */}
         <div className="absolute inset-0">

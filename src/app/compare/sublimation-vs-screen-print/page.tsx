@@ -7,6 +7,7 @@ import { buildBreadcrumbJsonLd, buildFaqPageNode } from "@/lib/breadcrumb";
 import { buildComparisonJsonLd } from "@/lib/breadcrumb";
 import { UnifiedContactCta } from "@/components/unified-contact-cta";
 import { buildPageMetadata } from "@/lib/page-metadata";
+import { PageGeoAnswerBlock } from "@/components/geo-answer-block";
 
 // 2026-09-11 (R26-D): the /compare/ directory already covers
 // ddp-vs-fob, polyester-vs-cotton-sublima and sublimation-vs-dtg.
@@ -310,6 +311,12 @@ export default function SublimationVsScreenPrintPage() {
       <JsonLd data={pageGraph} />
 
       <main className="min-h-screen bg-white text-[#0a0a0a]">
+        {/* 2026-09-18 (R73 GEO): Direct Answer block for AI crawlers.
+            Sits at the very top of <main> so Perplexity / ChatGPT Search /
+            Gemini can lift a 60-word method-comparison answer in their
+            first DOM pass. */}
+        <PageGeoAnswerBlock path="/compare/sublimation-vs-screen-print/" />
+
         {/* HERO */}
         <section className="border-b-2 border-[#0a0a0a] bg-white">
           <div className="mx-auto max-w-5xl px-4 py-12 md:px-8 md:py-20">

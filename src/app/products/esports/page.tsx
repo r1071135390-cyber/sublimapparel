@@ -5,6 +5,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Users, Palette, Ruler, Sparkles, Shirt, Gamepad2, Crown, Layers, Zap } from "lucide-react";
 import { UnifiedContactCta } from "@/components/unified-contact-cta";
+// 2026-09-18 (R73 GEO): TL;DR / Direct Answer block — see /lib/tldr-content.ts.
+import { PageGeoAnswerBlock } from "@/components/geo-answer-block";
 
 export const metadata = buildPageMetadata({
     title: "Custom Esports Apparel | Sublimated Jerseys & Team Kits",
@@ -166,6 +168,9 @@ export default function EsportsPage() {
   return (
     <main>
       <JsonLd data={categoryGraph} />
+      {/* 2026-09-18 (R73 GEO): Direct Answer block — AI engines
+          see "custom esports jerseys" in the first DOM pass. */}
+      <PageGeoAnswerBlock path="/products/esports/" />
 
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto grid max-w-7xl gap-0 px-6 md:grid-cols-12">

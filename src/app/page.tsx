@@ -4,6 +4,11 @@ import { FactoryFloor } from "@/components/factory-floor";
 import { VideoShowcase } from "@/components/home-extras";
 import { JsonLd } from "@/components/json-ld";
 import { LazyClientSections } from "@/components/home/lazy-client-sections";
+// 2026-09-18 (R73 GEO): Direct Answer block placed immediately after the
+// Hero so AI engines (Perplexity, ChatGPT, Gemini) hit the question +
+// answer in the first DOM pass. Content sourced from tldr-content.ts.
+import { GeoAnswerBlock } from "@/components/geo-answer-block";
+import { getPageTldr } from "@/lib/tldr-content";
 import {
   Features,
   Process,
@@ -377,10 +382,23 @@ const homeJsonLd = {
 };
 
 export default function Home() {
+  // 2026-09-18 (R73 GEO): pull the homepage's TL;DR config once at
+  // render time so the same component renders identically on every
+  // request. Content lives in `src/lib/tldr-content.ts` so it can be
+  // updated without re-reading this page.
+  const homeTldr = getPageTldr("/");
   return (
     <main>
       <JsonLd data={homeJsonLd} />
       <Hero />
+      {/* 2026-09-18 (R73 GEO): Direct Answer block placed immediately
+          after the hero so AI engines (Perplexity, ChatGPT Search,
+          Gemini) hit the question + answer in the first DOM pass.
+          The block is server-rendered, exposes its content via
+          data-tldr-* attributes, and slots the homepage into the
+          /, /products/, /fabric/cotton/, /blog/, /contact/ shared
+          "answer surface" AI crawlers can lift verbatim. */}
+      {homeTldr && <GeoAnswerBlock {...homeTldr} id="home-tldr" />}
       <FactoryFloor />
       <VideoShowcase />
       {/* Server-rendered below-fold sections — kept inline for SEO and

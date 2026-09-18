@@ -11,6 +11,10 @@ import { tagArchiveLink, resolveArchiveLink } from "@/lib/tag-utils";
 import { CATEGORY_TAGS } from "@/lib/tag-archive";
 import { products } from "@/lib/products-data";
 import { KeywordCloud } from "@/components/keyword-cloud";
+// 2026-09-18 (R73 GEO): TL;DR / Direct Answer block — same
+// question+answer shape as the homepage so AI engines can lift
+// the catalog summary verbatim.
+import { PageGeoAnswerBlock } from "@/components/geo-answer-block";
 
 export const metadata = buildPageMetadata({
     // 2026-09-11 (R15-P0-1): was 72 chars — Google SERP limit ~60. Shortened to 53.

@@ -216,5 +216,10 @@ const data: CustomerProfileData = {
 export const metadata: Metadata = buildMetadata(data);
 
 export default function Page() {
-  return <CustomerProfilePage data={data} />;
+  return (
+    <>
+      <PageGeoAnswerBlock path="/industries/trade-shows-display/" />
+      <CustomerProfilePage data={data} />
+    </>
+  );
 }

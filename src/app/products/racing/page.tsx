@@ -5,6 +5,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Flag, Users, Palette, Ruler, Layers, Award } from "lucide-react";
 import { UnifiedContactCta } from "@/components/unified-contact-cta";
+// 2026-09-18 (R73 GEO): TL;DR / Direct Answer block — see /lib/tldr-content.ts.
+import { PageGeoAnswerBlock } from "@/components/geo-answer-block";
 
 export const metadata = buildPageMetadata({
     title: "Custom Racing Apparel | Sublimation Motorsport & Track Day",

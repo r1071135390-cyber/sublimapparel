@@ -5,6 +5,7 @@ import { RequestQuoteLink } from "@/components/request-quote-link";
 import { ArrowRight, Globe, Anchor, Container, Ship, MapPin, FileCheck, Package, Truck, ShieldCheck } from "lucide-react";
 import { JsonLd } from "@/components/json-ld";
 import { buildFobShippingPageGraph } from "@/lib/breadcrumb";
+import { PageGeoAnswerBlock } from "@/components/geo-answer-block";
 
 export const metadata = buildPageMetadata({
   // 2026-09-13 (R55): title rewritten for CTR — leads with
@@ -306,6 +307,10 @@ export default function FobPage() {
   return (
     <main>
       <JsonLd data={fobGraph} />
+
+      {/* 2026-09-18 (R73 GEO): Direct Answer block for AI crawlers. */}
+      <PageGeoAnswerBlock path="/shipping/fob/" />
+
       {/* HERO */}
       <section className="border-b-2 border-black bg-[#0a0a0a] text-white">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">

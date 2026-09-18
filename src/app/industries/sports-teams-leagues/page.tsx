@@ -11,6 +11,8 @@ import {
 } from "lucide-react";
 import { buildMetadata, type CustomerProfileData } from "@/lib/customer-profile-data";
 import { CustomerProfilePage } from "@/components/customer-profile-template";
+// 2026-09-18 (R73 GEO): TL;DR / Direct Answer block — see /lib/tldr-content.ts.
+import { PageGeoAnswerBlock } from "@/components/geo-answer-block";
 
 export const dynamic = "force-static";
 
@@ -217,5 +219,13 @@ const data: CustomerProfileData = {
 export const metadata: Metadata = buildMetadata(data);
 
 export default function Page() {
-  return <CustomerProfilePage data={data} />;
+  return (
+    <>
+      {/* 2026-09-18 (R73 GEO): Direct Answer block above the
+          CustomerProfilePage client template so AI engines see
+          the question + answer before the dynamic content. */}
+      <PageGeoAnswerBlock path="/industries/sports-teams-leagues/" />
+      <CustomerProfilePage data={data} />
+    </>
+  );
 }
