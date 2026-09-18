@@ -15,6 +15,7 @@ import {
   Activity,
   Wind,
 } from "lucide-react";
+import { PageGeoAnswerBlock } from "@/components/geo-answer-block";
 
 export const metadata = buildPageMetadata({
     // 2026-09-11 (R15-P0-1): was 61 chars — over 60 limit. Shortened to 53.
@@ -547,3 +548,4 @@ export default function TrainingApparelPage() {
     </main>
   );
 }
+

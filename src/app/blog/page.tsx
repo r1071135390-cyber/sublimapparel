@@ -7,6 +7,7 @@ import Image from"next/image";
 import { ArrowRight, Clock, Calendar } from"lucide-react";
 import { blogPosts, getFeaturedPost, getAllCategories } from "@/lib/blog";
 import { UnifiedContactCta } from "@/components/unified-contact-cta";
+import { PageGeoAnswerBlock } from "@/components/geo-answer-block";
 
 export const metadata = buildPageMetadata({
     title: "Blog | Sublimation Apparel Insights & Factory Stories",
@@ -405,3 +406,4 @@ export default function BlogIndexPage() {
     </>
   );
 }
+

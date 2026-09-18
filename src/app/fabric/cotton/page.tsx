@@ -14,6 +14,7 @@ import { UnifiedContactCta } from "@/components/unified-contact-cta";
 // top-level `breadcrumbJsonLd` const can be built, then assemble
 // `cottonGraph` (BreadcrumbList + WebPage + Service) below.
 import { buildBreadcrumbJsonLd } from "@/lib/breadcrumb";
+import { PageGeoAnswerBlock } from "@/components/geo-answer-block";
 
 // 2026-09-11 push (Round 4): add BreadcrumbList JSON-LD so Google can render
 // rich breadcrumb crumbs in SERP for /fabric/cotton/ — improves CTR vs the
@@ -532,3 +533,4 @@ export default function CottonPage() {
     </>
   );
 }
+

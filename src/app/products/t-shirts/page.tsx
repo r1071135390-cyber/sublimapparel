@@ -15,6 +15,7 @@ import {
   Ruler,
   Users,
 } from "lucide-react";
+import { PageGeoAnswerBlock } from "@/components/geo-answer-block";
 
 export const metadata = buildPageMetadata({
     // 2026-09-15 (R69): was "Custom Sublimation T-Shirts | All-Over Print,
@@ -485,3 +486,4 @@ export default function TShirtsPage() {
     </main>
   );
 }
+

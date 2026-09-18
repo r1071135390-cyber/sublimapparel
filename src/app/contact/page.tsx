@@ -7,6 +7,7 @@ import { buildContactGraph } from "@/lib/breadcrumb";
 import { Contact } from "@/components/contact";
 import { TeamSection } from "@/components/contact-team";
 import { UnifiedContactCta } from "@/components/unified-contact-cta";
+import { PageGeoAnswerBlock } from "@/components/geo-answer-block";
 
 export const metadata = buildPageMetadata({
     // 2026-09-13 (R59): /contact/ title CTR rewrite — pre-R59
@@ -323,3 +324,4 @@ export default function ContactPage() {
     </>
   );
 }
+

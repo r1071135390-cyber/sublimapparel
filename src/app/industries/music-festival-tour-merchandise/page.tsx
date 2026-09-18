@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { buildMetadata, type CustomerProfileData } from "@/lib/customer-profile-data";
 import { CustomerProfilePage } from "@/components/customer-profile-template";
+import { PageGeoAnswerBlock } from "@/components/geo-answer-block";
 
 export const dynamic = "force-static";
 
@@ -222,3 +223,4 @@ export default function Page() {
     </>
   );
 }
+

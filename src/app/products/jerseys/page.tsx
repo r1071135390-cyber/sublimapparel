@@ -9,6 +9,7 @@ import { products } from "@/lib/products-data";
 import { getProductImages } from "@/lib/product-images";
 import { isJersey } from "@/lib/product-content";
 import { UnifiedContactCta } from "@/components/unified-contact-cta";
+import { PageGeoAnswerBlock } from "@/components/geo-answer-block";
 
 export const metadata = buildPageMetadata({
     title: "Custom Team Jerseys | Soccer, Baseball, Basketball",
@@ -448,3 +449,4 @@ export default function JerseysPage() {
     </main>
   );
 }
+

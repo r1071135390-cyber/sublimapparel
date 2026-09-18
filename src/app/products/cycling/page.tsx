@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Bike, Users, Palette, Ruler, Layers, Wind } from "lucide-react";
 import { UnifiedContactCta } from "@/components/unified-contact-cta";
+import { PageGeoAnswerBlock } from "@/components/geo-answer-block";
 
 export const metadata = buildPageMetadata({
     // 2026-09-11 (R15-P0-1): was 62 chars — over 60 limit. Shortened to 55.
@@ -374,3 +375,4 @@ export default function CyclingPage() {
     </main>
   );
 }
+
