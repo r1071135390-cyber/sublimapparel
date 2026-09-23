@@ -9,7 +9,7 @@
     <description>Industry guides, factory stories, and B2B apparel manufacturing insights from a 2,000 m² Yiwu sublimation factory. Sublimation vs DTG, DDP shipping, fabric guides, esports jersey fabric, and more.</description>
     <language>en-US</language>
     <copyright>Copyright © 2026 SublimApparel (Yiwu HomeDorm Commodity Manufacturing Co., Ltd.)</copyright>
-    <lastBuildDate>Sat, 05 Sep 2026 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 22 Sep 2026 00:00:00 GMT</lastBuildDate>
     <ttl>60</ttl>
     <image>
       <url>https://sublimapparel.com/sublimapparel-logo-v2.webp</url>
@@ -157,6 +157,17 @@ This guide breaks down the real-world differences between DTG and DTF, based on 
 
 This guide explains exactly what sublimation printing is, how it works, when to use it (and when not to), and what it costs. We have been running industrial sublimation lines in our Yiwu factory for over a decade — everything below is from production experience, not textbook theory.]]></content:encoded>
       <enclosure url="https://sublimapparel.com/techniques/Sublimationprinting02.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Custom Esports Jerseys: The 2026 B2B Buyer's Guide (Fabric, MOQ, Print)</title>
+      <link>https://sublimapparel.com/blog/custom-esports-jerseys-b2b-buyers-guide/</link>
+      <guid isPermaLink="true">https://sublimapparel.com/blog/custom-esports-jerseys-b2b-buyers-guide/</guid>
+      <pubDate>Tue, 22 Sep 2026 00:00:00 GMT</pubDate>
+      <author>info@sublimapparel.com (SublimApparel Team)</author>
+      <category>Industry Guide</category>
+      <description>Esports jerseys are not sports jerseys: stage lighting, sponsor walls, four-wash cycles a week, and a sponsor's brand on the line. Here is what B2B buyers need to know about fabric, MOQ, print, and DDP shipping for esports team apparel in 2026.</description>
+      <content:encoded><![CDATA[If you are an esports team manager, tournament organizer, league operations lead, or streetwear brand building an esports capsule, this guide is for you. We break down exactly what to ask your factory about fabric, MOQ, print method, QC, and DDP logistics — based on production data from our Yiwu sublimation lines, not marketing copy.]]></content:encoded>
+      <enclosure url="https://sublimapparel.com/esports-jersey-prodigy.webp" type="image/webp" length="0" />
     </item>
   </channel>
 </rss>
