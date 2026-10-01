@@ -392,4 +392,105 @@ Two payment options side-by-side:
 
 ---
 
+## Multi-site tracking (one Stripe account, multiple sites)
+
+> Added 2026-10-01 (R77)
+
+SublimApparel shares one Stripe account across sister sites (today: `sublimapparel.com`; tomorrow: `sublimapparel.us`, `sublimapparel.eu`, etc.). Each transaction carries a `site_slug` metadata field so the factory can reconcile which site a payment came from without scanning Dashboard reports.
+
+### How it works
+
+Every endpoint accepts an optional `site_slug` in the request body:
+
+```jsonc
+POST /api/stripe/create-payment-intent
+{
+  "scenario": "bulk_deposit",
+  "amount_cents": 30000,
+  "customer_email": "buyer@example.com",
+  "site_slug": "sublimapparel"   // optional; defaults to "sublimapparel"
+}
+```
+
+The slug is:
+
+1. **Whitelist-validated** against `ALLOWED_SITE_SLUGS` in
+   `functions/api/stripe/create-payment-intent.ts`,
+   `checkout-session.ts`, and `webhook.ts`. Anything off-list falls back to the
+   default `"sublimapparel"`. Adding a new site means appending one string to
+   three small arrays and one SQL check constraint.
+2. **Pushed into Stripe** as `metadata.site_slug` — visible in
+   Dashboard → Payments → any payment → "Metadata" panel.
+3. **Pushed into Supabase** as both `metadata->>site_slug` (for back-compat)
+   and the dedicated `payment_site` column (for fast indexed queries).
+4. **Echoed back** in the API response so the client can confirm which site
+   the transaction was tagged with.
+
+### Querying by site
+
+```bash
+# Supabase REST: all succeeded payments for sublimapparel
+curl "$SUPABASE_URL/rest/v1/payments?payment_site=eq.sublimapparel&status=eq.succeeded"
+
+# Supabase REST: all payments across all sites for last 30 days
+curl "$SUPABASE_URL/rest/v1/payments?paid_at=gte.2026-09-01&select=payment_site,amount_cents,currency,status"
+```
+
+```sql
+-- SQL: monthly GMV per site (cross-site reporting)
+SELECT
+  payment_site,
+  DATE_TRUNC('month', paid_at) AS month,
+  SUM(amount_cents) / 100.0 AS gmv_usd,
+  COUNT(*) AS txn_count
+FROM payments
+WHERE status = 'succeeded'
+GROUP BY payment_site, month
+ORDER BY month DESC, payment_site;
+```
+
+```text
+# Stripe Dashboard: filter charges by metadata
+# Payments → filter → "Metadata" → site_slug = sublimapparel
+```
+
+### Adding a new sister site
+
+1. Append the new slug to `ALLOWED_SITE_SLUGS` in all three Stripe function
+   files (`create-payment-intent.ts`, `checkout-session.ts`, `webhook.ts`).
+2. Add the same slug to the `CHECK (payment_site IN (...))` constraints in
+   `supabase/migrations/20261001_r77_payment_site.sql` (or write a new
+   migration that `ALTER`s the check).
+3. Pass the new slug from the front-end form when calling the payment
+   endpoint. Each site has its own `<form>` or `fetch` call site, so this is
+   a one-line change per page.
+4. No Cloudflare env var change needed — the slug list lives in code.
+
+### Why metadata + dedicated column (not just one or the other)?
+
+- **metadata JSONB**: future-proof if the site taxonomy grows (regions,
+  brands, sub-campaigns); Stripe Dashboard sees it natively.
+- **payment_site column**: queryable + indexable in Supabase, usable in
+  `pg_dump`, easy to JOIN against `proforma_invoices`.
+
+### Why a whitelist?
+
+Two reasons:
+1. **Defense in depth**: even though Stripe webhooks are signed, an attacker
+   who already has a valid Stripe session could try to mutate metadata via
+   Stripe's UI before payment lands. The whitelist coerces anything unknown
+   back to `"sublimapparel"`.
+2. **Operational clarity**: every site's slug is enumerated in three
+   places — when adding a new site, you cannot forget to add it everywhere
+   because the SQL CHECK constraint will reject the new column value until
+   you do.
+
+### Cloudflare env vars (no change)
+
+The Stripe `STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET` are shared
+across all sites in the same Stripe account — no per-site key rotation
+needed.
+
+---
+
 For any questions, ping the dev team.

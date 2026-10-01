@@ -2171,6 +2171,230 @@ export const blogPosts: BlogPost[] = [
       },
     ],
   },
+  // 2026-09-30 (R77-blog): process-education deep-dive companion to
+  // /blog/what-is-sublimation-printing/. Goes one level deeper into
+  // the actual 6-step production line (artwork prep → transfer paper
+  // → fabric cut → heat press → sew → QC) with concrete temperature,
+  // time, GSM, and wash-test numbers. Targets long-tail "how
+  // sublimation printing works" / "sublimation production process"
+  // / "sublimation heat press temperature" / "sublimation transfer
+  // paper" queries. Differs from the existing /blog/what-is-
+  // sublimation-printing/ overview by being operational rather
+  // than definitional.
+  {
+    slug: "sublimation-printing-process-explained",
+    title:
+      "Sublimation Printing Process Explained: From Artwork to Garment in 6 Steps",
+    excerpt:
+      "A factory walkthrough of the sublimation printing process — artwork prep, transfer paper, heat press, sewing, and quality control. Real temperatures, timings, and wash-test standards from a Yiwu sublimation line.",
+    category: "Industry Guide",
+    date: "2026-09-30",
+    readTime: "10 min read",
+    author: "SublimApparel Team",
+    coverImage:
+      "https://placehold.co/1600x900/0a3d62/ffffff?text=Sublimation+Printing+Process+Explained",
+    coverAlt:
+      "Process photograph of a sublimation production line showing transfer paper being heat-pressed onto white polyester fabric panels, with a flat-bed heat press visible in the foreground and finished printed panels stacked on a cutting table in the background",
+    tags: [
+      "sublimation printing process",
+      "how sublimation printing works",
+      "sublimation heat press temperature",
+      "sublimation transfer paper",
+      "sublimation ink",
+      "dye sublimation process",
+      "sublimation production line",
+      "polyester printing process",
+      "sublimation factory process",
+      "sublimation printing steps",
+      "heat press sublimation",
+      "sublimation wash test",
+      "sublimation line setup",
+    ],
+    metaTitle:
+      "Sublimation Printing Process Explained: 6 Steps (2026 Factory Guide)",
+    metaDescription:
+      "Sublimation printing process step by step: artwork prep, transfer paper, heat press temperature (200°C / 35 sec), fabric, sewing, QC wash test. Real numbers from a Yiwu sublimation line — MOQ 50 pcs, DDP worldwide.",
+    intro: [
+      "If you have been sourcing sublimated apparel and every supplier promises the same thing — \"vibrant color, soft hand-feel, no fade\" — you probably want to know what actually happens on the production line between your artwork file and the finished garment in the carton. This guide walks through the six physical steps that turn a Photoshop file into a sublimated t-shirt, jersey, or hoodie: artwork preparation, transfer paper printing, fabric cutting, heat press lamination, sewing, and quality control. Every number below is from our own sublimation line in Yiwu — temperature, dwell time, GSM, ink coverage, wash-test cycles.",
+      "It is the deeper companion to our <a href='/blog/what-is-sublimation-printing/'>overview post on what sublimation printing is</a> and the technical hub at <a href='/technique/sublimation/'>our sublimation technique page</a>. If you are evaluating a supplier and want to know whether their process actually matches industry standards, the sections below give you the questions to ask and the answers to expect.",
+    ],
+    sections: [
+      {
+        heading: "Why Sublimation Works at the Molecular Level",
+        paragraphs: [
+          "Sublimation is unique among textile decoration methods because it skips the liquid phase entirely. Solid dye turns straight into a gas under heat, bonds with the polyester fiber at the molecular level, and then re-solidifies inside the fiber as it cools. There is no print layer sitting on top of the fabric — the dye becomes part of the fiber. That is why sublimation prints cannot peel, crack, or fade for the life of the garment, and why the hand-feel is softer than screen print or DTF.",
+          "The physics matters for production: because the dye needs open molecular sites in the fiber to bond with, only polyester (and polyester-rich blends) work. Cotton has no synthetic polymer chains for the dye to lock onto, which is why every cotton \"sublimation\" you have seen online is actually DTF or DTG being mislabeled. The polyester requirement also drives every other step below — fabric selection, ink chemistry, transfer paper weight, heat press temperature, and even the cutting tolerances, all of which have to be tuned to the molecular reality of dye + synthetic fiber.",
+        ],
+      },
+      {
+        heading:
+          "Step 1: Artwork Preparation and Color Separation",
+        paragraphs: [
+          "The first production step is the one most off-shore suppliers skip or rush, and it is the one that decides 90% of the final print quality. Your artwork file (AI, PSD, or PDF) gets opened by our pre-press team, checked for resolution (we require 300 DPI at final print size, scaled 1:1), and converted into our printer's native color space. For edge-to-edge all-over print designs, the artwork is also panel-mapped: each garment panel (front body, back body, left sleeve, right sleeve, collar, cuff) is laid out flat on a single transfer paper so the print aligns perfectly when the garment is sewn.",
+          "Color separation is where factory experience shows. CMYK sublimation ink cannot reproduce every Pantone color — bright neons, metallics, and some fluorescents fall outside the gamut. Our pre-press team flags out-of-gamut colors before printing, recommends the closest achievable Pantone match, and produces a strike-off sample (a single 30×30 cm printed swatch) for your approval. A well-run sublimation line never goes straight from your file to bulk transfer paper printing without this strike-off step. If your supplier skips it, expect a color mismatch on the finished goods.",
+          "Allow 1-2 business days for artwork prep and 5-7 business days for a strike-off sample to reach you by international express. For repeat orders with the same artwork, we archive the pre-press file and the strike-off approval — re-orders typically skip the strike-off step and go straight to bulk printing.",
+        ],
+      },
+      {
+        heading:
+          "Step 2: Printing onto Sublimation Transfer Paper",
+        paragraphs: [
+          "Once artwork is approved, the file goes to one of our wide-format sublimation printers. We run Mimaki and MS JP7 printers with water-based sublimation ink (sublimation ink is suspended in water, not solvent — that is what makes the process low-VOC and OEKO-TEX compliant). The printer deposits ink onto a coated release paper, not directly onto the fabric. Print resolution is typically 720×1440 DPI for fine-art and photographic designs, 360×360 DPI for simpler vector graphics.",
+          "Transfer paper choice matters more than most buyers realize. We use 90-100 GSM high-release paper for sportswear and performance apparel (fast dye transfer, sharp edges, minimal ghosting) and 70-80 GSM low-release paper for fashion apparel where softer hand-feel matters more than maximum color saturation. The paper is wound onto a roll, slit to the panel width, and queued for the heat press.",
+          "One transfer paper print yields one garment panel-set. A full sublimated t-shirt uses one transfer paper per garment, sized to fit the front body, back body, and both sleeves laid out side-by-side. A cycling jersey uses 4-5 panels per garment (front, back, two side panels, two sleeve panels). A sublimated hoodie uses 5-6 panels because of the hood and kangaroo pocket. Multi-panel layouts are where a 1.9 m wide-format printer earns its keep — we print the full panel set in one pass so colors and gradients stay continuous across seams.",
+        ],
+      },
+      {
+        heading:
+          "Step 3: Fabric Selection and Panel Cutting",
+        paragraphs: [
+          "Polyester fabric arrives at our cutting line in rolls, typically 1.5-1.8 m wide and 50-100 m long, knit or woven depending on the garment spec. The most common knit for performance apparel is 160-180 GSM 100% polyester interlock; for fashion tees and streetwear, 140-160 GSM single jersey; for hoodies and sweatshirts, 280-320 GSM brushed polyester fleece or French terry. Each fabric has its own heat-press profile — thinner fabrics need lower pressure and shorter dwell times, thicker fleece needs higher pressure and longer dwell to push dye fully through the loft.",
+          "Cutting is done by computer-controlled knife or laser cutter, depending on the order size and precision requirement. Laser is more accurate (cut tolerance ±1 mm vs ±3 mm for knife) and seals the polyester edge to prevent fraying, which matters for sublimation because a fraying cut edge can lift during heat press and leave a visible halo. For 1,000+ piece orders, we run nested cutting to minimize fabric waste — typical fabric utilization is 82-88% depending on the panel layout.",
+          "Cut panels are stacked, bundled per garment, and barcoded with the order number, panel type, and size. Each bundle flows to the heat press station with its matching transfer paper bundle. Barcode tracking means a single panel can be traced from fabric roll to finished carton — critical when an issue surfaces in QC and we need to pull the specific lot.",
+        ],
+      },
+      {
+        heading:
+          "Step 4: Heat Press Lamination — Where the Dye Bonds",
+        paragraphs: [
+          "This is the heart of the sublimation process. A cut polyester panel is laid flat on the heat press bed, transfer paper is placed face-down on top of the panel (printed side touching the fabric), and the press closes at 200°C with 30-45 seconds of dwell time depending on the fabric. Under heat and pressure, the solid dye on the transfer paper sublimates — turns directly into a gas without becoming liquid — and the gas migrates into the polyester fiber. When the press opens and the paper is peeled away, the dye re-solidifies inside the fiber. The print is now physically part of the fabric, not a layer on top.",
+          "The 200°C / 35-second window is the industry standard for 100% polyester knit at 160 GSM. Go below 195°C or under 25 seconds and the dye does not fully vaporize — colors come out washed out, gradients lose their depth. Go above 210°C or over 50 seconds and the polyester begins to scorch — you see yellowing, stiffening, and a synthetic smell. Our press operators monitor every cycle with a calibrated thermocouple and follow a fabric-specific dwell-time chart (single jersey 30s, interlock 35s, fleece 45s, woven 25s).",
+          "Modern flat-bed sublimation presses like our Monti Antonio and Klieverik machines have automated pressure calibration, dual heating zones, and conveyor belt feed. A single press can laminate 400-600 panels per shift depending on panel size. For full-panel all-over print, the press bed needs to be at least as wide as the largest panel — for an adult cycling jersey back panel, that means a 60×80 cm working area. Sublimation lines that try to do full-panel work on a small 38×38 cm t-shirt press end up with seams in the middle of the print, which is the giveaway of a low-end supplier.",
+        ],
+      },
+      {
+        heading:
+          "Step 5: Sewing and Garment Assembly",
+        paragraphs: [
+          "After lamination, panels go to the sewing line. Sublimated panels are sewn with the same machinery as any knit garment — coverstitch, overlock, flatlock — but with two critical differences: needle size and thread type. We use ballpoint needles (not sharp) to avoid piercing the polyester fiber and creating visible holes at the seam, and we use polyester-core cotton-wrapped thread (not 100% cotton) so the thread survives the same 50-wash test as the print. A 100% cotton thread on a sublimated polyester garment will degrade and break long before the print fades.",
+          "Seam placement matters because sublimation has no print area limit. The artwork can extend edge-to-edge across panels, so seams have to be planned during the artwork layout (Step 1) to land in the right place — typically along the side seam, shoulder seam, and sleeve seam — not across a face, logo, or gradient. Our pre-press team works with our pattern maker to align the print layout with the seam layout before any fabric is cut. This is where 10+ years of factory experience shows: a newer supplier will sew the panels as-is and end up with a face split across a chest seam.",
+          "Assembly includes all trims: neck taping, label sewing (we offer woven custom labels, printed care labels, and tear-away tags), hem stitching, buttonholes, zippers, drawstrings, and elastic. Each trim is checked against the order spec before the garment moves to QC. For a sublimated t-shirt, sewing takes 12-18 minutes per garment depending on complexity. For a sublimated hoodie, 25-35 minutes. A 500-piece order typically takes 4-5 days on the sewing line.",
+        ],
+      },
+      {
+        heading:
+          "Step 6: Quality Control, Wash Test, and Packing",
+        paragraphs: [
+          "Every sublimated garment passes through three QC stages: inline inspection during sewing (operators check each seam and trim as they work), final inspection after assembly (a separate QC team checks the full garment against the order spec and the approved sample), and a batch-level wash test on a 5-10% sample from each production run. The wash test is the one most off-shore suppliers skip — and it is the single most reliable indicator of print durability.",
+          "Our standard wash test follows ISO 105-C10 (the international standard for textile colorfastness to washing). Each test garment is washed 50 cycles at 40°C with standard detergent, tumble-dried, and rated against the AATCC grayscale for color change. Acceptable rating is 4 out of 5 or higher. Anything below 4 is rejected and the batch is either re-printed or written off. For performance apparel and teamwear, we run the 50-cycle test before bulk shipment; for repeat orders from established clients with a known fabric spec, we run a 10-cycle accelerated test (60°C wash) and reserve the full 50-cycle test for quarterly spot-checks.",
+          "After QC, garments are folded, poly-bagged individually (for retail distribution) or stacked 10-25 per bundle (for teamwear bulk distribution), packed into export cartons with a silica desiccant, and palletized for DDP shipping. Each carton is labeled with the order number, size run breakdown, piece count, and gross/net weight. A full QC + packing cycle takes 2-3 days for a 500-piece order.",
+        ],
+      },
+      {
+        heading:
+          "What This Means for Your Sourcing Decision",
+        paragraphs: [
+          "The six steps above are the industry standard for any reputable sublimation supplier. If a factory you are talking to cannot describe each step in concrete terms — actual temperatures, dwell times, ink brands, paper weights, wash-test standards — they are probably cutting corners. The most common shortcuts we see at incoming QC from other factories: skipped strike-off sample (colors off), wrong paper weight (ghosting on gradients), over-hot press (scorched panels), wrong thread (breaking after a few washes), and no wash test at all (you discover the fade problem six months later).",
+          "For a hands-on look at the process, our <a href='/samples/'>fabric sample kit</a> includes printed swatches at different polyester contents and GSMs so you can feel the hand and see the color before you commit. For a deeper dive into the fabric science, see our <a href='/fabric/polyester/'>polyester fabric hub</a>. And if you have a design and a quantity ready, send it through <a href='/get-a-quote/'>our quote form</a> — we will reply within 24 hours with a transparent DDP price, a strike-off sample timeline, and the production schedule for your specific garment.",
+        ],
+      },
+    ],
+    keyTakeaways: [
+      "Sublimation skips the liquid phase — solid dye sublimates directly to gas and bonds with polyester fibers at the molecular level",
+      "Six production steps: artwork prep → transfer paper print → fabric cut → heat press → sew → QC, with barcode tracking at every step",
+      "Standard heat-press window is 200°C / 35 seconds at medium pressure for 100% polyester knit at 160 GSM — lower than 195°C washes out, higher than 210°C scorches",
+      "Wide-format sublimation printers (1.9 m working width) print full panel sets in one pass so colors and gradients stay continuous across seams",
+      "Quality lines run ISO 105-C10 wash tests on every batch and reject anything below AATCC grayscale 4/5 after 50 wash cycles",
+      "Pre-press artwork mapping, ballpoint needles, and polyester-core thread are the three details that separate a professional sublimation line from a low-end one",
+      "Always insist on a strike-off sample before bulk printing — out-of-gamut colors and panel misalignment can only be caught at this step, not in finished QC",
+    ],
+    faqs: [
+      {
+        q: "What temperature and time does sublimation heat press require?",
+        a: "Standard sublimation heat press for 100% polyester knit at 160 GSM is 200°C with 35 seconds of dwell time at medium pressure. Thinner fabrics (single jersey at 140 GSM) take 30 seconds; thicker fabrics (brushed fleece at 300 GSM) take 45 seconds. Woven polyester takes 25 seconds. Below 195°C the dye does not fully vaporize — colors come out washed out; above 210°C the polyester begins to scorch with visible yellowing and stiffening. Every professional sublimation line should run a calibrated thermocouple on every press cycle and follow a fabric-specific dwell-time chart.",
+      },
+      {
+        q: "Can sublimation be done at home with a small heat press?",
+        a: "Yes, hobbyist sublimation works for small hard-substrate items (mugs, coasters, phone cases, mousepads, polyester fabric patches) using a desktop heat press at the same 200°C / 35-second window. But home sublimation is not practical for full garments. A small 38×38 cm press cannot laminate a full t-shirt front panel — you end up with seams running across the print, which is the visual giveaway of a hobbyist setup. For full-garment sublimation, you need a flat-bed press with at least a 60×80 cm working area plus an industrial sublimation printer. Hobbyist setups also use consumer-grade sublimation ink that is not OEKO-TEX certified, so the finished product is not suitable for children's clothing or skin-contact apparel.",
+      },
+      {
+        q: "What is the difference between sublimation ink and regular ink?",
+        a: "Sublimation ink is a water-based dye suspension (pigment suspended in water, not solvent) that sublimates — turns from solid to gas — under heat around 200°C. Regular ink (screen printing ink, DTG ink, DTF ink) is solvent- or pigment-based and dries by evaporation or curing, leaving a layer on top of the substrate. The molecular difference is why sublimation dye bonds with polyester fiber while other inks form a surface layer. Sublimation ink is also low-VOC and OEKO-TEX compliant when used with certified paper and fabric, which is why it is the standard for children's clothing, sportswear, and skin-contact apparel where solvent residue is a concern.",
+      },
+      {
+        q: "How long does the dye sublimation process take from artwork to finished garment?",
+        a: "For a 500-piece sublimated apparel order from artwork approval to carton-ready: 15-20 days total. Breakdown: artwork prep 1-2 days, strike-off sample 5-7 days (plus 3-5 days for international shipping if you are outside China), bulk transfer paper printing 1-2 days, fabric cutting 1 day, heat press lamination 2-3 days, sewing 4-5 days, QC and packing 2-3 days. Add 5-10 days for DDP shipping to a US or EU address. Rush orders under 14 days are possible at a 30-50% rush-production fee plus air-freight shipping at cost.",
+      },
+      {
+        q: "Why does sublimation only work on polyester?",
+        a: "Sublimation dye needs synthetic polymer chains to bond with. Polyester (polyethylene terephthalate, PET) is a synthetic polymer with open molecular sites that the dye gas can lock into during the heat press cycle. Cotton is a natural cellulose fiber with a different molecular structure — no open polymer chains for the dye to bond with. That is why 100% cotton cannot be sublimated and why cotton \"sublimation\" you see advertised online is always actually DTF or DTG. Polyester blends (65/35, 50/50) partially work because the polyester portion of the blend accepts the dye while the cotton portion does not — the result is a faded, vintage look on the cotton side. For 100% cotton apparel with all-over print, the cotton-friendly alternative is DTF (Direct-to-Film), which lays a printed film on top of the fabric.",
+      },
+    ],
+    citations: [
+      {
+        "@type": "WebPage",
+        "@id": "https://www.oeko-tex.com/en/our-standards/standard-100-by-oeko-tex",
+        name: "OEKO-TEX Standard 100 — Textile Safety Certification",
+        url: "https://www.oeko-tex.com/en/our-standards/standard-100-by-oeko-tex",
+        sameAs: "https://www.oeko-tex.com/en/our-standards/standard-100-by-oeko-tex",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://en.wikipedia.org/wiki/Dye-sublimation_printer",
+        name: "Dye-sublimation printer — Wikipedia",
+        url: "https://en.wikipedia.org/wiki/Dye-sublimation_printer",
+        sameAs: "https://en.wikipedia.org/wiki/Dye-sublimation_printer",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://www.iso.org/standard/55631.html",
+        name: "ISO 105-C10:2006 — Textiles — Tests for colour fastness",
+        url: "https://www.iso.org/standard/55631.html",
+        sameAs: "https://www.iso.org/standard/55631.html",
+      },
+    ],
+    isBasedOn: [
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/technique/sublimation/",
+        name: "Sublimation Printing Process — SublimApparel Technique Hub",
+        url: "https://sublimapparel.com/technique/sublimation/",
+        sameAs: "https://sublimapparel.com/technique/sublimation/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/fabric/polyester/",
+        name: "Polyester Fabric — SublimApparel Fabric Hub",
+        url: "https://sublimapparel.com/fabric/polyester/",
+        sameAs: "https://sublimapparel.com/fabric/polyester/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/quality-control/",
+        name: "Quality Control &amp; AQL Inspection — SublimApparel",
+        url: "https://sublimapparel.com/quality-control/",
+        sameAs: "https://sublimapparel.com/quality-control/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/blog/what-is-sublimation-printing/",
+        name: "What Is Sublimation Printing — SublimApparel Blog",
+        url: "https://sublimapparel.com/blog/what-is-sublimation-printing/",
+        sameAs: "https://sublimapparel.com/blog/what-is-sublimation-printing/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/blog/what-is-sublimation-fabric/",
+        name: "What Is Sublimation Fabric? A Factory Guide",
+        url: "https://sublimapparel.com/blog/what-is-sublimation-fabric/",
+        sameAs: "https://sublimapparel.com/blog/what-is-sublimation-fabric/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/samples/",
+        name: "Fabric Sample Kit — SublimApparel",
+        url: "https://sublimapparel.com/samples/",
+        sameAs: "https://sublimapparel.com/samples/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/get-a-quote/",
+        name: "Get a Custom Quote — SublimApparel",
+        url: "https://sublimapparel.com/get-a-quote/",
+        sameAs: "https://sublimapparel.com/get-a-quote/",
+      },
+    ],
+  },
 ];
 
 export const getPostBySlug = (slug: string): BlogPost | undefined =>
