@@ -25,6 +25,12 @@ ALTER TABLE payments
 
 -- Backfill: copy any pre-existing metadata.site_slug values into the new column.
 -- Idempotent — only touches rows where metadata is set and contains site_slug.
+-- Allowed slugs: 'sublimapparel' today. Append 'sublimapparel_us' and
+-- 'sublimapparel_eu' to BOTH the IN list below and the ALLOWED_SITE_SLUGS
+-- set in functions/api/stripe/create-payment-intent.ts when new sites are
+-- added. Comments live ABOVE the IN clause to avoid the trailing-comma
+-- syntax error that PostgreSQL raises when comments appear between the
+-- last value and the closing paren.
 UPDATE payments
    SET payment_site = metadata->>'site_slug'
  WHERE payment_site = 'sublimapparel'
@@ -32,9 +38,7 @@ UPDATE payments
    AND metadata->>'site_slug' IS NOT NULL
    AND metadata->>'site_slug' <> ''
    AND metadata->>'site_slug' IN (
-     'sublimapparel',
-     -- 'sublimapparel_us',
-     -- 'sublimapparel_eu',
+     'sublimapparel'
    );
 
 CREATE INDEX IF NOT EXISTS idx_payments_payment_site
@@ -48,6 +52,8 @@ ALTER TABLE proforma_invoices
   ADD COLUMN IF NOT EXISTS payment_site TEXT;
 
 -- Backfill from PI's own metadata if present.
+-- Allowed slugs: 'sublimapparel' today. Same comment as the payments
+-- UPDATE — keep above the IN list to avoid PostgreSQL trailing-comma error.
 UPDATE proforma_invoices
    SET payment_site = metadata->>'site_slug'
  WHERE payment_site IS NULL
@@ -55,9 +61,7 @@ UPDATE proforma_invoices
    AND metadata->>'site_slug' IS NOT NULL
    AND metadata->>'site_slug' <> ''
    AND metadata->>'site_slug' IN (
-     'sublimapparel',
-     -- 'sublimapparel_us',
-     -- 'sublimapparel_eu',
+     'sublimapparel'
    );
 
 -- After backfill, anything still NULL gets the default. This makes the column
