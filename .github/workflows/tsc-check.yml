@@ -61,23 +61,18 @@ jobs:
           fi
         continue-on-error: false
 
-      - name: Verify Supabase migrations are valid SQL syntax
+      - name: Verify Supabase migrations have no trailing commas in IN-clauses
         run: |
+          # Trailing commas in IN clauses caused R77 sync_failure; flag them early.
+          set -e
           if [ -d supabase/migrations ]; then
             for f in supabase/migrations/*.sql; do
               echo "Checking $f"
-              # PGPORT regression — strip BEGIN/COMMIT and check trailing commas
-              python3 -c "
-import re, sys
-with open('$f') as fp: src = fp.read()
-# flag trailing commas in IN clauses (R77 lesson learned)
-matches = re.findall(r'IN \([^)]*,\s*\)', src, re.DOTALL)
-if matches:
-  print('TRAILING COMMA IN IN-clause:', file=sys.stderr)
-  for m in matches: print('  ' + m, file=sys.stderr)
-  sys.exit(1)
-print('OK')
-"
+              if grep -nE 'IN[[:space:]]*\([[:space:]]*[^)]*,[[:space:]]*\)' "$f"; then
+                echo "::error file=$f::Trailing comma inside IN() — remove it"
+                exit 1
+              fi
             done
+          else
+            echo "No supabase/migrations directory, skipping"
           fi
-        continue-on-error: true
