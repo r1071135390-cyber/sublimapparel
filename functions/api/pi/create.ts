@@ -142,7 +142,11 @@ export async function onRequestPost(context: {
     shipping_cents: shippingCents,
     total_cents: totalCents,
     currency,
-    status: "draft",
+    // 2026-10-02 (R78): admin creates a PI specifically to email a customer
+    // a /pay/?pi=... link. Writing 'sent' (instead of legacy 'draft') means
+    // /api/pi/{pi_number} will create a Stripe PaymentIntent on first load.
+    // SumaryClient already styles 'sent' (blue "SENT" badge) — no UI churn.
+    status: "sent",
     payment_terms: body.notes ?? "30% deposit, 70% before shipment",
     payment_percentage: 30,
   };
