@@ -200,10 +200,12 @@ export async function onRequestGet(context: {
   }
 
   return jsonResponse({
-    ...row,
-    clientSecret,
-    paymentIntentId,
-    paymentUrl: null,
+    pi: {
+      ...row,
+      stripe_client_secret: clientSecret,
+      stripe_payment_intent_id: paymentIntentId,
+      paymentUrl: null,
+    },
   });
 }
 
