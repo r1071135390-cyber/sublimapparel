@@ -93,7 +93,16 @@ export async function onRequestGet(context: {
 
   if (!id && !piNumber) {
     return jsonResponse(
-      { error: "Provide ?id=<id> or ?piNumber=<SA...> or path /api/pi/<pi_number>" },
+      {
+        error: "Provide ?id=<id> or ?piNumber=<SA...> or path /api/pi/<pi_number>",
+        debug: {
+          request_url: request.url,
+          params,
+          raw_path_pi: rawPathPi,
+          pathPi,
+          url_pathname: url.pathname,
+        },
+      },
       400,
     );
   }
