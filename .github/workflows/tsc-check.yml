@@ -37,13 +37,15 @@ jobs:
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: 9
+        # version is pinned in package.json "packageManager" field
+        # (pnpm@9.0.0) — keep them in sync to avoid ERR_PNPM_BAD_PM_VERSION.
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          # Node 20 is deprecated on GitHub Actions (Sept 2025).
+          # Use 24 to match the latest LTS and silence the runner warning.
+          node-version: "24"
           cache: "pnpm"
 
       - name: Install dependencies
