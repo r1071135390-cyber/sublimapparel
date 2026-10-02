@@ -64,7 +64,12 @@ export async function onRequestOptions(): Promise<Response> {
 export async function onRequestGet(context: {
   request: Request;
   env: Env;
-  params?: Record<string, string | undefined>;
+  // 2026-10-02 (R78): Cloudflare Pages Functions passes `params.pi_number`
+  // as a string ARRAY `["SA..."]` (not a plain string) for catch-all
+  // `[[pi_number]]` routes. The base Record<string,string> type CF gives
+  // us lies about this — accept the union so TypeScript doesn't narrow
+  // away the array branch.
+  params?: Record<string, string | string[] | undefined>;
 }): Promise<Response> {
   const { request, env, params } = context;
 
