@@ -5,8 +5,19 @@ COZE_WORKSPACE_PATH="${COZE_WORKSPACE_PATH:-$(pwd)}"
 
 cd "${COZE_WORKSPACE_PATH}"
 
-echo "Installing dependencies..."
-pnpm install --prefer-frozen-lockfile --prefer-offline --loglevel debug --reporter=append-only
+# 2026-10-02 (R78 follow-up): skip redundant `pnpm install` when running on
+# Cloudflare Pages or Vercel — both platforms install dependencies from the
+# lockfile BEFORE invoking this script. Re-running install here wasted ~2-3
+# minutes of the 5-minute build budget and caused several commits in this
+# session (3aeb0fb, 5cb79db, 35ba160, 6a18051, dd247e4) to be marked as
+# "no deployment available" on the CF dashboard even though their code
+# changes DID ship via the next successful build. Install only locally.
+if [ -z "${VERCEL:-}" ] && [ -z "${CF_PAGES:-}" ]; then
+  echo "Installing dependencies..."
+  pnpm install --prefer-frozen-lockfile --prefer-offline --loglevel error --reporter=append-only
+else
+  echo "Skipping pnpm install (deployment platform already installed deps)"
+fi
 
 # 2026-09-14 (R64 follow-up): pre-generate the SublimApparel blog
 # RSS feed as a static XML file under public/blog/feed.xml/index.xml.
