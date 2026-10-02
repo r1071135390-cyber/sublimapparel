@@ -179,6 +179,45 @@ export async function onRequestGet(context: {
         clientSecret = pi.client_secret ?? null;
         paymentIntentId = pi.id;
 
+        // 2026-10-02 (R78): also INSERT a pending payments row so the
+        // webhook's UPDATE on payment_intent.succeeded has something to
+        // match against (where stripe_payment_intent_id = 'pi_...').
+        // Without this, the webhook fires successfully but 0 rows are
+        // updated — payments table stays empty and admin dashboards
+        // showing "total payments this month" miss the row.
+        const paymentsInsertRes = await fetch(
+          `${supabaseUrl}/rest/v1/payments`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              apikey: env.COZE_SUPABASE_SERVICE_ROLE_KEY,
+              Authorization: `Bearer ${env.COZE_SUPABASE_SERVICE_ROLE_KEY}`,
+              Prefer: "return=minimal",
+            },
+            body: JSON.stringify({
+              stripe_payment_intent_id: pi.id,
+              scenario: "pi_payment",
+              status: "pending",
+              amount_cents: amountCents,
+              currency,
+              customer_name: (row.customer_name as string | null) ?? null,
+              customer_email: (row.customer_email as string | null) ?? null,
+              pi_id: String((row.id as string | number) ?? ""),
+              metadata: {
+                pi_number: String((row.pi_number as string | null) ?? ""),
+                site_slug,
+              },
+              payment_site: site_slug,
+            }),
+          },
+        );
+        if (!paymentsInsertRes.ok && paymentsInsertRes.status !== 409) {
+          console.error(
+            `[pi/get] payments INSERT failed: ${paymentsInsertRes.status} ${await paymentsInsertRes.text()}`,
+          );
+        }
+
         const patchRes = await fetch(
           `${supabaseUrl}/rest/v1/proforma_invoices?id=eq.${encodeURIComponent(String(row.id))}`,
           {
