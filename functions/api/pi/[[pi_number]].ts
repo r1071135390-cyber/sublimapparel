@@ -80,6 +80,8 @@ export async function onRequestGet(context: {
   // 2026-10-02 (R78): Cloudflare Pages Functions passes params.pi_number
   // as an ARRAY ["SA..."] for the catch-all [[pi_number]] route, NOT a
   // plain string. Normalise here — accept string | string[] | undefined.
+  // url.pathname is the ultimate fallback for the rare case neither
+  // catches.
   const paramRaw = params?.pi_number;
   const paramPi =
     typeof paramRaw === "string"
@@ -87,31 +89,11 @@ export async function onRequestGet(context: {
       : Array.isArray(paramRaw)
         ? paramRaw[paramRaw.length - 1] ?? ""
         : "";
-  // url.pathname fallback covers the edge where Cloudflare hasn't yet
-  // populated params (some routing edge cases). Take the last non-empty
-  // segment after /api/pi/.
   const pathSegments = url.pathname.replace(/\/+$/, "").split("/");
   const fallbackPathPi = pathSegments[pathSegments.length - 1] || "";
   const rawPathPi = paramPi || fallbackPathPi;
   const pathPi = rawPathPi.split("/").filter(Boolean).pop() ?? "";
   const piNumber = url.searchParams.get("piNumber") ?? (pathPi || undefined);
-
-  if (!id && !piNumber) {
-    return jsonResponse(
-      {
-        error: "Provide ?id=<id> or ?piNumber=<SA...> or path /api/pi/<pi_number>",
-        debug: {
-          request_url: request.url,
-          pathname: url.pathname,
-          params_keys: params ? Object.keys(params) : null,
-          param_pi: paramPi,
-          fallback_path_pi: fallbackPathPi,
-          resolved_path_pi: pathPi,
-        },
-      },
-      400,
-    );
-  }
 
   const filter = id
     ? `id=eq.${encodeURIComponent(id)}`
