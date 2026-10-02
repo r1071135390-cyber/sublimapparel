@@ -77,15 +77,21 @@ export async function onRequestGet(context: {
 
   const url = new URL(request.url);
   const id = url.searchParams.get("id");
-  // 2026-10-02 (R78): prefer the catch-all `[[pi_number]]` param when
-  // Cloudflare populates it, but ALSO extract from url.pathname as a
-  // fallback. url.pathname is reliable regardless of Cloudflare's
-  // dynamic-routing quirks — we just take the last non-empty segment
-  // after `/api/pi/`.
+  // 2026-10-02 (R78): Cloudflare Pages Functions passes params.pi_number
+  // as an ARRAY ["SA..."] for the catch-all [[pi_number]] route, NOT a
+  // plain string. Normalise here — accept string | string[] | undefined.
+  const paramRaw = params?.pi_number;
+  const paramPi =
+    typeof paramRaw === "string"
+      ? paramRaw
+      : Array.isArray(paramRaw)
+        ? paramRaw[paramRaw.length - 1] ?? ""
+        : "";
+  // url.pathname fallback covers the edge where Cloudflare hasn't yet
+  // populated params (some routing edge cases). Take the last non-empty
+  // segment after /api/pi/.
   const pathSegments = url.pathname.replace(/\/+$/, "").split("/");
   const fallbackPathPi = pathSegments[pathSegments.length - 1] || "";
-  const paramPi =
-    typeof params?.pi_number === "string" ? params.pi_number : "";
   const rawPathPi = paramPi || fallbackPathPi;
   const pathPi = rawPathPi.split("/").filter(Boolean).pop() ?? "";
   const piNumber = url.searchParams.get("piNumber") ?? (pathPi || undefined);
