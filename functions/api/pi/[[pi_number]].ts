@@ -133,6 +133,12 @@ export async function onRequestGet(context: {
 
   let clientSecret: string | null = existingClientSecret;
   let paymentIntentId: string | null = existingPaymentIntentId;
+  // 2026-10-02 (R78): compute the canonical amount once so the response
+  // and the PaymentIntent agree — and so the page header on the
+  // /pay/[pi]/ route (which reads pi.amount_due_cents) shows the
+  // correct figure even on the very first request, before any PATCH
+  // has refreshed the row.
+  let resolvedAmountCents = pickAmountCents(row);
 
   if (
     status === "sent" &&
@@ -140,7 +146,7 @@ export async function onRequestGet(context: {
     env.STRIPE_SECRET_KEY
   ) {
     try {
-      const amountCents = pickAmountCents(row);
+      const amountCents = resolvedAmountCents;
       if (amountCents === null || amountCents < 100) {
         console.warn(
           `[pi/get] PI ${String(row.pi_number)} has no amount; skipping PaymentIntent mint`,
@@ -207,6 +213,11 @@ export async function onRequestGet(context: {
   return jsonResponse({
     pi: {
       ...row,
+      // 2026-10-02 (R78): override with the canonical amount we just
+      // resolved so the /pay/ page header (which reads
+      // pi.amount_due_cents) shows the correct figure even on the
+      // very first request, before the PATCH refreshes the row.
+      amount_due_cents: resolvedAmountCents ?? row.amount_due_cents ?? 0,
       stripe_client_secret: clientSecret,
       stripe_payment_intent_id: paymentIntentId,
       paymentUrl: null,
