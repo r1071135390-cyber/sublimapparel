@@ -50,10 +50,21 @@ export async function onRequestGet(context: {
   };
 
   const url = new URL(request.url);
-  const action = url.searchParams.get("action");
-  console.log(`[check-payments-list] request.url=${request.url} action=${action}`);
+  let action = url.searchParams.get("action");
 
-  // Always return debug info at top level for easy inspection.
+  // Cloudflare Pages Functions has been observed stripping query params
+  // for some routes — accept the action via JSON POST as a fallback so
+  // we don't get locked into a no-op when GET ?action= is ignored.
+  if (!action && request.method !== "GET") {
+    try {
+      const body = (await request.json()) as { action?: string };
+        if (typeof body?.action === "string") action = body.action;
+    } catch {
+      // Body wasn't JSON — fall through to default list response.
+    }
+  }
+  console.log(`[check-payments-list] request.url=${request.url} method=${request.method} action=${action}`);
+
   // TEMP backfill — insert pending payments rows for any PI that has a
   // stripe_payment_intent_id but no matching payments row. Idempotent.
   if (action === "backfill") {
