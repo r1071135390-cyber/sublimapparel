@@ -51,7 +51,9 @@ export async function onRequestGet(context: {
 
   const url = new URL(request.url);
   const action = url.searchParams.get("action");
+  console.log(`[check-payments-list] request.url=${request.url} action=${action}`);
 
+  // Always return debug info at top level for easy inspection.
   // TEMP backfill — insert pending payments rows for any PI that has a
   // stripe_payment_intent_id but no matching payments row. Idempotent.
   if (action === "backfill") {
