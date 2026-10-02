@@ -1,30 +1,28 @@
-// functions/api/pi/get.ts
-// Fetches a Proforma Invoice by id or pi_number from Supabase.
+// functions/api/pi/[pi_number].ts
+// Fetches a Proforma Invoice by path pi_number (or legacy query params).
 //
-// 2026-10-02 (R78): live PI card payment — when a customer opens a PI that
-// is still in "sent" status and Stripe has not yet been minted a
-// PaymentIntent for it, this endpoint now creates one (via the REST helper
-// in lib/stripe.ts), persists `stripe_client_secret` back onto the
-// proforma_invoices row, and returns it so the /pay page can render Stripe
-// Elements without a second round-trip.
+// 2026-10-02 (R78): renamed from `get.ts` to `[pi_number].ts` so Cloudflare
+// Pages Functions dynamic-routing maps /api/pi/{pi_number} → this handler
+// (PayClient.tsx uses path params). The previous handler only accepted query
+// string `?id=` / `?piNumber=` and returned 400 silently on every customer
+// click.
+//
+// Live PI card payment flow:
+//   - When a customer opens a PI in "sent" status with no Stripe
+//     client_secret yet, this handler mints a PaymentIntent, persists
+//     `stripe_client_secret` back to the row, and ships it with the response.
+//   - When the row already has a client_secret, we reuse it (a page refresh
+//     must not create 20 PaymentIntents).
 //
 // State machine:
-//   PI status           | what get.ts does
+//   PI status | what this handler does
 //   ───────────────────────────────────────────────────────────────────
-//   draft, canceled,     | return row verbatim; clientSecret = null
-//   expired             | (front-end shows "Invoice Not Found" / expired UX)
-//   paid                | return row verbatim; clientSecret = null
-//   pending_bank        | return row verbatim; clientSecret = null
-//   sent (no client_secret yet) | mint a PaymentIntent, PATCH the row,
-//                               | clientSecret = new pi.client_secret
-//   sent (client_secret set)   | return existing; clientSecret = existing
-//
-// We deliberately reuse an existing client_secret rather than rotating on
-// every reload: a customer refreshing the page shouldn't trigger 20
-// PaymentIntents. Cancellation of a stale PI is the customer's job (they
-// can leave the page; the PI itself expires 24h after creation via the
-// PI's valid_until date — Stripe will not charge after that since we
-// never confirm it).
+//   draft, canceled, expired   | return row verbatim; clientSecret = null
+//   paid                       | return row verbatim; clientSecret = null
+//   pending_bank               | return row verbatim; clientSecret = null
+//   sent (no client_secret)    | mint a PaymentIntent, PATCH the row,
+//                              | return row + new clientSecret
+//   sent (client_secret set)   | return row + existing clientSecret
 
 import { normalizeSupabaseUrl } from "../_utils";
 import { createPaymentIntent } from "../../lib/stripe";
@@ -32,7 +30,7 @@ import { createPaymentIntent } from "../../lib/stripe";
 interface Env {
   COZE_SUPABASE_URL: string;
   COZE_SUPABASE_SERVICE_ROLE_KEY: string;
-  STRIPE_SECRET_KEY: string; // 2026-10-02 (R78)
+  STRIPE_SECRET_KEY: string;
 }
 
 // 2026-10-01 (R77): whitelist mirrored from stripe/create-payment-intent.ts
@@ -65,8 +63,9 @@ export async function onRequestOptions(): Promise<Response> {
 export async function onRequestGet(context: {
   request: Request;
   env: Env;
+  params: Record<string, string>;
 }): Promise<Response> {
-  const { request, env } = context;
+  const { request, env, params } = context;
 
   if (!env.COZE_SUPABASE_URL || !env.COZE_SUPABASE_SERVICE_ROLE_KEY) {
     return jsonResponse(
@@ -77,11 +76,15 @@ export async function onRequestGet(context: {
 
   const url = new URL(request.url);
   const id = url.searchParams.get("id");
-  const piNumber = url.searchParams.get("piNumber");
+  // 2026-10-02 (R78): path param is the primary source. Query string
+  // ?piNumber= is kept as a fallback for any admin tooling that still
+  // uses it.
+  const pathPi = typeof params?.pi_number === "string" ? params.pi_number : "";
+  const piNumber = url.searchParams.get("piNumber") ?? (pathPi || undefined);
 
   if (!id && !piNumber) {
     return jsonResponse(
-      { error: "Provide ?id=<id> or ?piNumber=<SA...>" },
+      { error: "Provide ?id=<id> or ?piNumber=<SA...> or path /api/pi/<pi_number>" },
       400,
     );
   }
@@ -117,10 +120,6 @@ export async function onRequestGet(context: {
   const existingPaymentIntentId =
     (row.stripe_payment_intent_id as string | null) ?? null;
 
-  // 2026-10-02 (R78): only PIs in `sent` state need a fresh PaymentIntent.
-  // Every other state has clientSecret = null on purpose — the front-end
-  // already short-circuits on status (paid → success screen,
-  // pending_bank → "we'll confirm within 1-2 business days", etc.).
   let clientSecret: string | null = existingClientSecret;
   let paymentIntentId: string | null = existingPaymentIntentId;
 
@@ -132,8 +131,6 @@ export async function onRequestGet(context: {
     try {
       const amountCents = pickAmountCents(row);
       if (amountCents === null || amountCents < 100) {
-        // Don't mint a PaymentIntent for a zero/under-minimum row — return
-        // the row as-is and let the front-end show a friendly message.
         console.warn(
           `[pi/get] PI ${String(row.pi_number)} has no amount; skipping PaymentIntent mint`,
         );
@@ -165,7 +162,6 @@ export async function onRequestGet(context: {
         clientSecret = pi.client_secret ?? null;
         paymentIntentId = pi.id;
 
-        // Persist both back to the PI row so a refresh reuses them.
         const patchRes = await fetch(
           `${supabaseUrl}/rest/v1/proforma_invoices?id=eq.${encodeURIComponent(String(row.id))}`,
           {
@@ -185,10 +181,6 @@ export async function onRequestGet(context: {
           },
         );
         if (!patchRes.ok) {
-          // Log but don't fail the customer-facing response — Stripe still
-          // has a valid PaymentIntent. Next request will mint a new one,
-          // and Stripe Dashboard will show the orphan (finance reconciles
-          // via payment_intent.metadata.pi_number).
           console.error(
             `[pi/get] PATCH proforma_invoices failed: ${patchRes.status} ${await patchRes.text()}`,
           );
@@ -197,8 +189,7 @@ export async function onRequestGet(context: {
     } catch (err: any) {
       console.error("[pi/get] Stripe PaymentIntent mint failed:", err);
       // Fall through: return row with clientSecret=null so the page renders
-      // its "Initializing secure payment…" spinner rather than a 500. The
-      // customer can refresh to retry.
+      // its "Initializing secure payment…" spinner rather than a 500.
     }
   }
 
@@ -214,14 +205,7 @@ export async function onRequestGet(context: {
 
 /**
  * Pick the canonical "amount due" for a PI.
- *
- * Preference order:
- *   1. `amount_due_cents` — already denormalised by R78 migration
- *   2. `total_cents`      — the total the customer owes including shipping
- *   3. `subtotal_cents`   — last resort; deprecated once amount_due_cents
- *                           is backfilled everywhere
- *
- * Returns null when no plausible number is available.
+ * Preference order: amount_due_cents → total_cents → subtotal_cents.
  */
 function pickAmountCents(row: Record<string, unknown>): number | null {
   const candidates = [
