@@ -15,7 +15,7 @@ interface Env {
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET, OPTIONS",
+  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type, Authorization",
 };
 
@@ -34,6 +34,24 @@ export async function onRequestGet(context: {
   request: Request;
   env: Env;
 }): Promise<Response> {
+  return handleRequest(context);
+}
+
+export async function onRequestPost(context: {
+  request: Request;
+  env: Env;
+}): Promise<Response> {
+  return handleRequest(context);
+}
+
+// 2026-10-02 (R78 fix): accept POST too so backfill can be triggered
+// when Cloudflare strips query strings from GET requests. The handler
+// logic is identical to onRequestGet — POST just supplies `action`
+// via JSON body instead of `?action=` query string.
+async function handleRequest(context: {
+  request: Request;
+  env: Env;
+}): Promise<Response> {
   const { env, request } = context;
 
   if (!env.COZE_SUPABASE_URL || !env.COZE_SUPABASE_SERVICE_ROLE_KEY) {
@@ -46,24 +64,22 @@ export async function onRequestGet(context: {
   const supabaseUrl = normalizeSupabaseUrl(env.COZE_SUPABASE_URL);
   const headers = {
     apikey: env.COZE_SUPABASE_SERVICE_ROLE_KEY,
-    Authorization: `Bearer ${env.COZE_SUPABASE_SERVICE_ROLE_KEY`,
+    Authorization: `Bearer ${env.COZE_SUPABASE_SERVICE_ROLE_KEY}`,
   };
 
   const url = new URL(request.url);
   let action = url.searchParams.get("action");
 
-  // Cloudflare Pages Functions has been observed stripping query params
-  // for some routes — accept the action via JSON POST as a fallback so
-  // we don't get locked into a no-op when GET ?action= is ignored.
+  // Fall back to JSON body for non-GET methods when query strings get stripped.
   if (!action && request.method !== "GET") {
     try {
       const body = (await request.json()) as { action?: string };
-        if (typeof body?.action === "string") action = body.action;
+      if (typeof body?.action === "string") action = body.action;
     } catch {
       // Body wasn't JSON — fall through to default list response.
     }
   }
-  console.log(`[check-payments-list] request.url=${request.url} method=${request.method} action=${action}`);
+  console.log(`[check-payments-list] method=${request.method} action=${action}`);
 
   // TEMP backfill — insert pending payments rows for any PI that has a
   // stripe_payment_intent_id but no matching payments row. Idempotent.
