@@ -1,11 +1,12 @@
-// functions/api/pi/[pi_number].ts
+// functions/api/pi/[[pi_number]].ts
 // Fetches a Proforma Invoice by path pi_number (or legacy query params).
 //
-// 2026-10-02 (R78): renamed from `get.ts` to `[pi_number].ts` so Cloudflare
-// Pages Functions dynamic-routing maps /api/pi/{pi_number} → this handler
-// (PayClient.tsx uses path params). The previous handler only accepted query
-// string `?id=` / `?piNumber=` and returned 400 silently on every customer
-// click.
+// 2026-10-02 (R78): renamed from `get.ts` → `[pi_number].ts` → `[[pi_number]].ts`
+// (catch-all). The double-bracket `[[pi_number]]` form is what Cloudflare
+// Pages Functions actually supports for dynamic routing — single brackets
+// are a Pages Router convention that crashed the connection here with no
+// response body. Catch-all captures the entire remaining path, so we split
+// on `/` and take the last segment as the PI.
 //
 // Live PI card payment flow:
 //   - When a customer opens a PI in "sent" status with no Stripe
@@ -78,8 +79,13 @@ export async function onRequestGet(context: {
   const id = url.searchParams.get("id");
   // 2026-10-02 (R78): path param is the primary source. Query string
   // ?piNumber= is kept as a fallback for any admin tooling that still
-  // uses it.
-  const pathPi = typeof params?.pi_number === "string" ? params.pi_number : "";
+  // uses it. Cloudflare Pages Functions uses `[[pi_number]]` (catch-all),
+  // so it captures the *whole* remaining path — split on / and take the
+  // last non-empty segment so /api/pi/SA-XXX/anything still resolves to
+  // pi_number=SA-XXX.
+  const rawPathPi =
+    typeof params?.pi_number === "string" ? params.pi_number : "";
+  const pathPi = rawPathPi.split("/").filter(Boolean).pop() ?? "";
   const piNumber = url.searchParams.get("piNumber") ?? (pathPi || undefined);
 
   if (!id && !piNumber) {
