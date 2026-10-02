@@ -85,6 +85,9 @@ export async function onRequestGet(context: {
   // pi_number=SA-XXX.
   const rawPathPi =
     typeof params?.pi_number === "string" ? params.pi_number : "";
+  console.log(
+    `[pi/get] request.url=${request.url} params=${JSON.stringify(params)} rawPathPi=${rawPathPi}`,
+  );
   const pathPi = rawPathPi.split("/").filter(Boolean).pop() ?? "";
   const piNumber = url.searchParams.get("piNumber") ?? (pathPi || undefined);
 
