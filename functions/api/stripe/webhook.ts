@@ -138,6 +138,7 @@ async function handlePaymentSucceeded(env: Env, intent: StripePaymentIntent) {
       paid_at: new Date().toISOString(),
       stripe_payment_intent_id: intent.id,
       payment_site: site_slug, // 2026-10-01 (R77)
+      amount_paid_cents: intent.amount, // 2026-10-02 (R78)
     });
 
     if (piError) {
