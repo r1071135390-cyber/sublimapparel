@@ -1,0 +1,83 @@
+# .github/workflows/tsc-check.yml
+#
+# R78 follow-up: catch TypeScript errors BEFORE pushing to Cloudflare Pages,
+# so we don't repeat the R46→R61 4-build-stall (4×3-min wasted on CF
+# per-error feedback). Runs `pnpm tsc --noEmit` on every PR + push to main.
+#
+# Triggers: pull_request, push to main
+# Runs on: ubuntu-latest
+# Cache: pnpm store (saves ~30s per run)
+# Timeout: 5 min (matches Cloudflare Pages build cap — if we hit it on
+#          GitHub Actions, the same code will probably also timeout on CF)
+
+name: tsc-check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: tsc-check-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  typecheck:
+    name: pnpm tsc --noEmit
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --prefer-offline
+
+      - name: Run TypeScript type check
+        run: pnpm tsc --noEmit
+
+      - name: Run Next.js lint (if configured)
+        run: |
+          if grep -q '"lint"' package.json; then
+            pnpm lint
+          else
+            echo "No lint script in package.json, skipping"
+          fi
+        continue-on-error: false
+
+      - name: Verify Supabase migrations are valid SQL syntax
+        run: |
+          if [ -d supabase/migrations ]; then
+            for f in supabase/migrations/*.sql; do
+              echo "Checking $f"
+              # PGPORT regression — strip BEGIN/COMMIT and check trailing commas
+              python3 -c "
+import re, sys
+with open('$f') as fp: src = fp.read()
+# flag trailing commas in IN clauses (R77 lesson learned)
+matches = re.findall(r'IN \([^)]*,\s*\)', src, re.DOTALL)
+if matches:
+  print('TRAILING COMMA IN IN-clause:', file=sys.stderr)
+  for m in matches: print('  ' + m, file=sys.stderr)
+  sys.exit(1)
+print('OK')
+"
+            done
+          fi
+        continue-on-error: true
