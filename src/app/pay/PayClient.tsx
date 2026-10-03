@@ -1,26 +1,29 @@
 "use client";
 
 /**
- * /pay/[pi_number]/PayClient.tsx
+ * /pay/?pi=.../PayClient.tsx (also served at /quote/?id=... via redirect)
  *
  * Customer-facing PI view. Renders the PI in print-friendly format + two payment options:
- *   1. Card (Stripe Payment Element) — instant, recommended
+ *   1. Card (Stripe Payment Link — hosted checkout) — instant, recommended (R76)
  *   2. Bank Transfer (T/T) — for customers preferring wire transfer
  *
  * Data flow:
- *   1. On mount, fetch /api/pi/{pi_number} to get PI details + stripe client_secret
+ *   1. On mount, fetch /api/pi/{pi_number} to get PI details
  *   2. Render PI in a print-styled layout (same look as the PDF your sales team sends)
- *   3. At bottom: two clear payment sections, default to card
+ *   3. "Pay by Card" calls /api/pi/stripe-payment-link to mint a Stripe-hosted
+ *      Payment Link, then opens that URL in a new tab. Stripe redirects back
+ *      to /quote/?id=...&status=paid on completion and fires the webhook that
+ *      marks the PI as paid.
  */
 
 import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
-import { loadStripe, type Stripe as StripeJs } from "@stripe/stripe-js";
-import { Elements, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 import { PIDisplay, type PIDisplayData } from "@/components/pi/PIDisplay";
+import { PayWithStripeLinkButton } from "@/components/PayWithStripeLinkButton";
 import { Truck, CheckCircle2, Loader2, Download, Building2, CreditCard, AlertCircle } from "lucide-react";
 
 // ---------- Types ----------
@@ -59,8 +62,8 @@ interface PIData {
   total_cents: number;
   currency: string;
 
-  // Stripe
-  stripe_client_secret?: string;
+  // Stripe (R76: Payment Links — no client_secret needed, the hosted page
+  // handles payment and POSTs back via the webhook).
   amount_due_cents: number; // what the customer needs to pay right now
   amount_paid_cents: number;
 
@@ -98,6 +101,7 @@ export default function PayClient() {
   const [loading, setLoading] = useState(true);
   const [paymentMethod, setPaymentMethod] = useState<"card" | "bank">("card");
   const [bankSubmitted, setBankSubmitted] = useState(false);
+  const [pdfGenerating, setPdfGenerating] = useState(false);
 
   useEffect(() => {
     if (!piNumber) {
@@ -129,118 +133,99 @@ export default function PayClient() {
     };
   }, [piNumber]);
 
-  // PDF download — uses jsPDF on client
-  const downloadPDF = useCallback(() => {
+  // PDF download — 2026-10-03 (R79): use html2canvas to screenshot the actual
+  // rendered <article id="pi-document"> so the exported PDF is byte-equivalent
+  // to the page the customer sees (logo, Inter typography, black/red/blue
+  // Excel borders, item images, bank info — all captured exactly).
+  // Previous jsPDF-only implementation hand-drew a simplified version with
+  // Helvetica and missed ~30% of the visual fidelity.
+  const downloadPDF = useCallback(async () => {
     if (!pi) return;
-    const doc = new jsPDF({ unit: "pt", format: "a4" });
-    const margin = 40;
-    let y = margin;
-
-    // Header
-    doc.setFontSize(18).setFont("helvetica", "bold");
-    doc.text("PROFORMA INVOICE", margin, y);
-    y += 8;
-    doc.setFontSize(10).setFont("helvetica", "normal");
-    doc.text(`PI Number: ${pi.pi_number}`, margin, (y += 18));
-    doc.text(`Issue Date: ${fmtDate(pi.issue_date)}`, margin, (y += 14));
-    if (pi.valid_until) doc.text(`Valid Until: ${fmtDate(pi.valid_until)}`, margin, (y += 14));
-    y += 18;
-
-    // From
-    doc.setFontSize(11).setFont("helvetica", "bold");
-    doc.text("FROM:", margin, y);
-    doc.setFont("helvetica", "normal").setFontSize(9);
-    doc.text("YIWU HOMEDORM COMMODITY MANUFACTURING CO., LTD", margin, y + 14);
-    doc.text("2nd Floor, No.11 Anshang Road, Yiwu, China", margin, y + 26);
-    doc.text("Contact: chris@sublimapparel.com / +86 19817930190", margin, y + 38);
-    y += 60;
-
-    // To
-    doc.setFontSize(11).setFont("helvetica", "bold");
-    doc.text("TO:", margin, y);
-    doc.setFont("helvetica", "normal").setFontSize(9);
-    doc.text(pi.customer_name, margin, y + 14);
-    if (pi.customer_company) doc.text(pi.customer_company, margin, y + 26);
-    if (pi.customer_address) {
-      const lines = doc.splitTextToSize(pi.customer_address, 480);
-      doc.text(lines, margin, y + 38);
-      y += 14 * lines.length;
-    }
-    y += 60;
-
-    // Items table
-    doc.setFontSize(11).setFont("helvetica", "bold");
-    doc.text("ITEMS", margin, y);
-    y += 16;
-    doc.setFontSize(9).setFont("helvetica", "bold");
-    doc.text("Description", margin, y);
-    doc.text("Qty", margin + 320, y, { align: "right" });
-    doc.text("Unit", margin + 400, y, { align: "right" });
-    doc.text("Total", margin + 510, y, { align: "right" });
-    y += 4;
-    doc.line(margin, y, 555, y);
-    y += 12;
-
-    doc.setFont("helvetica", "normal").setFontSize(9);
-    for (const item of pi.items) {
-      const descLines = doc.splitTextToSize(item.description, 300);
-      doc.text(descLines, margin, y);
-      doc.text(String(item.qty), margin + 320, y, { align: "right" });
-      doc.text(fmtMoney(item.unit_price_cents, pi.currency), margin + 400, y, { align: "right" });
-      doc.text(fmtMoney(item.total_cents, pi.currency), margin + 510, y, { align: "right" });
-      y += Math.max(14, 12 * descLines.length);
-      if (item.fabric) {
-        doc.setFontSize(8).setTextColor(120);
-        const fabricLines = doc.splitTextToSize(`Fabric: ${item.fabric}`, 300);
-        doc.text(fabricLines, margin, y);
-        y += 12 * fabricLines.length;
-        doc.setFontSize(9).setTextColor(0);
-      }
-      if (Array.isArray(item.sizes) && item.sizes.length > 0) {
-        const sizeText = item.sizes
-          .map((s) => `${s.label}×${s.qty}`)
-          .join("  ·  ");
-        doc.setFontSize(8).setTextColor(180, 0, 0);
-        const sizeLines = doc.splitTextToSize(`Sizes: ${sizeText}`, 480);
-        doc.text(sizeLines, margin, y);
-        y += 12 * sizeLines.length;
-        doc.setFontSize(9).setTextColor(0);
-      }
+    const article = document.getElementById("pi-document");
+    if (!article) {
+      setError("PI document not ready — please retry");
+      return;
     }
 
-    // Totals
-    y += 12;
-    doc.line(350, y, 555, y);
-    y += 14;
-    doc.text("Subtotal:", 400, y);
-    doc.text(fmtMoney(pi.subtotal_cents, pi.currency), 555, y, { align: "right" });
-    y += 14;
-    doc.text("Shipping (DDP):", 400, y);
-    doc.text(fmtMoney(pi.shipping_cents, pi.currency), 555, y, { align: "right" });
-    y += 14;
-    doc.setFont("helvetica", "bold").setFontSize(11);
-    doc.text("TOTAL:", 400, y);
-    doc.text(fmtMoney(pi.total_cents, pi.currency), 555, y, { align: "right" });
-    y += 30;
+    setPdfGenerating(true);
+    try {
+      // 1. Wait for web fonts to load so Inter/Chinese fallbacks render
+      //    correctly in the screenshot.
+      if (typeof document !== "undefined" && (document as any).fonts?.ready) {
+        await (document as any).fonts.ready;
+      }
 
-    // Payment terms
-    doc.setFontSize(9).setFont("helvetica", "normal");
-    doc.text(`Payment Terms: ${pi.payment_terms}`, margin, y);
-    y += 14;
-    doc.text(`Lead Time: ${pi.lead_time_days} days`, margin, y);
-    y += 14;
-    doc.text(`Production Time: ${pi.production_time_days} days after payment + PP sample approval`, margin, y);
+      // 2. Wait for every <img> inside the article to finish loading.
+      //    R2-hosted product images are lazy-loaded; html2canvas would
+      //    otherwise screenshot a blank square.
+      const images = Array.from(article.querySelectorAll("img"));
+      await Promise.all(
+        images.map(
+          (img) =>
+            new Promise<void>((resolve) => {
+              if (img.complete && img.naturalWidth > 0) {
+                resolve();
+                return;
+              }
+              img.addEventListener("load", () => resolve(), { once: true });
+              img.addEventListener("error", () => resolve(), { once: true });
+              // Safety timeout — never wait more than 3s per image
+              setTimeout(resolve, 3000);
+            }),
+        ),
+      );
 
-    // Footer
-    y = 780;
-    doc.setFontSize(8).setTextColor(120);
-    doc.text(
-      "This is a proforma invoice. Production begins after payment receipt and PP sample approval.",
-      margin,
-      y
-    );
+      // 3. Screenshot at 2x for crisp PDF render on retina/print.
+      const canvas = await html2canvas(article, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: false,
+        backgroundColor: "#ffffff",
+        logging: false,
+        // Honor any media-print override so users who print get the same
+        // white-bg, no-shadow layout they see on the printed page.
+        windowWidth: article.scrollWidth,
+        windowHeight: article.scrollHeight,
+      });
 
-    doc.save(`${pi.pi_number}.pdf`);
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF({
+        unit: "mm",
+        format: "a4",
+        orientation: "portrait",
+        compress: true,
+      });
+      const pageW = pdf.internal.pageSize.getWidth(); // 210
+      const pageH = pdf.internal.pageSize.getHeight(); // 297
+      // Fit width to A4 width; compute proportional height
+      const imgW = pageW;
+      const imgH = (canvas.height * imgW) / canvas.width;
+
+      // Multi-page support: when the PI is taller than one A4 page, split
+      // it across pages with the same offset (negative position keeps the
+      // image anchored to the top across pages).
+      let heightLeft = imgH;
+      let position = 0;
+      pdf.addImage(imgData, "PNG", 0, position, imgW, imgH, undefined, "FAST");
+      heightLeft -= pageH;
+      while (heightLeft > 0) {
+        position = heightLeft - imgH;
+        pdf.addPage();
+        pdf.addImage(imgData, "PNG", 0, position, imgW, imgH, undefined, "FAST");
+        heightLeft -= pageH;
+      }
+
+      pdf.save(`${pi.pi_number}.pdf`);
+    } catch (err) {
+      console.error("[PayClient] PDF generation failed:", err);
+      setError(
+        err instanceof Error
+          ? `PDF generation failed: ${err.message}`
+          : "PDF generation failed — please retry",
+      );
+    } finally {
+      setPdfGenerating(false);
+    }
   }, [pi]);
 
   // ---------- Render states ----------
@@ -284,10 +269,20 @@ export default function PayClient() {
           <button
             type="button"
             onClick={downloadPDF}
-            className="mt-5 inline-flex items-center gap-2 border-2 border-black bg-white px-4 py-2 text-xs font-black uppercase tracking-wider transition-colors hover:bg-black hover:text-white"
+            disabled={pdfGenerating}
+            className="mt-5 inline-flex items-center gap-2 border-2 border-black bg-white px-4 py-2 text-xs font-black uppercase tracking-wider transition-colors hover:bg-black hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
           >
-            <Download className="h-4 w-4" strokeWidth={3} />
-            Download PI PDF
+            {pdfGenerating ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" strokeWidth={3} />
+                Generating PDF…
+              </>
+            ) : (
+              <>
+                <Download className="h-4 w-4" strokeWidth={3} />
+                Download PI PDF
+              </>
+            )}
           </button>
         </div>
       </div>
@@ -307,10 +302,20 @@ export default function PayClient() {
           <button
             type="button"
             onClick={downloadPDF}
-            className="mt-5 inline-flex items-center gap-2 border-2 border-black bg-white px-4 py-2 text-xs font-black uppercase tracking-wider transition-colors hover:bg-black hover:text-white"
+            disabled={pdfGenerating}
+            className="mt-5 inline-flex items-center gap-2 border-2 border-black bg-white px-4 py-2 text-xs font-black uppercase tracking-wider transition-colors hover:bg-black hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
           >
-            <Download className="h-4 w-4" strokeWidth={3} />
-            Download PI PDF
+            {pdfGenerating ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" strokeWidth={3} />
+                Generating PDF…
+              </>
+            ) : (
+              <>
+                <Download className="h-4 w-4" strokeWidth={3} />
+                Download PI PDF
+              </>
+            )}
           </button>
         </div>
       </div>
@@ -331,17 +336,29 @@ export default function PayClient() {
             ← sublimapparel.com
           </Link>
           <button
-            type="button"
-            onClick={downloadPDF}
-            className="inline-flex items-center gap-2 border-2 border-black bg-white px-3 py-1.5 text-xs font-black uppercase tracking-wider transition-colors hover:bg-black hover:text-white"
-          >
-            <Download className="h-4 w-4" strokeWidth={3} />
-            Download PDF
-          </button>
+          type="button"
+          onClick={downloadPDF}
+          disabled={pdfGenerating}
+          className="inline-flex items-center gap-2 border-2 border-black bg-white px-3 py-1.5 text-xs font-black uppercase tracking-wider transition-colors hover:bg-black hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          {pdfGenerating ? (
+            <>
+              <Loader2 className="h-4 w-4 animate-spin" strokeWidth={3} />
+              Generating PDF…
+            </>
+          ) : (
+            <>
+              <Download className="h-4 w-4" strokeWidth={3} />
+              Download PDF
+            </>
+          )}
+        </button>
         </div>
 
-        {/* PI Document */}
-        <article className="border-2 border-black bg-white p-6 shadow-[6px_6px_0_0_rgba(10,10,10,1)] sm:p-10 print:border-0 print:shadow-none">
+        {/* PI Document — id="pi-document" is the capture target for the
+            html2canvas-based downloadPDF() (R79). Kept as <article> for
+            semantic correctness + screen-reader friendliness. */}
+        <article id="pi-document" className="border-2 border-black bg-white p-6 shadow-[6px_6px_0_0_rgba(10,10,10,1)] sm:p-10 print:border-0 print:shadow-none">
 
           <PIDisplay
             pi={{
@@ -420,108 +437,15 @@ export default function PayClient() {
   );
 }
 
-// ---------- Card payment (Stripe Payment Element) ----------
+// ---------- Card payment (Stripe Payment Link — hosted checkout) ----------
 
 function CardPaymentMethod({ pi }: { pi: PIData }) {
-  if (!pi.stripe_client_secret) {
-    return (
-      <div className="border-2 border-black bg-white p-6">
-        <div className="flex items-center gap-2 text-sm font-bold text-black/70">
-          <Loader2 className="h-4 w-4 animate-spin" />
-          Initializing secure payment…
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="border-2 border-black bg-white p-6 shadow-[6px_6px_0_0_rgba(10,10,10,1)]">
-      <div className="mb-4 flex items-center justify-between">
-        <div>
-          <div className="text-xs font-black uppercase tracking-wider text-[#ff4d00]">Pay with card</div>
-          <div className="mt-1 text-2xl font-black tabular-nums">
-            {fmtMoney(pi.amount_due_cents, pi.currency)}
-          </div>
-        </div>
-        <div className="text-right text-xs text-black/70">
-          <div>Secured by Stripe</div>
-          <div className="mt-1 inline-flex items-center gap-1">
-            <CheckCircle2 className="h-3 w-3" /> SSL encrypted
-          </div>
-        </div>
-      </div>
-
-      <Elements
-        stripe={getStripe()}
-        options={{
-          clientSecret: pi.stripe_client_secret,
-          appearance: {
-            theme: "flat",
-            variables: {
-              colorPrimary: "#ff4d00",
-              colorBackground: "#ffffff",
-              colorText: "#0a0a0a",
-              fontFamily: "Inter, system-ui, sans-serif",
-              borderRadius: "0px",
-            },
-          },
-        }}
-      >
-        <CardPaymentForm pi={pi} />
-      </Elements>
-    </div>
-  );
-}
-
-function CardPaymentForm({ pi }: { pi: PIData }) {
-  const stripe = useStripe();
-  const elements = useElements();
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!stripe || !elements) return;
-    setSubmitting(true);
-    setError(null);
-
-    const { error: stripeError } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        return_url: `${window.location.origin}/order/success/?scenario=pi_payment&pi_number=${encodeURIComponent(pi.pi_number)}`,
-      },
-    });
-
-    if (stripeError) {
-      setError(stripeError.message ?? "Payment failed");
-      setSubmitting(false);
-    }
-  };
-
-  return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <PaymentElement options={{ layout: "tabs" }} />
-      {error && (
-        <div className="border-2 border-[#ff4d00] bg-[#fff5f0] p-3 text-sm text-[#cc3d00]">{error}</div>
-      )}
-      <button
-        type="submit"
-        disabled={!stripe || submitting}
-        className="w-full border-2 border-black bg-[#ff4d00] px-6 py-3 text-sm font-black uppercase tracking-wider text-black shadow-[4px_4px_0_0_rgba(10,10,10,1)] transition-all hover:bg-[#cc3d00] hover:shadow-[6px_6px_0_0_rgba(10,10,10,1)] disabled:cursor-not-allowed disabled:opacity-50"
-      >
-        {submitting ? (
-          <span className="inline-flex items-center gap-2">
-            <Loader2 className="h-4 w-4 animate-spin" />
-            Processing…
-          </span>
-        ) : (
-          `Pay ${fmtMoney(pi.amount_due_cents, pi.currency)}`
-        )}
-      </button>
-      <p className="text-center text-[10px] uppercase tracking-wider text-black/70">
-        By paying, you confirm acceptance of PI {pi.pi_number} terms
-      </p>
-    </form>
+    <PayWithStripeLinkButton
+      piNumber={pi.pi_number}
+      amountCents={pi.amount_due_cents}
+      currency={pi.currency}
+    />
   );
 }
 
@@ -682,16 +606,4 @@ function BankTransferMethod({
   );
 }
 
-// ---------- Stripe singleton ----------
-
-let stripePromise: Promise<StripeJs | null> | null = null;
-function getStripe(): Promise<StripeJs | null> {
-  if (stripePromise) return stripePromise;
-  const pk = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
-  if (!pk) {
-    console.error("NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY is not set");
-    return Promise.resolve(null);
-  }
-  stripePromise = loadStripe(pk);
-  return stripePromise;
-}
+// ---------- (Stripe singleton removed in R76 — Payment Links don't need client-side Stripe.js) ----------

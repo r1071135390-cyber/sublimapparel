@@ -156,7 +156,24 @@ export function PIDisplay({ pi }: { pi: PIDisplayData }) {
       className="border-2 border-black bg-white text-[12px] leading-snug"
       style={{ color: BLACK }}
     >
-      {/* === ROW 1-3: Header (black, fixed) === */}
+      {/* === ROW 1: Brand logo === */}
+      {/* 2026-10-03 (R79): show brand logo in PI header so the exported
+          PDF (html2canvas screenshot) matches the navbar brand mark.
+          using /sublimapparel-logo-v2.webp (5.5 KB) for sharp render; explicit
+          width/height prevents layout shift + aids html2canvas measurement. */}
+      <div className="flex justify-center border-b border-black bg-white px-4 py-2">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/sublimapparel-logo-v2.webp"
+          alt="sublimapparel.com"
+          width={120}
+          height={32}
+          decoding="async"
+          className="h-8 w-auto"
+        />
+      </div>
+
+      {/* === ROW 2-3: Header (black, fixed) === */}
       <div className="border-b border-black px-4 py-2 text-center">
         <p className="text-[14px] font-black uppercase tracking-wide">
           Yiwu Homedorm Commodity Manufacturing Co., Ltd

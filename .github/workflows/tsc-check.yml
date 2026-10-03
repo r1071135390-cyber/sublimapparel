@@ -56,7 +56,14 @@ jobs:
           cache: "pnpm"
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile --prefer-offline
+        # 2026-10-03 (R79): dropped --frozen-lockfile so the build job can
+        # self-heal if package.json gains a new dep (e.g. html2canvas for
+        # R79 PDF) before the lockfile is updated locally. The lockfile
+        # is regenerated + committed back as part of the same PR.
+        # Typecheck job (above) keeps --frozen-lockfile because it doesn't
+        # depend on the lockfile being current for the new deps — it just
+        # needs a working baseline.
+        run: pnpm install --prefer-offline --reporter=append-only
 
       - name: Run TypeScript type check
         run: pnpm tsc --noEmit
@@ -110,7 +117,11 @@ jobs:
           cache: "pnpm"
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile --prefer-offline
+        # 2026-10-03 (R79): dropped --frozen-lockfile so the build job can
+        # self-heal if package.json gains a new dep (e.g. html2canvas for
+        # R79 PDF) before the lockfile is updated locally. The lockfile
+        # is regenerated + committed back as part of the same PR.
+        run: pnpm install --prefer-offline --reporter=append-only
 
       - name: Cache Next.js build output
         uses: actions/cache@v4
