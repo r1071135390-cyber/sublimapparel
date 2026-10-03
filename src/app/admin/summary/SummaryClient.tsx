@@ -7,7 +7,6 @@ import {
   BarChart3,
   RefreshCw,
   FileText,
-  DollarSign,
   Calendar,
   TrendingUp,
   Eye,
@@ -15,7 +14,9 @@ import {
   Trash2,
   AlertTriangle,
   X,
+  Coins,
 } from "lucide-react";
+import type { FxRates } from "@/lib/fx-rates";
 
 // Owner-only access. Change this string to whatever you'd like — it's the
 // only thing standing between anyone who finds the URL and your sales data.
@@ -37,14 +38,24 @@ interface PiListItem {
   createdAt: string;
 }
 
+interface CurrencyBucket {
+  cents: number;
+  display: string;
+}
+
 interface SummaryStats {
   totalCount: number;
   shownCount: number;
   monthCount: number;
-  totalValueCents: number;
-  monthValueCents: number;
-  totalValueDisplay: string;
-  monthValueDisplay: string;
+  // 2026-10-04 (R83): per-currency real-exposure totals + USD-equivalent
+  // aggregates. Replaces the single-page "USD-eq" sum we had before.
+  totalsByCurrency: Record<string, CurrencyBucket>;
+  monthTotalsByCurrency: Record<string, CurrencyBucket>;
+  totalValueUsdCents: number;
+  totalValueUsdDisplay: string;
+  monthValueUsdCents: number;
+  monthValueUsdDisplay: string;
+  fx: FxRates;
 }
 
 function statusColor(status: string | null): {
@@ -361,18 +372,20 @@ export default function SummaryClient() {
             sub="PIs created"
             accent="#00c2ff"
           />
-          <StatCard
-            icon={<DollarSign className="h-6 w-6" strokeWidth={2.5} />}
-            label="Total Value"
-            value={stats ? stats.totalValueDisplay : "—"}
-            sub="All time, USD-eq."
-            accent="#ff4d00"
+          <ByCurrencyCard
+            icon={<Coins className="h-6 w-6" strokeWidth={2.5} />}
+            label="By Currency"
+            stats={stats}
           />
           <StatCard
             icon={<TrendingUp className="h-6 w-6" strokeWidth={2.5} />}
-            label="This Month Value"
-            value={stats ? stats.monthValueDisplay : "—"}
-            sub="USD-equivalent"
+            label="USD Equivalent"
+            value={stats ? stats.totalValueUsdDisplay : "—"}
+            sub={
+              stats
+                ? `Rates as of ${stats.fx.asOf} · ${stats.fx.source}`
+                : "Rates as of —"
+            }
             accent="#ff4d00"
           />
         </div>
@@ -508,10 +521,26 @@ export default function SummaryClient() {
         </div>
 
         {/* Footnote */}
-        <div className="mt-8 text-xs text-[#6b6b6b]">
-          Values are USD-equivalent. Currencies other than USD are summed at
-          face value without conversion — fine for an internal overview, not for
-          financial reporting.
+        <div className="mt-8 space-y-2 text-xs text-[#6b6b6b]">
+          <p>
+            Per-row amounts are the PI’s actual currency. Per-currency totals
+            show real exposure. The &ldquo;USD Equivalent&rdquo; card uses a hardcoded
+            FX table for a single headline number — fine for an internal
+            overview, not for financial reporting.
+          </p>
+          {stats?.fx && (
+            <p>
+              Rates as of <span className="font-bold">{stats.fx.asOf}</span>
+              {" "}({stats.fx.source}):{" "}
+              {Object.entries(stats.fx.rates)
+                .map(
+                  ([code, rate]) =>
+                    `1 ${stats.fx.baseCurrency} = ${rate} ${code}`,
+                )
+                .join(" · ")}
+              .
+            </p>
+          )}
         </div>
       </div>
 
@@ -690,6 +719,85 @@ function DeleteConfirmModal({
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+
+// ──── By-currency totals card ─────────────────────────────────────────
+// 2026-10-04 (R83): renders one row per currency, showing the real total
+// for that currency. Currencies with $0 are rendered as muted "no
+// activity" so the admin can see at-a-glance which currencies have been
+// used vs. which are just available.
+//
+// We rely on the server pre-seeding TRACKED_CURRENCIES (USD/EUR/GBP/CNY)
+// so the card always shows the same set of rows in the same order.
+function ByCurrencyCard({
+  icon,
+  label,
+  stats,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  stats: SummaryStats | null;
+}) {
+  // Stable display order: USD, EUR, GBP, CNY, then anything the server
+  // sent that we don't explicitly track (e.g. a PI in JPY). Anything
+  // we don't recognise shows up at the bottom.
+  const PREFERRED_ORDER = ["USD", "EUR", "GBP", "CNY"];
+  const entries = stats
+    ? Object.entries(stats.totalsByCurrency).sort(([a], [b]) => {
+        const ai = PREFERRED_ORDER.indexOf(a);
+        const bi = PREFERRED_ORDER.indexOf(b);
+        if (ai === -1 && bi === -1) return a.localeCompare(b);
+        if (ai === -1) return 1;
+        if (bi === -1) return -1;
+        return ai - bi;
+      })
+    : [];
+
+  return (
+    <div className="border-2 border-black bg-white p-5 shadow-[4px_4px_0_0_rgba(10,10,10,1)]">
+      <div className="mb-3 flex items-center gap-2 text-xs font-black uppercase tracking-wider text-[#6b6b6b]">
+        <span style={{ color: "#00c2ff" }}>{icon}</span>
+        <span>{label}</span>
+      </div>
+      {!stats ? (
+        <div className="text-2xl font-black tracking-tight text-black md:text-3xl">
+          —
+        </div>
+      ) : entries.length === 0 ? (
+        <div className="text-2xl font-black tracking-tight text-black md:text-3xl">
+          —
+        </div>
+      ) : (
+        <ul className="space-y-1.5">
+          {entries.map(([code, bucket]) => {
+            const isActive = bucket.cents > 0;
+            return (
+              <li
+                key={code}
+                className={
+                  "flex items-baseline justify-between gap-3 " +
+                  (isActive ? "" : "opacity-40")
+                }
+              >
+                <span className="font-black uppercase tracking-wider text-[10px] text-[#6b6b6b]">
+                  {code}
+                </span>
+                <span
+                  className={
+                    "font-bold tracking-tight " +
+                    (isActive ? "text-black" : "text-[#9a9a9a]")
+                  }
+                >
+                  {isActive ? bucket.display : "no activity"}
+                </span>
+              </li>
+            );
+          })}
+        </ul>
+      )}
     </div>
   );
 }

@@ -2,8 +2,22 @@
 // Returns a list of Proforma Invoices + summary stats for the admin dashboard.
 // Includes the most recent 100 PIs (sorted by created_at desc) and
 // aggregate counts / values for all-time and this-month.
+//
+// 2026-10-04 (R83): summary ships BOTH a per-currency totals block and a
+// USD-equivalent aggregate. The per-currency totals use each PI's own
+// currency (no conversion), so the admin can see real exposure. The
+// USD aggregate uses the hardcoded FX_RATES table for a single
+// at-a-glance headline number. See functions/lib/fx-rates.ts for why
+// we don't pull live rates.
 
 import { normalizeSupabaseUrl } from "../_utils";
+import {
+  FX_RATES,
+  TRACKED_CURRENCIES,
+  formatCentsInCurrency,
+  toUsdCents,
+} from "../../lib/fx-rates";
+
 interface Env {
   COZE_SUPABASE_URL: string;
   COZE_SUPABASE_SERVICE_ROLE_KEY: string;
@@ -37,19 +51,41 @@ interface PiRow {
   created_at: string;
 }
 
+interface CurrencyBucket {
+  cents: number;
+  display: string;
+}
+
 function startOfMonthIso(): string {
   const now = new Date();
   return new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1)).toISOString();
 }
 
-function formatMoney(amountCents: number | null, currency: string | null): string {
-  if (amountCents == null) return "—";
-  const c = currency || "USD";
-  const dollars = amountCents / 100;
-  return `${c} ${dollars.toLocaleString("en-US", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  })}`;
+/**
+ * Build a per-currency totals map.
+ * Pre-seeds TRACKED_CURRENCIES so the UI sees all the buckets it cares
+ * about even if no PI has used a currency yet (otherwise the page would
+ * hide a currency that just hasn't been used this period).
+ */
+function emptyCurrencyMap(): Record<string, CurrencyBucket> {
+  const m: Record<string, CurrencyBucket> = {};
+  for (const code of TRACKED_CURRENCIES) {
+    m[code] = { cents: 0, display: formatCentsInCurrency(0, code) };
+  }
+  return m;
+}
+
+function bumpBucket(
+  map: Record<string, CurrencyBucket>,
+  currency: string | null,
+  amountCents: number | null,
+): void {
+  const code = (currency ?? "USD").toUpperCase();
+  const bucket =
+    map[code] ?? (map[code] = { cents: 0, display: formatCentsInCurrency(0, code) });
+  const amt = typeof amountCents === "number" ? amountCents : 0;
+  bucket.cents += amt;
+  bucket.display = formatCentsInCurrency(bucket.cents, code);
 }
 
 export async function onRequestGet(context: {
@@ -84,12 +120,18 @@ export async function onRequestGet(context: {
 
   const rows = (await listRes.json()) as PiRow[];
 
-  // Compute summary stats in JS — simpler than two extra aggregate queries
-  // and the dataset is small (admin-internal page, capped at 100 in the list).
+  // ── Aggregate stats ────────────────────────────────────────────────
+  // R83: previously we summed total_cents across all currencies and
+  // called it "USD-equivalent". That was wrong (€1 ≠ $1). Now we:
+  //   1) Bucket totals by currency (real exposure per currency).
+  //   2) Convert each bucket to USD cents via FX_RATES and sum for a
+  //      single headline USD number.
   let totalCount = 0;
   let monthCount = 0;
-  let totalValueCents = 0;
-  let monthValueCents = 0;
+  const totalsByCurrency = emptyCurrencyMap();
+  const monthTotalsByCurrency = emptyCurrencyMap();
+  let totalValueUsdCents = 0;
+  let monthValueUsdCents = 0;
   const monthStart = new Date(startOfMonthIso()).getTime();
 
   for (const r of rows) {
@@ -97,11 +139,20 @@ export async function onRequestGet(context: {
     const createdMs = new Date(r.created_at).getTime();
     const isThisMonth = createdMs >= monthStart;
     if (isThisMonth) monthCount++;
-    // Treat all totals as USD-equivalent for the summary.
-    // (If we add multi-currency conversion later, do it here.)
+
     const amt = typeof r.total_cents === "number" ? r.total_cents : 0;
-    totalValueCents += amt;
-    if (isThisMonth) monthValueCents += amt;
+    bumpBucket(totalsByCurrency, r.currency, amt);
+    if (isThisMonth) {
+      bumpBucket(monthTotalsByCurrency, r.currency, amt);
+    }
+
+    // USD equivalents — use the PI's own currency (not "USD") so a
+    // £1000 PI converts to ~$1282 instead of being silently treated as
+    // $1000.
+    totalValueUsdCents += toUsdCents(amt, r.currency);
+    if (isThisMonth) {
+      monthValueUsdCents += toUsdCents(amt, r.currency);
+    }
   }
 
   // If the table has more than 100 PIs, the counts above are only for the
@@ -129,7 +180,7 @@ export async function onRequestGet(context: {
     customerCompany: r.customer_company,
     totalCents: r.total_cents,
     currency: r.currency,
-    totalDisplay: formatMoney(r.total_cents, r.currency),
+    totalDisplay: formatCentsInCurrency(r.total_cents, r.currency),
     status: r.status,
     createdAt: r.created_at,
   }));
@@ -139,10 +190,25 @@ export async function onRequestGet(context: {
       totalCount: realTotalCount,
       shownCount: enriched.length,
       monthCount,
-      totalValueCents,
-      monthValueCents,
-      totalValueDisplay: formatMoney(totalValueCents, "USD"),
-      monthValueDisplay: formatMoney(monthValueCents, "USD"),
+
+      // R83: per-currency real-exposure totals (no conversion).
+      totalsByCurrency,
+      monthTotalsByCurrency,
+
+      // R83: USD-equivalent headlines, computed via FX_RATES.
+      totalValueUsdCents,
+      totalValueUsdDisplay: formatCentsInCurrency(totalValueUsdCents, "USD"),
+      monthValueUsdCents,
+      monthValueUsdDisplay: formatCentsInCurrency(monthValueUsdCents, "USD"),
+
+      // R83: ship the rates + provenance so the UI can render
+      // "Based on rates as of YYYY-MM-DD" without re-deriving.
+      fx: {
+        baseCurrency: FX_RATES.baseCurrency,
+        rates: FX_RATES.rates,
+        asOf: FX_RATES.asOf,
+        source: FX_RATES.source,
+      },
     },
     pis: enriched,
   });
