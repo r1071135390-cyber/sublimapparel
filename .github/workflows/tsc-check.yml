@@ -1,14 +1,18 @@
 # .github/workflows/tsc-check.yml
 #
-# R78 follow-up: catch TypeScript errors BEFORE pushing to Cloudflare Pages,
-# so we don't repeat the R46→R61 4-build-stall (4×3-min wasted on CF
-# per-error feedback). Runs `pnpm tsc --noEmit` on every PR + push to main.
+# R78 follow-up: catch TypeScript errors AND build failures BEFORE pushing
+# to Cloudflare Pages, so we don't repeat the R46→R61 4-build-stall
+# (4×3-min wasted on CF per-error feedback).
+#
+# Two parallel jobs run on every PR + push to main:
+#   1. typecheck — fast (1 min) `pnpm tsc --noEmit` + lint + SQL check
+#   2. build     — full `pnpm build` to prove next build + tsup bundle + post-
+#      processing (RSS, inline-css, auto-external-links, inject-json-ld) all pass.
 #
 # Triggers: pull_request, push to main
 # Runs on: ubuntu-latest
 # Cache: pnpm store (saves ~30s per run)
-# Timeout: 5 min (matches Cloudflare Pages build cap — if we hit it on
-#          GitHub Actions, the same code will probably also timeout on CF)
+# Timeout: 5 min for typecheck, 7 min for build (build has more steps)
 
 name: tsc-check
 
@@ -19,7 +23,10 @@ on:
     branches: [main]
 
 concurrency:
-  group: tsc-check-${{ github.ref }}
+  # Cancel in-progress runs when a new push comes in. Per-job cancellation
+  # would need separate groups; one group for the whole workflow is fine
+  # since typecheck + build start within ~10s of each other.
+  group: ci-${{ github.ref }}
   cancel-in-progress: true
 
 permissions:
@@ -82,3 +89,91 @@ jobs:
           else
             echo "No supabase/migrations directory, skipping"
           fi
+
+  build:
+    name: pnpm build (next build + post-processing)
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        # version is pinned in package.json "packageManager" field
+        # (pnpm@9.0.0) — keep them in sync to avoid ERR_PNPM_BAD_PM_VERSION.
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --prefer-offline
+
+      - name: Cache Next.js build output
+        uses: actions/cache@v4
+        with:
+          path: |
+            .next/cache
+            node_modules/.cache
+          key: ${{ runner.os }}-next-build-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-next-build-
+
+      - name: Run pnpm build
+        env:
+          # build scripts default to sublimapparel.com, but be explicit so
+          # CI behavior matches production. These are NOT secrets — they
+          # appear in RSS / sitemap / JSON-LD anyway.
+          SITE_URL: https://sublimapparel.com
+          NEXT_PUBLIC_SITE_URL: https://sublimapparel.com
+          # Force production mode so server.ts + RSS use prod URLs.
+          COZE_PROJECT_ENV: PROD
+          # Skip CF/Vercel detection in build.sh so we exercise the
+          # install + tsup bundle paths too.
+        run: pnpm build
+
+      - name: Verify static export was generated
+        run: |
+          # next build (with output: export) writes to out/. If the build
+          # script swallowed an error silently, this catches it.
+          if [ ! -d out ]; then
+            echo "::error::Build did not produce out/ directory — build script may have swallowed a failure"
+            exit 1
+          fi
+          PAGE_COUNT=$(find out -name "index.html" | wc -l)
+          echo "Generated $PAGE_COUNT HTML pages under out/"
+          if [ "$PAGE_COUNT" -lt 10 ]; then
+            echo "::error::Build produced suspiciously few pages ($PAGE_COUNT < 10)"
+            exit 1
+          fi
+
+      - name: Verify RSS feed was generated
+        run: |
+          # build-rss.mjs must write public/blog/feed.xml/ which next build
+          # then copies to out/blog/feed.xml/index.xml (R64 follow-up).
+          if [ ! -f out/blog/feed.xml/index.xml ] && [ ! -f out/blog/feed.xml ]; then
+            echo "::error::out/blog/feed.xml/ missing — build-rss.mjs did not run or failed"
+            exit 1
+          fi
+
+      - name: Verify tsup bundle was generated
+        run: |
+          # build.sh bundles src/server.ts to dist/ on non-CF/non-Vercel envs.
+          if [ ! -f dist/server.js ] && [ ! -f dist/server.cjs ] && [ ! -f dist/server.mjs ]; then
+            echo "::error::dist/server.* missing — tsup bundle step did not run or produced no output"
+            exit 1
+          fi
+
+      - name: Upload build artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: next-out-${{ github.sha }}
+          path: |
+            out/
+            dist/
+          retention-days: 7
+          if-no-files-found: ignore
