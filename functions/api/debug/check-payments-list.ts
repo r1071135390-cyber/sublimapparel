@@ -151,6 +151,84 @@ async function handleRequest(context: {
     });
   }
 
+  // 2026-10-03 (R78 follow-up): backfill historical
+  // `proforma_invoices.amount_paid_cents` from matching `payments.amount_cents`
+  // for any PI that is already status='paid' but whose amount_paid_cents is
+  // still 0/null — i.e. paid BEFORE the R78 webhook change that started
+  // writing amount_paid_cents (line 141 of stripe/webhook.ts, added
+  // 2026-10-02). Idempotent: skips rows that already have a non-zero value.
+  if (action === "backfill-amount-paid") {
+    const piRes = await fetch(
+      `${supabaseUrl}/rest/v1/proforma_invoices?select=id,pi_number,stripe_payment_intent_id,amount_paid_cents,status&status=eq.paid&or=(amount_paid_cents.eq.0,amount_paid_cents.is.null)&stripe_payment_intent_id=not.is.null&limit=50`,
+      { headers },
+    );
+    if (!piRes.ok) {
+      const text = await piRes.text();
+      return jsonResponse({ error: "PI query failed", detail: text }, 500);
+    }
+    const piRows = (await piRes.json()) as Array<Record<string, unknown>>;
+    const patches: Array<{
+      pi_id: string;
+      pi_number: string;
+      old_amount_paid_cents: unknown;
+      new_amount_paid_cents: number | null;
+    }> = [];
+    for (const pi of piRows) {
+      const piStripeId = pi.stripe_payment_intent_id as string;
+      const payRes = await fetch(
+        `${supabaseUrl}/rest/v1/payments?stripe_payment_intent_id=eq.${encodeURIComponent(piStripeId)}&select=amount_cents&limit=1`,
+        { headers },
+      );
+      const payRows = payRes.ok
+        ? ((await payRes.json()) as Array<Record<string, unknown>>)
+        : [];
+      const payAmount =
+        payRows.length > 0
+          ? (payRows[0].amount_cents as number | null)
+          : null;
+      if (payAmount === null) {
+        patches.push({
+          pi_id: String(pi.id),
+          pi_number: pi.pi_number as string,
+          old_amount_paid_cents: pi.amount_paid_cents,
+          new_amount_paid_cents: null,
+        });
+        continue;
+      }
+      const patchUpdate = await fetch(
+        `${supabaseUrl}/rest/v1/proforma_invoices?id=eq.${encodeURIComponent(String(pi.id))}`,
+        {
+          method: "PATCH",
+          headers: { ...headers, "Content-Type": "application/json" },
+          body: JSON.stringify({ amount_paid_cents: payAmount }),
+        },
+      );
+      if (!patchUpdate.ok) {
+        const t = await patchUpdate.text();
+        return jsonResponse(
+          {
+            error: `PATCH failed for PI ${String(pi.id)}`,
+            detail: t,
+            patched_so_far: patches.length,
+          },
+          500,
+        );
+      }
+      patches.push({
+        pi_id: String(pi.id),
+        pi_number: pi.pi_number as string,
+        old_amount_paid_cents: pi.amount_paid_cents,
+        new_amount_paid_cents: payAmount,
+      });
+    }
+    return jsonResponse({
+      ok: true,
+      scanned: piRows.length,
+      patched: patches.length,
+      patches,
+    });
+  }
+
   const res = await fetch(
     `${supabaseUrl}/rest/v1/payments?select=*&order=created_at.desc&limit=20`,
     { headers },
