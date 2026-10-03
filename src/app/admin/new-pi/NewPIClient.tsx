@@ -272,6 +272,16 @@ export default function NewPIPage() {
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
 
+  // 2026-10-04 (R81): guard against the SA{date}0001 collision.
+  // The form seeds piNumber with SA{date}0001 on first render and then
+  // asynchronously fetches the real next-available number from
+  // /api/pi/next-number. If the admin clicks Save before that fetch
+  // resolves we end up with a guaranteed unique-constraint 23505 on
+  // the server. We *also* auto-retry on the server (see create.ts),
+  // but blocking here is cheaper and gives a calmer UX (no server
+  // round-trip just to discover the default is taken).
+  const [piNumberReady, setPiNumberReady] = useState(false);
+
   // Item picture upload (per-row)
   const fileInputRefs = useRef<Array<HTMLInputElement | null>>([]);
 
@@ -313,6 +323,7 @@ export default function NewPIPage() {
       setPiNumber(p.pi_number);
       setPiNumberLocked(true);
       setPiSource("uploaded");
+      setPiNumberReady(true);
     }
     if (p.issue_date) setIssueDate(p.issue_date);
     if (p.lead_time_text) setLeadTimeText(p.lead_time_text);
@@ -345,13 +356,19 @@ export default function NewPIPage() {
   async function fetchNextPiNumber() {
     try {
       const res = await fetch("/api/pi/next-number/", { method: "GET" });
-      if (!res.ok) return;
-      const data = (await res.json()) as { ok?: boolean; pi_number?: string };
-      if (data.ok && data.pi_number && !hasEditedPiRef.current) {
-        setPiNumber(data.pi_number);
+      if (!res.ok) {
+        setPiNumberReady(true);
+        return;
+      }
+      const data = (await res.json()) as { ok?: boolean; pi_number?: string; next?: string };
+      const next = data.pi_number || data.next;
+      if (next && !hasEditedPiRef.current) {
+        setPiNumber(next);
       }
     } catch {
       // dev environment — Cloudflare Functions not running. Local fallback is fine.
+    } finally {
+      setPiNumberReady(true);
     }
   }
 
@@ -595,11 +612,16 @@ export default function NewPIPage() {
             </Link>
             <button
               onClick={onSave}
-              disabled={saving}
+              disabled={saving || !piNumberReady}
+              title={!piNumberReady ? "Fetching the next available PI number from the server…" : undefined}
               className="inline-flex items-center gap-2 px-6 py-2 bg-[#ff4d00] hover:bg-[#e64500] disabled:opacity-50 text-black rounded font-semibold"
             >
               <Save className="w-4 h-4" />
-              {saving ? "Saving…" : "Save PI & get payment link"}
+              {saving
+                ? "Saving…"
+                : !piNumberReady
+                ? "Fetching PI number…"
+                : "Save PI & get payment link"}
             </button>
           </div>
         )}
