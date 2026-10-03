@@ -15,6 +15,7 @@ import {
   AlertTriangle,
   X,
   Coins,
+  Pencil,
 } from "lucide-react";
 import type { FxRates } from "@/lib/fx-rates";
 
@@ -441,6 +442,7 @@ export default function SummaryClient() {
                     <th className="px-4 py-3 text-right">Total</th>
                     <th className="px-4 py-3">Status</th>
                     <th className="px-4 py-3 text-right">View</th>
+                    <th className="px-4 py-3 text-right">Edit</th>
                     <th className="px-4 py-3 text-right">Delete</th>
                   </tr>
                 </thead>
@@ -489,6 +491,26 @@ export default function SummaryClient() {
                             <Eye className="h-3.5 w-3.5" strokeWidth={2.5} />
                             Open
                           </Link>
+                        </td>
+                        <td className="px-4 py-3 text-right">
+                          {sc.label === "DRAFT" || sc.label === "SENT" ? (
+                            <Link
+                              href={`/admin/edit-pi/?pi=${encodeURIComponent(p.piNumber)}`}
+                              className="inline-flex items-center gap-1 text-xs font-black uppercase tracking-wider text-black hover:text-[#ff4d00]"
+                              title={`Edit PI ${p.piNumber}`}
+                            >
+                              <Pencil className="h-3.5 w-3.5" strokeWidth={2.5} />
+                              Edit
+                            </Link>
+                          ) : (
+                            <span
+                              className="inline-flex cursor-not-allowed items-center gap-1 text-xs font-black uppercase tracking-wider text-[#c0c0c0]"
+                              title={`PI status "${sc.label}" is locked for editing.`}
+                            >
+                              <Lock className="h-3.5 w-3.5" strokeWidth={2.5} />
+                              Locked
+                            </span>
+                          )}
                         </td>
                         <td className="px-4 py-3 text-right">
                           {sc.label === "PAID" ? (

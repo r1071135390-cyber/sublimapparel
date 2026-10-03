@@ -1,4 +1,4 @@
-// functions/api/pi/create.ts
+﻿// functions/api/pi/create.ts
 // Creates a Proforma Invoice (PI) in Supabase.
 // Stripe payment intent creation has been stripped out (chunk-size issue with
 // the Stripe SDK on Cloudflare Functions). When the front-end needs to charge
@@ -38,8 +38,18 @@ interface CreatePiBody {
   };
   items: LineItem[];
   notes?: string;
-  shippingCost?: number; // USD dollars
-  currency?: string; // defaults to USD
+  // 2026-10-04 (R84): every field the customer-facing /pay/?pi=... page
+  // reads. Before R84 we accepted only items + shippingCost + currency
+  // + notes, so fabric / image / shipping method / lead time / terms
+  // text all silently vanished from the customer view. Now we forward
+  // them and persist in the dedicated proforma_invoices columns.
+  issueDate?: string;          // YYYY-MM-DD, defaults to today on server
+  leadTimeText?: string;
+  paymentTermsText?: string;
+  shippingLabel?: string;
+  shippingMethod?: string;
+  shippingCost?: number;       // USD dollars
+  currency?: string;           // defaults to USD
 }
 
 const corsHeaders = {
@@ -251,10 +261,18 @@ export async function onRequestPost(context: {
       // 2026-10-02 (R78): admin creates a PI specifically to email a customer
       // a /pay/?pi=... link. Writing 'sent' (instead of legacy 'draft') means
       // /api/pi/{pi_number} will create a Stripe PaymentIntent on first load.
-      // SumaryClient already styles 'sent' (blue "SENT" badge) — no UI churn.
-      status: "sent",
-      payment_terms: body.notes ?? "30% deposit, 70% before shipment",
+      // SumaryClient already styles 'sent' (blue 'SENT' badge) — no UI churn.
+      status: 'sent',
+      payment_terms: body.paymentTermsText ?? body.notes ?? '30% deposit, 70% before shipment',
       payment_percentage: 30,
+      // 2026-10-04 (R84): every field that used to silently vanish from
+      // the customer-facing /pay/?pi=... page. PIDisplay already reads
+      // these columns; we just forgot to forward them on insert.
+      ...(body.issueDate ? { issue_date: body.issueDate } : {}),
+      ...(body.leadTimeText ? { lead_time_text: body.leadTimeText } : {}),
+      ...(body.paymentTermsText ? { payment_terms_text: body.paymentTermsText } : {}),
+      ...(body.shippingLabel ? { shipping_label: body.shippingLabel } : {}),
+      ...(body.shippingMethod ? { shipping_method: body.shippingMethod } : {}),
     };
     if (body.notes) {
       insertPayload.metadata = { notes: body.notes };

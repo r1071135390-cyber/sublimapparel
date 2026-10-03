@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect, useMemo, useRef } from "react";
 import Link from "next/link";
@@ -445,6 +445,14 @@ export default function NewPIPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           piNumber: piNumber.trim(),
+          issueDate: issueDate || undefined,
+          // 2026-10-04 (R84): forward every form field the customer-facing
+          // /pay/?pi=... page reads. Before R84 we sent only description +
+          // quantity + unitPrice + sizes, so fabric / image / shipping
+          // method / lead time / terms text all silently disappeared from
+          // the PI preview even though the admin typed them.
+          leadTimeText: leadTimeText || undefined,
+          paymentTermsText: termsPaymentText || undefined,
           customer: {
             name: customerName.trim(),
             phone: customerPhone.trim(),
@@ -457,8 +465,15 @@ export default function NewPIPage() {
             .map((it) => {
               const item: Record<string, unknown> = {
                 description: it.description.trim(),
+                // 2026-10-04 (R84): fabric / unit / imageUrl used to be
+                // dropped on save. PIDisplay already consumes them, so
+                // sending them fixes "image not showing / fabric blank"
+                // without touching the renderer.
+                fabric: it.fabric.trim() || undefined,
                 quantity: getItemQty(it),
+                unit: it.unit.trim() || undefined,
                 unitPrice: Number(it.unitPrice) || 0,
+                imageUrl: it.imageUrl || undefined,
               };
               if (it.hasSizeBreakdown && it.sizes.length > 0) {
                 item.sizes = it.sizes.map((s) => ({
@@ -468,12 +483,22 @@ export default function NewPIPage() {
               }
               return item;
             }),
-          notes: termsPaymentText || undefined,
+          // 2026-10-04 (R84): shipping label & method used to be dropped too.
+          // Exposed separately from shippingCost (the dollar amount) so admin
+          // can edit "DDP by AIR" vs "FOB by SEA" without rewriting the
+          // dollar value.
+          shippingLabel: shippingLabel.trim() || undefined,
+          shippingMethod: shippingMethod.trim() || undefined,
           shippingCost: Number(shippingCost) || 0,
           // 2026-10-04 (R80): forward the admin-selected currency to the
           // server. The Stripe Payment Link is minted in this currency
           // and the bank account shown on the customer PI matches.
           currency,
+          // Legacy alias for back-compat with /api/pi/create/ callers that
+          // still read body.notes. R84 sends the full payment_terms_text
+          // string directly so the PDF and the customer page show the
+          // exact text the admin typed.
+          notes: termsPaymentText || undefined,
         }),
       });
 
@@ -631,7 +656,9 @@ export default function NewPIPage() {
 }
 
 // ─── PI Preview (matches the Excel layout) ─────────────────────────────────
-function PIPreview(props: {
+// 2026-10-04 (R84): also reused by /admin/edit-pi/ — both pages render the
+// same form, only the save handler differs.
+export function PIPreview(props: {
   piNumber: string;
   piSource: "auto" | "uploaded" | "manual";
   piNumberLocked: boolean;
