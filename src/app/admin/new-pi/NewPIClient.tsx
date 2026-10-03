@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import Link from "next/link";
 import { Plus, Trash2, Save, ExternalLink, RefreshCw, Upload, X, Check, Copy, Eye, Ruler } from "lucide-react";
+import { getBankAccount, SUPPORTED_CURRENCIES, type SupportedCurrency } from "@/lib/bank-accounts";
 
 // ─── Types ────────────────────────────────────────────────────────────────
 type SizeRow = { label: string; qty: number };
@@ -115,18 +116,9 @@ function todayIsoDate() {
   return d.toISOString().slice(0, 10);
 }
 
-const fmt = (dollars: number) =>
-  `$${dollars.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-
-// ─── Fixed bank info (in real PIs these are blue, pre-filled) ──────────────
-const BANK_INFO = {
-  beneficiary: "YIWU HOMEDORM COMMODITY MANUFACTURING CO.,LTD",
-  companyAddress: "2nd Floor, No.11 Anshang Road, Yiwu City, China",
-  bankName: "Agricultural Bank of China, Zhejiang Branch",
-  bankAccount: "19648014040108531",
-  bankSwift: "ABOCCNBJ110",
-  bankAddress: "No. 181 Binwang Road, Yiwu City, Jinhua, Zhejiang Province, China",
-};
+// 2026-10-04 (R80): accept currency symbol so admin can preview PIs in USD/EUR/GBP/CNY.
+const fmt = (dollars: number, symbol = "$") =>
+  `${symbol}${dollars.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
 // ─── Page ─────────────────────────────────────────────────────────────────
 function getItemQty(it: LineItem): number {
@@ -243,6 +235,15 @@ export default function NewPIPage() {
   const [piSource, setPiSource] = useState<"auto" | "uploaded" | "manual">("auto");
   const [issueDate, setIssueDate] = useState(todayIsoDate());
   const [leadTimeText, setLeadTimeText] = useState("Within 30 days");
+
+  // 2026-10-04 (R80): currency selector — defaults to USD (the historical
+  // default). The select drives:
+  //   1. The price labels in the items table (TOTAL USD → TOTAL EUR, etc.)
+  //   2. The bank info shown in the preview + sent to /api/pi/create/
+  //   3. The currency passed to Stripe when a Payment Link is minted.
+  const [currency, setCurrency] = useState<SupportedCurrency>("usd");
+  // Live bank info for the preview, mirrors what PIDisplay will render.
+  const bankInfo = useMemo(() => getBankAccount(currency), [currency]);
 
   // TO: block
   const [customerName, setCustomerName] = useState("");
@@ -452,7 +453,10 @@ export default function NewPIPage() {
             }),
           notes: termsPaymentText || undefined,
           shippingCost: Number(shippingCost) || 0,
-          currency: "USD",
+          // 2026-10-04 (R80): forward the admin-selected currency to the
+          // server. The Stripe Payment Link is minted in this currency
+          // and the bank account shown on the customer PI matches.
+          currency,
         }),
       });
 
@@ -514,7 +518,10 @@ export default function NewPIPage() {
             customerName={customerName}
             total={grandTotal}
             itemCount={items.length}
-            currency="USD"
+            // 2026-10-04 (R80): use admin-selected currency symbol instead of
+            // hardcoded "USD" — now USD/EUR/GBP/CNY all show correctly.
+            currency={bankInfo.symbol}
+            currencyCode={currency.toUpperCase()}
             copied={copied}
             onCopy={copyLink}
             onNew={() => window.location.reload()}
@@ -530,6 +537,10 @@ export default function NewPIPage() {
             onIssueDateChange={setIssueDate}
             leadTimeText={leadTimeText}
             onLeadTimeChange={setLeadTimeText}
+            // 2026-10-04 (R80): currency + bank info forwarded to preview.
+            currency={currency}
+            onCurrencyChange={setCurrency}
+            bank={bankInfo}
             customerName={customerName}
             onCustomerNameChange={setCustomerName}
             customerEmail={customerEmail}
@@ -608,6 +619,10 @@ function PIPreview(props: {
   onIssueDateChange: (v: string) => void;
   leadTimeText: string;
   onLeadTimeChange: (v: string) => void;
+  // 2026-10-04 (R80): currency + dynamic bank info.
+  currency: SupportedCurrency;
+  onCurrencyChange: (v: SupportedCurrency) => void;
+  bank: ReturnType<typeof getBankAccount>;
   customerName: string;
   onCustomerNameChange: (v: string) => void;
   customerEmail: string;
@@ -646,6 +661,7 @@ function PIPreview(props: {
   const {
     piNumber, piSource, piNumberLocked, onPiNumberChange, onRefreshPi,
     issueDate, onIssueDateChange, leadTimeText, onLeadTimeChange,
+    currency, onCurrencyChange, bank,
     customerName, onCustomerNameChange, customerEmail, onCustomerEmailChange, customerCompany, onCustomerCompanyChange, customerAddress, onCustomerAddressChange, customerPhone, onCustomerPhoneChange,
     items, onAddItem, onRemoveItem, onUpdateItem, onItemImageFile, fileInputRefs,
     shippingLabel, onShippingLabelChange, shippingMethod, onShippingMethodChange,
@@ -655,6 +671,7 @@ function PIPreview(props: {
     shippingTerm, onShippingTermChange,
     BlackCell, RedInput, BlueText, RedReminder,
   } = props;
+  const currencyUpper = currency.toUpperCase();
 
   return (
     <div className="bg-white dark:bg-neutral-900 shadow-lg rounded-lg overflow-hidden border border-neutral-200 dark:border-neutral-800">
@@ -733,6 +750,23 @@ function PIPreview(props: {
               placeholder="Within 30 days"
             />
           </div>
+          {/* 2026-10-04 (R80): currency selector. Drives the bank info
+              shown below + the currency Stripe charges in. Switching
+              currency rewires the bank account instantly. */}
+          <div className="flex items-center gap-2">
+            <BlackCell className="w-32 shrink-0">CURRENCY:</BlackCell>
+            <select
+              value={currency}
+              onChange={(e) => onCurrencyChange(e.target.value as SupportedCurrency)}
+              className="flex-1 bg-white dark:bg-neutral-900 border-2 border-[#00c2ff] rounded px-2 py-1 text-sm text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#00c2ff]/30"
+            >
+              {SUPPORTED_CURRENCIES.map((code) => (
+                <option key={code} value={code}>
+                  {code.toUpperCase()} — {code === "usd" ? "US Dollar" : code === "eur" ? "Euro" : code === "gbp" ? "British Pound" : "Chinese Yuan (RMB)"}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       </div>
 
@@ -803,8 +837,8 @@ function PIPreview(props: {
                 <th className="border border-black dark:border-white p-2 text-left">DESCRIPTION</th>
                 <th className="border border-black dark:border-white p-2 text-left">FABRIC CONTENT</th>
                 <th className="border border-black dark:border-white p-2 w-28 text-left">QTY / UNIT</th>
-                <th className="border border-black dark:border-white p-2 w-24 text-left">PRICE</th>
-                <th className="border border-black dark:border-white p-2 w-28 text-left">TOTAL USD</th>
+                <th className="border border-black dark:border-white p-2 w-24 text-left">PRICE ({bank.symbol})</th>
+                <th className="border border-black dark:border-white p-2 w-28 text-left">TOTAL {currencyUpper}</th>
                 <th className="border border-black dark:border-white p-2 w-8"></th>
               </tr>
             </thead>
@@ -908,7 +942,8 @@ function PIPreview(props: {
                   </td>
                   <td className="border border-black dark:border-white p-1.5 align-top">
                     <div className="flex items-center">
-                      <span className="text-sm mr-0.5">$</span>
+                      {/* 2026-10-04 (R80): price symbol matches selected currency. */}
+                      <span className="text-sm mr-0.5">{bank.symbol}</span>
                       <input
                         type="text"
                         inputMode="decimal"
@@ -926,7 +961,7 @@ function PIPreview(props: {
                     </div>
                   </td>
                   <td className="border border-black dark:border-white p-1.5 align-top text-sm font-semibold">
-                    {fmt(getItemQty(it) * it.unitPrice)}
+                    {fmt(getItemQty(it) * it.unitPrice, bank.symbol)}
                   </td>
                   <td className="border border-black dark:border-white p-1.5 align-top text-center">
                     {items.length > 1 && (
@@ -989,7 +1024,8 @@ function PIPreview(props: {
                 </td>
                 <td className="border border-black dark:border-white p-1.5 align-top">
                   <div className="flex items-center">
-                    <span className="text-sm mr-0.5">$</span>
+                    {/* 2026-10-04 (R80): shipping cost uses selected currency symbol. */}
+                    <span className="text-sm mr-0.5">{bank.symbol}</span>
                     <input
                       type="text"
                       inputMode="decimal"
@@ -1007,7 +1043,7 @@ function PIPreview(props: {
                   </div>
                 </td>
                 <td className="border border-black dark:border-white p-1.5 align-top text-sm font-semibold">
-                  {fmt(shippingQty * shippingCost)}
+                  {fmt(shippingQty * shippingCost, bank.symbol)}
                 </td>
                 <td className="border border-black dark:border-white p-1.5 align-top"></td>
               </tr>
@@ -1015,7 +1051,7 @@ function PIPreview(props: {
               {/* TOTAL row */}
               <tr className="bg-neutral-100 dark:bg-neutral-800 font-bold">
                 <td colSpan={5} className="border border-black dark:border-white p-2 text-right">TOTAL:</td>
-                <td className="border border-black dark:border-white p-2 text-base">{fmt(grandTotal)}</td>
+                <td className="border border-black dark:border-white p-2 text-base">{fmt(grandTotal, bank.symbol)}</td>
                 <td className="border border-black dark:border-white p-2"></td>
               </tr>
             </tbody>
@@ -1031,7 +1067,8 @@ function PIPreview(props: {
             Add item
           </button>
           <div className="text-neutral-500 text-xs">
-            Subtotal: {fmt(itemsSubtotal)} + Shipping: {fmt(shippingCost)} = <strong className="text-black dark:text-white">{fmt(grandTotal)}</strong>
+            {/* 2026-10-04 (R80): all 3 amounts use the selected currency symbol. */}
+            Subtotal: {fmt(itemsSubtotal, bank.symbol)} + Shipping: {fmt(shippingCost, bank.symbol)} = <strong className="text-black dark:text-white">{fmt(grandTotal, bank.symbol)}</strong>
           </div>
         </div>
       </div>
@@ -1075,7 +1112,10 @@ function PIPreview(props: {
         <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-1 items-start">
           <BlackCell>BENEFICIARY (COMPANY NAME):</BlackCell>
           <div>
-            <BlueText>{BANK_INFO.beneficiary}</BlueText>
+            {/* 2026-10-04 (R80): beneficiary name from the currency's bank
+                record. For CNY we show the Chinese name (matches bank records);
+                for other currencies we show the English name. */}
+            <BlueText>{bank.beneficiary}</BlueText>
             <RedReminder>
               The company name must be written in full. If it does not fit in the designated space, the full name should be written on the next line.
             </RedReminder>
@@ -1083,24 +1123,36 @@ function PIPreview(props: {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-1 items-start">
           <BlackCell>COMPANY ADDRESS:</BlackCell>
-          <BlueText>{BANK_INFO.companyAddress}</BlueText>
+          <BlueText>{bank.companyAddress}</BlueText>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-1">
           <BlackCell>BANK NAME:</BlackCell>
-          <BlackCell>{BANK_INFO.bankName}</BlackCell>
+          <BlackCell>{bank.bankName}</BlackCell>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-1">
           <BlackCell>BANK ACCOUNT:</BlackCell>
-          <BlackCell>{BANK_INFO.bankAccount}</BlackCell>
+          <BlackCell>{bank.account}</BlackCell>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-1">
           <BlackCell>BANK SWIFT CODE:</BlackCell>
-          <BlackCell>{BANK_INFO.bankSwift}</BlackCell>
+          <BlackCell>{bank.swift}</BlackCell>
         </div>
+        {bank.cnaps && (
+          <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-1">
+            <BlackCell>CNAPS CODE:</BlackCell>
+            <BlackCell>{bank.cnaps}</BlackCell>
+          </div>
+        )}
         <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-1">
           <BlackCell>BANK ADDRESS:</BlackCell>
-          <BlackCell>{BANK_INFO.bankAddress}</BlackCell>
+          <BlackCell>{bank.bankAddress}</BlackCell>
         </div>
+        {bank.notes && (
+          <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-1 items-start">
+            <BlackCell>NOTES:</BlackCell>
+            <span className="italic text-neutral-600 dark:text-neutral-400">{bank.notes}</span>
+          </div>
+        )}
       </div>
 
       {/* ── Clauses (5)-(7) — fixed black text ── */}
@@ -1161,7 +1213,7 @@ function PISourceBadge({ source }: { source: "auto" | "uploaded" | "manual" }) {
 }
 
 function SuccessPanel({
-  link, piNumber, customerName, total, itemCount, currency, copied, onCopy, onNew,
+  link, piNumber, customerName, total, itemCount, currency, currencyCode, copied, onCopy, onNew,
 }: {
   link: string;
   piNumber: string;
@@ -1169,6 +1221,9 @@ function SuccessPanel({
   total: number;
   itemCount: number;
   currency: string;
+  // 2026-10-04 (R80): ISO 4217 code (USD/EUR/GBP/CNY) shown alongside the
+  // symbol so customers see both the sign and the unambiguous code.
+  currencyCode: string;
   copied: boolean;
   onCopy: () => void;
   onNew: () => void;
@@ -1205,7 +1260,9 @@ function SuccessPanel({
           <div>
             <div className="text-xs uppercase text-neutral-500 tracking-wide">Total</div>
             <div className="font-bold text-[#ff4d00] text-base mt-0.5">
-              {currency} {total.toFixed(2)}
+              {/* 2026-10-04 (R80): display both the symbol and the unambiguous
+                  currency code (USD/EUR/GBP/CNY). */}
+              {currency} {total.toFixed(2)} {currencyCode}
             </div>
           </div>
         </div>

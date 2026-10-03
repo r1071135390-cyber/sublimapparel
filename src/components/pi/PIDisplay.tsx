@@ -9,6 +9,7 @@
  */
 
 import { CheckCircle2 } from "lucide-react";
+import { getBankAccount } from "@/lib/bank-accounts";
 
 export interface PIItemRow {
   description: string;
@@ -150,6 +151,13 @@ function ItemWithSizesRow({
 export function PIDisplay({ pi }: { pi: PIDisplayData }) {
   const itemsSubtotal = pi.items.reduce((s, it) => s + it.total_cents, 0);
   const shipping = pi.shipping_cents;
+  // 2026-10-04 (R80): pick the right bank account for the PI's currency.
+  // Wires in USD/EUR/GBP/CNY use different receiving accounts so the
+  // sender's bank doesn't have to do a currency conversion (which adds
+  // 1-3% fee + 1-2 day delay). Falls back to USD if currency is unknown.
+  const bank = getBankAccount(pi.currency);
+  // Pretty currency code for the table headers, e.g. "USD" / "EUR" / "GBP" / "CNY".
+  const currencyUpper = pi.currency.toUpperCase();
 
   return (
     <div
@@ -244,10 +252,10 @@ export function PIDisplay({ pi }: { pi: PIDisplayData }) {
               Qty
             </th>
             <th className="w-[12%] border-r border-black p-2 text-right text-[10px] font-black uppercase">
-              Price (USD)
+              Price ({currencyUpper})
             </th>
             <th className="w-[12%] p-2 text-right text-[10px] font-black uppercase">
-              Total (USD)
+              Total ({currencyUpper})
             </th>
           </tr>
         </thead>
@@ -291,7 +299,7 @@ export function PIDisplay({ pi }: { pi: PIDisplayData }) {
               colSpan={5}
               className="border-r border-black p-2 text-right text-[11px] font-black uppercase"
             >
-              Total Amount (USD)
+              Total Amount ({currencyUpper})
             </td>
             <td className="p-2 text-right text-[14px] font-black">
               {fmtMoney(pi.total_cents, pi.currency)}
@@ -329,7 +337,13 @@ export function PIDisplay({ pi }: { pi: PIDisplayData }) {
         </p>
       </div>
 
-      {/* === ROW 24-33: Bank Info === */}
+      {/* === ROW 24-33: Bank Info — 2026-10-04 (R80) === */}
+      {/* Currency-aware: the receiving account is picked by pi.currency
+          (USD/EUR/GBP/CNY). Wired by getBankAccount() from
+          @/lib/bank-accounts. Field order matches the Excel layout —
+          BENEFICIARY, red reminder, COMPANY ADDRESS, BANK NAME, ACCOUNT,
+          SWIFT, BANK ADDRESS, with optional CNAPS / intermediary rows
+          appended when relevant for that currency. */}
       <div className="border-b border-black p-3 text-[10px]">
         <p className="mb-1 text-[12px] font-black uppercase tracking-wide">
           Bank Info:
@@ -337,7 +351,7 @@ export function PIDisplay({ pi }: { pi: PIDisplayData }) {
         <p>
           <span className="font-bold">BENEFICIARY: </span>
           <span style={{ color: BLUE }} className="font-bold">
-            Yiwu Homedorm Commodity Manufacturing Co., Ltd
+            {bank.beneficiary}
           </span>
         </p>
         {/* Red reminder - KEEPS RED as the customer reminder */}
@@ -348,27 +362,36 @@ export function PIDisplay({ pi }: { pi: PIDisplayData }) {
         <p className="mt-1">
           <span className="font-bold">COMPANY ADDRESS: </span>
           <span style={{ color: BLUE }} className="font-bold">
-            2nd Floor, No.11 Anshang Road, Yiwu City, China
+            {bank.companyAddress}
           </span>
         </p>
         <div className="mt-1 grid grid-cols-2 gap-x-3">
           <p>
             <span className="font-bold">BANK NAME: </span>
-            Bank of China, Yiwu Branch
+            {bank.bankName}
           </p>
           <p>
             <span className="font-bold">BANK ADDRESS: </span>
-            No.188 Chouzhou North Road, Yiwu, China
+            {bank.bankAddress}
           </p>
           <p>
             <span className="font-bold">ACCOUNT NO.: </span>
-            1234 5678 9012 3456
+            {bank.account}
           </p>
           <p>
             <span className="font-bold">SWIFT CODE: </span>
-            BKCHCNBJ78A
+            {bank.swift}
           </p>
+          {bank.cnaps && (
+            <p>
+              <span className="font-bold">CNAPS: </span>
+              {bank.cnaps}
+            </p>
+          )}
         </div>
+        {bank.notes && (
+          <p className="mt-1 italic text-black/70">Note: {bank.notes}</p>
+        )}
       </div>
 
       {/* === ROW 49-51: Signatures === */}

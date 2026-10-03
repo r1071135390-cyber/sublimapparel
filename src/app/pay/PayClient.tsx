@@ -24,6 +24,7 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { PIDisplay, type PIDisplayData } from "@/components/pi/PIDisplay";
 import { PayWithStripeLinkButton } from "@/components/PayWithStripeLinkButton";
+import { getBankAccount } from "@/lib/bank-accounts";
 import { Truck, CheckCircle2, Loader2, Download, Building2, CreditCard, AlertCircle } from "lucide-react";
 
 // ---------- Types ----------
@@ -139,7 +140,7 @@ export default function PayClient() {
   // Excel borders, item images, bank info — all captured exactly).
   // Previous jsPDF-only implementation hand-drew a simplified version with
   // Helvetica and missed ~30% of the visual fidelity.
-  const downloadPDF = useCallback(async () => {
+  const downloadPDF = useCallback(async (): Promise<void> => {
     if (!pi) return;
     const article = document.getElementById("pi-document");
     if (!article) {
@@ -150,9 +151,10 @@ export default function PayClient() {
     setPdfGenerating(true);
     try {
       // 1. Wait for web fonts to load so Inter/Chinese fallbacks render
-      //    correctly in the screenshot.
-      if (typeof document !== "undefined" && (document as any).fonts?.ready) {
-        await (document as any).fonts.ready;
+      //    correctly in the screenshot. document.fonts is typed in lib.dom
+      //    since TS 5.4 — no `any` cast needed.
+      if (typeof document !== "undefined" && document.fonts?.ready) {
+        await document.fonts.ready;
       }
 
       // 2. Wait for every <img> inside the article to finish loading.
@@ -161,7 +163,7 @@ export default function PayClient() {
       const images = Array.from(article.querySelectorAll("img"));
       await Promise.all(
         images.map(
-          (img) =>
+          (img): Promise<void> =>
             new Promise<void>((resolve) => {
               if (img.complete && img.naturalWidth > 0) {
                 resolve();
@@ -170,7 +172,7 @@ export default function PayClient() {
               img.addEventListener("load", () => resolve(), { once: true });
               img.addEventListener("error", () => resolve(), { once: true });
               // Safety timeout — never wait more than 3s per image
-              setTimeout(resolve, 3000);
+              setTimeout(() => resolve(), 3000);
             }),
         ),
       );
@@ -451,13 +453,11 @@ function CardPaymentMethod({ pi }: { pi: PIData }) {
 
 // ---------- Bank transfer (T/T) ----------
 
-const BANK_INFO = {
-  beneficiary: "YIWU HOMEDORM COMMODITY MANUFACTURING CO., LTD",
-  account: "19648014040108531",
-  swift: "ABOCCNBJ110",
-  bankName: "Agricultural Bank of China",
-  bankAddress: "No. 181 Binwang Road, Yiwu City, Jinhua, Zhejiang, China",
-};
+// 2026-10-04 (R80): bank account no longer hardcoded — driven by
+// pi.currency. Each PI picks the right receiving account for its
+// currency (USD/EUR/GBP/CNY) so the sender's bank doesn't have to
+// convert currencies (1-3% fee + 1-2 day delay).
+// Hardcoded account info lives in src/lib/bank-accounts.ts.
 
 function BankTransferMethod({
   pi,
@@ -470,6 +470,10 @@ function BankTransferMethod({
   const [error, setError] = useState<string | null>(null);
   const [wireRef, setWireRef] = useState("");
   const [agreed, setAgreed] = useState(false);
+  // 2026-10-04 (R80): resolve bank account from PI currency. Recomputes
+  // when the parent re-renders with a different pi (e.g. after admin
+  // updates the PI's currency in /admin/new-pi/).
+  const bank = getBankAccount(pi.currency);
 
   const copy = (text: string) => {
     if (typeof navigator !== "undefined" && navigator.clipboard) {
@@ -526,15 +530,16 @@ function BankTransferMethod({
       <dl className="mb-4 space-y-1.5 border-2 border-black/10 bg-[#faf9f6] p-4 text-sm">
         <div className="flex justify-between gap-2">
           <dt className="shrink-0 text-xs font-bold uppercase tracking-wider text-black/60">Beneficiary</dt>
-          <dd className="text-right font-bold">{BANK_INFO.beneficiary}</dd>
+          {/* 2026-10-04 (R80): all bank fields below come from getBankAccount(pi.currency). */}
+          <dd className="text-right font-bold">{bank.beneficiary}</dd>
         </div>
         <div className="flex justify-between gap-2">
           <dt className="shrink-0 text-xs font-bold uppercase tracking-wider text-black/60">Account #</dt>
           <dd className="flex items-center gap-2 font-mono font-bold">
-            {BANK_INFO.account}
+            {bank.account}
             <button
               type="button"
-              onClick={() => copy(BANK_INFO.account)}
+              onClick={() => copy(bank.account)}
               className="text-[10px] uppercase tracking-wider text-[#ff4d00] hover:underline"
             >
               Copy
@@ -543,16 +548,23 @@ function BankTransferMethod({
         </div>
         <div className="flex justify-between gap-2">
           <dt className="shrink-0 text-xs font-bold uppercase tracking-wider text-black/60">SWIFT Code</dt>
-          <dd className="font-mono font-bold">{BANK_INFO.swift}</dd>
+          <dd className="font-mono font-bold">{bank.swift}</dd>
         </div>
         <div className="flex justify-between gap-2">
           <dt className="shrink-0 text-xs font-bold uppercase tracking-wider text-black/60">Bank</dt>
-          <dd className="text-right">{BANK_INFO.bankName}</dd>
+          <dd className="text-right">{bank.bankName}</dd>
         </div>
         <div className="flex justify-between gap-2">
           <dt className="shrink-0 text-xs font-bold uppercase tracking-wider text-black/60">Bank Address</dt>
-          <dd className="text-right text-xs">{BANK_INFO.bankAddress}</dd>
+          <dd className="text-right text-xs">{bank.bankAddress}</dd>
         </div>
+        {/* 2026-10-04 (R80): optional CNAPS line shown only for CNY wires. */}
+        {bank.cnaps && (
+          <div className="flex justify-between gap-2">
+            <dt className="shrink-0 text-xs font-bold uppercase tracking-wider text-black/60">CNAPS</dt>
+            <dd className="font-mono font-bold">{bank.cnaps}</dd>
+          </div>
+        )}
         <div className="flex justify-between gap-2 border-t-2 border-[#ff4d00]/30 pt-2">
           <dt className="shrink-0 text-xs font-bold uppercase tracking-wider text-[#ff4d00]">Reference</dt>
           <dd className="font-mono font-black text-[#ff4d00]">{pi.pi_number}</dd>
