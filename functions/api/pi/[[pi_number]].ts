@@ -21,6 +21,13 @@
 //      405. The dispatch is based on the path's last segment, so
 //      anything we add later (`/api/pi/{n}/<action>`) can hook in here.
 //
+// 2026-10-04 (R86): the call into `handleConfirmBank` now passes
+// `{ request: context.request, env: context.env }` instead of the raw
+// context. The shared helper switched to that plain shape so it can be
+// driven from BOTH route surfaces (`[pi_number]/confirm-bank.ts` with
+// its EventContext<Env, ...> and THIS catch-all with its inline context)
+// without tripping the structural-mismatch tsc error.
+//
 // Live PI card payment flow:
 //   - When a customer opens a PI in "sent" status with no Stripe
 //     client_secret yet, this handler mints a PaymentIntent, persists
@@ -297,7 +304,7 @@ export async function onRequestPost(context: {
 
   switch (action) {
     case "confirm-bank":
-      return handleConfirmBank(context);
+      return handleConfirmBank({ request: context.request, env: context.env });
     default:
       return jsonResponse(
         { error: `Unknown PI action: ${action || "(none)"}` },

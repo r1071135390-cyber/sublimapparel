@@ -14,17 +14,17 @@
  *
  * Returns: { ok: true, pi_number, status: "pending_bank" }
  *
- * 2026-10-04 (R85): extracted from `functions/api/pi/confirm-bank.ts`
- * so the same logic can be reached via TWO route surfaces:
- *   1. /api/pi/[pi_number]/confirm-bank  — the canonical CF Pages
- *      Functions file at `functions/api/pi/[pi_number]/confirm-bank.ts`.
- *      Cloudflare's route precedence prefers this because of the static
- *      `confirm-bank` segment.
- *   2. /api/pi/{anything}/{action} via the catch-all
- *      `[[pi_number]].ts`, which dispatches to this function based on the
- *      last path segment. This is the safety net: if (1) is ever
- *      bypassed — stale edge cache, deploy timing, anything — POST
- *      still lands here and the bank-confirm flow still works.
+ * 2026-10-04 (R86): refactored handleConfirmBank to take `{ request: any;
+ * env: any }` instead of a wrapper interface. The wrapper approach failed
+ * `next build`'s tsc pass because the Cloudflare-flavored EventContext
+ * `request` type (`Request<unknown, IncomingRequestCfProperties<unknown>>`)
+ * and the standard lib.dom `Request` are NOT structurally assignable —
+ * even with `request: any` on our wrapper, `next build` still insisted on
+ * comparing the property shape and complained. Passing the two fields
+ * separately sidesteps the entire structural check; the function only
+ * ever calls `await request.json()` and reads `env.COZE_SUPABASE_URL` /
+ * `env.COZE_SUPABASE_SERVICE_ROLE_KEY`, so we don't need any structural
+ * type info.
  *
  * Note: This does NOT mark the PI as fully paid. The factory must verify
  * the wire in their bank account and then mark the PI as 'paid' via
@@ -34,19 +34,6 @@
 interface ConfirmBankEnv {
   COZE_SUPABASE_URL: string;
   COZE_SUPABASE_SERVICE_ROLE_KEY: string;
-}
-
-// 2026-10-04 (R85): Cloudflare's PagesFunction Request is
-// `Request<unknown, IncomingRequestCfProperties<unknown>>` which lacks the
-// browser-only `credentials`, `destination`, `mode`, `referrer`,
-// `referrerPolicy` fields that lib.dom's `Request` declares. Using `any`
-// here keeps the shared helper callable from BOTH route surfaces
-// (`[pi_number]/confirm-bank.ts` passes an EventContext with a
-// CF-flavored Request; the catch-all dispatcher does the same). We never
-// touch those browser-only fields, so the widening is safe.
-interface ConfirmBankContext {
-  request: any;
-  env: ConfirmBankEnv;
 }
 
 const CORS_HEADERS = {
@@ -67,10 +54,12 @@ interface ConfirmBankBody {
   customer_name?: string;
 }
 
-export async function handleConfirmBank(
-  context: ConfirmBankContext,
-): Promise<Response> {
-  const { request, env } = context;
+export async function handleConfirmBank(args: {
+  request: any;
+  env: any;
+}): Promise<Response> {
+  const request = args.request;
+  const env = args.env as ConfirmBankEnv;
 
   let body: ConfirmBankBody;
   try {
