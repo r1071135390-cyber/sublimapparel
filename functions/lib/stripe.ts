@@ -271,13 +271,13 @@ export async function createPaymentLink(
     "line_items[0][price_data][product_data][name]",
     params.description ?? "Order",
   );
+  body.append("after_completion[type]", "redirect");
+  body.append(
+    "after_completion[redirect][url]",
+    "https://sublimapparel.com/quote/?id={CHECKOUT_SESSION_ID}",
+  );
   if (params.receipt_email) {
-    body.append("after_completion[type]", "redirect");
-    body.append(
-      "after_completion[redirect][url]",
-      "https://sublimapparel.com/quote/?id={CHECKOUT_SESSION_ID}",
-    );
-    body.append("receipt_email", params.receipt_email);
+    body.append("payment_intent_data[receipt_email]", params.receipt_email);
   }
   for (const [k, v] of Object.entries(flattenMetadata(params.metadata))) {
     body.append(k, v);

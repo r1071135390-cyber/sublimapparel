@@ -178,16 +178,77 @@ export default function PayClient() {
       );
 
       // 3. Screenshot at 2x for crisp PDF render on retina/print.
+      //    onclone injects an OKLCH/oklab-free style sheet — html2canvas's
+      //    CSS parser (which walks getComputedStyle) does not yet understand
+      //    the modern oklab()/oklch() color functions that Tailwind v4 ships
+      //    via globals.css, and throws "Attempting to parse an unsupported
+      //    color function 'oklab'" before rendering anything. We swap every
+      //    oklab/oklch color reference for a near-equivalent rgb() so the
+      //    canvas-based screenshot finishes cleanly.
       const canvas = await html2canvas(article, {
         scale: 2,
         useCORS: true,
         allowTaint: false,
         backgroundColor: "#ffffff",
         logging: false,
-        // Honor any media-print override so users who print get the same
-        // white-bg, no-shadow layout they see on the printed page.
         windowWidth: article.scrollWidth,
         windowHeight: article.scrollHeight,
+        onclone: (clonedDoc) => {
+          // Tailwind v4 globals.css declares ~30 oklch() shadcn theme
+          // tokens (--background, --foreground, --primary, …). html2canvas
+          // walks getComputedStyle() on every element and throws
+          // "Attempting to parse an unsupported color function 'oklab'"
+          // the instant it hits one — so the screenshot aborts before a
+          // single pixel is drawn.
+          //
+          // Strategy: rewrite every oklab()/oklch() inside <style>
+          // blocks in the cloned doc to a plain rgb() placeholder. The
+          // same colour values Tailwind exposes via var(--background) etc.
+          // resolve at computed-style time, so patching the textContent
+          // fixes the crash without losing layout (flex, padding, border,
+          // text-size utilities are all non-color CSS).
+          //
+          // PIDisplay sets its key colors (header, red TO block, blue
+          // bank info) via inline `style={{ color: BLACK/RED/BLUE }}` —
+          // those are untouched.
+          const safeRgb = "rgb(0,0,0)";
+          const stripModern = (txt) =>
+            txt
+              .replace(/oklab\([^)]*\)/g, safeRgb)
+              .replace(/oklch\([^)]*\)/g, safeRgb);
+
+          clonedDoc.querySelectorAll("style").forEach((node) => {
+            if (!node.textContent) return;
+            if (!/oklab|oklch/.test(node.textContent)) return;
+            node.textContent = stripModern(node.textContent);
+          });
+
+          // External stylesheets are usually same-origin hashed CSS
+          // bundles (_next/static/css/...). Same-origin sync XHR works;
+          // cross-origin fall back to drop.
+          clonedDoc.querySelectorAll('link[rel="stylesheet"]').forEach((node) => {
+            try {
+              const href = node.getAttribute("href");
+              if (!href) {
+                node.remove();
+                return;
+              }
+              const absUrl = new URL(href, clonedDoc.baseURI).toString();
+              const xhr = new XMLHttpRequest();
+              xhr.open("GET", absUrl, false);
+              xhr.send();
+              if (xhr.status >= 200 && xhr.status < 300 && xhr.responseText) {
+                if (/oklab|oklch/.test(xhr.responseText)) {
+                  node.remove();
+                }
+              } else {
+                node.remove();
+              }
+            } catch {
+              node.remove();
+            }
+          });
+        },
       });
 
       const imgData = canvas.toDataURL("image/png");
