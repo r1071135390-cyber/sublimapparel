@@ -250,29 +250,25 @@ export function PIDisplay({ pi }: { pi: PIDisplayData }) {
         </div>
       </div>
 
-      {/* === ROW 3-7: TO block (red, customer-filled) === */}
+      {/* === TO block (red, customer-filled) 鈥?R97 layout ===
+          Line 1: To: <name> [/ <company>]   (company is appended with " / " only when set)
+          Line 2: <address>                   (omitted when not set)
+          Line 3: <phone> / <email>          (omitted when both are empty; " / " only between present values) */}
       <div className="border-b border-black p-3 text-[11px]">
-        <p className="text-[10px] font-bold uppercase">TO:</p>
-        {pi.customer_company && (
-          <p className="mt-0.5 text-[13px] font-bold uppercase" style={{ color: RED }}>
-            {pi.customer_company}
-          </p>
-        )}
-        <p className="mt-0.5 text-[13px] font-bold uppercase" style={{ color: RED }}>
+        <p className="text-[13px] font-bold uppercase" style={{ color: RED }}>
+          <span className="text-[10px] font-bold uppercase">To:</span>{" "}
           {pi.customer_name || "—"}
+          {pi.customer_company ? ` / ${pi.customer_company}` : ""}
         </p>
         {pi.customer_address && (
           <p className="mt-0.5 uppercase" style={{ color: RED }}>
             {pi.customer_address}
           </p>
         )}
-        {pi.customer_phone && (
+        {(pi.customer_phone || pi.customer_email) && (
           <p className="mt-0.5" style={{ color: RED }}>
-            {pi.customer_phone}
+            {[pi.customer_phone, pi.customer_email].filter(Boolean).join(" / ")}
           </p>
-        )}
-        {pi.customer_email && (
-          <p style={{ color: RED }}>{pi.customer_email}</p>
         )}
       </div>
 
