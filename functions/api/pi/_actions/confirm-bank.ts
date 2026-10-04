@@ -36,8 +36,16 @@ interface ConfirmBankEnv {
   COZE_SUPABASE_SERVICE_ROLE_KEY: string;
 }
 
+// 2026-10-04 (R85): Cloudflare's PagesFunction Request is
+// `Request<unknown, IncomingRequestCfProperties<unknown>>` which lacks the
+// browser-only `credentials`, `destination`, `mode`, `referrer`,
+// `referrerPolicy` fields that lib.dom's `Request` declares. Using `any`
+// here keeps the shared helper callable from BOTH route surfaces
+// (`[pi_number]/confirm-bank.ts` passes an EventContext with a
+// CF-flavored Request; the catch-all dispatcher does the same). We never
+// touch those browser-only fields, so the widening is safe.
 interface ConfirmBankContext {
-  request: Request;
+  request: any;
   env: ConfirmBankEnv;
 }
 
