@@ -40,7 +40,7 @@
 
 import { normalizeSupabaseUrl } from "../_utils";
 import { createPaymentIntent } from "../../lib/stripe";
-import { handleConfirmBank } from "./_actions/confirm-bank";
+import { handleConfirmBank } from "./pi-actions/confirm-bank";
 
 interface Env {
   COZE_SUPABASE_URL: string;
@@ -284,7 +284,7 @@ export async function onRequestGet(context: {
 // precedence didn't pick the dedicated file. The dispatch key is the LAST
 // path segment after the pi_number, so add new per-PI POSTs here too.
 export async function onRequestPost(context: {
-  request: Request;
+  request: any;
   env: Env;
   params?: Record<string, string | string[] | undefined>;
 }): Promise<Response> {

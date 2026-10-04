@@ -4,8 +4,8 @@
  * Customer confirms they have initiated a bank wire transfer (T/T).
  * Updates PI status to 'pending_bank' so the factory knows to watch for the wire.
  *
- * 2026-10-04 (R85): the actual logic now lives in
- * `functions/api/pi/_actions/confirm-bank.ts` and is re-exported here.
+ * 2026-10-04 (R85): the actual logic lives in
+ * `functions/api/pi/pi-actions/confirm-bank.ts` and is re-exported here.
  * This file exists as the canonical route — Cloudflare Pages Functions
  * prefers files with static trailing segments over the catch-all
  * `[[pi_number]].ts`, so this is the primary handler. The catch-all
@@ -13,7 +13,7 @@
  */
 
 import type { EventContext } from "@cloudflare/workers-types";
-import { handleConfirmBank, CONFIRM_BANK_CORS_HEADERS } from "../_actions/confirm-bank";
+import { handleConfirmBank, CONFIRM_BANK_CORS_HEADERS } from "../pi-actions/confirm-bank";
 
 interface Env {
   COZE_SUPABASE_URL: string;
