@@ -303,24 +303,21 @@ export function PIDisplay({ pi }: { pi: PIDisplayData }) {
             <td className="border-r border-black/30 p-2 text-center">
               <div className="mx-auto h-16 w-16 border border-dashed border-black/30" />
             </td>
-            <td className="border-r border-black/30 p-2 font-bold" style={{ color: RED }}>
+            <td className="border-r border-black/30 p-2 font-bold">
               {pi.shipping_label || "Shipping Cost"}
             </td>
             <td
               className="border-r border-black/30 p-2 italic"
-              style={{ color: RED }}
             >
               {pi.shipping_method || ""}
             </td>
             <td
               className="border-r border-black/30 p-2 text-right"
-              style={{ color: RED }}
             >
               1
             </td>
             <td
               className="border-r border-black/30 p-2 text-right"
-              style={{ color: RED }}
             >
               {fmtMoney(shipping, pi.currency)}
             </td>
