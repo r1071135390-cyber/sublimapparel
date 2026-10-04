@@ -212,7 +212,7 @@ export default function PayClient() {
           // bank info) via inline `style={{ color: BLACK/RED/BLUE }}` —
           // those are untouched.
           const safeRgb = "rgb(0,0,0)";
-          const stripModern = (txt) =>
+          const stripModern = (txt: string): string =>
             txt
               .replace(/oklab\([^)]*\)/g, safeRgb)
               .replace(/oklch\([^)]*\)/g, safeRgb);
