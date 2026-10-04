@@ -29,6 +29,12 @@
  *   - Footer adds the two-originals sentence + Seller/Buyer stamp with
  *     the company / buyer full names.
  *   - Items table stays as-is — per user direction "中间产品信息那里按照现在的".
+ *
+ * 2026-10-04 (R95): collapsed ROW 1 (centered logo) + ROW 2-3 (company header)
+ * into a single flex row. Logo now sits on the leftmost column of the same row
+ * that holds YIWU HOMEDORM / COMMODITY / ADD / PROFORMA INVOICE, with the text
+ * block centered inside the remaining flex-1 column. The two-column FM /
+ * INVOICE NO block shifts down one row as a result (no content change there).
  */
 
 import { CheckCircle2 } from "lucide-react";
@@ -190,8 +196,13 @@ export function PIDisplay({ pi }: { pi: PIDisplayData }) {
       className="border-2 border-black bg-white text-[12px] leading-snug"
       style={{ color: BLACK }}
     >
-      {/* === ROW 1: Brand logo (small, top) === */}
-      <div className="flex justify-center bg-white px-4 py-2">
+      {/* === ROW 1: Brand logo (leftmost) + company header + PROFORMA INVOICE ===
+          R95: logo used to sit in its own row above this block. User asked to
+          pull it inline — leftmost column, with the company name/address/
+          PROFORMA INVOICE text filling the rest of the row (still centered
+          horizontally inside its column). The two-column FM/INVOICE NO block
+          moves down one row as a result. */}
+      <div className="flex items-center gap-4 border-y border-black bg-white px-4 py-2">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/sublimapparel-logo-v2.webp"
@@ -199,26 +210,24 @@ export function PIDisplay({ pi }: { pi: PIDisplayData }) {
           width={120}
           height={32}
           decoding="async"
-          className="h-8 w-auto"
+          className="h-8 w-auto shrink-0"
         />
+        <div className="flex-1 text-center">
+          <p className="text-[12px] font-black uppercase tracking-wide">
+            YIWU HOMEDORM
+            <br />
+            COMMODITY MANUFACTURING CO.,LTD
+          </p>
+          <p className="mt-1 text-[10px] uppercase text-black/80">
+            ADD: 2nd Floor, No.11 Anshang Road, Yiwu City, China
+          </p>
+          <h1 className="mt-2 text-[22px] font-black uppercase tracking-widest text-black">
+            PROFORMA INVOICE
+          </h1>
+        </div>
       </div>
 
-      {/* === ROW 2-3: Header (black, fixed, uppercase) — matches reference === */}
-      <div className="border-y border-black px-4 py-2 text-center">
-        <p className="text-[12px] font-black uppercase tracking-wide">
-          YIWU HOMEDORM
-          <br />
-          COMMODITY MANUFACTURING CO.,LTD
-        </p>
-        <p className="mt-1 text-[10px] uppercase text-black/80">
-          ADD: 2nd Floor, No.11 Anshang Road, Yiwu City, China
-        </p>
-        <h1 className="mt-2 text-[22px] font-black uppercase tracking-widest text-black">
-          PROFORMA INVOICE
-        </h1>
-      </div>
-
-      {/* === ROW 4-8: FM block + factory info (uppercase) === */}
+      {/* === ROW 2: FM block + factory info (uppercase) === */}
       <div className="grid grid-cols-2 border-b border-black">
         {/* Left: factory info (black) */}
         <div className="border-r border-black p-3 text-[10px] uppercase">
@@ -241,7 +250,7 @@ export function PIDisplay({ pi }: { pi: PIDisplayData }) {
         </div>
       </div>
 
-      {/* === ROW 9-12: TO block (red, customer-filled) === */}
+      {/* === ROW 3-7: TO block (red, customer-filled) === */}
       <div className="border-b border-black p-3 text-[11px]">
         <p className="text-[10px] font-bold uppercase">TO:</p>
         {pi.customer_company && (
@@ -267,7 +276,7 @@ export function PIDisplay({ pi }: { pi: PIDisplayData }) {
         )}
       </div>
 
-      {/* === ROW 13-17: Items table (kept as-is per user direction) === */}
+      {/* === Items table (kept as-is per user direction) === */}
       <table className="w-full border-collapse text-[11px]">
         <thead>
           <tr className="border-b border-t border-black bg-[#fafafa]">
@@ -340,7 +349,7 @@ export function PIDisplay({ pi }: { pi: PIDisplayData }) {
         </tbody>
       </table>
 
-      {/* === ROW 18-23: Contract terms (1-7) — matches reference === */}
+      {/* === Contract terms (1-7) — matches reference === */}
       <div className="border-b border-black p-3 text-[10px] leading-relaxed">
         <p>
           <span className="font-bold">(1) Port of Loading:</span> Yiwu / Ningbo / Shanghai or any designated Chinese ports
@@ -445,12 +454,12 @@ export function PIDisplay({ pi }: { pi: PIDisplayData }) {
         <p className="ml-3">(e). Force Majeure: In case of Force Majeure the Sellers shall not be responsible for delay in delivery or nondelivery of the goods but shall notify immediately the Buyers and deliver to the Buyers by registered mail a certificate issued by government authorities or Chamber of Commerce as evidence thereof.</p>
       </div>
 
-      {/* === ROW 24: Two-originals sentence === */}
+      {/* === Two-originals sentence === */}
       <div className="border-b border-black px-4 py-2 text-center text-[10px] italic">
         This contract is made out in two original copies, one copy to be held by each party in witness thereof.
       </div>
 
-      {/* === ROW 25-26: Seller / Buyer stamp + signatures === */}
+      {/* === Seller / Buyer stamp + signatures === */}
       <div className="grid grid-cols-2 p-3 text-[10px]">
         <div>
           <p className="font-bold uppercase">Seller Stamp/ Signature:</p>
