@@ -129,10 +129,7 @@ function ItemWithSizesRow({
         <td className="border-r border-black/30 p-2 font-bold">
           {it.description}
         </td>
-        <td
-          className="border-r border-black/30 p-2"
-          style={{ color: RED }}
-        >
+        <td className="border-r border-black/30 p-2">
           {it.fabric || ""}
         </td>
         <td
@@ -154,17 +151,13 @@ function ItemWithSizesRow({
           <td className="border-r border-black/30 p-2" />
           <td colSpan={5} className="p-2">
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[10px]">
-              <span
-                className="font-black uppercase tracking-wide"
-                style={{ color: RED }}
-              >
+              <span className="font-black uppercase tracking-wide">
                 Size Breakdown:
               </span>
               {it.sizes!.map((s, i) => (
                 <span
                   key={`${s.label}-${i}`}
                   className="inline-flex items-center gap-1"
-                  style={{ color: RED }}
                 >
                   <span className="font-bold">{s.label}</span>
                   <span>×{s.qty}</span>
@@ -474,21 +467,16 @@ export function PIDisplay({ pi }: { pi: PIDisplayData }) {
 function Field({
   label,
   value,
-  red,
 }: {
   label: string;
   value: string;
-  red?: boolean;
 }) {
   return (
     <div className="flex items-baseline gap-2 border-b border-black/20 px-3 py-1.5 last:border-b-0">
       <span className="w-[110px] text-[10px] font-bold uppercase tracking-wide">
         {label}
       </span>
-      <span
-        className="flex-1 font-bold"
-        style={{ color: red ? RED : BLACK }}
-      >
+      <span className="flex-1 font-bold">
         {value || "—"}
       </span>
     </div>
