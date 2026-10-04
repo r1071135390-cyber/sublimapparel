@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 /**
  * /pay/?pi=.../PayClient.tsx (also served at /quote/?id=... via redirect)
@@ -23,7 +23,7 @@ import { Suspense } from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { PIDisplay, type PIDisplayData } from "@/components/pi/PIDisplay";
-import { PayWithStripeLinkButton } from "@/components/PayWithStripeLinkButton";
+import { PayWithStripeElements } from "@/components/PayWithStripeElements";
 import { getBankAccount } from "@/lib/bank-accounts";
 import { Truck, CheckCircle2, Loader2, Download, Building2, CreditCard, AlertCircle } from "lucide-react";
 
@@ -539,11 +539,11 @@ export default function PayClient() {
   );
 }
 
-// ---------- Card payment (Stripe Payment Link — hosted checkout) ----------
+// ---------- Card payment (Stripe Elements — inline, no navigation) ----------
 
 function CardPaymentMethod({ pi }: { pi: PIData }) {
   return (
-    <PayWithStripeLinkButton
+    <PayWithStripeElements
       piNumber={pi.pi_number}
       amountCents={pi.amount_due_cents}
       currency={pi.currency}

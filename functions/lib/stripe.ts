@@ -9,11 +9,11 @@
  *   - The REST API is small enough to call via fetch().
  *
  * This module exposes just the surface area we need:
- *   - createPaymentIntent
+ *   - createPaymentIntent       (R91 — in-page Elements flow, card only)
  *   - cancelPaymentIntent
  *   - createCheckoutSession
- *   - createPaymentLink          (R87 — customer-facing card flow)
- *   - constructWebhookEvent   (signature verification via Web Crypto)
+ *   - createPaymentLink          (R87 — hosted-checkout Payment Link flow)
+ *   - constructWebhookEvent      (signature verification via Web Crypto)
  *
  * 2026-10-01 (R77): unchanged surface area — multi-site support is
  * handled by the calling endpoints via the `site_slug` key in the
@@ -21,11 +21,27 @@
  * Webhook events surface site_slug back via event.data.object.metadata.
  *
  * 2026-10-04 (R87): added `createPaymentLink`. The /pay/ page's
- * PayWithStripeLinkButton component (R76/R80) has been POSTing to
- * /api/pi/stripe-payment-link since the page went live, but no Cloudflare
- * Pages Function ever handled that route — every click got 405 from the
- * catch-all dispatcher. This is the upstream primitive the new endpoint
- * calls.
+ * PayWithStripeLinkButton component (R76/R80) had been minting hosted
+ * Payment Links since the page went live, but no Cloudflare Pages Function
+ * ever handled that route — every click got 405 from the catch-all
+ * dispatcher. The /api/pi/stripe-payment-link endpoint calls this
+ * primitive.
+ *
+ * 2026-10-04 (R91): added card-only PaymentIntent creation for the
+ * Stripe Elements inline flow. PayWithStripeElements.tsx posts the PI number
+ * to /api/pi/stripe-payment-intent; the endpoint calls createPaymentIntent
+ * here, gets a client_secret, and returns it to the React side so
+ * <PaymentElement> can mount in the page (no navigation away).
+ *
+ * 2026-10-04 (R92): removed duplicate CreatePaymentIntentParams /
+ createPaymentIntent declarations left over from R91 — the second copy at
+ the bottom of the file collided with the original copy at the top,
+ causing TS "Duplicate identifier" errors that broke `pnpm tsc --noEmit`.
+ The two implementations are now consolidated into one (the R91 card-only
+ variant) and the legacy `automatic_payment_methods` variant is dropped
+ (no caller uses it; webhook / hosted-checkout flows already use
+ automatic_payment_methods implicitly via Stripe's default PaymentIntent
+ surface).
  */
 
 const STRIPE_API_BASE = "https://api.stripe.com/v1";
@@ -118,32 +134,51 @@ export interface StripeEvent {
   data: { object: StripePaymentIntent | StripeCheckoutSession | StripeCharge | Record<string, any> };
 }
 
-// ── Payment Intents ───────────────────────────────────────────────
+// ── Payment Intents (in-page Elements flow) ───────────────────────
+// 2026-10-04 (R91): customer requested paying inside the /pay/ page
+// without leaving to a hosted checkout. Stripe Elements + PaymentElement
+// render the card form inline; the customer never navigates away. This
+// primitive creates a PaymentIntent with `payment_method_types=["card"]`
+// (card only — no wallets / Klarna / etc.) and returns its client_secret.
+//
+// The webhook handler (/api/stripe/webhook, `handlePaymentSucceeded`) reads
+// pi_id / site_slug from intent.metadata and marks the PI row as paid —
+// we therefore MUST include those keys in metadata.
 export interface CreatePaymentIntentParams {
-  amount: number; // in cents
+  amount: number; // smallest currency unit (e.g. 1999 = $19.99)
   currency: string; // e.g. "usd"
   description?: string;
-  receipt_email?: string;
-  automatic_payment_methods?: boolean;
+  receipt_email?: string; // top-level is OK for PaymentIntent (unlike Payment Links)
   metadata?: Record<string, string>;
+  // Default: card only. Switch to automatic_payment_methods if you want
+  // wallets/redirects (Apple Pay, Google Pay, Klarna, etc.).
+  payment_method_types?: string[]; // e.g. ["card"]
+  automatic_payment_methods?: boolean;
 }
 
 export async function createPaymentIntent(
   secretKey: string,
   params: CreatePaymentIntentParams,
 ): Promise<StripePaymentIntent> {
-  const body = formBody({
-    amount: params.amount,
-    currency: params.currency,
-    description: params.description,
-    receipt_email: params.receipt_email,
-    "automatic_payment_methods[enabled]": params.automatic_payment_methods ?? true,
-    ...flattenMetadata(params.metadata),
-  });
+  const body = new URLSearchParams();
+  body.append("amount", String(params.amount));
+  body.append("currency", params.currency);
+  if (params.description) body.append("description", params.description);
+  if (params.receipt_email) body.append("receipt_email", params.receipt_email);
+  if (params.payment_method_types && params.payment_method_types.length > 0) {
+    for (const t of params.payment_method_types) {
+      body.append("payment_method_types[]", t);
+    }
+  } else if (params.automatic_payment_methods) {
+    body.append("automatic_payment_methods[enabled]", "true");
+  }
+  for (const [k, v] of Object.entries(flattenMetadata(params.metadata))) {
+    body.append(k, v);
+  }
   return stripeFetch("/payment_intents", secretKey, {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body,
+    body: body.toString(),
   });
 }
 
@@ -230,19 +265,22 @@ export async function createCheckoutSession(
   });
 }
 
-// ── Stripe Payment Links ──────────────────────────────────────────
+// ── Stripe Payment Links (hosted checkout, opens in new tab) ──────
 // 2026-10-04 (R87): the customer-facing /pay/ page card-payment flow
 // (PayWithStripeLinkButton.tsx, R76/R80) posts to /api/pi/stripe-payment-link
-// and expects a hosted URL it can `window.open()` in a new tab. Until
-// this round that route returned 405 — no Cloudflare Pages Function file
-// matched `/api/pi/stripe-payment-link` (the catch-all only handled
-// "confirm-bank"). This is the upstream primitive the new endpoint calls.
+// and expects a hosted URL it can `window.open()` in a new tab. This is
+// the upstream primitive the endpoint calls.
+//
+// 2026-10-04 (R91): superseded for the primary card-payment path by
+// Stripe Elements in PayWithStripeElements.tsx (in-page, no navigation).
+// The Link flow is still wired up so admin / fallback paths can use it; if
+// you remove PayWithStripeLinkButton you can delete this too.
 //
 // We mint a fresh Payment Link on every click (no caching yet — would need
-// a `stripe_payment_link_url` column on proforma_invoices, out of scope
-// for R87). Stripe accepts multiple payments on the same PI just fine;
-// the webhook handler is idempotent on stripe_payment_intent_id, so
-// duplicate links cannot double-mark the PI as paid.
+// a `stripe_payment_link_url` column on proforma_invoices, out of scope).
+// Stripe accepts multiple payments on the same PI just fine; the webhook
+// handler is idempotent on stripe_payment_intent_id, so duplicate links
+// cannot double-mark the PI as paid.
 export interface CreatePaymentLinkParams {
   amount: number; // in cents (smallest currency unit)
   currency: string; // e.g. "usd"

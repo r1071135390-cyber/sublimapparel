@@ -1,0 +1,24 @@
+R90.1: drop payment_method_collection (recurring-only) + debug onclone
+
+Two follow-ups after R90:
+
+1. Stripe Payment Links rejected `payment_method_collection: always` with
+   "can only be used if the payment link contains recurring prices".
+   That field is for subscription flows, not one-off PI payments.
+   Drop it from createPaymentLink(); no replacement — Stripe's default
+   collects card + us_bank_account automatically.
+
+2. After R90 the user still sees `oklab` on PDF download. The deployed
+   code does run onclone, but we have no console trace to confirm whether
+   it actually scrubbed anything. Added two console.log lines:
+     • `[PayClient] onclone entered: inlineStyleCount=N, linkCount=M`
+     • `[PayClient] onclone: link scrubbed=A, link dropped=B`
+   Plus switched `new URL(href, clonedDoc.baseURI)` to `window.location.href`
+   so the XHR resolves against the real page origin (the cloned doc
+   lives in an iframe whose baseURI is about:blank, which made every
+   synchronous fetch return the script as 404, so no CSS was ever scrubbed
+   or replaced — every Tailwind utility class on the page still resolves
+   to `color-mix(in oklab, …)`, and html2canvas's parser aborts the
+   first time it meets one).
+
+files: functions/lib/stripe.ts, src/app/pay/PayClient.tsx
