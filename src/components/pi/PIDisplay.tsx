@@ -137,13 +137,11 @@ function ItemWithSizesRow({
         </td>
         <td
           className="border-r border-black/30 p-2 text-right"
-          style={{ color: RED }}
         >
           {it.qty} {it.unit || "pcs"}
         </td>
         <td
           className="border-r border-black/30 p-2 text-right"
-          style={{ color: RED }}
         >
           {fmtMoney(it.unit_price_cents, currency)}
         </td>
@@ -242,11 +240,11 @@ export function PIDisplay({ pi }: { pi: PIDisplayData }) {
             <span style={{ color: BLUE }}>chris@sublimapparel.com</span>
           </p>
         </div>
-        {/* Right: INVOICE NO / ISSUE DATE / LEAD TIME (red) */}
+        {/* Right: INVOICE NO / ISSUE DATE / LEAD TIME (black) — R99 */}
         <div className="text-[10px]">
-          <Field label="INVOICE NO.:" value={pi.pi_number} red />
-          <Field label="ISSUE DATE:" value={fmtDate(pi.issue_date)} red />
-          <Field label="LEAD TIME:" value={pi.lead_time_text} red />
+          <Field label="INVOICE NO.:" value={pi.pi_number} />
+          <Field label="ISSUE DATE:" value={fmtDate(pi.issue_date)} />
+          <Field label="LEAD TIME:" value={pi.lead_time_text} />
         </div>
       </div>
 
@@ -467,10 +465,7 @@ export function PIDisplay({ pi }: { pi: PIDisplayData }) {
         </div>
         <div>
           <p className="font-bold uppercase">Buyer Stamp/ Signature:</p>
-          <p
-            className="mt-6 text-[12px] font-black uppercase tracking-wide"
-            style={{ color: RED }}
-          >
+          <p className="mt-6 text-[12px] font-black uppercase tracking-wide">
             {pi.customer_name || "—"}
           </p>
         </div>
