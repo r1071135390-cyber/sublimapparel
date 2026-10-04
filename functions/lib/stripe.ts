@@ -12,12 +12,20 @@
  *   - createPaymentIntent
  *   - cancelPaymentIntent
  *   - createCheckoutSession
+ *   - createPaymentLink          (R87 — customer-facing card flow)
  *   - constructWebhookEvent   (signature verification via Web Crypto)
  *
  * 2026-10-01 (R77): unchanged surface area — multi-site support is
  * handled by the calling endpoints via the `site_slug` key in the
  * `metadata` object passed to createPaymentIntent / createCheckoutSession.
  * Webhook events surface site_slug back via event.data.object.metadata.
+ *
+ * 2026-10-04 (R87): added `createPaymentLink`. The /pay/ page's
+ * PayWithStripeLinkButton component (R76/R80) has been POSTing to
+ * /api/pi/stripe-payment-link since the page went live, but no Cloudflare
+ * Pages Function ever handled that route — every click got 405 from the
+ * catch-all dispatcher. This is the upstream primitive the new endpoint
+ * calls.
  */
 
 const STRIPE_API_BASE = "https://api.stripe.com/v1";
@@ -59,7 +67,7 @@ function formBody(
   return usp.toString();
 }
 
-// ── Webhook event types (minimal subset we actually handle) ───────
+// ── Webhook event types (minimal subset we actually handle) ──────
 export interface StripePaymentIntent {
   id: string;
   object?: string;
@@ -216,6 +224,65 @@ export async function createCheckoutSession(
     body.append(k, v);
   }
   return stripeFetch("/checkout/sessions", secretKey, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: body.toString(),
+  });
+}
+
+// ── Stripe Payment Links ──────────────────────────────────────────
+// 2026-10-04 (R87): the customer-facing /pay/ page card-payment flow
+// (PayWithStripeLinkButton.tsx, R76/R80) posts to /api/pi/stripe-payment-link
+// and expects a hosted URL it can `window.open()` in a new tab. Until
+// this round that route returned 405 — no Cloudflare Pages Function file
+// matched `/api/pi/stripe-payment-link` (the catch-all only handled
+// "confirm-bank"). This is the upstream primitive the new endpoint calls.
+//
+// We mint a fresh Payment Link on every click (no caching yet — would need
+// a `stripe_payment_link_url` column on proforma_invoices, out of scope
+// for R87). Stripe accepts multiple payments on the same PI just fine;
+// the webhook handler is idempotent on stripe_payment_intent_id, so
+// duplicate links cannot double-mark the PI as paid.
+export interface CreatePaymentLinkParams {
+  amount: number; // in cents (smallest currency unit)
+  currency: string; // e.g. "usd"
+  description?: string;
+  receipt_email?: string;
+  metadata?: Record<string, string>;
+}
+
+export interface StripePaymentLink {
+  id: string;
+  object?: string;
+  url: string | null;
+  active?: boolean;
+  metadata?: Record<string, string>;
+}
+
+export async function createPaymentLink(
+  secretKey: string,
+  params: CreatePaymentLinkParams,
+): Promise<StripePaymentLink> {
+  const body = new URLSearchParams();
+  body.append("line_items[0][quantity]", "1");
+  body.append("line_items[0][price_data][currency]", params.currency);
+  body.append("line_items[0][price_data][unit_amount]", String(params.amount));
+  body.append(
+    "line_items[0][price_data][product_data][name]",
+    params.description ?? "Order",
+  );
+  if (params.receipt_email) {
+    body.append("after_completion[type]", "redirect");
+    body.append(
+      "after_completion[redirect][url]",
+      "https://sublimapparel.com/quote/?id={CHECKOUT_SESSION_ID}",
+    );
+    body.append("receipt_email", params.receipt_email);
+  }
+  for (const [k, v] of Object.entries(flattenMetadata(params.metadata))) {
+    body.append(k, v);
+  }
+  return stripeFetch("/payment_links", secretKey, {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: body.toString(),
