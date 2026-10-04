@@ -276,12 +276,14 @@ export async function createPaymentLink(
     "after_completion[redirect][url]",
     "https://sublimapparel.com/quote/?id={CHECKOUT_SESSION_ID}",
   );
-  if (params.receipt_email) {
-    body.append("payment_intent_data[receipt_email]", params.receipt_email);
-  }
+  body.append("payment_method_collection", "always");
   for (const [k, v] of Object.entries(flattenMetadata(params.metadata))) {
     body.append(k, v);
   }
+  // Note: payment_intent_data.receipt_email and top-level receipt_email
+  // are BOTH rejected by Stripe Payment Links API with parameter_unknown.
+  // The Payment Link surface has no native pre-fill-email field; the email
+  // is collected on the hosted checkout itself. Drop receipt_email entirely.
   return stripeFetch("/payment_links", secretKey, {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },

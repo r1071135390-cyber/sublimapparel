@@ -212,10 +212,17 @@ export default function PayClient() {
           // bank info) via inline `style={{ color: BLACK/RED/BLUE }}` —
           // those are untouched.
           const safeRgb = "rgb(0,0,0)";
+          // Tailwind v4 / shadcn emits colors via color-mix(in oklab, X, Y)
+          // (and oklch / lab / lch variants), NOT the bare oklab(...) form.
+          // html2canvas v1's color parser understands neither, so it crashes
+          // mid-walk on the first color-mix(in oklab, ...) it meets.
+          // Neutralise every flavor to a safe rgb(0,0,0) placeholder.
           const stripModern = (txt: string): string =>
             txt
+              .replace(/color-mix\([^)]+\)/g, safeRgb)
               .replace(/oklab\([^)]*\)/g, safeRgb)
-              .replace(/oklch\([^)]*\)/g, safeRgb);
+              .replace(/oklch\([^)]*\)/g, safeRgb)
+              .replace(/color\([^)]*\)/g, safeRgb);
 
           clonedDoc.querySelectorAll("style").forEach((node) => {
             if (!node.textContent) return;
@@ -224,8 +231,13 @@ export default function PayClient() {
           });
 
           // External stylesheets are usually same-origin hashed CSS
-          // bundles (_next/static/css/...). Same-origin sync XHR works;
-          // cross-origin fall back to drop.
+          // bundles (_next/static/chunks/*.css). Fetch the body via
+          // synchronous XHR, scrub every modern color function, then
+          // re-inject as an inline <style> in place of the link. Layout
+          // utilities (flex, padding, border-style, …) are preserved
+          // because they don't depend on color values. The 251 color-mix
+          // calls and 133 oklab() calls in the prod bundle all collapse
+          // to rgb(0,0,0), which html2canvas parses cleanly.
           clonedDoc.querySelectorAll('link[rel="stylesheet"]').forEach((node) => {
             try {
               const href = node.getAttribute("href");
@@ -238,9 +250,13 @@ export default function PayClient() {
               xhr.open("GET", absUrl, false);
               xhr.send();
               if (xhr.status >= 200 && xhr.status < 300 && xhr.responseText) {
-                if (/oklab|oklch/.test(xhr.responseText)) {
-                  node.remove();
+                const cleaned = stripModern(xhr.responseText);
+                const style = clonedDoc.createElement("style");
+                style.textContent = cleaned;
+                if (node.parentNode) {
+                  node.parentNode.insertBefore(style, node);
                 }
+                node.remove();
               } else {
                 node.remove();
               }
