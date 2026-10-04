@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 /**
  * PayWithStripeElements — inline card payment on /pay/ (R91)
@@ -164,7 +164,7 @@ function InnerForm({ piNumber, amountCents, currency }: InnerFormProps) {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: `${window.location.origin}/quote/?id={PAYMENT_INTENT_ID}`,
+        return_url: `${window.location.origin}/pay/?pi=${encodeURIComponent(piNumber)}&payment=success`,
       },
     });
     // If we reach here (no redirect) the payment failed inline.
