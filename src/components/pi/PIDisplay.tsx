@@ -6,6 +6,29 @@
  *   - Black (#000): company header, fixed text (factory info, terms 1-7, signatures)
  *   - Red (#FF0000): customer-fillable fields, "The company name must be written in full..." reminder
  *   - Blue (#0070C0): bank info (beneficiary, company address)
+ *
+ * 2026-10-04 (R88): complete header + contract-content refresh to match the
+ * customer's reference Excel (`SA202610030002 FR David 50fleece zipper hoodie.xlsx`)
+ * and the corresponding PDF rendered through the admin pipeline.
+ *
+ *   - Header now reads (centered, uppercase):
+ *       YIWU HOMEDORM
+ *       COMMODITY MANUFACTURING CO.,LTD
+ *       ADD: 2nd Floor, No.11 Anshang Road, Yiwu City, China
+ *       PROFORMA INVOICE
+ *   - The two-column FM/INVOICE NO block stays (uppercased to match).
+ *   - The 7 generic terms (Payment / Lead Time / Packing / Sample / MOQ /
+ *     Shipment / Validity) are REPLACED with the real factory contract:
+ *       (1) Port of Loading
+ *       (2) Port of Destination
+ *       (3) Shipping Term
+ *       (4) Terms of Payment       ← bank-info block embedded right under it
+ *       (5) Production Time
+ *       (6) Tolerance
+ *       (7) Additional Clause (a-e)
+ *   - Footer adds the two-originals sentence + Seller/Buyer stamp with
+ *     the company / buyer full names.
+ *   - Items table stays as-is — per user direction "中间产品信息那里按照现在的".
  */
 
 import { CheckCircle2 } from "lucide-react";
@@ -29,6 +52,8 @@ export interface PIDisplayData {
   lead_time_text: string;
   payment_terms_text: string;
   customer_name: string;
+  customer_email?: string | null;
+  customer_company?: string | null;
   customer_phone?: string | null;
   customer_address?: string | null;
   items: PIItemRow[];
@@ -81,6 +106,7 @@ function ItemWithSizesRow({
           style={{ minHeight: 70 }}
         >
           {it.image_url ? (
+            // eslint-disable-next-line @next/next/no-img-element
             <img
               src={it.image_url}
               alt={it.description}
@@ -88,7 +114,7 @@ function ItemWithSizesRow({
               height={64}
               loading="lazy"
               decoding="async"
-              className="mx-auto h-16 w-16 border border-black/20 object-cover"
+              className="mx-auto h-24 w-24 border border-black/20 object-cover"
             />
           ) : (
             <div className="mx-auto h-16 w-16 border border-dashed border-black/30" />
@@ -107,7 +133,7 @@ function ItemWithSizesRow({
           className="border-r border-black/30 p-2 text-right"
           style={{ color: RED }}
         >
-          {it.qty} {it.unit || "set"}
+          {it.qty} {it.unit || "pcs"}
         </td>
         <td
           className="border-r border-black/30 p-2 text-right"
@@ -164,12 +190,8 @@ export function PIDisplay({ pi }: { pi: PIDisplayData }) {
       className="border-2 border-black bg-white text-[12px] leading-snug"
       style={{ color: BLACK }}
     >
-      {/* === ROW 1: Brand logo === */}
-      {/* 2026-10-03 (R79): show brand logo in PI header so the exported
-          PDF (html2canvas screenshot) matches the navbar brand mark.
-          using /sublimapparel-logo-v2.webp (5.5 KB) for sharp render; explicit
-          width/height prevents layout shift + aids html2canvas measurement. */}
-      <div className="flex justify-center border-b border-black bg-white px-4 py-2">
+      {/* === ROW 1: Brand logo (small, top) === */}
+      <div className="flex justify-center bg-white px-4 py-2">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/sublimapparel-logo-v2.webp"
@@ -181,50 +203,57 @@ export function PIDisplay({ pi }: { pi: PIDisplayData }) {
         />
       </div>
 
-      {/* === ROW 2-3: Header (black, fixed) === */}
-      <div className="border-b border-black px-4 py-2 text-center">
-        <p className="text-[14px] font-black uppercase tracking-wide">
-          Yiwu Homedorm Commodity Manufacturing Co., Ltd
+      {/* === ROW 2-3: Header (black, fixed, uppercase) — matches reference === */}
+      <div className="border-y border-black px-4 py-2 text-center">
+        <p className="text-[12px] font-black uppercase tracking-wide">
+          YIWU HOMEDORM
+          <br />
+          COMMODITY MANUFACTURING CO.,LTD
         </p>
-        <p className="text-[11px] text-black/80">
-          Add: 2nd Floor, No.11 Anshang Road, Yiwu City, China
+        <p className="mt-1 text-[10px] uppercase text-black/80">
+          ADD: 2nd Floor, No.11 Anshang Road, Yiwu City, China
         </p>
         <h1 className="mt-2 text-[22px] font-black uppercase tracking-widest text-black">
-          Proforma Invoice
+          PROFORMA INVOICE
         </h1>
       </div>
 
-      {/* === ROW 4-8: FM block + factory info === */}
+      {/* === ROW 4-8: FM block + factory info (uppercase) === */}
       <div className="grid grid-cols-2 border-b border-black">
         {/* Left: factory info (black) */}
-        <div className="border-r border-black p-3 text-[11px]">
-          <p className="font-bold">FM: sublimapparel.com</p>
+        <div className="border-r border-black p-3 text-[10px] uppercase">
+          <p className="font-bold">FM: SUBLIMAPPAREL.com</p>
           <p className="mt-1 font-bold">
-            Yiwu Homedorm Commodity Manufacturing Co., Ltd
+            YIWU HOMEDORM COMMODITY MANUFACTURING CO.,LTD
           </p>
-          <p>2nd Floor, No.11 Anshang Road, Yiwu, China</p>
-          <p className="mt-1">
-            <span className="font-bold">Attn:</span> Miss Chris Ma ·{" "}
-            <span className="text-[#0070C0]">+86 19817930190</span> ·{" "}
-            <span className="text-[#0070C0]">chris@sublimapparel.com</span>
+          <p>2ND FLOOR, NO.11 ANSHANG ROAD, YIWU, CHINA</p>
+          <p className="mt-1 normal-case">
+            <span className="font-bold">Annt.:</span> Miss Chris Ma /{" "}
+            <span style={{ color: BLUE }}>+86 19817930190</span> /{" "}
+            <span style={{ color: BLUE }}>chris@sublimapparel.com</span>
           </p>
         </div>
         {/* Right: INVOICE NO / ISSUE DATE / LEAD TIME (red) */}
-        <div className="text-[11px]">
-          <Field label="INVOICE NO." value={pi.pi_number} red />
-          <Field label="ISSUE DATE" value={fmtDate(pi.issue_date)} red />
-          <Field label="LEAD TIME" value={pi.lead_time_text} red />
+        <div className="text-[10px]">
+          <Field label="INVOICE NO.:" value={pi.pi_number} red />
+          <Field label="ISSUE DATE:" value={fmtDate(pi.issue_date)} red />
+          <Field label="LEAD TIME:" value={pi.lead_time_text} red />
         </div>
       </div>
 
       {/* === ROW 9-12: TO block (red, customer-filled) === */}
       <div className="border-b border-black p-3 text-[11px]">
         <p className="text-[10px] font-bold uppercase">TO:</p>
-        <p className="mt-0.5 text-[13px] font-bold" style={{ color: RED }}>
+        {pi.customer_company && (
+          <p className="mt-0.5 text-[13px] font-bold uppercase" style={{ color: RED }}>
+            {pi.customer_company}
+          </p>
+        )}
+        <p className="mt-0.5 text-[13px] font-bold uppercase" style={{ color: RED }}>
           {pi.customer_name || "—"}
         </p>
         {pi.customer_address && (
-          <p className="mt-0.5" style={{ color: RED }}>
+          <p className="mt-0.5 uppercase" style={{ color: RED }}>
             {pi.customer_address}
           </p>
         )}
@@ -233,9 +262,12 @@ export function PIDisplay({ pi }: { pi: PIDisplayData }) {
             {pi.customer_phone}
           </p>
         )}
+        {pi.customer_email && (
+          <p style={{ color: RED }}>{pi.customer_email}</p>
+        )}
       </div>
 
-      {/* === ROW 13-17: Items table === */}
+      {/* === ROW 13-17: Items table (kept as-is per user direction) === */}
       <table className="w-full border-collapse text-[11px]">
         <thead>
           <tr className="border-b border-t border-black bg-[#fafafa]">
@@ -252,7 +284,7 @@ export function PIDisplay({ pi }: { pi: PIDisplayData }) {
               Qty
             </th>
             <th className="w-[12%] border-r border-black p-2 text-right text-[10px] font-black uppercase">
-              Price ({currencyUpper})
+              DDP Price ({currencyUpper})
             </th>
             <th className="w-[12%] p-2 text-right text-[10px] font-black uppercase">
               Total ({currencyUpper})
@@ -299,7 +331,7 @@ export function PIDisplay({ pi }: { pi: PIDisplayData }) {
               colSpan={5}
               className="border-r border-black p-2 text-right text-[11px] font-black uppercase"
             >
-              Total Amount ({currencyUpper})
+              Total ({currencyUpper})
             </td>
             <td className="p-2 text-right text-[14px] font-black">
               {fmtMoney(pi.total_cents, pi.currency)}
@@ -308,103 +340,132 @@ export function PIDisplay({ pi }: { pi: PIDisplayData }) {
         </tbody>
       </table>
 
-      {/* === ROW 18-23: Terms (black, fixed) === */}
+      {/* === ROW 18-23: Contract terms (1-7) — matches reference === */}
       <div className="border-b border-black p-3 text-[10px] leading-relaxed">
         <p>
-          <span className="font-bold">(1) Payment:</span> {pi.payment_terms_text}
+          <span className="font-bold">(1) Port of Loading:</span> Yiwu / Ningbo / Shanghai or any designated Chinese ports
         </p>
         <p>
-          <span className="font-bold">(2) Lead Time:</span> {pi.lead_time_text}
+          <span className="font-bold">(2) Port of Destination:</span> As Buyer address above
         </p>
         <p>
-          <span className="font-bold">(3) Packing:</span> Each piece in one pp bag,
-          standard export carton.
+          <span className="font-bold">(3) Shipping Term:</span>{" "}
+          {pi.shipping_method?.match(/\b(DDP|FOB|EXW|CIF|DAP|DDU|CFR|CPT|CIP|DPU)\b/i)?.[0]?.toUpperCase() ?? "DDP"}
         </p>
         <p>
-          <span className="font-bold">(4) Sample:</span> Sample fee will be refunded
-          upon bulk order.
+          <span className="font-bold">(4) Terms of Payment:</span>{" "}
+          {pi.payment_terms_text ||
+            "The buyer should pay 50% of down payment after confirmation of the PI. 50% balance before shipping. The seller should arrange production after receiving the payment and approval of PP samples."}
         </p>
-        <p>
-          <span className="font-bold">(5) MOQ:</span> 50 pcs per design.
-        </p>
-        <p>
-          <span className="font-bold">(6) Shipment:</span> By sea / air / express as
-          per buyer&apos;s option. DDP service available.
-        </p>
-        <p>
-          <span className="font-bold">(7) Validity:</span> This PI is valid until{" "}
-          {fmtDate(pi.valid_until || "")}.
-        </p>
-      </div>
 
-      {/* === ROW 24-33: Bank Info — 2026-10-04 (R80) === */}
-      {/* Currency-aware: the receiving account is picked by pi.currency
-          (USD/EUR/GBP/CNY). Wired by getBankAccount() from
-          @/lib/bank-accounts. Field order matches the Excel layout —
-          BENEFICIARY, red reminder, COMPANY ADDRESS, BANK NAME, ACCOUNT,
-          SWIFT, BANK ADDRESS, with optional CNAPS / intermediary rows
-          appended when relevant for that currency. */}
-      <div className="border-b border-black p-3 text-[10px]">
-        <p className="mb-1 text-[12px] font-black uppercase tracking-wide">
-          Bank Info:
-        </p>
-        <p>
-          <span className="font-bold">BENEFICIARY: </span>
-          <span style={{ color: BLUE }} className="font-bold">
-            {bank.beneficiary}
-          </span>
-        </p>
-        {/* Red reminder - KEEPS RED as the customer reminder */}
-        <p className="mt-1 italic" style={{ color: RED }}>
-          *The company name must be written in full on the wire transfer, otherwise
-          the payment cannot be received.
-        </p>
-        <p className="mt-1">
-          <span className="font-bold">COMPANY ADDRESS: </span>
-          <span style={{ color: BLUE }} className="font-bold">
-            {bank.companyAddress}
-          </span>
-        </p>
-        <div className="mt-1 grid grid-cols-2 gap-x-3">
-          <p>
-            <span className="font-bold">BANK NAME: </span>
-            {bank.bankName}
+        {/* === Bank Info (embedded within section 4 — matches reference) === */}
+        <div className="mt-3 border-t border-black pt-2">
+          <p className="mb-1 text-[12px] font-black uppercase tracking-wide">
+            Bank Info:
           </p>
           <p>
-            <span className="font-bold">BANK ADDRESS: </span>
-            {bank.bankAddress}
+            <span className="font-bold">BENEFICIARY (COMPANY NAME):</span>{" "}
+            <span style={{ color: BLUE }} className="font-bold">
+              {bank.beneficiary}
+            </span>
           </p>
-          <p>
-            <span className="font-bold">ACCOUNT NO.: </span>
-            {bank.account}
+          {/* Red reminder — KEEPS RED as the customer reminder */}
+          <p className="mt-1 italic" style={{ color: RED }}>
+            *The company name must be written in full. If it does not fit in the designated space, the full name shall be entered in the remarks column.
           </p>
-          <p>
-            <span className="font-bold">SWIFT CODE: </span>
-            {bank.swift}
+          <p className="mt-1">
+            <span className="font-bold">SUPPORT CURRENCY:</span>{" "}
+            <span style={{ color: BLUE }} className="font-bold">
+              {currencyUpper}
+            </span>
           </p>
-          {bank.cnaps && (
+          <div className="mt-1 grid grid-cols-2 gap-x-3 gap-y-0.5">
+            {bank.iban && (
+              <p>
+                <span className="font-bold">IBAN:</span>{" "}
+                <span style={{ color: BLUE }} className="font-bold">
+                  {bank.iban}
+                </span>
+              </p>
+            )}
             <p>
-              <span className="font-bold">CNAPS: </span>
-              {bank.cnaps}
+              <span className="font-bold">BANK NAME:</span>{" "}
+              <span style={{ color: BLUE }} className="font-bold">
+                {bank.bankName}
+              </span>
             </p>
+            <p>
+              <span className="font-bold">BANK ACCOUNT:</span>{" "}
+              <span style={{ color: BLUE }} className="font-bold">
+                {bank.account}
+              </span>
+            </p>
+            <p>
+              <span className="font-bold">BANK SWIFT CODE:</span>{" "}
+              <span style={{ color: BLUE }} className="font-bold">
+                {bank.swift}
+              </span>
+            </p>
+            <p className="col-span-2">
+              <span className="font-bold">BANK ADDRESS:</span>{" "}
+              <span style={{ color: BLUE }} className="font-bold">
+                {bank.bankAddress}
+              </span>
+            </p>
+            {bank.bankCountry && (
+              <p>
+                <span className="font-bold">BANK COUNTRY:</span>{" "}
+                <span style={{ color: BLUE }} className="font-bold">
+                  {bank.bankCountry}
+                </span>
+              </p>
+            )}
+          </div>
+          {bank.notes && (
+            <p className="mt-1 italic text-black/70">Note: {bank.notes}</p>
           )}
         </div>
-        {bank.notes && (
-          <p className="mt-1 italic text-black/70">Note: {bank.notes}</p>
-        )}
+
+        <p className="mt-3">
+          <span className="font-bold">(5) Production Time:</span> Normally about 45 days after order payment received and approval of PP samples. Seller will not take any responsibility for any delivery delay caused by buyer.
+        </p>
+        <p className="mt-2">
+          <span className="font-bold">(6) Tolerance:</span>
+        </p>
+        <p className="ml-3">Knitted Fabric GSM tolerance of +10gram and Size Measurement of +1.5 inch can be allowed and accepted.</p>
+        <p className="ml-3">Quantity Tolerance: +5% can be accepted, seller should make up if the quantity less is more than 5%.</p>
+        <p className="ml-3">2% - 3% of the defective products can be allowed and accepted.</p>
+        <p className="mt-2">
+          <span className="font-bold">(7) Additional Clause:</span>
+        </p>
+        <p className="ml-3">(a). Buyer confirm to have the commercial rights to reproduce the design. If for any reason the legal owner of the design contacts fulfillment house, they will be directed to the buyer and buyer should bear all the losses of the seller.</p>
+        <p className="ml-3">(b). Any loss caused by buyer's change in connection with the agreed contract will be on buyer's account.</p>
+        <p className="ml-3">(c). The Seller should inform buyer to arrange the balance ONE week before the goods ready for shipment. The buyers should arrange the balance payment within 5 business days after seller's notice, of any loss occurred hereof will be on Buyers' account. The buyer must not delay payment after seller's balance payment notice, seller will be authorized to dispose the goods if the balance payment is delayed by more than 30 days after seller's balance payment notice AND seller will not refund the received deposit. The seller only provide free warehousing for 30 days after production finished, 1% of total invoice value per week will be charged after 30 days. Until seller receives full payment for the order and the order is shipped, title to the goods remains with seller. Upon transfer of the goods to the carrier, title and risk of loss passes to the buyer. The buyer should handle products with care until the transfer of ownership is complete (for example, in case of a product return).</p>
+        <p className="ml-3">(d). The contract effective date will be started since the seller receives the deposit from the buyer. The contract will be invalid if the payment is delayed by 5 working days after the contract date.</p>
+        <p className="ml-3">(e). Force Majeure: In case of Force Majeure the Sellers shall not be responsible for delay in delivery or nondelivery of the goods but shall notify immediately the Buyers and deliver to the Buyers by registered mail a certificate issued by government authorities or Chamber of Commerce as evidence thereof.</p>
       </div>
 
-      {/* === ROW 49-51: Signatures === */}
-      <div className="grid grid-cols-2 p-3 text-[11px]">
+      {/* === ROW 24: Two-originals sentence === */}
+      <div className="border-b border-black px-4 py-2 text-center text-[10px] italic">
+        This contract is made out in two original copies, one copy to be held by each party in witness thereof.
+      </div>
+
+      {/* === ROW 25-26: Seller / Buyer stamp + signatures === */}
+      <div className="grid grid-cols-2 p-3 text-[10px]">
         <div>
-          <p className="text-[10px] uppercase text-black/60">Seller</p>
-          <p className="mt-4 font-bold">
-            Yiwu Homedorm Commodity Manufacturing Co., Ltd
+          <p className="font-bold uppercase">Seller Stamp/ Signature:</p>
+          <p className="mt-6 text-[12px] font-black uppercase tracking-wide">
+            YIWU HOMEDORM
+            <br />
+            COMMODITY MANUFACTURING CO.,LTD
           </p>
         </div>
         <div>
-          <p className="text-[10px] uppercase text-black/60">Buyer</p>
-          <p className="mt-4 font-bold" style={{ color: RED }}>
+          <p className="font-bold uppercase">Buyer Stamp/ Signature:</p>
+          <p
+            className="mt-6 text-[12px] font-black uppercase tracking-wide"
+            style={{ color: RED }}
+          >
             {pi.customer_name || "—"}
           </p>
         </div>

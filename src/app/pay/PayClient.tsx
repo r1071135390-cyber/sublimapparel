@@ -370,6 +370,8 @@ export default function PayClient() {
               lead_time_text: pi.lead_time_text,
               payment_terms_text: pi.payment_terms_text,
               customer_name: pi.customer_name,
+              customer_email: pi.customer_email,
+              customer_company: pi.customer_company,
               customer_phone: pi.customer_phone,
               customer_address: pi.customer_address,
               items: pi.items.map((it) => ({

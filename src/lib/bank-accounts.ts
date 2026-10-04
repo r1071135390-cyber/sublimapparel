@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Bank account mapping by currency.
  *
  * Each PI's bank block in PIDisplay + admin preview picks a bank account
@@ -44,6 +44,10 @@ export interface BankAccount {
   swift: string;
   /** Receiving bank's postal address (needed by some originating banks). */
   bankAddress: string;
+  /** Optional IBAN field for EUR accounts (some EU corridors require it). */
+  iban?: string;
+  /** Optional bank country code (ISO-3166-1 alpha-2) — matches reference Excel layout. */
+  bankCountry?: string;
   /** Routing number (US only; for USD wires via Fed/ACH). */
   routingNumber?: string;
   /** CNAPS / China-specific code (CNY only; required for CNY domestic wires). */
