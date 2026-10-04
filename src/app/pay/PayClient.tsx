@@ -4,16 +4,16 @@
  * /pay/?pi=.../PayClient.tsx (also served at /quote/?id=... via redirect)
  *
  * Customer-facing PI view. Renders the PI in print-friendly format + two payment options:
- *   1. Card (Stripe Payment Link — hosted checkout) — instant, recommended (R76)
+ *   1. Card (Stripe Elements — inline, no navigation since R91)
  *   2. Bank Transfer (T/T) — for customers preferring wire transfer
  *
  * Data flow:
  *   1. On mount, fetch /api/pi/{pi_number} to get PI details
  *   2. Render PI in a print-styled layout (same look as the PDF your sales team sends)
- *   3. "Pay by Card" calls /api/pi/stripe-payment-link to mint a Stripe-hosted
- *      Payment Link, then opens that URL in a new tab. Stripe redirects back
- *      to /quote/?id=...&status=paid on completion and fires the webhook that
- *      marks the PI as paid.
+ *   3. "Pay by Card" mints a PaymentIntent inline via /api/pi/stripe-payment-intent
+ *      and shows Stripe Elements on the same page; on success, Stripe redirects
+ *      back to /pay/?pi=...&payment=success (R93) so the customer can keep using
+ *      the page (download PDF, etc.).
  */
 
 import { useEffect, useState, useCallback } from "react";
@@ -357,68 +357,145 @@ export default function PayClient() {
     );
   }
 
+  // R94: the <article id="pi-document"> is the capture target for the
+  // html2canvas-based downloadPDF(). Previously it was only rendered in
+  // the default "sent" branch (around line 461), which meant paid and
+  // pending_bank customers clicking "Download PI PDF" got
+  //   "PI document not ready — please retry"
+  // because getElementById("pi-document") returned null, the page flipped
+  // to the "Invoice Not Found" branch, and download was impossible.
+  //
+  // Fix: build the article once, then render it in every status branch.
+  // For paid/pending we wrap it in piDocumentHidden so it's visually
+  // invisible (the small status card stays as the primary content) yet
+  // still in the DOM tree with computed dimensions — html2canvas needs
+  // both to capture correctly.
+  const piDocument = (
+    <article
+      id="pi-document"
+      className="border-2 border-black bg-white p-6 shadow-[6px_6px_0_0_rgba(10,10,10,1)] sm:p-10 print:border-0 print:shadow-none"
+    >
+      <PIDisplay
+        pi={{
+          pi_number: pi.pi_number,
+          issue_date: pi.issue_date,
+          valid_until: pi.valid_until,
+          lead_time_text: pi.lead_time_text,
+          payment_terms_text: pi.payment_terms_text,
+          customer_name: pi.customer_name,
+          customer_email: pi.customer_email,
+          customer_company: pi.customer_company,
+          customer_phone: pi.customer_phone,
+          customer_address: pi.customer_address,
+          items: pi.items.map((it) => ({
+            description: it.description,
+            fabric: it.fabric,
+            qty: it.qty,
+            unit_price_cents: it.unit_price_cents,
+            total_cents: it.total_cents,
+            image_url: it.image_url,
+            sizes: it.sizes,
+          })),
+          shipping_label: pi.shipping_label,
+          shipping_method: pi.shipping_method,
+          shipping_cents: pi.shipping_cents,
+          total_cents: pi.total_cents,
+          subtotal_cents: pi.subtotal_cents,
+          currency: pi.currency,
+        } as PIDisplayData}
+      />
+    </article>
+  );
+  // Offscreen wrapper — keeps the article in the DOM (so getElementById
+  // finds it AND html2canvas can walk it) but visually out of the way.
+  // Position absolute + huge negative left + a fixed pixel width so the
+  // layout inside is computed at full A4-ish size. visibility:hidden
+  // would also work but pointer-events:none + opacity:0 is friendlier
+  // to html2canvas which sometimes reads computed styles mid-walk.
+  const piDocumentHidden = (
+    <div
+      aria-hidden="true"
+      style={{
+        position: "absolute",
+        top: 0,
+        left: -10000,
+        width: 1024,
+        pointerEvents: "none",
+        opacity: 0,
+      }}
+    >
+      {piDocument}
+    </div>
+  );
+
   if (pi.status === "paid") {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#faf9f6] px-4 py-12">
-        <div className="max-w-md border-2 border-black bg-white p-8 text-center shadow-[6px_6px_0_0_rgba(10,10,10,1)]">
-          <CheckCircle2 className="mx-auto mb-3 h-14 w-14 text-green-600" strokeWidth={2.5} />
-          <h1 className="mb-2 text-2xl font-black uppercase tracking-tight">Invoice Paid</h1>
-          <p className="text-sm text-black/70">
-            PI <strong>{pi.pi_number}</strong> has been paid in full. Our team will be in touch shortly to start production.
-          </p>
-          <button
-            type="button"
-            onClick={downloadPDF}
-            disabled={pdfGenerating}
-            className="mt-5 inline-flex items-center gap-2 border-2 border-black bg-white px-4 py-2 text-xs font-black uppercase tracking-wider transition-colors hover:bg-black hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {pdfGenerating ? (
-              <>
-                <Loader2 className="h-4 w-4 animate-spin" strokeWidth={3} />
-                Generating PDF…
-              </>
-            ) : (
-              <>
-                <Download className="h-4 w-4" strokeWidth={3} />
-                Download PI PDF
-              </>
-            )}
-          </button>
+      <>
+        <div className="flex min-h-screen items-center justify-center bg-[#faf9f6] px-4 py-12">
+          <div className="max-w-md border-2 border-black bg-white p-8 text-center shadow-[6px_6px_0_0_rgba(10,10,10,1)]">
+            <CheckCircle2 className="mx-auto mb-3 h-14 w-14 text-green-600" strokeWidth={2.5} />
+            <h1 className="mb-2 text-2xl font-black uppercase tracking-tight">Invoice Paid</h1>
+            <p className="text-sm text-black/70">
+              PI <strong>{pi.pi_number}</strong> has been paid in full. Our team will be in touch shortly to start production.
+            </p>
+            <button
+              type="button"
+              onClick={downloadPDF}
+              disabled={pdfGenerating}
+              className="mt-5 inline-flex items-center gap-2 border-2 border-black bg-white px-4 py-2 text-xs font-black uppercase tracking-wider transition-colors hover:bg-black hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {pdfGenerating ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" strokeWidth={3} />
+                  Generating PDF…
+                </>
+              ) : (
+                <>
+                  <Download className="h-4 w-4" strokeWidth={3} />
+                  Download PI PDF
+                </>
+              )}
+            </button>
+          </div>
         </div>
-      </div>
+        {piDocumentHidden}
+      </>
     );
   }
 
   if (pi.status === "pending_bank" || bankSubmitted) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#faf9f6] px-4 py-12">
-        <div className="max-w-md border-2 border-black bg-white p-8 text-center shadow-[6px_6px_0_0_rgba(10,10,10,1)]">
-          <Building2 className="mx-auto mb-3 h-14 w-14 text-[#00c2ff]" strokeWidth={2.5} />
-          <h1 className="mb-2 text-2xl font-black uppercase tracking-tight">Bank Transfer Pending</h1>
-          <p className="text-sm text-black/70">
-            Thanks! We&apos;ve recorded your T/T transfer for PI <strong>{pi.pi_number}</strong>.
-            Our finance team will confirm receipt within 1-2 business days and email you when production begins.
-          </p>
-          <button
-            type="button"
-            onClick={downloadPDF}
-            disabled={pdfGenerating}
-            className="mt-5 inline-flex items-center gap-2 border-2 border-black bg-white px-4 py-2 text-xs font-black uppercase tracking-wider transition-colors hover:bg-black hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {pdfGenerating ? (
-              <>
-                <Loader2 className="h-4 w-4 animate-spin" strokeWidth={3} />
-                Generating PDF…
-              </>
-            ) : (
-              <>
-                <Download className="h-4 w-4" strokeWidth={3} />
-                Download PI PDF
-              </>
-            )}
-          </button>
+      <>
+        <div className="flex min-h-screen items-center justify-center bg-[#faf9f6] px-4 py-12">
+          <div className="max-w-md border-2 border-black bg-white p-8 text-center shadow-[6px_6px_0_0_rgba(10,10,10,1)]">
+            <Building2 className="mx-auto mb-3 h-14 w-14 text-[#00c2ff]" strokeWidth={2.5} />
+            <h1 className="mb-2 text-2xl font-black uppercase tracking-tight">Bank Transfer Pending</h1>
+            <p className="text-sm text-black/70">
+              Thanks! We&apos;ve recorded your T/T transfer for PI <strong>{pi.pi_number}</strong>.
+              Our finance team will confirm receipt within 1-2 business days and email you when production begins.
+            </p>
+            <button
+              type="button"
+              onClick={downloadPDF}
+              disabled={pdfGenerating}
+              className="mt-5 inline-flex items-center gap-2 border-2 border-black bg-white px-4 py-2 text-xs font-black uppercase tracking-wider transition-colors hover:bg-black hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {pdfGenerating ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" strokeWidth={3} />
+                  Generating PDF…
+                </>
+              ) : (
+                <>
+                  <Download className="h-4 w-4" strokeWidth={3} />
+                  Download PI PDF
+                </>
+              )}
+            </button>
+          </div>
         </div>
-      </div>
+        {piDocumentHidden}
+      </>
     );
   }
 
@@ -457,39 +534,10 @@ export default function PayClient() {
 
         {/* PI Document — id="pi-document" is the capture target for the
             html2canvas-based downloadPDF() (R79). Kept as <article> for
-            semantic correctness + screen-reader friendliness. */}
-        <article id="pi-document" className="border-2 border-black bg-white p-6 shadow-[6px_6px_0_0_rgba(10,10,10,1)] sm:p-10 print:border-0 print:shadow-none">
-
-          <PIDisplay
-            pi={{
-              pi_number: pi.pi_number,
-              issue_date: pi.issue_date,
-              valid_until: pi.valid_until,
-              lead_time_text: pi.lead_time_text,
-              payment_terms_text: pi.payment_terms_text,
-              customer_name: pi.customer_name,
-              customer_email: pi.customer_email,
-              customer_company: pi.customer_company,
-              customer_phone: pi.customer_phone,
-              customer_address: pi.customer_address,
-              items: pi.items.map((it) => ({
-                description: it.description,
-                fabric: it.fabric,
-                qty: it.qty,
-                unit_price_cents: it.unit_price_cents,
-                total_cents: it.total_cents,
-                image_url: it.image_url,
-                sizes: it.sizes,
-              })),
-              shipping_label: pi.shipping_label,
-              shipping_method: pi.shipping_method,
-              shipping_cents: pi.shipping_cents,
-              total_cents: pi.total_cents,
-              subtotal_cents: pi.subtotal_cents,
-              currency: pi.currency,
-            } as PIDisplayData}
-          />
-        </article>
+            semantic correctness + screen-reader friendliness. R94: now
+            also rendered (offscreen) by the paid/pending_bank branches
+            above so downloadPDF() works regardless of payment status. */}
+        {piDocument}
 
         {/* Payment section */}
         <section className="mt-10 print:hidden">
