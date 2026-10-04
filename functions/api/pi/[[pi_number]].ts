@@ -1,5 +1,6 @@
 // functions/api/pi/[[pi_number]].ts
-// Fetches a Proforma Invoice by path pi_number (or legacy query params).
+// Fetches a Proforma Invoice by path pi_number (or legacy query params),
+// and dispatches per-PI action POSTs to dedicated handlers.
 //
 // 2026-10-02 (R78): renamed from `get.ts` → `[pi_number].ts` → `[[pi_number]].ts`
 // (catch-all). The double-bracket `[[pi_number]]` form is what Cloudflare
@@ -7,6 +8,18 @@
 // are a Pages Router convention that crashed the connection here with no
 // response body. Catch-all captures the entire remaining path, so we split
 // on `/` and take the last segment as the PI.
+//
+// 2026-10-04 (R85): the catch-all previously intercepted POSTs to
+// `/api/pi/{pi_number}/confirm-bank` and returned 405 (it only exported
+// GET + OPTIONS). Two fixes are layered:
+//   1. The dedicated handler now lives at
+//      `functions/api/pi/[pi_number]/confirm-bank.ts` so a more specific
+//      static-segment route wins under Cloudflare's normal precedence.
+//   2. THIS file also re-exports onRequestPost so that if (1) is ever
+//      bypassed — Cloudflare CDN edge cache, a stale deploy, anything —
+//      POST still reaches the handler instead of falling through to a
+//      405. The dispatch is based on the path's last segment, so
+//      anything we add later (`/api/pi/{n}/<action>`) can hook in here.
 //
 // Live PI card payment flow:
 //   - When a customer opens a PI in "sent" status with no Stripe
@@ -27,6 +40,7 @@
 
 import { normalizeSupabaseUrl } from "../_utils";
 import { createPaymentIntent } from "../../lib/stripe";
+import { handleConfirmBank } from "./_actions/confirm-bank";
 
 interface Env {
   COZE_SUPABASE_URL: string;
@@ -46,7 +60,7 @@ function resolveSiteSlug(input: unknown): string {
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET, OPTIONS",
+  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type, Authorization",
 };
 
@@ -262,6 +276,34 @@ export async function onRequestGet(context: {
       paymentUrl: null,
     },
   });
+}
+
+// 2026-10-04 (R85): POST dispatch — covers actions like
+//   /api/pi/{pi_number}/confirm-bank
+// that would otherwise fall through to a 405 if Cloudflare's route
+// precedence didn't pick the dedicated file. The dispatch key is the LAST
+// path segment after the pi_number, so add new per-PI POSTs here too.
+export async function onRequestPost(context: {
+  request: Request;
+  env: Env;
+  params?: Record<string, string | string[] | undefined>;
+}): Promise<Response> {
+  const url = new URL(context.request.url);
+  // pathname looks like /api/pi/<pi_number>/<action> (or with extra
+  // segments in front for catch-all [[pi_number]]). Take the LAST
+  // non-empty segment as the action name.
+  const segments = url.pathname.replace(/\/+$/, "").split("/").filter(Boolean);
+  const action = segments[segments.length - 1] ?? "";
+
+  switch (action) {
+    case "confirm-bank":
+      return handleConfirmBank(context);
+    default:
+      return jsonResponse(
+        { error: `Unknown PI action: ${action || "(none)"}` },
+        405,
+      );
+  }
 }
 
 // ── helpers ──────────────────────────────────────────────────────
