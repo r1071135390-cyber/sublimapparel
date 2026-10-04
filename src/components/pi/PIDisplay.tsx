@@ -207,10 +207,10 @@ export function PIDisplay({ pi }: { pi: PIDisplayData }) {
         <img
           src="/sublimapparel-logo-v2.webp"
           alt="sublimapparel.com"
-          width={120}
-          height={32}
+          width={240}
+          height={64}
           decoding="async"
-          className="h-8 w-auto shrink-0"
+          className="h-16 w-auto shrink-0"
         />
         <div className="flex-1 text-center">
           <p className="text-[12px] font-black uppercase tracking-wide">
