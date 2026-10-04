@@ -212,6 +212,14 @@ export default function PayClient() {
           // bank info) via inline `style={{ color: BLACK/RED/BLUE }}` —
           // those are untouched.
           const safeRgb = "rgb(0,0,0)";
+          // Diagnostic: confirm onclone ran at all and what stylesheets
+          // it saw in the cloned doc. Visible in DevTools console when
+          // clicking Download PDF.
+          const inlineStyles = clonedDoc.querySelectorAll("style");
+          const linkStyles = clonedDoc.querySelectorAll('link[rel="stylesheet"]');
+          console.log(
+            `[PayClient] onclone entered: inlineStyleCount=${inlineStyles.length}, linkCount=${linkStyles.length}`,
+          );
           // Tailwind v4 / shadcn emits colors via color-mix(in oklab, X, Y)
           // (and oklch / lab / lch variants), NOT the bare oklab(...) form.
           // html2canvas v1's color parser understands neither, so it crashes
@@ -232,12 +240,18 @@ export default function PayClient() {
 
           // External stylesheets are usually same-origin hashed CSS
           // bundles (_next/static/chunks/*.css). Fetch the body via
-          // synchronous XHR, scrub every modern color function, then
-          // re-inject as an inline <style> in place of the link. Layout
-          // utilities (flex, padding, border-style, …) are preserved
-          // because they don't depend on color values. The 251 color-mix
-          // calls and 133 oklab() calls in the prod bundle all collapse
-          // to rgb(0,0,0), which html2canvas parses cleanly.
+          // synchronous XHR against window.location.href (the cloned doc
+          // lives in an iframe with baseURI = about:blank, so resolving
+          // href against clonedDoc.baseURI would yield about:blank/...
+          // and the XHR would always fail), scrub every modern color
+          // function, then re-inject as an inline <style> in place of
+          // the link. Layout utilities (flex, padding, border-style, …)
+          // are preserved because they don't depend on color values.
+          // The 251 color-mix calls and 133 oklab() calls in the prod
+          // bundle all collapse to rgb(0,0,0), which html2canvas parses
+          // cleanly.
+          let linkScrubOk = 0;
+          let linkScrubFail = 0;
           clonedDoc.querySelectorAll('link[rel="stylesheet"]').forEach((node) => {
             try {
               const href = node.getAttribute("href");
@@ -245,7 +259,7 @@ export default function PayClient() {
                 node.remove();
                 return;
               }
-              const absUrl = new URL(href, clonedDoc.baseURI).toString();
+              const absUrl = new URL(href, window.location.href).toString();
               const xhr = new XMLHttpRequest();
               xhr.open("GET", absUrl, false);
               xhr.send();
@@ -257,13 +271,20 @@ export default function PayClient() {
                   node.parentNode.insertBefore(style, node);
                 }
                 node.remove();
+                linkScrubOk++;
               } else {
                 node.remove();
+                linkScrubFail++;
               }
-            } catch {
+            } catch (e) {
+              console.warn("[PayClient] link stylesheet scrub failed", e);
               node.remove();
+              linkScrubFail++;
             }
           });
+          console.log(
+            `[PayClient] onclone: link scrubbed=${linkScrubOk}, link dropped=${linkScrubFail}`,
+          );
         },
       });
 

@@ -276,7 +276,6 @@ export async function createPaymentLink(
     "after_completion[redirect][url]",
     "https://sublimapparel.com/quote/?id={CHECKOUT_SESSION_ID}",
   );
-  body.append("payment_method_collection", "always");
   for (const [k, v] of Object.entries(flattenMetadata(params.metadata))) {
     body.append(k, v);
   }
