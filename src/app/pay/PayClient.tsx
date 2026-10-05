@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 /**
  * /pay/?pi=.../PayClient.tsx (also served at /quote/?id=... via redirect)
@@ -24,7 +24,7 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { PIDisplay, type PIDisplayData } from "@/components/pi/PIDisplay";
 import { PayWithStripeElements } from "@/components/PayWithStripeElements";
-import { getBankAccount } from "@/lib/bank-accounts";
+import { getBankAccount, bankAccountFromRow, type BankAccount, type BankAccountRow } from "@/lib/bank-accounts";
 import { Truck, CheckCircle2, Loader2, Download, Building2, CreditCard, AlertCircle } from "lucide-react";
 
 // ---------- Types ----------
@@ -103,6 +103,11 @@ export default function PayClient() {
   const [paymentMethod, setPaymentMethod] = useState<"card" | "bank">("card");
   const [bankSubmitted, setBankSubmitted] = useState(false);
   const [pdfGenerating, setPdfGenerating] = useState(false);
+  // R103: bank info loaded server-side from bank_accounts table.
+  // Defaults to hardcoded BANK_ACCOUNTS until the fetch resolves.
+  const [bankAccount, setBankAccount] = useState<BankAccount>(() =>
+    getBankAccount(""), // will be replaced on PI load
+  );
 
   useEffect(() => {
     if (!piNumber) {
@@ -118,9 +123,14 @@ export default function PayClient() {
           const body = (await res.json().catch(() => ({}))) as { error?: string };
           throw new Error(body.error || `HTTP ${res.status}`);
         }
-        const data = (await res.json()) as { pi: PIData };
+        const data = (await res.json()) as { pi: PIData; bank_account: BankAccountRow | null };
         if (!cancelled) {
           setPi(data.pi);
+          // R103: admin-managed bank info from /api/admin/bank-accounts
+          // (loaded server-side and shipped alongside the PI). Falls back
+          // to the hardcoded BANK_ACCOUNTS map if the row is missing
+          // (e.g. network blip during the bank_accounts Supabase query).
+          setBankAccount(bankAccountFromRow(data.bank_account, data.pi.currency));
           if (data.pi.status === "pending_bank") setBankSubmitted(true);
         }
       } catch (e) {
@@ -403,6 +413,7 @@ export default function PayClient() {
           subtotal_cents: pi.subtotal_cents,
           currency: pi.currency,
         } as PIDisplayData}
+        bankAccount={bank}
       />
     </article>
   );
@@ -621,7 +632,8 @@ function BankTransferMethod({
   // 2026-10-04 (R80): resolve bank account from PI currency. Recomputes
   // when the parent re-renders with a different pi (e.g. after admin
   // updates the PI's currency in /admin/new-pi/).
-  const bank = getBankAccount(pi.currency);
+  // R103: bankAccount state already holds the DB-loaded (or fallback) bank.
+  const bank = bankAccount;
 
   const copy = (text: string) => {
     if (typeof navigator !== "undefined" && navigator.clipboard) {

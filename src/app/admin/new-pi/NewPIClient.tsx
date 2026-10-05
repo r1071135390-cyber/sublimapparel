@@ -1,9 +1,9 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect, useMemo, useRef } from "react";
 import Link from "next/link";
 import { Plus, Trash2, Save, ExternalLink, RefreshCw, Upload, X, Check, Copy, Eye, Ruler } from "lucide-react";
-import { getBankAccount, SUPPORTED_CURRENCIES, type SupportedCurrency } from "@/lib/bank-accounts";
+import { getBankAccount, bankAccountFromRow, SUPPORTED_CURRENCIES, type SupportedCurrency, type BankAccount, type BankAccountRow } from "@/lib/bank-accounts";
 
 // ─── Types ────────────────────────────────────────────────────────────────
 type SizeRow = { label: string; qty: number };
@@ -242,8 +242,29 @@ export default function NewPIPage() {
   //   2. The bank info shown in the preview + sent to /api/pi/create/
   //   3. The currency passed to Stripe when a Payment Link is minted.
   const [currency, setCurrency] = useState<SupportedCurrency>("usd");
-  // Live bank info for the preview, mirrors what PIDisplay will render.
-  const bankInfo = useMemo(() => getBankAccount(currency), [currency]);
+  // R103: live bank info for the preview, mirrors what PIDisplay will render.
+  // Loaded from /api/admin/bank-accounts on mount so admin sees the same
+  // bank data they manage in /admin/bank-accounts/. Falls back to the
+  // hardcoded BANK_ACCOUNTS map if the fetch fails.
+  const [bankInfo, setBankInfo] = useState<BankAccount>(() => getBankAccount(currency));
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch("/api/admin/bank-accounts", { cache: "no-store" });
+        if (!res.ok) return;
+        const data = (await res.json()) as { ok: boolean; accounts?: BankAccountRow[] };
+        if (cancelled || !data.accounts) return;
+        const row = data.accounts.find((r) => r.currency === currency) ?? null;
+        setBankInfo(bankAccountFromRow(row, currency));
+      } catch {
+        // network blip — keep hardcoded fallback
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [currency]);
 
   // TO: block
   const [customerName, setCustomerName] = useState("");

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Bank account mapping by currency.
  *
  * Each PI's bank block in PIDisplay + admin preview picks a bank account
@@ -142,4 +142,67 @@ export function getBankAccount(currency: string | null | undefined): BankAccount
  */
 export function formatCurrencyOption(currency: SupportedCurrency): string {
   return BANK_ACCOUNTS[currency].label;
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// R103: dynamic loading from Supabase bank_accounts table
+// ─────────────────────────────────────────────────────────────────────────
+
+/**
+ * Shape of a row as stored in Supabase (snake_case). Used by the
+ * Cloudflare function /api/admin/bank-accounts and the /api/pi/{n}
+ * GET handler, which forward the row as-is to the browser.
+ */
+export interface BankAccountRow {
+  id: number;
+  site_slug: string;
+  currency: string;
+  label: string;
+  symbol: string;
+  beneficiary: string;
+  company_address: string;
+  bank_name: string;
+  account: string;
+  swift: string;
+  bank_address: string;
+  iban: string | null;
+  bank_country: string | null;
+  routing_number: string | null;
+  cnaps: string | null;
+  intermediary_bank: string | null;
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+/**
+ * Convert a Supabase bank_accounts row (snake_case) into the
+ * BankAccount shape the rest of the app uses (camelCase). When the
+ * row is null (table miss, network error) we fall back to the
+ * hardcoded BANK_ACCOUNTS[currency] so the PI still renders.
+ */
+export function bankAccountFromRow(
+  row: BankAccountRow | null | undefined,
+  currency: string,
+): BankAccount {
+  const fallback = BANK_ACCOUNTS[(currency ?? "usd").toLowerCase() as SupportedCurrency]
+    ?? BANK_ACCOUNTS.usd;
+  if (!row) return fallback;
+  return {
+    currency: row.currency,
+    label: row.label,
+    symbol: row.symbol,
+    beneficiary: row.beneficiary,
+    companyAddress: row.company_address,
+    bankName: row.bank_name,
+    account: row.account,
+    swift: row.swift,
+    bankAddress: row.bank_address,
+    iban: row.iban ?? undefined,
+    bankCountry: row.bank_country ?? undefined,
+    routingNumber: row.routing_number ?? undefined,
+    cnaps: row.cnaps ?? undefined,
+    intermediaryBank: row.intermediary_bank ?? undefined,
+    notes: row.notes ?? undefined,
+  };
 }

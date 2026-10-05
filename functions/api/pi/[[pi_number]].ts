@@ -147,6 +147,43 @@ export async function onRequestGet(context: {
   }
 
   const row = rows[0];
+  // 2026-10-05 (R103): fetch the bank_accounts row for this PI
+  // currency so the /pay/ page renders admin-managed bank info instead of
+  // the hardcoded fallback in src/lib/bank-accounts.ts. We fetch on every
+  // read (no in-memory cache) because the admin edits bank info via
+  // /admin/bank-accounts/ and we want those changes visible on the next
+  // page load. Supabase responds in <50ms, so the cost is negligible.
+  const piCurrency = ((row.currency as string | null) ?? "usd").toLowerCase();
+  const piSiteSlug =
+    resolveSiteSlug(
+      (row as any).payment_site ??
+        ((row.metadata as Record<string, unknown> | null)?.site_slug ?? null),
+    );
+  const bankLookupUrl =
+    `${supabaseUrl}/rest/v1/bank_accounts` +
+    `?site_slug=eq.${encodeURIComponent(piSiteSlug)}` +
+    `&currency=eq.${encodeURIComponent(piCurrency)}` +
+    `&limit=1`;
+  let bankAccount: Record<string, unknown> | null = null;
+  try {
+    const bankRes = await fetch(bankLookupUrl, {
+      headers: {
+        apikey: env.COZE_SUPABASE_SERVICE_ROLE_KEY,
+        Authorization: `Bearer ${env.COZE_SUPABASE_SERVICE_ROLE_KEY}`,
+      },
+    });
+    if (bankRes.ok) {
+      const bankRows = (await bankRes.json()) as Array<Record<string, unknown>>;
+      bankAccount = bankRows[0] ?? null;
+    } else {
+      console.warn(
+        `[pi/get] bank_accounts lookup failed: ${bankRes.status} ${await bankRes.text()}`,
+      );
+    }
+  } catch (err) {
+    console.warn("[pi/get] bank_accounts lookup threw:", err);
+  }
+
   const status = (row.status as string | null) ?? null;
   const existingClientSecret = (row.stripe_client_secret as string | null) ?? null;
   const existingPaymentIntentId =
@@ -173,7 +210,7 @@ export async function onRequestGet(context: {
           `[pi/get] PI ${String(row.pi_number)} has no amount; skipping PaymentIntent mint`,
         );
       } else {
-        const currency = ((row.currency as string) ?? "usd").toLowerCase();
+        const currency = piCurrency;
         const site_slug = resolveSiteSlug(
           (row as any).payment_site ??
             ((row.metadata as Record<string, unknown> | null)?.site_slug ?? null),
@@ -282,6 +319,7 @@ export async function onRequestGet(context: {
       stripe_payment_intent_id: paymentIntentId,
       paymentUrl: null,
     },
+    bank_account: bankAccount,
   });
 }
 

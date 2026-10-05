@@ -45,6 +45,9 @@ import {
 import { PIPreview } from "../new-pi/NewPIClient";
 import {
   getBankAccount,
+  bankAccountFromRow,
+  type BankAccount,
+  type BankAccountRow,
   SUPPORTED_CURRENCIES,
   type SupportedCurrency,
 } from "@/lib/bank-accounts";
@@ -100,7 +103,27 @@ function EditPIClientInner() {
   const [issueDate, setIssueDate] = useState("");
   const [leadTimeText, setLeadTimeText] = useState("Within 30 days");
   const [currency, setCurrency] = useState<SupportedCurrency>("usd");
-  const bankInfo = useMemo(() => getBankAccount(currency), [currency]);
+  // R103: live bank info from /api/admin/bank-accounts (dynamic) with
+  // hardcoded BANK_ACCOUNTS fallback until the fetch resolves.
+  const [bankInfo, setBankInfo] = useState<BankAccount>(() => getBankAccount(currency));
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch("/api/admin/bank-accounts", { cache: "no-store" });
+        if (!res.ok) return;
+        const data = (await res.json()) as { ok: boolean; accounts?: BankAccountRow[] };
+        if (cancelled || !data.accounts) return;
+        const row = data.accounts.find((r) => r.currency === currency) ?? null;
+        setBankInfo(bankAccountFromRow(row, currency));
+      } catch {
+        // keep hardcoded fallback
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [currency]);
 
   const [customerName, setCustomerName] = useState("");
   const [customerEmail, setCustomerEmail] = useState("");
