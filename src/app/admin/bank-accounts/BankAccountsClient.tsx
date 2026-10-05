@@ -256,7 +256,7 @@ function CurrencyCard({
           />
         </FieldRow>
 
-        <FieldRow label="Beneficiary address">
+        <FieldRow label="Beneficiary address (company_address)">
           <TextArea
             value={row.companyAddress}
             onChange={(v) => setField("companyAddress", v)}
@@ -393,6 +393,35 @@ export default function BankAccountsClient() {
   const handleSave = async (currency: SupportedCurrency) => {
     if (!forms) return;
     const current = forms[currency];
+
+    // R109: client-side pre-flight. The server validator reports only the
+    // first missing field; list all of them so the user sees what is
+    // actually wrong in one pass.
+    const requiredFields: { key: keyof BankAccountRow; label: string }[] = [
+      { key: "label", label: "Label" },
+      { key: "symbol", label: "Symbol" },
+      { key: "beneficiary", label: "Beneficiary" },
+      { key: "companyAddress", label: "Beneficiary address (company_address)" },
+      { key: "bankName", label: "Bank name" },
+      { key: "account", label: "Account number / IBAN" },
+      { key: "swift", label: "SWIFT / BIC" },
+      { key: "bankAddress", label: "Bank address" },
+    ];
+    const missing = requiredFields
+      .filter(({ key }) => !current.row[key] || String(current.row[key]).trim() === "")
+      .map(({ label }) => label);
+    if (missing.length > 0) {
+      setForms({
+        ...forms,
+        [currency]: {
+          ...current,
+          saveState: "error",
+          errorMsg: `Required field(s) empty: ${missing.join(", ")}`,
+        },
+      });
+      return;
+    }
+
     setForms({
       ...forms,
       [currency]: { ...current, saveState: "saving", errorMsg: null },
