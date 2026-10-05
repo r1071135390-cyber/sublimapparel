@@ -271,7 +271,7 @@ function CurrencyCard({
           />
         </FieldRow>
 
-        <FieldRow label="Account number / IBAN" mono>
+        <FieldRow label="Account number / IBAN">
           <TextInput
             value={row.account}
             onChange={(v) => setField("account", v)}
@@ -279,7 +279,7 @@ function CurrencyCard({
           />
         </FieldRow>
 
-        <FieldRow label="SWIFT / BIC" mono>
+        <FieldRow label="SWIFT / BIC">
           <TextInput
             value={row.swift}
             onChange={(v) => setField("swift", v)}
@@ -295,7 +295,7 @@ function CurrencyCard({
           />
         </FieldRow>
 
-        <FieldRow label="IBAN" hint="EUR accounts only. Leave blank for other currencies." mono>
+        <FieldRow label="IBAN" hint="EUR accounts only. Leave blank for other currencies.">
           <NullableTextInput
             value={row.iban}
             onChange={(v) => setField("iban", v)}
@@ -311,7 +311,7 @@ function CurrencyCard({
           />
         </FieldRow>
 
-        <FieldRow label="Routing number" hint="USD wires via Fed/ACH only." mono>
+        <FieldRow label="Routing number" hint="USD wires via Fed/ACH only.">
           <NullableTextInput
             value={row.routingNumber}
             onChange={(v) => setField("routingNumber", v)}
@@ -319,7 +319,7 @@ function CurrencyCard({
           />
         </FieldRow>
 
-        <FieldRow label="CNAPS" hint="CNY domestic wires only." mono>
+        <FieldRow label="CNAPS" hint="CNY domestic wires only.">
           <NullableTextInput
             value={row.cnaps}
             onChange={(v) => setField("cnaps", v)}
