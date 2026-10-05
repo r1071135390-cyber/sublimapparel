@@ -1,4 +1,4 @@
-import type { Metadata, Viewport } from "next";
+﻿import type { Metadata, Viewport } from "next";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { UtilityBar } from "@/components/utility-bar";
@@ -72,16 +72,10 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/icon.png", sizes: "256x256", type: "image/png" },
-      { url: "/favicon.ico", sizes: "256x256", type: "image/x-icon" },
-    ],
-    shortcut: [
-      { url: "/favicon.ico", sizes: "256x256", type: "image/x-icon" },
+      { url: "/icon.png", sizes: "any", type: "image/png" },
     ],
     apple: [
-      // Apple Touch Icon — 180x180 is the recommended iOS Home Screen size.
-      // We reuse the existing /icon.png (256x256) and let iOS downscale.
-      { url: "/icon.png", sizes: "256x256", type: "image/png" },
+      { url: "/icon.png", sizes: "any", type: "image/png" },
     ],
   },
   // PWA manifest (Next.js emits <link rel="manifest" href="...">)
