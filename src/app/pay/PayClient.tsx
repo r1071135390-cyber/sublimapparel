@@ -590,7 +590,7 @@ export default function PayClient() {
           {paymentMethod === "card" ? (
             <CardPaymentMethod pi={pi} />
           ) : (
-            <BankTransferMethod pi={pi} onSubmitted={() => setBankSubmitted(true)} />
+            <BankTransferMethod pi={pi} bankAccount={bankAccount} onSubmitted={() => setBankSubmitted(true)} />
           )}
         </section>
       </div>
@@ -620,9 +620,11 @@ function CardPaymentMethod({ pi }: { pi: PIData }) {
 
 function BankTransferMethod({
   pi,
+  bankAccount,
   onSubmitted,
 }: {
   pi: PIData;
+  bankAccount: BankAccount;
   onSubmitted: () => void;
 }) {
   const [submitting, setSubmitting] = useState(false);
