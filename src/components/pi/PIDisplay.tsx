@@ -204,10 +204,10 @@ export function PIDisplay({ pi }: { pi: PIDisplayData }) {
           className="h-16 w-auto shrink-0"
         />
         <div className="flex-1 text-center">
-          <p className="text-[12px] font-black uppercase tracking-wide">
-            YIWU HOMEDORM
-            <br />
-            COMMODITY MANUFACTURING CO.,LTD
+          <p
+            className="whitespace-nowrap text-[18px] font-black uppercase tracking-tight"
+          >
+            YIWU HOMEDORM COMMODITY MANUFACTURING CO.,LTD
           </p>
           <p className="mt-1 text-[10px] uppercase text-black/80">
             ADD: 2nd Floor, No.11 Anshang Road, Yiwu City, China
