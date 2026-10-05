@@ -413,7 +413,7 @@ export default function PayClient() {
           subtotal_cents: pi.subtotal_cents,
           currency: pi.currency,
         } as PIDisplayData}
-        bankAccount={bank}
+        bankAccount={bankAccount}
       />
     </article>
   );
