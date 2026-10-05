@@ -154,8 +154,8 @@ function NullableTextInput({
   placeholder,
   mono,
 }: {
-  value: string | null;
-  onChange: (v: string | null) => void;
+  value: string | undefined;
+  onChange: (v: string | undefined) => void;
   placeholder?: string;
   mono?: boolean;
 }) {
@@ -163,7 +163,7 @@ function NullableTextInput({
     <input
       type="text"
       value={value ?? ""}
-      onChange={(e) => onChange(e.target.value === "" ? null : e.target.value)}
+      onChange={(e) => onChange(e.target.value === "" ? undefined : e.target.value)}
       placeholder={placeholder}
       className={`w-full border-2 border-black/15 bg-white px-3 py-2 text-sm text-black outline-none transition-colors focus:border-[#ff4d00] ${
         mono ? "font-mono" : ""
@@ -337,7 +337,7 @@ function CurrencyCard({
         <FieldRow label="Notes" hint="Shown on the PI under Bank Info.">
           <TextArea
             value={row.notes ?? ""}
-            onChange={(v) => setField("notes", v === "" ? null : v)}
+            onChange={(v) => setField("notes", v === "" ? undefined : v)}
             rows={3}
           />
         </FieldRow>
