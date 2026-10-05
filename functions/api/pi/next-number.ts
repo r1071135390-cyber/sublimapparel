@@ -4,8 +4,16 @@
  * Returns the next available 4-digit PI number for a given date prefix.
  * Example response: { next: "SA202608250007", count: 6 }
  *
- * Looks at existing PIs starting with `SA{YYYYMMDD}` and returns the next
- * sequential number (zero-padded to 4 digits).
+ * 2026-10-05 (R113): replaced the inline LIKE + ORDER BY DESC + LIMIT 50
+ * scan with a call to the Supabase RPC `next_pi_number(prefix)`. The RPC
+ * runs an indexed range scan with LIMIT 1 server-side, which avoids the
+ * Supabase free-tier statement timeout (57014) that the previous
+ * implementation hit once the table grew.
+ *
+ * `count` is still returned for backwards compatibility with any caller
+ * that shows it in the admin UI — we approximate it as `maxSuffix` (i.e.
+ * how many PIs we believe exist under this prefix). If you need an exact
+ * count, run a separate query.
  */
 
 import type { EventContext } from "@cloudflare/workers-types";
@@ -29,41 +37,48 @@ export const onRequestGet: (context: EventContext<Env, string, Record<string, un
       return jsonResponse({ error: "Database not configured" }, 500);
     }
 
-    // Fetch all PIs with this prefix, ordered by pi_number desc
-    const res = await fetch(
-      `${COZE_SUPABASE_URL}/rest/v1/proforma_invoices?pi_number=like.${prefix}*&select=pi_number&order=pi_number.desc&limit=50`,
-      {
-        headers: {
-          apikey: COZE_SUPABASE_SERVICE_ROLE_KEY,
-          Authorization: `Bearer ${COZE_SUPABASE_SERVICE_ROLE_KEY}`,
-        },
-      }
-    );
+    // Delegate to the RPC — runs as an indexed range scan with LIMIT 1,
+    // so it's bounded by log(N) regardless of how big the table gets.
+    const rpcRes = await fetch(`${COZE_SUPABASE_URL}/rest/v1/rpc/next_pi_number`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        apikey: COZE_SUPABASE_SERVICE_ROLE_KEY,
+        Authorization: `Bearer ${COZE_SUPABASE_SERVICE_ROLE_KEY}`,
+      },
+      body: JSON.stringify({ p_prefix: prefix }),
+    });
 
-    if (!res.ok) {
-      return jsonResponse({ error: `Database query failed: ${res.status}` }, 500);
+    if (!rpcRes.ok) {
+      const detail = await rpcRes.text().catch(() => "");
+      return jsonResponse(
+        { error: `Database query failed: status=${rpcRes.status} body=${detail}` },
+        500,
+      );
     }
 
-    const rows = (await res.json()) as Array<{ pi_number: string }>;
-
-    // Find the max 4-digit suffix
-    let maxSuffix = 0;
-    for (const row of rows) {
-      const suffixStr = row.pi_number.slice(prefix.length);
-      const suffix = parseInt(suffixStr, 10);
-      if (!isNaN(suffix) && suffix > maxSuffix) {
-        maxSuffix = suffix;
-      }
+    const next = (await rpcRes.json()) as string;
+    if (typeof next !== "string" || !next) {
+      return jsonResponse(
+        { error: `next_pi_number RPC returned non-string: ${JSON.stringify(next)}` },
+        500,
+      );
     }
 
-    const nextSuffix = String(maxSuffix + 1).padStart(4, "0");
-    const next = `${prefix}${nextSuffix}`;
+    // The RPC returned e.g. "SA202608250007". The last 4 chars are the
+    // suffix; derive maxSuffix + count for UI compatibility.
+    const suffixStr = next.slice(prefix.length);
+    const maxSuffix = parseInt(suffixStr, 10);
+    const safeMaxSuffix = Number.isFinite(maxSuffix) ? maxSuffix : 0;
 
     return jsonResponse({
       next,
       prefix,
-      count: rows.length,
-      maxSuffix,
+      // Best-effort: count of PIs we believe exist under this prefix.
+      // equals the max suffix because each PI under a prefix occupies
+      // a unique 4-digit slot.
+      count: safeMaxSuffix,
+      maxSuffix: safeMaxSuffix - 1 >= 0 ? safeMaxSuffix - 1 : 0,
     });
   } catch (err) {
     return jsonResponse(

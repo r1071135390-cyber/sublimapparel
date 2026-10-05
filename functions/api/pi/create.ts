@@ -1,4 +1,4 @@
-﻿// functions/api/pi/create.ts
+// functions/api/pi/create.ts
 // Creates a Proforma Invoice (PI) in Supabase.
 // Stripe payment intent creation has been stripped out (chunk-size issue with
 // the Stripe SDK on Cloudflare Functions). When the front-end needs to charge
@@ -91,41 +91,47 @@ function todayPrefix(d = new Date()): string {
 
 /**
  * Look up the next available 4-digit PI number for the given date prefix
- * by querying the most recent rows in proforma_invoices.
+ * by delegating to the Supabase RPC `next_pi_number(prefix)`.
+ *
+ * 2026-10-05 (R113): the previous implementation fetched up to 50 rows
+ * with `pi_number LIKE prefix% ORDER BY pi_number DESC LIMIT 50`, which
+ * hit Supabase free-tier's statement timeout (PostgreSQL code 57014)
+ * once the table grew. The RPC:
+ *   - runs an indexed range scan (text_pattern_ops) on the pi_number
+ *     prefix and stops at LIMIT 1;
+ *   - returns only the single result string, not 50 rows;
+ *   - so the planner can answer in O(log N) and PostgREST doesn't have
+ *     to ship 50 rows over the wire before each insert retry.
  *
  * Mirrors the logic in /api/pi/next-number.ts — duplicated here so the
  * create path is self-contained (no internal fetch back to the Functions
  * hostname, which would loop on dev / localhost).
- *
- * Limit: 50. If you ever exceed 50 PIs in a single day, raise this.
  */
 async function nextAvailablePiNumber(
   supabaseUrl: string,
   serviceKey: string,
   prefix: string,
 ): Promise<string> {
-  const res = await fetch(
-    `${supabaseUrl}/rest/v1/proforma_invoices?pi_number=like.${prefix}*&select=pi_number&order=pi_number.desc&limit=50`,
-    {
-      headers: {
-        apikey: serviceKey,
-        Authorization: `Bearer ${serviceKey}`,
-      },
+  const res = await fetch(`${supabaseUrl}/rest/v1/rpc/next_pi_number`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      apikey: serviceKey,
+      Authorization: `Bearer ${serviceKey}`,
     },
-  );
+    body: JSON.stringify({ p_prefix: prefix }),
+  });
   if (!res.ok) {
-    throw new Error(`nextAvailablePiNumber: query failed status=${res.status}`);
+    const detail = await res.text().catch(() => "");
+    throw new Error(
+      `nextAvailablePiNumber: RPC failed status=${res.status} body=${detail}`,
+    );
   }
-  const rows = (await res.json()) as Array<{ pi_number: string }>;
-  let maxSuffix = 0;
-  for (const row of rows) {
-    const suffixStr = row.pi_number.slice(prefix.length);
-    const suffix = parseInt(suffixStr, 10);
-    if (!isNaN(suffix) && suffix > maxSuffix) {
-      maxSuffix = suffix;
-    }
+  const next = (await res.json()) as string;
+  if (typeof next !== "string" || !next) {
+    throw new Error(`nextAvailablePiNumber: RPC returned non-string: ${next}`);
   }
-  return `${prefix}${String(maxSuffix + 1).padStart(4, "0")}`;
+  return next;
 }
 
 /**
@@ -363,7 +369,7 @@ export async function onRequestPost(context: {
           detail: `lookup-next-number failed: ${lookupErr instanceof Error ? lookupErr.message : String(lookupErr)}; original insert error: ${lastErrorDetail}`,
           supabaseUrl,
         },
-        500,
+        500
       );
     }
   }
