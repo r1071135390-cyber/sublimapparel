@@ -25,7 +25,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, Save, RefreshCw, AlertCircle, CheckCircle2, Building2 } from "lucide-react";
+import { ArrowLeft, Save, RefreshCw, AlertCircle, CheckCircle2, Building2, RotateCcw } from "lucide-react";
 import { SUPPORTED_CURRENCIES, type BankAccount, type SupportedCurrency } from "@/lib/bank-accounts";
 
 interface BankAccountRow extends BankAccount {
@@ -177,11 +177,13 @@ function CurrencyCard({
   state,
   onChange,
   onSave,
+  onReset,
 }: {
   currency: SupportedCurrency;
   state: FormState;
   onChange: (next: BankAccountRow) => void;
   onSave: () => void;
+  onReset: () => void;
 }) {
   const row = state.row;
   const setField = <K extends keyof BankAccountRow>(k: K, v: BankAccountRow[K]) =>
@@ -210,12 +212,28 @@ function CurrencyCard({
               Saved
             </span>
           )}
+          {state.dirty && state.saveState !== "saved" && (
+            <span className="inline-flex items-center gap-1 text-xs font-bold text-amber-700">
+              <span className="inline-block h-2 w-2 rounded-full bg-amber-500" />
+              Modified
+            </span>
+          )}
           {state.saveState === "error" && state.errorMsg && (
             <span className="inline-flex items-center gap-1 text-xs font-bold text-red-700">
               <AlertCircle className="h-4 w-4" />
               {state.errorMsg}
             </span>
           )}
+          <button
+            type="button"
+            onClick={onReset}
+            disabled={!state.dirty || state.saveState === "saving"}
+            title="Discard unsaved changes and reload the saved values"
+            className="inline-flex items-center gap-2 border-2 border-black/30 bg-white px-4 py-2 text-sm font-black uppercase tracking-wider text-black transition-all hover:border-black hover:bg-black/5 disabled:cursor-not-allowed disabled:border-black/10 disabled:text-black/30"
+          >
+            <RotateCcw className="h-4 w-4" />
+            Reset
+          </button>
           <button
             type="button"
             onClick={onSave}
@@ -390,6 +408,26 @@ export default function BankAccountsClient() {
     });
   };
 
+  // R110: re-fetch a single currency from the DB so the user can undo
+    // unsaved edits if they made a mistake. Cheap, single GET call.
+    const handleReset = async (currency: SupportedCurrency) => {
+      if (!forms) return;
+      try {
+        const res = await fetch("/api/admin/bank-accounts", { cache: "no-store" });
+        if (!res.ok) return; // silently no-op if read fails
+        const data = (await res.json()) as { ok: boolean; accounts?: BankAccountRow[] };
+        const rows = data.accounts ?? [];
+        const fresh = rows.find((r) => r.currency === currency);
+        if (!fresh) return;
+        setForms({
+          ...forms,
+          [currency]: { row: fresh, dirty: false, saveState: "idle", errorMsg: null },
+        });
+      } catch {
+        // best-effort; silent
+      }
+    };
+
   const handleSave = async (currency: SupportedCurrency) => {
     if (!forms) return;
     const current = forms[currency];
@@ -525,6 +563,7 @@ export default function BankAccountsClient() {
                 state={forms[c]}
                 onChange={(next) => handleChange(c, next)}
                 onSave={() => handleSave(c)}
+                onReset={() => handleReset(c)}
               />
             ))}
           </div>
