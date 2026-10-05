@@ -26,9 +26,9 @@
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, Save, RefreshCw, AlertCircle, CheckCircle2, Building2, RotateCcw } from "lucide-react";
-import { SUPPORTED_CURRENCIES, type BankAccount, type SupportedCurrency } from "@/lib/bank-accounts";
+import { SUPPORTED_CURRENCIES, bankAccountFromRow, type BankAccount, type BankAccountRow as DbBankAccountRow, type SupportedCurrency } from "@/lib/bank-accounts";
 
-interface BankAccountRow extends BankAccount {
+interface FormBankAccountRow extends BankAccount {
   id: number;
   site_slug: string;
   updated_at: string;
@@ -37,7 +37,7 @@ interface BankAccountRow extends BankAccount {
 type SaveState = "idle" | "saving" | "saved" | "error";
 
 interface FormState {
-  row: BankAccountRow;
+  row: FormBankAccountRow;
   dirty: boolean;
   saveState: SaveState;
   errorMsg: string | null;
@@ -57,7 +57,7 @@ const CURRENCY_SYMBOLS: Record<SupportedCurrency, string> = {
   cny: "¥",
 };
 
-function emptyBankAccount(currency: SupportedCurrency): BankAccountRow {
+function emptyBankAccount(currency: SupportedCurrency): FormBankAccountRow {
   return {
     id: 0,
     site_slug: "sublimapparel",
@@ -181,12 +181,12 @@ function CurrencyCard({
 }: {
   currency: SupportedCurrency;
   state: FormState;
-  onChange: (next: BankAccountRow) => void;
+  onChange: (next: FormBankAccountRow) => void;
   onSave: () => void;
   onReset: () => void;
 }) {
   const row = state.row;
-  const setField = <K extends keyof BankAccountRow>(k: K, v: BankAccountRow[K]) =>
+  const setField = <K extends keyof FormBankAccountRow>(k: K, v: FormBankAccountRow[K]) =>
     onChange({ ...row, [k]: v });
 
   return (
@@ -382,12 +382,27 @@ export default function BankAccountsClient() {
     try {
       const res = await fetch("/api/admin/bank-accounts", { cache: "no-store" });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = (await res.json()) as { ok: boolean; accounts?: BankAccountRow[] };
+      // R111: API returns Supabase snake_case rows. We convert each to the
+      // camelCase BankAccount shape (via bankAccountFromRow), then merge in
+      // the DB-only fields (id / site_slug / updated_at) so the form state
+      // is a single self-contained object.
+      const data = (await res.json()) as { ok: boolean; accounts?: DbBankAccountRow[] };
       const rows = data.accounts ?? [];
       const next: Record<SupportedCurrency, FormState> = {} as Record<SupportedCurrency, FormState>;
       for (const c of SUPPORTED_CURRENCIES) {
-        const row = rows.find((r) => r.currency === c) ?? emptyBankAccount(c);
-        next[c] = { row, dirty: false, saveState: "idle", errorMsg: null };
+        const dbRow = rows.find((r) => r.currency === c);
+        if (dbRow) {
+          const converted = bankAccountFromRow(dbRow, c);
+          const formRow: FormBankAccountRow = {
+            ...converted,
+            id: dbRow.id,
+            site_slug: dbRow.site_slug,
+            updated_at: dbRow.updated_at,
+          };
+          next[c] = { row: formRow, dirty: false, saveState: "idle", errorMsg: null };
+        } else {
+          next[c] = { row: emptyBankAccount(c), dirty: false, saveState: "idle", errorMsg: null };
+        }
       }
       setForms(next);
       setLoadError(null);
@@ -400,7 +415,7 @@ export default function BankAccountsClient() {
     void fetchAll();
   }, [fetchAll]);
 
-  const handleChange = (currency: SupportedCurrency, next: BankAccountRow) => {
+  const handleChange = (currency: SupportedCurrency, next: FormBankAccountRow) => {
     if (!forms) return;
     setForms({
       ...forms,
@@ -415,14 +430,21 @@ export default function BankAccountsClient() {
       try {
         const res = await fetch("/api/admin/bank-accounts", { cache: "no-store" });
         if (!res.ok) return; // silently no-op if read fails
-        const data = (await res.json()) as { ok: boolean; accounts?: BankAccountRow[] };
+        const data = (await res.json()) as { ok: boolean; accounts?: DbBankAccountRow[] };
         const rows = data.accounts ?? [];
-        const fresh = rows.find((r) => r.currency === currency);
-        if (!fresh) return;
+        const dbRow = rows.find((r) => r.currency === currency);
+        if (!dbRow) return;
+        const converted = bankAccountFromRow(dbRow, currency);
+        const fresh: FormBankAccountRow = {
+          ...converted,
+          id: dbRow.id,
+          site_slug: dbRow.site_slug,
+          updated_at: dbRow.updated_at,
+        };
         setForms({
           ...forms,
           [currency]: { row: fresh, dirty: false, saveState: "idle", errorMsg: null },
-        });
+          });
       } catch {
         // best-effort; silent
       }
@@ -435,7 +457,7 @@ export default function BankAccountsClient() {
     // R109: client-side pre-flight. The server validator reports only the
     // first missing field; list all of them so the user sees what is
     // actually wrong in one pass.
-    const requiredFields: { key: keyof BankAccountRow; label: string }[] = [
+    const requiredFields: { key: keyof FormBankAccountRow; label: string }[] = [
       { key: "label", label: "Label" },
       { key: "symbol", label: "Symbol" },
       { key: "beneficiary", label: "Beneficiary" },
