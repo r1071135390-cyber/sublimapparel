@@ -70,12 +70,12 @@ function emptyBankAccount(currency: SupportedCurrency): BankAccountRow {
     account: "",
     swift: "",
     bankAddress: "",
-    iban: null,
-    bankCountry: null,
-    routingNumber: null,
-    cnaps: null,
-    intermediaryBank: null,
-    notes: null,
+    iban: undefined,
+    bankCountry: undefined,
+    routingNumber: undefined,
+    cnaps: undefined,
+    intermediaryBank: undefined,
+    notes: undefined,
     updated_at: new Date().toISOString(),
   };
 }
