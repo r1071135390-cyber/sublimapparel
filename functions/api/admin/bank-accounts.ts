@@ -1,5 +1,9 @@
 // functions/api/admin/bank-accounts.ts
 //
+// REPLACEMENT FILE — apply this to sublimapparel.com to enable cross-site
+// bank info push. The original file lives at:
+//   functions/api/admin/bank-accounts.ts
+//
 // 2026-10-05 (R103): admin CRUD endpoint for bank_accounts table.
 //
 // GET /api/admin/bank-accounts
@@ -12,6 +16,9 @@
 //   Body: { currency: 'usd'|'eur'|'gbp'|'cny', ...BankAccount fields }
 //   Upserts a row keyed on (site_slug, currency). Triggers the
 //   updated_at bump automatically.
+//   POST-PUT (R115): also pushes the new row to OEMTSHIRTS_BANK_WEBHOOK_URL
+//   so the WordPress PI plugin at oemtshirts.com can sync. Signature
+//   header is HMAC-SHA256 of the raw body using OEMTSHIRTS_BANK_WEBHOOK_SECRET.
 //
 // Why this endpoint and not the next-on-pages /api/... route:
 //   The /api/pi/* family lives in functions/api/pi/*.ts and uses the
@@ -28,6 +35,19 @@
 interface Env {
   COZE_SUPABASE_URL: string;
   COZE_SUPABASE_SERVICE_ROLE_KEY: string;
+  // R115: cross-site bank info push. If both are set, every successful PUT
+  // POSTs the new row to OEMTSHIRTS_BANK_WEBHOOK_URL with an HMAC signature.
+  OEMTSHIRTS_BANK_WEBHOOK_URL?: string;
+  OEMTSHIRTS_BANK_WEBHOOK_SECRET?: string;
+}
+
+interface PagesContext {
+  request: Request;
+  env: Env;
+  // Cloudflare Pages Functions expose ctx.waitUntil(promise) which keeps the
+  // worker alive until the promise settles. Optional so the function still
+  // type-checks when called outside the Pages runtime (e.g. local tests).
+  waitUntil?: (promise: Promise<unknown>) => void;
 }
 
 const CORS_HEADERS = {
@@ -139,6 +159,64 @@ function validateBody(body: unknown): { ok: true; data: BankAccountBody } | { ok
   };
 }
 
+// R115: HMAC-SHA256 hex digest using Web Crypto. Works on Cloudflare Workers
+// without any Node.js polyfill. Returns lowercase hex (64 chars).
+async function hmacSha256Hex(secret: string, payload: string): Promise<string> {
+  const enc = new TextEncoder();
+  const key = await crypto.subtle.importKey(
+    "raw",
+    enc.encode(secret),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"],
+  );
+  const sig = await crypto.subtle.sign("HMAC", key, enc.encode(payload));
+  return Array.from(new Uint8Array(sig))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+// R115: push the new row to OEMtshirts. Never throws — failures are logged
+// only, because the Supabase row is already saved and the admin should not
+// see a 500 just because OEMtshirts is briefly down. Re-saving the same
+// row retries the push automatically.
+async function pushToOemtshirts(row: BankAccountRow, env: Env): Promise<void> {
+  const url = env.OEMTSHIRTS_BANK_WEBHOOK_URL;
+  const secret = env.OEMTSHIRTS_BANK_WEBHOOK_SECRET;
+  if (!url || !secret) {
+    // Webhook not configured — silent no-op. See bank-webhook-setup-guide.md.
+    return;
+  }
+  const payload = JSON.stringify({
+    source: "sublimapparel",
+    event: "bank_account.upserted",
+    account: row,
+  });
+  try {
+    const sig = await hmacSha256Hex(secret, payload);
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Webhook-Signature": `sha256=${sig}`,
+        "X-Webhook-Source": "sublimapparel",
+        "X-Webhook-Event": "bank_account.upserted",
+      },
+      body: payload,
+    });
+    if (!res.ok) {
+      const text = await res.text().catch(() => "(no body)");
+      console.warn(
+        `[bank-accounts PUT] OEMtshirts webhook returned ${res.status}: ${text.slice(0, 200)}`,
+      );
+    } else {
+      console.log(`[bank-accounts PUT] OEMtshirts webhook OK (${res.status}) for ${row.currency}`);
+    }
+  } catch (err) {
+    console.warn(`[bank-accounts PUT] OEMtshirts webhook failed:`, err);
+  }
+}
+
 async function handleGet(env: Env): Promise<Response> {
   const url =
     `${env.COZE_SUPABASE_URL}/rest/v1/bank_accounts` +
@@ -163,10 +241,10 @@ async function handleGet(env: Env): Promise<Response> {
   return json({ ok: true, accounts: rows });
 }
 
-async function handlePut(request: Request, env: Env): Promise<Response> {
+async function handlePut(ctx: PagesContext): Promise<Response> {
   let body: unknown;
   try {
-    body = await request.json();
+    body = await ctx.request.json();
   } catch {
     return json({ error: "Invalid JSON body" }, 400);
   }
@@ -179,12 +257,12 @@ async function handlePut(request: Request, env: Env): Promise<Response> {
 
   // Use PostgREST upsert via Prefer: resolution=merge-duplicates so we can
   // update on conflict. The unique constraint is (site_slug, currency).
-  const url = `${env.COZE_SUPABASE_URL}/rest/v1/bank_accounts?on_conflict=site_slug,currency`;
+  const url = `${ctx.env.COZE_SUPABASE_URL}/rest/v1/bank_accounts?on_conflict=site_slug,currency`;
   const res = await fetch(url, {
     method: "POST",
     headers: {
-      apikey: env.COZE_SUPABASE_SERVICE_ROLE_KEY,
-      Authorization: `Bearer ${env.COZE_SUPABASE_SERVICE_ROLE_KEY}`,
+      apikey: ctx.env.COZE_SUPABASE_SERVICE_ROLE_KEY,
+      Authorization: `Bearer ${ctx.env.COZE_SUPABASE_SERVICE_ROLE_KEY}`,
       "Content-Type": "application/json",
       Prefer: "resolution=merge-duplicates,return=representation",
     },
@@ -215,6 +293,17 @@ async function handlePut(request: Request, env: Env): Promise<Response> {
   }
 
   const rows = (await res.json()) as BankAccountRow[];
+
+  // R115: schedule the OEMtshirts push via ctx.waitUntil so the worker
+  // keeps running until the webhook settles. If the runtime doesn't
+  // expose waitUntil (e.g. local test), we still fire-and-forget via a
+  // detached promise — pushToOemtshirts catches its own errors.
+  if (ctx.waitUntil) {
+    ctx.waitUntil(pushToOemtshirts(rows[0], ctx.env));
+  } else {
+    void pushToOemtshirts(rows[0], ctx.env);
+  }
+
   return json({ ok: true, account: rows[0] });
 }
 
@@ -222,11 +311,8 @@ export async function onRequestGet(ctx: { env: Env }): Promise<Response> {
   return handleGet(ctx.env);
 }
 
-export async function onRequestPut(ctx: {
-  request: Request;
-  env: Env;
-}): Promise<Response> {
-  return handlePut(ctx.request, ctx.env);
+export async function onRequestPut(ctx: PagesContext): Promise<Response> {
+  return handlePut(ctx);
 }
 
 export async function onRequestOptions(): Promise<Response> {
