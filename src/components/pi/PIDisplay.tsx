@@ -1,4 +1,4 @@
-﻿/**
+/**
  * PIDisplay — render a PI in the exact Excel layout (black/blue/red)
  * Used by the customer-facing /pay/ page and (optionally) the admin preview.
  *
