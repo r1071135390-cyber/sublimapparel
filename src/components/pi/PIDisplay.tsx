@@ -1,4 +1,4 @@
-/**
+﻿/**
  * PIDisplay — render a PI in the exact Excel layout (black/blue/red)
  * Used by the customer-facing /pay/ page and (optionally) the admin preview.
  *
@@ -115,7 +115,7 @@ function ItemWithSizesRow({
     <>
       <tr className="border-b border-black/30 align-top">
         <td
-          className="border-r border-black/30 p-2 text-center"
+          className="break-words border-r border-black/30 p-1 text-center sm:p-2"
           style={{ minHeight: 70 }}
         >
           {it.image_url ? (
@@ -127,36 +127,36 @@ function ItemWithSizesRow({
               height={64}
               loading="lazy"
               decoding="async"
-              className="mx-auto h-24 w-24 border border-black/20 object-cover"
+              className="mx-auto h-16 w-16 border border-black/20 object-cover sm:h-24 sm:w-24"
             />
           ) : (
-            <div className="mx-auto h-16 w-16 border border-dashed border-black/30" />
+            <div className="mx-auto h-12 w-12 border border-dashed border-black/30 sm:h-16 sm:w-16" />
           )}
         </td>
-        <td className="border-r border-black/30 p-2 font-bold">
+        <td className="break-words border-r border-black/30 p-1 font-bold sm:p-2">
           {it.description}
         </td>
-        <td className="border-r border-black/30 p-2">
+        <td className="break-words border-r border-black/30 p-1 sm:p-2">
           {it.fabric || ""}
         </td>
         <td
-          className="border-r border-black/30 p-2 text-right"
+          className="break-words border-r border-black/30 p-1 text-right sm:p-2"
         >
           {it.qty} {it.unit || "pcs"}
         </td>
         <td
-          className="border-r border-black/30 p-2 text-right"
+          className="break-words border-r border-black/30 p-1 text-right sm:p-2"
         >
           {fmtMoney(it.unit_price_cents, currency)}
         </td>
-        <td className="p-2 text-right font-bold">
+        <td className="break-words p-1 text-right font-bold sm:p-2">
           {fmtMoney(it.total_cents, currency)}
         </td>
       </tr>
       {hasSizes && (
         <tr className="border-b border-black/30 bg-[#fafafa]">
-          <td className="border-r border-black/30 p-2" />
-          <td colSpan={5} className="p-2">
+          <td className="break-words border-r border-black/30 p-1 sm:p-2" />
+          <td colSpan={5} className="break-words p-1 sm:p-2">
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[10px]">
               <span className="font-black uppercase tracking-wide">
                 Size Breakdown:
@@ -204,7 +204,7 @@ export function PIDisplay(props: PIDisplayProps) {
           PROFORMA INVOICE text filling the rest of the row (still centered
           horizontally inside its column). The two-column FM/INVOICE NO block
           moves down one row as a result. */}
-      <div className="flex items-center gap-4 border-y border-black bg-white px-4 py-2">
+      <div className="flex flex-col items-center gap-2 border-y border-black bg-white px-3 py-2 sm:flex-row sm:gap-4 sm:px-4">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/sublimapparel-logo-v2.webp"
@@ -212,18 +212,16 @@ export function PIDisplay(props: PIDisplayProps) {
           width={240}
           height={64}
           decoding="async"
-          className="h-16 w-auto shrink-0"
+          className="h-12 w-auto shrink-0 sm:h-16"
         />
-        <div className="flex-1 text-center">
-          <p
-            className="whitespace-nowrap text-[18px] font-black uppercase tracking-tight"
-          >
+        <div className="min-w-0 flex-1 text-center">
+          <p className="break-words text-[14px] font-black uppercase leading-tight tracking-tight sm:text-[18px]">
             YIWU HOMEDORM COMMODITY MANUFACTURING CO.,LTD
           </p>
-          <p className="mt-1 text-[10px] uppercase text-black/80">
+          <p className="mt-1 text-[9px] uppercase leading-snug text-black/80 sm:text-[10px]">
             ADD: 2nd Floor, No.11 Anshang Road, Yiwu City, China
           </p>
-          <h1 className="mt-2 text-[22px] font-black uppercase tracking-widest text-black">
+          <h1 className="mt-1 text-[18px] font-black uppercase tracking-widest text-black sm:mt-2 sm:text-[22px]">
             PROFORMA INVOICE
           </h1>
         </div>
@@ -232,7 +230,7 @@ export function PIDisplay(props: PIDisplayProps) {
       {/* === ROW 2: FM block + factory info (uppercase) === */}
       <div className="grid grid-cols-2 border-b border-black">
         {/* Left: factory info (black) */}
-        <div className="border-r border-black p-3 text-[10px] uppercase">
+        <div className="border-r border-black p-2 text-[10px] uppercase sm:p-3">
           <p className="font-bold">FM: SUBLIMAPPAREL.com</p>
           <p className="mt-1 font-bold">
             YIWU HOMEDORM COMMODITY MANUFACTURING CO.,LTD
@@ -275,25 +273,25 @@ export function PIDisplay(props: PIDisplayProps) {
       </div>
 
       {/* === Items table (kept as-is per user direction) === */}
-      <table className="w-full border-collapse text-[11px]">
+      <table className="w-full table-fixed border-collapse text-[10px] sm:text-[11px]">
         <thead>
           <tr className="border-b border-t border-black bg-[#fafafa]">
-            <th className="w-[15%] border-r border-black p-2 text-center text-[10px] font-black uppercase">
+            <th className="w-[15%] break-words p-1 text-center text-[9px] font-black uppercase sm:p-2 sm:text-[10px]">
               Product Picture
             </th>
-            <th className="w-[35%] border-r border-black p-2 text-left text-[10px] font-black uppercase">
+            <th className="w-[35%] break-words p-1 text-left text-[9px] font-black uppercase sm:p-2 sm:text-[10px]">
               Description
             </th>
-            <th className="w-[18%] border-r border-black p-2 text-left text-[10px] font-black uppercase">
+            <th className="w-[18%] break-words p-1 text-left text-[9px] font-black uppercase sm:p-2 sm:text-[10px]">
               Fabric Content
             </th>
-            <th className="w-[10%] border-r border-black p-2 text-right text-[10px] font-black uppercase">
+            <th className="w-[10%] break-words p-1 text-right text-[9px] font-black uppercase sm:p-2 sm:text-[10px]">
               Qty
             </th>
-            <th className="w-[12%] border-r border-black p-2 text-right text-[10px] font-black uppercase">
+            <th className="w-[12%] break-words p-1 text-right text-[9px] font-black uppercase sm:p-2 sm:text-[10px]">
               DDP Price ({currencyUpper})
             </th>
-            <th className="w-[12%] p-2 text-right text-[10px] font-black uppercase">
+            <th className="w-[12%] break-words p-1 text-right text-[9px] font-black uppercase sm:p-2 sm:text-[10px]">
               Total ({currencyUpper})
             </th>
           </tr>
@@ -304,28 +302,28 @@ export function PIDisplay(props: PIDisplayProps) {
           ))}
           {/* Shipping row */}
           <tr className="border-b border-black/30 align-top">
-            <td className="border-r border-black/30 p-2 text-center">
-              <div className="mx-auto h-16 w-16 border border-dashed border-black/30" />
+            <td className="break-words border-r border-black/30 p-1 text-center sm:p-2">
+              <div className="mx-auto h-12 w-12 border border-dashed border-black/30 sm:h-16 sm:w-16" />
             </td>
-            <td className="border-r border-black/30 p-2 font-bold">
+            <td className="break-words border-r border-black/30 p-1 font-bold sm:p-2">
               {pi.shipping_label || "Shipping Cost"}
             </td>
             <td
-              className="border-r border-black/30 p-2 italic"
+              className="break-words border-r border-black/30 p-1 italic sm:p-2"
             >
               {pi.shipping_method || ""}
             </td>
             <td
-              className="border-r border-black/30 p-2 text-right"
+              className="break-words border-r border-black/30 p-1 text-right sm:p-2"
             >
               1
             </td>
             <td
-              className="border-r border-black/30 p-2 text-right"
+              className="break-words border-r border-black/30 p-1 text-right sm:p-2"
             >
               {fmtMoney(shipping, pi.currency)}
             </td>
-            <td className="p-2 text-right font-bold">
+            <td className="break-words p-1 text-right font-bold sm:p-2">
               {fmtMoney(shipping, pi.currency)}
             </td>
           </tr>
@@ -333,11 +331,11 @@ export function PIDisplay(props: PIDisplayProps) {
           <tr className="bg-[#fafafa]">
             <td
               colSpan={5}
-              className="border-r border-black p-2 text-right text-[11px] font-black uppercase"
+              className="break-words border-r border-black p-1 text-right text-[10px] font-black uppercase sm:p-2 sm:text-[11px]"
             >
               Total ({currencyUpper})
             </td>
-            <td className="p-2 text-right text-[14px] font-black">
+            <td className="break-words p-1 text-right text-[12px] font-black sm:p-2 sm:text-[14px]">
               {fmtMoney(pi.total_cents, pi.currency)}
             </td>
           </tr>
@@ -345,7 +343,7 @@ export function PIDisplay(props: PIDisplayProps) {
       </table>
 
       {/* === Contract terms (1-7) — matches reference === */}
-      <div className="border-b border-black p-3 text-[10px] leading-relaxed">
+      <div className="border-b border-black p-2 text-[10px] leading-relaxed sm:p-3">
         <p>
           <span className="font-bold">(1) Port of Loading:</span> Yiwu / Ningbo / Shanghai or any designated Chinese ports
         </p>
@@ -455,7 +453,7 @@ export function PIDisplay(props: PIDisplayProps) {
       </div>
 
       {/* === Seller / Buyer stamp + signatures === */}
-      <div className="grid grid-cols-2 p-3 text-[10px]">
+      <div className="grid grid-cols-2 gap-3 p-2 text-[10px] sm:p-3">
         <div>
           <p className="font-bold uppercase">Seller Stamp/ Signature:</p>
           <p className="mt-6 text-[12px] font-black uppercase tracking-wide">
