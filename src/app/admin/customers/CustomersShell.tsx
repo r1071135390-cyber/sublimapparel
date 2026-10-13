@@ -32,8 +32,14 @@ export default function CustomersShell() {
 
 function ShellInner() {
   const searchParams = useSearchParams();
+  // 2026-10-13 (Phase C.5 link fallback): detail view fires when
+  // EITHER ?id= or ?name= is present. When ?name= is given,
+  // CustomerDetailClient resolves the name to an id via the list
+  // endpoint and then loads the same detail view (?name= resolves
+  // internally — the URL bar is rewritten to ?id= for consistency).
   const id = searchParams.get("id");
-  if (id) {
+  const name = searchParams.get("name");
+  if (id || name) {
     return <CustomerDetailClient />;
   }
   return <CustomersClient />;

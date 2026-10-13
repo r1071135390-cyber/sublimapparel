@@ -265,11 +265,11 @@ export default function SummaryClient() {
 
   // 2026-10-13 (Phase C.4): case-insensitive lookup from customer name
   // -> customers.id so the PI list rows can link to /admin/customers/[id]/.
-  // Multiple customers can share a name when their emails differ; the
-  // first one in the dropdown wins. Stable across renders (no useMemo
-  // needed — the list rarely has duplicates and the cost is trivial).
+  // 2026-10-13 (Phase C.5 link fallback): keys are TRIMmed + lowercased
+  // so PI rows whose customer_name has whitespace drift against the
+  // trimmed archive row still resolve.
   const customerIdByName: Map<string, string> = new Map(
-    customerOptions.map((c) => [c.customer_name.toLowerCase(), c.id]),
+    customerOptions.map((c) => [c.customer_name.trim().toLowerCase(), c.id]),
   );
 
   function tryUnlock(e: React.FormEvent) {
@@ -790,19 +790,36 @@ export default function SummaryClient() {
                           {p.piNumber}
                         </td>
                         <td className="px-4 py-3">
-                          {p.customerName && customerIdByName.has(p.customerName.toLowerCase()) ? (
-                            <Link
-                              href={`/admin/customers/?id=${customerIdByName.get(p.customerName.toLowerCase())}`}
-                              className="font-bold text-black underline-offset-2 hover:text-[#ff4d00] hover:underline"
-                              title={`Open ${p.customerName} profile`}
-                            >
-                              {p.customerName}
-                            </Link>
-                          ) : (
-                            <div className="font-bold">
-                              {p.customerName || "—"}
-                            </div>
-                          )}
+                          {(() => {
+                            // 2026-10-13 (Phase C.5 link fallback):
+                            // always render an <a>. If customers archive
+                            // has an id for this name (case-insensitive +
+                            // trim), link to /admin/customers/?id=<id>.
+                            // Otherwise fall back to ?name=<encoded> and
+                            // let the detail page resolve the id itself.
+                            // Plain <a> (not <Link>) is intentional — for
+                            // static-export pages with `useSearchParams`,
+                            // a full page navigation is more reliable than
+                            // a client-side router swap.
+                            const name = (p.customerName || "").trim();
+                            if (!name) {
+                              return <div className="font-bold">—</div>;
+                            }
+                            const key = name.toLowerCase();
+                            const id = customerIdByName.get(key);
+                            const href = id
+                              ? `/admin/customers/?id=${id}`
+                              : `/admin/customers/?name=${encodeURIComponent(name)}`;
+                            return (
+                              <a
+                                href={href}
+                                className="font-bold text-black underline-offset-2 hover:text-[#ff4d00] hover:underline"
+                                title={`Open ${name} profile`}
+                              >
+                                {p.customerName}
+                              </a>
+                            );
+                          })()}
                           {p.customerCompany && (
                             <div className="text-xs text-[#6b6b6b]">
                               {p.customerCompany}

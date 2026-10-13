@@ -39,6 +39,14 @@ interface CustomerDetail {
   updated_at: string | null;
 }
 
+// 2026-10-13 (Phase C.5): minimal shape we need from the list endpoint
+// when resolving a ?name= to an id. Mirrors CustomersClient's row shape.
+interface CustomerOption {
+  id: string;
+  customer_name: string;
+  company: string | null;
+}
+
 interface PiRow {
   id: string;
   pi_number: string;
@@ -132,9 +140,21 @@ function statusBadge(status: string | null) {
 // not support dynamic [id] routes without `generateStaticParams()`
 // returning all possible ids — which we can't know at build time.
 // Falling through to /admin/customers/?id=<n> is the simplest fix.
+//
+// 2026-10-13 (Phase C.5 link fallback): also accept ?name=<encoded>.
+// When the summary table links to a PI whose customer_name does not
+// exactly match a row in the customers archive (whitespace / casing
+// drift), we still want to land on a real detail page. The flow:
+//   1. /admin/customers/?name=Foo hits this component.
+//   2. fetchData() looks up "Foo" via /api/admin/customers/list/?search=Foo
+//      and resolves it to an id (case-insensitive + trim match).
+//   3. We then load /api/admin/customers/<id>/ as usual.
+//   4. The URL bar is rewritten to ?id=<n> so subsequent refreshes
+//      don't re-run the name lookup.
 export default function CustomerDetailClient() {
   const searchParams = useSearchParams();
   const id = searchParams.get("id") || "";
+  const name = searchParams.get("name") || "";
 
   // ---------- Lock state ----------
   const [unlocked, setUnlocked] = useState<boolean>(false);
@@ -159,12 +179,71 @@ export default function CustomerDetailClient() {
     setReady(true);
   }, []);
 
+  // 2026-10-13 (Phase C.5): resolve a ?name= lookup to a customer id
+  // via the list endpoint. Returns the resolved id, or null if no
+  // exact (case-insensitive + trim) match was found.
+  const resolveNameToId = useCallback(
+    async (rawName: string): Promise<string | null> => {
+      const target = rawName.trim().toLowerCase();
+      if (!target) return null;
+      const res = await fetch(
+        `/api/admin/customers/list/?search=${encodeURIComponent(
+          rawName.trim(),
+        )}&limit=20`,
+        { cache: "no-store" },
+      );
+      if (!res.ok) return null;
+      const data = (await res.json()) as {
+        customers?: CustomerOption[];
+      };
+      const list = data.customers || [];
+      // Prefer an exact case-insensitive + trim match, fall back to
+      // the first result if the search was unique enough.
+      const exact = list.find(
+        (c) => c.customer_name.trim().toLowerCase() === target,
+      );
+      if (exact) return String(exact.id);
+      if (list.length === 1) return String(list[0].id);
+      return null;
+    },
+    [],
+  );
+
   const fetchData = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
+      let effectiveId = id;
+      // If we were given ?name= instead of ?id=, run the lookup first.
+      if (!effectiveId && name) {
+        const resolved = await resolveNameToId(name);
+        if (!resolved) {
+          setError(
+            `Customer "${name}" not found in the archive. ` +
+              `(They may not have been added to the customers table yet.)`,
+          );
+          return;
+        }
+        effectiveId = resolved;
+        // 2026-10-13 (Phase C.5): rewrite the URL bar to use ?id= so
+        // refreshes don't re-run the name lookup. We use the same
+        // history.replaceState pattern as the summary filter so it
+        // doesn't bloat browser history.
+        try {
+          const u = new URL(window.location.href);
+          u.searchParams.delete("name");
+          u.searchParams.set("id", resolved);
+          window.history.replaceState({}, "", u.toString());
+        } catch {
+          // ignore
+        }
+      }
+      if (!effectiveId) {
+        setError("Missing customer id or name in the URL.");
+        return;
+      }
       const res = await fetch(
-        `/api/admin/customers/${encodeURIComponent(id)}/`,
+        `/api/admin/customers/${encodeURIComponent(effectiveId)}/`,
         { cache: "no-store" },
       );
       if (!res.ok) {
@@ -183,7 +262,7 @@ export default function CustomerDetailClient() {
     } finally {
       setLoading(false);
     }
-  }, [id]);
+  }, [id, name, resolveNameToId]);
 
   useEffect(() => {
     if (unlocked) {
