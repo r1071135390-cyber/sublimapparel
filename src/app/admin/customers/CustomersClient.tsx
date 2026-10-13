@@ -312,7 +312,7 @@ export default function CustomersClient() {
                       key={c.id}
                       className="cursor-pointer border-b border-[#e5e5e5] transition-colors last:border-b-0 hover:bg-[#faf9f6]"
                       onClick={() => {
-                        window.location.href = `/admin/customers/${c.id}/`;
+                        window.location.href = `/admin/customers/?id=${c.id}`;
                       }}
                     >
                       <td className="px-4 py-3">
@@ -366,7 +366,7 @@ export default function CustomersClient() {
                       </td>
                       <td className="px-4 py-3 text-right">
                         <Link
-                          href={`/admin/customers/${c.id}/`}
+                          href={`/admin/customers/?id=${c.id}`}
                           className="inline-flex items-center gap-1 text-xs font-black uppercase tracking-wider text-black hover:text-[#ff4d00]"
                           onClick={(e) => e.stopPropagation()}
                         >

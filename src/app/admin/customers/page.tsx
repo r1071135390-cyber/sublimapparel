@@ -1,6 +1,6 @@
 ﻿import type { Metadata } from "next";
 import { buildPageMetadata } from "@/lib/page-metadata";
-import CustomersClient from "./CustomersClient";
+import CustomersShell from "./CustomersShell";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Customers — SublimApparel Sales Portal",
@@ -9,5 +9,5 @@ export const metadata: Metadata = buildPageMetadata({
 });
 
 export default function CustomersPage() {
-  return <CustomersClient />;
+  return <CustomersShell />;
 }

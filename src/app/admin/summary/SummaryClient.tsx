@@ -792,7 +792,7 @@ export default function SummaryClient() {
                         <td className="px-4 py-3">
                           {p.customerName && customerIdByName.has(p.customerName.toLowerCase()) ? (
                             <Link
-                              href={`/admin/customers/${customerIdByName.get(p.customerName.toLowerCase())}/`}
+                              href={`/admin/customers/?id=${customerIdByName.get(p.customerName.toLowerCase())}`}
                               className="font-bold text-black underline-offset-2 hover:text-[#ff4d00] hover:underline"
                               title={`Open ${p.customerName} profile`}
                             >

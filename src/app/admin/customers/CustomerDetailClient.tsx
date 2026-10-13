@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import {
   ArrowLeft,
   RefreshCw,
@@ -125,11 +126,16 @@ function statusBadge(status: string | null) {
   );
 }
 
-interface Props {
-  id: string;
-}
+// 2026-10-13 (Phase C): read the customer id from the ?id= search
+// param instead of a route segment. The site uses Next.js
+// `output: "export"` (Cloudflare Pages static export), which does
+// not support dynamic [id] routes without `generateStaticParams()`
+// returning all possible ids — which we can't know at build time.
+// Falling through to /admin/customers/?id=<n> is the simplest fix.
+export default function CustomerDetailClient() {
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id") || "";
 
-export default function CustomerDetailClient({ id }: Props) {
   // ---------- Lock state ----------
   const [unlocked, setUnlocked] = useState<boolean>(false);
   const [ready, setReady] = useState<boolean>(false);
