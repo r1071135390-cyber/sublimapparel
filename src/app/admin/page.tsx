@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { FileEdit, Upload, History, ArrowRight, Building2 } from "lucide-react";
+import { FileEdit, Upload, History, ArrowRight, Building2, Users } from "lucide-react";
 import { buildPageMetadata } from "@/lib/page-metadata";
 
 export const metadata: Metadata = buildPageMetadata({
@@ -127,7 +127,7 @@ export default function AdminLandingPage() {
         </div>
 
         {/* Sales tools — bank account management */}
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
+        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           <Link
             href="/admin/bank-accounts/"
             className="group block border-2 border-black bg-white p-6 shadow-[4px_4px_0_0_rgba(10,10,10,1)] transition-all hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0_0_rgba(255,77,0,1)]"
@@ -178,6 +178,25 @@ export default function AdminLandingPage() {
             </h3>
             <p className="mb-3 text-sm text-[#6b6b6b]">
               Modify a draft or sent PI; snapshot stored as a revision.
+            </p>
+            <div className="flex items-center gap-1 text-sm font-black uppercase tracking-wider text-black group-hover:text-[#ff4d00]">
+              Open
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={3} />
+            </div>
+          </Link>
+
+          <Link
+            href="/admin/customers/"
+            className="group block border-2 border-black bg-white p-6 shadow-[4px_4px_0_0_rgba(10,10,10,1)] transition-all hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0_0_rgba(255,77,0,1)]"
+          >
+            <div className="mb-3 flex h-12 w-12 items-center justify-center border-2 border-black bg-[#faf9f6] text-black">
+              <Users className="h-6 w-6" strokeWidth={2.5} />
+            </div>
+            <h3 className="mb-1 text-lg font-black uppercase leading-tight tracking-tight">
+              Customers
+            </h3>
+            <p className="mb-3 text-sm text-[#6b6b6b]">
+              Archive of every customer who's received a PI. Open one to see full profile and history.
             </p>
             <div className="flex items-center gap-1 text-sm font-black uppercase tracking-wider text-black group-hover:text-[#ff4d00]">
               Open

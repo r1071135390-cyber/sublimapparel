@@ -263,6 +263,15 @@ export default function SummaryClient() {
     [],
   );
 
+  // 2026-10-13 (Phase C.4): case-insensitive lookup from customer name
+  // -> customers.id so the PI list rows can link to /admin/customers/[id]/.
+  // Multiple customers can share a name when their emails differ; the
+  // first one in the dropdown wins. Stable across renders (no useMemo
+  // needed — the list rarely has duplicates and the cost is trivial).
+  const customerIdByName: Map<string, string> = new Map(
+    customerOptions.map((c) => [c.customer_name.toLowerCase(), c.id]),
+  );
+
   function tryUnlock(e: React.FormEvent) {
     e.preventDefault();
     if (pwInput === OWNER_PASSWORD) {
@@ -623,6 +632,13 @@ export default function SummaryClient() {
               >
                 + New PI
               </Link>
+              <Link
+                href="/admin/customers/"
+                className="border-2 border-[#0a0a0a] bg-white px-3 py-1.5 text-xs font-black uppercase tracking-wider text-black hover:bg-[#0a0a0a] hover:text-white"
+                target="_blank"
+              >
+                View all customers →
+              </Link>
             </div>
           </div>
 
@@ -774,9 +790,19 @@ export default function SummaryClient() {
                           {p.piNumber}
                         </td>
                         <td className="px-4 py-3">
-                          <div className="font-bold">
-                            {p.customerName || "—"}
-                          </div>
+                          {p.customerName && customerIdByName.has(p.customerName.toLowerCase()) ? (
+                            <Link
+                              href={`/admin/customers/${customerIdByName.get(p.customerName.toLowerCase())}/`}
+                              className="font-bold text-black underline-offset-2 hover:text-[#ff4d00] hover:underline"
+                              title={`Open ${p.customerName} profile`}
+                            >
+                              {p.customerName}
+                            </Link>
+                          ) : (
+                            <div className="font-bold">
+                              {p.customerName || "—"}
+                            </div>
+                          )}
                           {p.customerCompany && (
                             <div className="text-xs text-[#6b6b6b]">
                               {p.customerCompany}
