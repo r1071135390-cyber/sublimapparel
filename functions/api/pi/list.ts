@@ -9,6 +9,11 @@
 // USD aggregate uses the hardcoded FX_RATES table for a single
 // at-a-glance headline number. See functions/lib/fx-rates.ts for why
 // we don't pull live rates.
+//
+// 2026-10-13 (Phase A.2): add optional ?customer=<id> filter. When set,
+// only PIs whose customer_name matches the named customer's name are
+// returned. Backed by the new `customers` table created in
+// supabase/migrations/20261013_customers_archive.sql.
 
 import { normalizeSupabaseUrl } from "../_utils";
 import {
@@ -92,7 +97,7 @@ export async function onRequestGet(context: {
   request: Request;
   env: Env;
 }): Promise<Response> {
-  const { env } = context;
+  const { env, request } = context;
 
   if (!env.COZE_SUPABASE_URL || !env.COZE_SUPABASE_SERVICE_ROLE_KEY) {
     return jsonResponse(
@@ -107,10 +112,69 @@ export async function onRequestGet(context: {
     Authorization: `Bearer ${env.COZE_SUPABASE_SERVICE_ROLE_KEY}`,
   };
 
+  // Phase A.2: optional customer filter. Resolve to customer_name so we
+  // don't have to touch the proforma_invoices schema.
+  const url = new URL(request.url);
+  const customerParam = url.searchParams.get("customer")?.trim() || "";
+  let customerNameFilter = "";
+  if (customerParam) {
+    const custRes = await fetch(
+      `${supabaseUrl}/rest/v1/customers?id=eq.${encodeURIComponent(
+        customerParam,
+      )}&select=customer_name&limit=1`,
+      { headers },
+    );
+    if (!custRes.ok) {
+      const text = await custRes.text();
+      return jsonResponse(
+        { error: "Customer filter lookup failed", detail: text },
+        500,
+      );
+    }
+    const custRows = (await custRes.json()) as { customer_name: string }[];
+    if (custRows.length === 0) {
+      // Unknown customer id -> empty result (don't 404 — let the UI
+      // show "0 PIs" instead of crashing).
+      return jsonResponse({
+        summary: {
+          totalCount: 0,
+          shownCount: 0,
+          monthCount: 0,
+          totalsByCurrency: emptyCurrencyMap(),
+          monthTotalsByCurrency: emptyCurrencyMap(),
+          totalValueUsdCents: 0,
+          totalValueUsdDisplay: formatCentsInCurrency(0, "USD"),
+          monthValueUsdCents: 0,
+          monthValueUsdDisplay: formatCentsInCurrency(0, "USD"),
+          fx: {
+            baseCurrency: FX_RATES.baseCurrency,
+            rates: FX_RATES.rates,
+            asOf: FX_RATES.asOf,
+            source: FX_RATES.source,
+          },
+          customerFilter: customerParam,
+        },
+        pis: [],
+      });
+    }
+    customerNameFilter = custRows[0].customer_name;
+  }
+
+  // Build the Supabase REST query. We use a separate base + filter
+  // params so we can append the customer filter conditionally.
+  const baseParams = new URLSearchParams({
+    select: "id,pi_number,customer_name,customer_company,total_cents,currency,status,created_at",
+    order: "created_at.desc",
+    limit: "100",
+  });
+  if (customerNameFilter) {
+    baseParams.set("customer_name", `ilike.${customerNameFilter}`);
+  }
+
   // Fetch the most recent 100 PIs.
   const listRes = await fetch(
-    `${supabaseUrl}/rest/v1/proforma_invoices?select=id,pi_number,customer_name,customer_company,total_cents,currency,status,created_at&order=created_at.desc&limit=100`,
-    { headers }
+    `${supabaseUrl}/rest/v1/proforma_invoices?${baseParams.toString()}`,
+    { headers },
   );
 
   if (!listRes.ok) {
@@ -156,12 +220,20 @@ export async function onRequestGet(context: {
   }
 
   // If the table has more than 100 PIs, the counts above are only for the
-  // list. Run a single count() query to get the real total.
+  // list. Run a single count() query to get the real total (still
+  // filtered by the same customer name when applicable).
+  const countParams = new URLSearchParams({
+    select: "id",
+    limit: "0",
+  });
+  if (customerNameFilter) {
+    countParams.set("customer_name", `ilike.${customerNameFilter}`);
+  }
   const countRes = await fetch(
-    `${supabaseUrl}/rest/v1/proforma_invoices?select=id&limit=0`,
+    `${supabaseUrl}/rest/v1/proforma_invoices?${countParams.toString()}`,
     {
       headers: { ...headers, Prefer: "count=exact" },
-    }
+    },
   );
   let realTotalCount = totalCount;
   if (countRes.ok) {
@@ -209,6 +281,10 @@ export async function onRequestGet(context: {
         asOf: FX_RATES.asOf,
         source: FX_RATES.source,
       },
+
+      // Phase A.2: echo the active customer filter so the UI can
+      // render the dropdown selection without re-parsing the URL.
+      customerFilter: customerParam,
     },
     pis: enriched,
   });

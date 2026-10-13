@@ -16,6 +16,7 @@ import {
   X,
   Coins,
   Pencil,
+  Filter,
 } from "lucide-react";
 import type { FxRates } from "@/lib/fx-rates";
 
@@ -57,6 +58,112 @@ interface SummaryStats {
   monthValueUsdCents: number;
   monthValueUsdDisplay: string;
   fx: FxRates;
+  // 2026-10-13 (Phase A.2): echoed customer id filter from the server, so
+  // the dropdown can sync to the URL on first paint without re-parsing.
+  customerFilter: string;
+}
+
+// 2026-10-13 (Phase A.2): a row from the customer archive used to
+// populate the customer-filter dropdown.
+interface CustomerOption {
+  id: string;
+  customer_name: string;
+  company: string | null;
+  email: string | null;
+  pi_count: number | null;
+  last_used_at: string | null;
+}
+
+// 2026-10-13 (Phase A.3): per-currency aggregate computed client-side
+// from the currently-visible PI list. Used to render the Amount
+// sub-header directly above the data rows.
+interface CurrencyAggregate {
+  currency: string;
+  count: number;
+  // totals excluding cancelled PIs (i.e. "real" exposure)
+  totalCents: number;
+  paidCents: number;
+  pendingCents: number;
+  cancelledCents: number;
+  totalDisplay: string;
+  paidDisplay: string;
+  pendingDisplay: string;
+  cancelledDisplay: string;
+}
+
+// 2026-10-13 (Phase A.3): payment status helpers. We accept several
+// aliases because the Stripe webhook and the manual-mark-paid flow write
+// different strings into proforma_invoices.status.
+function isPaidStatus(status: string | null): boolean {
+  if (!status) return false;
+  const s = status.toLowerCase();
+  return s === "paid" || s === "succeeded" || s === "completed" || s === "true";
+}
+
+function isCancelledStatus(status: string | null): boolean {
+  if (!status) return false;
+  const s = status.toLowerCase();
+  return s === "cancelled" || s === "canceled";
+}
+
+// 2026-10-13 (Phase A.3): compute one row per currency that appears in
+// the current PI list. Currencies are NOT converted — we show real
+// exposure per currency. Cancelled PIs are counted but excluded from
+// "total" because they're not real revenue.
+function aggregateByCurrency(items: PiListItem[]): CurrencyAggregate[] {
+  const buckets = new Map<string, CurrencyAggregate>();
+  for (const p of items) {
+    const cur = (p.currency || "USD").toUpperCase();
+    let agg = buckets.get(cur);
+    if (!agg) {
+      agg = {
+        currency: cur,
+        count: 0,
+        totalCents: 0,
+        paidCents: 0,
+        pendingCents: 0,
+        cancelledCents: 0,
+        totalDisplay: "—",
+        paidDisplay: "—",
+        pendingDisplay: "—",
+        cancelledDisplay: "—",
+      };
+      buckets.set(cur, agg);
+    }
+    agg.count += 1;
+    const cents = typeof p.totalCents === "number" ? p.totalCents : 0;
+    if (isCancelledStatus(p.status)) {
+      agg.cancelledCents += cents;
+    } else {
+      agg.totalCents += cents;
+      if (isPaidStatus(p.status)) agg.paidCents += cents;
+      else agg.pendingCents += cents;
+    }
+  }
+  for (const agg of buckets.values()) {
+    agg.totalDisplay = formatCurrency(agg.totalCents, agg.currency);
+    agg.paidDisplay = formatCurrency(agg.paidCents, agg.currency);
+    agg.pendingDisplay = formatCurrency(agg.pendingCents, agg.currency);
+    agg.cancelledDisplay = formatCurrency(agg.cancelledCents, agg.currency);
+  }
+  // Stable sort: USD first, then alphabetical.
+  return Array.from(buckets.values()).sort((a, b) => {
+    if (a.currency === "USD" && b.currency !== "USD") return -1;
+    if (b.currency === "USD" && a.currency !== "USD") return 1;
+    return a.currency.localeCompare(b.currency);
+  });
+}
+
+// 2026-10-13 (Phase A.3): simple currency formatter for the sub-header.
+// Uses Intl.NumberFormat so the comma-separator + 2 decimals match
+// formatCentsInCurrency() on the server side.
+function formatCurrency(cents: number, currency: string): string {
+  if (!cents) return `${currency} 0.00`;
+  const value = cents / 100;
+  return `${currency} ${value.toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })}`;
 }
 
 function statusColor(status: string | null): {
@@ -144,6 +251,18 @@ export default function SummaryClient() {
   const [deleting, setDeleting] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
 
+  // 2026-10-13 (Phase A.2): customer filter state. `customerFilter`
+  // holds the customer id (NOT the name) — the dropdown values are
+  // customer ids and the server resolves the id -> name. Empty string
+  // means "no filter".
+  const [customerFilter, setCustomerFilter] = useState<string>("");
+  // 2026-10-13 (Phase A.2): dropdown options. Loaded once on first
+  // unlock, ordered by last_used_at DESC NULLS LAST (matches the
+  // server-side default in /api/admin/customers/list).
+  const [customerOptions, setCustomerOptions] = useState<CustomerOption[]>(
+    [],
+  );
+
   function tryUnlock(e: React.FormEvent) {
     e.preventDefault();
     if (pwInput === OWNER_PASSWORD) {
@@ -159,11 +278,14 @@ export default function SummaryClient() {
     }
   }
 
-  async function fetchData() {
+  async function fetchData(customerId: string) {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch("/api/pi/list/", { cache: "no-store" });
+      const url = customerId
+        ? `/api/pi/list/?customer=${encodeURIComponent(customerId)}`
+        : "/api/pi/list/";
+      const res = await fetch(url, { cache: "no-store" });
       if (!res.ok) {
         const t = await res.text();
         setError(`Load failed (${res.status}): ${t}`);
@@ -182,11 +304,56 @@ export default function SummaryClient() {
     }
   }
 
-  useEffect(() => {
-    if (unlocked) {
-      void fetchData();
+  // 2026-10-13 (Phase A.2): load the customer archive once on unlock.
+  // Errors here are non-fatal — the dropdown just shows "All customers".
+  async function fetchCustomers() {
+    try {
+      const res = await fetch("/api/admin/customers/list/", {
+        cache: "no-store",
+      });
+      if (!res.ok) return;
+      const data = (await res.json()) as { customers: CustomerOption[] };
+      setCustomerOptions(data.customers || []);
+    } catch {
+      // non-fatal
     }
+  }
+
+  // 2026-10-13 (Phase A.2): read ?customer=<id> from the URL on first
+  // unlock so deep-links / refreshes stay sticky.
+  useEffect(() => {
+    if (!unlocked) return;
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get("customer") || "";
+      setCustomerFilter(id);
+      void fetchData(id);
+      void fetchCustomers();
+    } catch {
+      // ignore
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [unlocked]);
+
+  // 2026-10-13 (Phase A.2): when the dropdown changes (and we're
+  // already unlocked), re-fetch and push to the URL. We use
+  // history.replaceState instead of router.push so a filter tweak
+  // doesn't bloat the browser history.
+  function onCustomerFilterChange(id: string) {
+    setCustomerFilter(id);
+    void fetchData(id);
+    try {
+      const url = new URL(window.location.href);
+      if (id) {
+        url.searchParams.set("customer", id);
+      } else {
+        url.searchParams.delete("customer");
+      }
+      window.history.replaceState({}, "", url.toString());
+    } catch {
+      // ignore
+    }
+  }
 
   // 2026-10-04 (R82): Delete flow. The flow is:
   //   1. Admin clicks the trash icon → setConfirmTarget(p) opens the modal.
@@ -229,7 +396,7 @@ export default function SummaryClient() {
       }
       // success — close modal and refresh the list
       setConfirmTarget(null);
-      await fetchData();
+      await fetchData(customerFilter);
     } catch (e) {
       setDeleteError(
         e instanceof Error ? e.message : "Network error"
@@ -313,7 +480,7 @@ export default function SummaryClient() {
           <div className="flex items-center gap-4">
             <button
               type="button"
-              onClick={() => void fetchData()}
+              onClick={() => void fetchData(customerFilter)}
               disabled={loading}
               className="flex items-center gap-1.5 text-sm font-bold uppercase tracking-wider text-black hover:text-[#ff4d00] disabled:opacity-50"
             >
@@ -393,19 +560,70 @@ export default function SummaryClient() {
 
         {/* PI list */}
         <div className="border-2 border-black bg-white">
-          <div className="flex items-center justify-between border-b-2 border-black bg-[#0a0a0a] px-6 py-4 text-white">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b-2 border-black bg-[#0a0a0a] px-6 py-4 text-white">
             <div className="flex items-center gap-2">
               <BarChart3 className="h-5 w-5" strokeWidth={2.5} />
               <h2 className="text-lg font-black uppercase tracking-tight">
                 Recent PIs
               </h2>
             </div>
-            <Link
-              href="/admin/new-pi/"
-              className="bg-[#ff4d00] px-3 py-1.5 text-xs font-black uppercase tracking-wider text-black hover:bg-[#e64500]"
-            >
-              + New PI
-            </Link>
+            {/* 2026-10-13 (Phase A.2): customer filter dropdown. Shows
+                "All customers" by default. When a customer is picked we
+                re-fetch and update the URL via onCustomerFilterChange. */}
+            <div className="flex items-center gap-2">
+              <label
+                htmlFor="customer-filter"
+                className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-wider text-[#9a9a9a]"
+              >
+                <Filter className="h-3.5 w-3.5" strokeWidth={2.5} />
+                Customer
+              </label>
+              <div className="relative">
+                <select
+                  id="customer-filter"
+                  value={customerFilter}
+                  onChange={(e) => onCustomerFilterChange(e.target.value)}
+                  className="appearance-none border-2 border-[#0a0a0a] bg-white py-1.5 pl-3 pr-8 text-xs font-bold text-black focus:outline-none focus:ring-2 focus:ring-[#ff4d00]/40"
+                >
+                  <option value="">
+                    All customers ({customerOptions.length})
+                  </option>
+                  {customerOptions.map((c) => (
+                    <option key={c.id} value={c.id}>
+                      {c.customer_name}
+                      {c.company ? ` · ${c.company}` : ""}
+                      {c.pi_count != null && c.pi_count > 0
+                        ? ` (${c.pi_count})`
+                        : ""}
+                    </option>
+                  ))}
+                </select>
+                {customerFilter ? (
+                  <button
+                    type="button"
+                    onClick={() => onCustomerFilterChange("")}
+                    className="absolute right-1 top-1/2 -translate-y-1/2 text-[#6b6b6b] hover:text-[#ff4d00]"
+                    aria-label="Clear customer filter"
+                    title="Clear filter"
+                  >
+                    <X className="h-3.5 w-3.5" strokeWidth={2.5} />
+                  </button>
+                ) : (
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[#6b6b6b]"
+                  >
+                    ▾
+                  </span>
+                )}
+              </div>
+              <Link
+                href="/admin/new-pi/"
+                className="bg-[#ff4d00] px-3 py-1.5 text-xs font-black uppercase tracking-wider text-black hover:bg-[#e64500]"
+              >
+                + New PI
+              </Link>
+            </div>
           </div>
 
           {loading && !stats ? (
@@ -419,17 +637,29 @@ export default function SummaryClient() {
           ) : pis.length === 0 ? (
             <div className="px-6 py-16 text-center">
               <div className="mb-2 text-base font-black uppercase tracking-tight">
-                No PIs yet
+                {customerFilter ? "No PIs for this customer" : "No PIs yet"}
               </div>
               <div className="mb-4 text-sm text-[#6b6b6b]">
-                Create your first proforma invoice to see it here.
+                {customerFilter
+                  ? "Try a different customer or clear the filter."
+                  : "Create your first proforma invoice to see it here."}
               </div>
-              <Link
-                href="/admin/new-pi/"
-                className="inline-block bg-[#ff4d00] px-4 py-2 text-sm font-black uppercase tracking-wider text-black hover:bg-[#e64500]"
-              >
-                + Create a PI
-              </Link>
+              {customerFilter ? (
+                <button
+                  type="button"
+                  onClick={() => onCustomerFilterChange("")}
+                  className="inline-block border-2 border-black bg-white px-4 py-2 text-sm font-black uppercase tracking-wider text-black hover:bg-neutral-100"
+                >
+                  Clear filter
+                </button>
+              ) : (
+                <Link
+                  href="/admin/new-pi/"
+                  className="inline-block bg-[#ff4d00] px-4 py-2 text-sm font-black uppercase tracking-wider text-black hover:bg-[#e64500]"
+                >
+                  + Create a PI
+                </Link>
+              )}
             </div>
           ) : (
             <div className="overflow-x-auto">
@@ -439,13 +669,99 @@ export default function SummaryClient() {
                     <th className="px-4 py-3">PI Number</th>
                     <th className="px-4 py-3">Customer</th>
                     <th className="px-4 py-3">Date</th>
-                    <th className="px-4 py-3 text-right">Total</th>
+                    {/* 2026-10-13 (Phase A.3): renamed "Total" -> "Amount"
+                        because the column now reads against a sub-header
+                        that displays total / paid / pending / cancelled
+                        per currency directly above it. */}
+                    <th className="px-4 py-3 text-right">Amount</th>
                     <th className="px-4 py-3">Status</th>
                     <th className="px-4 py-3 text-right">View</th>
                     <th className="px-4 py-3 text-right">Edit</th>
                     <th className="px-4 py-3 text-right">Delete</th>
                   </tr>
                 </thead>
+                {/* 2026-10-13 (Phase A.3): per-currency sub-header.
+                    Sits between thead and the data rows. One row per
+                    currency that appears in the current PI list, with
+                    total / paid / pending / cancelled breakdown. The
+                    sub-header visually anchors to the "Amount" column
+                    via a right-aligned grid that starts at that column. */}
+                {(() => {
+                  const aggs = aggregateByCurrency(pis);
+                  if (aggs.length === 0) return null;
+                  return (
+                    <tbody>
+                      {aggs.map((agg) => (
+                        <tr
+                          key={agg.currency}
+                          className="border-b-2 border-[#f0b400] bg-[#fff8e1] text-xs"
+                        >
+                          <td
+                            colSpan={3}
+                            className="px-4 py-2 align-top"
+                          >
+                            <div className="flex items-center gap-2">
+                              <span className="inline-flex items-center gap-1 border-2 border-[#0a0a0a] bg-white px-2 py-0.5 text-[10px] font-black uppercase tracking-wider text-black">
+                                <Coins
+                                  className="h-3 w-3"
+                                  strokeWidth={2.5}
+                                />
+                                {agg.currency}
+                              </span>
+                              <span className="font-black uppercase tracking-wider text-[#6b6b6b]">
+                                {agg.count}{" "}
+                                {agg.count === 1 ? "PI" : "PIs"}
+                              </span>
+                            </div>
+                          </td>
+                          <td className="px-4 py-2 text-right align-top">
+                            <div className="flex flex-col items-end gap-0.5">
+                              <span className="font-black text-black">
+                                {agg.totalDisplay}
+                              </span>
+                              <div className="flex flex-wrap items-center justify-end gap-x-3 gap-y-0.5 text-[10px] font-bold">
+                                {agg.paidCents > 0 && (
+                                  <span
+                                    className="text-[#388e3c]"
+                                    title="Paid"
+                                  >
+                                    paid {agg.paidDisplay}
+                                  </span>
+                                )}
+                                {agg.pendingCents > 0 && (
+                                  <span
+                                    className="text-[#cc3d00]"
+                                    title="Pending / unpaid"
+                                  >
+                                    pending {agg.pendingDisplay}
+                                  </span>
+                                )}
+                                {agg.cancelledCents > 0 && (
+                                  <span
+                                    className="text-[#999]"
+                                    title="Cancelled (not counted in total)"
+                                  >
+                                    cancelled {agg.cancelledDisplay}
+                                  </span>
+                                )}
+                                <span
+                                  className="text-[#1976d2]"
+                                  title="Total across all statuses"
+                                >
+                                  total {agg.totalDisplay}
+                                </span>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="px-4 py-2 align-top" />
+                          <td className="px-4 py-2 text-right align-top" />
+                          <td className="px-4 py-2 text-right align-top" />
+                          <td className="px-4 py-2 text-right align-top" />
+                        </tr>
+                      ))}
+                    </tbody>
+                  );
+                })()}
                 <tbody>
                   {pis.map((p) => {
                     const sc = statusColor(p.status);
