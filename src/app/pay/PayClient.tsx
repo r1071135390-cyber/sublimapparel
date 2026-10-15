@@ -588,7 +588,7 @@ export default function PayClient() {
           </div>
 
           {paymentMethod === "card" ? (
-            <CardPaymentMethod pi={pi} />
+            <CardPaymentMethod pi={pi} onSwitchToBank={() => setPaymentMethod("bank")} />
           ) : (
             <BankTransferMethod pi={pi} bankAccount={bankAccount} onSubmitted={() => setBankSubmitted(true)} />
           )}
@@ -600,12 +600,13 @@ export default function PayClient() {
 
 // ---------- Card payment (Stripe Elements — inline, no navigation) ----------
 
-function CardPaymentMethod({ pi }: { pi: PIData }) {
+function CardPaymentMethod({ pi, onSwitchToBank }: { pi: PIData, onSwitchToBank: () => void }) {
   return (
     <PayWithStripeElements
       piNumber={pi.pi_number}
       amountCents={pi.amount_due_cents}
       currency={pi.currency}
+      onSwitchToBank={onSwitchToBank}
     />
   );
 }

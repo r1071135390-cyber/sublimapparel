@@ -27,6 +27,7 @@
  */
 
 import { constructWebhookEvent, type StripePaymentIntent, type StripeCheckoutSession, type StripeCharge, type StripeEvent } from "../../lib/stripe";
+import { formatDeclineMessageServer } from "../../lib/decline-codes";
 import type { EventContext } from "@cloudflare/workers-types";
 
 interface Env {
@@ -151,7 +152,23 @@ async function handlePaymentSucceeded(env: Env, intent: StripePaymentIntent) {
 }
 
 async function handlePaymentFailed(env: Env, intent: StripePaymentIntent) {
-  console.log(`[webhook] payment_intent.payment_failed: ${intent.id} reason=${intent.last_payment_error?.code}`);
+  // 2026-10-15 (R120): capture the decline_code (e.g. do_not_honor,
+  // insufficient_funds) so admin dashboards can later show a histogram of
+  // why cards are being declined, and persist a friendly Chinese sentence
+  // so future email notifications + admin views do not have to re-translate.
+  const lastErr = intent.last_payment_error as
+    | { decline_code?: string | null; code?: string | null; message?: string | null }
+    | null
+    | undefined;
+  const declineCode: string | null =
+    (lastErr?.decline_code ?? lastErr?.code ?? null) as string | null;
+  const friendlyMessage = formatDeclineMessageServer(declineCode);
+
+  console.log(
+    `[webhook] payment_intent.payment_failed: ${intent.id} reason=${
+      intent.last_payment_error?.code ?? "(none)"
+    } decline=${declineCode ?? "(none)"}`,
+  );
 
   const site_slug = resolveSiteSlug(intent.metadata?.site_slug); // 2026-10-01 (R77)
 
@@ -160,6 +177,8 @@ async function handlePaymentFailed(env: Env, intent: StripePaymentIntent) {
   }, {
     status: "failed",
     last_error: intent.last_payment_error?.message ?? "Unknown failure",
+    decline_code: declineCode,                   // 2026-10-15 (R120)
+    friendly_message: friendlyMessage,           // 2026-10-15 (R120)
     payment_site: site_slug, // 2026-10-01 (R77)
   });
 
