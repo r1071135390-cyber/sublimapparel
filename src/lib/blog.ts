@@ -2595,7 +2595,6 @@ export const blogPosts: BlogPost[] = [
     ],
 
   },
-,
   {
     slug: "custom-sublimated-hoodies-buyers-guide",
     title:
