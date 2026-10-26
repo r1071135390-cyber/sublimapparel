@@ -109,40 +109,45 @@ export default function PayClient() {
     getBankAccount(""), // will be replaced on PI load
   );
 
+  const loadPi = useCallback(async (): Promise<void> => {
+    try {
+      const res = await fetch(`/api/pi/${encodeURIComponent(piNumber)}`);
+      if (!res.ok) {
+        const body = (await res.json().catch(() => ({}))) as { error?: string };
+        throw new Error(body.error || `HTTP ${res.status}`);
+      }
+      const data = (await res.json()) as { pi: PIData; bank_account: BankAccountRow | null };
+      setPi(data.pi);
+      // R103: admin-managed bank info from /api/admin/bank-accounts
+      // (loaded server-side and shipped alongside the PI). Falls back
+      // to the hardcoded BANK_ACCOUNTS map if the row is missing
+      // (e.g. network blip during the bank_accounts Supabase query).
+      setBankAccount(bankAccountFromRow(data.bank_account, data.pi.currency));
+      if (data.pi.status === "pending_bank") setBankSubmitted(true);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Failed to load PI");
+    } finally {
+      setLoading(false);
+    }
+  }, [piNumber]);
+
+  // 2026-10-26 (R124): the server (or Stripe) told us this PI is already
+  // settled. Flip the local status so the page swaps the card form for the
+  // "Invoice Paid" confirmation right away, then re-read the row so the
+  // amount / PDF reflect what the server actually has.
+  const handleAlreadyPaid = useCallback(() => {
+    setPi((prev) => (prev ? { ...prev, status: "paid" } : prev));
+    void loadPi();
+  }, [loadPi]);
+
   useEffect(() => {
     if (!piNumber) {
       setError("No PI number provided in URL");
       setLoading(false);
       return;
     }
-    let cancelled = false;
-    (async () => {
-      try {
-        const res = await fetch(`/api/pi/${encodeURIComponent(piNumber)}`);
-        if (!res.ok) {
-          const body = (await res.json().catch(() => ({}))) as { error?: string };
-          throw new Error(body.error || `HTTP ${res.status}`);
-        }
-        const data = (await res.json()) as { pi: PIData; bank_account: BankAccountRow | null };
-        if (!cancelled) {
-          setPi(data.pi);
-          // R103: admin-managed bank info from /api/admin/bank-accounts
-          // (loaded server-side and shipped alongside the PI). Falls back
-          // to the hardcoded BANK_ACCOUNTS map if the row is missing
-          // (e.g. network blip during the bank_accounts Supabase query).
-          setBankAccount(bankAccountFromRow(data.bank_account, data.pi.currency));
-          if (data.pi.status === "pending_bank") setBankSubmitted(true);
-        }
-      } catch (e) {
-        if (!cancelled) setError(e instanceof Error ? e.message : "Failed to load PI");
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, [piNumber]);
+    void loadPi();
+  }, [piNumber, loadPi]);
 
   // PDF download — 2026-10-03 (R79): use html2canvas to screenshot the actual
   // rendered <article id="pi-document"> so the exported PDF is byte-equivalent
@@ -588,7 +593,11 @@ export default function PayClient() {
           </div>
 
           {paymentMethod === "card" ? (
-            <CardPaymentMethod pi={pi} onSwitchToBank={() => setPaymentMethod("bank")} />
+            <CardPaymentMethod
+              pi={pi}
+              onSwitchToBank={() => setPaymentMethod("bank")}
+              onAlreadyPaid={handleAlreadyPaid}
+            />
           ) : (
             <BankTransferMethod pi={pi} bankAccount={bankAccount} onSubmitted={() => setBankSubmitted(true)} />
           )}
@@ -600,13 +609,22 @@ export default function PayClient() {
 
 // ---------- Card payment (Stripe Elements — inline, no navigation) ----------
 
-function CardPaymentMethod({ pi, onSwitchToBank }: { pi: PIData, onSwitchToBank: () => void }) {
+function CardPaymentMethod({
+  pi,
+  onSwitchToBank,
+  onAlreadyPaid,
+}: {
+  pi: PIData;
+  onSwitchToBank: () => void;
+  onAlreadyPaid: () => void;
+}) {
   return (
     <PayWithStripeElements
       piNumber={pi.pi_number}
       amountCents={pi.amount_due_cents}
       currency={pi.currency}
       onSwitchToBank={onSwitchToBank}
+      onAlreadyPaid={onAlreadyPaid}
     />
   );
 }

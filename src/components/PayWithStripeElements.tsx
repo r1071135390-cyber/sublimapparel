@@ -12,7 +12,7 @@
  *   3. Mount <PaymentElement /> — Stripe renders the card form inline
  *   4. Submit → stripe.confirmPayment({ elements, confirmParams: { return_url } })
  *      — Stripe handles card validation, 3DS, and PI status updates
- *      — On success, redirects back to /quote/?id={PAYMENT_INTENT_ID}
+ *      — On success, redirects back to /pay/?pi=...&payment=success
  *
  * The webhook (/api/stripe/webhook) sees payment_intent.succeeded with
  * metadata.pi_id / metadata.site_slug and marks the PI as paid.
@@ -29,16 +29,31 @@
  *   - Previously the customer was stranded on a red banner with a single
  *     submit button; now they can either retry or fall back without ever
  *     leaving the /pay/ page.
+ *
+ * 2026-10-26 (R124): duplicate-payment fix (client side).
+ *   - Double-submit guard. `submitting` is React state, so it only takes
+ *     effect on the next render — two clicks inside the same tick both
+ *     saw `submitting === false` and both called confirmPayment. A ref
+ *     flips synchronously, so the second call is dropped outright.
+ *   - "Already paid" is now a first-class state. The server returns
+ *     409 { alreadyPaid: true } when the PI is settled, and Stripe
+ *     rejects a confirm on an already-succeeded intent. Both cases route
+ *     to onAlreadyPaid so the parent can show the paid confirmation
+ *     instead of an error the customer cannot act on.
+ *   - Fixed a long-standing inverted guard in the init fetch: the catch
+ *     block returned early when the component was STILL mounted, so init
+ *     errors were swallowed and the customer stared at an endless
+ *     "Preparing secure payment…" spinner.
  */
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Elements,
   PaymentElement,
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
-import { Loader2, AlertCircle, CreditCard, Lock, RefreshCw, Building2 } from "lucide-react";
+import { Loader2, AlertCircle, CreditCard, Lock, RefreshCw, Building2, CheckCircle2 } from "lucide-react";
 import { getStripeJs } from "@/lib/stripe-client";
 import { formatDeclineMessage, pickDeclineCode, getDeclineInfo } from "@/lib/decline-codes";
 
@@ -58,6 +73,10 @@ interface PayWithStripeElementsProps {
   // is not rendered (e.g. on the test harness where the toggle isn't
   // available). The parent owns the `card | bank` toggle state.
   onSwitchToBank?: () => void;
+  // 2026-10-26 (R124): fired when the server (or Stripe) tells us this
+  // PI is already settled. The parent re-reads the PI and swaps the card
+  // form for the "Invoice Paid" confirmation.
+  onAlreadyPaid?: () => void;
 }
 
 interface IntentResponse {
@@ -66,6 +85,7 @@ interface IntentResponse {
   amount?: number;
   currency?: string;
   error?: string;
+  alreadyPaid?: boolean;
 }
 
 export function PayWithStripeElements({
@@ -73,9 +93,11 @@ export function PayWithStripeElements({
   amountCents,
   currency,
   onSwitchToBank,
+  onAlreadyPaid,
 }: PayWithStripeElementsProps) {
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
+  const [alreadyPaid, setAlreadyPaid] = useState(false);
 
   // Step 1: ask the server for a client_secret for this PI.
   useEffect(() => {
@@ -89,6 +111,12 @@ export function PayWithStripeElements({
         });
         const data = (await res.json().catch(() => ({}))) as IntentResponse;
         if (cancelled) return;
+        // 2026-10-26 (R124): the PI is already settled server-side.
+        if (data.alreadyPaid) {
+          setAlreadyPaid(true);
+          onAlreadyPaid?.();
+          return;
+        }
         if (!res.ok || !data.clientSecret) {
           throw new Error(
             data.error || `Failed to initialize payment (HTTP ${res.status})`,
@@ -96,7 +124,10 @@ export function PayWithStripeElements({
         }
         setClientSecret(data.clientSecret);
       } catch (e) {
-        if (!cancelled) return;
+        // The original code returned early when the component was STILL
+        // mounted, so this branch never ran and init failures left the
+        // customer on a permanent "Preparing secure payment…" spinner.
+        if (cancelled) return;
         setLoadError(
           e instanceof Error ? e.message : "Failed to initialize payment",
         );
@@ -105,7 +136,23 @@ export function PayWithStripeElements({
     return () => {
       cancelled = true;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [piNumber]);
+
+  if (alreadyPaid) {
+    return (
+      <div className="border-2 border-black bg-white p-6 text-center shadow-[6px_6px_0_0_rgba(10,10,10,1)]">
+        <CheckCircle2 className="mx-auto mb-3 h-10 w-10 text-green-600" strokeWidth={2.5} />
+        <div className="text-sm font-black uppercase tracking-wider">
+          Payment already received
+        </div>
+        <p className="mt-2 text-xs text-black/70">
+          This invoice has already been paid. Refreshing the page will show your
+          confirmation.
+        </p>
+      </div>
+    );
+  }
 
   if (loadError) {
     return (
@@ -163,6 +210,7 @@ export function PayWithStripeElements({
         amountCents={amountCents}
         currency={currency}
         onSwitchToBank={onSwitchToBank}
+        onAlreadyPaid={onAlreadyPaid}
       />
     </Elements>
   );
@@ -175,6 +223,7 @@ interface InnerFormProps {
   amountCents: number;
   currency: string;
   onSwitchToBank?: () => void;
+  onAlreadyPaid?: () => void;
 }
 
 interface DeclineState {
@@ -183,7 +232,13 @@ interface DeclineState {
   retryable: boolean;
 }
 
-function InnerForm({ piNumber, amountCents, currency, onSwitchToBank }: InnerFormProps) {
+function InnerForm({
+  piNumber,
+  amountCents,
+  currency,
+  onSwitchToBank,
+  onAlreadyPaid,
+}: InnerFormProps) {
   const stripe = useStripe();
   const elements = useElements();
   const [submitting, setSubmitting] = useState(false);
@@ -191,6 +246,11 @@ function InnerForm({ piNumber, amountCents, currency, onSwitchToBank }: InnerFor
   // 2026-10-15 (R120): richer decline state — kept alongside submitError
   // so we can render a tailored retryable / switch-to-bank CTA.
   const [decline, setDecline] = useState<DeclineState | null>(null);
+  // 2026-10-26 (R124): synchronous double-submit lock. React state is
+  // applied on the next render, so two clicks in the same tick both saw
+  // `submitting === false` and both fired confirmPayment — Stripe charged
+  // the customer twice. A ref flips immediately.
+  const submitLock = useRef(false);
 
   const ready = useMemo(
     () => Boolean(stripe && elements),
@@ -201,6 +261,8 @@ function InnerForm({ piNumber, amountCents, currency, onSwitchToBank }: InnerFor
   // clearError flag so we wipe decline + submitError before retrying.
   const runSubmit = async (): Promise<void> => {
     if (!stripe || !elements) return;
+    if (submitLock.current) return; // already in flight — drop this call
+    submitLock.current = true;
     setSubmitting(true);
     setSubmitError(null);
     setDecline(null);
@@ -211,6 +273,15 @@ function InnerForm({ piNumber, amountCents, currency, onSwitchToBank }: InnerFor
       },
     });
     if (error) {
+      // 2026-10-26 (R124): the intent was already paid (e.g. the customer
+      // paid in another tab and came back here). This is NOT an error to
+      // retry — hand it to the parent so it can show the confirmation.
+      if (isAlreadyPaidError(error)) {
+        submitLock.current = false;
+        setSubmitting(false);
+        onAlreadyPaid?.();
+        return;
+      }
       // 2026-10-15 (R120): pull decline_code / code off the typed error.
       // `code` carries machine codes (card_declined, validation_error),
       // `decline_code` carries issuer-rejected codes (do_not_honor,
@@ -227,6 +298,8 @@ function InnerForm({ piNumber, amountCents, currency, onSwitchToBank }: InnerFor
         code,
         retryable: info.retryable,
       });
+      // Release the lock so the retry button can work again.
+      submitLock.current = false;
       setSubmitting(false);
     }
     // On success Stripe redirects to return_url; this line is only reached
@@ -344,4 +417,24 @@ function InnerForm({ piNumber, amountCents, currency, onSwitchToBank }: InnerFor
       </p>
     </form>
   );
+}
+
+/**
+ * 2026-10-26 (R124): recognise the Stripe error raised when confirming
+ * an intent that has ALREADY been paid. Stripe.js reports it as
+ * `payment_intent_unexpected_state` with a message like "You cannot
+ * complete a PaymentIntent that is already succeeded." There is nothing
+ * to retry — the money is already ours.
+ */
+function isAlreadyPaidError(error: { message?: string; code?: string }): boolean {
+  const message = (error?.message ?? "").toLowerCase();
+  if (
+    message.includes("already succeeded") ||
+    message.includes("already paid") ||
+    message.includes("already been paid") ||
+    message.includes("already complete")
+  ) {
+    return true;
+  }
+  return error?.code === "payment_intent_unexpected_state" && message.includes("succeed");
 }

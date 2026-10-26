@@ -11,6 +11,13 @@ import { normalizeSupabaseUrl } from "../_utils";
 interface Env {
   COZE_SUPABASE_URL: string;
   COZE_SUPABASE_SERVICE_ROLE_KEY: string;
+  // 2026-10-26 (R124): this endpoint returns customer names, e-mail
+  // addresses, PI numbers and Stripe ids, and until now it needed no
+  // credential at all — anyone who guessed the path could read live
+  // customer data. It now requires ADMIN_TOKEN (the same token as
+  // /api/admin/payment-reconciliation) and fails closed when the
+  // variable is not configured on the deployment.
+  ADMIN_TOKEN?: string;
 }
 
 const corsHeaders = {
@@ -24,6 +31,24 @@ function jsonResponse(data: unknown, status = 200): Response {
     status,
     headers: { "Content-Type": "application/json", ...corsHeaders },
   });
+}
+
+/** Length-independent comparison so the token check leaks no length. */
+function tokenMatches(provided: string, expected: string): boolean {
+  if (provided.length !== expected.length) return false;
+  let diff = 0;
+  for (let i = 0; i < expected.length; i++) {
+    diff |= provided.charCodeAt(i) ^ expected.charCodeAt(i);
+  }
+  return diff === 0;
+}
+
+function readToken(request: Request, url: URL): string | null {
+  const header = request.headers.get("Authorization") ?? "";
+  if (header.toLowerCase().startsWith("bearer ")) {
+    return header.slice(7).trim();
+  }
+  return url.searchParams.get("token");
 }
 
 export async function onRequestOptions(): Promise<Response> {
@@ -53,6 +78,22 @@ async function handleRequest(context: {
   env: Env;
 }): Promise<Response> {
   const { env, request } = context;
+
+  // 2026-10-26 (R124): fail closed. No configured token means no access,
+  // not open access.
+  if (!env.ADMIN_TOKEN) {
+    return jsonResponse(
+      {
+        error:
+          "ADMIN_TOKEN is not configured on this deployment. Add it as a Cloudflare Pages environment variable to use this endpoint.",
+      },
+      403,
+    );
+  }
+  const providedToken = readToken(request, new URL(request.url));
+  if (!providedToken || !tokenMatches(providedToken, env.ADMIN_TOKEN)) {
+    return jsonResponse({ error: "Unauthorized" }, 403);
+  }
 
   if (!env.COZE_SUPABASE_URL || !env.COZE_SUPABASE_SERVICE_ROLE_KEY) {
     return jsonResponse(

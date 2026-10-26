@@ -4,6 +4,7 @@
  * Handles Stripe webhook events:
  *   - payment_intent.succeeded     → mark payment as succeeded, send notification email
  *   - payment_intent.payment_failed → mark payment as failed
+ *   - payment_intent.canceled      → mark payment as canceled
  *   - charge.refunded               → mark payment as refunded
  *   - checkout.session.completed    → for Stripe Checkout (scenario D), link session to intent
  *
@@ -12,7 +13,7 @@
  * Setup: Stripe Dashboard → Developers → Webhooks → Add endpoint
  *   URL: https://sublimapparel.com/api/stripe/webhook
  *   Events: payment_intent.succeeded, payment_intent.payment_failed,
- *           charge.refunded, checkout.session.completed
+ *           payment_intent.canceled, charge.refunded, checkout.session.completed
  *
  * 2026-10-01 (R77): multi-site support — every handler now reads
  * `site_slug` from the Stripe event metadata and persists it to the
@@ -24,10 +25,33 @@
  * The site_slug coming back from Stripe is itself whitelisted inside
  * `resolveSiteSlug` to defend against bad-actor metadata tampering
  * (a Stripe webhook is trusted, but defense in depth costs nothing).
+ *
+ * 2026-10-26 (R124) — duplicate-payment fix. When a PI gets charged
+ * twice it is always because two PaymentIntents existed on the same PI
+ * and the customer confirmed both. The mint-side fixes live in
+ * functions/api/pi/stripe-payment-intent.ts (single mint path + intent
+ * reuse + idempotency key); this file adds the two safety nets that
+ * only the webhook can perform:
+ *
+ *   1. SIBLING CANCELLATION — the moment one intent on a PI succeeds we
+ *      cancel every other still-pending intent on that PI, so a second
+ *      card confirmation cannot become a second charge.
+ *   2. DUPLICATE DETECTION — if a second intent on the same PI ever
+ *      DOES succeed, we flag it loudly, record it on both payments
+ *      rows, and make `amount_paid_cents` reflect the true total paid
+ *      so finance can see the overcharge and refund it.
  */
 
-import { constructWebhookEvent, type StripePaymentIntent, type StripeCheckoutSession, type StripeCharge, type StripeEvent } from "../../lib/stripe";
+import {
+  constructWebhookEvent,
+  cancelPaymentIntent,
+  type StripePaymentIntent,
+  type StripeCheckoutSession,
+  type StripeCharge,
+  type StripeEvent,
+} from "../../lib/stripe";
 import { formatDeclineMessageServer } from "../../lib/decline-codes";
+import { normalizeSupabaseUrl } from "../_utils";
 import type { EventContext } from "@cloudflare/workers-types";
 
 interface Env {
@@ -44,6 +68,17 @@ const ALLOWED_SITE_SLUGS: ReadonlySet<string> = new Set([
   "sublimapparel",
 ]);
 const DEFAULT_SITE_SLUG = "sublimapparel";
+
+// Mirrors the payments_scenario_check constraint declared in
+// supabase/migrations/20261002_r78_payments_scenario_pi.sql. A value
+// outside this set would make the INSERT below fail, so unknown
+// scenarios fall back to 'pi_payment'.
+const PAYMENT_SCENARIOS: ReadonlySet<string> = new Set([
+  "inquiry_deposit",
+  "sample_fee",
+  "bulk_deposit",
+  "pi_payment",
+]);
 
 function resolveSiteSlug(input: unknown): string {
   if (typeof input !== "string" || input.length === 0) return DEFAULT_SITE_SLUG;
@@ -83,6 +118,9 @@ export const onRequestPost = async (
       case "payment_intent.payment_failed":
         await handlePaymentFailed(context.env, event.data.object as StripePaymentIntent);
         break;
+      case "payment_intent.canceled":
+        await handlePaymentCanceled(context.env, event.data.object as StripePaymentIntent);
+        break;
       case "charge.refunded":
         await handleRefund(context.env, event.data.object as StripeCharge);
         break;
@@ -109,6 +147,14 @@ async function handlePaymentSucceeded(env: Env, intent: StripePaymentIntent) {
   const isPiPayment = !!piId;
   const site_slug = resolveSiteSlug(intent.metadata?.site_slug); // 2026-10-01 (R77)
 
+  // 2026-10-26 (R124): the ledger needs a row for this intent BEFORE it
+  // can be promoted. The webhook updates by intent id, so a missing row
+  // means the charge is never recorded at all —invisible to the
+  // duplicate report, to the sibling cancellation, and to the revenue
+  // totals. A Payment Link payment or a PI whose earlier INSERT failed
+  // both land here.
+  await ensurePaymentRow(env, intent, piId, site_slug);
+
   // 1. Update payments table
   const { error } = await supabasePatch(env, "payments", {
     stripe_payment_intent_id: `eq.${intent.id}`,
@@ -132,6 +178,19 @@ async function handlePaymentSucceeded(env: Env, intent: StripePaymentIntent) {
   // 2. If this is a PI payment, also mark the PI as paid
   if (isPiPayment) {
     console.log(`[webhook] PI ${piId} marked as paid via payment_intent ${intent.id} (site=${site_slug})`);
+
+    // 2026-10-26 (R124): stop the bleeding BEFORE marking the PI paid.
+    // Any other still-pending intent on this PI is a live double-charge
+    // risk — cancel it now, while the customer has only paid once.
+    await cancelSiblingIntents(env, piId, intent.id);
+
+    // 2026-10-26 (R124): if another intent on the same PI already
+    // succeeded, the customer was charged twice. Record it on both
+    // payments rows and make amount_paid_cents reflect the real total
+    // so finance can refund the surplus.
+    const duplicate = await flagDuplicateCharge(env, piId, intent);
+    const totalPaidCents = await sumSucceededAmounts(env, piId);
+
     const { error: piError } = await supabasePatch(env, "proforma_invoices", {
       id: `eq.${piId}`,
     }, {
@@ -139,11 +198,20 @@ async function handlePaymentSucceeded(env: Env, intent: StripePaymentIntent) {
       paid_at: new Date().toISOString(),
       stripe_payment_intent_id: intent.id,
       payment_site: site_slug, // 2026-10-01 (R77)
-      amount_paid_cents: intent.amount, // 2026-10-02 (R78)
+      // 2026-10-26 (R124): the true amount collected for this PI. With a
+      // duplicate charge this is 2x the invoice total, which is exactly
+      // what finance needs to see to issue the refund.
+      amount_paid_cents: totalPaidCents ?? intent.amount,
     });
 
     if (piError) {
       throw new Error(`Supabase PI update failed: ${piError}`);
+    }
+
+    if (duplicate) {
+      console.error(
+        `[webhook] ⚠️ DUPLICATE CHARGE on PI ${piId}: intent ${intent.id} succeeded on top of ${duplicate.otherIntentId}. Refund ${duplicate.otherAmountCents} cents.`,
+      );
     }
   }
 
@@ -187,6 +255,27 @@ async function handlePaymentFailed(env: Env, intent: StripePaymentIntent) {
   }
 
   // Note: PI status stays as 'sent' — customer can retry payment with same PI link
+}
+
+/**
+ * 2026-10-26 (R124): the intent was cancelled in Stripe — either by us
+ * (the duplicate-payment guard cancelling a sibling intent) or by the
+ * customer in the Stripe Dashboard. Keep the ledger honest so a stale
+ * "pending" row doesn't look like money in flight.
+ */
+async function handlePaymentCanceled(env: Env, intent: StripePaymentIntent) {
+  console.log(`[webhook] payment_intent.canceled: ${intent.id}`);
+
+  const { error } = await supabasePatch(env, "payments", {
+    stripe_payment_intent_id: `eq.${intent.id}`,
+  }, {
+    status: "canceled",
+    last_error: "PaymentIntent canceled",
+  });
+
+  if (error) {
+    console.error(`[webhook] cancel update failed: ${error}`);
+  }
 }
 
 async function handleRefund(env: Env, charge: StripeCharge) {
@@ -236,6 +325,231 @@ async function handleCheckoutCompleted(env: Env, session: StripeCheckoutSession)
   }
 }
 
+// ── R124: duplicate-payment guards ────────────────────────────────
+
+interface PaymentRow {
+  stripe_payment_intent_id?: string | null;
+  status?: string | null;
+  amount_cents?: number | null;
+  metadata?: Record<string, unknown> | null;
+}
+
+/**
+ * Cancel every still-pending PaymentIntent that belongs to the same PI as
+ * the intent that just succeeded. Those are exactly the intents that could
+ * become a second charge.
+ */
+async function cancelSiblingIntents(
+  env: Env,
+  piId: string,
+  keepIntentId: string,
+): Promise<void> {
+  if (!env.STRIPE_SECRET_KEY) return;
+
+  const siblings = await selectPayments(env, {
+    pi_id: `eq.${piId}`,
+    status: "eq.pending",
+  });
+  if (siblings.length === 0) return;
+
+  for (const row of siblings) {
+    const intentId = row.stripe_payment_intent_id;
+    if (!intentId || intentId === keepIntentId) continue;
+
+    try {
+      await cancelPaymentIntent(env.STRIPE_SECRET_KEY, intentId);
+      console.log(
+        `[webhook] canceled sibling intent ${intentId} on PI ${piId} (payment already settled by ${keepIntentId})`,
+      );
+      await supabasePatch(env, "payments", {
+        stripe_payment_intent_id: `eq.${intentId}`,
+      }, {
+        status: "canceled",
+        last_error: "Canceled automatically: this PI was already paid by another PaymentIntent",
+        metadata: {
+          ...(row.metadata ?? {}),
+          canceled_by_intent: keepIntentId,
+          canceled_at: new Date().toISOString(),
+        },
+      });
+    } catch (err) {
+      console.error(
+        `[webhook] failed to cancel sibling intent ${intentId}:`,
+        err,
+      );
+    }
+  }
+}
+
+/**
+ * Detect that a SECOND intent on the same PI has also been paid. When
+ * that happens the customer was charged twice and finance has to refund
+ * the surplus — so record it on both payments rows.
+ */
+async function flagDuplicateCharge(
+  env: Env,
+  piId: string,
+  intent: StripePaymentIntent,
+): Promise<{ otherIntentId: string; otherAmountCents: number } | null> {
+  const others = await selectPayments(env, {
+    pi_id: `eq.${piId}`,
+    status: "eq.succeeded",
+    stripe_payment_intent_id: `neq.${intent.id}`,
+  });
+  const other = others.find(
+    (r) => r.stripe_payment_intent_id && r.stripe_payment_intent_id !== intent.id,
+  );
+  if (!other || !other.stripe_payment_intent_id) return null;
+
+  const detectedAt = new Date().toISOString();
+
+  // Read the row that just landed back. handlePaymentSucceeded wrote
+  // stripe_charge_id / payment_method into its metadata a moment ago, and
+  // a PostgREST PATCH replaces the whole jsonb value — so the flag has to
+  // be merged into what is actually stored, not into the raw intent
+  // metadata.
+  const landed = await selectPayments(env, {
+    stripe_payment_intent_id: `eq.${intent.id}`,
+    status: "eq.succeeded",
+  });
+
+  // Mark the payment that just landed.
+  await supabasePatch(env, "payments", {
+    stripe_payment_intent_id: `eq.${intent.id}`,
+  }, {
+    metadata: {
+      ...(landed[0]?.metadata ?? intent.metadata ?? {}),
+      duplicate_charge: {
+        other_intent_id: other.stripe_payment_intent_id,
+        detected_at: detectedAt,
+      },
+    },
+  });
+
+  // And mark the earlier one, so the flag is visible from either row.
+  await supabasePatch(env, "payments", {
+    stripe_payment_intent_id: `eq.${other.stripe_payment_intent_id}`,
+  }, {
+    metadata: {
+      ...(other.metadata ?? {}),
+      duplicate_charge: {
+        other_intent_id: intent.id,
+        detected_at: detectedAt,
+      },
+    },
+  });
+
+  return {
+    otherIntentId: other.stripe_payment_intent_id,
+    otherAmountCents: Number(other.amount_cents ?? intent.amount ?? 0),
+  };
+}
+
+/**
+ * Total actually collected for this PI. Normally equals one invoice
+ * amount; with a duplicate charge it is double, which is the number
+ * finance needs.
+ */
+async function sumSucceededAmounts(
+  env: Env,
+  piId: string,
+): Promise<number | null> {
+  const rows = await selectPayments(env, {
+    pi_id: `eq.${piId}`,
+    status: "eq.succeeded",
+  });
+  if (rows.length === 0) return null;
+  const seen = new Set<string>();
+  let total = 0;
+  for (const row of rows) {
+    const key = row.stripe_payment_intent_id ?? `#${seen.size}`;
+    if (seen.has(key)) continue; // same intent recorded twice — count once
+    seen.add(key);
+    total += Number(row.amount_cents ?? 0);
+  }
+  return total;
+}
+
+/**
+ * Make sure a `payments` row exists for a succeeded intent.
+ *
+ * The webhook's UPDATE is keyed on stripe_payment_intent_id, so a missing
+ * row means the charge is never recorded. That is not cosmetic: without
+ * the row the duplicate report cannot see the charge, the sibling
+ * cancellation cannot find the intent to cancel, and the PI's
+ * amount_paid_cents stays at zero.
+ */
+async function ensurePaymentRow(
+  env: Env,
+  intent: StripePaymentIntent,
+  piId: string | null,
+  site_slug: string,
+): Promise<void> {
+  const existing = await selectPayments(env, {
+    stripe_payment_intent_id: `eq.${intent.id}`,
+  });
+  if (existing.length > 0) return;
+
+  const rawScenario = intent.metadata?.scenario ?? "";
+  const scenario = PAYMENT_SCENARIOS.has(rawScenario)
+    ? rawScenario
+    : "pi_payment";
+
+  const res = await fetch(
+    `${normalizeSupabaseUrl(env.COZE_SUPABASE_URL)}/rest/v1/payments`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        apikey: env.COZE_SUPABASE_SERVICE_ROLE_KEY,
+        Authorization: `Bearer ${env.COZE_SUPABASE_SERVICE_ROLE_KEY}`,
+        Prefer: "return=minimal",
+      },
+      body: JSON.stringify({
+        stripe_payment_intent_id: intent.id,
+        scenario,
+        status: "pending",
+        amount_cents: intent.amount,
+        currency: intent.currency,
+        customer_name: intent.metadata?.customer_name ?? null,
+        customer_email: intent.metadata?.customer_email ?? null,
+        pi_id: piId,
+        metadata: intent.metadata ?? {},
+        payment_site: site_slug,
+      }),
+    },
+  );
+  if (!res.ok) {
+    console.error(
+      `[webhook] payments INSERT failed for ${intent.id}: ${res.status} ${await res.text()}`,
+    );
+  }
+}
+
+async function selectPayments(
+  env: Env,
+  filters: Record<string, string>,
+): Promise<PaymentRow[]> {
+  const qs = new URLSearchParams(filters).toString();
+  const res = await fetch(
+    `${normalizeSupabaseUrl(env.COZE_SUPABASE_URL)}/rest/v1/payments?${qs}&select=stripe_payment_intent_id,status,amount_cents,metadata`,
+    {
+      headers: {
+        apikey: env.COZE_SUPABASE_SERVICE_ROLE_KEY,
+        Authorization: `Bearer ${env.COZE_SUPABASE_SERVICE_ROLE_KEY}`,
+      },
+    },
+  );
+  if (!res.ok) {
+    console.warn(
+      `[webhook] payments query failed: ${res.status} ${await res.text()}`,
+    );
+    return [];
+  }
+  const rows = (await res.json()) as PaymentRow[];
+  return Array.isArray(rows) ? rows : [];
+}
+
 async function supabasePatch(
   env: Env,
   table: string,
@@ -243,16 +557,19 @@ async function supabasePatch(
   body: Record<string, any>,
 ): Promise<{ error: string | null }> {
   const qs = new URLSearchParams(query).toString();
-  const res = await fetch(`${env.COZE_SUPABASE_URL}/rest/v1/${table}?${qs}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      apikey: env.COZE_SUPABASE_SERVICE_ROLE_KEY,
-      Authorization: `Bearer ${env.COZE_SUPABASE_SERVICE_ROLE_KEY}`,
-      Prefer: "return=minimal",
+  const res = await fetch(
+    `${normalizeSupabaseUrl(env.COZE_SUPABASE_URL)}/rest/v1/${table}?${qs}`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        apikey: env.COZE_SUPABASE_SERVICE_ROLE_KEY,
+        Authorization: `Bearer ${env.COZE_SUPABASE_SERVICE_ROLE_KEY}`,
+        Prefer: "return=minimal",
+      },
+      body: JSON.stringify(body),
     },
-    body: JSON.stringify(body),
-  });
+  );
   if (!res.ok) {
     return { error: `${res.status} ${await res.text()}` };
   }

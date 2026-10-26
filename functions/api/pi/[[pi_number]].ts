@@ -29,11 +29,15 @@
 // without tripping the structural-mismatch tsc error.
 //
 // Live PI card payment flow:
-//   - When a customer opens a PI in "sent" status with no Stripe
-//     client_secret yet, this handler mints a PaymentIntent, persists
-//     `stripe_client_secret` back to the row, and ships it with the response.
-//   - When the row already has a client_secret, we reuse it (a page refresh
-//     must not create 20 PaymentIntents).
+//   - This handler is READ-ONLY for Stripe purposes. It returns whatever
+//     `stripe_client_secret` / `stripe_payment_intent_id` the PI row
+//     already carries and never creates a PaymentIntent.
+//   - 2026-10-26 (R124): the lazy mint that used to live here was
+//     removed. It duplicated POST /api/pi/stripe-payment-intent, so a
+//     customer opening the PI page and then pressing "Pay" ended up
+//     with two PaymentIntents on one PI — and Stripe charged them twice.
+//     The single mint path is now /api/pi/stripe-payment-intent, which
+//     reuses the intent recorded on this row.
 //
 // State machine:
 //   PI status | what this handler does
@@ -41,18 +45,15 @@
 //   draft, canceled, expired   | return row verbatim; clientSecret = null
 //   paid                       | return row verbatim; clientSecret = null
 //   pending_bank               | return row verbatim; clientSecret = null
-//   sent (no client_secret)    | mint a PaymentIntent, PATCH the row,
-//                              | return row + new clientSecret
-//   sent (client_secret set)   | return row + existing clientSecret
+//   sent                       | return row + the existing clientSecret
+//                              | (null when no intent has been minted yet)
 
 import { normalizeSupabaseUrl } from "../_utils";
-import { createPaymentIntent } from "../../lib/stripe";
 import { handleConfirmBank } from "./pi-actions/confirm-bank";
 
 interface Env {
   COZE_SUPABASE_URL: string;
   COZE_SUPABASE_SERVICE_ROLE_KEY: string;
-  STRIPE_SECRET_KEY: string;
 }
 
 // 2026-10-01 (R77): whitelist mirrored from stripe/create-payment-intent.ts
@@ -198,114 +199,17 @@ export async function onRequestGet(context: {
   // has refreshed the row.
   let resolvedAmountCents = pickAmountCents(row);
 
-  if (
-    status === "sent" &&
-    !existingClientSecret &&
-    env.STRIPE_SECRET_KEY
-  ) {
-    try {
-      const amountCents = resolvedAmountCents;
-      if (amountCents === null || amountCents < 100) {
-        console.warn(
-          `[pi/get] PI ${String(row.pi_number)} has no amount; skipping PaymentIntent mint`,
-        );
-      } else {
-        const currency = piCurrency;
-        const site_slug = resolveSiteSlug(
-          (row as any).payment_site ??
-            ((row.metadata as Record<string, unknown> | null)?.site_slug ?? null),
-        );
-
-        const pi = await createPaymentIntent(env.STRIPE_SECRET_KEY, {
-          amount: amountCents,
-          currency,
-          automatic_payment_methods: true,
-          receipt_email: (row.customer_email as string | null) ?? undefined,
-          description: buildDescription(row),
-          metadata: {
-            pi_id: String((row.id as string | number) ?? ""),
-            pi_number: String((row.pi_number as string | null) ?? ""),
-            scenario: "pi_payment",
-            site_slug,
-            customer_email:
-              (row.customer_email as string | null) ?? "",
-            customer_name:
-              (row.customer_name as string | null) ?? "",
-          },
-        });
-
-        clientSecret = pi.client_secret ?? null;
-        paymentIntentId = pi.id;
-
-        // 2026-10-02 (R78): also INSERT a pending payments row so the
-        // webhook's UPDATE on payment_intent.succeeded has something to
-        // match against (where stripe_payment_intent_id = 'pi_...').
-        // Without this, the webhook fires successfully but 0 rows are
-        // updated — payments table stays empty and admin dashboards
-        // showing "total payments this month" miss the row.
-        const paymentsInsertRes = await fetch(
-          `${supabaseUrl}/rest/v1/payments`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              apikey: env.COZE_SUPABASE_SERVICE_ROLE_KEY,
-              Authorization: `Bearer ${env.COZE_SUPABASE_SERVICE_ROLE_KEY}`,
-              Prefer: "return=minimal",
-            },
-            body: JSON.stringify({
-              stripe_payment_intent_id: pi.id,
-              scenario: "pi_payment",
-              status: "pending",
-              amount_cents: amountCents,
-              currency,
-              customer_name: (row.customer_name as string | null) ?? null,
-              customer_email: (row.customer_email as string | null) ?? null,
-              pi_id: String((row.id as string | number) ?? ""),
-              metadata: {
-                pi_number: String((row.pi_number as string | null) ?? ""),
-                site_slug,
-              },
-              payment_site: site_slug,
-            }),
-          },
-        );
-        if (!paymentsInsertRes.ok && paymentsInsertRes.status !== 409) {
-          console.error(
-            `[pi/get] payments INSERT failed: ${paymentsInsertRes.status} ${await paymentsInsertRes.text()}`,
-          );
-        }
-
-        const patchRes = await fetch(
-          `${supabaseUrl}/rest/v1/proforma_invoices?id=eq.${encodeURIComponent(String(row.id))}`,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-              apikey: env.COZE_SUPABASE_SERVICE_ROLE_KEY,
-              Authorization: `Bearer ${env.COZE_SUPABASE_SERVICE_ROLE_KEY}`,
-              Prefer: "return=minimal",
-            },
-            body: JSON.stringify({
-              stripe_client_secret: clientSecret,
-              stripe_payment_intent_id: paymentIntentId,
-              amount_due_cents: amountCents,
-              payment_site: site_slug,
-            }),
-          },
-        );
-        if (!patchRes.ok) {
-          console.error(
-            `[pi/get] PATCH proforma_invoices failed: ${patchRes.status} ${await patchRes.text()}`,
-          );
-        }
-      }
-    } catch (err: any) {
-      console.error("[pi/get] Stripe PaymentIntent mint failed:", err);
-      // Fall through: return row with clientSecret=null so the page renders
-      // its "Initializing secure payment…" spinner rather than a 500.
-    }
-  }
+  // 2026-10-26 (R124): PaymentIntent minting was REMOVED from this
+  // handler. It used to lazily mint an intent the first time a customer
+  // opened a "sent" PI, while POST /api/pi/stripe-payment-intent minted
+  // its own on every call — two independent mint paths for the same PI.
+  // Each path produced a DIFFERENT PaymentIntent and Stripe charges the
+  // customer once per intent: that is the duplicate-payment bug.
+  //
+  // /api/pi/stripe-payment-intent is now the single mint path. It reuses
+  // this row's stripe_payment_intent_id / stripe_client_secret whenever
+  // the intent is still live, so opening, refreshing or re-opening the
+  // page can no longer produce a second intent.
 
   return jsonResponse({
     pi: {
@@ -368,14 +272,4 @@ function pickAmountCents(row: Record<string, unknown>): number | null {
     if (Number.isFinite(n) && n > 0) return Math.round(n);
   }
   return null;
-}
-
-function buildDescription(row: Record<string, unknown>): string {
-  const company = (row.customer_company as string | null) ?? "";
-  const piNum = (row.pi_number as string | null) ?? "";
-  const parts: string[] = [];
-  if (company) parts.push(company);
-  if (piNum) parts.push(`PI ${piNum}`);
-  parts.push("payment card payment");
-  return parts.join(" — ");
 }

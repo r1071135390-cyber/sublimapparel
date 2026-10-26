@@ -10,6 +10,7 @@
  *
  * This module exposes just the surface area we need:
  *   - createPaymentIntent       (R91 — in-page Elements flow, card only)
+ *   - retrievePaymentIntent     (R124 — read an intent's live status)
  *   - cancelPaymentIntent
  *   - createCheckoutSession
  *   - createPaymentLink          (R87 — hosted-checkout Payment Link flow)
@@ -92,6 +93,7 @@ export interface StripePaymentIntent {
   amount_capturable?: number;
   currency: string;
   status: string;
+  created?: number;
   client_secret?: string;
   customer?: string;
   description?: string;
@@ -156,9 +158,25 @@ export interface CreatePaymentIntentParams {
   automatic_payment_methods?: boolean;
 }
 
+export interface CreatePaymentIntentOptions {
+  // 2026-10-26 (R124): Stripe idempotency key. Replaying the SAME key
+  // within 24h returns the ORIGINAL PaymentIntent instead of creating a
+  // second one — the server-side half of the duplicate-payment fix.
+  // Without it, two concurrent POSTs to /api/pi/stripe-payment-intent
+  // (double-clicked "Pay", two browser tabs, a client retry after a
+  // network timeout) each mint their own PaymentIntent, and Stripe
+  // charges the customer twice.
+  //
+  // Stripe prunes idempotency keys after 24h, so the caller must
+  // suffix the key with something that changes when a genuinely NEW
+  // intent is wanted (it appends the cancelled predecessor's id).
+  idempotencyKey?: string;
+}
+
 export async function createPaymentIntent(
   secretKey: string,
   params: CreatePaymentIntentParams,
+  opts: CreatePaymentIntentOptions = {},
 ): Promise<StripePaymentIntent> {
   const body = new URLSearchParams();
   body.append("amount", String(params.amount));
@@ -175,11 +193,32 @@ export async function createPaymentIntent(
   for (const [k, v] of Object.entries(flattenMetadata(params.metadata))) {
     body.append(k, v);
   }
+  const headers: Record<string, string> = {
+    "Content-Type": "application/x-www-form-urlencoded",
+  };
+  if (opts.idempotencyKey) {
+    headers["Idempotency-Key"] = opts.idempotencyKey;
+  }
   return stripeFetch("/payment_intents", secretKey, {
     method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    headers,
     body: body.toString(),
   });
+}
+
+// 2026-10-26 (R124): read back a PaymentIntent's live status. Used to
+// decide whether the intent already stored on a PI can be reused
+// (client_secret still valid) or must be replaced (succeeded / canceled /
+// amount changed since it was minted).
+export async function retrievePaymentIntent(
+  secretKey: string,
+  paymentIntentId: string,
+): Promise<StripePaymentIntent> {
+  return stripeFetch(
+    `/payment_intents/${encodeURIComponent(paymentIntentId)}`,
+    secretKey,
+    { method: "GET" },
+  );
 }
 
 export async function cancelPaymentIntent(
@@ -189,6 +228,52 @@ export async function cancelPaymentIntent(
   return stripeFetch(`/payment_intents/${paymentIntentId}/cancel`, secretKey, {
     method: "POST",
   });
+}
+
+// 2026-10-26 (R124): list PaymentIntents so the admin reconciliation
+// endpoint can ask Stripe which charges actually landed. The database
+// ledger cannot answer this for historical payments — the PI row keeps
+// only the LAST successful intent id, so an earlier second charge is
+// unrecoverable from our side.
+export interface ListPaymentIntentsOptions {
+  /** Unix seconds; only intents created at or after this instant. */
+  createdGte?: number;
+  /** Page size (Stripe caps this at 100). */
+  limit?: number;
+  /** Safety stop so a mis-set filter cannot pull the whole account. */
+  maxPages?: number;
+}
+
+export async function listPaymentIntents(
+  secretKey: string,
+  opts: ListPaymentIntentsOptions = {},
+): Promise<StripePaymentIntent[]> {
+  const pageSize = Math.min(100, Math.max(1, opts.limit ?? 100));
+  const maxPages = Math.min(50, Math.max(1, opts.maxPages ?? 10));
+  const out: StripePaymentIntent[] = [];
+  let startingAfter: string | null = null;
+
+  for (let page = 0; page < maxPages; page++) {
+    const params = new URLSearchParams();
+    params.set("limit", String(pageSize));
+    if (opts.createdGte !== undefined) {
+      params.set("created[gte]", String(opts.createdGte));
+    }
+    if (startingAfter) params.set("starting_after", startingAfter);
+
+    const list = await stripeFetch(
+      `/payment_intents?${params.toString()}`,
+      secretKey,
+      { method: "GET" },
+    );
+    const data = (list?.data ?? []) as StripePaymentIntent[];
+    out.push(...data);
+
+    if (!list?.has_more || data.length === 0) break;
+    startingAfter = data[data.length - 1].id;
+  }
+
+  return out;
 }
 
 // ── Checkout Sessions ─────────────────────────────────────────────
