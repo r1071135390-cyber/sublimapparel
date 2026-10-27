@@ -16,13 +16,28 @@
 --
 --   1. Indexes so the webhook can find "every other intent on this PI"
 --      without a sequential scan on the payments table.
---   2. v_duplicate_pi_payments — a report of PIs that were paid more than
+--   2. Relax the payments.status CHECK so 'canceled' is accepted — the
+--      sibling-cancellation writes that value.
+--   3. v_duplicate_pi_payments — a report of PIs that were paid more than
 --      once, with the total actually collected. This is the query to run
 --      when a customer says "I was charged twice".
---   3. v_pending_pi_intents — the live double-charge risk list: every PI
+--   4. v_pending_pi_intents — the live double-charge risk list: every PI
 --      that still has an unpaid intent hanging off it.
 --
--- Idempotent: every statement uses IF NOT EXISTS / CREATE OR REPLACE.
+-- The `payments` table itself predates this migration history (it was
+-- created directly in the Supabase dashboard), so nothing here assumes a
+-- column type that the application does not already write.
+--
+-- Every statement is idempotent: IF NOT EXISTS / CREATE OR REPLACE, and
+-- the constraint work preserves whatever the existing constraint allowed.
+
+-- ══════════════════════════════════════════════════════════════════
+-- PART 1 — indexes + status constraint
+-- ══════════════════════════════════════════════════════════════════
+-- Kept in its own transaction on purpose: if the views in PART 2 fail
+-- to build (they depend on columns the application writes but that this
+-- repository cannot prove exist), PART 1 stays committed and the
+-- webhook-side protection still works.
 
 BEGIN;
 
@@ -45,67 +60,61 @@ CREATE INDEX IF NOT EXISTS idx_payments_status
 -- ── 2. payments.status must allow 'canceled' ─────────────────────
 -- The duplicate guard cancels sibling intents and writes status =
 -- 'canceled' on their payments rows. If a status CHECK constraint
--- exists it must permit that value, otherwise the UPDATE fails.
+-- exists and does not permit that value, the UPDATE fails and the
+-- sibling is never marked — which is exactly the state we need to
+-- record.
 --
--- The check is rebuilt from the values actually present in the table
--- (plus 'canceled'), so no historical row can make this statement fail.
+-- The constraint is NOT rebuilt from a hardcoded value list. Its
+-- existing expression is preserved verbatim and 'canceled' is OR-ed in,
+-- so:
+--   * no historical row can start failing the constraint;
+--   * any other condition the constraint expressed (not just a value
+--     list) keeps working.
+--
+-- The constraint is located through pg_constraint + pg_attribute
+-- rather than by constraint name, because the payments table predates
+-- this migration history and the name is not known.
 DO $$
 DECLARE
-  allowed  text[];
-  literals text;
-  cname    text;
+  cname text;
+  cexpr text;
+  hits  int := 0;
 BEGIN
-  -- Locate the CHECK constraint governing payments.status by definition
-  -- rather than by name — the constraint may predate this migration
-  -- history and carry a different name.
-  SELECT c.conname
-    INTO cname
-    FROM pg_constraint c
-   WHERE c.conrelid = 'payments'::regclass
-     AND c.contype = 'c'
-     AND pg_get_constraintdef(c.oid) ILIKE '%status%'
-   LIMIT 1;
+  FOR cname, cexpr IN
+    SELECT c.conname,
+           pg_get_expr(c.conbin, c.conrelid)
+      FROM pg_constraint c
+      JOIN pg_attribute a
+        ON a.attrelid = c.conrelid
+       AND a.attnum = ANY(c.conkey)
+     WHERE c.conrelid = 'payments'::regclass
+       AND c.contype = 'c'
+       AND a.attname = 'status'
+  LOOP
+    hits := hits + 1;
+    EXECUTE format('ALTER TABLE payments DROP CONSTRAINT %I', cname);
+    EXECUTE format(
+      'ALTER TABLE payments ADD CONSTRAINT %I CHECK ((%s) OR status::text = %L)',
+      cname,
+      cexpr,
+      'canceled'
+    );
+    RAISE NOTICE 'payments.status: relaxed constraint % to also allow ''canceled''', cname;
+  END LOOP;
 
-  IF cname IS NULL THEN
-    RETURN;
+  IF hits = 0 THEN
+    RAISE NOTICE 'payments.status: no CHECK constraint found — nothing to relax';
   END IF;
-
-  SELECT array_agg(DISTINCT status::text)
-    INTO allowed
-    FROM payments
-   WHERE status IS NOT NULL;
-
-  IF allowed IS NULL THEN
-    allowed := ARRAY[]::text[];
-  END IF;
-
-  -- Union with every status the application writes. Rebuilding the check
-  -- from the rows that happen to exist today could SHRINK the allowed set —
-  -- 'pending' would vanish if no pending row existed at migration time, and
-  -- the very next payment attempt would then fail the constraint.
-  allowed := (
-    SELECT array_agg(DISTINCT s)
-      FROM unnest(
-        allowed || ARRAY[
-          'pending','succeeded','failed','refunded','canceled'
-        ]::text[]
-      ) AS s
-  );
-
-  -- A CHECK constraint may not reference a PL/pgSQL variable (PostgreSQL
-  -- rejects parameters inside a check expression), so the allowed set is
-  -- rendered into a literal array and applied through EXECUTE.
-  SELECT string_agg(quote_literal(s), ', ' ORDER BY s)
-    INTO literals
-    FROM unnest(allowed) AS s;
-
-  EXECUTE format('ALTER TABLE payments DROP CONSTRAINT %I', cname);
-  EXECUTE format(
-    'ALTER TABLE payments ADD CONSTRAINT %I CHECK (status::text = ANY (ARRAY[%s]::text[]))',
-    cname,
-    literals
-  );
 END $$;
+
+COMMIT;
+
+-- ══════════════════════════════════════════════════════════════════
+-- PART 2 — reporting views
+-- ══════════════════════════════════════════════════════════════════
+-- Separate transaction: a failure here cannot undo PART 1.
+
+BEGIN;
 
 -- ── 3. duplicate-payment report ──────────────────────────────────
 -- One row per PI that was paid by MORE THAN ONE PaymentIntent, with the
@@ -114,6 +123,12 @@ END $$;
 -- Rows are de-duplicated per intent id first: a rare concurrent insert
 -- can leave two rows pointing at the same intent, and that is NOT a
 -- duplicate charge.
+--
+-- pi_number is read from the row's metadata rather than by joining
+-- proforma_invoices: payments.pi_id holds the PI id as written by the
+-- application (a text value), and proforma_invoices.id is a BIGSERIAL.
+-- Joining them directly would need a cast on both sides; keeping the
+-- join out of the view avoids that entirely.
 CREATE OR REPLACE VIEW v_duplicate_pi_payments AS
 WITH per_intent AS (
   SELECT DISTINCT ON (stripe_payment_intent_id)
@@ -122,7 +137,6 @@ WITH per_intent AS (
          amount_cents,
          currency,
          metadata->>'pi_number'  AS pi_number,
-         created_at,
          paid_at
     FROM payments
    WHERE status = 'succeeded'
@@ -188,15 +202,17 @@ COMMIT;
 --    WHERE last_paid_at >= (CURRENT_DATE AT TIME ZONE 'Asia/Shanghai')
 --    ORDER BY last_paid_at DESC;
 --
--- Check the invoice total against what was collected:
+-- Check the invoice total against what was collected.
+-- pi_id in the view is the PI id as stored on the payments row (text),
+-- while proforma_invoices.id is a BIGSERIAL — cast both sides:
 --
 --   SELECT pi.pi_number,
 --          pi.total_cents          AS invoice_cents,
---          d.total_paid_cents     AS collected_cents,
+--          d.total_paid_cents      AS collected_cents,
 --          d.total_paid_cents - pi.total_cents AS overcharged_cents,
 --          d.intent_ids
 --     FROM v_duplicate_pi_payments d
---     JOIN proforma_invoices pi ON pi.id = d.pi_id
+--     JOIN proforma_invoices pi ON pi.id::text = d.pi_id::text
 --    WHERE d.total_paid_cents > pi.total_cents;
 --
 -- Live risk list (PIs with more than one pending intent = two
@@ -206,6 +222,24 @@ COMMIT;
 --     FROM v_pending_pi_intents
 --    GROUP BY pi_id
 --   HAVING COUNT(DISTINCT stripe_payment_intent_id) > 1;
+--
+-- ── optional follow-up (NOT run by this script) ───────────────────
+-- A partial UNIQUE index on the intent id would make a double ledger
+-- row impossible. It cannot be created here because the blind period
+-- very likely left duplicate rows behind, and creating it would fail.
+-- Run this only after inspecting for duplicates:
+--
+--   SELECT stripe_payment_intent_id, COUNT(*)
+--     FROM payments
+--    WHERE stripe_payment_intent_id IS NOT NULL
+--    GROUP BY stripe_payment_intent_id
+--   HAVING COUNT(*) > 1;
+--
+-- After cleaning those up:
+--
+--   CREATE UNIQUE INDEX IF NOT EXISTS uq_payments_intent
+--     ON payments(stripe_payment_intent_id)
+--    WHERE stripe_payment_intent_id IS NOT NULL;
 --
 -- ── rollback (manual, if needed) ──────────────────────────────────
 -- DROP VIEW IF EXISTS v_pending_pi_intents;
