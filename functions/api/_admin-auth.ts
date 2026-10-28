@@ -36,11 +36,23 @@ export function tokenMatches(provided: string, expected: string): boolean {
 }
 
 /**
+ * The little bit of a Request we actually read.
+ *
+ * We deliberately do NOT type this as the DOM `Request`: Cloudflare's
+ * EventContext hands us a workers-types Request, which is a different
+ * (enhanced) type and is not assignable to the DOM one. Accepting the
+ * narrowest structural shape keeps the guard usable from every handler.
+ */
+export interface AdminRequestLike {
+  headers: { get(name: string): string | null };
+}
+
+/**
  * Read the bearer token from the Authorization header, falling back to
  * the ?token= query param (handy for curl and for the reconciliation
  * endpoint's existing callers).
  */
-export function readToken(request: Request, url: URL): string | null {
+export function readToken(request: AdminRequestLike, url: URL): string | null {
   const header = request.headers.get("Authorization") ?? "";
   if (header.toLowerCase().startsWith("bearer ")) {
     return header.slice(7).trim();
@@ -54,7 +66,7 @@ export function readToken(request: Request, url: URL): string | null {
  *   const guard = requireAdmin(...); if (guard) return guard;
  */
 export function requireAdmin(
-  request: Request,
+  request: AdminRequestLike,
   url: URL,
   env: AdminEnv,
 ): Response | null {
