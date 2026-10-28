@@ -51,6 +51,7 @@ import {
   SUPPORTED_CURRENCIES,
   type SupportedCurrency,
 } from "@/lib/bank-accounts";
+import { adminFetch } from "@/lib/admin-token";
 
 // ─── Local types (mirror of NewPIClient's LineItem) ──────────────────────
 type SizeRow = { label: string; qty: number };
@@ -110,7 +111,7 @@ function EditPIClientInner() {
     let cancelled = false;
     (async () => {
       try {
-        const res = await fetch("/api/admin/bank-accounts", { cache: "no-store" });
+        const res = await adminFetch("/api/admin/bank-accounts", { cache: "no-store" });
         if (!res.ok) return;
         const data = (await res.json()) as { ok: boolean; accounts?: BankAccountRow[] };
         if (cancelled || !data.accounts) return;
@@ -305,7 +306,7 @@ function EditPIClientInner() {
     setSaving(true);
     setError(null);
     try {
-      const res = await fetch("/api/pi/update/", {
+      const res = await adminFetch("/api/pi/update/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

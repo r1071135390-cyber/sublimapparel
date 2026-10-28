@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo, useRef } from "react";
 import Link from "next/link";
 import { Plus, Trash2, Save, ExternalLink, RefreshCw, Upload, X, Check, Copy, Eye, Ruler } from "lucide-react";
 import { getBankAccount, bankAccountFromRow, SUPPORTED_CURRENCIES, type SupportedCurrency, type BankAccount, type BankAccountRow } from "@/lib/bank-accounts";
+import { adminFetch } from "@/lib/admin-token";
 
 // ─── Types ────────────────────────────────────────────────────────────────
 type SizeRow = { label: string; qty: number };
@@ -251,7 +252,7 @@ export default function NewPIPage() {
     let cancelled = false;
     (async () => {
       try {
-        const res = await fetch("/api/admin/bank-accounts", { cache: "no-store" });
+        const res = await adminFetch("/api/admin/bank-accounts", { cache: "no-store" });
         if (!res.ok) return;
         const data = (await res.json()) as { ok: boolean; accounts?: BankAccountRow[] };
         if (cancelled || !data.accounts) return;
@@ -376,7 +377,7 @@ export default function NewPIPage() {
 
   async function fetchNextPiNumber() {
     try {
-      const res = await fetch("/api/pi/next-number/", { method: "GET" });
+      const res = await adminFetch("/api/pi/next-number/", { method: "GET" });
       if (!res.ok) {
         setPiNumberReady(true);
         return;
@@ -461,7 +462,7 @@ export default function NewPIPage() {
 
     setSaving(true);
     try {
-      const res = await fetch("/api/pi/create/", {
+      const res = await adminFetch("/api/pi/create/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

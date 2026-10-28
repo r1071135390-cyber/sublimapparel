@@ -37,6 +37,7 @@
 
 import { listPaymentIntents, cancelPaymentIntent } from "../../lib/stripe";
 import { normalizeSupabaseUrl } from "../_utils";
+import { requireAdmin } from "../_admin-auth";
 import type { EventContext } from "@cloudflare/workers-types";
 
 interface Env {
@@ -59,31 +60,6 @@ function json(data: unknown, status = 200): Response {
 
 export const onRequestOptions = async () =>
   new Response(null, { status: 204, headers: corsHeaders });
-
-/**
- * Length-independent string comparison. Not a substitute for a real
- * secret manager, but it keeps the token check from leaking its length
- * through response timing.
- */
-function tokenMatches(provided: string, expected: string): boolean {
-  if (provided.length !== expected.length) return false;
-  let diff = 0;
-  for (let i = 0; i < expected.length; i++) {
-    diff |= provided.charCodeAt(i) ^ expected.charCodeAt(i);
-  }
-  return diff === 0;
-}
-
-function readToken(
-  request: { headers: { get(name: string): string | null } },
-  url: URL,
-): string | null {
-  const header = request.headers.get("Authorization") ?? "";
-  if (header.toLowerCase().startsWith("bearer ")) {
-    return header.slice(7).trim();
-  }
-  return url.searchParams.get("token");
-}
 
 // ── data shapes ──────────────────────────────────────────────────
 
@@ -174,19 +150,8 @@ async function handle(
   const url = new URL(request.url);
 
   // ── auth ───────────────────────────────────────────────────────
-  if (!env.ADMIN_TOKEN) {
-    return json(
-      {
-        error:
-          "ADMIN_TOKEN is not configured on this deployment. Add it as a Cloudflare Pages environment variable to use this endpoint.",
-      },
-      403,
-    );
-  }
-  const provided = readToken(request, url);
-  if (!provided || !tokenMatches(provided, env.ADMIN_TOKEN)) {
-    return json({ error: "Unauthorized" }, 403);
-  }
+  const guard = requireAdmin(request, url, env);
+  if (guard) return guard;
 
   if (!env.STRIPE_SECRET_KEY) {
     return json({ error: "Stripe is not configured on the server" }, 500);

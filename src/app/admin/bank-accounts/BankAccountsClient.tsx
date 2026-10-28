@@ -17,16 +17,17 @@
  *     updated_at column refreshes in the UI.
  *   - Saving to one currency does NOT block the others — each form has
  *     its own dirty state and Save button.
- *   - No auth: same posture as the rest of /admin/*. The RLS deny-all on
- *     bank_accounts means anonymous clients cannot read bank info even
- *     if they discover this endpoint; the service role key is the only
- *     path.
+ *   - Auth (R125): every call needs the ADMIN_TOKEN bearer header.
+ *     adminFetch() in src/lib/admin-token.ts attaches it, and the page
+ *     is wrapped in <AdminGate> so the operator supplies the token
+ *     once per browser tab.
  */
 
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, Save, RefreshCw, AlertCircle, CheckCircle2, Building2, RotateCcw } from "lucide-react";
 import { SUPPORTED_CURRENCIES, bankAccountFromRow, type BankAccount, type BankAccountRow as DbBankAccountRow, type SupportedCurrency } from "@/lib/bank-accounts";
+import { adminFetch } from "@/lib/admin-token";
 
 interface FormBankAccountRow extends BankAccount {
   id: number;
@@ -380,7 +381,7 @@ export default function BankAccountsClient() {
 
   const fetchAll = useCallback(async () => {
     try {
-      const res = await fetch("/api/admin/bank-accounts", { cache: "no-store" });
+      const res = await adminFetch("/api/admin/bank-accounts", { cache: "no-store" });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       // R111: API returns Supabase snake_case rows. We convert each to the
       // camelCase BankAccount shape (via bankAccountFromRow), then merge in
@@ -428,7 +429,7 @@ export default function BankAccountsClient() {
     const handleReset = async (currency: SupportedCurrency) => {
       if (!forms) return;
       try {
-        const res = await fetch("/api/admin/bank-accounts", { cache: "no-store" });
+      const res = await adminFetch("/api/admin/bank-accounts", { cache: "no-store" });
         if (!res.ok) return; // silently no-op if read fails
         const data = (await res.json()) as { ok: boolean; accounts?: DbBankAccountRow[] };
         const rows = data.accounts ?? [];
@@ -488,7 +489,7 @@ export default function BankAccountsClient() {
     });
     try {
       const r = current.row;
-      const res = await fetch("/api/admin/bank-accounts", {
+      const res = await adminFetch("/api/admin/bank-accounts", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

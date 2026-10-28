@@ -10,10 +10,13 @@
 //     customer_name (case-insensitive) matches the customer's name
 
 import { normalizeSupabaseUrl } from "../../_utils";
+import { requireAdmin } from "../../_admin-auth";
 
 interface Env {
   COZE_SUPABASE_URL: string;
   COZE_SUPABASE_SERVICE_ROLE_KEY: string;
+  // R125: required bearer token for admin access
+  ADMIN_TOKEN?: string;
 }
 
 const corsHeaders = {
@@ -63,7 +66,12 @@ export async function onRequestGet(context: {
   env: Env;
   params: { id?: string | string[] };
 }): Promise<Response> {
-  const { env, params } = context;
+  const { env, params, request } = context;
+
+  // ── ADMIN_TOKEN guard ──────────────────────────────────────────────
+  const guard = requireAdmin(request, new URL(request.url), env);
+  if (guard) return guard;
+  // ─────────────────────────────────────────────────────────────────
 
   if (!env.COZE_SUPABASE_URL || !env.COZE_SUPABASE_SERVICE_ROLE_KEY) {
     return jsonResponse(

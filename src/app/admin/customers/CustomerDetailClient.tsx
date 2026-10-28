@@ -12,7 +12,6 @@ import {
   MapPin,
   Calendar,
   Hash,
-  Lock,
   AlertTriangle,
   User,
   FileText,
@@ -21,10 +20,7 @@ import {
   XCircle,
   ExternalLink,
 } from "lucide-react";
-
-// Owner-only access. Same gate as SummaryClient / CustomersClient.
-const OWNER_PASSWORD = "HOMEdorm521$$$";
-const SESSION_KEY = "pi_customer_detail_unlocked";
+import { adminFetch } from "@/lib/admin-token";
 
 interface CustomerDetail {
   id: string;
@@ -156,28 +152,11 @@ export default function CustomerDetailClient() {
   const id = searchParams.get("id") || "";
   const name = searchParams.get("name") || "";
 
-  // ---------- Lock state ----------
-  const [unlocked, setUnlocked] = useState<boolean>(false);
-  const [ready, setReady] = useState<boolean>(false);
-  const [pwInput, setPwInput] = useState("");
-  const [pwError, setPwError] = useState<string | null>(null);
-
   // ---------- Data state ----------
   const [customer, setCustomer] = useState<CustomerDetail | null>(null);
   const [pis, setPis] = useState<PiRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    try {
-      if (sessionStorage.getItem(SESSION_KEY) === "1") {
-        setUnlocked(true);
-      }
-    } catch {
-      // ignore
-    }
-    setReady(true);
-  }, []);
 
   // 2026-10-13 (Phase C.5): resolve a ?name= lookup to a customer id
   // via the list endpoint. Returns the resolved id, or null if no
@@ -186,7 +165,7 @@ export default function CustomerDetailClient() {
     async (rawName: string): Promise<string | null> => {
       const target = rawName.trim().toLowerCase();
       if (!target) return null;
-      const res = await fetch(
+      const res = await adminFetch(
         `/api/admin/customers/list/?search=${encodeURIComponent(
           rawName.trim(),
         )}&limit=20`,
@@ -242,7 +221,7 @@ export default function CustomerDetailClient() {
         setError("Missing customer id or name in the URL.");
         return;
       }
-      const res = await fetch(
+      const res = await adminFetch(
         `/api/admin/customers/${encodeURIComponent(effectiveId)}/`,
         { cache: "no-store" },
       );
@@ -265,78 +244,8 @@ export default function CustomerDetailClient() {
   }, [id, name, resolveNameToId]);
 
   useEffect(() => {
-    if (unlocked) {
-      void fetchData();
-    }
-  }, [unlocked, fetchData]);
-
-  function tryUnlock(e: React.FormEvent) {
-    e.preventDefault();
-    if (pwInput === OWNER_PASSWORD) {
-      try {
-        sessionStorage.setItem(SESSION_KEY, "1");
-      } catch {
-        // ignore
-      }
-      setUnlocked(true);
-      setPwError(null);
-    } else {
-      setPwError("Wrong password.");
-    }
-  }
-
-  // ---------- Locked view ----------
-  if (ready && !unlocked) {
-    return (
-      <main className="flex min-h-screen items-center justify-center bg-[#faf9f6] px-4 py-12">
-        <div className="w-full max-w-md border-2 border-black bg-white p-8 shadow-[6px_6px_0_0_rgba(10,10,10,1)]">
-          <div className="mb-5 flex h-12 w-12 items-center justify-center border-2 border-black bg-[#0a0a0a] text-white">
-            <Lock className="h-6 w-6" strokeWidth={2.5} />
-          </div>
-          <h1 className="mb-1 text-2xl font-black uppercase leading-tight tracking-tight">
-            Customer Detail
-          </h1>
-          <p className="mb-5 text-sm text-[#6b6b6b]">
-            Owner-only. Enter the password to view this customer's profile and
-            PI history.
-          </p>
-          <form onSubmit={tryUnlock}>
-            <input
-              type="password"
-              autoFocus
-              autoComplete="off"
-              value={pwInput}
-              onChange={(e) => {
-                setPwInput(e.target.value);
-                setPwError(null);
-              }}
-              placeholder="Password"
-              className="mb-2 w-full border-2 border-black bg-white px-3 py-2 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-[#ff4d00]/40"
-            />
-            {pwError && (
-              <div className="mb-2 text-xs font-bold text-[#ff4d00]">
-                {pwError}
-              </div>
-            )}
-            <button
-              type="submit"
-              className="w-full bg-[#0a0a0a] px-4 py-2 text-sm font-black uppercase tracking-wider text-white transition-colors hover:bg-[#ff4d00]"
-            >
-              Unlock
-            </button>
-          </form>
-          <div className="mt-5 border-t border-[#e5e5e5] pt-4 text-xs text-[#6b6b6b]">
-            <Link
-              href="/admin/customers/"
-              className="font-bold uppercase tracking-wider text-black hover:text-[#ff4d00]"
-            >
-              ← Back to customers
-            </Link>
-          </div>
-        </div>
-      </main>
-    );
-  }
+    void fetchData();
+  }, [fetchData]);
 
   // ---------- Loading state ----------
   if (loading && !customer) {

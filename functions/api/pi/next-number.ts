@@ -17,13 +17,32 @@
  */
 
 import type { EventContext } from "@cloudflare/workers-types";
+import { requireAdmin } from "../_admin-auth";
 
 interface Env {
   COZE_SUPABASE_URL: string;
   COZE_SUPABASE_SERVICE_ROLE_KEY: string;
+  // R125: required bearer token for admin access
+  ADMIN_TOKEN?: string;
 }
 
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
+
+export const onRequestOptions: (
+  context: EventContext<Env, string, Record<string, unknown>>,
+) => Promise<Response> = async () =>
+  new Response(null, { status: 204, headers: corsHeaders });
+
 export const onRequestGet: (context: EventContext<Env, string, Record<string, unknown>>) => Promise<Response> = async (context) => {
+  // ── ADMIN_TOKEN guard ──────────────────────────────────────────────
+  const guard = requireAdmin(context.request, new URL(context.request.url), context.env);
+  if (guard) return guard;
+  // ─────────────────────────────────────────────────────────────────
+
   try {
     const url = new URL(context.request.url);
     const prefix = url.searchParams.get("prefix") || defaultTodayPrefix();
@@ -99,11 +118,6 @@ function defaultTodayPrefix(): string {
 function jsonResponse(data: unknown, status = 200): Response {
   return new Response(JSON.stringify(data), {
     status,
-    headers: {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type",
-    },
+    headers: { "Content-Type": "application/json", ...corsHeaders },
   });
 }

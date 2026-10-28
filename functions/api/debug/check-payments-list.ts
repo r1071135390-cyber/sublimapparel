@@ -7,6 +7,7 @@
 // to confirm the webhook also wrote the payments row.
 
 import { normalizeSupabaseUrl } from "../_utils";
+import { requireAdmin } from "../_admin-auth";
 
 interface Env {
   COZE_SUPABASE_URL: string;
@@ -31,24 +32,6 @@ function jsonResponse(data: unknown, status = 200): Response {
     status,
     headers: { "Content-Type": "application/json", ...corsHeaders },
   });
-}
-
-/** Length-independent comparison so the token check leaks no length. */
-function tokenMatches(provided: string, expected: string): boolean {
-  if (provided.length !== expected.length) return false;
-  let diff = 0;
-  for (let i = 0; i < expected.length; i++) {
-    diff |= provided.charCodeAt(i) ^ expected.charCodeAt(i);
-  }
-  return diff === 0;
-}
-
-function readToken(request: Request, url: URL): string | null {
-  const header = request.headers.get("Authorization") ?? "";
-  if (header.toLowerCase().startsWith("bearer ")) {
-    return header.slice(7).trim();
-  }
-  return url.searchParams.get("token");
 }
 
 export async function onRequestOptions(): Promise<Response> {
@@ -81,19 +64,8 @@ async function handleRequest(context: {
 
   // 2026-10-26 (R124): fail closed. No configured token means no access,
   // not open access.
-  if (!env.ADMIN_TOKEN) {
-    return jsonResponse(
-      {
-        error:
-          "ADMIN_TOKEN is not configured on this deployment. Add it as a Cloudflare Pages environment variable to use this endpoint.",
-      },
-      403,
-    );
-  }
-  const providedToken = readToken(request, new URL(request.url));
-  if (!providedToken || !tokenMatches(providedToken, env.ADMIN_TOKEN)) {
-    return jsonResponse({ error: "Unauthorized" }, 403);
-  }
+  const guard = requireAdmin(request, new URL(request.url), env);
+  if (guard) return guard;
 
   if (!env.COZE_SUPABASE_URL || !env.COZE_SUPABASE_SERVICE_ROLE_KEY) {
     return jsonResponse(

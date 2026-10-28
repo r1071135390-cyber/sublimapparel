@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import EditPIClient from "./EditPIClient";
+import { AdminGate } from "@/components/admin/AdminGate";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Edit PI | SublimApparel Sales Portal",
@@ -10,5 +11,9 @@ export const metadata: Metadata = buildPageMetadata({
 });
 
 export default function EditPI() {
-  return <EditPIClient />;
+  return (
+    <AdminGate title="Edit PI">
+      <EditPIClient />
+    </AdminGate>
+  );
 }

@@ -7,9 +7,12 @@
 // session created on demand.
 
 import { normalizeSupabaseUrl } from "../_utils";
+import { requireAdmin } from "../_admin-auth";
 interface Env {
   COZE_SUPABASE_URL: string;
   COZE_SUPABASE_SERVICE_ROLE_KEY: string;
+  // R125: required bearer token for admin access
+  ADMIN_TOKEN?: string;
 }
 
 interface SizeBreakdown {
@@ -157,6 +160,11 @@ export async function onRequestPost(context: {
   env: Env;
 }): Promise<Response> {
   const { request, env } = context;
+
+  // ── ADMIN_TOKEN guard ──────────────────────────────────────────────
+  const guard = requireAdmin(request, new URL(request.url), env);
+  if (guard) return guard;
+  // ─────────────────────────────────────────────────────────────────
 
   if (!env.COZE_SUPABASE_URL || !env.COZE_SUPABASE_SERVICE_ROLE_KEY) {
     return jsonResponse(

@@ -18,15 +18,8 @@ import {
   Pencil,
   Filter,
 } from "lucide-react";
+import { adminFetch } from "@/lib/admin-token";
 import type { FxRates } from "@/lib/fx-rates";
-
-// Owner-only access. Change this string to whatever you'd like — it's the
-// only thing standing between anyone who finds the URL and your sales data.
-// We do NOT rely on this for real security; the assumption is that no one
-// outside the owner knows this page exists. The password just keeps a
-// curious teammate from casually opening /admin/summary/.
-const OWNER_PASSWORD = "HOMEdorm521$$$";
-const SESSION_KEY = "pi_summary_unlocked";
 
 interface PiListItem {
   id: number | string;
@@ -217,31 +210,10 @@ function formatDate(iso: string): string {
 }
 
 export default function SummaryClient() {
-  // Locked until the owner enters the password. We initialize from
-  // sessionStorage so the owner only has to type it once per browser tab.
-  const [unlocked, setUnlocked] = useState<boolean>(false);
-  const [ready, setReady] = useState<boolean>(false); // avoid hydration flash
-
   const [stats, setStats] = useState<SummaryStats | null>(null);
   const [pis, setPis] = useState<PiListItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
-  // Password gate state
-  const [pwInput, setPwInput] = useState("");
-  const [pwError, setPwError] = useState<string | null>(null);
-
-  useEffect(() => {
-    // Read unlock flag from sessionStorage after mount (avoids SSR mismatch).
-    try {
-      if (sessionStorage.getItem(SESSION_KEY) === "1") {
-        setUnlocked(true);
-      }
-    } catch {
-      // sessionStorage may be unavailable (e.g. private mode quirks) — ignore.
-    }
-    setReady(true);
-  }, []);
 
   // 2026-10-04 (R82): per-row Delete UI state. `confirmTarget` holds the
   // PI the admin is currently being asked to confirm deletion of; null
@@ -272,21 +244,6 @@ export default function SummaryClient() {
     customerOptions.map((c) => [c.customer_name.trim().toLowerCase(), c.id]),
   );
 
-  function tryUnlock(e: React.FormEvent) {
-    e.preventDefault();
-    if (pwInput === OWNER_PASSWORD) {
-      try {
-        sessionStorage.setItem(SESSION_KEY, "1");
-      } catch {
-        // ignore
-      }
-      setUnlocked(true);
-      setPwError(null);
-    } else {
-      setPwError("Wrong password.");
-    }
-  }
-
   async function fetchData(customerId: string) {
     setLoading(true);
     setError(null);
@@ -294,7 +251,7 @@ export default function SummaryClient() {
       const url = customerId
         ? `/api/pi/list/?customer=${encodeURIComponent(customerId)}`
         : "/api/pi/list/";
-      const res = await fetch(url, { cache: "no-store" });
+      const res = await adminFetch(url, { cache: "no-store" });
       if (!res.ok) {
         const t = await res.text();
         setError(`Load failed (${res.status}): ${t}`);
@@ -317,7 +274,7 @@ export default function SummaryClient() {
   // Errors here are non-fatal — the dropdown just shows "All customers".
   async function fetchCustomers() {
     try {
-      const res = await fetch("/api/admin/customers/list/", {
+      const res = await adminFetch("/api/admin/customers/list/", {
         cache: "no-store",
       });
       if (!res.ok) return;
@@ -331,7 +288,6 @@ export default function SummaryClient() {
   // 2026-10-13 (Phase A.2): read ?customer=<id> from the URL on first
   // unlock so deep-links / refreshes stay sticky.
   useEffect(() => {
-    if (!unlocked) return;
     try {
       const params = new URLSearchParams(window.location.search);
       const id = params.get("customer") || "";
@@ -342,7 +298,7 @@ export default function SummaryClient() {
       // ignore
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [unlocked]);
+  }, []);
 
   // 2026-10-13 (Phase A.2): when the dropdown changes (and we're
   // already unlocked), re-fetch and push to the URL. We use
@@ -386,7 +342,7 @@ export default function SummaryClient() {
     setDeleting(true);
     setDeleteError(null);
     try {
-      const res = await fetch("/api/pi/delete/", {
+      const res = await adminFetch("/api/pi/delete/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ piNumber: confirmTarget.piNumber }),
@@ -413,59 +369,6 @@ export default function SummaryClient() {
     } finally {
       setDeleting(false);
     }
-  }
-
-  // ---------- Locked view ----------
-
-  if (ready && !unlocked) {
-    return (
-      <main className="flex min-h-screen items-center justify-center bg-[#faf9f6] px-4 py-12">
-        <div className="w-full max-w-md border-2 border-black bg-white p-8 shadow-[6px_6px_0_0_rgba(10,10,10,1)]">
-          <div className="mb-5 flex h-12 w-12 items-center justify-center border-2 border-black bg-[#0a0a0a] text-white">
-            <Lock className="h-6 w-6" strokeWidth={2.5} />
-          </div>
-          <h1 className="mb-1 text-2xl font-black uppercase leading-tight tracking-tight">
-            PI Summary
-          </h1>
-          <p className="mb-5 text-sm text-[#6b6b6b]">
-            Owner-only. Enter the password to view sales overview.
-          </p>
-          <form onSubmit={tryUnlock}>
-            <input
-              type="password"
-              autoFocus
-              autoComplete="off"
-              value={pwInput}
-              onChange={(e) => {
-                setPwInput(e.target.value);
-                setPwError(null);
-              }}
-              placeholder="Password"
-              className="mb-2 w-full border-2 border-black bg-white px-3 py-2 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-[#ff4d00]/40"
-            />
-            {pwError && (
-              <div className="mb-2 text-xs font-bold text-[#ff4d00]">
-                {pwError}
-              </div>
-            )}
-            <button
-              type="submit"
-              className="w-full bg-[#0a0a0a] px-4 py-2 text-sm font-black uppercase tracking-wider text-white transition-colors hover:bg-[#ff4d00]"
-            >
-              Unlock
-            </button>
-          </form>
-          <div className="mt-5 border-t border-[#e5e5e5] pt-4 text-xs text-[#6b6b6b]">
-            <Link
-              href="/admin/"
-              className="font-bold uppercase tracking-wider text-black hover:text-[#ff4d00]"
-            >
-              ← Back to admin
-            </Link>
-          </div>
-        </div>
-      </main>
-    );
   }
 
   // ---------- Main summary view ----------

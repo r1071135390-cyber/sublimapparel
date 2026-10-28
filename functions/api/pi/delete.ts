@@ -28,16 +28,19 @@
 //      list.ts; the delete is just a write-side mirror of that.
 
 import { normalizeSupabaseUrl } from "../_utils";
+import { requireAdmin } from "../_admin-auth";
 
 interface Env {
   COZE_SUPABASE_URL: string;
   COZE_SUPABASE_SERVICE_ROLE_KEY: string;
+  // R125: required bearer token for admin access
+  ADMIN_TOKEN?: string;
 }
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
 };
 
 function jsonResponse(data: unknown, status = 200): Response {
@@ -60,6 +63,11 @@ export async function onRequestPost(context: {
   env: Env;
 }): Promise<Response> {
   const { request, env } = context;
+
+  // ── ADMIN_TOKEN guard ──────────────────────────────────────────────
+  const guard = requireAdmin(request, new URL(request.url), env);
+  if (guard) return guard;
+  // ─────────────────────────────────────────────────────────────────
 
   if (!env.COZE_SUPABASE_URL || !env.COZE_SUPABASE_SERVICE_ROLE_KEY) {
     return jsonResponse(

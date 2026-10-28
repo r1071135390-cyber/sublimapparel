@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import NewPIClient from "./NewPIClient";
+import { AdminGate } from "@/components/admin/AdminGate";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "New PI — manual entry | SublimApparel Sales Portal",
@@ -9,5 +10,9 @@ export const metadata: Metadata = buildPageMetadata({
 });
 
 export default function NewPI() {
-  return <NewPIClient />;
+  return (
+    <AdminGate title="New PI">
+      <NewPIClient />
+    </AdminGate>
+  );
 }

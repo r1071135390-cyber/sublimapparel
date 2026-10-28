@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import BankAccountsClient from "./BankAccountsClient";
+import { AdminGate } from "@/components/admin/AdminGate";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Bank Accounts — SublimApparel Sales Portal",
@@ -14,5 +15,9 @@ export const metadata: Metadata = buildPageMetadata({
 });
 
 export default function BankAccountsPage() {
-  return <BankAccountsClient />;
+  return (
+    <AdminGate title="Bank Accounts">
+      <BankAccountsClient />
+    </AdminGate>
+  );
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import SummaryClient from "./SummaryClient";
+import { AdminGate } from "@/components/admin/AdminGate";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "PI Summary — SublimApparel Sales Portal",
@@ -9,5 +10,9 @@ export const metadata: Metadata = buildPageMetadata({
 });
 
 export default function SummaryPage() {
-  return <SummaryClient />;
+  return (
+    <AdminGate title="PI Summary">
+      <SummaryClient />
+    </AdminGate>
+  );
 }

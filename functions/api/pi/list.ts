@@ -16,6 +16,7 @@
 // supabase/migrations/20261013_customers_archive.sql.
 
 import { normalizeSupabaseUrl } from "../_utils";
+import { requireAdmin } from "../_admin-auth";
 import {
   FX_RATES,
   TRACKED_CURRENCIES,
@@ -26,6 +27,8 @@ import {
 interface Env {
   COZE_SUPABASE_URL: string;
   COZE_SUPABASE_SERVICE_ROLE_KEY: string;
+  // R125: required bearer token for admin access
+  ADMIN_TOKEN?: string;
 }
 
 const corsHeaders = {
@@ -98,6 +101,11 @@ export async function onRequestGet(context: {
   env: Env;
 }): Promise<Response> {
   const { env, request } = context;
+
+  // ── ADMIN_TOKEN guard ──────────────────────────────────────────────
+  const guard = requireAdmin(request, new URL(request.url), env);
+  if (guard) return guard;
+  // ─────────────────────────────────────────────────────────────────
 
   if (!env.COZE_SUPABASE_URL || !env.COZE_SUPABASE_SERVICE_ROLE_KEY) {
     return jsonResponse(

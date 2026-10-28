@@ -12,15 +12,9 @@ import {
   Mail,
   Calendar,
   Hash,
-  Lock,
   AlertTriangle,
 } from "lucide-react";
-
-// Owner-only access. Same gate as SummaryClient — see that file for the
-// security model. We duplicate the constant rather than share a module so
-// the summary page remains self-contained and easy to reason about.
-const OWNER_PASSWORD = "HOMEdorm521\$\$\$";
-const SESSION_KEY = "pi_customers_unlocked";
+import { adminFetch } from "@/lib/admin-token";
 
 interface CustomerRow {
   id: string;
@@ -42,28 +36,11 @@ function formatDate(iso: string | null): string {
 }
 
 export default function CustomersClient() {
-  // ---------- Lock state ----------
-  const [unlocked, setUnlocked] = useState<boolean>(false);
-  const [ready, setReady] = useState<boolean>(false);
-  const [pwInput, setPwInput] = useState("");
-  const [pwError, setPwError] = useState<string | null>(null);
-
   // ---------- Data state ----------
   const [rows, setRows] = useState<CustomerRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState("");
-
-  useEffect(() => {
-    try {
-      if (sessionStorage.getItem(SESSION_KEY) === "1") {
-        setUnlocked(true);
-      }
-    } catch {
-      // ignore
-    }
-    setReady(true);
-  }, []);
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -71,7 +48,7 @@ export default function CustomersClient() {
     try {
       const params = new URLSearchParams({ limit: "500" });
       if (search.trim()) params.set("search", search.trim());
-      const res = await fetch(
+      const res = await adminFetch(
         `/api/admin/customers/list/?${params.toString()}`,
         { cache: "no-store" },
       );
@@ -90,77 +67,9 @@ export default function CustomersClient() {
   }, [search]);
 
   useEffect(() => {
-    if (unlocked) {
-      void fetchData();
-    }
-  }, [unlocked, fetchData]);
+    void fetchData();
+  }, [fetchData]);
 
-  function tryUnlock(e: React.FormEvent) {
-    e.preventDefault();
-    if (pwInput === OWNER_PASSWORD) {
-      try {
-        sessionStorage.setItem(SESSION_KEY, "1");
-      } catch {
-        // ignore
-      }
-      setUnlocked(true);
-      setPwError(null);
-    } else {
-      setPwError("Wrong password.");
-    }
-  }
-
-  // ---------- Locked view ----------
-  if (ready && !unlocked) {
-    return (
-      <main className="flex min-h-screen items-center justify-center bg-[#faf9f6] px-4 py-12">
-        <div className="w-full max-w-md border-2 border-black bg-white p-8 shadow-[6px_6px_0_0_rgba(10,10,10,1)]">
-          <div className="mb-5 flex h-12 w-12 items-center justify-center border-2 border-black bg-[#0a0a0a] text-white">
-            <Lock className="h-6 w-6" strokeWidth={2.5} />
-          </div>
-          <h1 className="mb-1 text-2xl font-black uppercase leading-tight tracking-tight">
-            Customers
-          </h1>
-          <p className="mb-5 text-sm text-[#6b6b6b]">
-            Owner-only. Enter the password to view the customer archive.
-          </p>
-          <form onSubmit={tryUnlock}>
-            <input
-              type="password"
-              autoFocus
-              autoComplete="off"
-              value={pwInput}
-              onChange={(e) => {
-                setPwInput(e.target.value);
-                setPwError(null);
-              }}
-              placeholder="Password"
-              className="mb-2 w-full border-2 border-black bg-white px-3 py-2 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-[#ff4d00]/40"
-            />
-            {pwError && (
-              <div className="mb-2 text-xs font-bold text-[#ff4d00]">
-                {pwError}
-              </div>
-            )}
-            <button
-              type="submit"
-              className="w-full bg-[#0a0a0a] px-4 py-2 text-sm font-black uppercase tracking-wider text-white transition-colors hover:bg-[#ff4d00]"
-            >
-              Unlock
-            </button>
-          </form>
-          <div className="mt-5 border-t border-[#e5e5e5] pt-4 text-xs text-[#6b6b6b]">
-            <Link
-              href="/admin/"
-              className="font-bold uppercase tracking-wider text-black hover:text-[#ff4d00]"
-            >
-              ← Back to admin
-            </Link>
-          </div>
-        </div>
-      </main>
-    );
-  }
 
   // ---------- Main view ----------
   return (

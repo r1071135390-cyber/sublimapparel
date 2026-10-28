@@ -1,36 +1,27 @@
 // functions/api/admin/bank-accounts.ts
 //
-// REPLACEMENT FILE — apply this to sublimapparel.com to enable cross-site
-// bank info push. The original file lives at:
-//   functions/api/admin/bank-accounts.ts
-//
 // 2026-10-05 (R103): admin CRUD endpoint for bank_accounts table.
+//
+// 2026-10-27 (R125): ADMIN_TOKEN authentication added — fail-closed.
+// This endpoint leaks bank account numbers (SWIFT, IBAN, account number)
+// and must NOT be accessible without a valid bearer token. Unauthorised
+// requests receive 403 even when the token is missing.
 //
 // GET /api/admin/bank-accounts
 //   Returns all bank_accounts rows for the active site_slug
 //   (default 'sublimapparel'). Used by /admin/bank-accounts/ to hydrate
 //   the form and by /pay/ PayClient to pick the right account for the
-//   PI's currency.
+//   PI's currency. Requires ADMIN_TOKEN bearer.
 //
 // PUT /api/admin/bank-accounts
 //   Body: { currency: 'usd'|'eur'|'gbp'|'cny', ...BankAccount fields }
 //   Upserts a row keyed on (site_slug, currency). Triggers the
-//   updated_at bump automatically.
+//   updated_at bump automatically. Requires ADMIN_TOKEN bearer.
 //   POST-PUT (R115): also pushes the new row to OEMTSHIRTS_BANK_WEBHOOK_URL
 //   so the WordPress PI plugin at oemtshirts.com can sync. Signature
 //   header is HMAC-SHA256 of the raw body using OEMTSHIRTS_BANK_WEBHOOK_SECRET.
-//
-// Why this endpoint and not the next-on-pages /api/... route:
-//   The /api/pi/* family lives in functions/api/pi/*.ts and uses the
-//   service role key directly. /pay/ PayClient calls the same endpoints
-//   via fetch('/api/pi/...'). Keeping bank-accounts in the same place
-//   means one auth surface (service role) and one CORS posture.
-//
-// Note: this endpoint is INTERNAL. The admin page is noindex/nofollow
-// and admin pages don't require login today (same as the rest of /admin/*).
-// The RLS deny-all on bank_accounts means the only way bank details
-// leave Supabase is through this function, which only the server bundle
-// can call with the service role key.
+
+import { requireAdmin } from "../_admin-auth";
 
 interface Env {
   COZE_SUPABASE_URL: string;
@@ -39,21 +30,20 @@ interface Env {
   // POSTs the new row to OEMTSHIRTS_BANK_WEBHOOK_URL with an HMAC signature.
   OEMTSHIRTS_BANK_WEBHOOK_URL?: string;
   OEMTSHIRTS_BANK_WEBHOOK_SECRET?: string;
+  // R125: required bearer token for admin access
+  ADMIN_TOKEN?: string;
 }
 
 interface PagesContext {
   request: Request;
   env: Env;
-  // Cloudflare Pages Functions expose ctx.waitUntil(promise) which keeps the
-  // worker alive until the promise settles. Optional so the function still
-  // type-checks when called outside the Pages runtime (e.g. local tests).
   waitUntil?: (promise: Promise<unknown>) => void;
 }
 
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET, PUT, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
   "Content-Type": "application/json",
 };
 
@@ -184,7 +174,6 @@ async function pushToOemtshirts(row: BankAccountRow, env: Env): Promise<void> {
   const url = env.OEMTSHIRTS_BANK_WEBHOOK_URL;
   const secret = env.OEMTSHIRTS_BANK_WEBHOOK_SECRET;
   if (!url || !secret) {
-    // Webhook not configured — silent no-op. See bank-webhook-setup-guide.md.
     return;
   }
   const payload = JSON.stringify({
@@ -217,17 +206,22 @@ async function pushToOemtshirts(row: BankAccountRow, env: Env): Promise<void> {
   }
 }
 
-async function handleGet(env: Env): Promise<Response> {
+async function handleGet(ctx: PagesContext): Promise<Response> {
+  // ── ADMIN_TOKEN guard ──────────────────────────────────────────────
+  const guard = requireAdmin(ctx.request, new URL(ctx.request.url), ctx.env);
+  if (guard) return guard;
+  // ─────────────────────────────────────────────────────────────────
+
   const url =
-    `${env.COZE_SUPABASE_URL}/rest/v1/bank_accounts` +
+    `${ctx.env.COZE_SUPABASE_URL}/rest/v1/bank_accounts` +
     `?site_slug=eq.${SITE_SLUG}` +
     `&select=id,site_slug,currency,label,symbol,beneficiary,company_address,bank_name,account,swift,bank_address,iban,bank_country,routing_number,cnaps,intermediary_bank,notes,created_at,updated_at` +
     `&order=currency.asc`;
 
   const res = await fetch(url, {
     headers: {
-      apikey: env.COZE_SUPABASE_SERVICE_ROLE_KEY,
-      Authorization: `Bearer ${env.COZE_SUPABASE_SERVICE_ROLE_KEY}`,
+      apikey: ctx.env.COZE_SUPABASE_SERVICE_ROLE_KEY,
+      Authorization: `Bearer ${ctx.env.COZE_SUPABASE_SERVICE_ROLE_KEY}`,
     },
   });
 
@@ -242,6 +236,11 @@ async function handleGet(env: Env): Promise<Response> {
 }
 
 async function handlePut(ctx: PagesContext): Promise<Response> {
+  // ── ADMIN_TOKEN guard ──────────────────────────────────────────────
+  const guard = requireAdmin(ctx.request, new URL(ctx.request.url), ctx.env);
+  if (guard) return guard;
+  // ─────────────────────────────────────────────────────────────────
+
   let body: unknown;
   try {
     body = await ctx.request.json();
@@ -255,8 +254,6 @@ async function handlePut(ctx: PagesContext): Promise<Response> {
   }
   const data = validation.data;
 
-  // Use PostgREST upsert via Prefer: resolution=merge-duplicates so we can
-  // update on conflict. The unique constraint is (site_slug, currency).
   const url = `${ctx.env.COZE_SUPABASE_URL}/rest/v1/bank_accounts?on_conflict=site_slug,currency`;
   const res = await fetch(url, {
     method: "POST",
@@ -294,10 +291,6 @@ async function handlePut(ctx: PagesContext): Promise<Response> {
 
   const rows = (await res.json()) as BankAccountRow[];
 
-  // R115: schedule the OEMtshirts push via ctx.waitUntil so the worker
-  // keeps running until the webhook settles. If the runtime doesn't
-  // expose waitUntil (e.g. local test), we still fire-and-forget via a
-  // detached promise — pushToOemtshirts catches its own errors.
   if (ctx.waitUntil) {
     ctx.waitUntil(pushToOemtshirts(rows[0], ctx.env));
   } else {
@@ -307,8 +300,8 @@ async function handlePut(ctx: PagesContext): Promise<Response> {
   return json({ ok: true, account: rows[0] });
 }
 
-export async function onRequestGet(ctx: { env: Env }): Promise<Response> {
-  return handleGet(ctx.env);
+export async function onRequestGet(ctx: { env: Env; request: Request }): Promise<Response> {
+  return handleGet({ env: ctx.env, request: ctx.request });
 }
 
 export async function onRequestPut(ctx: PagesContext): Promise<Response> {

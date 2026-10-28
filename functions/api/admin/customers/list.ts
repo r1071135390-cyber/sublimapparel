@@ -2,24 +2,34 @@
 //
 // 2026-10-13 (Phase A.2): Returns the customer archive used by the
 // `/admin/summary` page's customer-filter dropdown.
+//
+// 2026-10-27 (R125): ADMIN_TOKEN authentication added — fail-closed.
+// This endpoint leaks customer PII (email + company name) and must NOT
+// be accessible without a valid bearer token. Unauthorised requests
+// receive 403 even when the token is missing (not 401, which would
+// distinguish "token absent" from "token wrong").
 
 import { normalizeSupabaseUrl } from "../../_utils";
+import { requireAdmin } from "../../_admin-auth";
 
 interface Env {
   COZE_SUPABASE_URL: string;
   COZE_SUPABASE_SERVICE_ROLE_KEY: string;
+  // R125: required bearer token for admin access
+  ADMIN_TOKEN?: string;
 }
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type, Authorization",
+  "Content-Type": "application/json",
 };
 
 function jsonResponse(data: unknown, status = 200): Response {
   return new Response(JSON.stringify(data), {
     status,
-    headers: { "Content-Type": "application/json", ...corsHeaders },
+    headers: corsHeaders,
   });
 }
 
@@ -38,16 +48,22 @@ interface CustomerRow {
 
 const DEFAULT_LIMIT = 500;
 
+// R125: apply requireAdmin guard at the very top
 export async function onRequestGet(context: {
   request: Request;
   env: Env;
 }): Promise<Response> {
   const { env, request } = context;
 
+  // ── ADMIN_TOKEN guard ──────────────────────────────────────────────
+  const guard = requireAdmin(request, new URL(request.url), env);
+  if (guard) return guard;
+  // ─────────────────────────────────────────────────────────────────
+
   if (!env.COZE_SUPABASE_URL || !env.COZE_SUPABASE_SERVICE_ROLE_KEY) {
     return jsonResponse(
       { error: "Supabase credentials not configured" },
-      500
+      500,
     );
   }
 
@@ -77,14 +93,14 @@ export async function onRequestGet(context: {
 
   const res = await fetch(
     `${supabaseUrl}/rest/v1/customers?${params.toString()}`,
-    { headers }
+    { headers },
   );
 
   if (!res.ok) {
     const text = await res.text();
     return jsonResponse(
       { error: "Supabase query failed", detail: text },
-      500
+      500,
     );
   }
 
