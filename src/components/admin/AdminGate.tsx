@@ -12,23 +12,28 @@ import Link from "next/link";
 import { Lock, AlertTriangle } from "lucide-react";
 import {
   ADMIN_TOKEN_REJECTED_EVENT,
-  OWNER_PASSWORD,
   clearAdminToken,
   getAdminToken,
   hasPasswordSession,
   setAdminToken,
   setPasswordSession,
   verifyAdminToken,
+  verifyOwnerPassword,
 } from "@/lib/admin-token";
 
 /**
  * One gate for every /administered/* page.
  *
  * Two things have to be true before an admin page talks to the API:
- *   1. the owner knows the owner password (the local UI gate that has
- *      always protected these pages), and
+ *   1. the owner knows the owner password, and
  *   2. the browser holds a token the server accepts (ADMIN_TOKEN, checked
  *      by functions/api/_admin-auth.ts).
+ *
+ * Both are now checked by the server. The owner password used to be
+ * compared here in the browser against a constant that shipped inside the
+ * public JS bundle, which handed it to anyone who downloaded the chunk. It
+ * is posted to /api/admin/verify instead, where the server compares its
+ * SHA-256 digest against the OWNER_PASSWORD_HASH environment variable.
  *
  * The password alone is not enough any more — the API rejects every
  * request without a valid bearer token. The token alone is not enough
@@ -95,13 +100,6 @@ export function useAdminGate(
       event.preventDefault();
       if (checking) return;
 
-      // The password is only asked for once per tab. After that the
-      // session flag stands in for it.
-      if (!hasPasswordSession() && password !== OWNER_PASSWORD) {
-        setError("Wrong password.");
-        return;
-      }
-
       const value = token.trim();
       if (!value) {
         setError("Enter the admin token.");
@@ -110,14 +108,26 @@ export function useAdminGate(
 
       setChecking(true);
       setError(null);
-      const result = await verifyAdminToken(value);
-      setChecking(false);
 
-      if (!result.ok) {
-        setError(result.message ?? "The admin token was rejected.");
+      const tokenResult = await verifyAdminToken(value);
+      if (!tokenResult.ok) {
+        setChecking(false);
+        setError(tokenResult.message ?? "The admin token was rejected.");
         return;
       }
 
+      // The password is only asked for once per tab. After that the
+      // session flag stands in for it.
+      if (!hasPasswordSession()) {
+        const passwordResult = await verifyOwnerPassword(password, value);
+        if (!passwordResult.ok) {
+          setChecking(false);
+          setError(passwordResult.message ?? "Wrong password.");
+          return;
+        }
+      }
+
+      setChecking(false);
       setAdminToken(value);
       setPasswordSession();
       setUnlocked(true);

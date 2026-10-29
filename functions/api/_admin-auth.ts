@@ -20,6 +20,9 @@
 
 export interface AdminEnv {
   ADMIN_TOKEN?: string;
+  // SHA-256 (hex) of the owner password. R128: the password itself used to
+  // be a constant in the public client bundle; only the digest lives here.
+  OWNER_PASSWORD_HASH?: string;
 }
 
 /**
@@ -31,6 +34,45 @@ export function tokenMatches(provided: string, expected: string): boolean {
   let diff = 0;
   for (let i = 0; i < expected.length; i++) {
     diff |= provided.charCodeAt(i) ^ expected.charCodeAt(i);
+  }
+  return diff === 0;
+}
+
+/**
+ * SHA-256 of a string, hex encoded.
+ *
+ * Used to turn the owner password into something we can store in an
+ * environment variable and compare without ever holding the plaintext.
+ */
+export async function sha256Hex(value: string): Promise<string> {
+  const digest = await crypto.subtle.digest(
+    "SHA-256",
+    new TextEncoder().encode(value),
+  );
+  return Array.from(new Uint8Array(digest))
+    .map((byte) => byte.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+/**
+ * Constant-time comparison for secrets whose length we must not leak.
+ *
+ * tokenMatches() bails out as soon as the lengths differ, which is fine for
+ * the fixed-length ADMIN_TOKEN but would reveal how long a candidate
+ * password is. Here both sides are hashed first, so the comparison always
+ * runs over 32 fixed bytes no matter what the inputs look like.
+ */
+export async function secretEquals(
+  provided: string,
+  expected: string,
+): Promise<boolean> {
+  const [a, b] = await Promise.all([
+    sha256Hex(provided),
+    sha256Hex(expected),
+  ]);
+  let diff = 0;
+  for (let i = 0; i < a.length; i++) {
+    diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
   }
   return diff === 0;
 }

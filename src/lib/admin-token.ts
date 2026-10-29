@@ -17,11 +17,6 @@ export const ADMIN_PASSWORD_STORAGE_KEY = "sa_admin_password_unlocked";
 // re-lock instead of leaving the operator staring at empty tables.
 export const ADMIN_TOKEN_REJECTED_EVENT = "admin-token-rejected";
 
-// The owner password that used to be the only gate for /administered/*. It is
-// still recognised so the existing owner workflow keeps working, but it
-// grants UI access only — the API is guarded by ADMIN_TOKEN on the server.
-export const OWNER_PASSWORD = "HOMEdorm521$$$";
-
 export function getAdminToken(): string | null {
   if (typeof window === "undefined") return null;
   try {
@@ -158,6 +153,67 @@ export async function verifyAdminToken(
       message:
         "Admin verification endpoint not found. The Cloudflare Functions deployment looks out of date.",
     };
+  }
+
+  const body = await res.text().catch(() => "");
+  let serverMessage = "";
+  try {
+    const parsed = JSON.parse(body) as { error?: string };
+    if (parsed && typeof parsed.error === "string") serverMessage = parsed.error;
+  } catch {
+    serverMessage = body.slice(0, 200);
+  }
+
+  return { ok: false, message: describeAuthFailure(serverMessage) };
+}
+
+/**
+ * Ask the server whether the owner password is correct.
+ *
+ * R128: the password is no longer compared in the browser. It used to be
+ * checked against a constant exported from this module, and because this
+ * module is imported by "use client" components, that constant ended up in
+ * the public JS chunk where anybody could read it. The password now travels
+ * over TLS to /api/admin/verify, where the server compares its SHA-256
+ * digest against the OWNER_PASSWORD_HASH environment variable.
+ *
+ * The request carries the ADMIN_TOKEN too: without it this endpoint would
+ * be a password oracle that anyone on the internet could grind against.
+ */
+export async function verifyOwnerPassword(
+  password: string,
+  token: string,
+): Promise<{ ok: boolean; message?: string }> {
+  let res: Response;
+  try {
+    res = await fetch("/api/admin/verify", {
+      method: "POST",
+      cache: "no-store",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ password }),
+    });
+  } catch {
+    return {
+      ok: false,
+      message: "Could not reach the server. Check your connection and try again.",
+    };
+  }
+
+  if (res.ok) return { ok: true };
+
+  if (res.status === 404) {
+    return {
+      ok: false,
+      message:
+        "Admin verification endpoint not found. The Cloudflare Functions deployment looks out of date.",
+    };
+  }
+
+  if (res.status === 401) {
+    return { ok: false, message: "Wrong password." };
   }
 
   const body = await res.text().catch(() => "");

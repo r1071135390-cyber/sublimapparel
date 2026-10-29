@@ -26,7 +26,7 @@
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, Save, RefreshCw, AlertCircle, CheckCircle2, Building2, RotateCcw } from "lucide-react";
-import { SUPPORTED_CURRENCIES, bankAccountFromRow, type BankAccount, type BankAccountRow as DbBankAccountRow, type SupportedCurrency } from "@/lib/bank-accounts";
+import { SUPPORTED_CURRENCIES, CURRENCY_SYMBOLS, bankAccountFromRow, type BankAccount, type BankAccountRow as DbBankAccountRow, type SupportedCurrency } from "@/lib/bank-accounts";
 import { adminFetch } from "@/lib/admin-token";
 
 interface FormBankAccountRow extends BankAccount {
@@ -49,13 +49,6 @@ const CURRENCY_LABELS: Record<SupportedCurrency, string> = {
   eur: "Euro",
   gbp: "British Pound",
   cny: "Chinese Yuan (RMB)",
-};
-
-const CURRENCY_SYMBOLS: Record<SupportedCurrency, string> = {
-  usd: "$",
-  eur: "€",
-  gbp: "£",
-  cny: "¥",
 };
 
 function emptyBankAccount(currency: SupportedCurrency): FormBankAccountRow {
@@ -395,7 +388,7 @@ export default function BankAccountsClient() {
         if (dbRow) {
           const converted = bankAccountFromRow(dbRow, c);
           const formRow: FormBankAccountRow = {
-            ...converted,
+            ...(converted ?? emptyBankAccount(c)),
             id: dbRow.id,
             site_slug: dbRow.site_slug,
             updated_at: dbRow.updated_at,
@@ -437,7 +430,7 @@ export default function BankAccountsClient() {
         if (!dbRow) return;
         const converted = bankAccountFromRow(dbRow, currency);
         const fresh: FormBankAccountRow = {
-          ...converted,
+          ...(converted ?? emptyBankAccount(currency)),
           id: dbRow.id,
           site_slug: dbRow.site_slug,
           updated_at: dbRow.updated_at,

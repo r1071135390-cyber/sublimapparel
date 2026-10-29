@@ -15,10 +15,12 @@
 --     write. Anonymous clients never see bank details.
 --   * updated_at triggers via a tiny stored procedure so admin save calls
 --     don't have to remember to set it.
---   * Seed rows for the 4 supported currencies using the hardcoded values
---     from src/lib/bank-accounts.ts. That way the dynamic reader falls
---     back to real data on first run; old PIs stay consistent with new
---     ones.
+--   * Seed rows for the 4 supported currencies use inert placeholders.
+--     The receiving account, SWIFT/BIC and CNAPS code are credentials:
+--     this repository is public, so any literal written here would be
+--     readable by anyone in the git history. The real values are entered
+--     once through /administered/bank-accounts/ and then live only in
+--     the bank_accounts table.
 --   * site_slug defaults to 'sublimapparel' per project convention. The
 --     future wholesale site may add a second row with a different slug.
 
@@ -85,9 +87,11 @@ CREATE POLICY bank_accounts_deny_all ON bank_accounts
   USING (false)
   WITH CHECK (false);
 
--- Seed rows for the 4 supported currencies. Values mirror
--- src/lib/bank-accounts.ts BANK_ACCOUNTS as of 2026-10-05 so first-time
--- reads return the same numbers the hardcoded file did.
+-- Seed rows for the 4 supported currencies. Account / SWIFT / CNAPS are
+-- placeholders on purpose (see the header note): the receiving details
+-- are configured in /administered/bank-accounts/ and are never stored in
+-- source control. ON CONFLICT DO NOTHING keeps any row already saved by
+-- an administrator untouched.
 INSERT INTO bank_accounts (
   site_slug, currency, label, symbol,
   beneficiary, company_address,
@@ -98,38 +102,38 @@ INSERT INTO bank_accounts (
    'YIWU HOMEDORM COMMODITY MANUFACTURING CO.,LTD',
    '2nd Floor, No.11 Anshang Road, Yiwu City, Jinhua, Zhejiang Province, China',
    'Agricultural Bank of China, Zhejiang Branch',
-   '19648014040108531',
-   'ABOCCNBJ110',
+   'REPLACE-IN-ADMIN-UI',
+   'REPLACE-IN-ADMIN-UI',
    'No. 181 Binwang Road, Yiwu City, Jinhua, Zhejiang Province, China',
    NULL, 'US', NULL, NULL, NULL,
-   'Add reference: PI number (e.g. SA202610020002).'),
+   'REPLACE-IN-ADMIN-UI. Add reference: PI number (e.g. SA202610020002).'),
   ('sublimapparel', 'eur', 'EUR — Euro', '€',
    'YIWU HOMEDORM COMMODITY MANUFACTURING CO.,LTD',
    '2nd Floor, No.11 Anshang Road, Yiwu City, Jinhua, Zhejiang Province, China',
    'Agricultural Bank of China, Zhejiang Branch',
-   '19648014040108531',
-   'ABOCCNBJ110',
+   'REPLACE-IN-ADMIN-UI',
+   'REPLACE-IN-ADMIN-UI',
    'No. 181 Binwang Road, Yiwu City, Jinhua, Zhejiang Province, China',
    NULL, 'CN', NULL, NULL, NULL,
-   'EUR wires may route via intermediary bank. Sender''s bank may charge a fee; we receive net only.'),
+   'REPLACE-IN-ADMIN-UI. EUR wires may route via intermediary bank. Sender''s bank may charge a fee; we receive net only.'),
   ('sublimapparel', 'gbp', 'GBP — British Pound', '£',
    'YIWU HOMEDORM COMMODITY MANUFACTURING CO.,LTD',
    '2nd Floor, No.11 Anshang Road, Yiwu City, Jinhua, Zhejiang Province, China',
    'Agricultural Bank of China, Zhejiang Branch',
-   '19648014040108531',
-   'ABOCCNBJ110',
+   'REPLACE-IN-ADMIN-UI',
+   'REPLACE-IN-ADMIN-UI',
    'No. 181 Binwang Road, Yiwu City, Jinhua, Zhejiang Province, China',
    NULL, 'CN', NULL, NULL, NULL,
-   'GBP wires via SWIFT; please add PI number in the wire reference.'),
+   'REPLACE-IN-ADMIN-UI. GBP wires via SWIFT; please add PI number in the wire reference.'),
   ('sublimapparel', 'cny', 'CNY — Chinese Yuan (RMB)', '¥',
    '义乌市好梦家居用品制造有限公司',
    '浙江省义乌市安商路11号二楼',
    '中国农业银行浙江省分行',
-   '19648014040108531',
-   'ABOCCNBJ110',
+   'REPLACE-IN-ADMIN-UI',
+   'REPLACE-IN-ADMIN-UI',
    '浙江省金华市义乌市宾王路181号',
-   NULL, 'CN', NULL, '103338671188', NULL,
-   '国内人民币电汇请使用CNAPS代码103338671188。')
+   NULL, 'CN', NULL, 'REPLACE-IN-ADMIN-UI', NULL,
+   'REPLACE-IN-ADMIN-UI. 国内人民币电汇请使用CNAPS代码。')
 ON CONFLICT (site_slug, currency) DO NOTHING;
 
 COMMIT;

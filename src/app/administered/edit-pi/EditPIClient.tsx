@@ -44,7 +44,6 @@ import {
 } from "lucide-react";
 import { PIPreview } from "../new-pi/NewPIClient";
 import {
-  getBankAccount,
   bankAccountFromRow,
   type BankAccount,
   type BankAccountRow,
@@ -104,9 +103,9 @@ function EditPIClientInner() {
   const [issueDate, setIssueDate] = useState("");
   const [leadTimeText, setLeadTimeText] = useState("Within 30 days");
   const [currency, setCurrency] = useState<SupportedCurrency>("usd");
-  // R103: live bank info from /api/admin/bank-accounts (dynamic) with
-  // hardcoded BANK_ACCOUNTS fallback until the fetch resolves.
-  const [bankInfo, setBankInfo] = useState<BankAccount>(() => getBankAccount(currency));
+  // R103: live bank info from /api/admin/bank-accounts (dynamic).
+  // R128: no hardcoded fallback any more — null until the admin API answers.
+  const [bankInfo, setBankInfo] = useState<BankAccount | null>(null);
   useEffect(() => {
     let cancelled = false;
     (async () => {
@@ -118,7 +117,7 @@ function EditPIClientInner() {
         const row = data.accounts.find((r) => r.currency === currency) ?? null;
         setBankInfo(bankAccountFromRow(row, currency));
       } catch {
-        // keep hardcoded fallback
+        // leave the preview without a bank block
       }
     })();
     return () => {

@@ -24,7 +24,7 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { PIDisplay, type PIDisplayData } from "@/components/pi/PIDisplay";
 import { PayWithStripeElements } from "@/components/PayWithStripeElements";
-import { getBankAccount, bankAccountFromRow, type BankAccount, type BankAccountRow } from "@/lib/bank-accounts";
+import { bankAccountFromRow, type BankAccount, type BankAccountRow } from "@/lib/bank-accounts";
 import { Truck, CheckCircle2, Loader2, Download, Building2, CreditCard, AlertCircle } from "lucide-react";
 
 // ---------- Types ----------
@@ -103,11 +103,10 @@ export default function PayClient() {
   const [paymentMethod, setPaymentMethod] = useState<"card" | "bank">("card");
   const [bankSubmitted, setBankSubmitted] = useState(false);
   const [pdfGenerating, setPdfGenerating] = useState(false);
-  // R103: bank info loaded server-side from bank_accounts table.
-  // Defaults to hardcoded BANK_ACCOUNTS until the fetch resolves.
-  const [bankAccount, setBankAccount] = useState<BankAccount>(() =>
-    getBankAccount(""), // will be replaced on PI load
-  );
+  // R128: bank info comes from the server with the PI payload. There is
+  // no client-side fallback map any more — null means "not resolved yet",
+  // and the Bank Info block stays hidden until the server answers.
+  const [bankAccount, setBankAccount] = useState<BankAccount | null>(null);
 
   const loadPi = useCallback(async (): Promise<void> => {
     try {
@@ -118,10 +117,9 @@ export default function PayClient() {
       }
       const data = (await res.json()) as { pi: PIData; bank_account: BankAccountRow | null };
       setPi(data.pi);
-      // R103: admin-managed bank info from /api/admin/bank-accounts
-      // (loaded server-side and shipped alongside the PI). Falls back
-      // to the hardcoded BANK_ACCOUNTS map if the row is missing
-      // (e.g. network blip during the bank_accounts Supabase query).
+      // R128: the server resolved the account from the bank_accounts
+      // table and shipped it alongside the PI. If the row is missing we
+      // show no bank block rather than a hardcoded account number.
       setBankAccount(bankAccountFromRow(data.bank_account, data.pi.currency));
       if (data.pi.status === "pending_bank") setBankSubmitted(true);
     } catch (e) {
@@ -631,11 +629,9 @@ function CardPaymentMethod({
 
 // ---------- Bank transfer (T/T) ----------
 
-// 2026-10-04 (R80): bank account no longer hardcoded — driven by
-// pi.currency. Each PI picks the right receiving account for its
-// currency (USD/EUR/GBP/CNY) so the sender's bank doesn't have to
-// convert currencies (1-3% fee + 1-2 day delay).
-// Hardcoded account info lives in src/lib/bank-accounts.ts.
+// R128: the bank account is resolved server-side (bank_accounts table)
+// and handed down as a prop. The client holds no account data of its own,
+// so there is nothing to hardcode here.
 
 function BankTransferMethod({
   pi,
@@ -643,17 +639,14 @@ function BankTransferMethod({
   onSubmitted,
 }: {
   pi: PIData;
-  bankAccount: BankAccount;
+  bankAccount: BankAccount | null;
   onSubmitted: () => void;
 }) {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [wireRef, setWireRef] = useState("");
   const [agreed, setAgreed] = useState(false);
-  // 2026-10-04 (R80): resolve bank account from PI currency. Recomputes
-  // when the parent re-renders with a different pi (e.g. after admin
-  // updates the PI's currency in /administered/new-pi/).
-  // R103: bankAccount state already holds the DB-loaded (or fallback) bank.
+  // R128: bankAccount comes straight from the server payload.
   const bank = bankAccount;
 
   const copy = (text: string) => {
@@ -708,10 +701,18 @@ function BankTransferMethod({
         confirm below. Your PI will be marked as paid once our finance team verifies receipt (1-3 business days).
       </p>
 
+      {!bank ? (
+        <div className="mb-4 border-2 border-[#ff4d00] bg-[#fff5f0] p-4 text-sm text-[#cc3d00]">
+          Bank transfer details are not available yet. Please contact us at{" "}
+          <a href="mailto:chris@sublimapparel.com" className="font-bold underline">
+            chris@sublimapparel.com
+          </a>{" "}
+          and we will send you the receiving account.
+        </div>
+      ) : (
       <dl className="mb-4 space-y-1.5 border-2 border-black/10 bg-[#faf9f6] p-4 text-sm">
         <div className="flex justify-between gap-2">
           <dt className="shrink-0 text-xs font-bold uppercase tracking-wider text-black/60">Beneficiary</dt>
-          {/* 2026-10-04 (R80): all bank fields below come from getBankAccount(pi.currency). */}
           <dd className="text-right font-bold">{bank.beneficiary}</dd>
         </div>
         <div className="flex justify-between gap-2">
@@ -751,6 +752,7 @@ function BankTransferMethod({
           <dd className="font-mono font-black text-[#ff4d00]">{pi.pi_number}</dd>
         </div>
       </dl>
+      )}
 
       <form onSubmit={handleSubmit} className="space-y-3">
         <div>

@@ -149,11 +149,17 @@ export async function onRequestGet(context: {
 
   const row = rows[0];
   // 2026-10-05 (R103): fetch the bank_accounts row for this PI
-  // currency so the /pay/ page renders admin-managed bank info instead of
-  // the hardcoded fallback in src/lib/bank-accounts.ts. We fetch on every
-  // read (no in-memory cache) because the admin edits bank info via
+  // currency so the /pay/ page renders admin-managed bank info. We fetch on
+  // every read (no in-memory cache) because the admin edits bank info via
   // /administered/bank-accounts/ and we want those changes visible on the next
   // page load. Supabase responds in <50ms, so the cost is negligible.
+  //
+  // R128: the bank_accounts TABLE is the only source of truth. There is no
+  // hardcoded fallback map on either side of the wire any more — the client
+  // bundle no longer carries account numbers, and the server does not keep a
+  // copy either (the GitHub repo is public, so a copy under functions/ would
+  // be published as well). A missing row means the account has not been set
+  // up yet: we return null and the client asks the customer to get in touch.
   const piCurrency = ((row.currency as string | null) ?? "usd").toLowerCase();
   const piSiteSlug =
     resolveSiteSlug(

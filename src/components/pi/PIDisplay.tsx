@@ -38,7 +38,7 @@
  */
 
 import { CheckCircle2 } from "lucide-react";
-import { getBankAccount, type BankAccount } from "@/lib/bank-accounts";
+import type { BankAccount } from "@/lib/bank-accounts";
 
 export interface PIItemRow {
   description: string;
@@ -55,7 +55,9 @@ export interface PIDisplayProps {
   pi: PIDisplayData;
   // R103: admin-managed bank info. When provided, the Bank Info block
   // uses this instead of the hardcoded BANK_ACCOUNTS fallback.
-  bankAccount?: BankAccount;
+  // R128: null means "the server has not resolved an account yet" —
+  // the caller passes it straight through and we omit the block.
+  bankAccount?: BankAccount | null;
 }
 
 export interface PIDisplayData {
@@ -182,14 +184,12 @@ export function PIDisplay(props: PIDisplayProps) {
   const { pi } = props;
   const itemsSubtotal = pi.items.reduce((s, it) => s + it.total_cents, 0);
   const shipping = pi.shipping_cents;
-  // 2026-10-04 (R80): pick the right bank account for the PI's currency.
-  // Wires in USD/EUR/GBP/CNY use different receiving accounts so the
-  // sender's bank doesn't have to do a currency conversion (which adds
-  // 1-3% fee + 1-2 day delay). Falls back to USD if currency is unknown.
-  // R103: prefer caller-provided (DB-loaded) bank info, fall back to
-  // the hardcoded BANK_ACCOUNTS map when the caller did not supply one
-  // (e.g. admin preview before the PI has been saved).
-  const bank: BankAccount = props.bankAccount ?? getBankAccount(pi.currency);
+  // R128: bank details are NEVER hardcoded in the client bundle. The
+  // caller passes the account resolved server-side (from the
+  // bank_accounts table) and we render whatever we were given. When
+  // there is no account yet we omit the Bank Info block entirely
+  // rather than inventing details that may be wrong.
+  const bank: BankAccount | null = props.bankAccount ?? null;
   // Pretty currency code for the table headers, e.g. "USD" / "EUR" / "GBP" / "CNY".
   const currencyUpper = pi.currency.toUpperCase();
 
@@ -360,7 +360,11 @@ export function PIDisplay(props: PIDisplayProps) {
             "The buyer should pay 50% of down payment after confirmation of the PI. 50% balance before shipping. The seller should arrange production after receiving the payment and approval of PP samples."}
         </p>
 
-        {/* === Bank Info (embedded within section 4 — matches reference) === */}
+        {/* === Bank Info (embedded within section 4 — matches reference) ===
+            R128: rendered only when the caller supplied a server-resolved
+            account. There is no client-side fallback map any more, so a
+            missing account means the whole block is omitted. */}
+        {bank && (
         <div className="mt-3 border-t border-black pt-2">
           <p className="mb-1 text-[12px] font-black uppercase tracking-wide">
             Bank Info:
@@ -427,6 +431,7 @@ export function PIDisplay(props: PIDisplayProps) {
             <p className="mt-1 italic text-black/70">Note: {bank.notes}</p>
           )}
         </div>
+        )}
 
         <p className="mt-3">
           <span className="font-bold">(5) Production Time:</span> Normally about 45 days after order payment received and approval of PP samples. Seller will not take any responsibility for any delivery delay caused by buyer.

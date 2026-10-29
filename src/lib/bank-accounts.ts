@@ -1,27 +1,33 @@
 /**
- * Bank account mapping by currency.
+ * Bank account types + currency metadata (CLIENT-SAFE).
  *
- * Each PI's bank block in PIDisplay + admin preview picks a bank account
- * based on `proforma_invoices.currency`. Customers paying by T/T wire
- * transfer need the correct account for the currency they're sending —
- * wiring USD to a CNY-denominated account triggers a conversion fee.
+ * 2026-10-29 (R128): this module used to hold the factory's real receiving
+ * accounts — account number, SWIFT/BIC, CNAPS code. That made it a secret
+ * in the wrong place: every "use client" component that imported it
+ * (PIDisplay, PayClient, NewPIClient, EditPIClient, BankAccountsClient)
+ * pulled those literals into the public static JS bundle. Under
+ * `output: "export"` the chunk lands at /_next/static/chunks/*.js and can be
+ * downloaded by anyone — including from the *.pages.dev deployment
+ * hostname, which sits outside the zone and therefore outside the
+ * Cloudflare Access policy that guards the custom domain.
  *
- * Why hardcoded instead of DB-driven:
- *   - Bank details are SECRET data we cannot risk leaking through a public
- *     Supabase SELECT. Hardcoding in a private TypeScript module keeps
- *     them in the protected server bundle (CF Pages worker) without
- *     exposing via anon-key queries.
- *   - The factory has 4 stable corporate accounts (one per currency);
- *     they almost never change. Code-as-config is the right size.
- *   - If we ever need to add / change accounts, this is one PR + redeploy.
+ * The real accounts now live ONLY in the Supabase bank_accounts table. The
+ * server resolves the row and ships it to the browser inside the PI
+ * payload (see functions/api/pi/[[pi_number]].ts), so the client never
+ * needs its own copy. There is no server-side fallback map either — a
+ * missing row means the details are unknown, not that we should guess.
  *
- * Adding a currency:
- *   1. Add a new entry below with the actual factory bank info.
- *   2. Add the new currency code to SUPPORTED_CURRENCIES so the admin
- *      form's <select> offers it.
- *   3. Make sure Stripe supports it (Stripe Connect supports 135+
- *      currencies, but the factory's Stripe account must be enabled
- *      for the currency — verify in Stripe dashboard before shipping).
+ * What stays here:
+ *   - the BankAccount / BankAccountRow shapes
+ *   - SUPPORTED_CURRENCIES (needed by the admin <select>)
+ *   - bankAccountFromRow (a pure snake_case -> camelCase converter)
+ *
+ * What is gone:
+ *   - BANK_ACCOUNTS (the hardcoded real-account map)
+ *   - getBankAccount (it would have had to return real data)
+ *
+ * If you need a real account, read it from bank_accounts through the
+ * admin API — never from a module constant.
  */
 
 export interface BankAccount {
@@ -62,86 +68,31 @@ export const SUPPORTED_CURRENCIES = ["usd", "eur", "gbp", "cny"] as const;
 export type SupportedCurrency = (typeof SUPPORTED_CURRENCIES)[number];
 
 /**
- * The factory's 4 receiving accounts.
- * NOTE: account numbers below are illustrative — admin must populate the
- * real ones before going live. The CI suite cannot test against live
- * account numbers for obvious security reasons.
+ * Static labels for the admin currency picker. These are display strings
+ * only — no account data.
  */
-export const BANK_ACCOUNTS: Record<SupportedCurrency, BankAccount> = {
-  usd: {
-    currency: "usd",
-    label: "USD — US Dollar",
-    symbol: "$",
-    beneficiary: "YIWU HOMEDORM COMMODITY MANUFACTURING CO.,LTD",
-    companyAddress:
-      "2nd Floor, No.11 Anshang Road, Yiwu City, Jinhua, Zhejiang Province, China",
-    bankName: "Agricultural Bank of China, Zhejiang Branch",
-    account: "19648014040108531",
-    swift: "ABOCCNBJ110",
-    bankAddress:
-      "No. 181 Binwang Road, Yiwu City, Jinhua, Zhejiang Province, China",
-    routingNumber: undefined,
-    notes: "Add reference: PI number (e.g. SA202610020002).",
-  },
-  eur: {
-    currency: "eur",
-    label: "EUR — Euro",
-    symbol: "€",
-    beneficiary: "YIWU HOMEDORM COMMODITY MANUFACTURING CO.,LTD",
-    companyAddress:
-      "2nd Floor, No.11 Anshang Road, Yiwu City, Jinhua, Zhejiang Province, China",
-    bankName: "Agricultural Bank of China, Zhejiang Branch",
-    account: "19648014040108531",
-    swift: "ABOCCNBJ110",
-    bankAddress:
-      "No. 181 Binwang Road, Yiwu City, Jinhua, Zhejiang Province, China",
-    notes:
-      "EUR wires may route via intermediary bank. Sender's bank may charge a fee; we receive net only.",
-  },
-  gbp: {
-    currency: "gbp",
-    label: "GBP — British Pound",
-    symbol: "£",
-    beneficiary: "YIWU HOMEDORM COMMODITY MANUFACTURING CO.,LTD",
-    companyAddress:
-      "2nd Floor, No.11 Anshang Road, Yiwu City, Jinhua, Zhejiang Province, China",
-    bankName: "Agricultural Bank of China, Zhejiang Branch",
-    account: "19648014040108531",
-    swift: "ABOCCNBJ110",
-    bankAddress:
-      "No. 181 Binwang Road, Yiwu City, Jinhua, Zhejiang Province, China",
-    notes: "GBP wires via SWIFT; please add PI number in the wire reference.",
-  },
-  cny: {
-    currency: "cny",
-    label: "CNY — Chinese Yuan (RMB)",
-    symbol: "¥",
-    beneficiary: "义乌市好梦家居用品制造有限公司",
-    companyAddress: "浙江省义乌市安商路11号二楼",
-    bankName: "中国农业银行浙江省分行",
-    account: "19648014040108531",
-    swift: "ABOCCNBJ110",
-    bankAddress: "浙江省金华市义乌市宾王路181号",
-    cnaps: "103338671188",
-    notes: "国内人民币电汇请使用CNAPS代码103338671188。",
-  },
+export const CURRENCY_LABELS: Record<SupportedCurrency, string> = {
+  usd: "USD — US Dollar",
+  eur: "EUR — Euro",
+  gbp: "GBP — British Pound",
+  cny: "CNY — Chinese Yuan (RMB)",
 };
 
 /**
- * Resolve bank account by currency code. Falls back to USD if the stored
- * currency is unrecognized (defensive — the DB column defaults to 'usd',
- * so this should only trigger for legacy rows from before R80).
+ * Currency symbols for price rendering. Pure display data — not secret.
  */
-export function getBankAccount(currency: string | null | undefined): BankAccount {
-  const key = (currency ?? "usd").toLowerCase() as SupportedCurrency;
-  return BANK_ACCOUNTS[key] ?? BANK_ACCOUNTS.usd;
-}
+export const CURRENCY_SYMBOLS: Record<SupportedCurrency, string> = {
+  usd: "$",
+  eur: "€",
+  gbp: "£",
+  cny: "¥",
+};
 
 /**
  * Pretty label for the admin <select> option, e.g. "USD — US Dollar".
  */
 export function formatCurrencyOption(currency: SupportedCurrency): string {
-  return BANK_ACCOUNTS[currency].label;
+  return CURRENCY_LABELS[currency] ?? currency.toUpperCase();
 }
 
 // ─────────────────────────────────────────────────────────────────────────
@@ -177,19 +128,19 @@ export interface BankAccountRow {
 
 /**
  * Convert a Supabase bank_accounts row (snake_case) into the
- * BankAccount shape the rest of the app uses (camelCase). When the
- * row is null (table miss, network error) we fall back to the
- * hardcoded BANK_ACCOUNTS[currency] so the PI still renders.
+ * BankAccount shape the rest of the app uses (camelCase).
+ *
+ * R128: there is no hardcoded fallback any more. When the row is missing
+ * the caller has no bank details to show — that is the honest outcome,
+ * and it is better than inventing an account number that may be wrong.
  */
 export function bankAccountFromRow(
   row: BankAccountRow | null | undefined,
   currency: string,
-): BankAccount {
-  const fallback = BANK_ACCOUNTS[(currency ?? "usd").toLowerCase() as SupportedCurrency]
-    ?? BANK_ACCOUNTS.usd;
-  if (!row) return fallback;
+): BankAccount | null {
+  if (!row) return null;
   return {
-    currency: row.currency,
+    currency: row.currency || currency.toLowerCase(),
     label: row.label,
     symbol: row.symbol,
     beneficiary: row.beneficiary,

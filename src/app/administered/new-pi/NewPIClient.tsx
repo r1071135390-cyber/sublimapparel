@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import Link from "next/link";
 import { Plus, Trash2, Save, ExternalLink, RefreshCw, Upload, X, Check, Copy, Eye, Ruler } from "lucide-react";
-import { getBankAccount, bankAccountFromRow, SUPPORTED_CURRENCIES, type SupportedCurrency, type BankAccount, type BankAccountRow } from "@/lib/bank-accounts";
+import { bankAccountFromRow, SUPPORTED_CURRENCIES, CURRENCY_SYMBOLS, type SupportedCurrency, type BankAccount, type BankAccountRow } from "@/lib/bank-accounts";
 import { adminFetch } from "@/lib/admin-token";
 
 // ─── Types ────────────────────────────────────────────────────────────────
@@ -245,9 +245,9 @@ export default function NewPIPage() {
   const [currency, setCurrency] = useState<SupportedCurrency>("usd");
   // R103: live bank info for the preview, mirrors what PIDisplay will render.
   // Loaded from /api/admin/bank-accounts on mount so admin sees the same
-  // bank data they manage in /administered/bank-accounts/. Falls back to the
-  // hardcoded BANK_ACCOUNTS map if the fetch fails.
-  const [bankInfo, setBankInfo] = useState<BankAccount>(() => getBankAccount(currency));
+  // bank data they manage in /administered/bank-accounts/.
+  // R128: no hardcoded fallback any more — null until the admin API answers.
+  const [bankInfo, setBankInfo] = useState<BankAccount | null>(null);
   useEffect(() => {
     let cancelled = false;
     (async () => {
@@ -259,7 +259,7 @@ export default function NewPIPage() {
         const row = data.accounts.find((r) => r.currency === currency) ?? null;
         setBankInfo(bankAccountFromRow(row, currency));
       } catch {
-        // network blip — keep hardcoded fallback
+        // network blip — leave the preview without a bank block
       }
     })();
     return () => {
@@ -584,7 +584,7 @@ export default function NewPIPage() {
             itemCount={items.length}
             // 2026-10-04 (R80): use admin-selected currency symbol instead of
             // hardcoded "USD" — now USD/EUR/GBP/CNY all show correctly.
-            currency={bankInfo.symbol}
+            currency={bankInfo?.symbol ?? CURRENCY_SYMBOLS[currency] ?? currency.toUpperCase()}
             currencyCode={currency.toUpperCase()}
             copied={copied}
             onCopy={copyLink}
@@ -693,7 +693,7 @@ export function PIPreview(props: {
   // 2026-10-04 (R80): currency + dynamic bank info.
   currency: SupportedCurrency;
   onCurrencyChange: (v: SupportedCurrency) => void;
-  bank: ReturnType<typeof getBankAccount>;
+  bank: BankAccount | null;
   customerName: string;
   onCustomerNameChange: (v: string) => void;
   customerEmail: string;
@@ -742,6 +742,10 @@ export function PIPreview(props: {
     shippingTerm, onShippingTermChange,
     BlackCell, RedInput, BlueText, RedReminder,
   } = props;
+  // R128: the bank record is server-provided and may still be loading.
+  // The currency symbol is not secret, so the price columns fall back to
+  // the shared symbol map; only the account details depend on `bank`.
+  const currencySymbol = bank?.symbol ?? CURRENCY_SYMBOLS[currency] ?? currency.toUpperCase();
   const currencyUpper = currency.toUpperCase();
 
   return (
@@ -908,7 +912,7 @@ export function PIPreview(props: {
                 <th className="border border-black dark:border-white p-2 text-left">DESCRIPTION</th>
                 <th className="border border-black dark:border-white p-2 text-left">FABRIC CONTENT</th>
                 <th className="border border-black dark:border-white p-2 w-28 text-left">QTY / UNIT</th>
-                <th className="border border-black dark:border-white p-2 w-24 text-left">PRICE ({bank.symbol})</th>
+                <th className="border border-black dark:border-white p-2 w-24 text-left">PRICE ({currencySymbol})</th>
                 <th className="border border-black dark:border-white p-2 w-28 text-left">TOTAL {currencyUpper}</th>
                 <th className="border border-black dark:border-white p-2 w-8"></th>
               </tr>
@@ -1014,7 +1018,7 @@ export function PIPreview(props: {
                   <td className="border border-black dark:border-white p-1.5 align-top">
                     <div className="flex items-center">
                       {/* 2026-10-04 (R80): price symbol matches selected currency. */}
-                      <span className="text-sm mr-0.5">{bank.symbol}</span>
+                      <span className="text-sm mr-0.5">{currencySymbol}</span>
                       <input
                         type="text"
                         inputMode="decimal"
@@ -1032,7 +1036,7 @@ export function PIPreview(props: {
                     </div>
                   </td>
                   <td className="border border-black dark:border-white p-1.5 align-top text-sm font-semibold">
-                    {fmt(getItemQty(it) * it.unitPrice, bank.symbol)}
+                    {fmt(getItemQty(it) * it.unitPrice, currencySymbol)}
                   </td>
                   <td className="border border-black dark:border-white p-1.5 align-top text-center">
                     {items.length > 1 && (
@@ -1096,7 +1100,7 @@ export function PIPreview(props: {
                 <td className="border border-black dark:border-white p-1.5 align-top">
                   <div className="flex items-center">
                     {/* 2026-10-04 (R80): shipping cost uses selected currency symbol. */}
-                    <span className="text-sm mr-0.5">{bank.symbol}</span>
+                    <span className="text-sm mr-0.5">{currencySymbol}</span>
                     <input
                       type="text"
                       inputMode="decimal"
@@ -1114,7 +1118,7 @@ export function PIPreview(props: {
                   </div>
                 </td>
                 <td className="border border-black dark:border-white p-1.5 align-top text-sm font-semibold">
-                  {fmt(shippingQty * shippingCost, bank.symbol)}
+                  {fmt(shippingQty * shippingCost, currencySymbol)}
                 </td>
                 <td className="border border-black dark:border-white p-1.5 align-top"></td>
               </tr>
@@ -1122,7 +1126,7 @@ export function PIPreview(props: {
               {/* TOTAL row */}
               <tr className="bg-neutral-100 dark:bg-neutral-800 font-bold">
                 <td colSpan={5} className="border border-black dark:border-white p-2 text-right">TOTAL:</td>
-                <td className="border border-black dark:border-white p-2 text-base">{fmt(grandTotal, bank.symbol)}</td>
+                <td className="border border-black dark:border-white p-2 text-base">{fmt(grandTotal, currencySymbol)}</td>
                 <td className="border border-black dark:border-white p-2"></td>
               </tr>
             </tbody>
@@ -1139,7 +1143,7 @@ export function PIPreview(props: {
           </button>
           <div className="text-neutral-500 text-xs">
             {/* 2026-10-04 (R80): all 3 amounts use the selected currency symbol. */}
-            Subtotal: {fmt(itemsSubtotal, bank.symbol)} + Shipping: {fmt(shippingCost, bank.symbol)} = <strong className="text-black dark:text-white">{fmt(grandTotal, bank.symbol)}</strong>
+            Subtotal: {fmt(itemsSubtotal, currencySymbol)} + Shipping: {fmt(shippingCost, currencySymbol)} = <strong className="text-black dark:text-white">{fmt(grandTotal, currencySymbol)}</strong>
           </div>
         </div>
       </div>
@@ -1177,7 +1181,10 @@ export function PIPreview(props: {
         </div>
       </div>
 
-      {/* ── Bank Info (rows 25-33) ── */}
+      {/* ── Bank Info (rows 25-33) ──
+          R128: rendered only when the server-resolved bank record is in.
+          The client holds no hardcoded account data. */}
+      {bank && (
       <div className="p-6 space-y-2 border-b border-neutral-200 dark:border-neutral-800 text-sm">
         <div className="font-bold">BANK INFO:</div>
         <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-1 items-start">
@@ -1225,6 +1232,7 @@ export function PIPreview(props: {
           </div>
         )}
       </div>
+      )}
 
       {/* ── Clauses (5)-(7) — fixed black text ── */}
       <div className="p-6 space-y-2 border-b border-neutral-200 dark:border-neutral-800 text-sm leading-relaxed">
