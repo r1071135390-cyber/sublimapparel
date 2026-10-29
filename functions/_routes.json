@@ -1,10 +1,11 @@
 {
   "version": 1,
   "include": [
-    "/api/*"
+    "/api/*",
+    "/administered",
+    "/administered/*"
   ],
   "exclude": [
-    "/administered/*",
     "/_next/*",
     "/*.css",
     "/*.js",
