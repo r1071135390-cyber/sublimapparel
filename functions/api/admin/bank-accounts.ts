@@ -9,7 +9,7 @@
 //
 // GET /api/admin/bank-accounts
 //   Returns all bank_accounts rows for the active site_slug
-//   (default 'sublimapparel'). Used by /admin/bank-accounts/ to hydrate
+//   (default 'sublimapparel'). Used by /administered/bank-accounts/ to hydrate
 //   the form and by /pay/ PayClient to pick the right account for the
 //   PI's currency. Requires ADMIN_TOKEN bearer.
 //

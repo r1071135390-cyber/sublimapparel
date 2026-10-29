@@ -146,7 +146,7 @@ for (const p of PAGES) {
   if (is404 && r.status === 200) problems.push("404 page");
   if (!title) { problems.push("no title"); byCategory.missingTitle++; }
   if (title && title.length > 70) { problems.push(`title too long (${title.length}ch)`); byCategory.titleTooLong++; }
-  if (title && title.length > 0 && title.length < 20 && !p.endsWith("/admin/")) { problems.push(`title very short (${title.length}ch)`); byCategory.titleTooShort++; }
+  if (title && title.length > 0 && title.length < 20 && !p.endsWith("/administered/")) { problems.push(`title very short (${title.length}ch)`); byCategory.titleTooShort++; }
   if (!desc) { problems.push("no description"); byCategory.missingDesc++; }
   if (desc && desc.length > 160) { problems.push(`desc too long (${desc.length}ch)`); byCategory.descTooLong++; }
   if (desc && desc.length > 0 && desc.length < 70) { problems.push(`desc short (${desc.length}ch)`); byCategory.descTooShort++; }

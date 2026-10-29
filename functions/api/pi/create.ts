@@ -357,7 +357,7 @@ export async function onRequestPost(context: {
           error: "Failed to create PI in Supabase",
           detail: lastErrorDetail,
           supabaseUrl,
-          hint: `pi_number "${piNumberToInsert}" already exists. Refresh /admin/new-pi/ to fetch a fresh next-available number, or pick a different one manually.`,
+          hint: `pi_number "${piNumberToInsert}" already exists. Refresh /administered/new-pi/ to fetch a fresh next-available number, or pick a different one manually.`,
         },
         409,
       );
@@ -391,7 +391,7 @@ export async function onRequestPost(context: {
         supabaseUrl,
         hint: retryReason === "race_collision"
           ? "Multiple admins created PIs at the same time. Refresh the page and try again."
-          : "Refresh /admin/new-pi/ to fetch a fresh next-available number, or pick a different one manually.",
+          : "Refresh /administered/new-pi/ to fetch a fresh next-available number, or pick a different one manually.",
       },
       500,
     );

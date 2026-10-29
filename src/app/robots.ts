@@ -25,7 +25,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/", "/_next/", "/admin/"],
+        disallow: ["/api/", "/_next/", "/administered/"],
         crawlDelay: 0,
       },
       // Generative AI training crawlers - EXPLICITLY ALLOWED

@@ -1,7 +1,7 @@
 // functions/api/pi/delete.ts
 // Hard-deletes a Proforma Invoice row from Supabase.
 //
-// 2026-10-04 (R82): the admin PI summary page (/admin/summary/) now has a
+// 2026-10-04 (R82): the admin PI summary page (/administered/summary/) now has a
 // Delete button per row. This endpoint backs it.
 //
 // Safety rules (per product decision):
@@ -20,7 +20,7 @@
 //      can clean up stale "sent" PIs whose customer never paid.
 //
 // Auth: same as the rest of the admin functions — relies on the
-// sessionKey + /admin/summary/ password gate on the client side. We don't
+// sessionKey + /administered/summary/ password gate on the client side. We don't
 // add a server-side password because:
 //   a) Cloudflare Pages Functions can't read sessionStorage.
 //   b) The endpoint is only called from a single password-gated UI.

@@ -2,7 +2,7 @@
 // Foreign-exchange rate table for the PI Summary overview.
 //
 // Scope: small, manually-maintained FX table used ONLY for the internal
-// admin overview at /admin/summary/. It is NOT used for:
+// admin overview at /administered/summary/. It is NOT used for:
 //   - Stripe payment amounts (Stripe is the source of truth there)
 //   - The customer-facing PI document (the page already shows the actual
 //     currency used, no conversion needed)

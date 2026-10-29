@@ -245,7 +245,7 @@ export default function NewPIPage() {
   const [currency, setCurrency] = useState<SupportedCurrency>("usd");
   // R103: live bank info for the preview, mirrors what PIDisplay will render.
   // Loaded from /api/admin/bank-accounts on mount so admin sees the same
-  // bank data they manage in /admin/bank-accounts/. Falls back to the
+  // bank data they manage in /administered/bank-accounts/. Falls back to the
   // hardcoded BANK_ACCOUNTS map if the fetch fails.
   const [bankInfo, setBankInfo] = useState<BankAccount>(() => getBankAccount(currency));
   useEffect(() => {
@@ -328,7 +328,7 @@ export default function NewPIPage() {
         const payload = JSON.parse(json) as PrefillPayload;
         applyPrefill(payload);
         // Clean URL
-        window.history.replaceState({}, "", "/admin/new-pi/");
+        window.history.replaceState({}, "", "/administered/new-pi/");
       } catch (e) {
         console.error("Prefill parse failed:", e);
       }
@@ -652,7 +652,7 @@ export default function NewPIPage() {
         {!savedLink && (
           <div className="mt-6 flex items-center justify-end gap-3 sticky bottom-4 bg-white dark:bg-neutral-900 p-4 rounded-lg shadow-lg border border-neutral-200 dark:border-neutral-800">
             <Link
-              href="/admin/upload-pi/"
+              href="/administered/upload-pi/"
               className="px-4 py-2 text-sm border border-neutral-300 dark:border-neutral-700 rounded hover:bg-neutral-50 dark:hover:bg-neutral-800"
             >
               Upload PI instead
@@ -678,7 +678,7 @@ export default function NewPIPage() {
 }
 
 // ─── PI Preview (matches the Excel layout) ─────────────────────────────────
-// 2026-10-04 (R84): also reused by /admin/edit-pi/ — both pages render the
+// 2026-10-04 (R84): also reused by /administered/edit-pi/ — both pages render the
 // same form, only the save handler differs.
 export function PIPreview(props: {
   piNumber: string;

@@ -1,7 +1,7 @@
 // functions/api/admin/customers/[id].ts
 //
 // 2026-10-13 (Phase C.1): Returns a single customer profile + their PI history.
-// Used by /admin/customers/[id]/ (CustomerDetailClient).
+// Used by /administered/customers/[id]/ (CustomerDetailClient).
 //
 // GET /api/admin/customers/[id]
 //   Response: { customer: CustomerRow, pis: PiRow[] }

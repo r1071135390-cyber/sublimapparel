@@ -247,7 +247,7 @@ This is implemented in two new pages.
 
 ### Sales flow — create a PI
 
-1. Sales goes to `https://sublimapparel.com/admin/new-pi/`
+1. Sales goes to `https://sublimapparel.com/administered/new-pi/`
 2. Fills in:
    - **PI number** (auto-suggested: `SA{YYYYMMDD}{NNN}`, e.g. `SA20260825001`)
    - **Customer info**: name, email, phone, company, address
@@ -294,7 +294,7 @@ For now, manually in Supabase Dashboard:
 3. Check your bank account
 4. Once wire is received, set `status = 'paid'` and `paid_at = now()`
 
-**Future enhancement**: build a small `/admin/pi-dashboard` page with a list of pending bank PIs and one-click "Confirm received" buttons. (Not in MVP.)
+**Future enhancement**: build a small `/administered/pi-dashboard` page with a list of pending bank PIs and one-click "Confirm received" buttons. (Not in MVP.)
 
 ### API endpoints (Cloudflare Pages Functions)
 
@@ -354,12 +354,12 @@ Examples:
 
 Two entry points for the sales team:
 
-1. **Manual form** (recommended for first-time use): `/admin/new-pi/` — fill in customer, items, totals; the form auto-fills the next available PI number.
-2. **AI upload** (faster after the first time): `/admin/upload-pi/` — paste PI text **or** upload a screenshot; AI (doubao-seed-1-8) extracts customer info, items, totals, and pre-fills the form on the next page.
+1. **Manual form** (recommended for first-time use): `/administered/new-pi/` — fill in customer, items, totals; the form auto-fills the next available PI number.
+2. **AI upload** (faster after the first time): `/administered/upload-pi/` — paste PI text **or** upload a screenshot; AI (doubao-seed-1-8) extracts customer info, items, totals, and pre-fills the form on the next page.
 
-Both flows end at `/admin/new-pi/?from=upload&data=...` (when using AI) or directly to `/pay/?pi=SAxxxxxxxx` (when saving).
+Both flows end at `/administered/new-pi/?from=upload&data=...` (when using AI) or directly to `/pay/?pi=SAxxxxxxxx` (when saving).
 
-The "/admin" entry is added in the footer as a low-key "Sales portal" link, so customers don't accidentally find it.
+The "/administered" entry is added in the footer as a low-key "Sales portal" link, so customers don't accidentally find it.
 
 ### Customer payment page
 

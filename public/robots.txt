@@ -203,7 +203,7 @@ User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /_next/
-Disallow: /admin/
+Disallow: /administered/
 
 # ===========================================================================
 # SITEMAPS & LLMS

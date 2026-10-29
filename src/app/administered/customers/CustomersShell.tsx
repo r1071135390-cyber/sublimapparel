@@ -6,7 +6,7 @@ import CustomersClient from "./CustomersClient";
 import CustomerDetailClient from "./CustomerDetailClient";
 
 // 2026-10-13 (Phase C): single client-side router for the
-// /admin/customers/ page. When the URL has no `?id=` we render the
+// /administered/customers/ page. When the URL has no `?id=` we render the
 // list (CustomersClient). When it has `?id=<n>` we render the
 // detail view (CustomerDetailClient).
 //
@@ -15,7 +15,7 @@ import CustomerDetailClient from "./CustomerDetailClient";
 //     Dynamic [id] routes would require `generateStaticParams()`
 //     returning all customer ids at build time, which we don't know.
 //   - Pushing the id into a query param keeps everything inside the
-//     single statically-generated /admin/customers/ page.
+//     single statically-generated /administered/customers/ page.
 export default function CustomersShell() {
   return (
     <Suspense

@@ -236,7 +236,7 @@ export default function SummaryClient() {
   );
 
   // 2026-10-13 (Phase C.4): case-insensitive lookup from customer name
-  // -> customers.id so the PI list rows can link to /admin/customers/[id]/.
+  // -> customers.id so the PI list rows can link to /administered/customers/[id]/.
   // 2026-10-13 (Phase C.5 link fallback): keys are TRIMmed + lowercased
   // so PI rows whose customer_name has whitespace drift against the
   // trimmed archive row still resolve.
@@ -403,7 +403,7 @@ export default function SummaryClient() {
               Refresh
             </button>
             <Link
-              href="/admin/"
+              href="/administered/"
               className="flex items-center gap-1.5 text-sm font-bold uppercase tracking-wider text-black hover:text-[#ff4d00]"
             >
               <ArrowLeft className="h-4 w-4" strokeWidth={2.5} />
@@ -530,13 +530,13 @@ export default function SummaryClient() {
                 )}
               </div>
               <Link
-                href="/admin/new-pi/"
+                href="/administered/new-pi/"
                 className="bg-[#ff4d00] px-3 py-1.5 text-xs font-black uppercase tracking-wider text-black hover:bg-[#e64500]"
               >
                 + New PI
               </Link>
               <Link
-                href="/admin/customers/"
+                href="/administered/customers/"
                 className="border-2 border-[#0a0a0a] bg-white px-3 py-1.5 text-xs font-black uppercase tracking-wider text-black hover:bg-[#0a0a0a] hover:text-white"
                 target="_blank"
               >
@@ -573,7 +573,7 @@ export default function SummaryClient() {
                 </button>
               ) : (
                 <Link
-                  href="/admin/new-pi/"
+                  href="/administered/new-pi/"
                   className="inline-block bg-[#ff4d00] px-4 py-2 text-sm font-black uppercase tracking-wider text-black hover:bg-[#e64500]"
                 >
                   + Create a PI
@@ -697,7 +697,7 @@ export default function SummaryClient() {
                             // 2026-10-13 (Phase C.5 link fallback):
                             // always render an <a>. If customers archive
                             // has an id for this name (case-insensitive +
-                            // trim), link to /admin/customers/?id=<id>.
+                            // trim), link to /administered/customers/?id=<id>.
                             // Otherwise fall back to ?name=<encoded> and
                             // let the detail page resolve the id itself.
                             // Plain <a> (not <Link>) is intentional — for
@@ -711,8 +711,8 @@ export default function SummaryClient() {
                             const key = name.toLowerCase();
                             const id = customerIdByName.get(key);
                             const href = id
-                              ? `/admin/customers/?id=${id}`
-                              : `/admin/customers/?name=${encodeURIComponent(name)}`;
+                              ? `/administered/customers/?id=${id}`
+                              : `/administered/customers/?name=${encodeURIComponent(name)}`;
                             return (
                               <a
                                 href={href}
@@ -757,7 +757,7 @@ export default function SummaryClient() {
                         <td className="px-4 py-3 text-right">
                           {sc.label === "DRAFT" || sc.label === "SENT" ? (
                             <Link
-                              href={`/admin/edit-pi/?pi=${encodeURIComponent(p.piNumber)}`}
+                              href={`/administered/edit-pi/?pi=${encodeURIComponent(p.piNumber)}`}
                               className="inline-flex items-center gap-1 text-xs font-black uppercase tracking-wider text-black hover:text-[#ff4d00]"
                               title={`Edit PI ${p.piNumber}`}
                             >

@@ -1,7 +1,7 @@
 // functions/api/admin/customers/list.ts
 //
 // 2026-10-13 (Phase A.2): Returns the customer archive used by the
-// `/admin/summary` page's customer-filter dropdown.
+// `/administered/summary` page's customer-filter dropdown.
 //
 // 2026-10-27 (R125): ADMIN_TOKEN authentication added — fail-closed.
 // This endpoint leaks customer PII (email + company name) and must NOT

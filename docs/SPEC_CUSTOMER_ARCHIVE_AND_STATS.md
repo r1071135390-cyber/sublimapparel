@@ -120,9 +120,9 @@ This lets All PIs list pages query one row per PI and get the archived customer 
 
 ## 3. Feature breakdown for sublimapparel
 
-### 3.1 `/admin/customers` — Customer Archive page (new)
+### 3.1 `/administered/customers` — Customer Archive page (new)
 
-Route: `src/app/admin/customers/page.tsx` + `CustomersClient.tsx`.
+Route: `src/app/administered/customers/page.tsx` + `CustomersClient.tsx`.
 
 UI:
 - Top bar: search input (debounced 200ms) + "Add customer manually" button
@@ -136,7 +136,7 @@ Mirrors OEM's `class-customers.php::render_admin_page()` exactly:
 - `?msg=saved|deleted|imported|error` shows a small blue/red banner
 - "Re-import from existing PIs" button calls `/api/admin/customers/reimport`
 
-### 3.2 `/admin/summary` (existing) — add customer filter + sub-header totals
+### 3.2 `/administered/summary` (existing) — add customer filter + sub-header totals
 
 This is the most valuable screen in OEM. Two additive changes:
 
@@ -221,7 +221,7 @@ function aggregateByCurrency(pis: PiListItem[]): Record<string, CurrencyTotals> 
 
 > **Critical:** Cancelled PIs are excluded from `total / paid / pending` to avoid inflating revenue. Their count is shown separately so the admin knows they exist.
 
-### 3.3 `/admin/new-pi` — customer autocomplete pre-fill (existing page, minor addition)
+### 3.3 `/administered/new-pi` — customer autocomplete pre-fill (existing page, minor addition)
 
 When the admin types into the `customer_name` field:
 - Debounce 200ms
@@ -234,13 +234,13 @@ Implementation: mirror OEM's `OEM_PI_V3_Customers::search()` — call the Supaba
 
 ### 3.4 Customer name link on All PIs list (small edit)
 
-In `SummaryClient.tsx`, change the customer name cell from plain text to a `<Link href={\`/admin/customers?id=\${row.customerId}\`}>` (use the `customer_id` returned by the optional `v_proforma_with_customer` view). When the row has no `customer_id` (customer not archived yet), keep it as plain text and add a small "+ Archive" button next to it that POSTs to `/api/admin/customers/save` and then links through.
+In `SummaryClient.tsx`, change the customer name cell from plain text to a `<Link href={\`/administered/customers?id=\${row.customerId}\`}>` (use the `customer_id` returned by the optional `v_proforma_with_customer` view). When the row has no `customer_id` (customer not archived yet), keep it as plain text and add a small "+ Archive" button next to it that POSTs to `/api/admin/customers/save` and then links through.
 
 ### 3.5 Customer edit page — back-link + quick stats
 
-In `/admin/customers?id=N` (edit mode):
-- Top: `< Back to All PIs` link → `/admin/summary`
-- Top: `View this customer's PIs on All PIs page ↗` link → `/admin/summary?customer_id=N`
+In `/administered/customers?id=N` (edit mode):
+- Top: `< Back to All PIs` link → `/administered/summary`
+- Top: `View this customer's PIs on All PIs page ↗` link → `/administered/summary?customer_id=N`
 - Bottom (after the form): a one-line footer
   ```
   <N> PI(s) recorded for this customer · last used: <YYYY-MM-DD HH:MM:SS> · See them on All PIs page →
@@ -259,10 +259,10 @@ In `/admin/customers?id=N` (edit mode):
 | Customer search API for autocomplete | `functions/api/admin/customers/search.ts` | OEM `OEM_PI_V3_Customers::search()` |
 | Customer re-import (one-click backfill) | `functions/api/admin/customers/reimport.ts` | OEM `OEM_PI_V3_Customers::handle_import()` |
 | Touch usage on PI save | `functions/api/pi/create.ts` (add `customer_id` + increment `pi_count`) | OEM `class-stripe.php` or post-create RPC |
-| Customer archive admin page | `src/app/admin/customers/page.tsx` + `CustomersClient.tsx` | OEM `class-customers.php::render_admin_page()` |
-| All PIs filter + sub-header | `src/app/admin/summary/SummaryClient.tsx` (edit existing) | OEM `class-admin.php::render_list()` |
-| New PI form pre-fill | `src/app/admin/new-pi/NewPIClient.tsx` (edit existing) | OEM `class-customers.php::search()` |
-| Customer name link on All PIs | `src/app/admin/summary/SummaryClient.tsx` (edit existing) | OEM `class-admin.php` customer column |
+| Customer archive admin page | `src/app/administered/customers/page.tsx` + `CustomersClient.tsx` | OEM `class-customers.php::render_admin_page()` |
+| All PIs filter + sub-header | `src/app/administered/summary/SummaryClient.tsx` (edit existing) | OEM `class-admin.php::render_list()` |
+| New PI form pre-fill | `src/app/administered/new-pi/NewPIClient.tsx` (edit existing) | OEM `class-customers.php::search()` |
+| Customer name link on All PIs | `src/app/administered/summary/SummaryClient.tsx` (edit existing) | OEM `class-admin.php` customer column |
 
 ---
 
@@ -287,18 +287,18 @@ In `/admin/customers?id=N` (edit mode):
 
 **Phase A — read-only (no risk, immediate value):**
 1. Run the SQL migration → `customers` table exists, backfilled with all current customers.
-2. Add the customer filter dropdown to `/admin/summary`.
+2. Add the customer filter dropdown to `/administered/summary`.
 3. Add the sub-header totals row above the Amount column.
 
 **Phase B — write:**
-4. Build `/admin/customers` page (list + create + edit + delete).
+4. Build `/administered/customers` page (list + create + edit + delete).
 5. Add "Re-import from existing PIs" button (idempotent, safe to re-run).
-6. Wire `customer_name` click in `/admin/summary` → `/admin/customers?id=...`.
+6. Wire `customer_name` click in `/administered/summary` → `/administered/customers?id=...`.
 
 **Phase C — UX polish:**
-7. Wire `/admin/new-pi` autocomplete pre-fill from archive.
+7. Wire `/administered/new-pi` autocomplete pre-fill from archive.
 8. Add `pi_count` touch-up on every PI create (RPC).
-9. Add "Quick stats footer" on `/admin/customers` edit page.
+9. Add "Quick stats footer" on `/administered/customers` edit page.
 
 Phases A → B → C are independent; each can ship and be verified on production without breaking the other.
 
@@ -306,17 +306,17 @@ Phases A → B → C are independent; each can ship and be verified on productio
 
 ## 7. Acceptance criteria
 
-- [ ] `/admin/summary` shows customer dropdown that filters the PI list when selected
+- [ ] `/administered/summary` shows customer dropdown that filters the PI list when selected
 - [ ] Status filter and customer filter compose with AND; both preserved when changing either
 - [ ] Sub-header row sits directly above the `Amount` column with the exact colors above
 - [ ] Multi-currency PIs render one sub-header line per currency
 - [ ] Cancelled PIs are excluded from total/paid/pending; their count is shown
 - [ ] Empty filtered result shows `No billable PIs` in the sub-header
-- [ ] `/admin/customers` lists all archived customers with their PI counts
+- [ ] `/administered/customers` lists all archived customers with their PI counts
 - [ ] Re-import button does not create duplicates on re-run
-- [ ] `/admin/new-pi` autocomplete pre-fills company/address/phone/email/country from archive
-- [ ] Customer name in `/admin/summary` is a link to `/admin/customers?id=...`
-- [ ] `/admin/customers?id=...` shows back-link + quick stats footer; no full PI list
+- [ ] `/administered/new-pi` autocomplete pre-fills company/address/phone/email/country from archive
+- [ ] Customer name in `/administered/summary` is a link to `/administered/customers?id=...`
+- [ ] `/administered/customers?id=...` shows back-link + quick stats footer; no full PI list
 
 ---
 

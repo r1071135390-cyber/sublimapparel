@@ -17,7 +17,7 @@ export const ADMIN_PASSWORD_STORAGE_KEY = "sa_admin_password_unlocked";
 // re-lock instead of leaving the operator staring at empty tables.
 export const ADMIN_TOKEN_REJECTED_EVENT = "admin-token-rejected";
 
-// The owner password that used to be the only gate for /admin/*. It is
+// The owner password that used to be the only gate for /administered/*. It is
 // still recognised so the existing owner workflow keeps working, but it
 // grants UI access only — the API is guarded by ADMIN_TOKEN on the server.
 export const OWNER_PASSWORD = "HOMEdorm521$$$";

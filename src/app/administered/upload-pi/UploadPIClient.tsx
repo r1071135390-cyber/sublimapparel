@@ -257,7 +257,7 @@ export default function UploadPIClient() {
     };
     const json = JSON.stringify(prefill);
     const encoded = btoa(unescape(encodeURIComponent(json)));
-    router.push(`/admin/new-pi/?from=upload&data=${encodeURIComponent(encoded)}`);
+    router.push(`/administered/new-pi/?from=upload&data=${encodeURIComponent(encoded)}`);
   }, [result, router]);
 
   const clearAll = useCallback(() => {
@@ -293,7 +293,7 @@ export default function UploadPIClient() {
             </h1>
           </div>
           <Link
-            href="/admin/"
+            href="/administered/"
             className="text-xs font-bold uppercase tracking-wider text-black/60 hover:text-black"
           >
             ← Back

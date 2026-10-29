@@ -652,7 +652,7 @@ function BankTransferMethod({
   const [agreed, setAgreed] = useState(false);
   // 2026-10-04 (R80): resolve bank account from PI currency. Recomputes
   // when the parent re-renders with a different pi (e.g. after admin
-  // updates the PI's currency in /admin/new-pi/).
+  // updates the PI's currency in /administered/new-pi/).
   // R103: bankAccount state already holds the DB-loaded (or fallback) bank.
   const bank = bankAccount;
 

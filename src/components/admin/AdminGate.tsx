@@ -22,7 +22,7 @@ import {
 } from "@/lib/admin-token";
 
 /**
- * One gate for every /admin/* page.
+ * One gate for every /administered/* page.
  *
  * Two things have to be true before an admin page talks to the API:
  *   1. the owner knows the owner password (the local UI gate that has
@@ -45,7 +45,7 @@ export interface AdminGateApi {
 
 export function useAdminGate(
   title = "Admin",
-  backHref = "/admin/",
+  backHref = "/administered/",
   backLabel = "← Back to admin",
 ): AdminGateApi {
   const [unlocked, setUnlocked] = useState(false);

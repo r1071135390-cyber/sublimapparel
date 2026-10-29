@@ -2,7 +2,7 @@
 // Edits a Proforma Invoice. Snapshots the pre-edit row to
 // proforma_invoices_revisions, then PATCHes proforma_invoices.
 //
-// 2026-10-04 (R84): backs the /admin/edit-pi/ page. Hard rules:
+// 2026-10-04 (R84): backs the /administered/edit-pi/ page. Hard rules:
 //   1. Only PIs with status IN ('draft', 'sent') are editable. PAID /
 //      pending_bank / canceled / expired all return 409 with a hint
 //      explaining why. This matches the product decision ("only
@@ -19,7 +19,7 @@
 //   4. valid_until defaults to issue_date + 14 days when not provided,
 //      matching the Excel template convention. Admin can override.
 //
-// Auth: same model as delete.ts — relies on the /admin/summary/ password
+// Auth: same model as delete.ts — relies on the /administered/summary/ password
 // gate. We do not add a second check; the gate is the only thing
 // standing between the URL and the data.
 

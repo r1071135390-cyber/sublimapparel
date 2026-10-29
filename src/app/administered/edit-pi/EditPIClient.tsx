@@ -1,11 +1,11 @@
 "use client";
 
 /**
- * /admin/edit-pi/?pi=SA...
+ * /administered/edit-pi/?pi=SA...
  *
  * 2026-10-04 (R84): page that loads an existing PI from
  *   GET /api/pi/{pi_number}
- * and pre-fills the same PIPreview form used by /admin/new-pi/.
+ * and pre-fills the same PIPreview form used by /administered/new-pi/.
  *
  * State machine:
  *   1. `loading`         → fetching the row + checking if editable
@@ -379,7 +379,7 @@ function EditPIClientInner() {
         {/* Top bar */}
         <div className="mb-4 flex items-center justify-between gap-3">
           <Link
-            href="/admin/summary/"
+            href="/administered/summary/"
             className="inline-flex items-center gap-1 text-sm text-neutral-600 hover:text-[#ff4d00]"
           >
             <ArrowLeft className="w-4 h-4" /> Back to summary
@@ -498,7 +498,7 @@ function EditPIClientInner() {
 
               <div className="flex items-center justify-end gap-3 sticky bottom-4 bg-white dark:bg-neutral-900 p-3 rounded shadow border border-neutral-200 dark:border-neutral-800">
                 <Link
-                  href="/admin/summary/"
+                  href="/administered/summary/"
                   className="px-4 py-2 text-sm border border-neutral-300 dark:border-neutral-700 rounded hover:bg-neutral-50 dark:hover:bg-neutral-800"
                 >
                   Cancel
@@ -542,7 +542,7 @@ function ReadOnlyBanner({ piNumber, status }: { piNumber: string; status: string
           </p>
         </div>
         <Link
-          href="/admin/summary/"
+          href="/administered/summary/"
           className="px-3 py-1.5 text-xs border border-neutral-300 rounded hover:bg-neutral-50"
         >
           ← Back to summary
@@ -569,7 +569,7 @@ function NotFoundBanner({ piNumber }: { piNumber: string }) {
           </p>
         </div>
         <Link
-          href="/admin/summary/"
+          href="/administered/summary/"
           className="px-3 py-1.5 text-xs border border-neutral-300 rounded hover:bg-neutral-50"
         >
           ← Back to summary
@@ -603,7 +603,7 @@ function SavedBanner({ piNumber, revisionNumber }: { piNumber: string; revisionN
               Open /pay/?pi={piNumber}
             </Link>
             <Link
-              href="/admin/summary/"
+              href="/administered/summary/"
               className="inline-flex items-center gap-1 px-3 py-1.5 text-xs border border-green-700 text-green-900 rounded hover:bg-green-100"
             >
               <Check className="w-3.5 h-3.5" /> Back to summary
@@ -611,7 +611,7 @@ function SavedBanner({ piNumber, revisionNumber }: { piNumber: string; revisionN
           </div>
         </div>
         <Link
-          href="/admin/summary/"
+          href="/administered/summary/"
           className="px-3 py-1.5 text-xs border border-green-700 text-green-900 rounded hover:bg-green-100 self-start"
           aria-label="Close"
         >

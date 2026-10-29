@@ -44,7 +44,7 @@ export default function AdminLandingClient() {
         <div className="grid gap-6 md:grid-cols-2">
           {/* Option 1: Fill manually */}
           <Link
-            href="/admin/new-pi/"
+            href="/administered/new-pi/"
             className="group block border-2 border-black bg-white p-8 shadow-[6px_6px_0_0_rgba(10,10,10,1)] transition-all hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[8px_8px_0_0_rgba(255,77,0,1)]"
           >
             <div className="mb-4 flex h-14 w-14 items-center justify-center border-2 border-black bg-[#ff4d00] text-black">
@@ -69,7 +69,7 @@ export default function AdminLandingClient() {
 
           {/* Option 2: Upload PI */}
           <Link
-            href="/admin/upload-pi/"
+            href="/administered/upload-pi/"
             className="group block border-2 border-black bg-white p-8 shadow-[6px_6px_0_0_rgba(10,10,10,1)] transition-all hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[8px_8px_0_0_rgba(255,77,0,1)]"
           >
             <div className="mb-4 flex h-14 w-14 items-center justify-center border-2 border-black bg-[#00c2ff] text-black">
@@ -119,7 +119,7 @@ export default function AdminLandingClient() {
         {/* Sales tools — bank account management */}
         <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           <Link
-            href="/admin/bank-accounts/"
+            href="/administered/bank-accounts/"
             className="group block border-2 border-black bg-white p-6 shadow-[4px_4px_0_0_rgba(10,10,10,1)] transition-all hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0_0_rgba(255,77,0,1)]"
           >
             <div className="mb-3 flex h-12 w-12 items-center justify-center border-2 border-black bg-[#0a0a0a] text-white">
@@ -138,7 +138,7 @@ export default function AdminLandingClient() {
           </Link>
 
           <Link
-            href="/admin/summary/"
+            href="/administered/summary/"
             className="group block border-2 border-black bg-white p-6 shadow-[4px_4px_0_0_rgba(10,10,10,1)] transition-all hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0_0_rgba(255,77,0,1)]"
           >
             <div className="mb-3 flex h-12 w-12 items-center justify-center border-2 border-black bg-[#faf9f6] text-black">
@@ -157,7 +157,7 @@ export default function AdminLandingClient() {
           </Link>
 
           <Link
-            href="/admin/edit-pi/"
+            href="/administered/edit-pi/"
             className="group block border-2 border-black bg-white p-6 shadow-[4px_4px_0_0_rgba(10,10,10,1)] transition-all hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0_0_rgba(255,77,0,1)]"
           >
             <div className="mb-3 flex h-12 w-12 items-center justify-center border-2 border-black bg-[#faf9f6] text-black">
@@ -176,7 +176,7 @@ export default function AdminLandingClient() {
           </Link>
 
           <Link
-            href="/admin/customers/"
+            href="/administered/customers/"
             className="group block border-2 border-black bg-white p-6 shadow-[4px_4px_0_0_rgba(10,10,10,1)] transition-all hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0_0_rgba(255,77,0,1)]"
           >
             <div className="mb-3 flex h-12 w-12 items-center justify-center border-2 border-black bg-[#faf9f6] text-black">

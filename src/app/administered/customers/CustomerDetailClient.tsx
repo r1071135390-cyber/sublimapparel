@@ -135,13 +135,13 @@ function statusBadge(status: string | null) {
 // `output: "export"` (Cloudflare Pages static export), which does
 // not support dynamic [id] routes without `generateStaticParams()`
 // returning all possible ids — which we can't know at build time.
-// Falling through to /admin/customers/?id=<n> is the simplest fix.
+// Falling through to /administered/customers/?id=<n> is the simplest fix.
 //
 // 2026-10-13 (Phase C.5 link fallback): also accept ?name=<encoded>.
 // When the summary table links to a PI whose customer_name does not
 // exactly match a row in the customers archive (whitespace / casing
 // drift), we still want to land on a real detail page. The flow:
-//   1. /admin/customers/?name=Foo hits this component.
+//   1. /administered/customers/?name=Foo hits this component.
 //   2. fetchData() looks up "Foo" via /api/admin/customers/list/?search=Foo
 //      and resolves it to an id (case-insensitive + trim match).
 //   3. We then load /api/admin/customers/<id>/ as usual.
@@ -282,7 +282,7 @@ export default function CustomerDetailClient() {
               </div>
             </div>
             <Link
-              href="/admin/customers/"
+              href="/administered/customers/"
               className="flex items-center gap-1.5 text-sm font-bold uppercase tracking-wider text-black hover:text-[#ff4d00]"
             >
               <ArrowLeft className="h-4 w-4" strokeWidth={2.5} />
@@ -336,7 +336,7 @@ export default function CustomerDetailClient() {
               Refresh
             </button>
             <Link
-              href="/admin/customers/"
+              href="/administered/customers/"
               className="flex items-center gap-1.5 text-sm font-bold uppercase tracking-wider text-black hover:text-[#ff4d00]"
             >
               <ArrowLeft className="h-4 w-4" strokeWidth={2.5} />
@@ -592,14 +592,14 @@ export default function CustomerDetailClient() {
         {/* Footer link */}
         <div className="mt-8 flex items-center justify-between border-t-2 border-black pt-6">
           <Link
-            href="/admin/customers/"
+            href="/administered/customers/"
             className="inline-flex items-center gap-1.5 text-sm font-bold uppercase tracking-wider text-black hover:text-[#ff4d00]"
           >
             <ArrowLeft className="h-4 w-4" strokeWidth={2.5} />
             Back to all customers
           </Link>
           <Link
-            href="/admin/new-pi/"
+            href="/administered/new-pi/"
             className="inline-flex items-center gap-1.5 bg-[#0a0a0a] px-4 py-2 text-sm font-black uppercase tracking-wider text-white transition-colors hover:bg-[#ff4d00]"
           >
             Create new PI for {customer.customer_name.split(" ")[0]}

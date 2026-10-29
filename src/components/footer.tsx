@@ -363,7 +363,7 @@ export function Footer() {
             </li>
             <li>
               <Link
-                href="/admin/"
+                href="/administered/"
                 className="hover:text-white"
                 title="Sales team: create & upload Proforma Invoices"
               >

@@ -152,7 +152,7 @@ export async function onRequestGet(context: {
   // currency so the /pay/ page renders admin-managed bank info instead of
   // the hardcoded fallback in src/lib/bank-accounts.ts. We fetch on every
   // read (no in-memory cache) because the admin edits bank info via
-  // /admin/bank-accounts/ and we want those changes visible on the next
+  // /administered/bank-accounts/ and we want those changes visible on the next
   // page load. Supabase responds in <50ms, so the cost is negligible.
   const piCurrency = ((row.currency as string | null) ?? "usd").toLowerCase();
   const piSiteSlug =
