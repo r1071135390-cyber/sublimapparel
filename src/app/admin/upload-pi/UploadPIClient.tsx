@@ -16,6 +16,7 @@ import {
   Sparkles,
   X,
 } from "lucide-react";
+import { adminFetch } from "@/lib/admin-token";
 
 type ExtractResult = {
   pi_number?: string | null;
@@ -201,14 +202,14 @@ export default function UploadPIClient() {
           const dataUrl = await fileToDataUrl(fileData!);
           payload = { imageData: dataUrl, imageName: fileData!.name };
         }
-        response = await fetch("/api/pi/parse", {
+        response = await adminFetch("/api/pi/parse", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
       } else {
         // Text or image → /api/pi/parse
-        response = await fetch("/api/pi/parse", {
+        response = await adminFetch("/api/pi/parse", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(

@@ -163,7 +163,7 @@ function EditPIClientInner() {
     setLoadState({ kind: "loading" });
     setError(null);
     try {
-      const res = await fetch(
+      const res = await adminFetch(
         `/api/pi/${encodeURIComponent(piNumber)}`,
         { method: "GET" },
       );

@@ -46,6 +46,7 @@ export interface AdminGateApi {
 export function useAdminGate(
   title = "Admin",
   backHref = "/admin/",
+  backLabel = "← Back to admin",
 ): AdminGateApi {
   const [unlocked, setUnlocked] = useState(false);
   const [password, setPassword] = useState("");
@@ -192,7 +193,7 @@ export function useAdminGate(
             href={backHref}
             className="font-bold uppercase tracking-wider text-black hover:text-[#ff4d00]"
           >
-            ← Back to admin
+            {backLabel}
           </Link>
         </div>
       </div>
@@ -211,13 +212,15 @@ export function useAdminGate(
 export function AdminGate({
   title,
   backHref,
+  backLabel,
   children,
 }: {
   title: string;
   backHref?: string;
+  backLabel?: string;
   children: ReactNode;
 }) {
-  const { unlocked, gate } = useAdminGate(title, backHref);
+  const { unlocked, gate } = useAdminGate(title, backHref, backLabel);
   if (!unlocked) return gate;
   return <>{children}</>;
 }

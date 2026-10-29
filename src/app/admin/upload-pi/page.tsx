@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import UploadPIClient from "./UploadPIClient";
+import { AdminGate } from "@/components/admin/AdminGate";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Upload PI for instant customer page",
@@ -10,5 +11,9 @@ export const metadata: Metadata = buildPageMetadata({
 });
 
 export default function UploadPIPage() {
-  return <UploadPIClient />;
+  return (
+    <AdminGate title="Upload PI">
+      <UploadPIClient />
+    </AdminGate>
+  );
 }
