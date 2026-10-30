@@ -88,6 +88,7 @@ export function tagLink(input: TagFilterInput): string {
 // ============================================================
 
 import { SOLUTIONS, INDUSTRIES } from "@/lib/taxonomy";
+import { ALL_TAGS, slugify } from "@/lib/tag-archive";
 
 export function solutionLink(slug: string): string {
   return `/${slug}/`;
@@ -221,6 +222,8 @@ const SPORT_MAP: Record<string, string> = {
 };
 
 const SCENARIO_MAP: Record<string, string> = {
+  // Values must be canonical keys of SCENARIO_TAGS in lib/tag-archive.ts —
+  // they are turned straight into /tag/scenario/<slug>/ URLs.
   // Industries on home page
   "Events & Conferences": "Event & Festival",
   "Event & Conferences": "Event & Festival",
@@ -244,11 +247,11 @@ const SCENARIO_MAP: Record<string, string> = {
   "Corporate & Branding": "Corporate & Branding",
   "Apparel Brands & Agencies": "Retail & Fashion",
   "Apparel Brands": "Retail & Fashion",
-  "Schools, Universities & Greek Life": "Education & School",
-  "Schools": "Education & School",
-  "Greek Life": "Education & School",
-  "Education & School": "Education & School",
-  "School & Education": "Education & School",
+  "Schools, Universities & Greek Life": "School & Education",
+  "Schools": "School & Education",
+  "Greek Life": "School & Education",
+  "Education & School": "School & Education",
+  "School & Education": "School & Education",
   "Political Campaigns": "Political Campaign",
   "Political Campaign": "Political Campaign",
   "Breweries, Coffee & Hospitality": "Hospitality & F&B",
@@ -257,6 +260,7 @@ const SCENARIO_MAP: Record<string, string> = {
   "Endurance & Race Events": "Sports League",
   "Race Events": "Event & Festival",
   "E-commerce & Fulfillment": "Retail & Fashion",
+  "E-commerce & POD": "Retail & Fashion",
   "Wedding": "Wedding & Party",
   "Fundraiser": "Fundraiser & Charity",
   "Construction": "Construction & Engineering",
@@ -296,24 +300,32 @@ export function resolveTagLink(
 
 export type ArchiveDimension = "category" | "sport" | "scenario";
 
-function archiveSlugify(s: string): string {
-  return s
-    .toLowerCase()
-    .replace(/&/g, "and")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
-
 /**
  * Build the URL to the dedicated archive page for a given tag.
  * Each of the 13 categories, 42 sports, and 25 scenarios has its
  * own page at /tag/<dimension>/<slug>/.
+ *
+ * The slug comes from the same slugify() the archive pages use, so a
+ * link and its page can never disagree about the URL.
  */
 export function tagArchiveLink(
   dimension: ArchiveDimension,
   value: string
 ): string {
-  return `/tag/${dimension}/${archiveSlugify(value)}/`;
+  return `/tag/${dimension}/${slugify(value)}/`;
+}
+
+/**
+ * Build the archive URL only when that archive actually exists.
+ * Returns null otherwise, so no link can point at a missing page.
+ */
+export function tagArchiveLinkIfExists(
+  dimension: ArchiveDimension,
+  value: string
+): string | null {
+  const dict = ALL_TAGS[dimension];
+  if (!dict || !(value in dict)) return null;
+  return tagArchiveLink(dimension, dict[value].label);
 }
 
 /**
@@ -322,8 +334,25 @@ export function tagArchiveLink(
  */
 export function resolveArchiveLink(label: string): string | null {
   const trimmed = label.trim();
-  if (CATEGORY_MAP[trimmed]) return tagArchiveLink("category", CATEGORY_MAP[trimmed]);
-  if (SPORT_MAP[trimmed]) return tagArchiveLink("sport", SPORT_MAP[trimmed]);
-  if (SCENARIO_MAP[trimmed]) return tagArchiveLink("scenario", SCENARIO_MAP[trimmed]);
+  const category = CATEGORY_MAP[trimmed];
+  if (category) {
+    const link = tagArchiveLinkIfExists("category", category);
+    if (link) return link;
+  }
+  const sport = SPORT_MAP[trimmed];
+  if (sport) {
+    const link = tagArchiveLinkIfExists("sport", sport);
+    if (link) return link;
+  }
+  const scenario = SCENARIO_MAP[trimmed];
+  if (scenario) {
+    const link = tagArchiveLinkIfExists("scenario", scenario);
+    if (link) return link;
+  }
+  // A canonical tag label points at its own archive.
+  for (const dim of ["category", "sport", "scenario"] as const) {
+    const link = tagArchiveLinkIfExists(dim, trimmed);
+    if (link) return link;
+  }
   return null;
 }

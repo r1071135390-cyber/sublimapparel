@@ -68,6 +68,9 @@ jobs:
       - name: Run TypeScript type check
         run: pnpm tsc --noEmit
 
+      - name: Verify tag archive links resolve to real archives
+        run: node scripts/check-tag-links.mjs
+
       - name: Run Next.js lint (informational only)
         # Non-blocking: we already rtl-style commit + push; surfacing lint
         # issues here as warnings rather than blocking merges keeps the

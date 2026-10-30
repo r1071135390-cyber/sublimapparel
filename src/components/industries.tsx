@@ -17,7 +17,7 @@ import {
   ShoppingCart,
   ArrowRight,
 } from "lucide-react";
-import { tagArchiveLink } from "@/lib/tag-utils";
+import { resolveArchiveLink } from "@/lib/tag-utils";
 
 export function Industries() {
   const industries = [
@@ -173,7 +173,7 @@ export function Industries() {
                 {/* View products link */}
                 <div className="mt-auto flex items-center justify-between gap-2">
                   <Link
-                    href={tagArchiveLink("scenario", ind.scenario)}
+                    href={resolveArchiveLink(ind.scenario) ?? "/products/all/"}
                     className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-black transition-colors hover:text-[#cc3d00]"
                   >
                     Browse products
