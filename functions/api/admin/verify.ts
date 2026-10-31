@@ -38,7 +38,7 @@
 // Auth: fails closed. If the matching environment variable is not set on the
 // deployment, this endpoint reports that instead of accepting anything.
 
-import { requireAdmin, secretEquals, sha256Hex } from "../_admin-auth";
+import { passwordMatches, requireAdmin } from "../_admin-auth";
 import type { EventContext } from "@cloudflare/workers-types";
 
 interface Env {
@@ -106,11 +106,7 @@ export const onRequestPost = async (
       ? (body as { password: string }).password
       : "";
 
-  // The digest is hex; accept the configured value whatever casing it was
-  // pasted in, so a hand-copied hash still matches.
-  const expected = env.OWNER_PASSWORD_HASH.trim().toLowerCase();
-  const digest = await sha256Hex(password);
-  const ok = await secretEquals(digest, expected);
+  const ok = await passwordMatches(password, env.OWNER_PASSWORD_HASH);
 
   if (!ok) {
     return json({ error: "Wrong password." }, 401);

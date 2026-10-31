@@ -20,8 +20,9 @@
 
 export interface AdminEnv {
   ADMIN_TOKEN?: string;
-  // SHA-256 (hex) of the owner password. R128: the password itself used to
-  // be a constant in the public client bundle; only the digest lives here.
+  // SHA-256 (hex) of the owner password, or the password itself — see
+  // passwordMatches(). R128: the password used to be a constant in the
+  // public client bundle; only the server-side value lives here now.
   OWNER_PASSWORD_HASH?: string;
 }
 
@@ -75,6 +76,33 @@ export async function secretEquals(
     diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
   }
   return diff === 0;
+}
+
+const SHA256_HEX = /^[0-9a-fA-F]{64}$/;
+
+/**
+ * Compare a typed password against the configured secret.
+ *
+ * The variable is called OWNER_PASSWORD_HASH and is documented to hold a
+ * SHA-256 digest, but operators paste the password itself — it is the only
+ * value they have, and ADMIN_TOKEN is configured exactly that way. A
+ * plaintext value stored there can never match a digest comparison, so the
+ * operator is locked out behind "Wrong password." with nothing to show
+ * why.
+ *
+ * Both representations are accepted: a 64-character hex string is read as
+ * a digest, anything else as the plaintext password. Either way the
+ * plaintext stays on the server and never reaches the client bundle.
+ */
+export async function passwordMatches(
+  provided: string,
+  configured: string,
+): Promise<boolean> {
+  const value = configured.trim();
+  if (SHA256_HEX.test(value)) {
+    return secretEquals(sha256Hex(provided), value.toLowerCase());
+  }
+  return secretEquals(provided, value);
 }
 
 /**
