@@ -100,7 +100,7 @@ export async function passwordMatches(
 ): Promise<boolean> {
   const value = configured.trim();
   if (SHA256_HEX.test(value)) {
-    return secretEquals(sha256Hex(provided), value.toLowerCase());
+    return secretEquals(await sha256Hex(provided), value.toLowerCase());
   }
   return secretEquals(provided, value);
 }
