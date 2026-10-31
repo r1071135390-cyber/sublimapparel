@@ -29,7 +29,7 @@ const data: CustomerProfileData = {
   // page owns "corporate apparel production service". 59 chars.
   metaTitle: "Corporate Uniforms for Employee Programs | Company Apparel",
   metaDescription:
-    "Corporate uniforms tailored for employee programs: new-hire kits, branded polos, office apparel, and multi-department uniform runs. Reliable global DDP delivery for growing companies.",
+    "Corporate uniforms for employee programs: new-hire kits, branded polos, office apparel, and multi-department uniform runs with reliable global DDP delivery.",
   keywords: [
     "employee shirts",
     "company event shirts",

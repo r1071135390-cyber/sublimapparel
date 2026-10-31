@@ -30,7 +30,7 @@ const data: CustomerProfileData = {
   // "event apparel production service". 58 chars.
   metaTitle: "Event Apparel for Conferences & Festivals | Bulk Shirts",
   metaDescription:
-    "Event apparel for conferences, festivals, and large-scale gatherings. Bulk T-shirts, staff uniforms, sponsor-branded clothing, race shirts. Reliable worldwide DDP production.",
+    "Event apparel for conferences, festivals, and large gatherings: bulk T-shirts, staff uniforms, sponsor-branded clothing, and race shirts with global DDP.",
   keywords: [
     "conference shirts",
     "event shirts",

@@ -282,6 +282,23 @@ const ROUTES: SitemapRoute[] = [
   { path: "/shipping-policy", priority: 0.3, changeFrequency: "yearly" },
 ];
 
+// R131: the real, on-disk image for each product category page.
+// Verified to exist under public/. The previous "/products/<slug>.webp"
+// guess 404'd on all 11 category pages.
+const CATEGORY_IMAGES: Record<string, string> = {
+  "t-shirts": "/products/0002/0.webp",
+  "hoodies": "/products/0004/0.webp",
+  "jerseys": "/products/0018/1.webp",
+  "running-shirts": "/products/0128/0.webp",
+  "training-apparel": "/products/0129/0.webp",
+  "racing": "/products/0016/0.webp",
+  "cycling": "/products/0007/0.webp",
+  "golf": "/golf-polo-navy.webp",
+  "bowling": "/bowling-jersey-striker.webp",
+  "esports": "/esports-jersey-prodigy.webp",
+  "all": "/og/og-products.webp",
+};
+
 export default function sitemap(): MetadataRoute.Sitemap {
   // Static pages — use each route's own lastModified override, or fall back
   // to the stable STATIC_LAST_MOD anchor. We deliberately do NOT use
@@ -298,7 +315,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
       entry.images = [`${SITE_URL}/og-default.jpg`];
     } else if (r.path.startsWith("/products/")) {
       const slug = r.path.replace("/products/", "");
-      entry.images = [`${SITE_URL}/og-default.jpg`, `${SITE_URL}/products/${slug}.webp`];
+      // R131: the old code guessed "/products/<slug>.webp" for every
+      // category page, but public/products/ holds numbered folders
+      // (0001/…/0129), not per-category files — all 11 category
+      // entries pointed at a 404. Each category now names its real,
+      // existing image; the default is used for anything unmapped.
+      const categoryImage = CATEGORY_IMAGES[slug];
+      entry.images = categoryImage
+        ? [`${SITE_URL}/og-default.jpg`, `${SITE_URL}${categoryImage}`]
+        : [`${SITE_URL}/og-default.jpg`];
     } else if (r.path === "/fabric" || r.path === "/fabric/cotton") {
       entry.images = [`${SITE_URL}/fabric-hero.webp`, `${SITE_URL}/og-default.jpg`];
     } else if (r.path === "/") {

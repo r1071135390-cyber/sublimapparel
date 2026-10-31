@@ -26,7 +26,7 @@ const data: CustomerProfileData = {
   // "team sports apparel production service". 60 chars exactly.
   metaTitle: "Team Apparel for Clubs & Leagues | Custom Sports Jerseys",
   metaDescription:
-    "Custom team apparel for clubs, leagues, and federations: sublimated jerseys, uniforms, and training wear. Roster-locked production, sponsor panels, season-opener deadlines.",
+    "Custom team apparel for clubs, leagues, and federations: sublimated jerseys, uniforms, and training wear with roster-locked production and sponsor panels.",
   keywords: [
     "custom sports team apparel",
     "team jersey supplier",
