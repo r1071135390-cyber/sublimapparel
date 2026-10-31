@@ -18,7 +18,11 @@ import {
   Pencil,
   Filter,
 } from "lucide-react";
-import { adminFetch } from "@/lib/admin-token";
+import {
+  adminFetch,
+  getAdminUser,
+  type AdminUserIdentity,
+} from "@/lib/admin-token";
 import type { FxRates } from "@/lib/fx-rates";
 
 interface PiListItem {
@@ -215,6 +219,18 @@ export default function SummaryClient() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // R132: deleting an invoice is owner-only. The server refuses it for
+  // any other role, so we hide the button instead of offering one that
+  // would bounce.
+  const [user, setUser] = useState<AdminUserIdentity | null>(null);
+  useEffect(() => {
+    setUser(getAdminUser());
+  }, []);
+  // The identity arrives asynchronously; until it does, no owner-only
+  // action may be offered. `role === "owner"` is the only thing that
+  // unlocks the Delete button — an unknown identity unlocks nothing.
+  const canDelete = user?.role === "owner";
+
   // 2026-10-04 (R82): per-row Delete UI state. `confirmTarget` holds the
   // PI the admin is currently being asked to confirm deletion of; null
   // means the modal is closed. `deleting` is true while the network
@@ -327,6 +343,10 @@ export default function SummaryClient() {
   //   4. POST /api/pi/delete/. On success, close modal + re-fetch the list.
   //   5. On failure, surface the error inline; modal stays open.
   function requestDelete(p: PiListItem) {
+    if (!canDelete) {
+      setDeleteError("Deleting a PI is restricted to the owner account.");
+      return;
+    }
     setDeleteError(null);
     setConfirmTarget(p);
   }
@@ -783,7 +803,7 @@ export default function SummaryClient() {
                               <Lock className="h-3.5 w-3.5" strokeWidth={2.5} />
                               Locked
                             </span>
-                          ) : (
+                          ) : canDelete ? (
                             <button
                               type="button"
                               onClick={() => requestDelete(p)}
@@ -793,6 +813,14 @@ export default function SummaryClient() {
                               <Trash2 className="h-3.5 w-3.5" strokeWidth={2.5} />
                               Delete
                             </button>
+                          ) : (
+                            <span
+                              className="inline-flex cursor-not-allowed items-center gap-1 text-xs font-black uppercase tracking-wider text-[#c0c0c0]"
+                              title="Deleting a PI is restricted to the owner account."
+                            >
+                              <Lock className="h-3.5 w-3.5" strokeWidth={2.5} />
+                              Owner only
+                            </span>
                           )}
                         </td>
                       </tr>

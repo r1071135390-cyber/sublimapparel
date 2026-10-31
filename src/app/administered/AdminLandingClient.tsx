@@ -1,9 +1,24 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { FileEdit, Upload, History, ArrowRight, Building2, Users } from "lucide-react";
+import {
+  adminUserLabel,
+  getAdminUser,
+  type AdminUserIdentity,
+} from "@/lib/admin-token";
 
 export default function AdminLandingClient() {
+  // R132: who is signed in, and may they change the receiving accounts?
+  const [user, setUser] = useState<AdminUserIdentity | null>(null);
+  useEffect(() => {
+    setUser(getAdminUser());
+  }, []);
+  // Unknown identity is treated as not-owner, so the card never offers
+  // "Edit" before the server has confirmed who signed in.
+  const isOwner = user?.role === "owner";
+
   return (
     <main className="min-h-screen bg-[#faf9f6]">
       {/* Header */}
@@ -20,12 +35,22 @@ export default function AdminLandingClient() {
               <div className="text-lg font-black leading-none">Proforma Invoice Tools</div>
             </div>
           </div>
-          <Link
-            href="/"
-            className="text-sm font-bold uppercase tracking-wider text-black hover:text-[#ff4d00]"
-          >
-            ← Back to site
-          </Link>
+          <div className="flex items-center gap-4">
+            {user && (
+              <div className="hidden text-xs font-bold uppercase tracking-widest text-[#6b6b6b] sm:block">
+                <span className="text-black">{adminUserLabel(user)}</span>
+                <span className="ml-2 border border-black px-1.5 py-0.5">
+                  {user.role}
+                </span>
+              </div>
+            )}
+            <Link
+              href="/"
+              className="text-sm font-bold uppercase tracking-wider text-black hover:text-[#ff4d00]"
+            >
+              ← Back to site
+            </Link>
+          </div>
         </div>
       </header>
 
@@ -129,10 +154,12 @@ export default function AdminLandingClient() {
               Bank Accounts
             </h3>
             <p className="mb-3 text-sm text-[#6b6b6b]">
-              Manage the 4 receiving accounts (USD / EUR / GBP / CNY) shown in every PI.
+              {isOwner
+                ? "Manage the 4 receiving accounts (USD / EUR / GBP / CNY) shown in every PI."
+                : "View the 4 receiving accounts (USD / EUR / GBP / CNY) shown in every PI. Editing them is owner-only."}
             </p>
             <div className="flex items-center gap-1 text-sm font-black uppercase tracking-wider text-black group-hover:text-[#ff4d00]">
-              Edit
+              {isOwner ? "Edit" : "View only"}
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={3} />
             </div>
           </Link>

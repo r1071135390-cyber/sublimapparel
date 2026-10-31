@@ -1,6 +1,6 @@
 // functions/api/admin/verify.ts
 //
-// 2026-10-28 (R125): lightweight ADMIN_TOKEN check for the admin UI.
+// 2026-10-28 (R125): lightweight admin-credential check for the admin UI.
 //
 // The admin pages need to know whether the token the operator typed is
 // the one the server expects — before they start loading data. Without
@@ -12,15 +12,15 @@
 // stays fast and cannot leak anything.
 //
 // GET /api/admin/verify
-//   Authorization: Bearer <ADMIN_TOKEN>
-//   → 200 { ok: true }
+//   Authorization: Bearer <token>
+//   → 200 { ok: true, user: { id, email, role } }
 //   → 403 { error: "Unauthorized" }                  token is wrong
 //   → 403 { error: "ADMIN_TOKEN is not configured…" }  env var missing
 //
 // POST /api/admin/verify
-//   Authorization: Bearer <ADMIN_TOKEN>
-//   Body: { password: "<plaintext owner password>" }
-//   → 200 { ok: true }
+//   Authorization: Bearer <token>
+//   Body: { password: "<plaintext account password>" }
+//   → 200 { ok: true, user: { id, email, role } }
 //   → 401 { error: "Wrong password." }              password is wrong
 //   → 403 { error: "Unauthorized" }                  token is wrong
 //   → 403 { error: "OWNER_PASSWORD_HASH is not configured…" }  env var missing
@@ -31,19 +31,32 @@
 // password over TLS and we check its SHA-256 digest against the
 // OWNER_PASSWORD_HASH environment variable. The plaintext is never stored.
 //
-// The ADMIN_TOKEN is required on POST as well. Without it this endpoint
+// R132 (2026-10-31): multi-user accounts.
+//
+// The response now carries the identity of the account the token belongs
+// to. POST checks the password of THAT account — every colleague has their
+// own password, so leaking one does not unlock the rest of the team.
+//
+// The admin token is required on POST as well. Without it this endpoint
 // would be an open password oracle — reachable by anyone on the internet,
 // who could grind passwords against it.
 //
 // Auth: fails closed. If the matching environment variable is not set on the
 // deployment, this endpoint reports that instead of accepting anything.
 
-import { passwordMatches, requireAdmin } from "../_admin-auth";
+import {
+  passwordMatches,
+  publicUser,
+  requireAdmin,
+  resolveAdminUser,
+} from "../_admin-auth";
 import type { EventContext } from "@cloudflare/workers-types";
 
 interface Env {
   ADMIN_TOKEN?: string;
   OWNER_PASSWORD_HASH?: string;
+  // R132: roster of individual admin accounts.
+  ADMIN_USERS?: string;
 }
 
 const corsHeaders = {
@@ -69,7 +82,10 @@ export const onRequestGet = async (
   const guard = requireAdmin(request, url, env);
   if (guard) return guard;
 
-  return json({ ok: true });
+  const user = resolveAdminUser(request, url, env);
+  if (!user) return json({ error: "Unauthorized" }, 403);
+
+  return json({ ok: true, user: publicUser(user) });
 };
 
 export const onRequestPost = async (
@@ -81,11 +97,18 @@ export const onRequestPost = async (
   const guard = requireAdmin(request, url, env);
   if (guard) return guard;
 
-  if (!env.OWNER_PASSWORD_HASH) {
+  const user = resolveAdminUser(request, url, env);
+  if (!user) return json({ error: "Unauthorized" }, 403);
+
+  // R132: each account has its own password. The deployment-wide
+  // OWNER_PASSWORD_HASH stays as the fallback for the legacy single-token
+  // account and for roster entries that do not define one.
+  const configured = user.passwordHash ?? env.OWNER_PASSWORD_HASH;
+  if (!configured) {
     return json(
       {
         error:
-          "OWNER_PASSWORD_HASH is not configured on this deployment. Add it as a Cloudflare Pages environment variable to use this endpoint.",
+          "No password is configured for this account. Add a passwordHash for it in ADMIN_USERS, or set OWNER_PASSWORD_HASH on the deployment.",
       },
       403,
     );
@@ -106,11 +129,11 @@ export const onRequestPost = async (
       ? (body as { password: string }).password
       : "";
 
-  const ok = await passwordMatches(password, env.OWNER_PASSWORD_HASH);
+  const ok = await passwordMatches(password, configured);
 
   if (!ok) {
     return json({ error: "Wrong password." }, 401);
   }
 
-  return json({ ok: true });
+  return json({ ok: true, user: publicUser(user) });
 };

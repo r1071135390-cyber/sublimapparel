@@ -17,11 +17,13 @@
 //   Body: { currency: 'usd'|'eur'|'gbp'|'cny', ...BankAccount fields }
 //   Upserts a row keyed on (site_slug, currency). Triggers the
 //   updated_at bump automatically. Requires ADMIN_TOKEN bearer.
+//   R132: owner role only — an "admin" account may read the accounts
+//   but may not change them.
 //   POST-PUT (R115): also pushes the new row to OEMTSHIRTS_BANK_WEBHOOK_URL
 //   so the WordPress PI plugin at oemtshirts.com can sync. Signature
 //   header is HMAC-SHA256 of the raw body using OEMTSHIRTS_BANK_WEBHOOK_SECRET.
 
-import { requireAdmin } from "../_admin-auth";
+import { requireAdmin, requireRole } from "../_admin-auth";
 
 interface Env {
   COZE_SUPABASE_URL: string;
@@ -32,6 +34,8 @@ interface Env {
   OEMTSHIRTS_BANK_WEBHOOK_SECRET?: string;
   // R125: required bearer token for admin access
   ADMIN_TOKEN?: string;
+  // R132: roster of individual admin accounts (owner / admin roles)
+  ADMIN_USERS?: string;
 }
 
 interface PagesContext {
@@ -236,8 +240,10 @@ async function handleGet(ctx: PagesContext): Promise<Response> {
 }
 
 async function handlePut(ctx: PagesContext): Promise<Response> {
-  // ── ADMIN_TOKEN guard ──────────────────────────────────────────────
-  const guard = requireAdmin(ctx.request, new URL(ctx.request.url), ctx.env);
+  // ── R132: owner-only guard ─────────────────────────────────────────
+  // Writing the receiving accounts changes where real money lands, so
+  // it stays with the owner account even when the roster has admins on it.
+  const guard = requireRole(ctx.request, new URL(ctx.request.url), ctx.env, "owner");
   if (guard) return guard;
   // ─────────────────────────────────────────────────────────────────
 

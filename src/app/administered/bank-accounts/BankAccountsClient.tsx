@@ -27,7 +27,12 @@ import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, Save, RefreshCw, AlertCircle, CheckCircle2, Building2, RotateCcw } from "lucide-react";
 import { SUPPORTED_CURRENCIES, CURRENCY_SYMBOLS, bankAccountFromRow, type BankAccount, type BankAccountRow as DbBankAccountRow, type SupportedCurrency } from "@/lib/bank-accounts";
-import { adminFetch } from "@/lib/admin-token";
+import {
+  adminFetch,
+  adminUserLabel,
+  getAdminUser,
+  type AdminUserIdentity,
+} from "@/lib/admin-token";
 
 interface FormBankAccountRow extends BankAccount {
   id: number;
@@ -113,7 +118,7 @@ function TextInput({
       value={value}
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
-      className={`w-full border-2 border-black/15 bg-white px-3 py-2 text-sm text-black outline-none transition-colors focus:border-[#ff4d00] ${
+      className={`w-full border-2 border-black/15 bg-white px-3 py-2 text-sm text-black outline-none transition-colors focus:border-[#ff4d00] disabled:cursor-not-allowed disabled:bg-black/[0.03] disabled:text-black/40 ${
         mono ? "font-mono" : ""
       }`}
     />
@@ -137,7 +142,7 @@ function TextArea({
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
       rows={rows}
-      className="w-full border-2 border-black/15 bg-white px-3 py-2 text-sm text-black outline-none transition-colors focus:border-[#ff4d00]"
+      className="w-full border-2 border-black/15 bg-white px-3 py-2 text-sm text-black outline-none transition-colors focus:border-[#ff4d00] disabled:cursor-not-allowed disabled:bg-black/[0.03] disabled:text-black/40"
     />
   );
 }
@@ -159,7 +164,7 @@ function NullableTextInput({
       value={value ?? ""}
       onChange={(e) => onChange(e.target.value === "" ? undefined : e.target.value)}
       placeholder={placeholder}
-      className={`w-full border-2 border-black/15 bg-white px-3 py-2 text-sm text-black outline-none transition-colors focus:border-[#ff4d00] ${
+      className={`w-full border-2 border-black/15 bg-white px-3 py-2 text-sm text-black outline-none transition-colors focus:border-[#ff4d00] disabled:cursor-not-allowed disabled:bg-black/[0.03] disabled:text-black/40 ${
         mono ? "font-mono" : ""
       }`}
     />
@@ -172,12 +177,14 @@ function CurrencyCard({
   onChange,
   onSave,
   onReset,
+  readOnly,
 }: {
   currency: SupportedCurrency;
   state: FormState;
   onChange: (next: FormBankAccountRow) => void;
   onSave: () => void;
   onReset: () => void;
+  readOnly: boolean;
 }) {
   const row = state.row;
   const setField = <K extends keyof FormBankAccountRow>(k: K, v: FormBankAccountRow[K]) =>
@@ -221,7 +228,7 @@ function CurrencyCard({
           <button
             type="button"
             onClick={onReset}
-            disabled={!state.dirty || state.saveState === "saving"}
+            disabled={readOnly || !state.dirty || state.saveState === "saving"}
             title="Discard unsaved changes and reload the saved values"
             className="inline-flex items-center gap-2 border-2 border-black/30 bg-white px-4 py-2 text-sm font-black uppercase tracking-wider text-black transition-all hover:border-black hover:bg-black/5 disabled:cursor-not-allowed disabled:border-black/10 disabled:text-black/30"
           >
@@ -231,7 +238,7 @@ function CurrencyCard({
           <button
             type="button"
             onClick={onSave}
-            disabled={!state.dirty || state.saveState === "saving"}
+            disabled={readOnly || !state.dirty || state.saveState === "saving"}
             className="inline-flex items-center gap-2 border-2 border-black bg-[#ff4d00] px-4 py-2 text-sm font-black uppercase tracking-wider text-white transition-all hover:bg-black disabled:cursor-not-allowed disabled:border-black/20 disabled:bg-black/10 disabled:text-black/40"
           >
             {state.saveState === "saving" ? (
@@ -244,7 +251,7 @@ function CurrencyCard({
         </div>
       </header>
 
-      <div className="space-y-3 p-5">
+      <fieldset disabled={readOnly} className="m-0 min-w-0 space-y-3 border-0 p-5">
         <FieldRow label="Label">
           <TextInput
             value={row.label}
@@ -363,7 +370,7 @@ function CurrencyCard({
             minute: "2-digit",
           })}
         </div>
-      </div>
+      </fieldset>
     </section>
   );
 }
@@ -371,6 +378,17 @@ function CurrencyCard({
 export default function BankAccountsClient() {
   const [forms, setForms] = useState<Record<SupportedCurrency, FormState> | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
+
+  // R132: changing the receiving accounts is owner-only. The server
+  // refuses the write for any other role, so the form is read-only here
+  // instead of offering a Save that would bounce.
+  const [user, setUser] = useState<AdminUserIdentity | null>(null);
+  useEffect(() => {
+    setUser(getAdminUser());
+  }, []);
+  // Unknown identity = read-only. Only an explicit owner may write,
+  // so the form stays locked until the server has named the account.
+  const readOnly = user?.role !== "owner";
 
   const fetchAll = useCallback(async () => {
     try {
@@ -557,6 +575,17 @@ export default function BankAccountsClient() {
           </p>
         </div>
 
+        {readOnly && (
+          <div className="mb-6 flex items-start gap-2 border-2 border-amber-600 bg-amber-50 p-4 text-sm text-amber-900">
+            <AlertCircle className="mt-0.5 h-5 w-5 shrink-0" />
+            <div>
+              <strong className="font-black">Read-only access.</strong> Your
+              account ({adminUserLabel(user)}) can view the receiving accounts,
+              but only the owner account can change them.
+            </div>
+          </div>
+        )}
+
         {loadError && (
           <div className="mb-6 flex items-start gap-2 border-2 border-red-700 bg-red-50 p-4 text-sm text-red-800">
             <AlertCircle className="mt-0.5 h-5 w-5 shrink-0" />
@@ -580,6 +609,7 @@ export default function BankAccountsClient() {
                 onChange={(next) => handleChange(c, next)}
                 onSave={() => handleSave(c)}
                 onReset={() => handleReset(c)}
+                readOnly={readOnly}
               />
             ))}
           </div>

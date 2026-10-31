@@ -16,6 +16,7 @@ import {
   getAdminToken,
   hasPasswordSession,
   setAdminToken,
+  setAdminUser,
   setPasswordSession,
   verifyAdminToken,
   verifyOwnerPassword,
@@ -40,8 +41,13 @@ import {
  * either, because the owner password is what stops a borrowed laptop
  * from silently opening the admin area.
  *
- * Both are remembered in sessionStorage, so the owner types them once per
+ * Both are remembered in sessionStorage, so the operator types them once per
  * browser tab and every admin page in that tab opens straight away.
+ *
+ * R132: each colleague has their own token and their own password, and the
+ * server tells us which account signed in (and with which role). The
+ * password gate is remembered per account, not per browser, so a shared
+ * machine does not hand one person's unlocked session to the next person.
  */
 export interface AdminGateApi {
   unlocked: boolean;
@@ -59,21 +65,29 @@ export function useAdminGate(
   const [error, setError] = useState<string | null>(null);
   const [checking, setChecking] = useState(false);
 
-  // Auto-unlock when this tab already holds both credentials. We unlock
-  // optimistically and let the server have the final word: a stale token
-  // re-locks the page a moment later (the API call 403s, or verify fails).
+  // Auto-unlock when this tab already holds both credentials. The token is
+  // checked first, because only the server knows which account it belongs
+  // to — the password session is stored per account, so it can only be
+  // looked up once the account is known. A stale token re-locks the page a
+  // moment later (the API call 403s, or verify fails).
   useEffect(() => {
     const stored = getAdminToken();
-    if (!stored || !hasPasswordSession()) return;
-    setUnlocked(true);
+    if (!stored) return;
     let cancelled = false;
     void (async () => {
       const result = await verifyAdminToken(stored);
       if (cancelled) return;
-      if (result.ok) return;
-      clearAdminToken();
-      setUnlocked(false);
-      setError(result.message ?? "Your admin token was rejected. Sign in again.");
+      if (!result.ok) {
+        clearAdminToken();
+        setError(result.message ?? "Your admin token was rejected. Sign in again.");
+        return;
+      }
+      const accountId = result.user?.id || result.user?.email || "";
+      if (!accountId || !hasPasswordSession(accountId)) {
+        return;
+      }
+      if (result.user) setAdminUser(result.user);
+      setUnlocked(true);
     })();
     return () => {
       cancelled = true;
@@ -116,20 +130,28 @@ export function useAdminGate(
         return;
       }
 
-      // The password is only asked for once per tab. After that the
-      // session flag stands in for it.
-      if (!hasPasswordSession()) {
+      // R132: the server now tells us who this token belongs to. The
+      // password gate is remembered per account, so one person's unlocked
+      // tab never unlocks the next person's session on a shared machine.
+      let activeUser = tokenResult.user ?? null;
+      const accountId = activeUser?.id || activeUser?.email || "";
+
+      if (!accountId || !hasPasswordSession(accountId)) {
         const passwordResult = await verifyOwnerPassword(password, value);
         if (!passwordResult.ok) {
           setChecking(false);
           setError(passwordResult.message ?? "Wrong password.");
           return;
         }
+        if (passwordResult.user) activeUser = passwordResult.user;
       }
 
+      const sessionId =
+        activeUser?.id || activeUser?.email || accountId || "unknown";
       setChecking(false);
       setAdminToken(value);
-      setPasswordSession();
+      if (activeUser) setAdminUser(activeUser);
+      setPasswordSession(sessionId);
       setUnlocked(true);
     },
     [checking, password, token],
@@ -145,14 +167,14 @@ export function useAdminGate(
           {title}
         </h1>
         <p className="mb-5 text-sm text-[#6b6b6b]">
-          Owner-only. Enter the owner password and your admin token to continue.
+          Staff only. Enter your admin token and your account password to continue.
         </p>
         <form onSubmit={submit}>
           <label
             htmlFor="admin-owner-password"
             className="mb-1 block text-xs font-black uppercase tracking-wider text-[#6b6b6b]"
           >
-            Owner password
+            Account password
           </label>
           <input
             id="admin-owner-password"
@@ -181,7 +203,7 @@ export function useAdminGate(
               setToken(e.target.value);
               setError(null);
             }}
-            placeholder="ADMIN_TOKEN"
+            placeholder="Your admin token"
             className="mb-2 w-full border-2 border-black bg-white px-3 py-2 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-[#ff4d00]/40"
           />
           {error && (

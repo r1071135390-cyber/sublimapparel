@@ -26,15 +26,20 @@
 //   b) The endpoint is only called from a single password-gated UI.
 //   c) Anyone with the URL and the password can already view every PI via
 //      list.ts; the delete is just a write-side mirror of that.
+//
+// R132: the endpoint additionally requires an owner-role account, so a
+// plain "admin" colleague can never delete an invoice.
 
 import { normalizeSupabaseUrl } from "../_utils";
-import { requireAdmin } from "../_admin-auth";
+import { requireRole } from "../_admin-auth";
 
 interface Env {
   COZE_SUPABASE_URL: string;
   COZE_SUPABASE_SERVICE_ROLE_KEY: string;
   // R125: required bearer token for admin access
   ADMIN_TOKEN?: string;
+  // R132: roster of individual admin accounts (owner / admin roles)
+  ADMIN_USERS?: string;
 }
 
 const corsHeaders = {
@@ -64,8 +69,10 @@ export async function onRequestPost(context: {
 }): Promise<Response> {
   const { request, env } = context;
 
-  // ── ADMIN_TOKEN guard ──────────────────────────────────────────────
-  const guard = requireAdmin(request, new URL(request.url), env);
+  // ── R132: owner-only guard ─────────────────────────────────────────
+  // Deleting an invoice is irreversible, so it stays with the owner
+  // account even when the roster has admins on it.
+  const guard = requireRole(request, new URL(request.url), env, "owner");
   if (guard) return guard;
   // ─────────────────────────────────────────────────────────────────
 
