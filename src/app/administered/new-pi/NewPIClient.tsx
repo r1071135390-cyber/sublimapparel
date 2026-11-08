@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo, useRef } from "react";
+import { Fragment, useState, useEffect, useMemo, useRef } from "react";
 import Link from "next/link";
 import { Plus, Trash2, Save, ExternalLink, RefreshCw, Upload, X, Check, Copy, Eye, Ruler } from "lucide-react";
 import { bankAccountFromRow, SUPPORTED_CURRENCIES, CURRENCY_SYMBOLS, type SupportedCurrency, type BankAccount, type BankAccountRow } from "@/lib/bank-accounts";
@@ -957,153 +957,155 @@ export function PIPreview(props: {
             </thead>
             <tbody>
               {items.map((it, idx) => (
-                <tr key={idx}>
-                  <td className="border border-black dark:border-white p-1.5 align-top">
-                    <div className="w-24 h-24 border border-dashed border-neutral-300 dark:border-neutral-700 flex items-center justify-center bg-neutral-50 dark:bg-neutral-800 relative overflow-hidden">
-                      {it.imageUrl ? (
-                        <>
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={it.imageUrl} alt="" width={96} height={96} loading="lazy" decoding="async" className="object-cover w-full h-full" />
+                <Fragment key={idx}>
+                  <tr>
+                    <td className="border border-black dark:border-white p-1.5 align-top">
+                      <div className="w-24 h-24 border border-dashed border-neutral-300 dark:border-neutral-700 flex items-center justify-center bg-neutral-50 dark:bg-neutral-800 relative overflow-hidden">
+                        {it.imageUrl ? (
+                          <>
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={it.imageUrl} alt="" width={96} height={96} loading="lazy" decoding="async" className="object-cover w-full h-full" />
+                            <button
+                              onClick={() => onUpdateItem(idx, { imageUrl: "" })}
+                              className="absolute top-0.5 right-0.5 p-0.5 bg-black/60 text-white rounded"
+                            >
+                              <X className="w-3 h-3" />
+                            </button>
+                          </>
+                        ) : (
                           <button
-                            onClick={() => onUpdateItem(idx, { imageUrl: "" })}
-                            className="absolute top-0.5 right-0.5 p-0.5 bg-black/60 text-white rounded"
+                            onClick={() => fileInputRefs.current[idx]?.click()}
+                            className="text-xs text-neutral-500 hover:text-[#ff4d00] flex flex-col items-center gap-1"
                           >
-                            <X className="w-3 h-3" />
+                            <Upload className="w-5 h-5" />
+                            upload
                           </button>
-                        </>
-                      ) : (
-                        <button
-                          onClick={() => fileInputRefs.current[idx]?.click()}
-                          className="text-xs text-neutral-500 hover:text-[#ff4d00] flex flex-col items-center gap-1"
-                        >
-                          <Upload className="w-5 h-5" />
-                          upload
-                        </button>
-                      )}
-                      <input
-                        ref={(el) => { fileInputRefs.current[idx] = el; }}
-                        type="file"
-                        accept="image/*"
-                        className="hidden"
-                        onChange={(e) => {
-                          const file = e.target.files?.[0];
-                          if (file) onItemImageFile(idx, file);
-                          e.target.value = "";
-                        }}
-                      />
-                    </div>
-                  </td>
-                  <td className="border border-black dark:border-white p-1.5 align-top">
-                    <textarea
-                      value={it.description}
-                      onChange={(e) => onUpdateItem(idx, { description: e.target.value })}
-                      placeholder=""
-                      rows={4}
-                      className="w-full bg-white dark:bg-neutral-900 border border-[#ff4d00] rounded px-1.5 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-[#ff4d00]/40"
-                    />
-                  </td>
-                  <td className="border border-black dark:border-white p-1.5 align-top">
-                    <textarea
-                      value={it.fabric}
-                      onChange={(e) => onUpdateItem(idx, { fabric: e.target.value })}
-                      placeholder=""
-                      rows={4}
-                      className="w-full bg-white dark:bg-neutral-900 border border-[#ff4d00] rounded px-1.5 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-[#ff4d00]/40"
-                    />
-                  </td>
-                  <td className="border border-black dark:border-white p-1.5 align-top">
-                    <div className="flex items-center gap-1">
-                      {it.hasSizeBreakdown ? (
-                        <div
-                          className="w-24 bg-neutral-100 dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-700 rounded px-1.5 py-1 text-sm font-semibold text-center text-neutral-700 dark:text-neutral-200"
-                          title="Auto-summed from size breakdown below"
-                        >
-                          {getItemQty(it).toLocaleString()}
-                        </div>
-                      ) : (
+                        )}
                         <input
-                          type="number"
-                          min={1}
-                          value={it.qty}
-                          onChange={(e) => onUpdateItem(idx, { qty: parseInt(e.target.value) || 0 })}
-                          className="w-24 bg-white dark:bg-neutral-900 border border-[#ff4d00] rounded px-1.5 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-[#ff4d00]/40"
+                          ref={(el) => { fileInputRefs.current[idx] = el; }}
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) onItemImageFile(idx, file);
+                            e.target.value = "";
+                          }}
                         />
-                      )}
-                      <input
-                        type="text"
-                        value={it.unit}
-                        onChange={(e) => onUpdateItem(idx, { unit: e.target.value })}
-                        placeholder="set"
-                        className="w-16 bg-white dark:bg-neutral-900 border border-[#ff4d00] rounded px-1.5 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-[#ff4d00]/40"
-                      />
-                      {!it.hasSizeBreakdown && (
-                        <button
-                          type="button"
-                          onClick={() =>
-                            onUpdateItem(idx, {
-                              hasSizeBreakdown: true,
-                              sizes: SIZE_PRESETS["Adult Standard"].map((s) => ({ ...s })),
-                            })
-                          }
-                          className="text-neutral-400 hover:text-[#ff4d00]"
-                          title="Enable size breakdown"
-                        >
-                          <Ruler className="w-4 h-4" />
-                        </button>
-                      )}
-                    </div>
-                  </td>
-                  <td className="border border-black dark:border-white p-1.5 align-top">
-                    <div className="flex items-center">
-                      {/* 2026-10-04 (R80): price symbol matches selected currency. */}
-                      <span className="text-sm mr-0.5">{currencySymbol}</span>
-                      <input
-                        type="text"
-                        inputMode="decimal"
-                        defaultValue={it.unitPrice > 0 ? it.unitPrice.toString() : ""}
-                        key={`price-${idx}-${items.length}-${items[idx]?.description ?? ""}`}
-                        onBlur={(e) => {
-                          const v = parseFloat(e.target.value || "0");
-                          if (!isNaN(v) && v !== it.unitPrice) {
-                            onUpdateItem(idx, { unitPrice: v });
-                          }
-                        }}
-                        placeholder="0.000"
+                      </div>
+                    </td>
+                    <td className="border border-black dark:border-white p-1.5 align-top">
+                      <textarea
+                        value={it.description}
+                        onChange={(e) => onUpdateItem(idx, { description: e.target.value })}
+                        placeholder=""
+                        rows={4}
                         className="w-full bg-white dark:bg-neutral-900 border border-[#ff4d00] rounded px-1.5 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-[#ff4d00]/40"
                       />
-                    </div>
-                  </td>
-                  <td className="border border-black dark:border-white p-1.5 align-top text-sm font-semibold">
-                    {fmt(getItemQty(it) * it.unitPrice, currencySymbol)}
-                  </td>
-                  <td className="border border-black dark:border-white p-1.5 align-top text-center">
-                    {items.length > 1 && (
-                      <button
-                        onClick={() => onRemoveItem(idx)}
-                        className="text-neutral-400 hover:text-red-500"
-                        title="Remove item"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    )}
-                  </td>
-                </tr>
-              ))}
-
-              {/* Size breakdown sub-rows (one per item that has hasSizeBreakdown) */}
-              {items.map((it, idx) =>
-                it.hasSizeBreakdown ? (
-                  <tr key={`sizes-${idx}`} className="bg-[#fff7f0] dark:bg-[#2a1a0e]">
-                    <td colSpan={7} className="border border-black dark:border-white p-3 align-top">
-                      <SizeBreakdownEditor
-                        it={it}
-                        idx={idx}
-                        onUpdateItem={onUpdateItem}
+                    </td>
+                    <td className="border border-black dark:border-white p-1.5 align-top">
+                      <textarea
+                        value={it.fabric}
+                        onChange={(e) => onUpdateItem(idx, { fabric: e.target.value })}
+                        placeholder=""
+                        rows={4}
+                        className="w-full bg-white dark:bg-neutral-900 border border-[#ff4d00] rounded px-1.5 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-[#ff4d00]/40"
                       />
                     </td>
+                    <td className="border border-black dark:border-white p-1.5 align-top">
+                      <div className="flex items-center gap-1">
+                        {it.hasSizeBreakdown ? (
+                          <div
+                            className="w-24 bg-neutral-100 dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-700 rounded px-1.5 py-1 text-sm font-semibold text-center text-neutral-700 dark:text-neutral-200"
+                            title="Auto-summed from size breakdown below"
+                          >
+                            {getItemQty(it).toLocaleString()}
+                          </div>
+                        ) : (
+                          <input
+                            type="number"
+                            min={1}
+                            value={it.qty}
+                            onChange={(e) => onUpdateItem(idx, { qty: parseInt(e.target.value) || 0 })}
+                            className="w-24 bg-white dark:bg-neutral-900 border border-[#ff4d00] rounded px-1.5 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-[#ff4d00]/40"
+                          />
+                        )}
+                        <input
+                          type="text"
+                          value={it.unit}
+                          onChange={(e) => onUpdateItem(idx, { unit: e.target.value })}
+                          placeholder="set"
+                          className="w-16 bg-white dark:bg-neutral-900 border border-[#ff4d00] rounded px-1.5 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-[#ff4d00]/40"
+                        />
+                        {!it.hasSizeBreakdown && (
+                          <button
+                            type="button"
+                            onClick={() =>
+                              onUpdateItem(idx, {
+                                hasSizeBreakdown: true,
+                                sizes: SIZE_PRESETS["Adult Standard"].map((s) => ({ ...s })),
+                              })
+                            }
+                            className="text-neutral-400 hover:text-[#ff4d00]"
+                            title="Enable size breakdown"
+                          >
+                            <Ruler className="w-4 h-4" />
+                          </button>
+                        )}
+                      </div>
+                    </td>
+                    <td className="border border-black dark:border-white p-1.5 align-top">
+                      <div className="flex items-center">
+                        {/* 2026-10-04 (R80): price symbol matches selected currency. */}
+                        <span className="text-sm mr-0.5">{currencySymbol}</span>
+                        <input
+                          type="text"
+                          inputMode="decimal"
+                          defaultValue={it.unitPrice > 0 ? it.unitPrice.toString() : ""}
+                          key={`price-${idx}-${items.length}-${items[idx]?.description ?? ""}`}
+                          onBlur={(e) => {
+                            const v = parseFloat(e.target.value || "0");
+                            if (!isNaN(v) && v !== it.unitPrice) {
+                              onUpdateItem(idx, { unitPrice: v });
+                            }
+                          }}
+                          placeholder="0.000"
+                          className="w-full bg-white dark:bg-neutral-900 border border-[#ff4d00] rounded px-1.5 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-[#ff4d00]/40"
+                        />
+                      </div>
+                    </td>
+                    <td className="border border-black dark:border-white p-1.5 align-top text-sm font-semibold">
+                      {fmt(getItemQty(it) * it.unitPrice, currencySymbol)}
+                    </td>
+                    <td className="border border-black dark:border-white p-1.5 align-top text-center">
+                      {items.length > 1 && (
+                        <button
+                          onClick={() => onRemoveItem(idx)}
+                          className="text-neutral-400 hover:text-red-500"
+                          title="Remove item"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      )}
+                    </td>
                   </tr>
-                ) : null
-              )}
+                  {/* 2026-11-08 (R134): the size breakdown of THIS product is
+                      rendered directly underneath its own product row, so the
+                      editors of different products never stack together at
+                      the bottom of the table. */}
+                  {it.hasSizeBreakdown && (
+                    <tr className="bg-[#fff7f0] dark:bg-[#2a1a0e]">
+                      <td colSpan={7} className="border border-black dark:border-white p-3 align-top">
+                        <SizeBreakdownEditor
+                          it={it}
+                          idx={idx}
+                          onUpdateItem={onUpdateItem}
+                        />
+                      </td>
+                    </tr>
+                  )}
+                </Fragment>
+              ))}
 
               {/* Shipping row */}
               <tr>
