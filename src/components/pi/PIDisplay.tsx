@@ -78,6 +78,12 @@ export interface PIDisplayData {
   total_cents: number;
   subtotal_cents: number;
   currency: string;
+  // 2026-11-08 (R133): instalment fields. The document always shows the
+  // FULL contract value (total_cents); these drive the "Payment Schedule"
+  // block that spells out the deposit and the balance.
+  payment_percentage?: number | null;
+  amount_due_cents?: number | null;
+  amount_paid_cents?: number | null;
 }
 
 const BLACK = "#000000";
@@ -192,6 +198,43 @@ export function PIDisplay(props: PIDisplayProps) {
   const bank: BankAccount | null = props.bankAccount ?? null;
   // Pretty currency code for the table headers, e.g. "USD" / "EUR" / "GBP" / "CNY".
   const currencyUpper = pi.currency.toUpperCase();
+
+  // 2026-11-08 (R133): Payment Schedule.
+  // The document always shows the FULL contract value in the Total row.
+  // This block explains HOW that total is paid:
+  //   percent      — the first-instalment ratio (100 = pay everything now)
+  //   depositCents — first instalment
+  //   balanceCents — the rest, due before shipment
+  //   paidCents    — money already received
+  // It is omitted for a plain single-payment PI so the document looks
+  // exactly like before on the common case.
+  const totalCents = pi.total_cents;
+  const percent =
+    typeof pi.payment_percentage === "number" &&
+    Number.isFinite(pi.payment_percentage)
+      ? Math.min(100, Math.max(0, Math.round(pi.payment_percentage)))
+      : 100;
+  const paidCents =
+    typeof pi.amount_paid_cents === "number" &&
+    Number.isFinite(pi.amount_paid_cents)
+      ? Math.max(0, Math.round(pi.amount_paid_cents))
+      : 0;
+  const hasInstalment = percent < 100;
+  const hasCollection = paidCents > 0;
+  const paymentSchedule =
+    hasInstalment || hasCollection
+      ? {
+          percent,
+          depositCents: hasInstalment
+            ? Math.round((totalCents * percent) / 100)
+            : null,
+          balanceCents: hasInstalment
+            ? Math.max(0, totalCents - Math.round((totalCents * percent) / 100))
+            : null,
+          paidCents: hasCollection ? paidCents : null,
+          balanceDueCents: Math.max(0, totalCents - paidCents),
+        }
+      : null;
 
   return (
     <div
@@ -341,6 +384,68 @@ export function PIDisplay(props: PIDisplayProps) {
           </tr>
         </tbody>
       </table>
+
+      {/* === Payment Schedule (R133) ===
+          Shown only when the PI is NOT a single full payment, i.e. when a
+          deposit ratio is configured or money has already been collected.
+          The total above always stays the FULL contract value — this block
+          only explains HOW it is paid. */}
+      {paymentSchedule && (
+        <div className="border-b border-black px-2 py-2 text-[10px] leading-relaxed sm:px-3 sm:text-[11px]">
+          <p className="mb-1 text-[11px] font-black uppercase tracking-wide sm:text-[12px]">
+            Payment Schedule:
+          </p>
+          <div className="grid grid-cols-1 gap-x-4 gap-y-0.5 sm:grid-cols-2">
+            <p>
+              <span className="font-bold">Total Contract Value:</span>{" "}
+              <span className="font-bold">
+                {fmtMoney(pi.total_cents, pi.currency)}
+              </span>
+            </p>
+            {paymentSchedule.depositCents !== null && (
+              <p>
+                <span className="font-bold">
+                  Deposit ({paymentSchedule.percent}%):
+                </span>{" "}
+                <span className="font-bold">
+                  {fmtMoney(paymentSchedule.depositCents, pi.currency)}
+                </span>
+              </p>
+            )}
+            {paymentSchedule.balanceCents !== null && (
+              <p>
+                <span className="font-bold">
+                  Balance ({100 - paymentSchedule.percent}%):
+                </span>{" "}
+                <span className="font-bold">
+                  {fmtMoney(paymentSchedule.balanceCents, pi.currency)}
+                </span>
+              </p>
+            )}
+            {paymentSchedule.paidCents !== null &&
+              paymentSchedule.paidCents > 0 && (
+                <p>
+                  <span className="font-bold">Amount Received:</span>{" "}
+                  <span className="font-bold">
+                    {fmtMoney(paymentSchedule.paidCents, pi.currency)}
+                  </span>
+                </p>
+              )}
+            {paymentSchedule.paidCents !== null &&
+              paymentSchedule.paidCents > 0 && (
+                <p>
+                  <span className="font-bold">Balance Due Now:</span>{" "}
+                  <span className="font-bold">
+                    {fmtMoney(
+                      paymentSchedule.balanceDueCents,
+                      pi.currency,
+                    )}
+                  </span>
+                </p>
+              )}
+          </div>
+        </div>
+      )}
 
       {/* === Contract terms (1-7) — matches reference === */}
       <div className="border-b border-black p-2 text-[10px] leading-relaxed sm:p-3">
@@ -501,12 +606,25 @@ function Field({
 export function PIStatusBadge({
   status,
 }: {
-  status: "draft" | "sent" | "paid" | "pending_bank" | "canceled" | "expired";
+  status:
+    | "draft"
+    | "sent"
+    | "paid"
+    | "partially_paid"
+    | "pending_bank"
+    | "canceled"
+    | "expired";
 }) {
   const config: Record<string, { label: string; bg: string; text: string }> = {
     draft: { label: "Draft", bg: "bg-black/10", text: "text-black/70" },
     sent: { label: "Awaiting payment", bg: "bg-[#ff4d00]/10", text: "text-[#ff4d00]" },
     paid: { label: "Paid", bg: "bg-[#00c2ff]/10", text: "text-[#0070c0]" },
+    // 2026-11-08 (R133): a deposit was collected, the balance is still open.
+    partially_paid: {
+      label: "Deposit received — balance due",
+      bg: "bg-amber-100",
+      text: "text-amber-800",
+    },
     pending_bank: {
       label: "Bank transfer pending verification",
       bg: "bg-amber-100",

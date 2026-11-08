@@ -83,6 +83,10 @@ interface UpdateBody {
   issueDate?: string; // YYYY-MM-DD
   validUntil?: string | null; // YYYY-MM-DD or null to keep current
   currency?: string;
+  // 2026-11-08 (R133): first-installment ratio (1..100). 100 = the whole
+  // amount is due up front; 30 = a 30% deposit, the rest later.
+  // The PI document always shows the full total.
+  paymentPercentage?: number;
 }
 
 export async function onRequestPost(context: {
@@ -300,12 +304,6 @@ export async function onRequestPost(context: {
     const shippingCents = Math.round((Number(body.shippingCost ?? current.shipping_cents) || 0) * 100);
     patch.shipping_cents = shippingCents;
     patch.total_cents = subtotalCents + shippingCents;
-
-    // 2026-10-04 (R84): keep amount_due_cents in sync with the new
-    // total unless the PI is already paid (paid PIs aren't editable,
-    // so this only matters for partial-payment flows where the deposit
-    // was less than total). For now we just mirror total_cents.
-    patch.amount_due_cents = subtotalCents + shippingCents;
   } else if (body.shippingCost !== undefined) {
     // Shipping-only edit (rare). Recompute total from the existing
     // subtotal so we never drift.
@@ -313,7 +311,38 @@ export async function onRequestPost(context: {
     patch.shipping_cents = shippingCents;
     const subtotalCents = (current.subtotal_cents as number) ?? 0;
     patch.total_cents = subtotalCents + shippingCents;
-    patch.amount_due_cents = subtotalCents + shippingCents;
+  }
+
+  // 2026-11-08 (R133): recompute the instalment split after any total
+  // change. Before R133 this handler forced amount_due_cents = total_cents,
+  // which silently erased a deposit the admin had configured — Stripe then
+  // asked the customer for the full amount again.
+  //
+  // Rules:
+  //   - payment_percentage comes from the request, else from the stored
+  //     column, else defaults to 100 (pay everything up front).
+  //   - Nothing paid yet → amount_due = total × percentage (the deposit).
+  //   - Something already paid → amount_due = total − paid (the balance).
+  {
+    const requestedPct = Number(body.paymentPercentage);
+    const storedPct = Number(current.payment_percentage);
+    const effectivePct = Number.isFinite(requestedPct)
+      ? Math.min(100, Math.max(1, Math.round(requestedPct)))
+      : Number.isFinite(storedPct) && storedPct > 0
+        ? Math.min(100, Math.round(storedPct))
+        : 100;
+
+    const newTotal =
+      typeof patch.total_cents === "number"
+        ? (patch.total_cents as number)
+        : ((current.total_cents as number) ?? 0);
+    const paid = (current.amount_paid_cents as number) ?? 0;
+
+    patch.payment_percentage = effectivePct;
+    patch.amount_due_cents =
+      paid > 0
+        ? Math.max(0, newTotal - paid)
+        : Math.round((newTotal * effectivePct) / 100);
   }
 
   if (body.shippingLabel !== undefined) patch.shipping_label = body.shippingLabel;

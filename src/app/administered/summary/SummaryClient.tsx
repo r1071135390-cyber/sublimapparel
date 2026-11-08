@@ -17,6 +17,7 @@ import {
   Coins,
   Pencil,
   Filter,
+  Banknote,
 } from "lucide-react";
 import {
   adminFetch,
@@ -31,6 +32,11 @@ interface PiListItem {
   customerName: string | null;
   customerCompany: string | null;
   totalCents: number | null;
+  // 2026-11-08 (R133): instalment progress. totalCents is always the FULL
+  // contract value; amountDueCents is what is still asked for.
+  amountDueCents: number | null;
+  amountPaidCents: number | null;
+  paymentPercentage: number | null;
   currency: string | null;
   totalDisplay: string;
   status: string | null;
@@ -185,6 +191,14 @@ function statusColor(status: string | null): {
         border: "border-[#00c2ff]",
         label: "SENT",
       };
+    // 2026-11-08 (R133): a deposit was collected, the balance is open.
+    case "partially_paid":
+      return {
+        bg: "bg-amber-400",
+        text: "text-[#0a0a0a]",
+        border: "border-amber-500",
+        label: "DEPOSIT PAID",
+      };
     case "cancelled":
     case "canceled":
       return {
@@ -230,6 +244,19 @@ export default function SummaryClient() {
   // action may be offered. `role === "owner"` is the only thing that
   // unlocks the Delete button — an unknown identity unlocks nothing.
   const canDelete = user?.role === "owner";
+
+  // 2026-11-08 (R133): registering a payment that arrived outside Stripe
+  // (a wire transfer). The server endpoint is owner-only — it moves money
+  // state — so the button is owner-only as well.
+  const canReceive = user?.role === "owner";
+
+  // 2026-11-08 (R133): "record a received payment" UI state.
+  // `receiveTarget` holds the PI the admin is registering money for;
+  // null means the modal is closed. `receiving` is true while the
+  // request is in flight.
+  const [receiveTarget, setReceiveTarget] = useState<PiListItem | null>(null);
+  const [receiving, setReceiving] = useState(false);
+  const [receiveError, setReceiveError] = useState<string | null>(null);
 
   // 2026-10-04 (R82): per-row Delete UI state. `confirmTarget` holds the
   // PI the admin is currently being asked to confirm deletion of; null
@@ -388,6 +415,73 @@ export default function SummaryClient() {
       );
     } finally {
       setDeleting(false);
+    }
+  }
+
+  // 2026-11-08 (R133): "record a received payment" flow. A wire transfer
+  // never touches Stripe, so the Stripe webhook never sees it and the PI's
+  // amount_paid_cents / amount_due_cents stay frozen. This registers the
+  // money by hand:
+  //   1. Click "Receive" on a row → the modal opens with the remaining
+  //      balance pre-filled.
+  //   2. Adjust the amount if the customer sent a different figure, add the
+  //      bank reference.
+  //   3. POST /api/admin/pi/mark-received. The server re-reads the PI,
+  //      writes the ledger row and recomputes the instalment position —
+  //      it does not trust the numbers the browser sent.
+  function requestReceive(p: PiListItem) {
+    if (!canReceive) {
+      setReceiveError(
+        "Recording a received payment is restricted to the owner account.",
+      );
+      return;
+    }
+    setReceiveError(null);
+    setReceiveTarget(p);
+  }
+
+  function cancelReceive() {
+    if (receiving) return; // never close mid-flight
+    setReceiveTarget(null);
+    setReceiveError(null);
+  }
+
+  async function confirmReceive(
+    amountCents: number,
+    reference: string,
+    notes: string,
+  ) {
+    if (!receiveTarget || receiving) return;
+    setReceiving(true);
+    setReceiveError(null);
+    try {
+      const res = await adminFetch("/api/admin/pi/mark-received", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          piNumber: receiveTarget.piNumber,
+          amountCents,
+          reference: reference.trim() || undefined,
+          notes: notes.trim() || undefined,
+        }),
+      });
+      const data = (await res.json().catch(() => ({}))) as {
+        ok?: boolean;
+        error?: string;
+      };
+      if (!res.ok || !data.ok) {
+        setReceiveError(
+          data.error || `Recording the payment failed (${res.status})`,
+        );
+        return;
+      }
+      // success — close the modal and refresh the list
+      setReceiveTarget(null);
+      await fetchData(customerFilter);
+    } catch (e) {
+      setReceiveError(e instanceof Error ? e.message : "Network error");
+    } finally {
+      setReceiving(false);
     }
   }
 
@@ -616,6 +710,9 @@ export default function SummaryClient() {
                     <th className="px-4 py-3">Status</th>
                     <th className="px-4 py-3 text-right">View</th>
                     <th className="px-4 py-3 text-right">Edit</th>
+                    {/* 2026-11-08 (R133): registering money that arrived
+                        by wire — Stripe never sees those payments. */}
+                    <th className="px-4 py-3 text-right">Receive</th>
                     <th className="px-4 py-3 text-right">Delete</th>
                   </tr>
                 </thead>
@@ -696,6 +793,7 @@ export default function SummaryClient() {
                           <td className="px-4 py-2 text-right align-top" />
                           <td className="px-4 py-2 text-right align-top" />
                           <td className="px-4 py-2 text-right align-top" />
+                          <td className="px-4 py-2 text-right align-top" />
                         </tr>
                       ))}
                     </tbody>
@@ -754,6 +852,36 @@ export default function SummaryClient() {
                         </td>
                         <td className="px-4 py-3 text-right font-bold">
                           {p.totalDisplay}
+                          {/* 2026-11-08 (R133): instalment progress. The
+                              headline stays the FULL contract value; the
+                              line below says how much was collected and
+                              how much is still open. */}
+                          {(() => {
+                            const paid = Number(p.amountPaidCents ?? 0) || 0;
+                            const due = Number(p.amountDueCents ?? 0) || 0;
+                            const pct = Number(p.paymentPercentage ?? 100) || 100;
+                            if (paid <= 0 && pct >= 100) return null;
+                            const cur = (p.currency || "USD").toUpperCase();
+                            const money = (c: number) =>
+                              formatCurrency(c, cur);
+                            return (
+                              <div className="mt-0.5 text-[11px] font-normal text-[#6b6b6b] leading-tight">
+                                {paid > 0 && (
+                                  <>Received {money(paid)}</>
+                                )}
+                                {paid > 0 && due > 0 && <> · </>}
+                                {due > 0 && (
+                                  <>Due {money(due)}</>
+                                )}
+                                {pct < 100 && (
+                                  <>
+                                    {" · "}
+                                    deposit {pct}%
+                                  </>
+                                )}
+                              </div>
+                            );
+                          })()}
                         </td>
                         <td className="px-4 py-3">
                           <span
@@ -793,6 +921,52 @@ export default function SummaryClient() {
                               Locked
                             </span>
                           )}
+                        </td>
+                        <td className="px-4 py-3 text-right">
+                          {/* 2026-11-08 (R133): register a payment that
+                              arrived by wire. Only offered while money is
+                              still outstanding, and only to the owner. */}
+                          {(() => {
+                            const paid = Number(p.amountPaidCents ?? 0) || 0;
+                            const total = Number(p.totalCents ?? 0) || 0;
+                            const settled =
+                              sc.label === "PAID" ||
+                              sc.label === "CANCELLED" ||
+                              (total > 0 && paid >= total);
+                            if (settled) {
+                              return (
+                                <span
+                                  className="inline-flex cursor-not-allowed items-center gap-1 text-xs font-black uppercase tracking-wider text-[#c0c0c0]"
+                                  title="This invoice is settled — there is nothing left to receive."
+                                >
+                                  <Lock className="h-3.5 w-3.5" strokeWidth={2.5} />
+                                  Locked
+                                </span>
+                              );
+                            }
+                            if (!canReceive) {
+                              return (
+                                <span
+                                  className="inline-flex cursor-not-allowed items-center gap-1 text-xs font-black uppercase tracking-wider text-[#c0c0c0]"
+                                  title="Recording a received payment is restricted to the owner account."
+                                >
+                                  <Lock className="h-3.5 w-3.5" strokeWidth={2.5} />
+                                  Owner only
+                                </span>
+                              );
+                            }
+                            return (
+                              <button
+                                type="button"
+                                onClick={() => requestReceive(p)}
+                                className="inline-flex items-center gap-1 text-xs font-black uppercase tracking-wider text-[#6b6b6b] hover:text-[#ff4d00]"
+                                title={`Record a payment received for PI ${p.piNumber}`}
+                              >
+                                <Banknote className="h-3.5 w-3.5" strokeWidth={2.5} />
+                                Receive
+                              </button>
+                            );
+                          })()}
                         </td>
                         <td className="px-4 py-3 text-right">
                           {sc.label === "PAID" ? (
@@ -863,6 +1037,16 @@ export default function SummaryClient() {
           error={deleteError}
           onCancel={cancelDelete}
           onConfirm={confirmDelete}
+        />
+      )}
+
+      {receiveTarget && (
+        <MarkReceivedModal
+          target={receiveTarget}
+          saving={receiving}
+          error={receiveError}
+          onCancel={cancelReceive}
+          onConfirm={confirmReceive}
         />
       )}
     </main>
@@ -1025,6 +1209,208 @@ function DeleteConfirmModal({
                 <>
                   <Trash2 className="h-3.5 w-3.5" strokeWidth={2.5} />
                   Delete permanently
+                </>
+              )}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+// ─── Mark received modal ────────────────────────────────────────────────
+// 2026-11-08 (R133): register a payment that arrived outside Stripe —
+// a wire transfer (T/T), a PayPal transfer, a cash deposit. Stripe's
+// webhook never sees those, so the PI's instalment position
+// (amount_paid_cents / amount_due_cents) has to be advanced by hand.
+//
+// The amount defaults to the remaining balance, because that is what
+// the customer is expected to have sent. The admin can lower it (a part
+// payment) but not raise it past the remaining balance — the server
+// rejects that too, so the invoice can never be over-collected by
+// accident.
+function MarkReceivedModal({
+  target,
+  saving,
+  error,
+  onCancel,
+  onConfirm,
+}: {
+  target: PiListItem;
+  saving: boolean;
+  error: string | null;
+  onCancel: () => void;
+  onConfirm: (amountCents: number, reference: string, notes: string) => void;
+}) {
+  const currency = (target.currency || "USD").toUpperCase();
+  const totalCents = Number(target.totalCents ?? 0) || 0;
+  const paidCents = Number(target.amountPaidCents ?? 0) || 0;
+  // What is still open: the total minus what has been collected. The
+  // server's `amount_due_cents` is the same number, but the list endpoint
+  // can be a few seconds stale, so we recompute it here.
+  const remainingCents = Math.max(0, totalCents - paidCents);
+
+  const [amount, setAmount] = useState("");
+  const [reference, setReference] = useState("");
+  const [notes, setNotes] = useState("");
+
+  // Reset the form every time a new target is opened.
+  useEffect(() => {
+    setAmount(remainingCents > 0 ? (remainingCents / 100).toFixed(2) : "");
+    setReference("");
+    setNotes("");
+  }, [target.piNumber, remainingCents]);
+
+  const amountNumber = Number(amount);
+  const amountCents = Number.isFinite(amountNumber)
+    ? Math.round(amountNumber * 100)
+    : 0;
+  const valid =
+    Number.isFinite(amountNumber) &&
+    amountNumber > 0 &&
+    amountCents <= remainingCents;
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="receive-modal-title"
+      onClick={(e) => {
+        if (e.target === e.currentTarget && !saving) onCancel();
+      }}
+    >
+      <div className="w-full max-w-md border-2 border-black bg-white shadow-[8px_8px_0_0_rgba(255,77,0,1)]">
+        <div className="flex items-start justify-between border-b-2 border-black bg-[#ff4d00] px-5 py-3 text-black">
+          <div className="flex items-center gap-2">
+            <Banknote className="h-5 w-5" strokeWidth={2.5} />
+            <h2
+              id="receive-modal-title"
+              className="text-base font-black uppercase tracking-tight"
+            >
+              Record a received payment
+            </h2>
+          </div>
+          <button
+            type="button"
+            onClick={onCancel}
+            disabled={saving}
+            className="text-black hover:opacity-70 disabled:opacity-30"
+            aria-label="Close"
+          >
+            <X className="h-5 w-5" strokeWidth={2.5} />
+          </button>
+        </div>
+
+        <div className="px-5 py-5">
+          <p className="mb-4 text-sm text-[#0a0a0a]">
+            Money received outside Stripe (wire transfer, cash deposit).
+            Recording it advances the invoice: the received amount is added
+            to what has been collected and the balance is recalculated.
+          </p>
+
+          <dl className="mb-5 space-y-1 border-l-2 border-[#ff4d00] bg-[#fff7f3] px-3 py-2 text-xs">
+            <div className="flex justify-between gap-3">
+              <dt className="font-black uppercase tracking-wider text-[#6b6b6b]">PI Number</dt>
+              <dd className="font-bold">{target.piNumber}</dd>
+            </div>
+            <div className="flex justify-between gap-3">
+              <dt className="font-black uppercase tracking-wider text-[#6b6b6b]">Customer</dt>
+              <dd className="font-bold">{target.customerName || "—"}</dd>
+            </div>
+            <div className="flex justify-between gap-3">
+              <dt className="font-black uppercase tracking-wider text-[#6b6b6b]">Invoice total</dt>
+              <dd className="font-bold">{formatCurrency(totalCents, currency)}</dd>
+            </div>
+            <div className="flex justify-between gap-3">
+              <dt className="font-black uppercase tracking-wider text-[#6b6b6b]">Already received</dt>
+              <dd className="font-bold">{formatCurrency(paidCents, currency)}</dd>
+            </div>
+            <div className="flex justify-between gap-3">
+              <dt className="font-black uppercase tracking-wider text-[#6b6b6b]">Outstanding</dt>
+              <dd className="font-bold">{formatCurrency(remainingCents, currency)}</dd>
+            </div>
+          </dl>
+
+          <label className="mb-1 block text-xs font-black uppercase tracking-wider text-[#6b6b6b]">
+            Amount received ({currency})
+          </label>
+          <input
+            type="number"
+            inputMode="decimal"
+            step="0.01"
+            min="0"
+            max={remainingCents / 100}
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            disabled={saving}
+            autoFocus
+            className="mb-3 w-full border-2 border-black bg-white px-3 py-2 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-[#ff4d00]/40 disabled:opacity-50"
+          />
+          {amount !== "" && amountCents > remainingCents && (
+            <div className="mb-3 border-2 border-[#ff4d00] bg-white px-3 py-2 text-xs font-bold text-[#ff4d00]">
+              That is more than the outstanding balance of{" "}
+              {formatCurrency(remainingCents, currency)}.
+            </div>
+          )}
+
+          <label className="mb-1 block text-xs font-black uppercase tracking-wider text-[#6b6b6b]">
+            Bank reference <span className="font-normal normal-case">(optional)</span>
+          </label>
+          <input
+            type="text"
+            value={reference}
+            onChange={(e) => setReference(e.target.value)}
+            disabled={saving}
+            autoComplete="off"
+            placeholder="MT103 / wire reference"
+            className="mb-3 w-full border-2 border-black bg-white px-3 py-2 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-[#ff4d00]/40 disabled:opacity-50"
+          />
+
+          <label className="mb-1 block text-xs font-black uppercase tracking-wider text-[#6b6b6b]">
+            Notes <span className="font-normal normal-case">(optional)</span>
+          </label>
+          <input
+            type="text"
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+            disabled={saving}
+            placeholder="Bank, sender, reason"
+            className="mb-2 w-full border-2 border-black bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#ff4d00]/40 disabled:opacity-50"
+          />
+
+          {error && (
+            <div className="mb-3 border-2 border-[#ff4d00] bg-white px-3 py-2 text-xs font-bold text-[#ff4d00]">
+              {error}
+            </div>
+          )}
+
+          <div className="flex items-center justify-end gap-2 pt-2">
+            <button
+              type="button"
+              onClick={onCancel}
+              disabled={saving}
+              className="border-2 border-black bg-white px-4 py-2 text-xs font-black uppercase tracking-wider text-black hover:bg-neutral-100 disabled:opacity-50"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              onClick={() => onConfirm(amountCents, reference, notes)}
+              disabled={!valid || saving}
+              className="inline-flex items-center gap-1.5 bg-[#ff4d00] px-4 py-2 text-xs font-black uppercase tracking-wider text-black hover:bg-[#e64500] disabled:opacity-40"
+            >
+              {saving ? (
+                <>
+                  <RefreshCw className="h-3.5 w-3.5 animate-spin" strokeWidth={2.5} />
+                  Saving…
+                </>
+              ) : (
+                <>
+                  <Banknote className="h-3.5 w-3.5" strokeWidth={2.5} />
+                  Record payment
                 </>
               )}
             </button>

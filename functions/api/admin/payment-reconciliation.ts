@@ -219,8 +219,16 @@ async function handle(
       (sum, i) => sum + (i.amount_received ?? i.amount),
       0,
     );
+    // 2026-11-08 (R133): the invoice value is the FULL contract value
+    // (total_cents), not the currently-due amount. On an instalment PI the
+    // deposit + balance together add up to the total, so comparing
+    // against amount_due_cents would flag a legitimate second charge as
+    // an overcharge.
     const invoiceCents =
-      (pi?.amount_due_cents ?? pi?.total_cents ?? null) as number | null;
+      (pi?.total_cents ?? pi?.amount_due_cents ?? null) as number | null;
+    // True once the collected total covers the whole invoice.
+    const invoiceSettled =
+      invoiceCents !== null && collectedCents >= invoiceCents;
 
     const entry = {
       pi_number: piNumber,
@@ -249,7 +257,10 @@ async function handle(
       pi_status: pi?.status ?? null,
     };
 
-    if (succeeded.length > 1) {
+    // 2026-11-08 (R133): two succeeded intents are NORMAL on an instalment
+    // PI (deposit + balance). A duplicate is "more money than the invoice
+    // is worth", not "more than one charge".
+    if (invoiceCents !== null ? collectedCents > invoiceCents : succeeded.length > 1) {
       duplicates.push(entry);
     } else {
       singleCharges.push(entry);
@@ -275,7 +286,12 @@ async function handle(
 
       // An intent that is still open on an already-paid invoice is a live
       // double-charge: whoever holds its client_secret can still pay it.
-      if (succeeded.length > 0) {
+      //
+      // 2026-11-08 (R133): only cancel when the invoice is actually
+      // SETTLED. On an instalment PI an open intent may be the pending
+      // balance payment — cancelling it would stop the customer from
+      // paying the rest.
+      if (succeeded.length > 0 && invoiceSettled) {
         for (const intent of open) {
           try {
             await cancelPaymentIntent(env.STRIPE_SECRET_KEY, intent.id);

@@ -116,7 +116,7 @@ export const onRequestPost = async (
   // 2. Look up PI — now including the Stripe companion columns, because
   //    the reuse decision below depends on them.
   const lookupRes = await fetch(
-    `${supabaseUrl}/rest/v1/proforma_invoices?pi_number=eq.${encodeURIComponent(piNumber)}&select=id,pi_number,status,amount_due_cents,total_cents,subtotal_cents,currency,customer_email,customer_name,customer_company,payment_site,stripe_payment_intent_id,stripe_client_secret&limit=1`,
+    `${supabaseUrl}/rest/v1/proforma_invoices?pi_number=eq.${encodeURIComponent(piNumber)}&select=id,pi_number,status,amount_due_cents,amount_paid_cents,total_cents,subtotal_cents,payment_percentage,currency,customer_email,customer_name,customer_company,payment_site,stripe_payment_intent_id,stripe_client_secret&limit=1`,
     {
       headers: {
         apikey: env.COZE_SUPABASE_SERVICE_ROLE_KEY,
@@ -153,7 +153,15 @@ export const onRequestPost = async (
   }
 
   // 3. Pick canonical amount
-  const amountCents = pickAmountCents(row);
+  //
+  // 2026-11-08 (R133): instalment PIs. `amount_due_cents` holds what the
+  // customer still has to pay (deposit first, balance later — the webhook
+  // rewrites it to `total − collected` after each instalment). When the
+  // row has no explicit amount_due_cents we fall back to the invoice
+  // total, which reproduces the pre-R133 behaviour exactly.
+  const totalCents = readNumber(row.total_cents);
+  const paidCents = readNumber(row.amount_paid_cents) ?? 0;
+  let amountCents = pickAmountCents(row);
   if (amountCents === null || amountCents < 100) {
     return json({ error: "PI has no payable amount" }, 400);
   }
@@ -184,25 +192,43 @@ export const onRequestPost = async (
     }
 
     if (live && live.status === "succeeded") {
-      // The PI row lagged behind the webhook. Sync it and stop — charging
-      // again here is exactly the bug we are fixing.
-      await patchPiRow(env, supabaseUrl, piId, {
-        status: "paid",
-        paid_at: new Date().toISOString(),
-        stripe_payment_intent_id: live.id,
-        amount_paid_cents: live.amount,
-      });
-      return json(
-        {
-          error: "PI is already fully paid",
-          alreadyPaid: true,
-          paymentIntentId: live.id,
-        },
-        409,
-      );
-    }
+      // 2026-11-08 (R133): a succeeded intent does NOT necessarily mean the
+      // invoice is settled — with instalments the succeeded intent may be
+      // the deposit and the balance is still outstanding. Compare the
+      // money against the invoice total.
+      const collected = Math.max(paidCents, live.amount);
+      const invoiceSettled =
+        totalCents !== null && collected >= totalCents;
 
-    if (live && live.status !== "canceled" && live.amount === amountCents) {
+      if (invoiceSettled) {
+        // The PI row lagged behind the webhook. Sync it and stop — charging
+        // again here is exactly the bug we are fixing.
+        await patchPiRow(env, supabaseUrl, piId, {
+          status: "paid",
+          paid_at: new Date().toISOString(),
+          stripe_payment_intent_id: live.id,
+          amount_paid_cents: collected,
+          amount_due_cents: 0,
+        });
+        return json(
+          {
+            error: "PI is already fully paid",
+            alreadyPaid: true,
+            paymentIntentId: live.id,
+          },
+          409,
+        );
+      }
+
+      // An earlier instalment settled but the invoice is still open. The
+      // outstanding amount is `total − collected`; the succeeded intent
+      // must not be reused for it.
+      if (totalCents !== null) {
+        amountCents = Math.max(0, totalCents - collected);
+      }
+      predecessorId = existingIntentId;
+      reuseReason = `previous intent ${existingIntentId} settled an earlier instalment`;
+    } else if (live && live.status !== "canceled" && live.amount === amountCents) {
       // Still payable and the amount matches → hand back the SAME intent.
       intent = live;
       reuseReason = `reusing live intent ${live.id} (${live.status})`;
@@ -219,6 +245,10 @@ export const onRequestPost = async (
       predecessorId = existingIntentId;
       reuseReason = `previous intent ${existingIntentId} is no longer retrievable`;
     }
+  }
+
+  if (amountCents < 100) {
+    return json({ error: "PI has no payable amount" }, 400);
   }
 
   if (!intent) {
@@ -535,15 +565,33 @@ async function ensurePendingPaymentRow(
   }
 }
 
+/**
+ * Read a numeric column that PostgREST may return as number | string | null.
+ * Returns null for anything that is not a finite number.
+ */
+function readNumber(value: unknown): number | null {
+  if (value === null || value === undefined) return null;
+  const n = typeof value === "number" ? value : Number(value);
+  return Number.isFinite(n) ? n : null;
+}
+
+/**
+ * The amount Stripe must collect for this request.
+ *
+ * 2026-11-08 (R133): `amount_due_cents` is authoritative when the column
+ * exists — it holds the deposit on a fresh PI and the remaining balance
+ * after an instalment has been paid. Only when the column was never
+ * filled in (legacy rows) do we fall back to the invoice total, which
+ * reproduces the pre-R133 behaviour.
+ */
 function pickAmountCents(row: Record<string, unknown>): number | null {
-  const candidates = [
-    row.amount_due_cents,
-    row.total_cents,
-    row.subtotal_cents,
-  ];
+  const explicit = readNumber(row.amount_due_cents);
+  if (explicit !== null) return Math.round(explicit);
+
+  const candidates = [row.total_cents, row.subtotal_cents];
   for (const candidate of candidates) {
-    const n = typeof candidate === "number" ? candidate : Number(candidate);
-    if (Number.isFinite(n) && n > 0) return Math.round(n);
+    const n = readNumber(candidate);
+    if (n !== null && n > 0) return Math.round(n);
   }
   return null;
 }

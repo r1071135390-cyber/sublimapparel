@@ -55,6 +55,10 @@ interface PiRow {
   customer_name: string | null;
   customer_company: string | null;
   total_cents: number | null;
+  // 2026-11-08 (R133): instalment progress (deposit vs balance).
+  amount_due_cents: number | null;
+  amount_paid_cents: number | null;
+  payment_percentage: number | null;
   currency: string | null;
   status: string | null;
   paid_at: string | null;
@@ -115,7 +119,7 @@ export async function onRequestGet(context: {
   const piRes = await fetch(
     `${supabaseUrl}/rest/v1/proforma_invoices` +
       `?customer_name=ilike.${encodeURIComponent(customer.customer_name)}` +
-      `&select=id,pi_number,customer_name,customer_company,total_cents,currency,status,paid_at,created_at` +
+      `&select=id,pi_number,customer_name,customer_company,total_cents,amount_due_cents,amount_paid_cents,payment_percentage,currency,status,paid_at,created_at` +
       `&order=created_at.desc` +
       `&limit=200`,
     { headers },

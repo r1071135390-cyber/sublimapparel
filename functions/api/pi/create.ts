@@ -53,6 +53,11 @@ interface CreatePiBody {
   shippingMethod?: string;
   shippingCost?: number;       // USD dollars
   currency?: string;           // defaults to USD
+  // 2026-11-08 (R133): first-installment ratio. 100 = pay the full amount
+  // up front (previous behaviour); 30 = pay a 30% deposit now and the 70%
+  // balance before shipment. The PI document always shows the FULL
+  // contract value; this only decides how much Stripe collects first.
+  paymentPercentage?: number;  // 1..100, defaults to 100
 }
 
 const corsHeaders = {
@@ -194,6 +199,19 @@ export async function onRequestPost(context: {
   const currency = body.currency || "USD";
   const shippingCostDollars = Number(body.shippingCost) || 0;
 
+  // 2026-11-08 (R133): first-installment ratio.
+  //   100 → the customer pays the FULL amount now (previous behaviour).
+  //   30  → the customer pays a 30% deposit now; the 70% balance is
+  //          collected later (before shipment) via a second PI payment.
+  // The PI document always shows the FULL contract value (total_cents);
+  // this ratio only decides how much Stripe collects on the first charge.
+  // Anything that is not a finite number falls back to 100 (full payment),
+  // so existing admin flows keep working unchanged.
+  const rawPercentage = Number(body.paymentPercentage);
+  const paymentPercentage = Number.isFinite(rawPercentage)
+    ? Math.min(100, Math.max(1, Math.round(rawPercentage)))
+    : 100;
+
   // Convert form's items (dollars, quantity, unitPrice) to the storage format
   // (qty + unit_price_cents + total_cents) so the customer-facing pay page keeps
   // working. sizes are stored verbatim.
@@ -227,6 +245,20 @@ export async function onRequestPost(context: {
   );
   const shippingCents = Math.round(shippingCostDollars * 100);
   const totalCents = subtotalCents + shippingCents;
+
+  // 2026-11-08 (R133): split the contract value from the first payable
+  // instalment.
+  //   total_cents      — the FULL contract value. The PI document always
+  //                      renders this, so the customer still sees the total.
+  //   amount_due_cents — how much Stripe collects on THIS charge. Every
+  //                      payment path (PaymentIntent / Payment Link /
+  //                      bank transfer) reads amount_due_cents first, so
+  //                      writing the deposit here is all it takes to make
+  //                      the customer pay only the deposit.
+  //   amount_paid_cents — cumulative amount actually received (written by
+  //                      the webhook after a successful charge).
+  const amountDueCents = Math.round((totalCents * paymentPercentage) / 100);
+  const balanceCents = Math.max(0, totalCents - amountDueCents);
 
   const supabaseUrl = normalizeSupabaseUrl(env.COZE_SUPABASE_URL);
 
@@ -278,7 +310,16 @@ export async function onRequestPost(context: {
       // SumaryClient already styles 'sent' (blue 'SENT' badge) — no UI churn.
       status: 'sent',
       payment_terms: body.paymentTermsText ?? body.notes ?? '30% deposit, 70% before shipment',
-      payment_percentage: 30,
+      // 2026-11-08 (R133): the deposit ratio the admin picked (100 = pay
+      // the full amount up front). Persisted so the PI document and the
+      // admin summary can show "Deposit 30% / Balance 70%" later.
+      payment_percentage: paymentPercentage,
+      // 2026-11-08 (R133): the amount Stripe collects on the first charge.
+      // Written explicitly instead of being left NULL (NULL used to fall
+      // back to total_cents in pickAmountCents → the customer was always
+      // asked for the full amount).
+      amount_due_cents: amountDueCents,
+      amount_paid_cents: 0,
       // 2026-10-04 (R84): every field that used to silently vanish from
       // the customer-facing /pay/?pi=... page. PIDisplay already reads
       // these columns; we just forgot to forward them on insert.
@@ -409,5 +450,10 @@ export async function onRequestPost(context: {
     subtotalCents,
     shippingCents,
     currency,
+    // 2026-11-08 (R133): instalment breakdown — the admin UI shows these
+    // right after saving so the first charge is never a surprise.
+    paymentPercentage,
+    amountDueCents,
+    balanceCents,
   });
 }

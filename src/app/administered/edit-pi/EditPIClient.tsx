@@ -140,6 +140,8 @@ function EditPIClientInner() {
   const [shippingCost, setShippingCost] = useState(118);
 
   const [termsPaymentText, setTermsPaymentText] = useState("");
+  // 2026-11-08 (R133): first-payment / deposit ratio (100 = pay in full).
+  const [paymentPercentage, setPaymentPercentage] = useState(100);
   const [shippingTerm, setShippingTerm] = useState("DDP");
 
   // Saving state
@@ -259,6 +261,14 @@ function EditPIClientInner() {
           : "",
     );
 
+    // 2026-11-08 (R133): restore the stored deposit ratio.
+    const storedPct = Number(row.payment_percentage);
+    setPaymentPercentage(
+      Number.isFinite(storedPct) && storedPct > 0
+        ? Math.min(100, Math.round(storedPct))
+        : 100,
+    );
+
     // shippingTerm is implicit from shipping_method / metadata; default to DDP.
     const methodText = typeof row.shipping_method === "string" ? row.shipping_method : "";
     const incotermMatch = methodText.match(/\b(DDP|FOB|EXW|CIF|DAP|DDU|CFR|CPT|CIP|DPU)\b/);
@@ -275,6 +285,17 @@ function EditPIClientInner() {
     [items],
   );
   const grandTotal = itemsSubtotal + shippingCost;
+
+  // 2026-11-08 (R133): deposit split — the PI keeps the full total, only
+  // the amount asked for up front changes.
+  const depositRatio = Math.min(100, Math.max(1, Math.round(paymentPercentage || 100)));
+  const depositAmount = (grandTotal * depositRatio) / 100;
+  const balanceAmount = Math.max(0, grandTotal - depositAmount);
+
+  function onPaymentPercentageChange(v: number) {
+    if (!Number.isFinite(v)) return;
+    setPaymentPercentage(Math.min(100, Math.max(1, Math.round(v))));
+  }
 
   // Form-state helpers (mirror NewPIClient) ───────────────────────────────
   function addItem() {
@@ -314,6 +335,9 @@ function EditPIClientInner() {
           issueDate: issueDate || undefined,
           leadTimeText: leadTimeText || undefined,
           paymentTermsText: termsPaymentText || undefined,
+          // 2026-11-08 (R133): deposit ratio. The server keeps total_cents
+          // as-is and recomputes amount_due_cents from it.
+          paymentPercentage: depositRatio,
           shippingLabel: shippingLabel || undefined,
           shippingMethod: shippingMethod || undefined,
           shippingCost: Number(shippingCost) || 0,
@@ -472,6 +496,10 @@ function EditPIClientInner() {
               grandTotal={grandTotal}
               termsPaymentText={termsPaymentText}
               onTermsPaymentTextChange={setTermsPaymentText}
+              paymentPercentage={depositRatio}
+              onPaymentPercentageChange={onPaymentPercentageChange}
+              depositAmount={depositAmount}
+              balanceAmount={balanceAmount}
               shippingTerm={shippingTerm}
               onShippingTermChange={setShippingTerm}
               BlackCell={undefined as any}

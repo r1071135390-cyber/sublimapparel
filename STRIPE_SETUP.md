@@ -288,13 +288,34 @@ Customer opens `https://sublimapparel.com/pay/?pi=SA20260825001` and sees:
 
 ### Verifying bank payments (factory side)
 
-For now, manually in Supabase Dashboard:
-1. Open `proforma_invoices` table
-2. Find PI with `status = 'pending_bank'`
-3. Check your bank account
-4. Once wire is received, set `status = 'paid'` and `paid_at = now()`
+A wire transfer never touches Stripe, so the Stripe webhook never sees it.
+When the money lands, record it from the PI summary page:
 
-**Future enhancement**: build a small `/administered/pi-dashboard` page with a list of pending bank PIs and one-click "Confirm received" buttons. (Not in MVP.)
+1. Open **Admin → PI Summary**
+2. Click **Receive** on the PI with `status = 'pending_bank'`
+3. Check the amount against the bank statement, add the MT103 reference
+4. Click **Record payment**
+
+The server re-reads the invoice, writes a `payments` ledger row
+(`method: 'bank_transfer'`, no Stripe intent) and advances the instalment
+position:
+
+- `amount_paid_cents` += the received amount
+- `amount_due_cents` = invoice total − amount received
+- `status` = `paid` when the invoice is settled, `partially_paid` while a
+  balance is still open
+
+The customer can then pay the remaining balance with the SAME PI link —
+`/pay/?pi=<PI number>` — and Stripe will only ask for the outstanding
+amount.
+
+The endpoint is **owner-only** (`POST /api/admin/pi/mark-received`), because
+it moves money state. A plain `admin` account cannot call it.
+
+**Fallback**: the old manual route still works — set `status = 'paid'` and
+`paid_at = now()` in the Supabase Dashboard — but it does NOT update
+`amount_paid_cents` / `amount_due_cents`, so the instalment maths stays
+wrong. Prefer the Receive button.
 
 ### API endpoints (Cloudflare Pages Functions)
 
@@ -303,6 +324,7 @@ For now, manually in Supabase Dashboard:
 | `/api/pi/create` | POST | Create new PI + Stripe PaymentIntent |
 | `/api/pi/get?pi=SA20260825001` | GET | Fetch PI data for customer page |
 | `/api/pi/confirm-bank` | POST | Customer confirms T/T sent (sets `pending_bank`) |
+| `/api/admin/pi/mark-received` | POST | Owner-only: record a payment that arrived by wire |
 | `/api/stripe/webhook` | POST | Stripe webhook (already exists, updated to handle `pi_id` in metadata) |
 
 ### Database table
@@ -312,7 +334,7 @@ For now, manually in Supabase Dashboard:
 ```sql
 id uuid PRIMARY KEY,
 pi_number text UNIQUE NOT NULL,  -- e.g. SA20260825001
-status text CHECK (status IN ('draft','sent','paid','pending_bank','canceled','expired')),
+status text CHECK (status IN ('draft','sent','paid','pending_bank','canceled','expired','partially_paid')),
 customer_name text,
 customer_email text,
 customer_phone text,

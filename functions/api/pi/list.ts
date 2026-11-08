@@ -54,6 +54,9 @@ interface PiRow {
   customer_name: string | null;
   customer_company: string | null;
   total_cents: number | null;
+  amount_due_cents: number | null;
+  amount_paid_cents: number | null;
+  payment_percentage: number | null;
   currency: string | null;
   status: string | null;
   created_at: string;
@@ -171,7 +174,7 @@ export async function onRequestGet(context: {
   // Build the Supabase REST query. We use a separate base + filter
   // params so we can append the customer filter conditionally.
   const baseParams = new URLSearchParams({
-    select: "id,pi_number,customer_name,customer_company,total_cents,currency,status,created_at",
+    select: "id,pi_number,customer_name,customer_company,total_cents,amount_due_cents,amount_paid_cents,payment_percentage,currency,status,created_at",
     order: "created_at.desc",
     limit: "100",
   });
@@ -259,6 +262,11 @@ export async function onRequestGet(context: {
     customerName: r.customer_name,
     customerCompany: r.customer_company,
     totalCents: r.total_cents,
+    // 2026-11-08 (R133): instalment progress — the admin list shows how
+    // much of the contract value has actually been collected.
+    amountDueCents: r.amount_due_cents,
+    amountPaidCents: r.amount_paid_cents,
+    paymentPercentage: r.payment_percentage,
     currency: r.currency,
     totalDisplay: formatCentsInCurrency(r.total_cents, r.currency),
     status: r.status,

@@ -287,6 +287,14 @@ export default function NewPIPage() {
   // Terms (only the (4) Terms of Payment text is editable)
   const [termsPaymentText, setTermsPaymentText] = useState(DEFAULT_TERMS_PAYMENT);
 
+  // 2026-11-08 (R133): first-payment / deposit ratio.
+  // 100 = the customer pays the full amount up front (historic default).
+  // Anything below 100 means "collect a deposit now, balance later":
+  //   - the PI document still shows the FULL total (total_cents),
+  //   - the customer is only asked for amount_due_cents (= total × ratio),
+  //   - PIeDisplay renders a Payment Schedule block with the ratio.
+  const [paymentPercentage, setPaymentPercentage] = useState(100);
+
   // Saving
   const [saving, setSaving] = useState(false);
   const [savedLink, setSavedLink] = useState<string | null>(null);
@@ -400,6 +408,20 @@ export default function NewPIPage() {
     [items],
   );
   const grandTotal = itemsSubtotal + shippingCost;
+
+  // 2026-11-08 (R133): deposit split. The PI always carries the FULL
+  // grandTotal (that is what the document shows); these two numbers only
+  // describe HOW MUCH we ask for up front.
+  const depositRatio = Math.min(100, Math.max(1, Math.round(paymentPercentage || 100)));
+  const depositAmount = (grandTotal * depositRatio) / 100;
+  const balanceAmount = Math.max(0, grandTotal - depositAmount);
+
+  // 2026-11-08 (R133): clamp the ratio as it is typed so the field can
+  // never hold a value the server would reject (1..100).
+  function onPaymentPercentageChange(v: number) {
+    if (!Number.isFinite(v)) return;
+    setPaymentPercentage(Math.min(100, Math.max(1, Math.round(v))));
+  }
 
   // ── Handlers ────────────────────────────────────────────────────────────
   function onPiNumberChange(v: string) {
@@ -521,6 +543,11 @@ export default function NewPIPage() {
           // string directly so the PDF and the customer page show the
           // exact text the admin typed.
           notes: termsPaymentText || undefined,
+          // 2026-11-08 (R133): first-payment / deposit ratio. The server
+          // splits the full total into amount_due_cents (what the customer
+          // pays now) and keeps total_cents untouched so the PI document
+          // still shows the full contract value.
+          paymentPercentage: depositRatio,
         }),
       });
 
@@ -633,6 +660,10 @@ export default function NewPIPage() {
             grandTotal={grandTotal}
             termsPaymentText={termsPaymentText}
             onTermsPaymentTextChange={setTermsPaymentText}
+            paymentPercentage={depositRatio}
+            onPaymentPercentageChange={onPaymentPercentageChange}
+            depositAmount={depositAmount}
+            balanceAmount={balanceAmount}
             shippingTerm={shippingTerm}
             onShippingTermChange={setShippingTerm}
             BlackCell={BlackCell}
@@ -722,6 +753,12 @@ export function PIPreview(props: {
   grandTotal: number;
   termsPaymentText: string;
   onTermsPaymentTextChange: (v: string) => void;
+  // 2026-11-08 (R133): deposit ratio + the derived split, so the preview
+  // can show "Deposit X% / Deposit $A / Balance $B" live.
+  paymentPercentage: number;
+  onPaymentPercentageChange: (v: number) => void;
+  depositAmount: number;
+  balanceAmount: number;
   shippingTerm: string;
   onShippingTermChange: (v: string) => void;
   BlackCell: React.FC<{ children: React.ReactNode; className?: string }>;
@@ -739,6 +776,7 @@ export function PIPreview(props: {
     shippingQty, onShippingQtyChange, shippingCost, onShippingCostChange,
     itemsSubtotal, grandTotal,
     termsPaymentText, onTermsPaymentTextChange,
+    paymentPercentage, onPaymentPercentageChange, depositAmount, balanceAmount,
     shippingTerm, onShippingTermChange,
     BlackCell, RedInput, BlueText, RedReminder,
   } = props;
@@ -1178,6 +1216,50 @@ export function PIPreview(props: {
             rows={2}
             className="w-full mt-1 bg-white dark:bg-neutral-900 border-2 border-[#ff4d00] rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-[#ff4d00]/30"
           />
+        </div>
+        {/* 2026-11-08 (R133): first-payment / deposit ratio.
+            100% = customer pays everything up front (historic behaviour).
+            Below 100% the PI document still shows the FULL total, but the
+            customer is only charged the deposit; the balance is collected
+            later. */}
+        <div className="pt-2">
+          <div className="flex flex-wrap items-center gap-2">
+            <strong>(5) First Payment / Deposit:</strong>
+            <input
+              type="number"
+              min={1}
+              max={100}
+              step={1}
+              value={paymentPercentage}
+              onChange={(e) => onPaymentPercentageChange(Number(e.target.value))}
+              className="w-20 bg-white dark:bg-neutral-900 border-2 border-[#00c2ff] rounded px-2 py-1 text-sm text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#00c2ff]/30"
+            />
+            <span className="text-xs text-neutral-500">%</span>
+            <div className="flex flex-wrap gap-1">
+              {[100, 50, 30].map((p) => (
+                <button
+                  key={p}
+                  type="button"
+                  onClick={() => onPaymentPercentageChange(p)}
+                  className={`px-2 py-0.5 rounded border text-xs ${
+                    paymentPercentage === p
+                      ? "border-[#00c2ff] bg-[#00c2ff]/10 text-[#0a6cff]"
+                      : "border-neutral-300 dark:border-neutral-700 text-neutral-500 hover:border-[#00c2ff]"
+                  }`}
+                >
+                  {p}%
+                </button>
+              ))}
+            </div>
+          </div>
+          {paymentPercentage < 100 && (
+            <div className="mt-1 text-xs text-neutral-600 dark:text-neutral-400">
+              Deposit now: <strong>{fmt(depositAmount, currencySymbol)}</strong> ({paymentPercentage}%)
+              {" · "}Balance later: <strong>{fmt(balanceAmount, currencySymbol)}</strong> ({100 - paymentPercentage}%)
+              {" · "}The PI document still shows the full contract value{" "}
+              <strong>{fmt(grandTotal, currencySymbol)}</strong>.
+            </div>
+          )}
         </div>
       </div>
 

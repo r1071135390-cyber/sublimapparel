@@ -265,17 +265,30 @@ export async function onRequestPost(context: {
 
 /**
  * Pick the canonical "amount due" for a PI.
- * Preference order: amount_due_cents → total_cents → subtotal_cents.
+ *
+ * 2026-11-08 (R133): `amount_due_cents` is authoritative whenever the
+ * column carries a number — it holds the deposit on a fresh PI and the
+ * remaining balance after an instalment was paid. Only rows where the
+ * column was never filled in fall back to the invoice total (pre-R133
+ * behaviour).
  */
 function pickAmountCents(row: Record<string, unknown>): number | null {
-  const candidates = [
-    row.amount_due_cents,
-    row.total_cents,
-    row.subtotal_cents,
-  ];
+  const explicit = readNumber(row.amount_due_cents);
+  if (explicit !== null) return Math.round(explicit);
+
+  const candidates = [row.total_cents, row.subtotal_cents];
   for (const candidate of candidates) {
-    const n = typeof candidate === "number" ? candidate : Number(candidate);
-    if (Number.isFinite(n) && n > 0) return Math.round(n);
+    const n = readNumber(candidate);
+    if (n !== null && n > 0) return Math.round(n);
   }
   return null;
+}
+
+/**
+ * Read a numeric column that PostgREST may return as number | string | null.
+ */
+function readNumber(value: unknown): number | null {
+  if (value === null || value === undefined) return null;
+  const n = typeof value === "number" ? value : Number(value);
+  return Number.isFinite(n) ? n : null;
 }

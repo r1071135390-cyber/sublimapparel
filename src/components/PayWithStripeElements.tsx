@@ -77,6 +77,10 @@ interface PayWithStripeElementsProps {
   // PI is already settled. The parent re-reads the PI and swaps the card
   // form for the "Invoice Paid" confirmation.
   onAlreadyPaid?: () => void;
+  // 2026-11-08 (R133): what this charge is for. "full" = the whole PI
+  // amount, "deposit" = the first instalment, "balance" = the remainder
+  // after a deposit was already collected. Only drives the wording.
+  paymentKind?: "full" | "deposit" | "balance";
 }
 
 interface IntentResponse {
@@ -94,6 +98,7 @@ export function PayWithStripeElements({
   currency,
   onSwitchToBank,
   onAlreadyPaid,
+  paymentKind = "full",
 }: PayWithStripeElementsProps) {
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
@@ -211,6 +216,7 @@ export function PayWithStripeElements({
         currency={currency}
         onSwitchToBank={onSwitchToBank}
         onAlreadyPaid={onAlreadyPaid}
+        paymentKind={paymentKind}
       />
     </Elements>
   );
@@ -224,6 +230,8 @@ interface InnerFormProps {
   currency: string;
   onSwitchToBank?: () => void;
   onAlreadyPaid?: () => void;
+  // 2026-11-08 (R133): deposit / balance / full — drives the button copy.
+  paymentKind?: "full" | "deposit" | "balance";
 }
 
 interface DeclineState {
@@ -238,6 +246,7 @@ function InnerForm({
   currency,
   onSwitchToBank,
   onAlreadyPaid,
+  paymentKind = "full",
 }: InnerFormProps) {
   const stripe = useStripe();
   const elements = useElements();
@@ -323,7 +332,11 @@ function InnerForm({
       <div className="mb-4 flex items-center justify-between">
         <div>
           <div className="text-xs font-black uppercase tracking-wider text-[#ff4d00]">
-            Pay with card
+            {paymentKind === "deposit"
+              ? "Pay deposit with card"
+              : paymentKind === "balance"
+                ? "Pay balance with card"
+                : "Pay with card"}
           </div>
           <div className="mt-1 text-2xl font-black tabular-nums">
             {fmtMoney(amountCents, currency)}
@@ -407,7 +420,11 @@ function InnerForm({
         ) : (
           <span className="inline-flex items-center gap-2">
             <CreditCard className="h-4 w-4" strokeWidth={3} />
-            Pay {fmtMoney(amountCents, currency)}
+            {paymentKind === "deposit"
+              ? `Pay deposit ${fmtMoney(amountCents, currency)}`
+              : paymentKind === "balance"
+                ? `Pay balance ${fmtMoney(amountCents, currency)}`
+                : `Pay ${fmtMoney(amountCents, currency)}`}
           </span>
         )}
       </button>

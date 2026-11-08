@@ -184,28 +184,62 @@ async function handlePaymentSucceeded(env: Env, intent: StripePaymentIntent) {
     // risk — cancel it now, while the customer has only paid once.
     await cancelSiblingIntents(env, piId, intent.id);
 
-    // 2026-10-26 (R124): if another intent on the same PI already
-    // succeeded, the customer was charged twice. Record it on both
-    // payments rows and make amount_paid_cents reflect the real total
-    // so finance can refund the surplus.
-    const duplicate = await flagDuplicateCharge(env, piId, intent);
+    // 2026-11-08 (R133): a PI may be paid in instalments (deposit first,
+    // balance later). So "one more charge landed" does NOT mean the PI is
+    // fully paid any more. Compare the money actually collected against
+    // the invoice total:
+    //   collected <  total → status 'partially_paid', amount_due_cents
+    //                         becomes the remaining balance
+    //   collected >= total → status 'paid' (unchanged behaviour)
+    const piState = await fetchPiPaymentState(env, piId);
     const totalPaidCents = await sumSucceededAmounts(env, piId);
+    const collectedCents = totalPaidCents ?? intent.amount;
+    const totalCents = piState.totalCents;
+    const fullyPaid =
+      totalCents === null ? true : collectedCents >= totalCents;
 
-    const { error: piError } = await supabasePatch(env, "proforma_invoices", {
-      id: `eq.${piId}`,
-    }, {
-      status: "paid",
-      paid_at: new Date().toISOString(),
+    // 2026-11-08 (R133): duplicate detection now compares the money
+    // against the invoice total. Two succeeded intents are NORMAL for an
+    // instalment PI (deposit + balance) — only an over-collection is a
+    // duplicate charge.
+    const duplicate = await flagDuplicateCharge(
+      env,
+      piId,
+      intent,
+      totalCents,
+      collectedCents,
+    );
+
+    const piPatch: Record<string, unknown> = {
+      status: fullyPaid ? "paid" : "partially_paid",
       stripe_payment_intent_id: intent.id,
       payment_site: site_slug, // 2026-10-01 (R77)
       // 2026-10-26 (R124): the true amount collected for this PI. With a
       // duplicate charge this is 2x the invoice total, which is exactly
       // what finance needs to see to issue the refund.
-      amount_paid_cents: totalPaidCents ?? intent.amount,
-    });
+      amount_paid_cents: collectedCents,
+    };
+    if (fullyPaid) {
+      piPatch.paid_at = new Date().toISOString();
+    }
+    if (totalCents !== null) {
+      // 2026-11-08 (R133): the next instalment = invoice total − money in.
+      // 0 when the invoice is settled (Stripe rejects 0-amount intents).
+      piPatch.amount_due_cents = Math.max(0, totalCents - collectedCents);
+    }
+
+    const { error: piError } = await supabasePatch(env, "proforma_invoices", {
+      id: `eq.${piId}`,
+    }, piPatch);
 
     if (piError) {
       throw new Error(`Supabase PI update failed: ${piError}`);
+    }
+
+    if (!fullyPaid) {
+      console.log(
+        `[webhook] PI ${piId} is PARTIALLY paid: ${collectedCents}/${totalCents} cents collected, balance ${Math.max(0, (totalCents ?? 0) - collectedCents)} cents due.`,
+      );
     }
 
     if (duplicate) {
@@ -382,14 +416,56 @@ async function cancelSiblingIntents(
 }
 
 /**
+ * Read the money columns of a PI row.
+ *
+ * 2026-11-08 (R133): the webhook needs the invoice total to tell a
+ * completed payment (status 'paid') apart from a completed instalment
+ * (status 'partially_paid'). Returns totalCents = null when the row
+ * cannot be read, which makes the caller fall back to the old
+ * "mark as paid" behaviour.
+ */
+async function fetchPiPaymentState(
+  env: Env,
+  piId: string,
+): Promise<{ totalCents: number | null }> {
+  try {
+    const res = await fetch(
+      `${normalizeSupabaseUrl(env.COZE_SUPABASE_URL)}/rest/v1/proforma_invoices?id=eq.${encodeURIComponent(piId)}&select=total_cents&limit=1`,
+      {
+        headers: {
+          apikey: env.COZE_SUPABASE_SERVICE_ROLE_KEY,
+          Authorization: `Bearer ${env.COZE_SUPABASE_SERVICE_ROLE_KEY}`,
+        },
+      },
+    );
+    if (!res.ok) return { totalCents: null };
+    const rows = (await res.json()) as Array<{ total_cents: number | null }>;
+    const raw = rows[0]?.total_cents;
+    const n = typeof raw === "number" ? raw : Number(raw);
+    return { totalCents: Number.isFinite(n) ? n : null };
+  } catch (err) {
+    console.warn("[webhook] failed to read PI payment state:", err);
+    return { totalCents: null };
+  }
+}
+
+/**
  * Detect that a SECOND intent on the same PI has also been paid. When
  * that happens the customer was charged twice and finance has to refund
  * the surplus — so record it on both payments rows.
+ *
+ * 2026-11-08 (R133): an instalment PI legitimately has two succeeded
+ * intents (deposit + balance). A duplicate charge is therefore defined
+ * as "more money collected than the invoice total", not "more than one
+ * intent succeeded". When the invoice total is unknown we keep the old
+ * behaviour (any second succeeded intent is flagged).
  */
 async function flagDuplicateCharge(
   env: Env,
   piId: string,
   intent: StripePaymentIntent,
+  totalCents: number | null,
+  collectedCents: number,
 ): Promise<{ otherIntentId: string; otherAmountCents: number } | null> {
   const others = await selectPayments(env, {
     pi_id: `eq.${piId}`,
@@ -400,6 +476,12 @@ async function flagDuplicateCharge(
     (r) => r.stripe_payment_intent_id && r.stripe_payment_intent_id !== intent.id,
   );
   if (!other || !other.stripe_payment_intent_id) return null;
+
+  // 2026-11-08 (R133): instalment payments are normal — only flag when the
+  // customer handed over more than the invoice total.
+  if (totalCents !== null && collectedCents <= totalCents) {
+    return null;
+  }
 
   const detectedAt = new Date().toISOString();
 

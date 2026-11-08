@@ -49,6 +49,10 @@ interface PiRow {
   customer_name: string | null;
   customer_company: string | null;
   total_cents: number | null;
+  // 2026-11-08 (R133): instalment progress (deposit vs balance).
+  amount_due_cents: number | null;
+  amount_paid_cents: number | null;
+  payment_percentage: number | null;
   currency: string | null;
   status: string | null;
   paid_at: string | null;
@@ -112,6 +116,15 @@ function statusBadge(status: string | null) {
       <span className={`${base} bg-[#ff4d00] text-black`}>
         <Clock className="h-3 w-3" strokeWidth={3} />
         Wire pending
+      </span>
+    );
+  }
+  // 2026-11-08 (R133): a deposit was collected, the balance is still open.
+  if (s === "partially_paid") {
+    return (
+      <span className={`${base} bg-amber-400 text-black`}>
+        <Clock className="h-3 w-3" strokeWidth={3} />
+        Deposit paid
       </span>
     );
   }
@@ -566,6 +579,22 @@ export default function CustomerDetailClient() {
                       <td className="px-4 py-3">{statusBadge(pi.status)}</td>
                       <td className="px-4 py-3 text-right font-black">
                         {formatAmount(pi.total_cents, pi.currency)}
+                        {/* 2026-11-08 (R133): instalment progress under the
+                            full contract value. */}
+                        {(() => {
+                          const paid = Number(pi.amount_paid_cents ?? 0) || 0;
+                          const due = Number(pi.amount_due_cents ?? 0) || 0;
+                          const pct = Number(pi.payment_percentage ?? 100) || 100;
+                          if (paid <= 0 && pct >= 100) return null;
+                          return (
+                            <div className="mt-0.5 text-[11px] font-normal text-[#6b6b6b] leading-tight">
+                              {paid > 0 && <>Received {formatAmount(paid, pi.currency)}</>}
+                              {paid > 0 && due > 0 && <> · </>}
+                              {due > 0 && <>Due {formatAmount(due, pi.currency)}</>}
+                              {pct < 100 && <> · deposit {pct}%</>}
+                            </div>
+                          );
+                        })()}
                       </td>
                       <td className="px-4 py-3 text-[#6b6b6b]">
                         {formatDate(pi.paid_at)}

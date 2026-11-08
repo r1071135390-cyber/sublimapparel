@@ -41,7 +41,15 @@ interface PIItem {
 
 interface PIData {
   pi_number: string;
-  status: "draft" | "sent" | "paid" | "pending_bank" | "canceled" | "expired";
+  status:
+    | "draft"
+    | "sent"
+    | "paid"
+    // 2026-11-08 (R133): a deposit was collected, the balance is open.
+    | "partially_paid"
+    | "pending_bank"
+    | "canceled"
+    | "expired";
   issue_date: string;
   valid_until?: string;
   lead_time_days: number;
@@ -415,6 +423,12 @@ export default function PayClient() {
           total_cents: pi.total_cents,
           subtotal_cents: pi.subtotal_cents,
           currency: pi.currency,
+          // 2026-11-08 (R133): the instalment fields drive the
+          // "Payment Schedule" block on the document — without them the
+          // customer-facing PI would not show the deposit ratio at all.
+          payment_percentage: pi.payment_percentage,
+          amount_due_cents: pi.amount_due_cents,
+          amount_paid_cents: pi.amount_paid_cents,
         } as PIDisplayData}
         bankAccount={bankAccount}
       />
@@ -562,6 +576,25 @@ export default function PayClient() {
             Choose your preferred method. Card payments are instant; bank transfers take 1-3 business days.
           </p>
 
+          {/* 2026-11-08 (R133): instalment banner. When a deposit has
+              already been collected the PI stays open and this page now
+              collects the remaining balance. */}
+          {pi.status === "partially_paid" && (
+            <div className="mb-6 border-2 border-amber-500 bg-amber-50 p-4 text-sm">
+              <p className="font-black uppercase tracking-wide">
+                Deposit received — balance due
+              </p>
+              <p className="mt-1 text-black/70">
+                We have received{" "}
+                <strong>{fmtMoney(pi.amount_paid_cents, pi.currency)}</strong> of{" "}
+                <strong>{fmtMoney(pi.total_cents, pi.currency)}</strong>. The
+                remaining balance of{" "}
+                <strong>{fmtMoney(pi.amount_due_cents, pi.currency)}</strong> is
+                payable now, before shipment.
+              </p>
+            </div>
+          )}
+
           {/* Method toggle */}
           <div className="mb-6 grid grid-cols-2 gap-0 border-2 border-black">
             <button
@@ -616,6 +649,22 @@ function CardPaymentMethod({
   onSwitchToBank: () => void;
   onAlreadyPaid: () => void;
 }) {
+  // 2026-11-08 (R133): tell the card form WHAT this charge is. The amount
+  // itself always comes from the server (amount_due_cents = deposit on a
+  // fresh PI, balance after an instalment was collected).
+  const percent =
+    typeof pi.payment_percentage === "number" &&
+    Number.isFinite(pi.payment_percentage)
+      ? pi.payment_percentage
+      : 100;
+  const paid = pi.amount_paid_cents ?? 0;
+  const paymentKind =
+    pi.status === "partially_paid" || paid > 0
+      ? "balance"
+      : percent < 100
+        ? "deposit"
+        : "full";
+
   return (
     <PayWithStripeElements
       piNumber={pi.pi_number}
@@ -623,6 +672,7 @@ function CardPaymentMethod({
       currency={pi.currency}
       onSwitchToBank={onSwitchToBank}
       onAlreadyPaid={onAlreadyPaid}
+      paymentKind={paymentKind}
     />
   );
 }
@@ -698,7 +748,9 @@ function BankTransferMethod({
 
       <p className="mb-4 text-xs text-black/70">
         Send <strong>{fmtMoney(pi.amount_due_cents, pi.currency)}</strong> to the bank account below, then
-        confirm below. Your PI will be marked as paid once our finance team verifies receipt (1-3 business days).
+        confirm below. {pi.amount_paid_cents > 0
+          ? "Our finance team will verify the balance receipt (1-3 business days)."
+          : "Your PI will be marked as paid once our finance team verifies receipt (1-3 business days)."}
       </p>
 
       {!bank ? (
