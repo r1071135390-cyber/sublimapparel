@@ -258,7 +258,13 @@ export function PIDisplay(props: PIDisplayProps) {
           className="h-12 w-auto shrink-0 sm:h-16"
         />
         <div className="min-w-0 flex-1 text-center">
-          <p className="break-words text-[14px] font-black uppercase leading-tight tracking-tight sm:text-[18px]">
+          {/* 2026-11-08 (R135): the letterhead company name is scaled down
+              by 10% (18px -> 16.2px on desktop, 14px -> 12.6px on mobile)
+              so it always fits on a SINGLE line inside the exported PDF
+              (the capture width is 1024px for the paid/pending branches
+              and ~848px for the visible one). `sm:whitespace-nowrap`
+              guarantees the one-line layout for those widths. */}
+          <p className="break-words text-[12.6px] font-black uppercase leading-tight tracking-tight sm:whitespace-nowrap sm:text-[16.2px]">
             YIWU HOMEDORM COMMODITY MANUFACTURING CO.,LTD
           </p>
           <p className="mt-1 text-[9px] uppercase leading-snug text-black/80 sm:text-[10px]">
