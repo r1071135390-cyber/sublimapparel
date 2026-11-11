@@ -9,7 +9,7 @@
     <description>Industry guides, factory stories, and B2B apparel manufacturing insights from a 2,000 m² Yiwu sublimation factory. Sublimation vs DTG, DDP shipping, fabric guides, esports jersey fabric, and more.</description>
     <language>en-US</language>
     <copyright>Copyright © 2026 SublimApparel (Yiwu HomeDorm Commodity Manufacturing Co., Ltd.)</copyright>
-    <lastBuildDate>Tue, 06 Oct 2026 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 11 Nov 2026 00:00:00 GMT</lastBuildDate>
     <ttl>60</ttl>
     <image>
       <url>https://sublimapparel.com/sublimapparel-logo-v2.webp</url>
@@ -21,6 +21,32 @@
     <atom:link href="https://sublimapparel.com/blog/feed.xml" rel="self" type="application/rss+xml" />
     <managingEditor>info@sublimapparel.com (Ramon Wang, SublimApparel)</managingEditor>
     <webMaster>info@sublimapparel.com (SublimApparel Web Team)</webMaster>
+    <item>
+      <title>How to Write a Tech Pack for Custom Apparel: The Complete B2B Guide</title>
+      <link>https://sublimapparel.com/blog/how-to-write-a-tech-pack-for-custom-apparel/</link>
+      <guid isPermaLink="true">https://sublimapparel.com/blog/how-to-write-a-tech-pack-for-custom-apparel/</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <author>info@sublimapparel.com (SublimApparel Team)</author>
+      <category>Industry Guide</category>
+      <description>A tech pack is the document that lets a factory price, sample, produce and inspect a garment without asking you a single follow-up question. Here is the factory-side version of it: the nine sections, how to specify fabric and sizing so they cannot be misread, and how to review the pack before you approve it.</description>
+      <content:encoded><![CDATA[Ask any apparel factory what slows them down on a new order, and the answer is almost never capacity. It is the same answer every time: unclear specifications. A buyer sends a logo, a quantity and a price target; the factory then has to guess the fabric, the size run, the print placement, the trim quality and the acceptable tolerance. Sometimes the guess is right. Sometimes it is wrong, and you find out when 500 shirts arrive with a print that sits four centimetres too low and a collar band that will not survive a wash.
+
+That guessing game is exactly what a tech pack exists to end. A tech pack is the single document that turns your intent into a specification a factory can price, sample, produce and inspect without asking you a single follow-up question. This is the factory-side version of that document: the nine sections we expect, the way each team reads it, the specific ways buyers most often get them wrong, and how to hand the pack over when you would rather we drafted it. If you are starting from a sketch rather than a spec, our &lt;a href=&apos;/apparel-brands-agencies/&apos;&gt;ODM team drafts tech packs from sketches and reference garments&lt;/a&gt; for brands that have no in-house technical designer.]]></content:encoded>
+      <enclosure url="https://sublimapparel.com/blog/tech-pack-custom-apparel-cover.jpg" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Custom Sublimated Hoodies: The 2026 B2B Buyer&apos;s Guide (Fabric, MOQ, Cost, and QC)</title>
+      <link>https://sublimapparel.com/blog/custom-sublimated-hoodies-buyers-guide/</link>
+      <guid isPermaLink="true">https://sublimapparel.com/blog/custom-sublimated-hoodies-buyers-guide/</guid>
+      <pubDate>Tue, 20 Oct 2026 00:00:00 GMT</pubDate>
+      <author>info@sublimapparel.com (SublimApparel Team)</author>
+      <category>Product Guide</category>
+      <description>All-over-print hoodies are the fastest-growing category in custom apparel — and the easiest one to get wrong. Here is the factory-side guide to fleece weights, sublimation vs cut-and-sew panels, realistic 2026 pricing, MOQ, and the 4 QC checkpoints that decide whether your hoodie survives 50 washes.</description>
+      <content:encoded><![CDATA[Custom hoodies have quietly become the highest-margin category in custom apparel. Esports orgs want them as merch drops, breweries and coffee shops want them as staff uniforms that customers actually buy, and corporate programs want them as retention gifts that do not end up in a drawer. The problem: a hoodie is a far more complex garment than a T-shirt, and far more ways to get it wrong.
+
+We run a 2,000 m² sublimation and cut-and-sew factory in Yiwu, and hoodies are one of our top three categories by order volume. This guide is the checklist we walk every new hoodie client through — fleece weights, panel construction, print method trade-offs, honest 2026 pricing, and the QC checkpoints that separate a hoodie that sells for three years from one that pills and twists after ten washes.]]></content:encoded>
+      <enclosure url="https://sublimapparel.com/blog/custom-sublimated-hoodies-buyers-guide-cover.jpg" type="image/webp" length="0" />
+    </item>
     <item>
       <title>How to Find a Reliable Apparel Manufacturer in China: The 2026 B2B Buyer&apos;s Guide</title>
       <link>https://sublimapparel.com/blog/how-to-find-reliable-apparel-manufacturer-china/</link>

@@ -2791,6 +2791,295 @@ export const blogPosts: BlogPost[] = [
       },
     ],
   },
+  {
+    slug: "how-to-write-a-tech-pack-for-custom-apparel",
+    title:
+      "How to Write a Tech Pack for Custom Apparel: The Complete B2B Guide",
+    excerpt:
+      "A tech pack is the document that lets a factory price, sample, produce and inspect a garment without asking you a single follow-up question. Here is the factory-side version of it: the nine sections, how to specify fabric and sizing so they cannot be misread, and how to review the pack before you approve it.",
+    category: "Industry Guide",
+    date: "2026-11-11",
+    readTime: "12 min read",
+    author: "SublimApparel Team",
+    coverImage: "/blog/tech-pack-custom-apparel-cover.jpg",
+    coverAlt:
+      "Custom apparel tech pack spec sheet with a garment measurement chart laid on a factory workbench, beside a fanned Pantone colour swatch deck, a folded white polyester t-shirt, a yellow tape measure and a black pen",
+    tags: [
+      "tech pack",
+      "custom apparel",
+      "apparel spec sheet",
+      "b2b apparel",
+      "sizing charts",
+      "quality control",
+      "product development",
+    ],
+    metaTitle: "How to Write a Tech Pack for Custom Apparel (2026 Guide)",
+    metaDescription:
+      "A factory guide to writing a tech pack for custom apparel: the 9 required sections, sizing tolerance, GSM specs, print placement and QC criteria.",
+    intro: [
+      "Ask any apparel factory what slows them down on a new order, and the answer is almost never capacity. It is the same answer every time: unclear specifications. A buyer sends a logo, a quantity and a price target; the factory then has to guess the fabric, the size run, the print placement, the trim quality and the acceptable tolerance. Sometimes the guess is right. Sometimes it is wrong, and you find out when 500 shirts arrive with a print that sits four centimetres too low and a collar band that will not survive a wash.",
+      "That guessing game is exactly what a tech pack exists to end. A tech pack is the single document that turns your intent into a specification a factory can price, sample, produce and inspect without asking you a single follow-up question. This is the factory-side version of that document: the nine sections we expect, the way each team reads it, the specific ways buyers most often get them wrong, and how to hand the pack over when you would rather we drafted it. If you are starting from a sketch rather than a spec, our <a href='/apparel-brands-agencies/'>ODM team drafts tech packs from sketches and reference garments</a> for brands that have no in-house technical designer.",
+    ],
+    sections: [
+      {
+        heading: "What a Tech Pack Is (and What It Is Not)",
+        paragraphs: [
+          "A tech pack — also called a specification sheet, a spec pack or a product specification — is the production document for a garment. It carries everything a factory needs to build the item without a phone call: the garment type, the fabric, the size chart and grading, the construction, the print artwork and placement, the trims, the labels, the packaging, and the quality criteria the finished garment will be judged against. If a question can be answered during production, it belongs in the tech pack.",
+          "What it is not: a mood board, a brand deck, or a one-line email saying 'here is my logo, please advise'. Those are inputs. A tech pack is an output — a measurable, signable agreement. The distinction matters because a mood board describes intent and a tech pack describes tolerances. 'Premium quality' is a mood-board line. '180 gsm 100% polyester single jersey, roll width 160 cm, shrinkage not more than 3% after three washes at 40 degrees Celsius per AATCC 135' is a tech pack line.",
+          "Inside a factory, four teams read the same tech pack and each one reads it differently. The costing team turns fabric consumption, trims and print area into a price. The sampling team turns the measurement chart and construction notes into a first sample. The cutting room turns the panel layout into a marker and a cutting plan. QC turns the last page into an inspection sheet. When one of those four reads the same document and lands on a different answer, the order becomes expensive. The tech pack is not paperwork; it is the shared source of truth for all four.",
+          "One practical point that costs buyers real money: a tech pack must be versioned. A file called <em>tech-pack-final-v2-FINAL-revised.pdf</em> is how a 500-piece order ends up being produced against a superseded specification. Number every revision, date it, record who signed it off, and make sure the version number printed on the purchase order matches the version on the pack.",
+          "<figure class='my-8 md:my-10'><img src='/order-folder-desk.webp' alt='SublimApparel order spec sheet on a kraft folder showing product, quantity, unit price, subtotal, shipping, duties and total, next to a fanned colour swatch wheel, a black pen and a binder clip on a wooden desk' title='A numbered order sheet: product, quantity, unit price, subtotal, shipping and duties on one page' width='720' height='480' loading='lazy' decoding='async' class='w-full h-auto border-2 border-black' /></figure>",
+          "<em class='block text-center text-xs text-[#6b6b6b] -mt-6 mb-8 md:-mt-8 md:mb-10'>Figure 1 — A numbered order sheet: product, quantity, unit price, subtotal, shipping and duties on a single page. A tech pack deserves the same discipline — one versioned document that costing, sampling, production and QC all read from.</em>",
+        ],
+      },
+      {
+        heading: "The 9 Sections Every Tech Pack Needs",
+        paragraphs: [
+          "Our factory templates have nine sections. You can reorder them, add to them, or use fewer for a simple reprint job — but if a section is missing, the factory will either ask you a question or make an assumption on your behalf. Both cost you time, and the second one costs you money.",
+          "<strong>1. Garment overview.</strong> Style reference code, product type (tee, jersey, hoodie, tank), target fit (slim, regular, oversized), intended audience and season, and the market it is built for. If you are reverse-engineering an existing garment, attach reference photos and label them 'reference, not specification' so nobody treats the photo as the spec.",
+          "<strong>2. Bill of materials.</strong> Every material with its own specification: fabric type, composition, GSM, colour, trims, thread, labels and packaging. One table, one row per material, no free text.",
+          "<strong>3. Size and grading.</strong> The measurement chart, how each measurement is taken, the grading rule, the acceptance tolerance and the size-run distribution. This is a section of its own because it carries the most risk.",
+          "<strong>4. Construction.</strong> Panel list and seam map, stitch types and stitch density, collar type and construction, cuff and hem treatments, and shoulder and side-seam construction. 'Standard construction' is not a spec.",
+          "<strong>5. Print and decoration.</strong> Technique, placement in centimetres from a named origin, artwork file name and version, artwork dimensions, print area, and colour references. This is where most under-specified packs fail first.",
+          "<strong>6. Colour.</strong> Pantone references for every spot colour, the base fabric colour (white, light grey, black), the background colour, and how close is close enough. Add a tolerance, not just a number.",
+          "<strong>7. Branding and labels.</strong> Neck label (printed or woven, material, size, language set), care label content, hang tag or swing ticket, and any reflective or size tabs.",
+          "<strong>8. Packaging and delivery.</strong> Folding method, polybag material and thickness, size sticker type, pieces per carton, carton dimensions, carton marks, and the delivery terms.",
+          "<strong>9. QC and acceptance criteria.</strong> Measurement tolerance, AQL level, shrinkage limits, colour tolerance, which tests are performed and who signs the sample off.",
+          "Add a tenth section if your product needs one: barcode and retail packaging for e-commerce fulfilment, reflective trims for safety gear, or a spares allocation for sizing. Packaging spec has to match how you actually ship — our <a href='/blog/moq-explained-apparel-manufacturing/'>MOQ economics guide</a> explains why packing and grading decisions change the unit cost more than most buyers expect.",
+        ],
+      },
+      {
+        heading:
+          "Fabric and GSM: Writing Specifications a Factory Cannot Misread",
+        paragraphs: [
+          "Fabric is where most under-specified tech packs fail. 'Polyester' is a category, not a specification: it covers everything from a 110 gsm training mesh to a 400 gsm fleece hoodie, and the cost difference between those two is larger than the cost of the print. Fabric weight — GSM, grams per square metre — is the single most useful number you can put in the pack.",
+          "State the measurement standard so the factory measures it the way you mean it. GSM is normally measured per ASTM D3776 or ISO 3801 on a conditioned specimen, and a sane commercial tolerance is plus or minus 5%. A 180 gsm tolerance of 5% means 171 to 189 gsm is acceptable. Ask for the actual roll weight on the cutting report and compare it against the tolerance, because underweight fabric is the quietest way a bulk order arrives cheaper than it should and worse than it should.",
+          "Composition and knit structure come next. 100% polyester versus 95/5 polyester-elastane is not a detail — it changes recovery, print hand-feel and how the garment behaves after washing. Name the structure too: single jersey, interlock, birdseye, mesh, pique, fleece. Our <a href='/blog/what-is-sublimation-fabric/'>sublimation fabric guide</a> walks through which knit structures accept dye-sublimation cleanly, and <a href='/blog/polyester-vs-cotton-sublima-fabric/'>polyester versus cotton</a> is the right read if you are choosing between a performance tee and a retail tee.",
+          "Three phrases cause re-cuts more often than any others: 'premium quality', 'same as the sample', and 'similar to the reference photo'. None of them are measurable. Replace them with a GSM range, a composition, a knit structure, a shrinkage limit, a colour-fastness requirement and a signed sample reference with its own number. If wash durability matters to you, name the standard — ISO 105-C06 for colour fastness to washing, and OEKO-TEX Standard 100 for restricted substances in the finished textile.",
+        ],
+      },
+      {
+        heading: "Sizing: The Section Buyers Most Often Get Wrong",
+        paragraphs: [
+          "Sizing is where buyers lose the most money, because a measurement chart looks unambiguous and is not. A chest measurement of 52 cm means nothing until you say how the tape was placed: across the garment 1 cm below the armhole on a relaxed garment laid flat, or across a body. Write the measurement method next to every number.",
+          "The grading rule is the part most tech packs omit entirely. A size chart tells the factory which sizes you want; the grading rule tells it how to get from one to the next. Either give a per-size increment — for example chest plus 2 cm and body length plus 1.5 cm per size from M upward — or supply a graded block in your own base size, which is the better option for a brand with an established fit, because it preserves your silhouette instead of imposing a factory's default. Our standard is a six-size run from XS to 2XL with 2 cm chest grading, customisable on request.",
+          "State the tolerance. Without one, QC measures a garment, gets 53.5 cm on a nominal 52 cm chest, and has to decide whether that is a reject or a rounding artefact. The commercial norm is plus or minus 1.0 to 1.5 cm on body width and plus or minus 1.0 cm on body length. Put the tolerance in the pack, and put the same tolerance on the inspection sheet.",
+          "Name the measurement points the way a factory does, and specify garment measurements rather than body measurements. The common points are P2P across the chest, HPS to hem for body length, shoulder to hem, sleeve length from the shoulder seam, neck width, and armhole depth. If your chart uses different names, add a diagram — a mistranslated 'armhole depth' is a pattern change, not a typo. Our <a href='/us-size-guide/'>US size guide</a> uses the same point names we use on the floor.",
+          "Finally, state the size-run distribution, not just the range. 'S to 3XL' leaves the factory guessing; S 8 / M 22 / L 30 / XL 20 / 2XL 14 / 3XL 6 tells them exactly how many cutting markers to plan for and how many of each panel to grade. When you also need a graded sample in every size, budget for it — a full size-run sample set typically runs 10 to 15% of the bulk order value and adds 5 to 8 days to the timeline.",
+        ],
+      },
+      {
+        heading: "Print Placement, Artwork, and Colour Management",
+        paragraphs: [
+          "Print placement must be given as a measurement from a named origin, not as a phrase. 'Logo 8 cm down from the collar seam, centred on the chest, 30 cm wide' is buildable. 'Logo on the chest' is the opening line of a phone call. For all-over-print pieces, mark the print area and the panel layout on the artwork and state which panels are printed versus blank, because that decision changes both the fabric cost and the registration risk. Our guide to the <a href='/blog/sublimation-printing-process-explained/'>sublimation printing process</a> explains why fabric is printed before it is cut, which is exactly why seamless continuity has to be planned on the artwork rather than discovered on the machine.",
+          "Deliver artwork as production-ready files, named and versioned, and have the tech pack reference the exact file name. Vector files (AI, EPS, PDF) scale without loss and are the right format for anything that has to hit a size precisely. Raster files need 300 DPI at final print size, not at the size of the mockup. Our <a href='/blog/how-to-prepare-artwork-files-for-sublimation/'>artwork preparation guide</a> covers bleed, mirrored elements and the small-detail rules that decide whether a file prints cleanly on the first pass.",
+          "Colour needs two separate references: the artwork's own colour values, and the target colour as a physical standard. Give Pantone references for every spot colour and name the base fabric colour, because the base changes ink laydown and the perceived brightness of the print. Where exact matching matters, ask for a printed colour card (a strike-off) before bulk and approve it in writing against a physical swatch under controlled light. A screen is not a colour standard, and a phone in daylight is not either.",
+          "One more field worth adding is the decoration technique. Sublimation, screen printing, DTF, embroidery and applique each carry different minimums, different cost per placement and different tolerances — embroidery cannot hit a 5 mm line, screen printing charges setup per colour, and sublimation cannot reproduce a 4-colour spot gradient. Our <a href='/blog/screen-printing-vs-embroidery/'>screen printing versus embroidery comparison</a> and the <a href='/technique/sublimation/'>sublimation technique page</a> cover where each one wins.",
+          "<figure class='my-8 md:my-10'><img src='/designer-workstation.webp' alt='Apparel designer working on a floral artwork file at a large desktop monitor with a CMYK colour panel open on the right, printed colour swatch chart on the desk beside a graphics tablet' title='Artwork preparation is part of the specification — every colour value becomes a named Pantone reference' width='800' height='800' loading='lazy' decoding='async' class='w-full h-auto border-2 border-black' /></figure>",
+          "<em class='block text-center text-xs text-[#6b6b6b] -mt-6 mb-8 md:-mt-8 md:mb-10'>Figure 2 — Artwork preparation is part of the spec, not a separate favour. Every value in that colour panel belongs in the tech pack as a named Pantone reference, and every spot colour needs a base fabric to be printed onto.</em>",
+        ],
+      },
+      {
+        heading:
+          "Trims, Labels, Packaging, and the QC Criteria That Protect You",
+        paragraphs: [
+          "Trims are the cheapest quality lever you have. Drawcords, zippers, eyelets, aglets and thread all end up in the customer's hand, and swapping a good YKK-style zip for a budget one is a cost difference of roughly a dollar that changes how the garment reads the moment someone picks it up. Name every trim: type, brand or specification, colour and material.",
+          "Labels are where compliance and branding meet. A neck label should specify print versus woven, material, size, the country-of-origin line and the language set for your market — the EU, the UK and the US do not use the same fibre-content wording. Care labels should carry the wash instruction you actually tested, not a generic one, because the number on the label is a claim you are making.",
+          "Packaging needs the same precision: folding method, polybag material and thickness, sticker type, pieces per carton, carton dimensions, carton marks, and a carton label format your warehouse can actually read. Folding method is not cosmetic — a left-right fold places the most important element of a full-bleed print directly on the fold line.",
+          "The last section is the one that protects you: QC and acceptance criteria. Name the inspection standard and level, the measurement tolerance, the shrinkage limit, the colour tolerance and the test method. We inspect to AQL 2.5 per ISO 2859-1, which sets acceptance at roughly 2.5 defects per hundred units, and we write the checkpoints explicitly onto the report so you can verify remotely from photographs. Where colour has to be verified, ask for a spectrophotometer reading and a Delta E tolerance rather than a photo. Our <a href='/quality-control/'>quality control page</a> and <a href='/samples/'>sampling process</a> explain how those checkpoints run on every order.",
+          "<figure class='my-8 md:my-10'><img src='/qc-inspection.webp' alt='Four quality control inspectors checking folded white and navy printed t-shirts one by one along a long inspection table in a garment factory, one worker marking a checklist with a pen' title='Final inspection against the tech pack — measurements, print placement and shrinkage checked per checkpoint' width='800' height='800' loading='lazy' decoding='async' class='w-full h-auto border-2 border-black' /></figure>",
+          "<em class='block text-center text-xs text-[#6b6b6b] -mt-6 mb-8 md:-mt-8 md:mb-10'>Figure 3 — Final inspection in progress. Every folded garment is measured against the tech pack's tolerance and print-placement criteria, and the checkpoints are written on the report rather than left in the inspector's head.</em>",
+        ],
+      },
+      {
+        heading: "The Review Loop: Tech Pack to Sample to Approval to Bulk",
+        paragraphs: [
+          "A tech pack stays a draft until a sample is approved against it. The loop we run is: pack received and reviewed by costing, sampling and production; quotes returned against the pack; pre-production sample made to the pack; sample measured and photographed against the pack's tolerance; your written approval with any corrections noted on the sample; bulk production; AQL inspection; shipping. Every step reads the same document, which is why nothing gets renegotiated mid-production.",
+          "The correction note on the sample is the most valuable artefact in the whole process. Because everything in the pack is measured and numbered, a change becomes a line item — 'P2P on sample XL measures 55 cm, pack says 53 cm, regrade chest minus 2 cm' — instead of a sentence in an email that the factory interprets differently from you. Each of those lines is a change order with a cost attached, and the tech pack is where you catch it before the cutting room does.",
+          "On timing, budget for the sample round to take 10 to 14 days plus 3 to 5 days of courier, then bulk production of 20 to 30 days for a standard garment, then 5 to 8 days of inspection and export clearance. That lands roughly 6 to 7 weeks door to door by air, or 10 to 12 weeks by ocean. Our <a href='/90-day-program/'>90-day program</a> lays out the full calendar for seasonal drops. If a launch date is fixed, tell the factory before the sample rather than after — a rush plan is far cheaper to arrange on paper than to pull out of a cutting room.",
+          "If you would rather not write the pack, you do not have to. Send a reference garment, a sketch or a bullet-point brief and our ODM team drafts the spec sheet, returns it for your sign-off, and then treats the approved version as the contract for production. That is standard for brands without an in-house technical designer, and it is also how we handle <a href='/blog/custom-sublimated-hoodies-buyers-guide/'>hoodie programs</a>, where construction details matter far more than the logo. To see a finished pack in practice, browse our <a href='/cases/'>case study gallery</a>, or read our <a href='/blog/how-to-find-reliable-apparel-manufacturer-china/'>guide to finding a reliable apparel manufacturer</a> before you send your own out for review.",
+          "<figure class='my-8 md:my-10'><img src='/sample-studio.webp' alt='Pre-production sample of a multicolour all-over-print t-shirt on a grey mannequin, photographed between two softboxes in a white cyclorama studio with a camera on a tripod in the foreground' title='Approved sample photographed under controlled light against the tech pack measurements' width='800' height='800' loading='lazy' decoding='async' class='w-full h-auto border-2 border-black' /></figure>",
+          "<em class='block text-center text-xs text-[#6b6b6b] -mt-6 mb-8 md:-mt-8 md:mb-10'>Figure 4 — The approved sample, photographed under controlled light against the pack's measurements. Once a sample is approved against a numbered spec, the bulk run becomes a reproduction rather than an interpretation.</em>",
+        ],
+      },
+    ],
+    keyTakeaways: [
+      "A tech pack is an engineering specification, not a design brief. Its job is to let a factory price, sample, cut and inspect the garment without asking you a single follow-up question.",
+      "Nine sections cover it: garment overview, bill of materials, size and grading, construction, print and decoration, colour, branding and labels, packaging and delivery, and QC acceptance criteria.",
+      "Always specify fabric by GSM and composition, name the measurement standard (ASTM D3776 or ISO 3801) and set a tolerance — typically plus or minus 5%. 'Polyester' and 'premium quality' are not specifications.",
+      "Grade in writing: state the measurement method, the per-size grading increment, the acceptance tolerance (plus or minus 1.0 to 1.5 cm) and the size-run distribution, not just the size range.",
+      "Print placement must be measured in centimetres from a named origin, with artwork delivered as production-ready vector files and every spot colour given a Pantone reference and a base fabric colour.",
+      "Write the QC criteria into the pack before the bulk run — AQL 2.5 per ISO 2859-1, shrinkage limits, colour tolerance, and a named sign-off — because a spec nobody tests is just a suggestion.",
+    ],
+    faqs: [
+      {
+        q: "Do I really need a tech pack for a 50-piece order?",
+        a: "Yes, but it can be one page. At small quantities the cost of a mistake is small; at 500 pieces the same missing line costs a full set of labels and a reprint. The pack for a simple tee is about a page. A hoodie with trims, a full size run and a printed neck label runs three to five pages, and that is still cheaper than one round of corrections on a 500-piece order.",
+      },
+      {
+        q: "What format should I send a tech pack in?",
+        a: "PDF is the baseline, because it is versioned and cannot be edited by accident. Excel is better for the measurement chart, since a factory can copy a row straight into their own system. A shared document works for review, but it must be frozen and exported as PDF before approval. Name the file with the style code, version and date, for example STYLE-102_TechPack_v2_2026-11-11.pdf.",
+      },
+      {
+        q: "Can the factory write the tech pack for me?",
+        a: "Yes, and for a first order it is usually worth it. Send a reference garment, a sketch or a bullet-point brief and our ODM team drafts the specification, returns it for your review, and then treats the approved version as the contract for production. Expect one or two rounds of corrections and budget two to three days for the draft.",
+      },
+      {
+        q: "How do I specify a size if I do not have a size chart yet?",
+        a: "Use a factory spec sheet with graded sizes and give a base garment measurement — chest width in centimetres across the garment and body length from the high point shoulder to hem — instead of body measurements. If you want a specific silhouette, send a sample garment: measurements beat adjectives. The US size guide in our resources uses the same point names we use internally.",
+      },
+      {
+        q: "What happens if the bulk order does not match the tech pack?",
+        a: "Every approval should name the spec version, and the inspection report should reference the same version. Quality claims are far stronger when the document and the inspection record agree. Ask for the measurement report rather than photographs alone, keep your approved copy of the pack on file, and make sure the version number on your purchase order matches the version on the production floor.",
+      },
+    ],
+    citations: [
+      {
+        "@type": "WebPage",
+        "@id": "https://www.iso.org/standard/1140.html",
+        name: "ISO 2859-1:1999 — Sampling procedures for inspection by attributes (AQL)",
+        url: "https://www.iso.org/standard/1140.html",
+        sameAs: "https://www.iso.org/standard/1140.html",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://www.astm.org/d3776_d3776m-20.html",
+        name:
+          "ASTM D3776/D3776M-20 — Standard Test Methods for Mass Per Unit Area (Weight) of Fabric",
+        url: "https://www.astm.org/d3776_d3776m-20.html",
+        sameAs: "https://www.astm.org/d3776_d3776m-20.html",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://www.oeko-tex.com/en/our-standards/oeko-tex-standard-100",
+        name: "OEKO-TEX Standard 100 — Certification for tested textiles",
+        url: "https://www.oeko-tex.com/en/our-standards/oeko-tex-standard-100",
+        sameAs: "https://www.oeko-tex.com/en/our-standards/oeko-tex-standard-100",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://www.pantone.com/articles/color-fundamentals/the-pantone-matching-system",
+        name: "The Pantone Matching System — Color Fundamentals",
+        url: "https://www.pantone.com/articles/color-fundamentals/the-pantone-matching-system",
+        sameAs:
+          "https://www.pantone.com/articles/color-fundamentals/the-pantone-matching-system",
+      },
+    ],
+    isBasedOn: [
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/blog/how-to-prepare-artwork-files-for-sublimation/",
+        name: "How to Prepare Artwork Files for Sublimation — SublimApparel Blog",
+        url: "https://sublimapparel.com/blog/how-to-prepare-artwork-files-for-sublimation/",
+        sameAs:
+          "https://sublimapparel.com/blog/how-to-prepare-artwork-files-for-sublimation/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/blog/sublimation-printing-process-explained/",
+        name: "Sublimation Printing Process Explained — SublimApparel Blog",
+        url: "https://sublimapparel.com/blog/sublimation-printing-process-explained/",
+        sameAs:
+          "https://sublimapparel.com/blog/sublimation-printing-process-explained/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/blog/what-is-sublimation-fabric/",
+        name: "What Is Sublimation Fabric? — SublimApparel Blog",
+        url: "https://sublimapparel.com/blog/what-is-sublimation-fabric/",
+        sameAs: "https://sublimapparel.com/blog/what-is-sublimation-fabric/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/blog/polyester-vs-cotton-sublima-fabric/",
+        name: "Polyester vs Cotton for Sublimation — SublimApparel Blog",
+        url: "https://sublimapparel.com/blog/polyester-vs-cotton-sublima-fabric/",
+        sameAs:
+          "https://sublimapparel.com/blog/polyester-vs-cotton-sublima-fabric/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/blog/moq-explained-apparel-manufacturing/",
+        name: "MOQ Explained — SublimApparel Blog",
+        url: "https://sublimapparel.com/blog/moq-explained-apparel-manufacturing/",
+        sameAs:
+          "https://sublimapparel.com/blog/moq-explained-apparel-manufacturing/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/blog/screen-printing-vs-embroidery/",
+        name: "Screen Printing vs Embroidery — SublimApparel Blog",
+        url: "https://sublimapparel.com/blog/screen-printing-vs-embroidery/",
+        sameAs:
+          "https://sublimapparel.com/blog/screen-printing-vs-embroidery/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/blog/custom-sublimated-hoodies-buyers-guide/",
+        name: "Custom Sublimated Hoodies: 2026 B2B Buyer's Guide — SublimApparel Blog",
+        url: "https://sublimapparel.com/blog/custom-sublimated-hoodies-buyers-guide/",
+        sameAs:
+          "https://sublimapparel.com/blog/custom-sublimated-hoodies-buyers-guide/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/blog/how-to-find-reliable-apparel-manufacturer-china/",
+        name: "How to Find a Reliable Apparel Manufacturer in China — SublimApparel Blog",
+        url: "https://sublimapparel.com/blog/how-to-find-reliable-apparel-manufacturer-china/",
+        sameAs:
+          "https://sublimapparel.com/blog/how-to-find-reliable-apparel-manufacturer-china/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/quality-control/",
+        name: "Quality Control — SublimApparel",
+        url: "https://sublimapparel.com/quality-control/",
+        sameAs: "https://sublimapparel.com/quality-control/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/samples/",
+        name: "Samples — SublimApparel",
+        url: "https://sublimapparel.com/samples/",
+        sameAs: "https://sublimapparel.com/samples/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/us-size-guide/",
+        name: "US Size Guide — SublimApparel",
+        url: "https://sublimapparel.com/us-size-guide/",
+        sameAs: "https://sublimapparel.com/us-size-guide/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/apparel-brands-agencies/",
+        name: "For Apparel Brands and Agencies — SublimApparel",
+        url: "https://sublimapparel.com/apparel-brands-agencies/",
+        sameAs: "https://sublimapparel.com/apparel-brands-agencies/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/technique/sublimation/",
+        name: "Dye-Sublimation Printing Technique — SublimApparel",
+        url: "https://sublimapparel.com/technique/sublimation/",
+        sameAs: "https://sublimapparel.com/technique/sublimation/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/90-day-program/",
+        name: "90-Day Program — SublimApparel",
+        url: "https://sublimapparel.com/90-day-program/",
+        sameAs: "https://sublimapparel.com/90-day-program/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/cases/",
+        name: "Case Studies Gallery — SublimApparel",
+        url: "https://sublimapparel.com/cases/",
+        sameAs: "https://sublimapparel.com/cases/",
+      },
+    ],
+  },
 ];
 
 export const getPostBySlug = (slug: string): BlogPost | undefined =>
