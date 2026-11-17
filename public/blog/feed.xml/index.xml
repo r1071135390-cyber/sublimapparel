@@ -9,7 +9,7 @@
     <description>Industry guides, factory stories, and B2B apparel manufacturing insights from a 2,000 m² Yiwu sublimation factory. Sublimation vs DTG, DDP shipping, fabric guides, esports jersey fabric, and more.</description>
     <language>en-US</language>
     <copyright>Copyright © 2026 SublimApparel (Yiwu HomeDorm Commodity Manufacturing Co., Ltd.)</copyright>
-    <lastBuildDate>Wed, 11 Nov 2026 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 17 Nov 2026 00:00:00 GMT</lastBuildDate>
     <ttl>60</ttl>
     <image>
       <url>https://sublimapparel.com/sublimapparel-logo-v2.webp</url>
@@ -21,6 +21,19 @@
     <atom:link href="https://sublimapparel.com/blog/feed.xml" rel="self" type="application/rss+xml" />
     <managingEditor>info@sublimapparel.com (Ramon Wang, SublimApparel)</managingEditor>
     <webMaster>info@sublimapparel.com (SublimApparel Web Team)</webMaster>
+    <item>
+      <title>How to Order Custom Marathon Shirts for a 5K or Half Marathon</title>
+      <link>https://sublimapparel.com/blog/how-to-order-custom-marathon-shirts/</link>
+      <guid isPermaLink="true">https://sublimapparel.com/blog/how-to-order-custom-marathon-shirts/</guid>
+      <pubDate>Tue, 17 Nov 2026 00:00:00 GMT</pubDate>
+      <author>info@sublimapparel.com (SublimApparel Team)</author>
+      <category>Product Guide</category>
+      <description>A race-order buying guide written on the factory floor: how many shirts to order, which fabric to pick, how to hand over artwork that prints cleanly, how to collect participant sizes, how long production takes, and how to get the cartons through customs and onto the finish-line table.</description>
+      <content:encoded><![CDATA[Race shirts are the easiest apparel order to get wrong, and the mistakes are almost never about artwork. They are about quantity, fabric and timing — three decisions made eight to twelve weeks before race day, usually by someone who has never ordered sublimated apparel before. Get those three right and the rest is a normal production job. Get them wrong and you are reprinting four hundred shirts in race week.
+
+This is the factory-side guide to ordering custom marathon shirts for a 5K or half marathon, written from the cutting and sewing floor rather than from a sales deck. It covers how many pieces to order, which fabric to pick for a race that starts at six in the morning in September, how to hand over artwork that prints cleanly the first time, how to collect participant sizes without chasing four hundred people, how long production really takes, and how to get the cartons through customs and onto a table at the finish line. If you want the short version with the specifications and the quote form, our &lt;a href=&apos;/marathon-shirts/&apos;&gt;custom marathon shirts page&lt;/a&gt; has it.]]></content:encoded>
+      <enclosure url="https://sublimapparel.com/blog/marathon-shirts-buyers-guide-cover.jpg" type="image/webp" length="0" />
+    </item>
     <item>
       <title>How to Write a Tech Pack for Custom Apparel: The Complete B2B Guide</title>
       <link>https://sublimapparel.com/blog/how-to-write-a-tech-pack-for-custom-apparel/</link>

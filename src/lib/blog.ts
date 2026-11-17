@@ -3115,6 +3115,289 @@ export const blogPosts: BlogPost[] = [
       },
     ],
   },
+  {
+    // 2026-11-17 (R138): buying guide for the "custom marathon shirts"
+    // keyword cluster from the Nov 2026 SEO plan (content topic table
+    // row "How to Order Custom Marathon Shirts"). Six buyer-question
+    // sections, exactly as specified in the plan, closing with a
+    // natural hand-off to the /marathon-shirts/ commercial page.
+    slug: "how-to-order-custom-marathon-shirts",
+    title:
+      "How to Order Custom Marathon Shirts for a 5K or Half Marathon",
+    excerpt:
+      "A race-order buying guide written on the factory floor: how many shirts to order, which fabric to pick, how to hand over artwork that prints cleanly, how to collect participant sizes, how long production takes, and how to get the cartons through customs and onto the finish-line table.",
+    category: "Product Guide",
+    date: "2026-11-17",
+    readTime: "12 min read",
+    author: "SublimApparel Team",
+    coverImage: "/blog/marathon-shirts-buyers-guide-cover.jpg",
+    coverAlt:
+      "Three white long-sleeve running shirts laid side by side on a wooden factory workbench, one with a teal geometric triangle print, one with a black-to-grey gradient triangle print and one plain white, with a stack of folded multi-colour garments behind them, a printed size chart at the front left and a roll of transfer paper at the right",
+    tags: [
+      "custom marathon shirts",
+      "marathon shirts bulk",
+      "half marathon shirts",
+      "5k race shirts",
+      "race shirt fabric",
+      "custom race shirts",
+      "running shirt order",
+      "sublimation race shirts",
+      "race event apparel",
+      "DDP shipping apparel",
+    ],
+    metaTitle: "How to Order Custom Marathon Shirts (2026)",
+    metaDescription:
+      "How to order custom marathon shirts for a 5K or half marathon: MOQ, fabric, artwork prep, sizing, lead time and DDP shipping from a Yiwu factory.",
+    intro: [
+      "Race shirts are the easiest apparel order to get wrong, and the mistakes are almost never about artwork. They are about quantity, fabric and timing — three decisions made eight to twelve weeks before race day, usually by someone who has never ordered sublimated apparel before. Get those three right and the rest is a normal production job. Get them wrong and you are reprinting four hundred shirts in race week.",
+      "This is the factory-side guide to ordering custom marathon shirts for a 5K or half marathon, written from the cutting and sewing floor rather than from a sales deck. It covers how many pieces to order, which fabric to pick for a race that starts at six in the morning in September, how to hand over artwork that prints cleanly the first time, how to collect participant sizes without chasing four hundred people, how long production really takes, and how to get the cartons through customs and onto a table at the finish line. If you want the short version with the specifications and the quote form, our <a href='/marathon-shirts/'>custom marathon shirts page</a> has it.",
+    ],
+    sections: [
+      {
+        heading: "How Many Shirts Should You Order?",
+        paragraphs: [
+          "Start with the registration count, then add ten percent. That buffer is not optimism — it covers size swaps at the check-in desk, shirts damaged in a carry-on, and the runners who register in the final week before your production slot closes. Under-ordering costs more than over-ordering, because a leftover marathon shirt is a harmless piece of memorabilia while a runner who arrives with nothing to wear is a complaint you have to handle at the start line.",
+          "Then check the minimum. For cut-and-sew sublimation on polyester our standard is 50 pieces per design. On 100% cotton, printed with all-over DTG, it drops to 30. If your race needs three designs — participant shirt, volunteer shirt and a separate sponsor or VIP style — each design carries its own minimum, so the realistic floor for a three-design race order is 150 pieces, not 50. Our <a href='/blog/moq-explained-apparel-manufacturing/'>MOQ guide</a> explains why the floor exists and what actually moves it.",
+          "Two more order types to plan for. Sample runs start at 5 to 10 pieces with a 7 to 10 day turnaround, and they are worth paying for on any design you have not seen as a finished garment before — a 5K shirt that reads differently at twelve centimetres across the chest than it did on your laptop is not a problem you want to discover during production. And a race-week top-up re-order starts at 30 pieces, which is the number to keep in your back pocket for the runners who missed the deadline.",
+          "Finally, separate the designs. Participant, volunteer and staff shirts should not share a design even when the artwork looks similar, because each one is graded differently and packed differently. Volunteer shirts are usually an oversize cut with a sleeve print; participant shirts are a race cut with an all-over front. Our <a href='/products/running-shirts/'>running shirts</a> and <a href='/all-over-print/'>all-over print</a> pages show the construction options, and the <a href='/marathon-shirts/'>marathon shirts page</a> lists the styles we build for race events.",
+          "<figure class='my-8 md:my-10'><img src='/product-lineup.webp' alt='Six white mannequins wearing a football jersey, a printed t-shirt, a printed hoodie, a printed vest, a zip-front cycling kit and a grey polo shirt' title='Garment range for race orders — participant, volunteer and warm-up styles are cut and graded separately' width='800' height='800' loading='lazy' decoding='async' class='w-full h-auto border-2 border-black' /></figure>",
+          "<em class='block text-center text-xs text-[#6b6b6b] -mt-6 mb-8 md:-mt-8 md:mb-10'>Figure 1 — Participant, volunteer and warm-up garments are separate designs, so each one carries its own minimum order and its own grading.</em>",
+        ],
+      },
+      {
+        heading: "What Fabric Is Best for Marathon Shirts?",
+        paragraphs: [
+          "Polyester, almost always. A race shirt is a performance garment that happens to be a souvenir: it has to wick, dry, survive a laundry cycle and still look right in a finish-line photograph two hours after the start. Cotton absorbs sweat and stays wet. Polyester pushes moisture to the surface and dries in a fraction of the time.",
+          "Within polyester, four fabrics cover nearly every race order. <strong>Polyester-spandex at 92/8 and 145 GSM</strong> is the fitted race cut — stretch, smooth and close to the body, and the standard for 5K and half marathon tees. <strong>Birdseye mesh polyester</strong> is the right pick for a hot, humid, summer-start race, because the open structure moves air across the skin instead of trapping it. <strong>Coolmax-blend</strong> is the premium option when the budget allows. <strong>100% polyester interlock at 135 GSM</strong> is the durable, budget-friendly workhorse and survives the most washing. For organisers with a sustainability angle, <strong>recycled polyester (rPET)</strong> uses roughly 8 to 12 post-consumer bottles per shirt and prints identically to virgin polyester.",
+          "Weigh that decision against the run date, not the budget. A July marathon in a hot climate is a mesh decision. An October race in a temperate climate can be interlock. A sponsor-led event where the shirt is as much merchandise as kit can go to the heavier interlock or a coolmax blend without hurting performance. Our <a href='/fabric/polyester/'>polyester printing page</a> covers how the print behaves at each weight, and the <a href='/blog/polyester-vs-cotton-sublima-fabric/'>polyester versus cotton comparison</a> and <a href='/blog/cycling-jersey-fabric-guide/'>cycling fabric guide</a> go deeper on GSM and hand-feel.",
+          "One practical note: specify GSM in writing and ask for the measured fabric weight on the cutting report. Fabric weight is tested per ASTM D3776, and a sensible commercial tolerance is plus or minus 5% — a 145 GSM tolerance of 5% means 138 to 152 GSM is acceptable. Underweight fabric is the quietest way a bulk order arrives cheaper than it should and worse than it should. If you want the full specification format, the <a href='/blog/how-to-write-a-tech-pack-for-custom-apparel/'>tech pack guide</a> shows how to write those numbers so they cannot be misread.",
+          "<figure class='my-8 md:my-10'><img src='/fabric-hero.webp' alt='Macro close-up of white breathable mesh performance fabric with large blue, orange, yellow and magenta lettering printed across the surface' title='Sublimated mesh fabric — dye bonded into the fibre so the print survives washing' width='2048' height='2048' loading='lazy' decoding='async' class='w-full h-auto border-2 border-black' /></figure>",
+          "<em class='block text-center text-xs text-[#6b6b6b] -mt-6 mb-8 md:-mt-8 md:mb-10'>Figure 2 — Sublimated mesh. The dye bonds into the polyester fibre rather than sitting on top of it, which is why the print survives a race and a wash cycle.</em>",
+          "<figure class='my-8 md:my-10'><img src='/products/0128/0.webp' alt='Finished black-to-teal gradient long-sleeve running top with a small white logo mark printed on the shoulder seam' title='A finished marathon shirt off the line — race cut, full-colour print, graded size run' width='800' height='800' loading='lazy' decoding='async' class='w-full h-auto border-2 border-black' /></figure>",
+          "<em class='block text-center text-xs text-[#6b6b6b] -mt-6 mb-8 md:-mt-8 md:mb-10'>Figure 3 — The finished article. Race cut in fitted polyester-spandex with an all-over front and a small sponsor mark on the shoulder.</em>",
+        ],
+      },
+      {
+        heading: "How to Prepare Artwork",
+        paragraphs: [
+          "Deliver vector files — AI, EPS or PDF — for anything containing text or a logo. They scale to any print area without loss. Raster artwork works for photographic or painterly designs, but it has to be 300 DPI at the final print size, not at the size of your mockup. Our <a href='/blog/how-to-prepare-artwork-files-for-sublimation/'>artwork preparation guide</a> covers bleed, mirrored elements and the detail rules that decide whether a file prints cleanly on the first pass.",
+          "Give us a Pantone reference for every spot colour and tell us the base fabric colour. The base changes how the ink lays down and how bright the print reads — a logo tuned for white will look muddy on a light grey race shirt. If exact matching matters, ask for a printed colour card before bulk and approve it against a physical swatch, because a screen is not a colour standard.",
+          "Sponsors are where race artwork usually breaks. A multi-sponsor marathon typically runs 5 to 20 sponsor logos on a single design. Sublimation handles unlimited colours and unlimited placements with no extra setup fee per placement, so a chest logo, a back sponsor block and a sleeve mark cost no more than one logo would. That is a structural advantage of dye-sublimation over screen printing, where every additional sponsor means another screen and another setup charge — our <a href='/blog/screen-printing-vs-embroidery/'>screen printing versus embroidery comparison</a> covers the cost mechanics.",
+          "If the shirt is all-over printed, plan the artwork around the garment rather than around the flat sheet. The fabric is printed before it is cut, so a pattern that looks continuous on a rectangle can break at the side seam or the sleeve join. Mark every seam line on the artwork proof before it goes on the press. Our <a href='/blog/sublimation-printing-process-explained/'>sublimation printing process guide</a> walks through why that order of operations exists, and the <a href='/blog/how-to-write-a-tech-pack-for-custom-apparel/'>tech pack guide</a> shows how to specify placement in centimetres from a named origin.",
+          "One last rule: version every file and get the version written onto the purchase order. A file called final-v3-FINAL.psd is how a four-hundred-piece order gets produced against a superseded design.",
+        ],
+      },
+      {
+        heading: "How to Collect Participant Sizes",
+        paragraphs: [
+          "Make size selection part of registration, not a follow-up email. Add a size dropdown to the registration form, ask for the shirt size at the same moment you ask for the name, and export the sizes straight from the registration platform. Chasing sizes by email to four hundred runners is where most race orders lose a full week — and it is a week that comes straight out of your production window.",
+          "Give people their real options. A unisex S to 2XL run covers the large majority of runners; add XS or 3XL only when your previous event data tells you they will sell. Our <a href='/us-size-guide/'>US size guide</a> uses the same measurement points our cutting room uses and lists garment measurements rather than body measurements, so you can hand participants something unambiguous instead of a chest-to-hem number they have to interpret.",
+          "Decide on a cut and stick to it. A race cut and an oversize volunteer cut cannot share one size run without a pattern change on the grading table. Pick the cut per design, keep it, and write it into the order.",
+          "Leave a swap allowance. Five percent extra across the size run absorbs the runners who ordered medium and turned up wanting large, and it is far cheaper than reprinting. If you are running a packet-pickup desk, keep a handful of oversize pieces in a separate colour at the desk rather than handing out the last size in the run.",
+          "To de-risk it further, our <a href='/samples/'>sample policy</a> covers free and pre-production samples. A graded sample set across the whole size run is the closest thing to proofing a size curve before the bulk order, and it adds five to eight days to the schedule — worth it on a first order, skippable once you have your own data.",
+          "Finally, close the registration deadline with enough margin. Sizes arriving after the size run is locked mean either a second production slot or an oversize run, and both cost more than the ten percent buffer you built into the quantity.",
+        ],
+      },
+      {
+        heading: "How Long Does Production Take?",
+        paragraphs: [
+          "Bulk production on polyester runs 15 to 25 days from the moment the artwork and the size run are approved. That clock does not start when you place the order — it starts when the last approval lands. So the real question is not how long production takes, it is how long you take to approve things.",
+          "Work backwards from race day. This is the sequence we build into race orders: artwork proof and colour sign-off at T-60 days, physical sample and size run approval at T-45, bulk production of 15 to 25 days landing around T-25, then ocean freight of 7 to 14 days putting the cartons at your door roughly T-12 to T-7. Swap in air freight and you buy back about a week, because DDP air freight is 5 to 7 days. If the race is domestic and the stock is already in the US, our warehouse in Fontana, California delivers in 2 to 5 days, which is the fastest route to a start line.",
+          "The rule behind all of that is simple: every unapproved decision is a week you have not spent. Approve artwork in writing, approve the physical sample, lock the size run in a single message rather than three. Our <a href='/event-timeline/'>event apparel timeline calculator</a> builds the back-planned calendar from your race date, and the <a href='/90-day-program/'>90-day production program</a> shows the two-phase model we use for event and seasonal ranges.",
+          "And check the goods before they ship. Every bulk run goes through AQL 2.5 inspection with ISO 2859-1 sampling, with the checkpoints written onto the report so you can verify remotely from photographs rather than from a promise. Our <a href='/quality-control/'>four-step quality control process</a> explains exactly what those checkpoints are and when they happen.",
+          "<figure class='my-8 md:my-10'><img src='/pack-warehouse.webp' alt='Rows of stacked kraft export cartons in a warehouse, each carrying a barcode EXPORT label, with an empty pallet and yellow floor marking lines to the right' title='Packed and labelled export cartons ready for collection' width='800' height='800' loading='lazy' decoding='async' class='w-full h-auto border-2 border-black' /></figure>",
+          "<em class='block text-center text-xs text-[#6b6b6b] -mt-6 mb-8 md:-mt-8 md:mb-10'>Figure 4 — Packed, labelled and inspected. Cartons are sealed only after the AQL inspection has been passed, so a problem is found while it can still be fixed.</em>",
+        ],
+      },
+      {
+        heading: "How to Arrange International Shipping",
+        paragraphs: [
+          "For most race organisers DDP is the right answer and FOB is a trap that looks cheaper. DDP — Delivered Duty Paid under ICC Incoterms 2020 — means the supplier pays the freight, clears customs, pays import duties and taxes and delivers to your door. FOB puts all four of those on your desk, and the final invoice usually adds 15 to 35% on top of the quoted price. Our <a href='/shipping/ddp/'>DDP shipping page</a> and <a href='/blog/what-is-ddp-shipping/'>DDP shipping explained</a> walk through the mechanics and the total landed cost.",
+          "Sea or air is a date decision, not a cost decision. Ocean adds 7 to 14 days and is correct for anything ordered more than six weeks out. Air freight at 5 to 7 days is what you want when the race is close, when a design change means a reprint, or when you are running a multi-event series and the same shirt has to be in three different cities before race day. Our <a href='/shipping/global/'>global shipping page</a> lists the routes we run.",
+          "Watch the paperwork. The commercial invoice and packing list must match the physical goods exactly, and the apparel description and HS code need to stay consistent with the garment. Mismatched quantities between the carton and the invoice are the single most common cause of a customs hold, and a hold eats the buffer you built into the timeline. Ask for the documents before you release the balance, not after the container sails.",
+          "Get the delivery address right the first time. A race order is usually a pallet delivered to a hotel, a warehouse or a race office — not a home address. Confirm who can physically receive a pallet, whether there is a receiving window at that address, and who the duty and tax invoice should be issued to. We ship to more than 100 countries, and the <a href='/get-a-quote/'>quote form</a> returns a delivered DDP price with the shipping already in it.",
+          "<figure class='my-8 md:my-10'><img src='/shipping-hero.webp' alt='Warehouse worker in a fluorescent vest scanning a carton on a hand trolley with a handheld tablet, with a shipping container and high racking in the background' title='Scan-checked cartons leaving the warehouse for export' width='1600' height='900' loading='lazy' decoding='async' class='w-full h-auto border-2 border-black' /></figure>",
+          "<em class='block text-center text-xs text-[#6b6b6b] -mt-6 mb-8 md:-mt-8 md:mb-10'>Figure 5 — Every carton is scanned against the packing list before it leaves the warehouse, so a short shipment is caught here rather than at customs.</em>",
+        ],
+      },
+      {
+        heading: "Where to Start",
+        paragraphs: [
+          "Four steps, in order: fix the quantities and the size policy, choose the fabric and the cut, hand over artwork that will print cleanly, then lock the approval deadline and the shipping method backwards from race day. Every step carries a hard number attached to it, and that is the point — a race shirt order is a manufacturing job with a deadline, not a purchase.",
+          "If you want the specifications without the theory, the <a href='/marathon-shirts/'>custom marathon shirts page</a> lists the styles, fabrics, minimums and delivery options for race events, and you can send your design, quantity and deadline through the <a href='/get-a-quote/'>quote form</a> for a DDP price. For reference orders from clubs, teams and sponsors, the <a href='/cases/'>case study gallery</a> shows finished race and event apparel, and <a href='/industries/endurance-race-events/'>race apparel we produce</a> covers the organiser side of the business.",
+        ],
+      },
+    ],
+    keyTakeaways: [
+      "Order ten percent above your registration count, and treat every design as its own minimum: 50 pieces per design for cut-and-sew sublimation on polyester, 30 for all-over DTG on cotton.",
+      "Polyester is the default for race shirts — 92/8 polyester-spandex at 145 GSM for a fitted race cut, birdseye mesh for hot climates, 135 GSM interlock for durability, coolmax for premium, rPET for sustainability.",
+      "Give the factory vector artwork with a Pantone value per spot colour, and mark every seam line on an all-over print, because the fabric is printed before it is cut.",
+      "Collect sizes through the registration form with a dropdown, pick one cut per design, and add five percent to the size run to cover swaps on the day.",
+      "Budget 15 to 25 days of bulk production that only starts after written approval of artwork and size run, then 7 to 14 days by ocean or 5 to 7 days by air.",
+      "Ship international race orders DDP, make the invoice, packing list and physical cartons match, and confirm who can receive a pallet before the order leaves the factory.",
+    ],
+    faqs: [
+      {
+        q: "What is the minimum order for custom marathon shirts?",
+        a: "50 pieces per design for cut-and-sew sublimation on polyester, and 30 pieces for all-over DTG on 100% cotton. Because each design carries its own minimum, a participant shirt plus a volunteer shirt plus a sponsor style means three separate minimums, not one combined one. Sample runs start at 5 to 10 pieces with a 7 to 10 day turnaround, and race-week top-up re-orders start at 30 pieces.",
+      },
+      {
+        q: "How far in advance should I order marathon shirts for a race?",
+        a: "For a race day eight to ten weeks out, order with ocean freight: 15 to 25 days of bulk production that starts only after artwork and size approval, then 7 to 14 days at sea. DDP air freight at 5 to 7 days is the option when the race is closer, and for domestic orders our US warehouse in Fontana, California delivers in 2 to 5 days. Every approval that slips costs a week, so agree the artwork and the size run deadline up front.",
+      },
+      {
+        q: "Should marathon shirts be polyester or cotton?",
+        a: "Polyester for anything worn on the course. It wicks moisture, dries fast, holds its shape and is the only substrate dye-sublimation can bond into, which is what makes an all-over print survive a race and a wash cycle. Cotton absorbs sweat and stays wet, so it belongs in a pre-race or souvenir design rather than the race-day shirt. If you need a cotton option, we print it with all-over DTG at a 30-piece minimum.",
+      },
+      {
+        q: "Can I add sponsor logos to the marathon shirt?",
+        a: "Yes, and with sublimation they do not each cost extra. A multi-sponsor marathon typically runs 5 to 20 logos on one design, and dye-sublimation supports unlimited colours and unlimited placements with no per-placement setup fee — a chest logo, a back sponsor block and a sleeve mark cost the same as one logo. Send every logo as a vector file with a Pantone value, and we mark the seam lines on the artwork proof so the placement survives cutting and sewing.",
+      },
+      {
+        q: "How do I handle size swaps on race day?",
+        a: "Build the allowance into the order rather than into the day. Add five percent across the size run so a runner who ordered medium can be given large, keep a small number of oversize pieces at the packet-pickup desk, and use a separate colour for that shelf so it is obvious what it is. The alternative — reprinting after the race — is more expensive than the buffer and arrives far too late to be useful.",
+      },
+    ],
+    citations: [
+      {
+        "@type": "WebPage",
+        "@id": "https://www.iso.org/standard/1140.html",
+        name: "ISO 2859-1:1999 — Sampling procedures for inspection by attributes (AQL)",
+        url: "https://www.iso.org/standard/1140.html",
+        sameAs: "https://www.iso.org/standard/1140.html",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://www.astm.org/d3776_d3776m-20.html",
+        name:
+          "ASTM D3776/D3776M-20 — Standard Test Methods for Mass Per Unit Area (Weight) of Fabric",
+        url: "https://www.astm.org/d3776_d3776m-20.html",
+        sameAs: "https://www.astm.org/d3776_d3776m-20.html",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://www.oeko-tex.com/en/our-standards/oeko-tex-standard-100",
+        name: "OEKO-TEX Standard 100 — Certification for tested textiles",
+        url: "https://www.oeko-tex.com/en/our-standards/oeko-tex-standard-100",
+        sameAs: "https://www.oeko-tex.com/en/our-standards/oeko-tex-standard-100",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://iccwbo.org/business-solutions/incoterms-rules/incoterms-2020/",
+        name: "ICC Incoterms 2020",
+        url: "https://iccwbo.org/business-solutions/incoterms-rules/incoterms-2020/",
+        sameAs:
+          "https://iccwbo.org/business-solutions/incoterms-rules/incoterms-2020/",
+      },
+    ],
+    isBasedOn: [
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/marathon-shirts/",
+        name: "Custom Marathon Shirts for Full & Half Marathons — SublimApparel",
+        url: "https://sublimapparel.com/marathon-shirts/",
+        sameAs: "https://sublimapparel.com/marathon-shirts/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/race-shirts/",
+        name: "5K Race Shirts — SublimApparel",
+        url: "https://sublimapparel.com/race-shirts/",
+        sameAs: "https://sublimapparel.com/race-shirts/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/products/running-shirts/",
+        name: "Custom Running Shirts for Events, Teams & Organizations — SublimApparel",
+        url: "https://sublimapparel.com/products/running-shirts/",
+        sameAs: "https://sublimapparel.com/products/running-shirts/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/fabric/polyester/",
+        name: "All-Over Polyester Printing | Sublimation on 100% Polyester — SublimApparel",
+        url: "https://sublimapparel.com/fabric/polyester/",
+        sameAs: "https://sublimapparel.com/fabric/polyester/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/us-size-guide/",
+        name: "US Size Guide for Custom Apparel | Specs & Templates — SublimApparel",
+        url: "https://sublimapparel.com/us-size-guide/",
+        sameAs: "https://sublimapparel.com/us-size-guide/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/samples/",
+        name: "Sample Policy: Free & Pre-Production Samples — SublimApparel",
+        url: "https://sublimapparel.com/samples/",
+        sameAs: "https://sublimapparel.com/samples/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/quality-control/",
+        name: "4-Step Quality Control | AQL 2.5 Inspection Process — SublimApparel",
+        url: "https://sublimapparel.com/quality-control/",
+        sameAs: "https://sublimapparel.com/quality-control/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/shipping/ddp/",
+        name: "DDP Shipping — Duties Paid, Delivered to Your Door — SublimApparel",
+        url: "https://sublimapparel.com/shipping/ddp/",
+        sameAs: "https://sublimapparel.com/shipping/ddp/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/shipping/global/",
+        name: "DDP Shipping to 100+ Countries | Sea, Air, US Warehouse — SublimApparel",
+        url: "https://sublimapparel.com/shipping/global/",
+        sameAs: "https://sublimapparel.com/shipping/global/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/event-timeline/",
+        name: "Event Apparel Timeline Calculator | Order Custom Shirts — SublimApparel",
+        url: "https://sublimapparel.com/event-timeline/",
+        sameAs: "https://sublimapparel.com/event-timeline/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/90-day-program/",
+        name: "90-Day Custom Apparel Production Program | 2-Phase Model — SublimApparel",
+        url: "https://sublimapparel.com/90-day-program/",
+        sameAs: "https://sublimapparel.com/90-day-program/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/all-over-print/",
+        name: "All-Over Print Manufacturer | Edge-to-Edge | MOQ 50 — SublimApparel",
+        url: "https://sublimapparel.com/all-over-print/",
+        sameAs: "https://sublimapparel.com/all-over-print/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/get-a-quote/",
+        name: "Get a Quote — DDP Pricing in 12 Hours, No Setup Fee — SublimApparel",
+        url: "https://sublimapparel.com/get-a-quote/",
+        sameAs: "https://sublimapparel.com/get-a-quote/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/industries/endurance-race-events/",
+        name: "Race Apparel We Produce — SublimApparel",
+        url: "https://sublimapparel.com/industries/endurance-race-events/",
+        sameAs: "https://sublimapparel.com/industries/endurance-race-events/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/cases/",
+        name: "Custom Apparel Case Studies: Sports, Events & Brands — SublimApparel",
+        url: "https://sublimapparel.com/cases/",
+        sameAs: "https://sublimapparel.com/cases/",
+      },
+    ],
+  },
 ];
 
 export const getPostBySlug = (slug: string): BlogPost | undefined =>
