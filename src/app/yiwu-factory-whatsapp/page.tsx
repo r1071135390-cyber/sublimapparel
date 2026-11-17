@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { MessageCircle, Clock, Package, Truck, Shield } from "lucide-react";
+import Link from "next/link";
+import { MessageCircle, Clock, Package, Truck, Shield, ArrowRight } from "lucide-react";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { JsonLd } from "@/components/json-ld";
 import { buildYiwuWhatsappGraph } from "@/lib/breadcrumb";
@@ -302,13 +303,84 @@ export default function YiwuFactoryWhatsappPage() {
               />
               <FAQItem
                 q="How long does production take?"
-                a="15-25 business days for bulk production after sample sign-off. Sample lead time is 5-7 days. Rush service (7-10 day bulk) is available for an additional 20% on select product types."
+                a="Standard bulk production is 15-25 days after sample sign-off. Sample lead time is 5-7 days. Rush bulk service (7-15 days) is available for an additional 20% on select product types. Shipping transit is quoted separately and depends on mode and destination."
               />
               <FAQItem
                 q="Is the WhatsApp line staffed 24/7?"
                 a="Business-day coverage: Mon-Fri 09:00-18:00 China time (UTC+8). Outside those hours, leave a message and you'll get a reply the next business morning. We do not use WhatsApp auto-responders."
               />
             </dl>
+          </div>
+        </section>
+
+        {/* 2026-11-17 (R137): internal-link layer. The plan's SEO-014 task
+            asks for product / quote / factory links on this page — it had
+            none, so the only exit was the WhatsApp button and the contact
+            CTA. These routes let a buyer who landed here on a brand or
+            "factory contact" query continue into a commercial page. */}
+        <section className="border-b-2 border-black bg-white">
+          <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
+            <div className="mb-10">
+              <div className="mb-3 inline-block bg-[#ff4d00] px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
+                Before you message
+              </div>
+              <h2 className="text-3xl font-black leading-[1.05] tracking-tight text-black md:text-5xl">
+                Product pages, factory pages and quoting.
+              </h2>
+            </div>
+            <div className="grid gap-4 md:grid-cols-3">
+              <Link
+                href="/products/"
+                className="group flex items-start gap-4 border-2 border-black bg-white p-6 transition-colors hover:border-[#ff4d00]"
+              >
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center bg-black text-white">
+                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-base font-black text-black">
+                    Custom sublimation apparel catalog
+                  </p>
+                  <p className="mt-1 text-sm text-black/70">
+                    T-shirts, jerseys, hoodies, polos and performance styles we
+                    already produce in bulk.
+                  </p>
+                </div>
+              </Link>
+              <Link
+                href="/about/factory/"
+                className="group flex items-start gap-4 border-2 border-black bg-white p-6 transition-colors hover:border-[#ff4d00]"
+              >
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center bg-black text-white">
+                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-base font-black text-black">
+                    Yiwu factory and production floor
+                  </p>
+                  <p className="mt-1 text-sm text-black/70">
+                    Print, cut-and-sew, QC and packing — the real evidence
+                    behind the quote.
+                  </p>
+                </div>
+              </Link>
+              <Link
+                href="/get-a-quote/"
+                className="group flex items-start gap-4 border-2 border-black bg-white p-6 transition-colors hover:border-[#ff4d00]"
+              >
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center bg-black text-white">
+                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-base font-black text-black">
+                    Get a quote for custom apparel
+                  </p>
+                  <p className="mt-1 text-sm text-black/70">
+                    Send artwork, quantity and destination — a landed DDP price
+                    comes back in writing.
+                  </p>
+                </div>
+              </Link>
+            </div>
           </div>
         </section>
 

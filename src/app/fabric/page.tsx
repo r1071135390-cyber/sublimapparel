@@ -1,6 +1,7 @@
 import { FabricCatalogGrid } from "@/components/fabric-catalog-grid";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import { JsonLd } from "@/components/json-ld";
 import { buildFabricHubGraph } from "@/lib/breadcrumb";
 import { UnifiedContactCta } from "@/components/unified-contact-cta";
@@ -88,6 +89,40 @@ const fabrics = [
     href: "/fabric/polyester#polyester-fabrics",
   },
 ];
+
+// 2026-11-17 (R137): internal-link layer. The two fabric cards above
+// only link to this hub's own anchors, so the polyester and cotton
+// detail pages received no internal link from the hub. These notes
+// add the sibling links with the anchors used in the SEO plan's link
+// table ("polyester fabric and sublimation", "100% cotton printing").
+const fabricDetailNote: Record<string, ReactNode> = {
+  cotton: (
+    <>
+      Working in cotton? Our{" "}
+      <Link
+        href="/fabric/cotton/"
+        className="font-bold text-[#cc3d00] underline underline-offset-4 hover:text-[#ff4d00]"
+      >
+        100% cotton printing
+      </Link>{" "}
+      guide walks through allover digital print, DTG and DTF — and the
+      cut-and-sew workflow for full-body graphics.
+    </>
+  ),
+  polyester: (
+    <>
+      Working in polyester? Our{" "}
+      <Link
+        href="/fabric/polyester/"
+        className="font-bold text-[#cc3d00] underline underline-offset-4 hover:text-[#ff4d00]"
+      >
+        polyester fabric and sublimation
+      </Link>{" "}
+      guide covers the weights, blends and all-over dye-sublimation
+      options we run in-house.
+    </>
+  ),
+};
 
 const processes = [
   { name: "Sublimation Printing", slug: "sublimation", bestOn: "Polyester", desc: "Dye fuses into fibers — permanent, breathable, full-color, zero hand feel" },
@@ -234,25 +269,36 @@ export default function FabricPage() {
           <div className="grid gap-6 md:grid-cols-2">
             {fabrics.map((f) => {
               const Icon = f.icon;
+              // 2026-11-17 (R137): sibling detail-page note (see
+              // fabricDetailNote above). It renders under the card
+              // because the card itself is a link — a nested link is
+              // not valid markup.
+              const note = fabricDetailNote[f.slug];
               return (
-                <Link
-                  key={f.slug}
-                  href={f.href}
-                  className={"group relative flex flex-col border-2 border-black p-8 transition-all hover:border-[#ff4d00] " + f.color}
-                >
-                  <div className="mb-4 flex items-center justify-between">
-                    <Icon className="h-8 w-8 text-[#cc3d00]" strokeWidth={1.5} />
-                    <span className={"px-2 py-1 text-[10px] font-black uppercase tracking-widest " + f.badgeColor + " text-white"}>
-                      {f.badge}
+                <div key={f.slug} className="flex h-full flex-col">
+                  <Link
+                    href={f.href}
+                    className={"group relative flex flex-1 flex-col border-2 border-black p-8 transition-all hover:border-[#ff4d00] " + f.color}
+                  >
+                    <div className="mb-4 flex items-center justify-between">
+                      <Icon className="h-8 w-8 text-[#cc3d00]" strokeWidth={1.5} />
+                      <span className={"px-2 py-1 text-[10px] font-black uppercase tracking-widest " + f.badgeColor + " text-white"}>
+                        {f.badge}
+                      </span>
+                    </div>
+                    <h3 className="mb-3 text-3xl font-black leading-none">{f.name}</h3>
+                    <p className="mb-6 flex-1 text-sm text-black/70 md:text-base">{f.desc}</p>
+                    <span className="inline-flex items-center gap-2 text-sm font-black uppercase tracking-widest text-black transition-colors group-hover:text-[#cc3d00]">
+                      Explore {f.name}
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
                     </span>
-                  </div>
-                  <h3 className="mb-3 text-3xl font-black leading-none">{f.name}</h3>
-                  <p className="mb-6 flex-1 text-sm text-black/70 md:text-base">{f.desc}</p>
-                  <span className="inline-flex items-center gap-2 text-sm font-black uppercase tracking-widest text-black transition-colors group-hover:text-[#cc3d00]">
-                    Explore {f.name}
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
-                  </span>
-                </Link>
+                  </Link>
+                  {note ? (
+                    <p className="mt-4 text-sm leading-relaxed text-black/70 md:text-base">
+                      {note}
+                    </p>
+                  ) : null}
+                </div>
               );
             })}
           </div>

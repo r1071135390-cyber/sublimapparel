@@ -238,7 +238,7 @@ const faq = [
   },
   {
     q: "What are the production lead times for custom apparel?",
-    a: "Standard bulk production: 15–25 business days after sample sign-off. Sample lead time: 5–7 days. Rush bulk service (7–10 days) is available for select product types at an additional 20%. DDP ocean freight adds 18–25 days door-to-door from Yiwu to most countries.",
+    a: "Standard bulk production: 15–25 business days after sample sign-off. Sample lead time: 5–7 days. Rush bulk service (7–15 days) is available for select product types at an additional 20%. Shipping transit is quoted separately and depends on mode and destination — ocean DDP to the US typically adds 18–25 days door-to-door from Yiwu.",
   },
   // 2026-09-13 (R58): two new products-only FAQs that
   // distinctively position this page as the **garment

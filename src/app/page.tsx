@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Hero } from "@/components/hero";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { FactoryFloor } from "@/components/factory-floor";
@@ -43,17 +44,26 @@ export const metadata = buildPageMetadata({
     // intent (4 high-intent tokens in 60 chars) but trades "All-Over
     // Print" for "Custom Apparel" so the homepage opens ranking
     // space for the broader query clusters the catalog now covers.
-    title: "Yiwu Sublimation Factory | Custom Apparel, MOQ 50, DDP",
-    // 2026-09-15 (R69): description trim — same rationale as the
-    // title above. Drop "all-over print" from the description to
-    // stop reinforcing technique-keyword cannibalization on the
-    // homepage, which is the highest-authority page on the site and
-    // was dragging down rankings for buyer-intent (wedding/church/
-    // fundraiser/fraternity/camp/marathon) clusters R69 just
-    // added. Sublimation already implies all-over coverage, and
-    // "DDP to 100+ countries" still carries the differentiation.
-    // 156 chars, under 160 meta description truncation limit.
-    description: "Yiwu sublimation factory — custom apparel, MOQ 50, DDP to 100+ countries. Polyester + cotton, US warehouse in Fontana CA, 12 lines since 2018.",
+    // 2026-11-17 (R137): SEO plan rewrite — the title now leads with the
+    // plan's proposed head phrase "Custom Sublimation Apparel
+    // Manufacturer" (the entity type buyers actually search) instead of
+    // the R69 wording, while keeping the three differentiating tokens
+    // the page already ranks on: Yiwu, MOQ 50 and DDP. 59 chars, under
+    // the 60-char SERP limit, so buildPageMetadata() does not truncate
+    // it. The exact bigram "Sublimation Factory" gives way to the plan's
+    // head phrase; the factory signal stays on-page (hero, the /about/
+    // link copy) and in the keywords list and the JSON-LD Service node.
+    title: "Custom Sublimation Apparel Manufacturer | Yiwu, MOQ 50, DDP",
+    // 2026-11-17 (R137): description opens with the plan's proposed
+    // sentence ("Custom sublimation apparel manufacturer in Yiwu,
+    // China.") and keeps every signal the page currently ranks on —
+    // MOQ 50, DDP, 100+ countries, US warehouse in Fontana CA — then
+    // names product types (T-shirts, jerseys, event apparel) so the
+    // snippet matches the new browse-by-use-case copy and the core
+    // commercial pages linked from it. 148 chars, under the 160-char
+    // meta description truncation limit.
+    description:
+      "Custom sublimation apparel manufacturer in Yiwu, China. MOQ 50, DDP to 100+ countries, US warehouse in Fontana CA. T-shirts, jerseys, event apparel.",
 keywords: [
         "custom sublimation apparel factory",
         "all-over print manufacturer",
@@ -104,9 +114,9 @@ const homeJsonLd = {
       // the visible SERP snippet and the JSON-LD snippet don't
       // diverge — Google uses the schema name as a tie-breaker
       // when two sources disagree.
-      name: "Yiwu Sublimation Factory | Custom Apparel, MOQ 50, DDP",
+      name: "Custom Sublimation Apparel Manufacturer | Yiwu, MOQ 50, DDP",
       description:
-        "Yiwu sublimation factory — custom apparel, MOQ 50, DDP to 100+ countries. Polyester + cotton, US warehouse in Fontana CA, 12 lines since 2018.",
+        "Custom sublimation apparel manufacturer in Yiwu, China. MOQ 50, DDP to 100+ countries, US warehouse in Fontana CA. T-shirts, jerseys, event apparel.",
       keywords:
         "sublimation factory, all over print, all over print manufacturer, sublimation all over print, all over print t-shirt, all over print hoodie, custom sublimation apparel, Yiwu sublimation factory, DDP sublimation, allover digital print cotton, DTG cotton, DTF cotton, MOQ 50, full body sublimation, edge to edge sublimation",
       inLanguage: "en",
@@ -349,7 +359,7 @@ const homeJsonLd = {
           name: "How long does production take?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Standard lead time is 10-15 business days for bulk production after sample approval, plus 3-7 days for sample development. Rush service (7-10 days) is available for an additional 20%.",
+            text: "Standard lead time is 15–25 business days for bulk production after sample approval, plus 5–7 days for sample development. Rush service (7–15 days) is available for an additional 20%. DDP shipping is quoted separately and depends on mode and destination.",
           },
         },
         {
@@ -411,6 +421,144 @@ export default function Home() {
       <HowItWorks />
       <Products />
       <DDP />
+      {/* 2026-11-17 (R137): SEO plan band — carries the plan's proposed
+          homepage H1 intent ("Custom Sublimation Apparel Manufacturer in
+          China") as an <h2>, because the shared hero (src/components/
+          hero.tsx) owns the page's only <h1> and two <h1>s on one page
+          is a structural problem. It also adds the plan's internal-link
+          architecture: homepage → /products/ hub, /industries/ hub and
+          /about/ factory page inside real body copy, plus one natural
+          anchor per core commercial page (running / marathon / race /
+          summer camp / event t-shirts) using the anchor texts the plan
+          recommends (plan lines 2169-2175). The eyebrow stays unnumbered
+          so the 001–010 section numbering of the shared components is
+          untouched.
+          2026-11-17 (R137): the [010 / By Use Case] grid in
+          src/components/use-cases.tsx was trimmed to the three use-case
+          pages this band does not link, so each landing page keeps exactly
+          one homepage entry point instead of being linked twice from two
+          adjacent grids. */}
+      <section className="border-b-2 border-black bg-[#faf9f6]">
+        <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
+          {/* Header */}
+          <div className="mb-10 border-b-2 border-black pb-6">
+            <div className="mb-2 text-xs font-black uppercase tracking-widest text-black/60">
+              [ Commercial Landing Pages ]
+            </div>
+            <h2 className="text-4xl font-black uppercase leading-none tracking-tight md:text-5xl">
+              Custom Sublimation Apparel
+              <br />
+              <span className="italic text-[#cc3d00]">Manufacturer in China.</span>
+            </h2>
+            <p className="mt-4 max-w-3xl text-base font-bold leading-relaxed md:text-lg">
+              We are a Yiwu custom sublimation apparel manufacturer — all-over print tees, jerseys and team kits cut and sewn in-house, then shipped DDP worldwide. Start with the{" "}
+              <Link
+                href="/products/"
+                className="underline decoration-black/25 underline-offset-2 transition-colors hover:text-[#cc3d00]"
+              >
+                Custom sublimation apparel catalog
+              </Link>{" "}
+              for every fabric and cut, see the{" "}
+              <Link
+                href="/industries/"
+                className="underline decoration-black/25 underline-offset-2 transition-colors hover:text-[#cc3d00]"
+              >
+                Industries we serve
+              </Link>{" "}
+              we already supply, and follow the order through the{" "}
+              <Link
+                href="/about/"
+                className="underline decoration-black/25 underline-offset-2 transition-colors hover:text-[#cc3d00]"
+              >
+                Yiwu apparel factory
+              </Link>{" "}
+              from artwork check to DDP delivery.
+            </p>
+          </div>
+
+          {/* Browse by use case — one natural anchor per core commercial page */}
+          <div className="mb-5 text-xs font-black uppercase tracking-widest text-black/60">
+            Browse by use case
+          </div>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <div className="group border-2 border-black bg-white p-5 transition-all hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[6px_6px_0_0_#ff4d00]">
+              <h3 className="text-base font-black uppercase leading-tight tracking-tight text-black">
+                Running
+              </h3>
+              <p className="mt-2 text-sm font-medium leading-relaxed text-black/75">
+                Club, road and training kits — start with our{" "}
+                <Link
+                  href="/products/running-shirts/"
+                  className="font-bold text-black underline decoration-black/25 underline-offset-2 transition-colors hover:text-[#cc3d00]"
+                >
+                  custom running shirts
+                </Link>
+                .
+              </p>
+            </div>
+            <div className="group border-2 border-black bg-white p-5 transition-all hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[6px_6px_0_0_#ff4d00]">
+              <h3 className="text-base font-black uppercase leading-tight tracking-tight text-black">
+                Marathon
+              </h3>
+              <p className="mt-2 text-sm font-medium leading-relaxed text-black/75">
+                Full, half and ultra distance events — see our{" "}
+                <Link
+                  href="/marathon-shirts/"
+                  className="font-bold text-black underline decoration-black/25 underline-offset-2 transition-colors hover:text-[#cc3d00]"
+                >
+                  custom marathon shirts
+                </Link>
+                .
+              </p>
+            </div>
+            <div className="group border-2 border-black bg-white p-5 transition-all hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[6px_6px_0_0_#ff4d00]">
+              <h3 className="text-base font-black uppercase leading-tight tracking-tight text-black">
+                Race day
+              </h3>
+              <p className="mt-2 text-sm font-medium leading-relaxed text-black/75">
+                5K runs, charity races and club race days — order{" "}
+                <Link
+                  href="/race-shirts/"
+                  className="font-bold text-black underline decoration-black/25 underline-offset-2 transition-colors hover:text-[#cc3d00]"
+                >
+                  custom race shirts
+                </Link>
+                .
+              </p>
+            </div>
+            <div className="group border-2 border-black bg-white p-5 transition-all hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[6px_6px_0_0_#ff4d00]">
+              <h3 className="text-base font-black uppercase leading-tight tracking-tight text-black">
+                Summer camp
+              </h3>
+              <p className="mt-2 text-sm font-medium leading-relaxed text-black/75">
+                Color-coded groups for counselors, staff and campers — check{" "}
+                <Link
+                  href="/summer-camp-shirts/"
+                  className="font-bold text-black underline decoration-black/25 underline-offset-2 transition-colors hover:text-[#cc3d00]"
+                >
+                  custom summer camp shirts
+                </Link>
+                .
+              </p>
+            </div>
+            <div className="group border-2 border-black bg-white p-5 transition-all hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[6px_6px_0_0_#ff4d00]">
+              <h3 className="text-base font-black uppercase leading-tight tracking-tight text-black">
+                Events
+              </h3>
+              <p className="mt-2 text-sm font-medium leading-relaxed text-black/75">
+                Weddings, reunions and awareness walks — buy{" "}
+                <Link
+                  href="/custom-event-t-shirts/"
+                  className="font-bold text-black underline decoration-black/25 underline-offset-2 transition-colors hover:text-[#cc3d00]"
+                >
+                  custom event t-shirts
+                </Link>
+                .
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
       {/* Client-heavy below-fold sections — lazy-loaded in a client
           wrapper. Each gets a lightweight skeleton so layout doesn't
           jump when the real content hydrates. */}

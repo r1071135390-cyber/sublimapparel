@@ -1144,6 +1144,9 @@ export const blogPosts: BlogPost[] = [
         heading:"6. Our Free Artwork Template",
         paragraphs: [
 "We provide a free Adobe Illustrator template with pre-set artboards for every garment type we make — t-shirts, polos, hoodies, jerseys, tank tops, and shorts. Each artboard is set to the actual printable area for that garment, with seam lines and safe zones marked.",
+          // 2026-11-17 (R137): commercial link to the product range, placed
+          // where the reader is choosing which garment to print on.
+          "Not sure which garment your artwork is for? Browse our <a href='/products/'>custom sublimation apparel</a> range first, then open the matching artboard.",
 "Download it from the Artwork Upload section of any quote request, or ask us to send it. Using the template is the single fastest way to get your file approved on the first review.",
 "If you are not an Illustrator user, ask us for a PDF template with the same dimensions. Just place your design inside the marked area and save as a vector PDF.",
         ],
@@ -1373,9 +1376,17 @@ export const blogPosts: BlogPost[] = [
     coverImage: "/blog/polyester-vs-cotton-comparison.jpeg",
     coverAlt: "Two folded t-shirts side by side on white background — left shirt bright white polyester with vivid full-color edge-to-edge sublimated geometric pattern, right shirt heather grey plain cotton",
     tags: ["polyester vs cotton", "sublimation fabric", "cotton printing", "DTG", "DTF", "all-over print"],
-    metaTitle: "Polyester vs Cotton for Sublimation 2025: Honest Factory Comparison",
+    // 2026-11-17 (R137): the SEO title carried a stale "2025" year and ran
+    // past the 60-char budget the metadata helper enforces, so it was cut
+    // mid-word in search snippets. Replaced with the plan title
+    // "Polyester vs Cotton for Sublimation: Which Fabric Is Better?"
+    // (60 chars exactly — no truncation, no mid-word cut).
+    metaTitle: "Polyester vs Cotton for Sublimation: Which Fabric Is Better?",
+    // 2026-11-17 (R137): meta description was 165 chars and got truncated
+    // with an ellipsis. Now 159 chars, US spelling ("color") to stay
+    // consistent with the rest of the site.
     metaDescription:
-"Polyester vs cotton for sublimation printing: polyester wins on color and durability, cotton wins on comfort. Honest comparison of cost, feel, wash-fastness, and the cotton alternatives.",
+      "Polyester vs cotton for sublimation printing: polyester wins on color and durability, cotton wins on comfort. Compare cost, feel, wash-fastness, print quality.",
     intro: [
 "This is the most common question we get from new B2B clients: can we sublimate on cotton? The short answer is no. The longer answer is: here is what cotton does instead, here is what polyester does, and here is what to order when your design brief says 100% cotton but you really want an all-over print.",
 "We run both polyester and cotton apparel in our Yiwu factory every week. This comparison is from production data, not marketing copy — including the actual wash-test results from our QC lab.",
@@ -1421,11 +1432,31 @@ export const blogPosts: BlogPost[] = [
 "Our <a href='/pricing/'>pricing guide</a> has a full breakdown of decoration costs by technique, fabric, and quantity.",
         ],
       },
+      // 2026-11-17 (R137): added a buyer-facing decision block. Every
+      // characteristic quoted below is already asserted earlier in this
+      // same article — no new GSM figures, print-coverage percentages,
+      // cost numbers, MOQ or lead-time claims were introduced.
+      {
+        heading: "Which Should You Choose? A Fabric Decision Guide",
+        paragraphs: [
+          "Pick by what the garment has to do, not by which fiber sounds more premium. Here is the short version, matched to the briefs we see most often:",
+          "<strong>1. Race or event tees that get washed hard.</strong> 100% polyester. The dye bonds into the fiber, so the print cannot peel, crack or fade, and birdseye and pique knits pull sweat away from the skin.",
+          "<strong>2. Premium soft-handle retail and lifestyle lines.</strong> 100% cotton, printed with DTG. Cotton is the comfort benchmark — soft, breathable and absorbent — and DTG gives the softest hand-feel, with a thin ink layer sitting on the surface of the fiber.",
+          "<strong>3. All-over print, edge to edge.</strong> 100% polyester. Sublimation covers the full panel with no print area limit, and gradients come through with no banding.",
+          "<strong>4. Graphics with more than six colors, gradients or photo-realistic detail.</strong> 100% polyester. If you need that coverage on cotton, DTF is the cotton route — visually close to sublimation, with a slightly thicker hand-feel and lower long-term wash durability.",
+          "<strong>5. Corporate and school uniforms where a softer feel matters more than the print.</strong> A poly-cotton blend. The polyester accepts the dye and the cotton adds softness, but the print looks faded next to 100% poly and large color blocks look uneven.",
+          "One more case worth naming: a small chest-area print on cotton. For one or two colors, screen print is still the cheapest option.",
+        ],
+      },
       {
         heading: "When to Use Polyester (Sublimation)",
         paragraphs: [
 "Use polyester sublimation when: (1) you want an <a href='/all-over-print/'>all-over print</a> with edge-to-edge artwork, (2) the design has gradients, photo-realistic elements, or more than 6 colors, (3) the garment will see heavy washing (sports, workwear, events), (4) the end use is performance apparel — <a href='/industries/endurance-race-events/'>running</a>, <a href='/industries/sports-teams-leagues/'>cycling</a>, <a href='/industries/endurance-race-events/'>triathlon</a>, <a href='/industries/sports-teams-leagues/'>esports</a>, (5) you want the lowest cost per wear over the life of the garment.",
 "Polyester is the right call for about 80% of the sublimation work we do.",
+          // 2026-11-17 (R137): commercial internal link to the polyester
+          // fabric hub, placed in the body copy where the reader is choosing
+          // the substrate for the garment.
+          "Our <a href='/fabric/polyester/'>polyester sublimation fabric</a> range lists the knits we recommend for each of those use cases.",
         ],
       },
       {
@@ -1433,6 +1464,10 @@ export const blogPosts: BlogPost[] = [
         paragraphs: [
 "Use cotton with DTG or DTF when: (1) the customer specifically asks for 100% cotton (some markets — EU lifestyle, premium streetwear, certain corporate buyers — insist on cotton), (2) the design is a small chest-area print (DTG and DTF handle small areas well, and screen print is even cheaper for 1-2 color chest prints), (3) the print is not required to survive 50+ washes, (4) the end use is lifestyle or fashion, not performance.",
 "Note that even on cotton, <a href='/technique/dtf/'>DTF transfers</a> give you a near-full-coverage print — close to sublimation visually — with the trade-off of a slightly thicker hand-feel and lower long-term wash durability. DTG gives the softest hand-feel but is limited to a smaller print area than sublimation.",
+          // 2026-11-17 (R137): commercial internal link to the cotton
+          // fabric hub, placed in the body copy where the reader is choosing
+          // the cotton route.
+          "When the buyer asks for a specific cotton fabric, our <a href='/fabric/cotton/'>100% cotton printing options</a> page shows the cotton garments we print with DTG and DTF.",
         ],
       },
       {

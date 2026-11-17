@@ -33,9 +33,14 @@ const steps = [
     num: "04",
     icon: Truck,
     title: "Receive",
-    headline: "7–15 days to your door.",
+    headline: "15–25 days to your door.",
     desc: "Production in our Yiwu factory. QC at every step. Air, sea, or express — you choose. We handle customs, duties, and last-mile for 100+ countries.",
-    bullets: ["Production 7–15 days", "DDP to 100+ countries", "US domestic 2–5 days"],
+    bullets: [
+      "Production 15–25 days",
+      "Rush option 7–15 days",
+      "DDP to 100+ countries",
+      "US domestic 2–5 days",
+    ],
   },
 ];
 
@@ -60,7 +65,7 @@ export function HowItWorks() {
           </div>
           <div className="hidden text-right text-xs font-bold uppercase tracking-widest text-white/80 md:block">
             <div>Average lead time</div>
-            <div className="mt-1 text-3xl font-black text-white">7–15 days</div>
+            <div className="mt-1 text-3xl font-black text-white">15–25 days</div>
           </div>
         </div>
 

@@ -433,12 +433,12 @@ export const PAGE_TLDR: Record<string, PageTldr> = {
   "/industries/sports-teams-leagues/": {
     question: "Can SublimApparel supply custom sports team uniforms?",
     answer:
-      "Yes. We dye-sublimation print custom sports team uniforms — soccer, basketball, baseball, volleyball, hockey, wrestling — on polyester performance fabrics. Full team programs with name & number personalization, edge-to-edge print, matching shorts. MOQ 50 pieces per design, 15–25 day bulk production, 7–10 day rush available. DDP shipping to 100+ countries.",
+      "Yes. We dye-sublimation print custom sports team uniforms — soccer, basketball, baseball, volleyball, hockey, wrestling — on polyester performance fabrics. Full team programs with name & number personalization, edge-to-edge print, matching shorts. MOQ 50 pieces per design, 15–25 day bulk production, 7–15 day rush available. DDP shipping to 100+ countries.",
     stats: [
       { value: "50", label: "MOQ (pcs)" },
       { value: "Edge-to-edge", label: "Print coverage" },
       { value: "15–25 d", label: "Bulk lead time" },
-      { value: "7–10 d", label: "Rush option" },
+      { value: "7–15 d", label: "Rush option" },
     ],
     citations: [
       { label: "OEKO-TEX Standard 100", href: "https://www.oeko-tex.com/en/our-standards/standard-100-by-oeko-tex", date: "2024" },
@@ -453,11 +453,11 @@ export const PAGE_TLDR: Record<string, PageTldr> = {
   "/industries/endurance-race-events/": {
     question: "Can SublimApparel supply custom race event shirts?",
     answer:
-      "Yes. We dye-sublimation print custom race shirts — marathon, half-marathon, 5K, 10K, triathlon — on polyester performance fabrics. Edge-to-edge print, name & number personalization, race-day turnaround available. MOQ 50 pieces per design, 7–15 day bulk production for race-day events. DDP shipping to 100+ countries.",
+      "Yes. We dye-sublimation print custom race shirts — marathon, half-marathon, 5K, 10K, triathlon — on polyester performance fabrics. Edge-to-edge print, name & number personalization. MOQ 50 pieces per design, 15–25 day bulk production, 7–15 day rush turnaround for race-day deadlines. DDP shipping to 100+ countries.",
     stats: [
       { value: "50", label: "MOQ (pcs)" },
-      { value: "7–15 d", label: "Race-day turnaround" },
-      { value: "Edge-to-edge", label: "Print coverage" },
+      { value: "15–25 d", label: "Bulk lead time" },
+      { value: "7–15 d", label: "Rush option" },
       { value: "100+", label: "DDP countries" },
     ],
     citations: [],
@@ -491,11 +491,11 @@ export const PAGE_TLDR: Record<string, PageTldr> = {
   "/industries/events-conferences/": {
     question: "Can SublimApparel supply custom event & conference apparel?",
     answer:
-      "Yes. We dye-sublimation print custom event & conference apparel — staff tees, volunteer polos, attendee merch — on polyester and 100% cotton via DTG / DTF. Edge-to-edge print, name & number personalization. MOQ 50 pieces per design, 7–15 day rush available. DDP shipping to 100+ countries.",
+      "Yes. We dye-sublimation print custom event & conference apparel — staff tees, volunteer polos, attendee merch — on polyester and 100% cotton via DTG / DTF. Edge-to-edge print, name & number personalization. MOQ 50 pieces per design, 15–25 day bulk production, 7–15 day rush available. DDP shipping to 100+ countries.",
     stats: [
       { value: "50", label: "MOQ (pcs)" },
-      { value: "7–15 d", label: "Rush turnaround" },
-      { value: "Edge-to-edge", label: "Print coverage" },
+      { value: "15–25 d", label: "Bulk lead time" },
+      { value: "7–15 d", label: "Rush option" },
       { value: "100+", label: "DDP countries" },
     ],
     citations: [],
@@ -955,11 +955,11 @@ export const PAGE_TLDR: Record<string, PageTldr> = {
   "/custom-event-t-shirts/": {
     question: "Can SublimApparel print custom event t-shirts?",
     answer:
-      "Yes. We dye-sublimation print custom event t-shirts on polyester (edge-to-edge) and 100% cotton via DTG / DTF. Name personalization, sponsor logos, date/event branding. MOQ 50 pieces per design, 7–15 day rush turnaround for fast-approaching events. DDP shipping to 100+ countries.",
+      "Yes. We dye-sublimation print custom event t-shirts on polyester (edge-to-edge) and 100% cotton via DTG / DTF. Name personalization, sponsor logos, date/event branding. MOQ 50 pieces per design, 15–25 day bulk production, 7–15 day rush turnaround for fast-approaching events. DDP shipping to 100+ countries.",
     stats: [
       { value: "50", label: "MOQ (pcs)" },
-      { value: "7–15 d", label: "Rush turnaround" },
-      { value: "Edge-to-edge", label: "Print coverage" },
+      { value: "15–25 d", label: "Bulk lead time" },
+      { value: "7–15 d", label: "Rush option" },
       { value: "100+", label: "DDP countries" },
     ],
     citations: [],
@@ -974,11 +974,11 @@ export const PAGE_TLDR: Record<string, PageTldr> = {
   "/summer-camp-shirts/": {
     question: "Can SublimApparel supply custom summer camp shirts?",
     answer:
-      "Yes. We dye-sublimation print custom summer camp shirts on polyester performance fabric — edge-to-edge, color-fast, fade-resistant, soft hand feel, CPSIA-compliant inks for kids' wear. MOQ 50 pieces per design, 7–15 day rush turnaround. DDP shipping to 100+ countries.",
+      "Yes. We dye-sublimation print custom summer camp shirts on polyester performance fabric — edge-to-edge, color-fast, fade-resistant, soft hand feel, CPSIA-compliant inks for kids' wear. MOQ 50 pieces per design, 15–25 day bulk production, 7–15 day rush turnaround. DDP shipping to 100+ countries.",
     stats: [
       { value: "50", label: "MOQ (pcs)" },
-      { value: "7–15 d", label: "Rush turnaround" },
-      { value: "Edge-to-edge", label: "Print coverage" },
+      { value: "15–25 d", label: "Bulk lead time" },
+      { value: "7–15 d", label: "Rush option" },
       { value: "CPSIA", label: "Kid-safe inks" },
     ],
     citations: [
@@ -1012,11 +1012,11 @@ export const PAGE_TLDR: Record<string, PageTldr> = {
   "/race-shirts/": {
     question: "Can SublimApparel supply custom race shirts?",
     answer:
-      "Yes. We dye-sublimation print custom race shirts on polyester performance fabric — edge-to-edge print, name & number personalization, race-day turnaround available. MOQ 50 pieces per design, 7–15 day rush turnaround for fast-approaching races. DDP shipping to 100+ countries.",
+      "Yes. We dye-sublimation print custom race shirts on polyester performance fabric — edge-to-edge print, name & number personalization. MOQ 50 pieces per design, 15–25 day bulk production, 7–15 day rush turnaround for fast-approaching races. DDP shipping to 100+ countries.",
     stats: [
       { value: "50", label: "MOQ (pcs)" },
-      { value: "7–15 d", label: "Rush turnaround" },
-      { value: "Edge-to-edge", label: "Print coverage" },
+      { value: "15–25 d", label: "Bulk lead time" },
+      { value: "7–15 d", label: "Rush option" },
       { value: "Name/number", label: "Personalization" },
     ],
     citations: [],
@@ -1031,11 +1031,11 @@ export const PAGE_TLDR: Record<string, PageTldr> = {
   "/marathon-shirts/": {
     question: "Can SublimApparel supply custom marathon shirts?",
     answer:
-      "Yes. We dye-sublimation print custom marathon shirts on polyester performance mesh — edge-to-edge print, name & number personalization, race-day turnaround available. MOQ 50 pieces per design, 7–15 day rush turnaround for fast-approaching races. DDP shipping to 100+ countries.",
+      "Yes. We dye-sublimation print custom marathon shirts on polyester performance mesh — edge-to-edge print, name & number personalization. MOQ 50 pieces per design, 15–25 day bulk production, 7–15 day rush turnaround for fast-approaching races. DDP shipping to 100+ countries.",
     stats: [
       { value: "50", label: "MOQ (pcs)" },
-      { value: "7–15 d", label: "Rush turnaround" },
-      { value: "Edge-to-edge", label: "Print coverage" },
+      { value: "15–25 d", label: "Bulk lead time" },
+      { value: "7–15 d", label: "Rush option" },
       { value: "100+", label: "DDP countries" },
     ],
     citations: [],
@@ -1080,7 +1080,7 @@ export const PAGE_TLDR: Record<string, PageTldr> = {
  */
 export function getPageTldr(pathname: string): PageTldr | undefined {
   // Normalize trailing slash for lookup; pages register with a slash.
-  let key = pathname.endsWith("/") ? pathname : `${pathname}/`;
+  const key = pathname.endsWith("/") ? pathname : `${pathname}/`;
 
   const hit = PAGE_TLDR[key];
   if (hit) return hit;

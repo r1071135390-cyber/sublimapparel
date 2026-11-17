@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import {
+  ArrowRight,
   Calendar,
   Shirt,
   Briefcase,
@@ -29,8 +31,12 @@ const data: CustomerProfileData = {
   // conferences and festivals" while the solutions page owns
   // "event apparel production service". 58 chars.
   metaTitle: "Event Apparel for Conferences & Festivals | Bulk Shirts",
+  // 2026-11-17 (R137): was "…and race shirts with global DDP" — "race
+  // shirts" is the keyword of /race-shirts/, so this page was
+  // competing with the product page. Replaced with "volunteer
+  // apparel", which belongs to the conference/event intent.
   metaDescription:
-    "Event apparel for conferences, festivals, and large gatherings: bulk T-shirts, staff uniforms, sponsor-branded clothing, and race shirts with global DDP.",
+    "Event apparel for conferences, festivals, and large gatherings: bulk T-shirts, staff uniforms, sponsor-branded clothing, and volunteer apparel with global DDP.",
   keywords: [
     "conference shirts",
     "event shirts",
@@ -69,7 +75,7 @@ const data: CustomerProfileData = {
   stats: [
     { value: "200+", label: "Events Served" },
     { value: "5k+", label: "Shirts Per Event" },
-    { value: "15 days", label: "Rush Available" },
+    { value: "7–15 days", label: "Rush Available" },
     { value: "DDP", label: "Door-to-Door" },
   ],
   solutionsSection: {
@@ -191,7 +197,9 @@ const data: CustomerProfileData = {
     name: "How we produce custom event shirts for conferences, festivals and corporate events",
     description:
       "Event-date production: from the organizer's first quote request to DDP delivery of attendee, staff and volunteer shirts at the venue or hotel.",
-    totalTime: "P25D",
+    // 2026-11-17 (R137): totalTime "P25D" removed — it contradicted the
+    // published lead-time wording (15–25 day bulk production plus DDP
+    // transit), so the duration is no longer asserted as a single number.
     steps: [
       {
         name: "Send event date + role breakdown",
@@ -224,6 +232,59 @@ export default function Page() {
     <>
       <PageGeoAnswerBlock path="/industries/events-conferences/" />
       <CustomerProfilePage data={data} />
+      {/* 2026-11-17 (R137): internal-link layer. This page is the
+          organiser-side industry surface ("Conference & Corporate Event
+          Apparel"); /custom-event-t-shirts/ owns the product keyword
+          "custom event t-shirts". The block below hands readers over to
+          that product page instead of repeating its copy here. Styled
+          after the "Related Solutions" block in
+          customer-profile-template.tsx (border, uppercase micro-label,
+          arrow links). */}
+      <section className="border-t border-black/10 bg-[#fafafa] py-14 md:py-20">
+        <div className="mx-auto max-w-5xl px-4 md:px-6">
+          <div className="mb-6 max-w-2xl">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#ff4d00]">
+              Ready to order
+            </p>
+            <h2 className="mt-2 text-2xl font-black tracking-tight text-[#0a0a0a] md:text-3xl">
+              See the event t-shirt product page
+            </h2>
+          </div>
+          <p className="mb-6 max-w-3xl text-base leading-relaxed text-black/70 md:text-lg">
+            This page covers the organiser side — production planning, artwork
+            support and delivery against your event date.
+          </p>
+          <p className="mb-8 max-w-3xl text-base leading-relaxed text-black/70 md:text-lg">
+            Ready to order? See our{" "}
+            <Link
+              href="/custom-event-t-shirts/"
+              className="font-bold text-[#cc3d00] underline underline-offset-4 hover:text-[#ff4d00]"
+            >
+              custom event t-shirts
+            </Link>{" "}
+            for product specs, decoration options and ordering details.
+          </p>
+          <div className="max-w-xl">
+            <Link
+              href="/custom-event-t-shirts/"
+              className="group flex items-start gap-4 rounded-2xl border border-black/10 bg-white p-5 transition-colors hover:border-[#ff4d00]/40"
+            >
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#ff4d00]/10 text-[#ff4d00]">
+                <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-base font-black text-[#0a0a0a]">
+                  Event T-Shirt Product Range
+                </p>
+                <p className="mt-1 text-sm text-black/65">
+                  Conference shirts, staff and volunteer apparel, festival tees
+                  and promotional garments for events and organizations.
+                </p>
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
     </>
   );
 }

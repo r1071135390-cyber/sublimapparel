@@ -3,11 +3,7 @@
 import Link from "next/link";
 import {
   PartyPopper,
-  Shirt,
-  Tent,
   Building2,
-  Flag,
-  Medal,
   Sparkles,
   ArrowRight,
 } from "lucide-react";
@@ -27,6 +23,24 @@ import {
 // 12 /industries/* vertical pages (broad B2B buyer profiles). This
 // section links to the 7 /[use-case]/ pages (narrow buyer-intent
 // landing pages with their own keyword focus).
+//
+// 2026-11-17 (R137): trimmed from 7 cards to 3. The SEO plan's homepage
+// internal-link architecture (plan lines 552-586) puts the five core
+// commercial pages — Running / Marathon / Race / Summer Camp / Event
+// T-Shirts — under a "Commercial Landing Pages" branch, and the new
+// server-rendered SEO band in src/app/page.tsx now links exactly those
+// five with the plan's recommended anchor texts (plan lines 2169-2175).
+// Keeping all four overlapping cards here as well meant the homepage
+// linked the same targets twice from two adjacent grids — diluted
+// anchor signals and duplicated the visible use-case grid. The three
+// cards below are the use-case pages that band does not cover, so every
+// landing page still keeps exactly one homepage entry point.
+//
+// 2026-11-17 (R137): Running Shirts keeps its homepage entry via the
+// SEO band (anchor "custom running shirts", target
+// /products/running-shirts/) rather than a card here, because the band
+// carries the plan's anchor text and the page is a catalog product
+// page rather than a /[use-case]/ scenario page.
 export function UseCases() {
   const useCases = [
     {
@@ -37,38 +51,10 @@ export function UseCases() {
       accent: "orange",
     },
     {
-      slug: "custom-event-t-shirts",
-      title: "Custom Event T-Shirts",
-      desc: "Wedding party, family reunion, event-day tees",
-      icon: Shirt,
-      accent: "cyan",
-    },
-    {
-      slug: "summer-camp-shirts",
-      title: "Summer Camp Shirts",
-      desc: "Camp counselor, staff, color-coded group shirts",
-      icon: Tent,
-      accent: "orange",
-    },
-    {
       slug: "corporate-event-apparel",
       title: "Corporate Event Apparel",
       desc: "Retreats, trade shows, church & wedding events",
       icon: Building2,
-      accent: "cyan",
-    },
-    {
-      slug: "race-shirts",
-      title: "Race Shirts",
-      desc: "5K, 10K, fun runs, charity races, club kits",
-      icon: Flag,
-      accent: "orange",
-    },
-    {
-      slug: "marathon-shirts",
-      title: "Marathon Shirts",
-      desc: "Marathon, half-marathon, ultra finisher tees",
-      icon: Medal,
       accent: "cyan",
     },
     {
@@ -93,12 +79,15 @@ export function UseCases() {
             <span className="italic text-[#00c2ff]">your occasion.</span>
           </h2>
           <p className="mt-4 max-w-2xl text-base font-bold leading-relaxed text-white/80 md:text-lg">
-            From wedding parties to marathon finishers, from Greek rush week to summer camp color groups — pick your occasion, we&apos;ll handle the rest.
+            From fundraiser walks to corporate retreats, from church groups to Greek life — pick your occasion, we&apos;ll handle the rest.
           </p>
         </div>
 
         {/* Use-cases grid: 3 cols desktop, 2 cols tablet, 1 col mobile.
-            7 items split: 3 + 3 + 1 (last one centers on its own row). */}
+            2026-11-17 (R137): 3 items, one full row on desktop. The five
+            core commercial pages (Running / Marathon / Race / Summer Camp /
+            Event T-Shirts) are linked by the server-rendered SEO band in
+            src/app/page.tsx with the SEO plan's recommended anchor texts. */}
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {useCases.map((uc) => {
             const Icon = uc.icon;

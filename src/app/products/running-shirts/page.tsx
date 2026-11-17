@@ -1,34 +1,57 @@
 import { JsonLd } from "@/components/json-ld";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { buildCategoryProductGraph } from "@/lib/breadcrumb";
-import type { Metadata } from "next";
 import Link from "next/link";
 import { UnifiedContactCta } from "@/components/unified-contact-cta";
 import {
-  ArrowRight,
-  Sparkles,
-  Layers,
-  Palette,
-  Ruler,
-  Users,
-  Zap,
   Activity,
+  ArrowRight,
+  Award,
+  Boxes,
+  Building2,
+  ClipboardCheck,
+  Dumbbell,
+  Factory,
+  Flag,
+  Heart,
+  Layers,
+  MapPin,
+  MessageSquare,
+  PackageCheck,
+  Palette,
+  PenTool,
+  Ruler,
+  School,
+  ShieldCheck,
+  Ship,
+  Sparkles,
+  Trophy,
+  Users,
   Wind,
 } from "lucide-react";
 import { PageGeoAnswerBlock } from "@/components/geo-answer-block";
 
+// 2026-11-17 (R137): absolute page URL, used for the canonical link and OG url.
+const SITE_URL = "https://sublimapparel.com";
+const pageUrl = `${SITE_URL}/products/running-shirts/`;
+
 export const metadata = buildPageMetadata({
-    // 2026-09-15 (R69): was "Custom Running Shirts | All-Over Print,
-    // Sublimation, MOQ 50" (58 chars) — contained "All-Over Print" on
-    // a non-technique product page. Replaced with "Full Color
-    // Sublimation" to drop the redundant "All-Over Print" token
-    // (Sublimation already implies all-over coverage) and match the
-    // title pattern used by cycling/racing/golf/bowling/esports
-    // product pages. Stays 56 chars, under 60 limit.
-    title: "Custom Running Shirts | Full Color Sublimation, MOQ 50",
-    description: "Custom running shirts — all-over print sublimation on light, fast-dry polyester. MOQ 50 pcs, 4-way stretch, moisture-wicking, anti-odor finish. Built for marat…",
+    // 2026-11-17 (R137): SEO plan rewrite. The old title led with the
+    // printing technique ("Full Color Sublimation, MOQ 50"). The page is
+    // now positioned around buyer intent — organizers, clubs, schools and
+    // companies ordering running shirts for an event. 55 chars, under the
+    // 60-char limit, and no "| SublimApparel" suffix.
+    title: "Custom Running Shirts for Events, Teams & Organizations",
+    description:
+      "Order custom running shirts for races, marathons, running clubs, schools and corporate events. Custom designs, bulk production and worldwide delivery.",
     keywords: [
     "custom running shirts",
+    // 2026-11-17 (R137): buyer-intent keywords from the SEO plan.
+    "custom running shirts for events",
+    "bulk running shirts",
+    "personalized running shirts",
+    "running event shirts custom",
+    "custom running shirts manufacturer",
     "custom marathon shirts manufacturer",
     "running event shirts bulk",
     "sublimation running shirts",
@@ -98,16 +121,23 @@ export const metadata = buildPageMetadata({
     "summer camp running shirts",
     "color coded camp running shirts",
   ],
+    // 2026-11-17 (R137): self-referencing canonical + Open Graph copy.
+    alternates: { canonical: pageUrl },
+    ogTitle: "Custom Running Shirts for Events, Teams & Organizations",
+    ogDescription:
+      "Custom running shirts for races, marathons, running clubs, schools and corporate events. Bulk production, worldwide delivery.",
   });
 
 // Hero / showcase gallery sourced from public/products/0128/ (0.webp = cover, 1-5.webp = gallery)
+// 2026-11-17 (R137): alt text rewritten from keyword-stuffed placeholders to
+// accurate, distinct descriptions of what each photo actually shows.
 const heroGallery = [
-  { src: "/products/0128/0.webp", alt: "Custom all-over print running shirts — hero view" },
-  { src: "/products/0128/1.webp", alt: "Custom sublimation marathon shirts — front detail" },
-  { src: "/products/0128/2.webp", alt: "Sublimated 5K race shirts — back view" },
-  { src: "/products/0128/3.webp", alt: "Charity run shirts all-over print — side profile" },
-  { src: "/products/0128/4.webp", alt: "Club running kit sublimation — close-up fabric" },
-  { src: "/products/0128/5.webp", alt: "Lightweight running tee — full print color range" },
+  { src: "/products/0128/0.webp", alt: "Long-sleeve running top in black fading to teal at the hem with small shoulder logos" },
+  { src: "/products/0128/1.webp", alt: "Long-sleeve running top in black fading to white at the hem with small shoulder logos" },
+  { src: "/products/0128/2.webp", alt: "Short-sleeve crew neck tee in lavender fading to white with SPORT printed on chest and sleeve" },
+  { src: "/products/0128/3.webp", alt: "Short-sleeve crew neck tee in black fading to white with SPORT printed on chest and sleeve" },
+  { src: "/products/0128/4.webp", alt: "Short-sleeve crew neck tee in pink fading to white with SPORT printed on chest and sleeve" },
+  { src: "/products/0128/5.webp", alt: "Short-sleeve crew neck tee in sky blue fading to white with SPORT printed on chest and sleeve" },
 ];
 
 const stats = [
@@ -140,15 +170,42 @@ const customisation = [
   { icon: Wind, title: "Performance finish", desc: "Moisture-wicking, anti-odor, UV-50+ optional. All finishes OEKO-TEX certified and CPSIA-compliant for kids." },
   { icon: Layers, title: "Print area", desc: "Front, back, both sleeves, neck label, hem tag. Full panel on poly. Sponsorship logos, race bibs, names — all in one print." },
   { icon: Ruler, title: "Sizes XS–3XL", desc: "Men's, women's, unisex, kids' sizing. Race-cut and classic-fit size charts. Spec sheet sent with every quote." },
+  // 2026-11-17 (R137): fifth option added from the SEO plan's
+  // "Customize Your Running Shirts" block.
+  { icon: Sparkles, title: "Custom colors", desc: "Choose colors that match your event, club or company identity, and apply them consistently across every size in the run." },
 ];
 
-const useCases = [
-  { who: "Marathon & race organisers", what: "Marathon finisher shirts, 5K/10K race kits, charity run tees, ultras, fun runs" },
-  { who: "Running clubs & teams", what: "Club kit nights, cross-country teams, training groups, coaching staff uniforms" },
-  { who: "Schools & universities", what: "Cross-country, track & field, intramural leagues, university athletics, alumni runs" },
-  { who: "Charity & fundraising", what: "Awareness walks, charity runs, sponsor-driven campaigns, community events" },
-  { who: "Corporate wellness", what: "Company running clubs, fitness challenges, employee wellness programs" },
-  { who: "Race directors & brands", what: "Branded race merchandise, finisher swag, sponsor co-branded apparel" },
+// 2026-11-17 (R137): the six "use cases" were replaced by the eight buyer
+// types listed in the SEO plan's "Who Do We Work With?" block.
+const buyerTypes = [
+  { icon: Trophy, who: "Marathon & race organisers", what: "Finisher shirts, race-day kits, ultras, road races and half marathons" },
+  { icon: Flag, who: "Community running event organisers", what: "Local races, charity runs, fun runs and community fitness events" },
+  { icon: Users, who: "Running clubs & amateur teams", what: "Club kit nights, cross-country teams, recreational teams and training groups" },
+  { icon: School, who: "Schools & universities", what: "Sports days, student running clubs, campus events and athletics programs" },
+  { icon: Dumbbell, who: "Sports training organisations", what: "Coaching staff uniforms, academy kit and structured training programs" },
+  { icon: Building2, who: "Corporate event planners", what: "Company sports days, employee wellness programs and corporate team events" },
+  { icon: Heart, who: "Charity & fundraising organisations", what: "Awareness runs, charity tees, sponsor-driven campaigns and community events" },
+  { icon: PackageCheck, who: "Promotional merchandise agencies", what: "Branded race merchandise, sponsor co-branded apparel and multi-client runs" },
+];
+
+// 2026-11-17 (R137): "Our Running Shirt Production Process" from the SEO plan.
+const productionSteps = [
+  { icon: MessageSquare, title: "Share your requirements", desc: "Send us your design, estimated quantity, size breakdown, preferred fabric and delivery destination." },
+  { icon: PenTool, title: "Design & specification review", desc: "Our team reviews your artwork and garment requirements. We clarify important details before production." },
+  { icon: PackageCheck, title: "Sample confirmation", desc: "When required, arrange a sample or pre-production confirmation to check the design, fabric and garment specifications." },
+  { icon: Activity, title: "Bulk production", desc: "After approval, we arrange production according to the confirmed order specifications." },
+  { icon: ShieldCheck, title: "Quality inspection", desc: "Garments are checked during the production process and before shipment." },
+  { icon: Ship, title: "International delivery", desc: "We discuss suitable shipping arrangements, including available door-to-door delivery options, based on the destination and order requirements." },
+];
+
+// 2026-11-17 (R137): "Why Work With SublimApparel?" from the SEO plan.
+const whyWorkWithUs = [
+  { icon: Factory, title: "Yiwu-based apparel production partner", desc: "Work directly with a China-based apparel production team rather than navigating multiple layers of intermediaries." },
+  { icon: Award, title: "Experience since 2018", desc: "We have been working in custom apparel production since 2018, supporting customers with different garment and event apparel requirements." },
+  { icon: Boxes, title: "Support for bulk orders", desc: "We work with organizations and businesses that need coordinated apparel in multiple sizes and quantities." },
+  { icon: ClipboardCheck, title: "Clear communication", desc: "We help clarify artwork, sizing, garment specifications and production requirements before an order moves forward." },
+  { icon: ShieldCheck, title: "Quality control", desc: "We conduct production checks and final inspections to help reduce avoidable quality issues." },
+  { icon: MapPin, title: "International shipping support", desc: "We support international customers with shipping coordination and available door-to-door delivery arrangements." },
 ];
 
 const pricing = [
@@ -182,7 +239,13 @@ const faq = [
   },
   {
     q: "How fast can you deliver race-day shirts?",
-    a: "Sample: 5–7 days from artwork approval. Bulk: 10–14 days after sample approval. DDP shipping adds 7–12 days to most countries. For race deadlines, we can split-ship samples first and bulk later if needed — just ask.",
+    a: "Sample: 5–7 days from artwork approval. Bulk: 15–25 days after sample approval, with a 7–15 day rush option for tight race deadlines. DDP shipping adds 7–14 days to most countries. For race deadlines, we can split-ship samples first and bulk later if needed — just ask.",
+  },
+  // 2026-11-17 (R137): seventh item from the SEO plan's FAQ block
+  // (international buyer intent). No hard lead time is promised here.
+  {
+    q: "Can you ship running shirts to the United States?",
+    a: "Yes. We work with international customers and can discuss shipping options to the United States and other destinations. The shipping method and delivery estimate depend on the order and destination.",
   },
 ];
 
@@ -193,9 +256,11 @@ export default function RunningShirtsPage() {
   const categoryGraph = buildCategoryProductGraph({
     slug: "running-shirts",
     path: "/products/running-shirts/",
-    name: "Custom All-Over Print Running Shirts",
+    // 2026-11-17 (R137): name and description rewritten to the SEO plan's
+    // buyer-intent positioning (events, teams and organizations).
+    name: "Custom Running Shirts for Events, Teams & Organizations",
     description:
-      "Custom sublimation running shirts, all-over print, low MOQ 50 pcs, DDP shipping worldwide. Poly interlock or mesh, 4-way stretch, anti-odor finish.",
+      "Custom running shirts for races, marathons, running clubs, schools and corporate events. Personalized designs, bulk production and international delivery from a Yiwu-based apparel manufacturing partner.",
     productCategory: "Running Shirt",
     mpn: "SA-RUN-01",
     image: "/products/0128/0.webp",
@@ -218,14 +283,19 @@ export default function RunningShirtsPage() {
               01 / Apparel · Running Shirts
             </div>
             <h1 className="text-5xl font-black leading-[0.95] tracking-tight md:text-8xl">
-              Custom
+              Custom Running Shirts
               <br />
-              all-over print
-              <br />
-              <span className="text-[#cc3d00]">running shirts.</span>
+              for Events, Teams &amp; <span className="text-[#cc3d00]">Organizations</span>
             </h1>
+            {/* 2026-11-17 (R137): intro rewritten to the SEO plan's
+                buyer-intent copy (organizers, clubs, schools, companies).
+                The existing MOQ / lead-time / delivery facts are kept
+                unchanged on the line below so no number is lost. */}
             <p className="mt-6 max-w-xl text-base text-neutral-700 md:text-lg">
-              Light, fast-dry, edge-to-edge sublimation. Built for marathons, club runs, charity races, and school athletics. MOQ 50 pcs, 7–15 day production, DDP to 100+ countries.
+              Create custom running shirts for your next race, running event, team or organization. SublimApparel is a custom apparel manufacturing partner based in Yiwu, China — we help event organizers, running clubs, schools, companies and organizations produce custom running shirts with personalized designs, colors and branding.
+            </p>
+            <p className="mt-3 max-w-xl text-xs font-black uppercase tracking-widest text-neutral-600">
+              MOQ 50 pcs · 7–15 day production · DDP to 100+ countries
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
@@ -236,10 +306,10 @@ export default function RunningShirtsPage() {
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
               </Link>
               <Link
-                href="/industries/endurance-race-events/"
+                href="/race-shirts/"
                 className="inline-flex items-center gap-2 border-2 border-black bg-white px-6 py-3 text-sm font-black uppercase tracking-widest text-black transition-all hover:bg-black hover:text-white"
               >
-                See Race Events Page
+                custom race shirts
               </Link>
             </div>
           </div>
@@ -258,7 +328,7 @@ export default function RunningShirtsPage() {
                 />
               </div>
               <p className="mt-4 text-center text-xs font-bold uppercase tracking-widest text-neutral-600">
-                Men's · Women's · Unisex · Kids
+                Men&apos;s · Women&apos;s · Unisex · Kids
               </p>
               <p className="mt-1 text-center text-xs font-bold uppercase tracking-widest text-neutral-600">
                 Interlock · Mesh · Poly-Spandex · Recycled
@@ -334,7 +404,7 @@ export default function RunningShirtsPage() {
             Six cuts. <span className="text-[#cc3d00]">Race-ready.</span>
           </h2>
           <p className="mt-4 max-w-2xl text-base text-neutral-700 md:text-lg">
-            From the everyday training tee to the race-day singlet — same low MOQ, same 7–15 day production, same DDP shipping.
+            From the everyday training tee to the race-day singlet — same low MOQ, same 15–25 day bulk production, same DDP shipping.
           </p>
           <div className="mt-10 grid gap-0 md:grid-cols-2 lg:grid-cols-3">
             {styles.map((s, i) => (
@@ -381,7 +451,7 @@ export default function RunningShirtsPage() {
             ))}
           </div>
           <p className="mt-4 text-sm text-neutral-600">
-            Need a fabric we don't list? <Link href="/get-a-quote/" className="font-bold text-black underline">Ask us →</Link> We source from 30+ mills in Guangdong, Zhejiang, and Jiangsu.
+            Need a fabric we don&apos;t list? <Link href="/get-a-quote/" className="font-bold text-black underline">Ask us →</Link> We source from 30+ mills in Guangdong, Zhejiang, and Jiangsu.
           </p>
         </div>
       </section>
@@ -393,12 +463,16 @@ export default function RunningShirtsPage() {
           <h2 className="text-4xl font-black leading-tight md:text-6xl">
             Your race. <span className="text-[#cc3d00]">Your design.</span>
           </h2>
-          <div className="mt-10 grid gap-0 md:grid-cols-2 lg:grid-cols-4">
-            {customisation.map((c, i) => (
-              <div
-                key={c.title}
-                className={`p-6 ${i < 3 ? "lg:border-r-2 border-black" : ""} ${i < 2 ? "border-b-2 lg:border-b-0 border-black" : ""} ${i === 2 ? "border-b-2 lg:border-b-0 border-black" : ""}`}
-              >
+          {/* 2026-11-17 (R137): intro copy from the SEO plan's "Customize Your
+              Running Shirts" block, plus the /summer-camp-shirts/ internal
+              link for buyers ordering several groups at once. */}
+          <p className="mt-4 max-w-2xl text-base text-neutral-700 md:text-lg">
+            Make your running shirts recognizable with custom artwork and event branding. Ordering for several groups at the same event? We can colour-code the run — see our{" "}
+            <Link href="/summer-camp-shirts/" className="font-bold text-black underline">custom group shirts</Link> page for that workflow.
+          </p>
+          <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {customisation.map((c) => (
+              <div key={c.title} className="border-2 border-black bg-white p-6">
                 <c.icon className="h-8 w-8 text-[#cc3d00]" strokeWidth={2} />
                 <div className="mt-3 text-xl font-black text-black">{c.title}</div>
                 <p className="mt-2 text-sm text-neutral-700">{c.desc}</p>
@@ -408,35 +482,98 @@ export default function RunningShirtsPage() {
         </div>
       </section>
 
-      {/* USE CASES */}
-      <section className="border-b-2 border-black bg-[#0a0a0a] text-white">
+      {/* PRODUCTION PROCESS */}
+      {/* 2026-11-17 (R137): new section from the SEO plan's "Our Running
+          Shirt Production Process" block. No new lead-time or MOQ numbers
+          are introduced here — the existing stats row and FAQ carry those. */}
+      <section className="border-b-2 border-black bg-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
-          <div className="mb-3 text-xs font-black uppercase tracking-widest text-neutral-400">[ 005 / Who orders this ]</div>
+          <div className="mb-3 text-xs font-black uppercase tracking-widest text-neutral-500">[ 005 / Process ]</div>
           <h2 className="text-4xl font-black leading-tight md:text-6xl">
-            <span className="text-[#cc3d00]">50–10,000 pcs</span> per race.
+            From brief to <span className="text-[#cc3d00]">bulk delivery.</span>
           </h2>
-          <p className="mt-4 max-w-2xl text-base text-neutral-300 md:text-lg">
-            Same factory, same team — from a 50-piece school cross-country kit to a 10,000-piece marathon finisher drop. Tell us what you need and we run it.
+          <p className="mt-4 max-w-2xl text-base text-neutral-700 md:text-lg">
+            We aim to make bulk custom apparel ordering straightforward for overseas customers.
           </p>
-          <div className="mt-10 grid gap-0 md:grid-cols-2 lg:grid-cols-3">
-            {useCases.map((u, i) => (
-              <div
-                key={u.who}
-                className={`p-6 ${i < 3 ? "lg:border-r-2 border-neutral-800" : ""} ${i < 3 ? "border-b-2 lg:border-b-0 border-neutral-800" : ""} ${i === 3 || i === 4 ? "border-b-2 lg:border-b-0 border-neutral-800 md:border-r-2 md:border-b-0" : ""}`}
-              >
-                <Users className="h-6 w-6 text-[#cc3d00]" strokeWidth={2} />
-                <div className="mt-3 text-lg font-black text-white">{u.who}</div>
-                <p className="mt-1 text-sm text-neutral-400">{u.what}</p>
+          <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {productionSteps.map((s, i) => (
+              <div key={s.title} className="border-2 border-black bg-white p-6">
+                <div className="flex items-center justify-between">
+                  <s.icon className="h-7 w-7 text-[#cc3d00]" strokeWidth={2} />
+                  <span className="text-3xl font-black leading-none text-neutral-200">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                </div>
+                <div className="mt-4 text-lg font-black text-black">{s.title}</div>
+                <p className="mt-2 text-sm text-neutral-700">{s.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
+      {/* WHY WORK WITH US */}
+      {/* 2026-11-17 (R137): new section from the SEO plan's "Why Work With
+          SublimApparel?" block. */}
+      <section className="border-b-2 border-black bg-white">
+        <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
+          <div className="mb-3 text-xs font-black uppercase tracking-widest text-neutral-500">[ 006 / Why us ]</div>
+          <h2 className="text-4xl font-black leading-tight md:text-6xl">
+            Why work with <span className="text-[#cc3d00]">SublimApparel?</span>
+          </h2>
+          <p className="mt-4 max-w-2xl text-base text-neutral-700 md:text-lg">
+            A Yiwu-based apparel production partner for organizations and events ordering custom running shirts in bulk.
+          </p>
+          <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {whyWorkWithUs.map((w) => (
+              <div key={w.title} className="border-2 border-black bg-white p-6">
+                <w.icon className="h-7 w-7 text-[#cc3d00]" strokeWidth={2} />
+                <div className="mt-4 text-lg font-black text-black">{w.title}</div>
+                <p className="mt-2 text-sm text-neutral-700">{w.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* WHO ORDERS THIS */}
+      {/* 2026-11-17 (R137): the six former use cases were replaced by the
+          eight buyer types from the SEO plan's "Who Do We Work With?" block.
+          The existing "50–10,000 pcs" range is preserved in the copy below. */}
+      <section className="border-b-2 border-black bg-[#0a0a0a] text-white">
+        <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
+          <div className="mb-3 text-xs font-black uppercase tracking-widest text-neutral-400">[ 007 / Who orders this ]</div>
+          <h2 className="text-4xl font-black leading-tight md:text-6xl">
+            Who orders <span className="text-[#cc3d00]">custom running shirts?</span>
+          </h2>
+          <p className="mt-4 max-w-2xl text-base text-neutral-300 md:text-lg">
+            Whether you are organizing a small community race or preparing apparel for a large running event, we can help you create running shirts that match your event identity. Same factory, same team — 50–10,000 pcs per race, from a school cross-country kit to a marathon finisher drop.
+          </p>
+          <p className="mt-3 max-w-2xl text-base text-neutral-300 md:text-lg">
+            Planning a road race or a half marathon? Ask about our{" "}
+            <Link href="/marathon-shirts/" className="font-bold text-white underline">custom marathon shirts</Link> and{" "}
+            <Link href="/race-shirts/" className="font-bold text-white underline">custom race shirts</Link> ranges. If the same team also needs general event apparel, our{" "}
+            <Link href="/custom-event-t-shirts/" className="font-bold text-white underline">custom event t-shirts</Link> cover that side.
+          </p>
+          <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {buyerTypes.map((u) => (
+              <div key={u.who} className="border-2 border-neutral-800 p-6">
+                <u.icon className="h-6 w-6 text-[#cc3d00]" strokeWidth={2} />
+                <div className="mt-3 text-lg font-black text-white">{u.who}</div>
+                <p className="mt-1 text-sm text-neutral-400">{u.what}</p>
+              </div>
+            ))}
+          </div>
+          <p className="mt-8 max-w-2xl text-base text-neutral-300 md:text-lg">
+            If you are purchasing running shirts for a group, event or organization, tell us about your project and we can discuss a suitable production solution.
+          </p>
+        </div>
+      </section>
+
       {/* PRICING */}
       <section className="border-b-2 border-black bg-white">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
-          <div className="mb-3 text-xs font-black uppercase tracking-widest text-neutral-500">[ 006 / Pricing ]</div>
+          <div className="mb-3 text-xs font-black uppercase tracking-widest text-neutral-500">[ 008 / Pricing ]</div>
           <h2 className="text-4xl font-black leading-tight md:text-6xl">
             Transparent. <span className="text-[#cc3d00]">No quotes required</span> to see the range.
           </h2>
@@ -471,7 +608,7 @@ export default function RunningShirtsPage() {
       {/* FAQ */}
       <section className="border-b-2 border-black bg-[#faf9f6]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
-          <div className="mb-3 text-xs font-black uppercase tracking-widest text-neutral-500">[ 007 / FAQ ]</div>
+          <div className="mb-3 text-xs font-black uppercase tracking-widest text-neutral-500">[ 009 / FAQ ]</div>
           <h2 className="text-4xl font-black leading-tight md:text-6xl">
             Common questions.
           </h2>
@@ -515,30 +652,38 @@ export default function RunningShirtsPage() {
 <section className="bg-[#ff4d00] text-black">
 
         <div className="mx-auto max-w-7xl px-6 py-20 md:py-28">
-          <div className="mb-3 text-xs font-black uppercase tracking-widest text-white/80">[ 008 / Next step ]</div>
+          <div className="mb-3 text-xs font-black uppercase tracking-widest text-white/80">[ 010 / Next step ]</div>
           <h2 className="text-4xl font-black leading-tight md:text-7xl">
-            Send us your race design.
+            Start your custom running shirt project.
             <br />
             Get a quote in 1 business day.
           </h2>
+          {/* 2026-11-17 (R137): closing copy from the SEO plan. The existing
+              quote-turnaround and sample-price lines are kept unchanged. */}
           <p className="mt-4 max-w-2xl text-base text-white/90 md:text-lg">
-            PNG, AI, or even a hand-drawn sketch — we'll redraw it free and quote poly + mesh options. Sample available for $25–$45.
+            Planning a marathon, community run, school activity or corporate sports event? Tell us what you need. Share your design, estimated quantity, size breakdown and delivery destination. Our team will review your requirements and get back to you with the next steps.
+          </p>
+          <p className="mt-3 max-w-2xl text-base text-white/90 md:text-lg">
+            PNG, AI, or even a hand-drawn sketch — we&apos;ll redraw it free and quote poly + mesh options. Sample available for $25–$45.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
               href="/get-a-quote/"
               className="group inline-flex items-center gap-2 bg-black px-6 py-3 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-white hover:text-[#cc3d00]"
             >
-              Get a Running Shirt Quote
+              Request a Quote
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
             </Link>
             <Link
-              href="/products/training-apparel/"
+              href="/contact/"
               className="inline-flex items-center gap-2 border-2 border-black bg-transparent px-6 py-3 text-sm font-black uppercase tracking-widest text-black transition-all hover:bg-black hover:text-white"
             >
-              See Training Apparel
+              get a quote for custom apparel
             </Link>
           </div>
+          <p className="mt-6 text-sm font-black uppercase tracking-widest text-black">
+            Email: <a href="mailto:info@sublimapparel.com" className="underline">info@sublimapparel.com</a>
+          </p>
         </div>
       </section>
     </main>
