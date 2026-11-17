@@ -88,23 +88,28 @@ function todayPiNumber() {
 // each render of NewPIPage otherwise re-creates these function identities,
 // and React treats them as different component types — which unmounts and
 // remounts the underlying <input>, stealing focus after every keystroke.
+//
+// 2026-11-17 (R139): exported so /administered/edit-pi/ can hand the SAME
+// real components to <PIPreview>. It used to pass `undefined as any` for
+// all four, which made React throw "Element type is invalid" on render and
+// dropped the user on the global error page ("Something broke on our end.").
 // ---------------------------------------------------------------------------
-function BlackCell({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+export function BlackCell({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return <div className={`px-2 py-1 text-sm ${className}`}>{children}</div>;
 }
 
-const RedInput = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
+export const RedInput = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
   <input
     {...props}
     className={`w-full bg-white dark:bg-neutral-900 border-2 border-[#ff4d00] dark:border-[#ff4d00] rounded px-2 py-1 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#ff4d00]/30 ${props.className || ""}`}
   />
 );
 
-function BlueText({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+export function BlueText({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return <span className={`text-[#0a6cff] font-medium ${className}`}>{children}</span>;
 }
 
-function RedReminder({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+export function RedReminder({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
     <div className={`mt-1 text-xs italic text-[#ff4d00] ${className}`}>
       {children}

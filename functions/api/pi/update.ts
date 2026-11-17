@@ -3,11 +3,16 @@
 // proforma_invoices_revisions, then PATCHes proforma_invoices.
 //
 // 2026-10-04 (R84): backs the /administered/edit-pi/ page. Hard rules:
-//   1. Only PIs with status IN ('draft', 'sent') are editable. PAID /
-//      pending_bank / canceled / expired all return 409 with a hint
-//      explaining why. This matches the product decision ("only
-//      draft/sent are editable") and protects audit data integrity
-//      once money has actually changed hands.
+//   1. A PI is editable while it is still alive and no money has been
+//      collected for it. PAID / canceled / expired return 409 with a hint
+//      explaining why.
+//      2026-11-17 (R139): the rule moved to functions/lib/pi-status.ts and
+//      now also allows 'pending_bank' (customer declared a wire, receipt
+//      not yet confirmed — amount_paid_cents is still 0) and
+//      'partially_paid' (deposit collected, balance still open; the
+//      endpoint recomputes amount_due_cents as total − paid). Before this
+//      the admin UI and this endpoint disagreed, so an unpaid PI often
+//      could not be edited at all.
 //   2. pi_number is immutable. You can edit anything else; if you
 //      want a different number, create a new PI. (Editing the number
 //      would orphan every Stripe webhook reference and every /pay/?pi=
@@ -25,6 +30,11 @@
 
 import { normalizeSupabaseUrl } from "../_utils";
 import { requireAdmin } from "../_admin-auth";
+import {
+  EDITABLE_PI_STATUSES,
+  isEditablePiStatus,
+  normalizePiStatus,
+} from "../../lib/pi-status";
 
 interface Env {
   COZE_SUPABASE_URL: string;
@@ -32,8 +42,6 @@ interface Env {
   // R125: required bearer token for admin access
   ADMIN_TOKEN?: string;
 }
-
-const EDITABLE_STATUSES = new Set(["draft", "sent"]);
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -152,16 +160,16 @@ export async function onRequestPost(context: {
   }
 
   const current = rows[0];
-  const currentStatus = ((current.currentStatus as string) ?? (current.status as string) ?? "").toLowerCase();
-  if (!EDITABLE_STATUSES.has(currentStatus)) {
+  const currentStatus = normalizePiStatus(current.status);
+  if (!isEditablePiStatus(currentStatus)) {
     return jsonResponse(
       {
         error: `PI in status "${currentStatus || "unknown"}" is not editable`,
         piNumber,
         status: current.status,
-        editableStatuses: Array.from(EDITABLE_STATUSES),
+        editableStatuses: [...EDITABLE_PI_STATUSES],
         hint:
-          "Only draft and sent PIs can be edited. For a paid PI, refund via the Stripe Dashboard first; for canceled / expired PIs, create a new PI with the corrected details.",
+          "Only unpaid PIs can be edited. For a paid PI, refund via the Stripe Dashboard first; for canceled / expired PIs, create a new PI with the corrected details.",
       },
       409,
     );

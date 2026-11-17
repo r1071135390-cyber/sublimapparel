@@ -10,9 +10,9 @@
  * State machine:
  *   1. `loading`         → fetching the row + checking if editable
  *   2. `editable`        → form is mounted with the row's fields
- *   3. `readOnly`        → server returned a status outside
- *                          {draft, sent}; show a banner + a "go back"
- *                          link instead of a save button
+ *   3. `readOnly`        → the PI's status is outside the editable set
+ *                          (see @/lib/pi-status); show a banner + a
+ *                          "go back" link instead of a save button
  *   4. `notFound`        → 404 from the server
  *   5. `saved`           → PATCH /api/pi/update/ returned OK; show the
  *                          success panel with revisionNumber
@@ -42,7 +42,7 @@ import {
   X,
   Check,
 } from "lucide-react";
-import { PIPreview } from "../new-pi/NewPIClient";
+import { PIPreview, BlackCell, RedInput, BlueText, RedReminder } from "../new-pi/NewPIClient";
 import {
   bankAccountFromRow,
   type BankAccount,
@@ -51,6 +51,10 @@ import {
   type SupportedCurrency,
 } from "@/lib/bank-accounts";
 import { adminFetch } from "@/lib/admin-token";
+import {
+  isEditablePiStatus,
+  normalizePiStatus,
+} from "@/lib/pi-status";
 
 // ─── Local types (mirror of NewPIClient's LineItem) ──────────────────────
 type SizeRow = { label: string; qty: number };
@@ -185,9 +189,19 @@ function EditPIClientInner() {
         return;
       }
 
-      const status = String(row.status ?? "").toLowerCase();
-      if (status !== "draft" && status !== "sent") {
-        setLoadState({ kind: "read_only", piNumber, status });
+      // 2026-11-17 (R139): the editable rule now lives in one place
+      // (@/lib/pi-status), shared with the summary list and mirrored in
+      // functions/lib/pi-status.ts. It used to be hardcoded here as
+      // `status !== "draft" && status !== "sent"`, which disagreed with
+      // the server and locked out unpaid PIs that were still editable
+      // in the database.
+      const rawStatus = typeof row.status === "string" ? row.status : null;
+      if (!isEditablePiStatus(rawStatus)) {
+        setLoadState({
+          kind: "read_only",
+          piNumber,
+          status: normalizePiStatus(rawStatus),
+        });
         return;
       }
 
@@ -502,10 +516,10 @@ function EditPIClientInner() {
               balanceAmount={balanceAmount}
               shippingTerm={shippingTerm}
               onShippingTermChange={setShippingTerm}
-              BlackCell={undefined as any}
-              RedInput={undefined as any}
-              BlueText={undefined as any}
-              RedReminder={undefined as any}
+              BlackCell={BlackCell}
+              RedInput={RedInput}
+              BlueText={BlueText}
+              RedReminder={RedReminder}
             />
 
             {/* Optional change-note input + Save bar */}
@@ -559,9 +573,13 @@ function ReadOnlyBanner({ piNumber, status }: { piNumber: string; status: string
             PI {piNumber || "(unknown)"} is locked for editing
           </div>
           <p className="text-sm text-neutral-700 mt-1">
-            Status <code className="bg-neutral-100 px-1.5 py-0.5 rounded">{status || "unknown"}</code>{" "}
-            is not editable. Only <code className="bg-neutral-100 px-1.5 py-0.5 rounded">draft</code>{" "}
-            and <code className="bg-neutral-100 px-1.5 py-0.5 rounded">sent</code> PIs can be edited.
+            Status <code className="bg-neutral-100 px-1.5 py-1.5 rounded">{status || "unknown"}</code>{" "}
+            is not editable. Only unpaid PIs can be edited —{" "}
+            <code className="bg-neutral-100 px-1.5 py-1.5 rounded">draft</code>,{" "}
+            <code className="bg-neutral-100 px-1.5 py-1.5 rounded">sent</code>,{" "}
+            <code className="bg-neutral-100 px-1.5 py-1.5 rounded">pending_bank</code>{" "}
+            and{" "}
+            <code className="bg-neutral-100 px-1.5 py-1.5 rounded">partially_paid</code>.
           </p>
           <p className="text-xs text-neutral-600 mt-2">
             Paid PIs: refund via the Stripe Dashboard first. Canceled / expired PIs: create a new PI

@@ -25,6 +25,13 @@ import {
   type AdminUserIdentity,
 } from "@/lib/admin-token";
 import type { FxRates } from "@/lib/fx-rates";
+import {
+  isEditablePiStatus,
+  isPaidPiStatus,
+  isCancelledPiStatus,
+  isSettledPiStatus,
+  piStatusMeta,
+} from "@/lib/pi-status";
 
 interface PiListItem {
   id: number | string;
@@ -94,19 +101,24 @@ interface CurrencyAggregate {
   cancelledDisplay: string;
 }
 
-// 2026-10-13 (Phase A.3): payment status helpers. We accept several
-// aliases because the Stripe webhook and the manual-mark-paid flow write
-// different strings into proforma_invoices.status.
+// 2026-11-17 (R139): the editable-status rule and the status badge
+// colours now come from @/lib/pi-status, which is also mirrored in
+// functions/lib/pi-status.ts. Previously this file compared DISPLAY
+// LABELS (`sc.label === "DRAFT"`) to decide whether a PI was editable,
+// so any status that fell through to the default branch was treated as
+// editable — while the server refused the same edit with a 409.
+//
+//   isPaidStatus      → paid / succeeded / completed / true
+//   isCancelledStatus → cancelled / canceled
+//
+// The aliases come from the Stripe webhook and the manual mark-paid
+// flow, which write different strings into proforma_invoices.status.
 function isPaidStatus(status: string | null): boolean {
-  if (!status) return false;
-  const s = status.toLowerCase();
-  return s === "paid" || s === "succeeded" || s === "completed" || s === "true";
+  return isPaidPiStatus(status);
 }
 
 function isCancelledStatus(status: string | null): boolean {
-  if (!status) return false;
-  const s = status.toLowerCase();
-  return s === "cancelled" || s === "canceled";
+  return isCancelledPiStatus(status);
 }
 
 // 2026-10-13 (Phase A.3): compute one row per currency that appears in
@@ -169,55 +181,10 @@ function formatCurrency(cents: number, currency: string): string {
   })}`;
 }
 
-function statusColor(status: string | null): {
-  bg: string;
-  text: string;
-  border: string;
-  label: string;
-} {
-  const s = (status || "draft").toLowerCase();
-  switch (s) {
-    case "paid":
-      return {
-        bg: "bg-[#0a0a0a]",
-        text: "text-white",
-        border: "border-[#0a0a0a]",
-        label: "PAID",
-      };
-    case "sent":
-      return {
-        bg: "bg-[#00c2ff]",
-        text: "text-[#0a0a0a]",
-        border: "border-[#00c2ff]",
-        label: "SENT",
-      };
-    // 2026-11-08 (R133): a deposit was collected, the balance is open.
-    case "partially_paid":
-      return {
-        bg: "bg-amber-400",
-        text: "text-[#0a0a0a]",
-        border: "border-amber-500",
-        label: "DEPOSIT PAID",
-      };
-    case "cancelled":
-    case "canceled":
-      return {
-        bg: "bg-white",
-        text: "text-[#6b6b6b]",
-        border: "border-[#6b6b6b]",
-        label: "CANCELLED",
-      };
-    case "draft":
-    default:
-      return {
-        bg: "bg-[#ff4d00]",
-        text: "text-white",
-        border: "border-[#ff4d00]",
-        label: "DRAFT",
-      };
-  }
-}
-
+// 2026-11-17 (R139): the local statusColor() map is gone — the badge
+// colours and labels now come from piStatusMeta() in @/lib/pi-status,
+// which also knows about `pending_bank` and `expired`. Those two used to
+// fall through to the default branch and were rendered as "DRAFT".
 function formatDate(iso: string): string {
   const d = new Date(iso);
   if (isNaN(d.getTime())) return "—";
@@ -801,7 +768,7 @@ export default function SummaryClient() {
                 })()}
                 <tbody>
                   {pis.map((p) => {
-                    const sc = statusColor(p.status);
+                    const sc = piStatusMeta(p.status);
                     return (
                       <tr
                         key={String(p.id)}
@@ -903,7 +870,7 @@ export default function SummaryClient() {
                           </Link>
                         </td>
                         <td className="px-4 py-3 text-right">
-                          {sc.label === "DRAFT" || sc.label === "SENT" ? (
+                          {isEditablePiStatus(p.status) ? (
                             <Link
                               href={`/administered/edit-pi/?pi=${encodeURIComponent(p.piNumber)}`}
                               className="inline-flex items-center gap-1 text-xs font-black uppercase tracking-wider text-black hover:text-[#ff4d00]"
@@ -930,8 +897,7 @@ export default function SummaryClient() {
                             const paid = Number(p.amountPaidCents ?? 0) || 0;
                             const total = Number(p.totalCents ?? 0) || 0;
                             const settled =
-                              sc.label === "PAID" ||
-                              sc.label === "CANCELLED" ||
+                              isSettledPiStatus(p.status) ||
                               (total > 0 && paid >= total);
                             if (settled) {
                               return (
@@ -969,7 +935,7 @@ export default function SummaryClient() {
                           })()}
                         </td>
                         <td className="px-4 py-3 text-right">
-                          {sc.label === "PAID" ? (
+                          {isPaidPiStatus(p.status) ? (
                             <span
                               className="inline-flex cursor-not-allowed items-center gap-1 text-xs font-black uppercase tracking-wider text-[#c0c0c0]"
                               title="Paid PIs cannot be deleted. Refund via Stripe Dashboard first."
