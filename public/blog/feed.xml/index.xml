@@ -9,7 +9,7 @@
     <description>Industry guides, factory stories, and B2B apparel manufacturing insights from a 2,000 m² Yiwu sublimation factory. Sublimation vs DTG, DDP shipping, fabric guides, esports jersey fabric, and more.</description>
     <language>en-US</language>
     <copyright>Copyright © 2026 SublimApparel (Yiwu HomeDorm Commodity Manufacturing Co., Ltd.)</copyright>
-    <lastBuildDate>Tue, 17 Nov 2026 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 01 Dec 2026 00:00:00 GMT</lastBuildDate>
     <ttl>60</ttl>
     <image>
       <url>https://sublimapparel.com/sublimapparel-logo-v2.webp</url>
@@ -21,6 +21,19 @@
     <atom:link href="https://sublimapparel.com/blog/feed.xml" rel="self" type="application/rss+xml" />
     <managingEditor>info@sublimapparel.com (Ramon Wang, SublimApparel)</managingEditor>
     <webMaster>info@sublimapparel.com (SublimApparel Web Team)</webMaster>
+    <item>
+      <title>How to Order Custom Team Jerseys for Clubs, Leagues and Academies</title>
+      <link>https://sublimapparel.com/blog/how-to-order-custom-team-jerseys/</link>
+      <guid isPermaLink="true">https://sublimapparel.com/blog/how-to-order-custom-team-jerseys/</guid>
+      <pubDate>Tue, 01 Dec 2026 00:00:00 GMT</pubDate>
+      <author>info@sublimapparel.com (SublimApparel Team)</author>
+      <category>Product Guide</category>
+      <description>A club-side buying guide written on the factory floor: how many jerseys to order, which fabric and cut to choose, how to hand over crests and sponsor logos, how to submit a roster for names and numbers, and how to get the kits delivered before your first fixture.</description>
+      <content:encoded><![CDATA[Team kit is one of the few apparel orders where the buyer, the designer and the deadline are usually three different people. The manager signs the purchase order, the club crest comes from a committee that meets on a Tuesday, and the first fixture is a date that does not move. The order still has to arrive as one set of matching garments, with the right name and number on the right shirt, before that date. Every mistake in that chain shows up on a Saturday morning in front of a crowd.
+
+This is the factory-side guide to ordering custom team jerseys for clubs, leagues and academies, written from the cutting and sewing floor rather than from a sales deck. It covers how many jerseys to order and how the minimums work, which fabric and cut to choose for your sport, how to hand over crests and sponsor logos that print cleanly, how to submit a roster so every player gets the right name and number, when to take a physical sample, how long production really takes against a season-opener deadline, and how to get the cartons to a clubhouse, a league office or a tournament hotel without doing the customs paperwork yourself. If you want the specifications without the theory, our &lt;a href=&apos;/teams-sports-apparel/&apos;&gt;team sports apparel production page&lt;/a&gt; has them, and the &lt;a href=&apos;/products/jerseys/&apos;&gt;custom team jerseys page&lt;/a&gt; lists every cut we build.]]></content:encoded>
+      <enclosure url="https://sublimapparel.com/blog/team-jerseys-buyers-guide-cover.jpg" type="image/webp" length="0" />
+    </item>
     <item>
       <title>How to Order Custom Marathon Shirts for a 5K or Half Marathon</title>
       <link>https://sublimapparel.com/blog/how-to-order-custom-marathon-shirts/</link>

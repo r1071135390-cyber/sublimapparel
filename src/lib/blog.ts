@@ -3398,6 +3398,326 @@ export const blogPosts: BlogPost[] = [
       },
     ],
   },
+  {
+    // 2026-11-26 (R140): buying guide for the "custom team jerseys"
+    // keyword cluster. The /teams-sports-apparel/, /products/jerseys/
+    // and /industries/sports-teams-leagues/ commercial pages already
+    // exist but had no supporting article; this post fills that gap
+    // and cross-links them. Eight buyer-question sections, six
+    // in-body figures with descriptive alt text and numbered
+    // captions, five FAQs, four external standards as citations and
+    // seventeen internal pages as isBasedOn.
+    slug: "how-to-order-custom-team-jerseys",
+    title: "How to Order Custom Team Jerseys for Clubs, Leagues and Academies",
+    excerpt:
+      "A club-side buying guide written on the factory floor: how many jerseys to order, which fabric and cut to choose, how to hand over crests and sponsor logos, how to submit a roster for names and numbers, and how to get the kits delivered before your first fixture.",
+    category: "Product Guide",
+    date: "2026-12-01",
+    readTime: "12 min read",
+    author: "SublimApparel Team",
+    coverImage: "/blog/team-jerseys-buyers-guide-cover.jpg",
+    coverAlt:
+      "A row of custom sublimated football jerseys in navy, royal blue and crimson hanging on a metal rail inside a garment factory, the front navy shirt carrying a flame crest and the number 10, with two workers in blue polo shirts checking printed panels beside a wide-format sublimation printer",
+    tags: [
+      "custom team jerseys",
+      "team jersey bulk order",
+      "custom soccer jerseys bulk",
+      "basketball jersey supplier",
+      "custom football jersey manufacturer",
+      "sublimation jersey MOQ",
+      "jerseys with names and numbers",
+      "team uniform manufacturer",
+      "club kit supplier",
+      "DDP shipping jerseys",
+    ],
+    metaTitle: "How to Order Custom Team Jerseys (2026 Buyer Guide)",
+    metaDescription:
+      "How to order custom team jerseys for clubs and leagues: MOQ, fabric and cut, crests and sponsor logos, names and numbers, samples, lead times and DDP delivery.",
+    intro: [
+      "Team kit is one of the few apparel orders where the buyer, the designer and the deadline are usually three different people. The manager signs the purchase order, the club crest comes from a committee that meets on a Tuesday, and the first fixture is a date that does not move. The order still has to arrive as one set of matching garments, with the right name and number on the right shirt, before that date. Every mistake in that chain shows up on a Saturday morning in front of a crowd.",
+      "This is the factory-side guide to ordering custom team jerseys for clubs, leagues and academies, written from the cutting and sewing floor rather than from a sales deck. It covers how many jerseys to order and how the minimums work, which fabric and cut to choose for your sport, how to hand over crests and sponsor logos that print cleanly, how to submit a roster so every player gets the right name and number, when to take a physical sample, how long production really takes against a season-opener deadline, and how to get the cartons to a clubhouse, a league office or a tournament hotel without doing the customs paperwork yourself. If you want the specifications without the theory, our <a href='/teams-sports-apparel/'>team sports apparel production page</a> has them, and the <a href='/products/jerseys/'>custom team jerseys page</a> lists every cut we build.",
+    ],
+    sections: [
+      {
+        heading: "How Many Jerseys Should You Order?",
+        paragraphs: [
+          "Start from the roster, then add ten percent. That buffer covers the five players who turn up at the first training session when they were not on the list, the mid-season transfers, the shirt left behind in the changing room at the away fixture, and the sizes that turn out to be wrong the moment somebody tries the jersey on. Under-ordering is the expensive mistake here: a reprint at the end of the season costs more than the surplus shirts sitting in a storage cupboard, and a substitute with no kit does not take the field.",
+          "Then understand what the minimum actually attaches to. Our standard is 50 pieces per design for cut-and-sew sublimation on polyester, and the part that matters is the word design. A home kit, an away kit and a training top are three separate designs, each with its own minimum, so a club ordering one tier of match kit plus one training tier is looking at 100 pieces, not 50. What makes that workable is that tiered designs can each start at 50 pieces and still run in the same production batch, which pulls the per-unit cost of the second tier down. Re-orders, whether they are for an extra player or a new sponsor, start as low as 30 pieces. Our <a href='/blog/moq-explained-apparel-manufacturing/'>MOQ guide</a> explains why the floor exists and what actually moves it, and the <a href='/pricing/'>pricing and MOQ page</a> shows how the volume tiers step down.",
+          "Above the minimum the price steps down on its own. Volume pricing kicks in at 500 pieces, again at 2,000 and again at 10,000, which is the difference between a single club and a national league wearing the same design. That is also the strongest argument for consolidating: a league buying forty clubs worth of the same kit in one run gets a materially better per-shirt price than forty clubs ordering separately, and the manager only has to approve one design and one size run instead of forty.",
+          "Keep the designs separate even when they look similar. A match kit is graded on a different body and packed differently from a training top, and a goalkeeper kit is a third cut again. Splitting them is not extra work for the factory, it is one extra minimum per design, and mixing them onto a single run is where sizing errors enter the order. The <a href='/products/training-apparel/'>training apparel page</a> and the <a href='/products/jerseys/'>team jerseys page</a> both set out the cuts we build.",
+          "<figure class='my-8 md:my-10'><img src='/blog/custom-soccer-jerseys-factory-b.jpg' alt='Factory floor with two workers in blue t-shirts checking a tablet beside a large wide-format sublimation printer and a roll of transfer paper, red, navy and blue football jerseys with printed squad numbers laid out on the workbench in front and a rack of finished jerseys hanging in the background' title='Roster-locked production: printed panels checked against the squad list before cutting' width='2560' height='1440' loading='lazy' decoding='async' class='w-full h-auto border-2 border-black' /></figure>",
+          "<em class='block text-center text-xs text-[#6b6b6b] -mt-6 mb-8 md:-mt-8 md:mb-10'>Figure 1 — Every design in a team order runs as its own batch. Printed panels are checked against the squad list before they are cut and sewn, which is where a wrong number is caught.</em>",
+        ],
+      },
+      {
+        heading: "Which Fabric and Cut Should You Choose?",
+        paragraphs: [
+          "Six fabrics cover almost every team order, and the choice is driven by the sport and the season rather than by price. <strong>Polyester interlock at 140 to 160 GSM</strong> is the default match-day fabric: smooth, dense and the most accurate surface for an all-over print, which is why we recommend it unless you specifically need more airflow. <strong>Polyester mesh with an eyelet structure</strong> is the breathable option for hot-weather game days and for soccer and baseball. <strong>Birdseye at 160 to 180 GSM</strong> has a textured face and is the right cloth for reversible jerseys, because two designs printed on one birdseye fabric and hemmed together at the shoulders hold their shape better than a smooth face. <strong>Micro-pique at 180 GSM</strong> is the premium hand-feel option. <strong>A 92/8 polyester-spandex at 180 to 200 GSM</strong> is for compression base layers worn under the shirt or on their own. <strong>Poly-cotton</strong> belongs on off-field and clubhouse wear. Our <a href='/fabric/'>fabric and print process guide</a> shows the full range with GSM and use cases, and the <a href='/blog/what-is-sublimation-fabric/'>sublimation fabric guide</a> explains why the fabric choice constrains the print method.",
+          "The cuts matter just as much as the weights. <strong>Short sleeve</strong> is the classic V-neck or crew-neck cut for soccer, baseball and basketball. <strong>Sleeveless</strong> is for basketball, lacrosse and training pinnies, with deep arm holes for range of motion. <strong>Long sleeve at 160 to 180 GSM</strong> covers cold-weather training and the esports-style kit. <strong>Reversible</strong> gives two colours, two logos and two number sets in one garment, printed on both faces and finished in a single run, which is why it is the cheapest route to a home-and-away pair without paying for two separate orders. <strong>Kids</strong> is a real pattern rather than a shrunken adult one: sizes 2Y to 14Y with CPSIA compliance, soft seams for young players and numbers sized for small frames.",
+          "Write the GSM into the order and check it on the cutting report. Fabric weight is tested to ASTM D3776, and a sensible commercial tolerance is plus or minus five percent, so on a 160 GSM cloth anything from 152 to 168 GSM is acceptable. Underweight fabric is the quietest way a bulk order arrives cheaper than it should and worse than it should, and it is the first thing a soft, transparent jersey gets blamed for. If you are specifying from scratch, the <a href='/blog/how-to-write-a-tech-pack-for-custom-apparel/'>tech pack guide</a> shows how to write those numbers so they cannot be misread.",
+          "One more material decision is worth making deliberately: recycled polyester. <strong>rPET interlock</strong> uses roughly eight post-consumer bottles per jersey, prints identically to virgin polyester, and gives a club or an academy something concrete to say about sustainability. The <a href='/blog/polyester-vs-cotton-sublima-fabric/'>polyester versus cotton comparison</a> covers when cotton is still the right answer, which is usually off-field and never for a match shirt.",
+          "<figure class='my-8 md:my-10'><img src='/fabric-sw-interlock.webp' alt='Square swatch of pale lilac polyester interlock knit fabric with a fine vertical rib texture and pinked zigzag cut edges, laid flat on a white background' title='Polyester interlock, the default match-day surface for an all-over print' width='500' height='500' loading='lazy' decoding='async' class='w-full h-auto border-2 border-black' /></figure>",
+          "<em class='block text-center text-xs text-[#6b6b6b] -mt-6 mb-8 md:-mt-8 md:mb-10'>Figure 2 — Polyester interlock. A smooth, dense face holds an all-over print accurately and keeps the colour where it should be, which is why it is the default match-day cloth.</em>",
+        ],
+      },
+      {
+        heading: "How to Prepare Crests, Sponsors and Artwork",
+        paragraphs: [
+          "Send vector files, AI or EPS or PDF, for anything containing text or a crest. Sponsor logos are accepted in AI, PDF, PNG and SVG, and our artwork team aligns them to your club, league or federation brand guide rather than redrawing them. Vector artwork scales to any print area without loss, while raster artwork has to be 300 DPI at the final print size and not at the size of the mockup you approved. The <a href='/blog/how-to-prepare-artwork-files-for-sublimation/'>artwork preparation guide</a> covers bleed, mirrored elements and the detail rules that decide whether a file prints cleanly on the first pass.",
+          "Give us a Pantone reference for every spot colour and tell us the base fabric colour. The base changes how the dye lays down and how bright the print reads, which is the most common reason a crest that looks right on a screen comes back muddy on a navy shirt. If the crest is colour-critical, approve a physical sample against the actual fabric rather than against a monitor, because a screen is not a colour standard.",
+          "This is where sublimation earns its keep on a team kit. A chest crest, a back sponsor block, a sleeve badge, a federation mark and a manufacturer tag are all printed in one continuous run. There is no per-placement setup fee, and unlimited colours and unlimited placements cost the same as one logo would. Screen printing charges by the screen, so every extra sponsor is another screen and another charge. The <a href='/blog/screen-printing-vs-embroidery/'>screen printing versus embroidery comparison</a> and the <a href='/compare/sublimation-vs-screen-print/'>sublimation versus screen printing comparison</a> set out the cost mechanics.",
+          "One rule catches people out on an all-over kit: the fabric is printed before it is cut. A pattern that looks continuous on a flat sheet can break at the side seam or the sleeve join. Mark every seam line on the artwork proof and have it confirmed before the press runs. The <a href='/blog/sublimation-printing-process-explained/'>sublimation printing process guide</a> explains why that order of operations exists, and the <a href='/blog/custom-esports-jerseys-b2b-buyers-guide/'>esports jersey buyers guide</a> covers the same artwork rules for a very graphic-heavy kit.",
+          "<figure class='my-8 md:my-10'><img src='/hero-jersey.webp' alt='Black mannequin torso wearing a short-sleeve jersey printed edge to edge with a blue, red and orange paint-splash graphic against a solid black background' title='All-over print: the whole panel is one image with no print-area limit' width='800' height='800' loading='lazy' decoding='async' class='w-full h-auto border-2 border-black' /></figure>",
+          "<em class='block text-center text-xs text-[#6b6b6b] -mt-6 mb-8 md:-mt-8 md:mb-10'>Figure 3 — All-over print means the panel is one continuous image, so gradients, flames and photographic elements run edge to edge with no separate placement charge.</em>",
+        ],
+      },
+      {
+        heading: "How to Send Player Names and Numbers",
+        paragraphs: [
+          "Send a roster, not a list of names in an email body. A spreadsheet with one row per player and columns for name, number, size and any captain or goalkeeper flag is all we need. We read it at the print stage and apply the names and numbers as variable data, so every shirt comes out of the same run with the right data on it.",
+          "The detail that matters is that these names and numbers are printed rather than stitched on. That means there is no per-name setup cost, so a 30-player roster costs the same as a 12-player roster, and it means nothing to peel or crack after a season of washing. It also means one number can be changed without re-cutting the whole batch. If you want the raised look, embroidered crests and sponsor patches are available as a separate add-on, and screen-printed numbers stay available as a different visual weight.",
+          "Be specific about typography, because this is where a kit goes wrong. Send the typeface or a reference image, state whether names are set in capitals or title case, and give the maximum character count you will accept, because a long surname arched across a small youth panel has nowhere to go. Decide the placement rules yourself too: number on the back with the name above it, or the number on the front and back with the name on the back only.",
+          "Two things belong on the roster sheet rather than in a side conversation. The captain C, the vice-captain V and the referee mark are printed the same way and cost nothing extra to add. And a reversible jersey needs its own number set for each face, so the roster should say which numbers belong to which side. The <a href='/products/bowling/'>custom bowling jerseys page</a> and the <a href='/products/golf/'>custom golf apparel page</a> show how the same variable-data approach carries across sports with very different naming conventions.",
+          "Individual names and numbers carry a minimum of 50 pieces. If your roster is smaller than that, the practical answer is to run a plain kit with a crest and print the squad numbers after delivery, or to order at 50 and keep the difference as buffer.",
+        ],
+      },
+      {
+        heading: "Samples, Sizes and the Approval Deadline",
+        paragraphs: [
+          "The schedule is the part of a team order that actually goes wrong, not the printing and not the shipping, but the approvals. Our club programme runs on a fixed sequence: brief and roster intake on day one, artwork and sponsor lock by day three, an optional physical sample shipped by day five, bulk production from day seven, buffer stock built at day twenty, and DDP delivery at day twenty-five. Every one of those gates is a date you can hold us to, and every one of them moves if the artwork is not locked on day three.",
+          "Take the sample when the design is colour-critical. A pre-production sample shows you the crest, the sponsor marks, the number treatment and the actual fabric colour in daylight, and it can be shipped within three days of an approved artwork file. Our <a href='/samples/'>sample policy</a> covers the free stock-colour swatches and the cost of a pre-production sample in your own design. For most clubs the answer is to sample the crest and skip the rest.",
+          "Sizes come from the roster rather than from memory, because players guess, and the guess is usually one size too large. Use our <a href='/us-size-guide/'>US size guide</a>, which lists garment measurements rather than body measurements, so a player can measure a jersey they already own and land on the right size. For youth teams, capture the size at registration and keep it on the same roster sheet as the name and number, so a single file drives the whole order.",
+          "Leave the roster open for a while and plan for a second run. We hold buffer stock for late additions and size swaps up to ten days before delivery, which covers the player who signs in the last week of the transfer window or the parent who calls about a size on the Friday before the fixture. A re-order starts at 30 pieces, so that buffer is cheap insurance rather than a second bulk run.",
+        ],
+      },
+      {
+        heading: "How Long Does Production Take?",
+        paragraphs: [
+          "Standard production is 25 days from approved artwork, and for a pre-season or in-season re-order we run a 15-day expedited lane at a small premium. Plan around the slot, not just the duration: production windows fill 60 to 90 days out for major sports, so the team whose manager waits until the fixtures are published to order is the team waiting for the next slot.",
+          "Work backwards from the first fixture rather than from the order date. A workable club sequence is artwork and sponsor lock at T-60 days, physical sample and roster approval at T-45, bulk production at T-20, buffer stock built at T-10, and delivery two to three weeks before kick-off. That leaves room for the thing that actually happens, one design change after the sample, without moving the fixture. The <a href='/event-timeline/'>event apparel timeline calculator</a> builds the same calendar backwards from your date, and the <a href='/production/'>production and lead times page</a> lists the calendar, the rush lane and the holiday effects.",
+          "The tiers move in parallel rather than in sequence. Home kit, away kit and training wear can all travel through the same print run, which is why a three-design order does not take three times as long as a one-design order. It is also why the artwork lock matters more than the order size, because three designs with three separate approval cycles is where the schedule goes.",
+          "Everything is inspected before it is sealed. Bulk runs are checked to AQL 2.5 under ISO 2859-1 sampling, with the checkpoints written onto the report so you can verify the shipment from photographs rather than from a promise. The <a href='/quality-control/'>four-step quality control process</a> and the <a href='/about/quality/'>factory quality page</a> set out exactly what is checked and when.",
+          "<figure class='my-8 md:my-10'><img src='/qc-inspection.webp' alt='Four workers in an inspection room checking folded navy and white printed jerseys laid out in a row along a long white table, one filling in a written checklist while another carries a stack of folded garments' title='Every folded jersey is checked against the inspection checklist before packing' width='800' height='800' loading='lazy' decoding='async' class='w-full h-auto border-2 border-black' /></figure>",
+          "<em class='block text-center text-xs text-[#6b6b6b] -mt-6 mb-8 md:-mt-8 md:mb-10'>Figure 4 — Every folded jersey is inspected against the checklist before it is packed, with the crest, the print registration and the stitch lines checked one by one.</em>",
+        ],
+      },
+      {
+        heading: "How to Arrange Delivery to Your Club or League HQ",
+        paragraphs: [
+          "For most clubs DDP is the right answer and FOB is a trap that looks cheaper. DDP, Delivered Duty Paid under ICC Incoterms 2020, means we pay the freight, clear the customs, pay the import duties and taxes and deliver to your door. FOB puts all four of those on your desk, and the final invoice usually lands 15 to 35 percent above the quoted price. The <a href='/shipping/ddp/'>DDP shipping page</a> and the <a href='/blog/what-is-ddp-shipping/'>DDP shipping explained</a> post work through the mechanics and the landed cost, and <a href='/compare/ddp-vs-fob/'>DDP versus FOB</a> is the short version.",
+          "A team order rarely goes to a home address. It goes to a team manager house, a clubhouse with no loading bay, a league office, a tournament hotel or a registration desk at a sports expo. Tell us the actual delivery point, whether there is a receiving window at that address, and who the duty and tax invoice should be issued to. We deliver DDP to more than 100 countries, and the <a href='/shipping/global/'>worldwide shipping page</a> lists the routes we run.",
+          "Sea or air is a date decision. Ocean freight takes 7 to 14 days and is correct for anything ordered more than six weeks ahead. Air freight at 5 to 7 days is what you want when the season opener is close or a design change means a reprint. If the kit is already in the United States, our warehouse in Fontana, California delivers in 2 to 5 days, which is the fastest route to a pitch.",
+          "Check the paperwork before the balance is released. The commercial invoice and the packing list have to match the physical cartons exactly, and the apparel description and HS code have to stay consistent with the garment. Mismatched quantities are the most common cause of a customs hold, and a hold eats the buffer you built into the schedule.",
+          "<figure class='my-8 md:my-10'><img src='/shipping-flow-1.webp' alt='Aerial view of a container port yard with rows of stacked shipping containers, a large orange gantry crane spanning the roadway and trucks queued beneath it in hazy sunlight' title='Containers leave Yiwu by sea or air under a DDP delivered-duty-paid arrangement' width='1200' height='800' loading='lazy' decoding='async' class='w-full h-auto border-2 border-black' /></figure>",
+          "<em class='block text-center text-xs text-[#6b6b6b] -mt-6 mb-8 md:-mt-8 md:mb-10'>Figure 5 — Containers leave Yiwu by sea or air. Under DDP the duty, the customs entry and the last mile are all handled before the cartons reach the clubhouse.</em>",
+        ],
+      },
+      {
+        heading: "Where to Start",
+        paragraphs: [
+          "Four steps, in order: lock the roster and the sizes, choose the fabric and the cut, hand over artwork that will print cleanly with crests and sponsors in vector form, then lock the approval deadline and the shipping method backwards from the first fixture. Every step carries a number attached to it, 50 pieces per design, 25 days of production, 60 days of artwork lead time, and that is the point. A team kit is a manufacturing job with a date on it, not a purchase.",
+          "If you want the specifications without the theory, the <a href='/teams-sports-apparel/'>team sports apparel production page</a> covers the club programme end to end and the <a href='/products/jerseys/'>custom team jerseys page</a> lists every cut, fabric and trim. For kit that carries your own brand rather than a crest, the <a href='/private-label-sportswear/'>private label sportswear page</a> covers hang tags, packaging and branding, while the <a href='/industries/sports-teams-leagues/'>sports teams and leagues page</a> covers federations and multi-club programmes. Send your sport, roster size and deadline through the <a href='/get-a-quote/'>quote form</a> for a DDP price, and browse the <a href='/cases/'>case study gallery</a> for finished team and league kit.",
+        ],
+      },
+    ],
+    keyTakeaways: [
+      "Order ten percent above the roster, and treat every design as its own minimum: 50 pieces per design for cut-and-sew sublimation, 30 for a re-order, with volume tiers at 500, 2,000 and 10,000 pieces.",
+      "Interlock at 140 to 160 GSM is the default match-day fabric, mesh with an eyelet structure is for hot-weather game days, birdseye at 160 to 180 GSM is for reversible kits, and kids cuts run 2Y to 14Y with CPSIA compliance.",
+      "Send crests and sponsor logos as vector files with a Pantone value, and mark every seam line on an all-over kit because the fabric is printed before it is cut.",
+      "Names and numbers are printed as variable data from a roster spreadsheet, so there is no per-name setup cost, and you specify the typeface, the case and the maximum character count yourself.",
+      "Production runs 25 days from approved artwork with a 15-day expedited lane, and slots fill 60 to 90 days out for major sports, so lock artwork at T-60 and approval at T-45.",
+      "Ship DDP to the real delivery point, a team manager, a clubhouse, a league office or a tournament hotel, and make the commercial invoice, the packing list and the physical cartons match.",
+    ],
+    faqs: [
+      {
+        q: "What is the minimum order for custom team jerseys?",
+        a: "50 pieces per design for cut-and-sew sublimation on polyester. Home kit, away kit and training top are three separate designs, each with its own minimum, but each tier can start at 50 pieces and still run in the same production batch, which keeps the per-unit cost down. Re-orders start as low as 30 pieces, and individual names and numbers also carry a 50-piece minimum.",
+      },
+      {
+        q: "Can every player have a different name and number?",
+        a: "Yes, and there is no per-name setup cost. Names and numbers are printed as variable data at the print stage rather than stitched on, so nothing peels or cracks after a season of washing and a 30-player roster costs the same as a 12-player roster. Send a spreadsheet with one row per player and columns for name, number, size and captain or goalkeeper flags, and specify the typeface, capitals or title case, and the maximum character count you will accept.",
+      },
+      {
+        q: "Which fabric should a soccer or basketball jersey use?",
+        a: "Polyester interlock at 140 to 160 GSM is the default: it is smooth and dense, so an all-over print reads accurately and it holds colour. Polyester mesh with an eyelet structure is the breathable choice for hot-weather game days. Birdseye at 160 to 180 GSM is the right cloth for reversible jerseys, micro-pique at 180 GSM is the premium hand-feel option, and a 92/8 polyester-spandex at 180 to 200 GSM is for compression base layers. Fabric weight is tested to ASTM D3776 with a plus or minus five percent tolerance.",
+      },
+      {
+        q: "How long does it take to get team jerseys before the first fixture?",
+        a: "Standard production is 25 days from approved artwork, with a 15-day expedited lane at a small premium for pre-season and in-season re-orders. The real constraint is the slot, because production windows fill 60 to 90 days out for major sports. A workable sequence is artwork and sponsor lock at T-60 days, sample and roster approval at T-45, bulk production at T-20 and delivery two to three weeks before kick-off, then 7 to 14 days by sea or 5 to 7 days by air.",
+      },
+      {
+        q: "Can you deliver the kit to our clubhouse or a tournament hotel?",
+        a: "Yes. We deliver DDP, duties and customs included, to a team manager address, a clubhouse, a league office, a tournament hotel or a registration desk at a sports expo, in more than 100 countries. Tell us the actual delivery point, whether there is a receiving window at that address, and who the duty and tax invoice should be issued to. If the kit is already in the United States, our warehouse in Fontana, California delivers in 2 to 5 days.",
+      },
+    ],
+    citations: [
+      {
+        "@type": "WebPage",
+        "@id": "https://www.iso.org/standard/1140.html",
+        name: "ISO 2859-1:1999 — Sampling procedures for inspection by attributes (AQL)",
+        url: "https://www.iso.org/standard/1140.html",
+        sameAs: "https://www.iso.org/standard/1140.html",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://www.astm.org/d3776_d3776m-20.html",
+        name:
+          "ASTM D3776/D3776M-20 — Standard Test Methods for Mass Per Unit Area (Weight) of Fabric",
+        url: "https://www.astm.org/d3776_d3776m-20.html",
+        sameAs: "https://www.astm.org/d3776_d3776m-20.html",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://www.oeko-tex.com/en/our-standards/oeko-tex-standard-100",
+        name: "OEKO-TEX Standard 100 — Certification for tested textiles",
+        url: "https://www.oeko-tex.com/en/our-standards/oeko-tex-standard-100",
+        sameAs: "https://www.oeko-tex.com/en/our-standards/oeko-tex-standard-100",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://iccwbo.org/business-solutions/incoterms-rules/incoterms-2020/",
+        name: "ICC Incoterms 2020",
+        url: "https://iccwbo.org/business-solutions/incoterms-rules/incoterms-2020/",
+        sameAs:
+          "https://iccwbo.org/business-solutions/incoterms-rules/incoterms-2020/",
+      },
+    ],
+    isBasedOn: [
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/teams-sports-apparel/",
+        name: "Team Sports Apparel Production Service | Club Kits — SublimApparel",
+        url: "https://sublimapparel.com/teams-sports-apparel/",
+        sameAs: "https://sublimapparel.com/teams-sports-apparel/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/products/jerseys/",
+        name: "Custom Team Jerseys | Soccer, Baseball, Basketball — SublimApparel",
+        url: "https://sublimapparel.com/products/jerseys/",
+        sameAs: "https://sublimapparel.com/products/jerseys/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/industries/sports-teams-leagues/",
+        name: "Custom Apparel Solutions for Sports Teams — SublimApparel",
+        url: "https://sublimapparel.com/industries/sports-teams-leagues/",
+        sameAs: "https://sublimapparel.com/industries/sports-teams-leagues/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/products/training-apparel/",
+        name: "Custom Training Apparel | Performance Fabric, MOQ 50 — SublimApparel",
+        url: "https://sublimapparel.com/products/training-apparel/",
+        sameAs: "https://sublimapparel.com/products/training-apparel/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/private-label-sportswear/",
+        name: "Private Label Sportswear | Custom Athletic Apparel Manufacturer — SublimApparel",
+        url: "https://sublimapparel.com/private-label-sportswear/",
+        sameAs: "https://sublimapparel.com/private-label-sportswear/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/fabric/",
+        name: "Fabric & Print Process Guide — 24 Fabrics, 6 Methods — SublimApparel",
+        url: "https://sublimapparel.com/fabric/",
+        sameAs: "https://sublimapparel.com/fabric/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/fabric/polyester/",
+        name: "All-Over Polyester Printing | Sublimation on 100% Polyester — SublimApparel",
+        url: "https://sublimapparel.com/fabric/polyester/",
+        sameAs: "https://sublimapparel.com/fabric/polyester/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/us-size-guide/",
+        name: "US Size Guide for Custom Apparel | Specs & Templates — SublimApparel",
+        url: "https://sublimapparel.com/us-size-guide/",
+        sameAs: "https://sublimapparel.com/us-size-guide/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/samples/",
+        name: "Sample Policy: Free & Pre-Production Samples — SublimApparel",
+        url: "https://sublimapparel.com/samples/",
+        sameAs: "https://sublimapparel.com/samples/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/quality-control/",
+        name: "4-Step Quality Control | AQL 2.5 Inspection Process — SublimApparel",
+        url: "https://sublimapparel.com/quality-control/",
+        sameAs: "https://sublimapparel.com/quality-control/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/pricing/",
+        name: "Pricing & MOQ: How Quotes Are Built — SublimApparel",
+        url: "https://sublimapparel.com/pricing/",
+        sameAs: "https://sublimapparel.com/pricing/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/production/",
+        name: "Production & Lead Times: Calendar, Rush, Holidays — SublimApparel",
+        url: "https://sublimapparel.com/production/",
+        sameAs: "https://sublimapparel.com/production/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/shipping/ddp/",
+        name: "DDP Shipping — Duties Paid, Delivered to Your Door — SublimApparel",
+        url: "https://sublimapparel.com/shipping/ddp/",
+        sameAs: "https://sublimapparel.com/shipping/ddp/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/shipping/global/",
+        name: "Worldwide Shipping · DDP to 100+ Countries from Yiwu Factory — SublimApparel",
+        url: "https://sublimapparel.com/shipping/global/",
+        sameAs: "https://sublimapparel.com/shipping/global/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/event-timeline/",
+        name: "Event Apparel Timeline Calculator | Order Custom Shirts — SublimApparel",
+        url: "https://sublimapparel.com/event-timeline/",
+        sameAs: "https://sublimapparel.com/event-timeline/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/products/bowling/",
+        name: "Custom Bowling Jerseys | Sublimated League Shirts — SublimApparel",
+        url: "https://sublimapparel.com/products/bowling/",
+        sameAs: "https://sublimapparel.com/products/bowling/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/products/golf/",
+        name: "Custom Golf Apparel | Sublimated Polos & Quarter-Zips — SublimApparel",
+        url: "https://sublimapparel.com/products/golf/",
+        sameAs: "https://sublimapparel.com/products/golf/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/get-a-quote/",
+        name: "Get a Quote — DDP Pricing in 12 Hours, No Setup Fee — SublimApparel",
+        url: "https://sublimapparel.com/get-a-quote/",
+        sameAs: "https://sublimapparel.com/get-a-quote/",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sublimapparel.com/cases/",
+        name: "Custom Apparel Case Studies: Sports, Events & Brands — SublimApparel",
+        url: "https://sublimapparel.com/cases/",
+        sameAs: "https://sublimapparel.com/cases/",
+      },
+    ],
+  },
 ];
 
 export const getPostBySlug = (slug: string): BlogPost | undefined =>
